@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="Stuct12" transaction-type="RESOURCE_LOCAL" >
+ 
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.entities.Producto</class>
+    <class>com.entities.Area</class>
+    <class>com.entities.Categoria</class>
+    <class>com.entities.Cliente</class>
+    <class>com.entities.Cuota</class>
+    <class>com.entities.Direccioncliente</class>
+    <class>com.entities.Empresa</class>
+    <class>com.entities.Estado</class>
+    <class>com.entities.Estadocuentacliente</class>
+    <class>com.entities.Estadocuentaproveedor</class>
+    <class>com.entities.Formapago</class>
+    <class>com.entities.Ingresoproducto</class>
+    <class>com.entities.Ingresoproductodetalle</class>
+    <class>com.entities.Letracliente</class>
+    <class>com.entities.Me</class>
+    <class>com.entities.Moneda</class>
+    <class>com.entities.Perfil</class>
+    <class>com.entities.Personal</class>
+    <class>com.entities.Poblacion</class>
+    <class>com.entities.Produccion</class>
+    <class>com.entities.Producciondetalle</class>
+    <class>com.entities.Proveedor</class>
+    <class>com.entities.Salidaproducto</class>
+    <class>com.entities.Session</class>
+    <class>com.entities.Sexo</class>
+    <class>com.entities.Tipodocumento</class>
+    <class>com.entities.Tipodocumentogestion</class>
+    <class>com.entities.Unidadmedida</class>
+    <class>com.entities.Usuario</class>
+    <class>com.entities.Venta</class>
+    <class>com.entities.Ventadetalle</class>
+    <class>com.entities.Via</class>
+    <class>com.entities.Kardex</class>
+    <class>com.entities.Configuracion</class>
+    <class>com.entities.Cuenta</class>
+    <class>com.entities.Librodiario</class>
+    <class>com.entities.Clasificacioncategoria</class>
+    <class>com.entities.Ingresoproductodevolucion</class>
+    <class>com.entities.Ingresoproductodevoluciondetalle</class>
+    <class>com.entities.Ventadevolucion</class>
+    <class>com.entities.Ventadevoluciondetalle</class>
+    <class>com.entities.Cajachica</class>
+    <class>com.entities.Elementocuenta</class>
+    <class>com.entities.Permiso</class>
+    <class>com.entities.Menu</class>
+    <class>com.entities.Menuopcione</class>
+    <class>com.entities.Menutitulo</class>
+    <class>com.entities.Visitacliente</class>
+    <class>com.entities.Subcategoria</class>
+    <class>com.entities.Preciosproducto</class>
+    <class>com.entities.Ejerciciofiscal</class>
+    <class>com.entities.Periodo</class>
+    <class>com.entities.Impuesto</class>
+    <class>com.entities.Letraproveedor</class>
+    <class>com.entities.Libromayor</class>
+    	 
+	<!-- transaction-type="RESOURCE_LOCAL"-->
+		<properties>
+			
+	      <property name="eclipselink.target-database" value="mysql"/>
+	      <!-- property name="eclipselink.target-server" value="JBoss"/> -->
+	      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+	      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/macrostruts"/>
+	      <property name="javax.persistence.jdbc.user" value="root"/>
+	      <property name="javax.persistence.jdbc.password" value="qwertY"/>	    
+	    </properties>
+	</persistence-unit>
+</persistence>
