@@ -1,0 +1,139 @@
+
+<%@ page language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<html:form action="venta" styleId="formUsuario">
+<tr class="trCodigo">
+    <td align="right" width="30%">Raz&oacute;n Social:</td>
+    <td>    
+	    <html:text property="vClienteCodigo"  styleId="vClienteCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />
+	    <html:text property="vClienteRazonSocial"  styleId="vClienteRazonSocial"  styleClass="inputDisabled" size="35"/>
+	    <img  onclick="popupModal('cliente.do?metodo=listaCliente&mode=LP',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png"/>
+	    <span id="m_cClienteCodigo" class="importante">*</span>
+	    </td>
+</tr>
+<tr>
+<td align="right">Direcci&oacute;n :</td>
+    <td>
+       <html:text property="vClienteDireccion" styleId="vClienteDireccion"   styleClass="inputDisabled" size="46"/>
+     </td>
+</tr>
+<tr>
+    <td align="right"><span id="Ruc">Ruc :</span></td>
+    <td>
+       <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  styleClass="text inputDisabled" readonly="" />
+       
+   </td>
+</tr>
+<tr>
+    <td align="right">Tipo Documento :</td>
+    <td> <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo">    
+    		  <option value="00">::SELECCIONE::</option>    
+              <html:options collection="listaTipoDoc" property="iTipoDocumentoGestionId" labelProperty="vTipoDocumentoDescripcion"/>
+         </html:select>
+     </td>
+</tr>
+
+<tr>
+	<td align="right">Nro Documento :</td>
+	 <td><html:text property="nVentaNumero" styleId="nVentaNumero"   styleClass="text" onkeypress="return Numeros(event)"  size="11" maxlength="11" />
+		     <span id="m_nVentaNumero" class="importante">*</span>
+	</td>
+</tr>
+<tr>
+    <td align="right">Fecha Emisi&oacute;n :</td>
+    <td>
+       <html:text property="dVentaFecha" styleId="dVentaFecha"   styleClass="text"  size="11" maxlength="11"/>
+      <span id="m_dVentaFecha" class="importante">*</span>
+    </td>
+</tr>
+<tr>
+    <td align="right">Monto :</td>
+    <td>
+    <html:text property="fVentaTotal" styleId="fVentaTotal"   styleClass="text" onkeypress="return Numeros(event)" size="11" maxlength="11"/>
+    <span id="m_fVentaTotal" class="importante">*</span>  
+    </td>
+</tr>
+<tr>
+    <td align="right">Forma de Pago :</td>
+    <td>
+         <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo">
+              <option value="00">::SELECCIONE::</option>            
+              <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
+         </html:select>
+        </td>
+</tr>
+<tr>
+    <td align="right">Estado:</td>
+    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo">       
+              <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
+         </html:select>
+    </td>
+    
+</tr>
+<tr height="50px">   
+    <td align="center" colspan="2">
+    <br>    
+     <button onclick="buscar('tab-grupo')" class="button" ><span class='save' id="btnGuardar">Guardar</span></button>
+     <button onclick="cancelar('');" class="button"  type="button"><span class='cancel'>Cancelar</span></button>
+     <br>
+     <br>
+     <span  class="mensaje"></span>
+     <br>
+    </td>
+</tr>
+<%-- hidden field que contiene el id del producto --%>
+<html:hidden property="iVentaId" />
+
+<%-- hidden field que contiene el id del producto --%>
+<html:hidden property="iClienteId" styleId="iClienteId" />
+
+
+<html:hidden property="pagoTotal" styleId="pagoTotal" />
+
+<%-- hidden field que contiene el id del producto --%>
+<html:hidden property="vVentaPuntoLlegada" styleId="vVentaPuntoLlegada" />
+
+<%-- hidden field que contiene el mode --%>
+<html:hidden property="mode" styleId="mode"  />
+			
+<%-- set the parameter for the dispatch action --%>
+<html:hidden property="metodo" value="listaVentaDevolucion" styleId="metodo" />
+	
+</html:form>
+<script>
+    var mode = document.getElementById('mode').value;
+    
+    $("#dVentaFecha").datepicker(
+        {
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            defaultDate: -1,
+            maxDate: '+0d'
+    })
+    $("#dVentaFecha").val(" ");
+    $("input:text.inputDisabled").attr("readonly",true);
+    if(mode=='IE') {
+        document.getElementById('vClienteCodigo').focus();
+        document.getElementById('btnGuardar').textContent="Insertar";
+        $(".trCodigo").show();
+        $("#popupCabecera").text('INSERTAR DATOS');	
+    } else {
+         document.getElementById('btnGuardar').textContent="Actualizar";
+        $("#popupCabecera").text('BUSCAR DATOS');	
+        if(mode=='F'){
+        	$("#popupCabecera").text('BUSCAR DATOS');        	
+         	/*$(":input").attr('disabled',true);
+         	$(":hidden").attr('disabled',false);
+         	$(":button").attr('disabled',false);*/
+         	$("#btnGuardar").removeClass('save');
+         	$("#btnGuardar").addClass('find');
+        	$("#btnGuardar").text('Buscar');
+         }
+    }
+    
+   
+
+</script>

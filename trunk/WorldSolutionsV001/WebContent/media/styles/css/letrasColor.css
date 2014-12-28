@@ -1,0 +1,199 @@
+@charset "utf-8";
+/* CSS Document */
+
+.font_0 {
+    color: #FFFFFF;
+    font: 32px/1.1em "Open Sans","sans-serif";
+}
+.font_00 {
+    color: #FFFFFF;
+    font: 24px/1.1em "Open Sans","sans-serif";
+}
+.font_1 {
+    color: #645844;
+    font: 18px/1.1em "Overlock","sans-serif";
+}
+.font_2 {
+    color: #645844;
+    font: 30px/1.1em "Overlock","sans-serif";
+}
+.font_3 {
+    color: #645844;
+    font: 60px/1.1em "Overlock","sans-serif";
+}
+.font_4 {
+    color: #645844;
+    font: 30px/1.3em "Helvetica","Arial","sans-serif";
+}
+.font_5 {
+    color: #645844;
+    font: 26px/1.2em "Overlock","sans-serif";
+}
+.font_6 {
+    color: #2FC4C6;
+    font: 23px/1.3em "Overlock","sans-serif";
+}
+.font_7 {
+    color: #645844;
+    font: 20px/1.3em "Geneva","Tahoma","sans-serif";
+}
+.font_8 {
+    color: #645844;
+    font: 12px/1.3em "Geneva","Tahoma","sans-serif";
+}
+.font_9 {
+    color: #645844;
+    font: 12px/1.3em "Geneva","Tahoma","sans-serif";
+}
+.font_10 {
+    color: #645844;
+    font: 11px/1.3em "Geneva","Tahoma","sans-serif";
+}
+.font_11{
+   -moz-transition: color 0.4s ease 0s;
+    color: #F76700;
+    cursor: pointer;
+    font: 12px/1.3em "Geneva","Tahoma","sans-serif";
+    white-space: nowrap;
+	}
+.font_11:Hover{
+    color: #0088CB;
+}
+.font_12{
+  -moz-transition: color 0.4s ease 0s;
+    color: #71E8E8;
+    cursor: pointer;
+    font: 11px/1.3em "Geneva","Tahoma","sans-serif";
+    white-space: nowrap;
+}
+.font_12:Hover{
+    color: #BBF4F4;
+}
+.font_13{
+    color: #2FC4C6;
+	font: 11px/1.3em "Geneva","Tahoma","sans-serif";
+}
+.color_0 {
+    color: #E4E4F3;
+}
+.color_1 {
+    color: #FFFFFF;
+}
+.color_2 {
+    color: #000000;
+}
+.color_3 {
+    color: #0088CB;
+}
+.color_4 {
+    color: #FFB400;
+}
+.color_5 {
+    color: #ED1C24;
+}
+.color_6 {
+    color: #8892A1;
+}
+.color_7 {
+    color: #A2B9CF;
+}
+.color_8 {
+    color: #FFFFFF;
+}
+.color_9 {
+    color: #557593;
+}
+.color_10 {
+    color: #164172;
+}
+.color_11 {
+    color: #FFFFFF;
+}
+.color_12 {
+    color: #D8D1C6;
+}
+.color_13 {
+    color: #A69376;
+}
+.color_14 {
+    color: #826F52;
+}
+.color_15 {
+    color: #645844;
+}
+.color_16 {
+    color: #ffffff;
+}
+.color_17 {
+    color: #71E8E8;
+}
+.color_18 {
+    color: #21A9E8;
+}
+.color_19 {
+    color: #2FC4C6;
+}
+.color_20 {
+    color: #1A7373;
+}
+.color_21 {
+    color: #E1E69D;
+}
+.color_22 {
+    color: #C7CD6B;
+}
+.color_23 {
+    color: #A9B709;
+}
+.color_24 {
+    color: #717806;
+}
+.color_25 {
+    color: #383C03;
+}
+.color_26 {
+    color: #DAB3D4;
+}
+.color_27 {
+    color: #B68AAF;
+}
+.color_28 {
+    color: #915D8A;
+}
+.color_29 {
+    color: #6D1E61;
+}
+.color_30 {
+    color: #360F30;
+}
+.color_31 {
+    color: #FCCBA8;
+}
+.color_32 {
+    color: #F9B17C;
+}
+.color_33 {
+    color: #F76700;
+}
+.color_34 {
+    color: #A44400;
+}
+.color_35 {
+    color: #522200;
+}
+.alignLeft {
+    text-align: left;
+}
+.alignCenter {
+    text-align: center;
+}
+.italic {
+    font-style: italic;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+.bold {
+    font-weight: bold;
+}
