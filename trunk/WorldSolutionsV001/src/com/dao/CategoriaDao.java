@@ -96,7 +96,7 @@ public class CategoriaDao  extends GenericaDao implements ICategoriaDao {
 	@Override
 	public List<Subcategoria> listaSubcategoria(int iCategoriaId) {
 		
-		Query q = getInstancia().createQuery("select c from Subcategoria c where c.categoria.iCategoriaId="+iCategoriaId);
+		Query q = getInstancia().createQuery("select c from Subcategoria c where c.categoria.iCategoriaId="+iCategoriaId +" and c.cEstadoCodigo='AC'");
 		List<Subcategoria> listaCategoria = q.getResultList();      
 	
     return listaCategoria;
