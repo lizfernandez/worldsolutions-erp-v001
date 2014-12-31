@@ -302,26 +302,30 @@ public class ProductosAction extends DispatchAction {
 		 * 4: Envases y embalajes
 		 * 
 		 * ***/
-		/**Obtenemos le codigo correlativo del producto **/
-		productoForm.getProducto().setcProductoCodigo(genericoDao.callSPCalculoCodigo(productoForm.getProducto()));
-		
 		switch (iclasificacionId) {
-		 
-        case 1:  msn ="showEdit";
-                 break;
-        case 2:  msn ="showEditMateriaPrima";
-                 break;
-        case 3:  msn ="showEditSuministros";
-                 break;
-        case 4:  msn ="showEditEnvases";
-                 break;        
-       
-       } 
+
+		case 1:
+			msn = "showEdit";
+			break;
+		case 2:
+			msn = "showEditMateriaPrima";
+			break;
+		case 3:
+			msn = "showEditSuministros";
+			break;
+		case 4:
+			msn = "showEditEnvases";
+			break;
+
+		}
 		
+		if(mode.equals("I")){
+			/** Obtenemos le codigo correlativo del producto **/
+			productoForm.getProducto().setcProductoCodigo(genericoDao.callSPCalculoCodigo(productoForm.getProducto()));
 		
 		/**LLamamos al formulario mantenimientoProducto.jsp para mostrar los datos del UPDATE **/
 		/** Seteamos el PerfilForm la clase Perfil **/
-	    if(mode.equals("U") || mode.equals("D")){
+		} else if(mode.equals("U") || mode.equals("D")){
 	    	
 			int id = Integer.parseInt(request.getParameter("id"));
 			Producto pro = genericoDao.findEndidad(productoForm.getProducto(),id);
