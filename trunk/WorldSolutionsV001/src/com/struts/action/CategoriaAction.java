@@ -246,12 +246,7 @@ public class CategoriaAction extends DispatchAction {
 			/** Instanciamos las clase Daos **/
 			
 			CategoriaDao categoriaDao = new CategoriaDao();
-			
-			// Se transfiere el estado que se encuentra en la entidad cataegoria a sub categoria
-			if (objform.getSubCategoria() != null) {
-				objform.getSubCategoria().setcEstadoCodigo(objform.getcEstadoCodigo());
-			}
-			
+						
 			/**Seteamos los valores en las listas**/
 			List<Subcategoria> listaCategoria = categoriaDao.listaSubcategoria(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getSubCategoria());
 			
@@ -358,7 +353,7 @@ public class CategoriaAction extends DispatchAction {
 			Subcategoria obj =pForm.getSubCategoria();
 			
 			GenericaDao categoriaDao = new GenericaDao();
-			obj.setCategoria(pForm.getCategoria());
+			obj.setCategoria(categoriaDao.findEndidad(new Categoria(), pForm.getiCategoriaId()));
 			obj.setcEstadoCodigo(pForm.getcEstadoCodigo());
 			
 	        /** **/

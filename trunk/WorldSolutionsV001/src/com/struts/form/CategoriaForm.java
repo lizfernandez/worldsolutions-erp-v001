@@ -118,7 +118,12 @@ public class CategoriaForm extends ActionForm {
 	 * @return the cEstadoCodigo
 	 */
 	public String getcEstadoCodigo() {
-		return categoria.getcEstadoCodigo();
+		String cEstadoCodigo = categoria.getcEstadoCodigo();
+		if (cEstadoCodigo == null) {
+			cEstadoCodigo = subCategoria.getcEstadoCodigo();
+		}
+		return cEstadoCodigo;
+		
 	}
 
 	/**
@@ -126,6 +131,7 @@ public class CategoriaForm extends ActionForm {
 	 */
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		categoria.setcEstadoCodigo(cEstadoCodigo);
+		subCategoria.setcEstadoCodigo(cEstadoCodigo);
 	}
 
 	
