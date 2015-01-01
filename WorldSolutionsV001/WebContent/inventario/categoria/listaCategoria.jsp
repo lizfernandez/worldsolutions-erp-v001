@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('categoria.do?metodo=mantenimientoCategoria&mode=I',350,200)">
+        <td><button  class="button" onclick="popup('categoria.do?metodo=mantenimientoCategoria&mode=I',350,250)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -12,7 +12,7 @@
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('categoria.do?metodo=mantenimientoCategoria&mode=F',350,200)">
+        <td><button  class="button" onclick="popup('categoria.do?metodo=mantenimientoCategoria&mode=F',350,220)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -49,7 +49,7 @@
 			<tr>
 				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iCategoriaId" />"/></td> 
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('categoria.do?metodo=mantenimientoCategoria&mode=U&id=<bean:write name="x" property="iCategoriaId" />',350,180)" /></td>
+		                     onclick="popup('categoria.do?metodo=mantenimientoCategoria&mode=U&id=<bean:write name="x" property="iCategoriaId" />',350,250)" /></td>
 		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iCategoriaId" />','categoria.do?metodo=iduCategoria&mode=D')" /></td>	
                 <td><bean:write name="x" property="clasificacionCategoria.vClasificacionDescripcion" /></td>
