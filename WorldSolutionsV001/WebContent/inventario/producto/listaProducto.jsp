@@ -15,7 +15,7 @@
         </td>
     </tr> -->
      <tr>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=I&iclasificacionId=1',700,635)">
+        <td><button  class="button" onclick="nuevo()">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -115,6 +115,6 @@
 paginacion();
 $("#inventario, #producto").addClass("active");
 function nuevo(){
-	popup('productos.do?metodo=mantenimientoProducto&mode=I&iclasificacionId=1',600,600);
+	popup('productos.do?metodo=mantenimientoProducto&mode=I&iclasificacionId=1',700,635);
 }
 </script> 
