@@ -15,7 +15,7 @@
         </td>
     </tr> -->
      <tr>
-        <td><button  class="button" onclick="nuevo()">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=I&iclasificacionId=1',700,635)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -23,7 +23,7 @@
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=1',700,500)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=1',700,580)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -60,7 +60,7 @@
 	<tr>
 	    <td align="center"><input type="checkbox" id="<bean:write name="x" property="iProductoId" />"/></td> 
 		<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoProducto&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iProductoId" />',600,600)" /></td>
+		                     onclick="popup('productos.do?metodo=mantenimientoProducto&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iProductoId" />',600,660)" /></td>
 		<td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iProductoId" />','productos.do?metodo=iduProducto&mode=D')" /></td>	
 		

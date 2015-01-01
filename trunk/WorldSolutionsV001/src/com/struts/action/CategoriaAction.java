@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.dao.ClasificacionCategoriaDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.CategoriaDao;
@@ -113,12 +114,14 @@ public class CategoriaAction extends DispatchAction {
 			
 			/** Instantacia a la capa Dao **/
 			EstadoDao estadoDao = new EstadoDao();
+			ClasificacionCategoriaDao clasificacionCategoriaDao = new ClasificacionCategoriaDao();
 			GenericaDao categoriaDao = new GenericaDao();
+			
 
 			/** llamado de los metodos de la clase dao **/
 
 			List<Estado> listaEstado = estadoDao.listEstado();
-			List<Clasificacioncategoria> listaClasificacioncategoria = Util.listaClasificacioncategoria();
+			List<Clasificacioncategoria> listaClasificacioncategoria = clasificacionCategoriaDao.listClasificacioncategorias();
 
 			
 			/**LLamamos al formulario mantenimientoCategoria.jsp para la insercion de datos **/
