@@ -214,8 +214,10 @@ public class UsuarioForm extends ActionForm {
 	 * @return the vPersonalNombres
 	 */
 	public String getvPersonalNombres() {
-		Personal personal = getPersonal();		
-			vPersonalNombres = personal.getvPersonalNombres()+" "+personal.getvPersonalApellidoPaterno();		 
+		Personal personal = getPersonal();	
+		if(personal.getvPersonalNombres()!=null){
+			vPersonalNombres = personal.getvPersonalNombres()+" "+personal.getvPersonalApellidoPaterno();
+		}
 		return vPersonalNombres;
 	}
 

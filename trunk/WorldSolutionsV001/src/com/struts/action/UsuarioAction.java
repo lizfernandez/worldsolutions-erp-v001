@@ -18,6 +18,7 @@ import com.dao.PerfilDao;
 import com.dao.UsuarioDao;
 import com.entities.Estado;
 import com.entities.Perfil;
+import com.entities.Personal;
 import com.entities.Usuario;
 import com.struts.form.UsuarioForm;
 import com.util.Fechas;
@@ -162,11 +163,12 @@ public class UsuarioAction extends DispatchAction {
 			String mode = request.getParameter("mode");		
 			String ids = request.getParameter("ids");		
 			boolean resultado = false;
-		
+			GenericaDao usuarioDao = new GenericaDao();
 			/** Instanciamos las clase UsuarioForm y UsuarioDao **/
 			UsuarioForm pForm = (UsuarioForm) form;
 			Usuario obj =pForm.getUsuario();
-			GenericaDao usuarioDao = new GenericaDao();
+			obj.setPersonal(usuarioDao.findEndidad(new Personal(), pForm.getiPersonalId()));
+			obj.setPerfil(usuarioDao.findEndidad(new Perfil(), pForm.getiPerfilId()));
 			
 			
 	        /** **/
@@ -181,9 +183,11 @@ public class UsuarioAction extends DispatchAction {
 				resultado = usuarioDao.actualizarUnaEndidad(obj);
 				
 			}
-			else if (mode.equals("D")) { 		        	
-					 usuarioDao.eliminarUnaEndidad(obj, "iUsuarioId", ids);/**/
-					 resultado = usuarioDao.commitEndidad(usuarioDao.entityTransaction());
+			else if (mode.equals("D")) { 	
+				usuarioDao.entityTransaction().begin();
+				usuarioDao.eliminarUnaEndidad(obj, "iUsuarioId",ids);/**/
+				resultado = usuarioDao.commitEndidad(usuarioDao.entityTransaction());
+				
 				}
 				
 			if (resultado == true) {
