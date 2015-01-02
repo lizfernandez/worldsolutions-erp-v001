@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="personal" styleId="formPersonal">
     <tr>
-	    <td align="right">Código:</td>
+	    <td align="right">C&oacute;digo:</td>
 	    <td>   
 	        <html:text property="cPersonalCodigo"  styleId="cPersonalCodigo"  onkeyup="return mayuscula('cPersonalCodigo')" onkeypress="return LetrasNumeros(event)" maxlength="5"/>
 	        <span id="m_cPersonalCodigo" class="importante"></span>

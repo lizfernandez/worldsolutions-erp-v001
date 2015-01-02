@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="personal" styleId="formPersonal">
 <tr class="trCodigo">
-    <td align="right">Código:</td>
+    <td align="right">C&oacute;digo:</td>
     <td>   
         <html:text property="cPersonalCodigo"  styleId="cPersonalCodigo" styleClass="text" onkeyup="return mayuscula('cPersonalCodigo')" onkeypress="return LetrasNumeros(event)" maxlength="5"/>
         <span id="m_cPersonalCodigo" class="importante"></span>
@@ -31,7 +31,7 @@
 </tr>
 <tr>
     <td align="right">Tipo Doc.:</td>
-    <td><html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo"> 
+    <td><html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo" style="width:154px"> 
               <option value="00">::SELECCIONE::</option>      
               <html:options collection="listaDoc" property="iTipoDocumentoId" labelProperty="vTipoDocuumentoDescripcion"/>
          </html:select>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
     <td align="right">Sexo:</td>
-    <td><html:select  property="iSexoId" styleId="iSexoId" styleClass="combo">
+    <td><html:select  property="iSexoId" styleId="iSexoId" styleClass="combo" style="width:154px">
               <option value="00">::SELECCIONE::</option>       
               <html:options collection="listaSex" property="iSexoId" labelProperty="vSexoDescripcion"/>
          </html:select>
@@ -54,7 +54,7 @@
 </tr>
 <tr>
     <td align="right">Area:</td>
-    <td><html:select  property="iAreaId" styleId="iAreaId"  styleClass="combo" >  
+    <td><html:select  property="iAreaId" styleId="iAreaId"  styleClass="combo"  style="width:154px" >  
               <option value="00">::SELECCIONE::</option>     
               <html:options collection="listaArea" property="iAreaId" labelProperty="vAreaDescripcion" />
          </html:select>
@@ -62,7 +62,7 @@
 </tr>
 <tr>
     <td align="right">Estado:</td>
-    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo">       
+    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" style="width:154px">       
               <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
          </html:select>
     </td>

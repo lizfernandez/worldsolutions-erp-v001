@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('area.do?metodo=mantenimientoArea&mode=I',350,180)">
+        <td><button  class="button" onclick="popup('area.do?metodo=mantenimientoArea&mode=I',350,220)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -13,7 +13,7 @@
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('area.do?metodo=mantenimientoArea&mode=F',350,180)">
+        <td><button  class="button" onclick="popup('area.do?metodo=mantenimientoArea&mode=F',350,220)">
                 <span class="find">Buscar</span>
             </button>
         </td>

@@ -325,6 +325,7 @@ public class ConfiguracionAction extends DispatchAction {
 				Ejerciciofiscal obj =pForm.getEjercicio();				
 				obj.setdFechaInserta(Fechas.getDate());
 				obj.setcCodigoEstado(conf.getcEstadoCodigo());
+				
 				int anio = Fechas.anioFecha(obj.getdFechaInicio());
 				
 				for(int i=Fechas.mesFecha(obj.getdFechaInicio()); i<=Fechas.mesFecha(obj.getdFechaFin());i++){
@@ -338,6 +339,7 @@ public class ConfiguracionAction extends DispatchAction {
 					e.setvNombrePeriodo("X "+i+"/"+anio);
 					e.setcCodigoEstado(conf.getcEstadoCodigo());
 					e.setEjerciciofiscal(obj);
+				
 					periodos.add(e);
 				}
 				
@@ -665,7 +667,7 @@ public class ConfiguracionAction extends DispatchAction {
 			/** Inicializamos las variables **/ 
 			String msn = "";
 			boolean resultado = false;
-		
+			HttpSession sesion = request.getSession();
 			/** Instanciamos las clase ConfiguracionForm y ConfiguracionDao **/
 			ConfiguracionForm pForm = (ConfiguracionForm) form;
 			GenericaDao configuracionDao = new GenericaDao();
@@ -676,11 +678,33 @@ public class ConfiguracionAction extends DispatchAction {
 	        /** **/
 			if (pForm.getMode().equals("I")) {	
 				resultado = configuracionDao.insertarUnaEndidad(obj);
-		
+				
+				if(sesion.getAttribute("IGVCompras")!=null){
+					if(pForm.getvAplicacionImpuesto().equals(Constantes.IGVCompra)){
+						sesion.setAttribute("IGVCompras",pForm.getvPorcentaje());
+					}
+				}
+				if(sesion.getAttribute("IGVVentas")!=null){
+					if(pForm.getvAplicacionImpuesto().equals(Constantes.IGVVenta)){
+						sesion.setAttribute("IGVVentas",pForm.getvPorcentaje());
+					}
+				}
+					
 			} else if (pForm.getMode().equals("U")) {		
 			
 				obj.setcCodigoEstado(conf.getcEstadoCodigo());				
 				resultado = configuracionDao.actualizarUnaEndidad(obj);
+				
+				if(sesion.getAttribute("IGVCompras")!=null){
+					if(pForm.getvAplicacionImpuesto().equals(Constantes.IGVCompra)){
+						sesion.setAttribute("IGVCompras",pForm.getvPorcentaje());
+					}
+				}
+				if(sesion.getAttribute("IGVVentas")!=null){
+					if(pForm.getvAplicacionImpuesto().equals(Constantes.IGVVenta)){
+						sesion.setAttribute("IGVVentas",pForm.getvPorcentaje());
+					}
+				}
 				
 			}
 			
