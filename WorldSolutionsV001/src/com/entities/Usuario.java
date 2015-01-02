@@ -50,12 +50,12 @@ public class Usuario implements Serializable {
 	private List<Session> sessions;
 
 	//bi-directional many-to-one association to Perfil
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iPerfilId", nullable=false)
 	private Perfil perfil;
 /**/
 	//bi-directional many-to-one association to Personal
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iPersonalId", nullable=false)
 	private Personal personal;
 
