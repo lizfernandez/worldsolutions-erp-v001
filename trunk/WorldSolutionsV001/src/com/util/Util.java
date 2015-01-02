@@ -167,41 +167,36 @@ public class Util {
 		// Class obj =type;
 		Field[] fields = objOrigen.getClass().getDeclaredFields();
 		
+		for (Field f : fields) {
 
-        for(Field f : fields){
-           
 			try {
-				 String fieldOrigen = f.getName();
-		             
-		        Field fDestino = objDestino.getClass().getDeclaredField(fieldOrigen); 
+				String fieldOrigen = f.getName();
+				Field fDestino = objDestino.getClass().getDeclaredField(fieldOrigen);
 				f.setAccessible(true);
 				fDestino.setAccessible(true);
 				Object fieldValue = f.get(objOrigen);
-				 /**/   
-				if(fieldValue!=null){
-					 System.out.println("name field ="+fieldOrigen);
-						// System.out.println(" Object fieldType = "+f.getType());
-						 System.out.println("valor field origen= "+fieldValue.toString());
-		                 System.out.println("valor field destino= "+fDestino.get(objDestino));
-			        
-				   if(!fieldValue.toString().equals("0"))
-				       fDestino.set(objDestino, fieldValue);
-					//f.getType().equals(int);
-				   }
-	    					
-		  
+				/**/
+				if (fieldValue != null) {
+					System.out.println("name field =" + fieldOrigen);
+					// System.out.println(" Object fieldType = "+f.getType());
+					System.out.println("valor field origen= " + fieldValue.toString());
+					System.out.println("valor field destino= " + fDestino.get(objDestino));
 
-				
+					if (!fieldValue.toString().equals("0") && !Constantes.CAMPO_SERAILIZABLE.equals(fieldOrigen)) {
+						
+					fDestino.set(objDestino, fieldValue);
+					// f.getType().equals(int);
+					}
+				}
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            
-        
-            
-           // f.set(objOrigen, fieldValue);
-          //  Field fdestino = 
-           
+
+			// f.set(objOrigen, fieldValue);
+			// Field fdestino =
+
         }
        // E lita = (E) obj1;
 		return objDestino;

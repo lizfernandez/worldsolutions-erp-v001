@@ -209,7 +209,7 @@ function buscar(form){
 	var s = window.opener.document.location.search;
 	var l=  s.split("?");
 	var metodo = l[1].split("&");
-	alert(metodo[0]);
+	//alert(metodo[0]);
 	var valor="";
 	 /** buscamos todos los input del formulario **/
 	$(document).find('#'+form+' input:text, input:text.textInvisible, select.combo').each(function(key,val){ 	 

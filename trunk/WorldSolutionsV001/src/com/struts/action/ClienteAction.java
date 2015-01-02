@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -297,105 +298,108 @@ public class ClienteAction extends DispatchAction {
 		 * @throws IllegalArgumentException 
 		 * @throws ParseException 
 		 */
-		public ActionForward iduCliente(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException, ParseException {
-			
-			/** Inicializamos las variables **/ 
-			HttpSession sesion = request.getSession();	
-			String msn = "";
-			String mode = request.getParameter("mode");		
-			String ids = request.getParameter("ids");		
-			boolean resultado = false;
-		
-			/** Instanciamos las clase ClienteForm y ClienteDao **/
-			ClienteForm pForm = (ClienteForm) form;
-			Cliente obj =pForm.getCliente();
-			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
-			GenericaDao clienteDao = new GenericaDao();
-			
-			/**Creamos un objeto de direccion cliente**/
+	public ActionForward iduCliente(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException, ParseException {
 
-			Direccioncliente direccion = new Direccioncliente();
-			
-			List<Direccioncliente> listaDirec = new ArrayList<Direccioncliente>();
-			List<Visitacliente> listavisitaCliente = new ArrayList<Visitacliente>();
-			
-			direccion.setvDireccion(pForm.getvDireccion());
-			direccion.setiPoblacionId(pForm.getiPoblacionId());
-			direccion.setvReferencia(pForm.getvReferencia());
-			direccion.setvPrincipal(pForm.getvPrincipal());
-			listaDirec.add(direccion);
-			
-			/**visitas clientes**//*
-			visitacliente.setdFechaVisista(Fechas.fechaDate(pForm.getdFechaVisista()));
-			visitacliente.setdFecaProxVisita(Fechas.fechaDate(pForm.getdFecaProxVisita()));
-			visitacliente.setvProductoOfrecido(pForm.getvProductoOfrecido());
-			visitacliente.setfPrecioPactado(pForm.getfPrecioPactado());
-			visitacliente.setvMotivoVisita(pForm.getvMotivoVisita());
-			visitacliente.setvObservacion(pForm.getvObservacion());
-			visitacliente.setCliente(obj);
-			visitacliente.setdFechaInserta(Fechas.getDate());
-			listavisitaCliente.add(visitacliente);*/
-			
-	        /** **/
-			if (pForm.getMode().equals("I")) {				
-				obj.setdFechaInserta(Fechas.getDate());
+		/** Inicializamos las variables **/
+		HttpSession sesion = request.getSession();
+		String msn = "";
+		String mode = request.getParameter("mode");
+		String ids = request.getParameter("ids");
+		boolean resultado = false;
+
+		/** Instanciamos las clase ClienteForm y ClienteDao **/
+		ClienteForm pForm = (ClienteForm) form;
+		Cliente obj = pForm.getCliente();
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		GenericaDao clienteDao = new GenericaDao();
+
+		/** Creamos un objeto de direccion cliente **/
+
+		Direccioncliente direccion = new Direccioncliente();
+
+		List<Direccioncliente> listaDirec = new ArrayList<Direccioncliente>();
+		List<Visitacliente> listavisitaCliente = new ArrayList<Visitacliente>();
+
+		direccion.setvDireccion(pForm.getvDireccion());
+		direccion.setiPoblacionId(pForm.getiPoblacionId());
+		direccion.setvReferencia(pForm.getvReferencia());
+		direccion.setvPrincipal(pForm.getvPrincipal());
+		listaDirec.add(direccion);
+
+		/** visitas clientes **/
+		/*
+		 * visitacliente.setdFechaVisista(Fechas.fechaDate(pForm.getdFechaVisista
+		 * ())); visitacliente.setdFecaProxVisita(Fechas.fechaDate(pForm.
+		 * getdFecaProxVisita()));
+		 * visitacliente.setvProductoOfrecido(pForm.getvProductoOfrecido());
+		 * visitacliente.setfPrecioPactado(pForm.getfPrecioPactado());
+		 * visitacliente.setvMotivoVisita(pForm.getvMotivoVisita());
+		 * visitacliente.setvObservacion(pForm.getvObservacion());
+		 * visitacliente.setCliente(obj);
+		 * visitacliente.setdFechaInserta(Fechas.getDate());
+		 * listavisitaCliente.add(visitacliente);
+		 */
+
+		/** **/
+		if (pForm.getMode().equals("I")) {
+			obj.setdFechaInserta(Fechas.getDate());
+			direccion.setCliente(obj);
+			direccion.setdFechaInserta(Fechas.getDate());
+			direccion.setiUsuarioInsertaId(usu.getiUsuarioId());
+			obj.setDireccionclientes(listaDirec);
+			obj.setVisitaCliente(listavisitaCliente);
+			resultado = clienteDao.insertarUnaEndidad(obj);
+
+		} else if (pForm.getMode().equals("U")) {
+
+			/**** Iniciamos el begin transaction ****/
+			EntityTransaction transaction = clienteDao.entityTransaction();
+			transaction.begin();
+
+			obj = clienteDao.findEndidad(pForm.getCliente(), pForm.getCliente()
+					.getiClienteId());
+			List<Direccioncliente> listaDireccion = obj.getDireccionclientes();
+
+			obj = Util.comparar(obj, pForm.getCliente());
+
+			/*** preparamos la instancia para la actualizacion **/
+			obj.setdFechaActualiza(Fechas.getDate());
+			clienteDao.mergeEndidad(obj);
+
+			if (listaDireccion.size() > 0 && direccion.getvPrincipal().equals(Constantes.vPrincipal)) {
+				for (Direccioncliente direccionss : listaDireccion) {
+					if (direccionss.getvPrincipal().equals(Constantes.vPrincipal)) {
+						direccion.setIdireccionClienteId(direccionss.getIdireccionClienteId());
+						direccion.setCliente(obj);
+						break;
+					}
+				}// for
+				/*** preparamos la instancia para la actualizacion ***/
+				clienteDao.mergeEndidad(direccion);
+			// Se debe validar que si el cliente solo tiene una direccion y esta es modificada a secundaria no debera realizarse la modificacion
+			}// if
+			else {
 				direccion.setCliente(obj);
-				direccion.setdFechaInserta(Fechas.getDate());
-				direccion.setiUsuarioInsertaId(usu.getiUsuarioId());
-				obj.setDireccionclientes(listaDirec);
-				obj.setVisitaCliente(listavisitaCliente);
-				resultado = clienteDao.insertarUnaEndidad(obj);
-				
-			} else if (pForm.getMode().equals("U")) {
-				
-				/**** Iniciamos el begin transaction ****/
-				clienteDao.entityTransaction(); 
-				
-						 obj = clienteDao.findEndidad(pForm.getCliente(), pForm.getCliente().getiClienteId());
-						 List<Direccioncliente> listaDireccion = obj.getDireccionclientes();
-						
-						obj= Util.comparar(obj, pForm.getCliente());
-						
-						/*** preparamos la instancia para la actualizacion **/
-						clienteDao.mergeEndidad(obj);
-						
-						obj.setdFechaActualiza(Fechas.getDate());
-						if(listaDireccion.size()>0){
-							for(Direccioncliente direccionss: listaDireccion){
-								if(direccionss.getvPrincipal().equals(Constantes.vPrincipal))
-								{  
-									direccion.setIdireccionClienteId(direccionss.getIdireccionClienteId());
-									direccion.setCliente(obj);
-									break;
-								}
-							 }// for
-							/*** preparamos la instancia para la actualizacion ***/
-							clienteDao.mergeEndidad(direccion);
-						}// if
-						else{
-							direccion.setCliente(obj);
-							clienteDao.persistEndidad(direccion);
-						}
-						
-					/**** Realizamos el commit de los cambios **/
-					clienteDao.commitEndidad(clienteDao.entityTransaction());
-					
+				clienteDao.persistEndidad(direccion);
 			}
-			else if (mode.equals("D")) {
-				    clienteDao.entityTransaction().begin();					
-					clienteDao.eliminarUnaEndidad(obj, "iClienteId",ids);
-					resultado = clienteDao.commitEndidad(clienteDao.entityTransaction());
-					
-				}
-				
-			if (resultado == true) {
-				msn = "msnOk";
-			}
-			else  {
-				msn = "msnError";
-			}
-			
-			return mapping.findForward(msn);
+
+			/**** Realizamos el commit de los cambios **/
+			resultado = clienteDao.commitEndidad(transaction);
+
+		} else if (mode.equals("D")) {
+			EntityTransaction transaction = clienteDao.entityTransaction();
+			transaction.begin();
+			clienteDao.eliminarUnaEndidad(obj, "iClienteId", ids);
+			resultado = clienteDao.commitEndidad(transaction);
+
 		}
+
+		if (resultado == true) {
+			msn = "msnOk";
+		} else {
+			msn = "msnError";
+		}
+
+		return mapping.findForward(msn);
+	}
 }

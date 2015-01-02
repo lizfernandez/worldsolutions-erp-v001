@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=I',380,450)">
+        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=I',380,480)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -13,7 +13,7 @@
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=F',380,450)">
+        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=F',380,480)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -49,40 +49,42 @@
        
     </tr>
     </thead>
-    <tbody>
-	    <logic:empty name="clienteForm" property="lista">
-				<tr>
-					<td colspan="8">No hay informaci&oacute;n del clientes</td>
-				</tr>
-	    </logic:empty>
-	    <logic:notEmpty name="clienteForm" property="lista">
-	    <logic:iterate name="clienteForm" property="lista" id="x">	
+	<tbody>
+		<logic:empty name="clienteForm" property="lista">
 			<tr>
-				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iClienteId" />"/></td> 
-				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=U&id=<bean:write name="x" property="iClienteId" />',380,450)" /></td>
-		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iClienteId" />','cliente.do?metodo=iduCliente&mode=D')" /></td>	
-				<td><bean:write name="x" property="vClienteCodigo" /></td>
-				<td><bean:write name="x" property="vClienteRazonSocial" /></td>
-				<td><bean:write name="x" property="nClienteNumeroDocumento" /></td>
-				<td><bean:write name="x" property="nClienteTelefono" /></td>
-			<logic:notEmpty name="x" property="direccionclientes">
-	         <logic:iterate name="x" property="direccionclientes" id="z">
-	         <logic:equal name="z"  property="vPrincipal" value="1">
-	            <td><bean:write name="z" property="vDireccion" /></td>
-	         </logic:equal>
-					
-				</logic:iterate>
-	         </logic:notEmpty>				
-				<td><bean:write name="x" property="cEstadoCodigo" /></td>
-		 
-				
-		
+				<td colspan="8">No hay informaci&oacute;n del clientes</td>
 			</tr>
-		  </logic:iterate>
-	   </logic:notEmpty>
-    </tbody>
+		</logic:empty>
+		<logic:notEmpty name="clienteForm" property="lista">
+			<logic:iterate name="clienteForm" property="lista" id="x">
+				<tr>
+					<td align="center"><input type="checkbox"
+						id="<bean:write name="x" property="iClienteId" />" /></td>
+					<td align="center"><img title="Editar"
+						src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+						onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=U&id=<bean:write name="x" property="iClienteId" />',380,450)" /></td>
+					<td align="center"><img title="Eliminar"
+						src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+						onclick="eliminar('tabla','<bean:write name="x" property="iClienteId" />','cliente.do?metodo=iduCliente&mode=D')" /></td>
+					<td><bean:write name="x" property="vClienteCodigo" /></td>
+					<td><bean:write name="x" property="vClienteRazonSocial" /></td>
+					<td><bean:write name="x" property="nClienteNumeroDocumento" /></td>
+					<td><bean:write name="x" property="nClienteTelefono" /></td>
+					<td><logic:notEmpty name="x" property="direccionclientes">	
+							<logic:iterate name="x" property="direccionclientes" id="z">
+								<logic:equal name="z" property="vPrincipal" value="1">
+									<bean:write name="z" property="vDireccion" /><br>
+								</logic:equal>
+							</logic:iterate>
+						</logic:notEmpty></td>
+					<td><bean:write name="x" property="cEstadoCodigo" /></td>
+
+
+
+				</tr>
+			</logic:iterate>
+		</logic:notEmpty>
+	</tbody>
 </table>
 <div id="paginacion">
 <logic:notEmpty name="clienteForm" property="paginas">	
