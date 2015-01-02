@@ -451,7 +451,7 @@ public class ProductosAction extends DispatchAction {
 			pro.setvFoto(pro.getcProductoCodigo()+"-"+nombre);
 			if(!nombre.equals("")){
 	
-			File ficheroACrear = new File(filePath+"/media/fotos/"+pro.getvFoto());
+			File ficheroACrear = new File(filePath + File.separator + "media" + File.separator + "fotos" + File.separator +pro.getvFoto());
 			System.out.println(filePath+"    /media/fotos/" +"   "+ficheroACrear.getPath()+" "+request.getPathInfo()+ " " +request.getServletPath());
 			if(!ficheroACrear.exists()){				
 					ficheroACrear.createNewFile();
