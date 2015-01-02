@@ -45,17 +45,7 @@ public class UsuarioDao extends GenericaDao implements IUsuarioDao {
 
 			
 		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Usuario p " +
-		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaUsuario = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
-												  .setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-				
-		 
-		}//else , lista simple	        
- 			
+		
 		
         return listaUsuario;
 	}
