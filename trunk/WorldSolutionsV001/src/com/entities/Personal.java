@@ -53,7 +53,7 @@ public class Personal implements Serializable {
 	private String vPersonalNombres;
 
 	//bi-directional many-to-one association to Area
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iAreaId", nullable=false)
 	private Area area;
         
