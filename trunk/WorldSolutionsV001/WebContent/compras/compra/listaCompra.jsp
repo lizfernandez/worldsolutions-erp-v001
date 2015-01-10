@@ -7,15 +7,15 @@
 <table border="0">
     <tr>
             
-        <td> 
-          <!-- select id="iclasificacionId" name="iclasificacionId" class="text" style="width: 150px">
+        <!-- td> 
+          <select id="iclasificacionId" name="iclasificacionId" class="text" style="width: 150px">
                 <option value="1">PRODUCTOS</option>
                 <option value="2">MATERIAS PRIMAS</option>
                 <option value="3">SUMINISTROS Y REPUESTOS</option>
                 <option value="4">ENVASES Y EMBALAJES</option>
                
-           </select -->
-        </td>
+           </select >
+        </td-->
         <td> 
           <!-- select id="selTipoDocumento" name="selTipoDocumento" class="text" style="width: 150px">
                 <option value="1">FACTURA</option>

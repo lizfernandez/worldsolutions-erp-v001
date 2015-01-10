@@ -7,11 +7,11 @@
     <tr>
 	    <td align="right">C&oacute;digo:</td>
 	    <td>   
-	        <html:text property="vClienteCodigo"  styleId="vClienteCodigo"  onkeyup="return mayuscula('vClienteCodigo')" onkeypress="return LetrasNumeros(event)" maxlength="5"/>
+	        <html:text property="vClienteCodigo"  styleId="vClienteCodigo"  onkeyup="return mayuscula('vClienteCodigo')" onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text "/>
 	        
 	    </td>
         <td align="right">Ruc:</td>
-	   <td><html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  onkeypress="return Numeros(event)"/>
+	   <td><html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  onkeypress="return Numeros(event)" styleClass="text "/>
 	        <span id="m_vPersonalApellidoPaterno" class="importante"></span>
 	    </td>
 	    <td rowspan="2"><button  class="button"  onclick="buscarPopup('tab-grupo')">
@@ -26,7 +26,7 @@
 	 <tr>
 	   <td align="right">Raz&oacute;n Social:</td>
 	    <td colspan="3">
-	    <html:text property="vClienteRazonSocial" styleId="vClienteRazonSocial" onkeyup="return mayuscula('vClienteRazonSocial')" size="45"/>
+	    <html:text property="vClienteRazonSocial" styleId="vClienteRazonSocial" onkeyup="return mayuscula('vClienteRazonSocial')" size="45" styleClass="text "/>
 	        
 	    </td>
 	   	    

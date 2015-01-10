@@ -7,7 +7,7 @@
 <table border="0">
     <tr>
 
-        <td> 
+        <!-- td> 
           <select id="iclasificacionId" name="iclasificacionId" class="text" style="width: 150px">
                 <option value="1">PRODUCTOS</option>
                 <option value="2">MATERIAS PRIMAS</option>
@@ -24,7 +24,7 @@
                 <option value="4">GUIA DE REMISI&Oacute;N</option>
                 <option value="5">PEDIDO</option>
            </select>
-        </td>
+        </td-->
         <td><button  class="button" onclick="fn_nuevoDocumento()">
                 <span class="new">Nuevo</span>
             </button>
@@ -125,9 +125,9 @@ paginacion();
 $("#venta,#mantVentas").addClass("active");
  
  function fn_nuevoDocumento(){
-	tipoDoc= $("#selTipoDocumento").val();
-	var tipoDoc= $("#selTipoDocumento").val();
-	var iclasificacionId= $("#iclasificacionId").val();
+	//tipoDoc== 2;// $("#selTipoDocumento").val();
+	var tipoDoc= 1;//$("#selTipoDocumento").val();
+	var iclasificacionId= 1;/*$("#iclasificacionId").val();*/
 	 popup('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,900,700);
  }
  </script> 
