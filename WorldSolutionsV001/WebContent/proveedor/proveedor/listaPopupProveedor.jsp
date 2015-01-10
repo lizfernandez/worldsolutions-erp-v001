@@ -18,7 +18,7 @@
 	       <button  class="button"   onclick="buscarPopup('tab-grupo')" tabindex="4">
                 <span class="find">Buscar</span>
             </button>
-            <button  class="button" type="button" onclick="popupModal('proveedor.do?metodo=mantenimientoProveedor&mode=I',350,400)">
+            <button  class="button" type="button" onclick="popupModal('proveedor.do?metodo=mantenimientoProveedor&mode=I',350,450)">
                 <span class="new">Nuevo</span>
             </button>
         </td>

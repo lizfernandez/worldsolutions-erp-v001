@@ -12,12 +12,12 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabla">
             <tr>
                 <td>FECHA:</td>
-                <td>
+                <td colspan="3">
                 	<html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha" styleClass="text" readonly="true" tabindex="1" />
     				<span id="m_dIngresoProductoFecha" class="importante">*</span>
                 </td>
-                <td>CODIGO:</td>
-                <td><html:text property="cPersonalCodigo" styleId="cPersonalCodigo" styleClass="textN" readonly="true" tabindex="1"/></td>
+                <!-- td>CODIGO:</td>
+                <td><html:text property="cPersonalCodigo" styleId="cPersonalCodigo" styleClass="textN" readonly="true" tabindex="1"/></td-->
                 <td>TIPO DOC.:</td>
                 <td> 
                   <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo" onchange="fn_CambioTipoDoc()" style="width:162px">       

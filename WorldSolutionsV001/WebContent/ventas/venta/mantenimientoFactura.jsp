@@ -17,14 +17,18 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabla">
             <tr>
                 <td width="14%">FECHA:</td>
-                <td>
+                <td colspan="3">
                 	<html:text property="dVentaFecha" styleId="dVentaFecha" styleClass="text textCodigo" readonly="true" tabindex="1"/>
     				<span id="m_dVentaFecha" class="importante">*</span>
                 </td>
-                <td>CODIGO:</td>
-                <td><html:text property="cPersonalCodigo" styleId="cPersonalCodigo" styleClass="textN textCodigo" readonly="true" tabindex="1"/></td>
-                <td width="13%">VENDEDOR:</td>
-                <td><html:text property="vPersonalNombres" styleId="vPersonalNombres" styleClass="textExtraGrande" readonly="true" tabindex="1"/></td>
+                
+                <td>TIPO DOC.:</td>
+                <td> 
+                  <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo" onchange="fn_CambioTipoDoc()" style="width:162px">       
+                   <html:options collection="listaTipoDoc" property="iTipoDocumentoGestionId" labelProperty="vTipoDocumentoDescripcion"/>
+                  </html:select>				    
+				 </td>
+                
                 </tr>
             <tr>
                 <td>CLIENTE:</td>
@@ -34,9 +38,9 @@
 	   				  <button type="button"  class="button" onclick="popupModal('cliente.do?metodo=listaCliente&mode=LP',580,350)" tabindex="1" ><span class='imgpopup'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></button>
 	                <span id="m_vClienteRazonSocial" class="importante">*</span>
                 </td>
-                <td>NRO FACTURA:</td>
+                <td>NRO DOCUMENTO:</td>
                 <td>                
-				   <html:text property="nVentaNumero"  styleId="nVentaNumero" maxlength="10" styleClass="text " />
+				   <html:text property="nVentaNumero"  styleId="nVentaNumero" maxlength="15" styleClass="text " />
 				   <span id="m_nVentaNumero" class="importante">*</span>
 				 </td>
             </tr>
@@ -68,7 +72,9 @@
           <td colspan="3"  width="16%">
              <html:text property="vVentaPuntoLlegada" styleId="vVentaPuntoLlegada"  tabindex="1" size="60%"  styleClass="textExtraGrande inputDisabled"/>
           </td>
-           <td colspan="2" ></td>
+           
+                <td width="13%">VENDEDOR:</td>
+                <td><html:text property="vPersonalNombres" styleId="vPersonalNombres" styleClass="textExtraGrande" readonly="true" tabindex="1"/></td>
           </tr>
         </table></td>
       </tr>
@@ -362,7 +368,18 @@
         fn_calcularTotales();
        
     }
-    
+    function fn_CambioTipoDoc(key){
+    	var iTipoDocumentoId= $("#iTipoDocumentoId").val()
+        var cad = "venta.do?metodo=obtenerCodigoVenta&iTipoDocumentoId="+iTipoDocumentoId;        
+       $.getJSON(cad, function retorna(obj){
+      	 $("#nVentaNumero").val(obj);
+      	 
+      	 });
+      
+       //fn_calcularTotales();
+      
+   }
+   
     function cargar_direcciones(){
         var cliente = $("#iClienteId").val();
         if(cliente!='0') {
