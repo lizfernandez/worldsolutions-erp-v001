@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.EntityTransaction;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -595,6 +597,48 @@ public class VentaAction extends DispatchAction {
 		 * @param request
 		 * @param response
 		 * @return ActionForward
+		 * @throws IOException 
+		 */
+			public ActionForward obtenerCodigoVenta(ActionMapping mapping, ActionForm form,
+						HttpServletRequest request, HttpServletResponse response) throws IOException{
+	      
+				response.setContentType("text/json");	
+				HttpSession sesion = request.getSession();
+				
+				Gson gson = new Gson();			
+				GenericaDao productoDao = new GenericaDao();
+				VentaDao ventaDao = new VentaDao();
+				int iTipoDocumentoId = Integer.parseInt(request.getParameter("iTipoDocumentoId"));			
+				
+				/** Instanciamos la Clase VentaForm **/
+			 
+				String nuevoCodigo = ventaDao.callSPNro_Documento(iTipoDocumentoId);
+				List<String> list = new ArrayList<String>();
+			    list.add(nuevoCodigo);
+			    
+				String jsonOutput = gson.toJson(list);
+				
+				//response.getWriter().write(json);
+				
+				PrintWriter pw;
+				pw = response.getWriter();
+				pw.write(jsonOutput);
+				System.out.println( jsonOutput.toString() );
+				pw.flush();
+				pw.close();
+					
+				
+				return null;
+				
+			}
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
 		 */
 		public ActionForward mantenimientoVenta(ActionMapping mapping,
 				ActionForm form, HttpServletRequest request,
@@ -818,9 +862,9 @@ public class VentaAction extends DispatchAction {
 	           fecha = (obj.getFormaPago().getiFormaPago()==3?Fechas.fechaDate("30/"+(Fechas.mesFecha(fecha)+1)+"/"+Fechas.anioFecha(fecha)):obj.getdFechaProximoPago());
 	        obj.setdFechaProximoPago(fecha);
 	 
-			/** Iniciamos transacion**/
-	        ventaDao.entityTransaction().begin();
-	        
+	        /** Iniciamos instacia de transacion **/
+	         EntityTransaction trx = ventaDao.entityTransaction();
+	         trx.begin();
 			if (pForm.getMode().equals("I") || pForm.getMode().equals("IE")) {		
 				
 				/*** Informacion de la Venta****/
@@ -1036,16 +1080,18 @@ public class VentaAction extends DispatchAction {
 	    	       sesion.removeAttribute("listaProducto");
 	    	       
 	   			  ventaDao.persistEndidad(obj);	             
-	              resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
+	              resultado = ventaDao.commitEndidad(trx);
 	              if(resultado==true){
 	            	  int idVentaId=obj.getiVentaId();
 	            	  int nNumeroLetra=1;
+	            	  trx= ventaDao.entityTransaction();
 	            	  ventaDao.entityTransaction().begin();
 	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra); 
-	            	  resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
+	            	  resultado = ventaDao.commitEndidad(trx);
 	              }
 	              ventaDao.refreshEndidad(obj);
 	              
+	             
 			} else if (pForm.getMode().equals("U") || pForm.getMode().equals("UE")) {
 				
 				Venta obj1 = ventaDao.findEndidad(pForm.getVenta(),pForm.getVenta().getiVentaId()); 
