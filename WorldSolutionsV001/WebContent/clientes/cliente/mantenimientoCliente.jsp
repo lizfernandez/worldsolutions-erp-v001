@@ -26,7 +26,7 @@
     </td>    
 </tr>
 <tr>
-    <td align="right">Telefonos:</td>
+    <td align="right">Tel&eacute;fono:</td>
     <td>
         <html:text property="nClienteTelefono" styleId="nClienteTelefono"  styleClass="textN"/>
     </td>

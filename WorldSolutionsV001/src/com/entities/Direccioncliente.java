@@ -201,6 +201,46 @@ public class Direccioncliente implements Serializable {
 		this.cliente = cliente;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((iPoblacionId == null) ? 0 : iPoblacionId.hashCode());
+		result = prime * result
+				+ ((vDireccion == null) ? 0 : vDireccion.hashCode());
+		result = prime * result
+				+ ((vReferencia == null) ? 0 : vReferencia.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Direccioncliente other = (Direccioncliente) obj;
+		if (iPoblacionId == null) {
+			if (other.iPoblacionId != null)
+				return false;
+		} else if (!iPoblacionId.equals(other.iPoblacionId))
+			return false;
+		if (vDireccion == null) {
+			if (other.vDireccion != null)
+				return false;
+		} else if (!vDireccion.equals(other.vDireccion))
+			return false;
+		if (vReferencia == null) {
+			if (other.vReferencia != null)
+				return false;
+		} else if (!vReferencia.equals(other.vReferencia))
+			return false;
+		return true;
+	}
+
 	
 	
 }
