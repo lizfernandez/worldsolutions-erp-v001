@@ -79,9 +79,10 @@ public class GenericaDao  implements IGenerica{
 	    }
 	    catch (Exception re)
 	    {
+	    	resultado = false;
 	        if (ext.isActive()){
 	        	ext.rollback();
-	        	resultado = false;
+	        	//resultado = false;
 	        	}  // or could attempt to fix error and retry
 	        re.printStackTrace();
 	    }

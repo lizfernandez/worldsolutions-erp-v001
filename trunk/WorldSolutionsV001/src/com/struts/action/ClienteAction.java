@@ -324,6 +324,7 @@ public class ClienteAction extends DispatchAction {
 		direccion.setiPoblacionId(pForm.getiPoblacionId());
 		direccion.setvReferencia(pForm.getvReferencia());
 		direccion.setvPrincipal(pForm.getvPrincipal());
+		direccion.setcEstadoCodigo(pForm.getcEstadoCodigo());
 		listaDirec.add(direccion);
 
 		/** visitas clientes **/
@@ -356,33 +357,80 @@ public class ClienteAction extends DispatchAction {
 			EntityTransaction transaction = clienteDao.entityTransaction();
 			transaction.begin();
 
-			obj = clienteDao.findEndidad(pForm.getCliente(), pForm.getCliente()
-					.getiClienteId());
+			obj = clienteDao.findEndidad(pForm.getCliente(), pForm.getCliente().getiClienteId());
 			List<Direccioncliente> listaDireccion = obj.getDireccionclientes();
 
 			obj = Util.comparar(obj, pForm.getCliente());
 
 			/*** preparamos la instancia para la actualizacion **/
 			obj.setdFechaActualiza(Fechas.getDate());
-			clienteDao.mergeEndidad(obj);
+			direccion.setiUsuarioActualizaId(usu.getiUsuarioId());
+			direccion.setCliente(obj);
 
-			if (listaDireccion.size() > 0 && direccion.getvPrincipal().equals(Constantes.vPrincipal)) {
-				for (Direccioncliente direccionss : listaDireccion) {
-					if (direccionss.getvPrincipal().equals(Constantes.vPrincipal)) {
-						direccion.setIdireccionClienteId(direccionss.getIdireccionClienteId());
-						direccion.setCliente(obj);
-						break;
+			String accionDireccion = "";
+			
+			if (listaDireccion.size() > 0) {
+				// Se debe validar que si el cliente solo tiene una direccion y esta es modificada a secundaria no debera realizarse la modificacion
+				if (listaDireccion.size() == 1 && !direccion.getvPrincipal().equals(Constantes.vPrincipal)) {
+					Direccioncliente direccionActual = listaDireccion.get(0);
+					if (!direccionActual.equals(direccion)) {
+						accionDireccion = "I";
+					} else {
+						System.out.println("No se puede modificar la direccion principal a secundaria");
 					}
-				}// for
-				/*** preparamos la instancia para la actualizacion ***/
-				clienteDao.mergeEndidad(direccion);
-			// Se debe validar que si el cliente solo tiene una direccion y esta es modificada a secundaria no debera realizarse la modificacion
-			}// if
-			else {
-				direccion.setCliente(obj);
+					
+				} else if (direccion.getvPrincipal().equals(Constantes.vPrincipal)) {
+					accionDireccion = "I";
+					for (Direccioncliente direccionss : listaDireccion) {
+						if (direccionss.getvPrincipal().equals(Constantes.vPrincipal)) {
+							direccion.setIdireccionClienteId(direccionss.getIdireccionClienteId());
+							direccion.setiUsuarioInsertaId(direccionss.getiUsuarioInsertaId());
+							direccion.setdFechaInserta(direccionss.getdFechaInserta());
+							direccion.setvReferencia(direccionss.getvReferencia());
+							accionDireccion = "U";
+							break;
+						}
+					}
+					// for
+					/*** preparamos la instancia para la actualizacion ***/
+				
+				} else {
+					accionDireccion = "I";
+					/* Si es una direccion secundaria se deberá verificar si la direccion ya existe 
+					 * para confirmar si s debe actualizar o inseryar una nueva direccion
+					 * 
+					 */
+					for (Direccioncliente direccionss : listaDireccion) {
+						if (direccion.getvDireccion().equals(direccionss.getvDireccion())) {
+							direccion.setIdireccionClienteId(direccionss.getIdireccionClienteId());
+							direccion.setiUsuarioInsertaId(direccionss.getiUsuarioInsertaId());
+							direccion.setdFechaInserta(direccionss.getdFechaInserta());
+							direccion.setvReferencia(direccionss.getvReferencia());
+							accionDireccion = "U";
+							break;
+						}
+					}
+				}
+				
+			} else {
+				accionDireccion = "I";
+			}
+			
+			if (accionDireccion.equals("I")) {
+
+				direccion.setiUsuarioInsertaId(usu.getiUsuarioId());
+				direccion.setdFechaInserta(Fechas.getDate());
 				clienteDao.persistEndidad(direccion);
+				obj.getDireccionclientes().add(direccion);
+				
+			} else if (accionDireccion.equals("U")) {
+				// Si el boolean es false se considera que la direccion ya existe y será modificada
+
+				direccion.setdFechaActualiza(Fechas.getDate());
+				clienteDao.mergeEndidad(direccion);
 			}
 
+			clienteDao.mergeEndidad(obj);
 			/**** Realizamos el commit de los cambios **/
 			resultado = clienteDao.commitEndidad(transaction);
 

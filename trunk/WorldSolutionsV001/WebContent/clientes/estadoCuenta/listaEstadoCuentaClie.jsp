@@ -5,11 +5,11 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVenta&mode=IE',470,380)">
+        <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVenta&mode=IE',520,430)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
-        <td><button  class="button"onclick="popup('venta.do?metodo=mantenimientoVenta&mode=F',470,380)">
+        <td><button  class="button"onclick="popup('venta.do?metodo=mantenimientoVenta&mode=F',520,430)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -55,11 +55,11 @@
 		          </logic:equal>
 		        <logic:equal name="x" property="venta.vPrincipal" value="0">  
 				<td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=UE&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',470,380)" /></td>
+		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=UE&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',520,430)" /></td>
 		        </logic:equal>
 		        <logic:notEqual name="x" property="saldoTotal" value="0.00">
 			        <td align="center"><img title="Agregar Pago" src="${pageContext.request.contextPath}/media/imagenes/new.png"
-			                     onclick="popup('estadoCuentaCliente.do?metodo=mantenimientoEstadoCuentaCliente&mode=I&iVentaId=<bean:write name="x" property="venta.iVentaId" />&iClienteId=<bean:write name="x" property="venta.cliente.iClienteId" />&montoTotal=<bean:write name="x" property="venta.fVentaTotal" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',350,200)" />
+			                     onclick="popup('estadoCuentaCliente.do?metodo=mantenimientoEstadoCuentaCliente&mode=I&iVentaId=<bean:write name="x" property="venta.iVentaId" />&iClienteId=<bean:write name="x" property="venta.cliente.iClienteId" />&montoTotal=<bean:write name="x" property="venta.fVentaTotal" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',350,220)" />
 			         </td>
 		          </logic:notEqual>
 		          <logic:equal name="x" property="saldoTotal" value="0.00">
