@@ -5,11 +5,11 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVenta&mode=IE',520,430)">
+        <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVenta&mode=IE',520,450)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
-        <td><button  class="button"onclick="popup('venta.do?metodo=mantenimientoVenta&mode=F',520,430)">
+        <td><button  class="button"onclick="popup('venta.do?metodo=mantenimientoVenta&mode=F',585,480)">
                 <span class="find">Buscar</span>
             </button>
         </td>
