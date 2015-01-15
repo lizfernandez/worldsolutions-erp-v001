@@ -8,7 +8,7 @@
     <td align="right" width="30%">Raz&oacute;n Social:</td>
     <td>    
 	    <html:text property="vClienteCodigo"  styleId="vClienteCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />
-	    <html:text property="vClienteRazonSocial"  styleId="vClienteRazonSocial"  styleClass="inputDisabled" size="35"/>
+	    <html:text property="vClienteRazonSocial"  styleId="vClienteRazonSocial"  styleClass="text inputDisabled" size="35"/>
 	    <img  onclick="popupModal('cliente.do?metodo=listaCliente&mode=LP',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png"/>
 	    <span id="m_cClienteCodigo" class="importante">*</span>
 	    </td>
@@ -16,7 +16,7 @@
 <tr>
 <td align="right">Direcci&oacute;n :</td>
     <td>
-       <html:text property="vClienteDireccion" styleId="vClienteDireccion"   styleClass="inputDisabled" size="46"/>
+       <html:text property="vClienteDireccion" styleId="vClienteDireccion"   styleClass="text inputDisabled" size="46"/>
      </td>
 </tr>
 <tr>

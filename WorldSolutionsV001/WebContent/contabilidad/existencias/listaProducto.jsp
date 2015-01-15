@@ -15,7 +15,7 @@
         </td>
     </tr> -->
      <tr>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=I&iclasificacionId=1',430,500)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=I&iclasificacionId=1',700,635)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -23,7 +23,7 @@
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=1',430,500)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=1',470,580)">
                 <span class="find">Buscar</span>
             </button>
         </td>

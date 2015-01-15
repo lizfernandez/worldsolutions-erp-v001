@@ -33,7 +33,7 @@
                 <span class="delete">Eliminar</span>
             </button>
         </td> -->
-        <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=F',600,420)">
+        <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
         </td>
