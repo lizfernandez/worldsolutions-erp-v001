@@ -59,10 +59,11 @@ public class Util {
     	 List<Configuracion> listaConf = new ArrayList<Configuracion>();
     	 listaConf.add(new Configuracion(3,"NRO FACTURA VENTA"));
     	 listaConf.add(new Configuracion(4,"NRO BOLETA VENTA"));
-    	 listaConf.add(new Configuracion(5,"NRO GUIA REMISION VENTA"));
-    	 listaConf.add(new Configuracion(6,"RUC DE EMPRESA"));
-    	 listaConf.add(new Configuracion(7,"TIPO CAMBIO"));
-    	 listaConf.add(new Configuracion(8,"TIPO MONEDA"));
+    	 listaConf.add(new Configuracion(5,"NRO NOTA VENTA"));
+    	 listaConf.add(new Configuracion(6,"NRO GUIA REMISION VENTA"));
+    	 listaConf.add(new Configuracion(7,"RUC DE EMPRESA"));
+    	 listaConf.add(new Configuracion(8,"TIPO CAMBIO"));
+    	 listaConf.add(new Configuracion(9,"TIPO MONEDA"));
     	 return listaConf;
      }
 	  
