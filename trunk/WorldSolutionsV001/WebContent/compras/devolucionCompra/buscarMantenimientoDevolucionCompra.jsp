@@ -8,7 +8,7 @@
     <td align="right" width="30%">Raz&oacute;n Social:</td>
     <td>    
 	    <html:text property="cProveedorCodigo"  styleId="cProveedorCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />
-	    <html:text property="vProveedorRazonSocial"  styleId="vProveedorRazonSocial"  styleClass="inputDisabled" size="35"/>
+	    <html:text property="vProveedorRazonSocial"  styleId="vProveedorRazonSocial"  styleClass="text inputDisabled" size="35"/>
 	    <img  onclick="popupModal('proveedor.do?metodo=listaProveedor&mode=LP',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png"/>
 	    <span id="m_cProveedorCodigo" class="importante">*</span>
 	    </td>
@@ -16,7 +16,7 @@
 <tr>
 <td align="right">Direcci&oacute;n :</td>
     <td>
-       <html:text property="vProveedorDireccion" styleId="vProveedorDireccion"   styleClass="inputDisabled" size="46"/>
+       <html:text property="vProveedorDireccion" styleId="vProveedorDireccion"   styleClass="text inputDisabled" size="46"/>
      </td>
 </tr>
 <tr>

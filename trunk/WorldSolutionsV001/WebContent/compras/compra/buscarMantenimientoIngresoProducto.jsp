@@ -58,7 +58,7 @@
 <tr>
     <td align="right">Forma de Pago:</td>
     <td>
-         <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo" style="width:160px" multiple="multiple">
+         <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo" style="width:160px" ><!--   multiple="multiple"-->
               <option value="00">::SELECCIONE::</option>            
               <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
          </html:select>

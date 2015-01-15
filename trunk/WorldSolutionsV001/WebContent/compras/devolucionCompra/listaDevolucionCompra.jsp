@@ -10,7 +10,7 @@
                 <span class="new">Nuevo</span>
             </button>
         </td>        
-        <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=F',500,380)">
+        <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
         </td>        
