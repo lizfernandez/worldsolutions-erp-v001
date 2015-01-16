@@ -1088,9 +1088,10 @@ public class VentaAction extends DispatchAction {
 	            	  ventaDao.entityTransaction().begin();
 	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra); 
 	            	  resultado = ventaDao.commitEndidad(trx);
+	            	
 	              }
-	              ventaDao.refreshEndidad(obj);
 	              
+	               ventaDao.refreshEndidad(obj);
 	             
 			} else if (pForm.getMode().equals("U") || pForm.getMode().equals("UE")) {
 				

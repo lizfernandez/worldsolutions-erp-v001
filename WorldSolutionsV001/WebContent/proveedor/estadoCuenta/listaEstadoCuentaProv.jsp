@@ -34,7 +34,7 @@
     <thead>
     <tr>
           <th colspan="4"width="5%" >Operaciones</th>
-          <th align="left">Proveedor</th>
+          <th align="left" width="25%" >Proveedor</th>
           <th align="left">Tipo Documento</th>
 	      <th align="left">Nro. Documento</th>
 	      <th align="left">Forma pago</th>
