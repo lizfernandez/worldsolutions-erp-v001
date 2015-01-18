@@ -7,6 +7,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
+
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Ingresoproducto;
 import com.entities.Ingresoproductodetalle;
 import com.entities.Ingresoproductodevolucion;
@@ -23,7 +27,7 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 	public List<Ingresoproducto> listaIngresoproducto(int pagInicio, int pagFin, Ingresoproducto ingresoproducto) {
 		/*factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();     */
-		Query q ;
+		String q ;
 		List<Ingresoproducto> listaIngresoproducto = null ;
 		String where="";
     	
@@ -64,25 +68,23 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 	        	where+= " and p.dIngresoProductoFecha BETWEEN '"+Fechas.fechaYYMMDD(ingresoproducto.getdIngresoProductoFecha())+"' and '"+Fechas.fechaYYMMDD(ingresoproducto.getdFechaActualiza())+"'";
 	        }
 			System.out.println(where);
-	    	    q = getInstancia().createQuery("select p from Ingresoproducto p " + where + "order by p.dIngresoProductoFecha desc");/**/
+	    	    q = "select p from Ingresoproducto p " + where + "order by p.dIngresoProductoFecha desc";/**/
 	    	    
-	    	    listaIngresoproducto = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaIngresoproducto = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
 		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Ingresoproducto p " +
-		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaIngresoproducto = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
-												  .setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-				
-		 
-		}//else , lista simple	        
- 			
+//		else{
+//				q= getInstancia().createQuery("select p from Ingresoproducto p " +
+//		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
+//				listaIngresoproducto = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
+//												  .setFirstResult(pagInicio)
+//												  .setMaxResults(pagFin)
+//												  .getResultList(); 
+//				
+//		 
+//		}//else , lista simple	        
+
 		
         return listaIngresoproducto;
 	}
@@ -91,7 +93,7 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 	public List<Ingresoproducto> listaEstadoCuentaPorProveedor(int pagInicio, int pagFin, Ingresoproducto ingresoproducto, int iProveedorId) {
 		/*factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();     */
-		Query q ;
+		String q ;
 		List<Ingresoproducto> listaIngresoproducto = null ;
 		String where="";
     	
@@ -135,12 +137,10 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 	        }
 			
 	          System.out.println(" where ingreso Producto Estado Cuenta ="+ where);
-	    	    q = getInstancia().createQuery("select p from Ingresoproducto p " +
-	    	    				   " JOIN FETCH p.proveedor " + where +" order by p.dIngresoProductoFecha desc");/**/
+	    	    q = "select p from Ingresoproducto p " +
+	    	    				   " JOIN FETCH p.proveedor " + where +" order by p.dIngresoProductoFecha desc";/**/
 	    	    
-	    	    listaIngresoproducto = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaIngresoproducto = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
 		}// lista con busqueda
@@ -154,7 +154,7 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 			Ingresoproducto ingresoproductodev) {
 		/*factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();*/     
-		Query q ;
+		String q ;
 		List<Ingresoproductodevolucion> listaIngresoproducto = null ;
 		String where="";
     	
@@ -190,11 +190,9 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 	        	where+= " and p.dIngresoProductoDevFecha BETWEEN '"+Fechas.fechaYYMMDD(ingresoproductodev.getdIngresoProductoFecha())+"' and '"+Fechas.fechaYYMMDD(ingresoproductodev.getdFechaActualiza())+"'";
 	        }
 	    	System.out.println(where);   
-			q = getInstancia().createQuery("select p from Ingresoproductodevolucion p " + where + "order by p.dIngresoProductoDevFecha desc");/**/
+			q = "select p from Ingresoproductodevolucion p " + where + "order by p.dIngresoProductoDevFecha desc";/**/
 	    	    
-	    	    listaIngresoproducto = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaIngresoproducto = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
 		}// lista con busqueda
@@ -212,7 +210,7 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 
         
   	    q = getInstancia().createQuery("select p from Ingresoproductodetalle p where p.ingresoproducto.iIngresoProductoId="+iIngresoproductoId);/**/
-  	    
+  	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
   	    listaIngresoproducto = q.getResultList(); 
 System.out.println("listado listaIngresoproducto "+listaIngresoproducto.size());
 		return listaIngresoproducto;
@@ -261,7 +259,7 @@ System.out.println("listado listaIngresoproducto "+listaIngresoproducto.size());
 	        }
 			
 	            q = getInstancia().createQuery("select p from Letraproveedor p "+ where +" order by p.dFechaVencimiento asc");/**/
-	    	    
+	            q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    listaLetra = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
 							  .getResultList(); 

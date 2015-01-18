@@ -6,7 +6,7 @@
 <html:form action="proveedor" styleId="formProveedor">
 <tr class="trCodigo">
     <td align="right">C&oacute;digo:</td>
-    <td><html:text property="cProveedorCodigo" styleId="cProveedorCodigo" onkeyup="return mayuscula('cProveedorCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text"/>
+    <td><html:text property="cProveedorCodigo" styleId="cProveedorCodigo" onkeyup="return mayuscula('cProveedorCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="7" styleClass="text"/>
     	<span id="m_cProveedorCodigo" class="importante">*</span>
     </td>
 </tr>

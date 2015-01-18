@@ -10,6 +10,8 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
 import org.eclipse.persistence.queries.ReadObjectQuery;
 import org.eclipse.persistence.queries.StoredProcedureCall;
 
@@ -42,22 +44,22 @@ public class PerfilDao extends GenericaDao implements IPerfilDao {
 	        }
 	        System.out.println(" where ="+ where);
 	    	    q = getInstancia().createQuery("select p from Perfil p " + where);/**/
-	    	    
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    listaPerfil = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
 							  .getResultList(); 
 
 			
 		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Perfil p " +
-		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaPerfil = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
-												  .setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-		 
-		}//else , lista simple	
+//		else{
+//				q= getInstancia().createQuery("select p from Perfil p " +
+//		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
+//				listaPerfil = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
+//												  .setFirstResult(pagInicio)
+//												  .setMaxResults(pagFin)
+//												  .getResultList(); 
+//		 
+//		}//else , lista simple	
 		
         return listaPerfil;
 	}
@@ -70,6 +72,7 @@ public class PerfilDao extends GenericaDao implements IPerfilDao {
 				//createQuery("select p from Permiso p group by p.usuario.iUsuarioId")//where SUBSTRING(p.vCodigoMenu,2,3)='0' group by p.usuario.iUsuarioId// 
 				.setFirstResult(pagInicio)
 				.setMaxResults(pagFin);
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		listaPermiso = q.getResultList();
 		return listaPermiso;
 	}
@@ -79,6 +82,7 @@ public class PerfilDao extends GenericaDao implements IPerfilDao {
 		Query q ;
 		List<Permiso> listaPermiso = null ;
 		q = getInstancia().createQuery("select p from Permiso p where p.usuario.iUsuarioId="+iUsuarioId +" order by p.vCodigoMenu asc");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		listaPermiso = q.getResultList();
 		return listaPermiso;
 	}

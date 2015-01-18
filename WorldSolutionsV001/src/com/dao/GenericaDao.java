@@ -9,6 +9,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.interfaces.dao.IGenerica;
 import com.util.Constantes;
 
@@ -41,6 +45,7 @@ public class GenericaDao  implements IGenerica{
 	public <E> Long totalLista(E entidad) {
 		Query q = getInstancia().createQuery("select Count(p) from "+entidad.getClass().getSimpleName()+" p " +
                    " where p.cEstadoCodigo = :EstadoCodigo");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		Long total = (Long) q.setParameter("EstadoCodigo", Constantes.estadoActivo)
 				  .getSingleResult(); 
 		return total;
@@ -52,13 +57,15 @@ public class GenericaDao  implements IGenerica{
 		
 			Query q =  getInstancia().createQuery("select p from "+ entidad.getClass().getSimpleName() +"  p"+
                    " where p.cEstadoCodigo = :EstadoCodigo");
-		List<G> lita = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
+			q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+			List<G> lita = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
 				  .getResultList(); 
 		return lita;
 	}
 	@Override
 	public <G> List<G> listaEntidadGenericaSinCodigo(String entidad) {
 		Query q =  getInstancia().createQuery("select p from "+entidad +"  p");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		List<G> lita = q.getResultList(); 
 		return lita;
 	}
@@ -69,6 +76,21 @@ public class GenericaDao  implements IGenerica{
 		E lita = (E) getInstancia().find(entidad.getClass(), iEntidadId);		
 		return lita;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <G> List<G> listaEntidadPaginada(String sentencia, int pagInicio, int pagFin) {
+		Query query;
+		List<G> listaEntidad = null;
+		query = getInstancia().createQuery(sentencia);
+		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
+
+		listaEntidad = query.setFirstResult(pagInicio).setMaxResults(pagFin)
+				.getResultList();
+
+		return listaEntidad;
+	}
+	
 	@Override
 	public  boolean commitEndidad(EntityTransaction ext) {
 		boolean resultado = true;
@@ -135,6 +157,7 @@ public class GenericaDao  implements IGenerica{
 		                    " where p."+sEntidadId+" IN ("+iEntidadId+")")
 		                    .setParameter("EstadoCodigo", Constantes.estadoInactivo);
 		    q.executeUpdate();
+		  
 	}
 
 	@Override

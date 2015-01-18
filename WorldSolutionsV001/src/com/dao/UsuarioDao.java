@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Usuario;
 import com.interfaces.dao.IUsuarioDao;
 import com.util.Constantes;
@@ -38,7 +41,7 @@ public class UsuarioDao extends GenericaDao implements IUsuarioDao {
 	        }
 	        System.out.println(" where ="+ where);
 	    	    q = getInstancia().createQuery("select p from Usuario p " + where);/**/
-	    	    
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    listaUsuario = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
 							  .getResultList(); 
@@ -154,7 +157,7 @@ public class UsuarioDao extends GenericaDao implements IUsuarioDao {
 		List<Usuario> usua = new ArrayList<Usuario>();
 		q= getInstancia().createQuery("select p from Usuario p " +
                    " where p.vUsuarioLogin ='"+usuario+"'"+cadena);
-		
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
         usua =  (List<Usuario>) q.getResultList(); 
 		return usua;
 	}

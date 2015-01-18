@@ -6,6 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Personal;
 import com.interfaces.dao.IPersonalDao;
 import com.util.Constantes;
@@ -55,7 +59,7 @@ public class PersonalDao implements IPersonalDao {
 	        }
 	        System.out.println(" where ="+ where);
 	    	    q = em.createQuery("select p from Personal p " + where);/**/
-	    	    
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    listapersonal = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
 							  .getResultList(); 
@@ -65,6 +69,7 @@ public class PersonalDao implements IPersonalDao {
 		else{
 				q= em.createQuery("select p from Personal p " +
 		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
+				q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 				listapersonal = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
 												  .setFirstResult(pagInicio)
 												  .setMaxResults(pagFin)

@@ -67,7 +67,7 @@
           <tr style="display: none;">
            <td width="5%">PUNTO DE LLEGADA :</td>
           <td colspan="3"  width="16%">
-             <html:text property="vIngresoProductoPuntoLlegada" styleId="vIngresoProductoPuntoLlegada"  tabindex="1" size="60%"  styleClass="textExtraGrande inputDisabled" readonly="true" tabindex="1"/>
+             <html:text property="vIngresoProductoPuntoLlegada" styleId="vIngresoProductoPuntoLlegada" size="60%"  styleClass="textExtraGrande inputDisabled" readonly="true" tabindex="1"/>
           </td>
             <td width="5%"></td>
             <td width="14%">

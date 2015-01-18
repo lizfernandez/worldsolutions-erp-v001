@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Categoria;
 import com.entities.Subcategoria;
 import com.interfaces.dao.ICategoriaDao;
@@ -12,25 +15,26 @@ import com.util.Constantes;
 public class CategoriaDao  extends GenericaDao implements ICategoriaDao {
 	
 	public List<Categoria> listaCategoria(Categoria categoria) {
-	
-		String where="";
+
+		String where = "";
+
+		if (categoria.getcEstadoCodigo() == null) {
+			where += " where c.cEstadoCodigo LIKE '%" + Constantes.estadoActivo + "%'";
+		}
+		if (categoria.getClasificacionCategoria() != null) {
+			where += " and c.clasificacionCategoria.iClasificacionId  LIKE '%" + categoria.getClasificacionCategoria().getiClasificacionId() + "%'";
+		}
 		
-			if(categoria.getcEstadoCodigo()==null){
-	        	where+= " where c.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
-	        }
-			if(categoria.getClasificacionCategoria()!=null){
-	        	where+= " and c.clasificacionCategoria.iClasificacionId  LIKE '%"+categoria.getClasificacionCategoria().getiClasificacionId()+"%'";
-	        }
-			;  
-    	   Query q = getInstancia().createQuery("select c from Categoria c "+where);
-			List<Categoria> listaCategoria = q.getResultList();  
-			
+		Query q = getInstancia().createQuery(
+				"select c from Categoria c " + where);
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		List<Categoria> listaCategoria = q.getResultList();
 		
         return listaCategoria;
 	}
 	@Override
 	public List<Categoria> listaCategoria(int pagInicio, int pagFin, Categoria categoria) {
-		Query q ;
+		String q ;
 		List<Categoria> listaCategoria = null ;
 		String where="";
     	
@@ -46,22 +50,17 @@ public class CategoriaDao  extends GenericaDao implements ICategoriaDao {
 	        if(categoria.getvCategoriaDescripcion()!=null){
 	        	where+=" and  p.vCategoriaDescripcion LIKE '%"+categoria.getvCategoriaDescripcion()+"%'";
 	        }
+	        if(categoria.getClasificacionCategoria()!=null && categoria.getClasificacionCategoria().getiClasificacionId() > 0){
+	        	where+=" and  p.clasificacionCategoria.iClasificacionId = "+categoria.getClasificacionCategoria().getiClasificacionId();
+	        }
 	        System.out.println(" where ="+ where);
-	    	    q = getInstancia().createQuery("select p from Categoria p " + where+ " order by p.clasificacionCategoria.iClasificacionId ");/**/
-	    	    
-	    	    listaCategoria = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    q = "select p from Categoria p " + where+ " order by p.clasificacionCategoria.iClasificacionId";/**/
+	    	    listaCategoria = listaEntidadPaginada(q, pagInicio, pagFin); 
 
 			
 		}// lista con busqueda
 		else{
-				q= getInstancia().createQuery("select p from Categoria p " +
-		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaCategoria = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
-												  .setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
+				listaCategoria = listaEntidadGenerica(categoria);
 				
 		 
 		}//else , lista simple	        
@@ -89,6 +88,7 @@ public class CategoriaDao  extends GenericaDao implements ICategoriaDao {
 	        }
 		}
 		Query q = getInstancia().createQuery("select c from Subcategoria c " + where);
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		List<Subcategoria> listaCategoria = q.getResultList();
 
         return listaCategoria;
@@ -97,6 +97,7 @@ public class CategoriaDao  extends GenericaDao implements ICategoriaDao {
 	public List<Subcategoria> listaSubcategoria(int iCategoriaId) {
 		
 		Query q = getInstancia().createQuery("select c from Subcategoria c where c.categoria.iCategoriaId="+iCategoriaId +" and c.cEstadoCodigo='AC'");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		List<Subcategoria> listaCategoria = q.getResultList();      
 	
     return listaCategoria;

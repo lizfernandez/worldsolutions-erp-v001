@@ -167,6 +167,7 @@ public class CategoriaForm extends ActionForm {
 	 */
 	public void setiClasificacionId(int iClasificacionId) {
 		this.iClasificacionId = iClasificacionId;
+
 	}
 	
 	

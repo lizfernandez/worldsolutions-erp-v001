@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -66,17 +67,22 @@ public class CategoriaAction extends DispatchAction {
 			/** Instanciamos la Clase CategoriaForm **/
 			CategoriaForm objform = (CategoriaForm) form;
 			
-
+			Categoria categoria = objform.getCategoria();
+			Clasificacioncategoria clasificacioncategoria = new Clasificacioncategoria();
+			clasificacioncategoria.setiClasificacionId(objform.getiClasificacionId());
+			
+			categoria.setClasificacionCategoria(clasificacioncategoria);
+			
 			/** Instanciamos las clase Daos **/
 			
 			CategoriaDao categoriaDao = new CategoriaDao();
 			
 			/**Seteamos los valores en las listas**/
-			List<Categoria> listaCategoria = categoriaDao.listaCategoria(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getCategoria());
+			List<Categoria> listaCategoria = categoriaDao.listaCategoria(Paginacion.pagInicio(pagina),Paginacion.pagFin(),categoria);
 			
 	    
 			/**Consultamos el total de registros segun criterio**/
-			List<Categoria> listaCategoriaTotal = categoriaDao.listaCategoria(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getCategoria());
+			List<Categoria> listaCategoriaTotal = categoriaDao.listaCategoria(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),categoria);
 			
 	        /**Obtenemos el total del paginas***/
 			List<Long> paginas = Paginacion.listPaginas((long)(listaCategoriaTotal.size()));
@@ -198,9 +204,10 @@ public class CategoriaAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) { 
-				categoriaDao.entityTransaction().begin();
+				EntityTransaction transaccion = categoriaDao.entityTransaction();
+				transaccion.begin();
 				categoriaDao.eliminarUnaEndidad(obj, "iCategoriaId",ids);/**/
-				resultado = categoriaDao.commitEndidad(categoriaDao.entityTransaction());
+				resultado = categoriaDao.commitEndidad(transaccion);
 				}
 				
 			if (resultado == true) {

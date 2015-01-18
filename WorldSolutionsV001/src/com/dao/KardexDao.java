@@ -8,6 +8,9 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Kardex;
 import com.entities.Kardex;
 import com.entities.Librodiario;
@@ -40,7 +43,7 @@ public class KardexDao extends GenericaDao implements IKardexDao {
 	        }
 			System.out.println(" where ="+where);
 	        q = getInstancia().createQuery("select p from Kardex p " + where +" order by p.dFechaInserta,p.vConcepto asc");/**/
-    	    
+	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaKardex = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)
 						  .getResultList(); 
@@ -63,15 +66,18 @@ public class KardexDao extends GenericaDao implements IKardexDao {
 	@Override
 	public List<Kardex> buscarKardexProducto(int iProductoId) {
 		// TODO Auto-generated method stub
-		List<Kardex> kardex = (List<Kardex>) getInstancia().createQuery("Select p from Kardex p where p.producto.iProductoId ='"+iProductoId+"' and p.cEstadoCodigo = :EstadoCodigo order by p.dFechaInserta,p.vConcepto asc").setParameter("EstadoCodigo", Constantes.estadoActivo).getResultList(); //find(Kardex.class, iProductoId);		     
-	
+		Query q = getInstancia().createQuery("Select p from Kardex p where p.producto.iProductoId ='"+iProductoId+"' and p.cEstadoCodigo = :EstadoCodigo order by p.dFechaInserta,p.vConcepto asc");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		List<Kardex> kardex = (List<Kardex>) q.setParameter("EstadoCodigo", Constantes.estadoActivo).getResultList(); //find(Kardex.class, iProductoId);		     
+		
         return kardex;
 	}
 	@Override
 	public List<Librodiario> buscarLibroDiarioKardex(int iKardexId) {
 		// TODO Auto-generated method stub
-	              
-		List<Librodiario> libroDiario = (List<Librodiario>) getInstancia().createQuery("Select p from Librodiario p where p.kardex.iKardexId ='"+iKardexId+"'").getResultList(); //find(Kardex.class, iProductoId);		     
+		Query q = getInstancia().createQuery("Select p from Librodiario p where p.kardex.iKardexId ='"+iKardexId+"'");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		List<Librodiario> libroDiario = (List<Librodiario>) q.getResultList(); //find(Kardex.class, iProductoId);		     
 	
         return libroDiario;
 	}

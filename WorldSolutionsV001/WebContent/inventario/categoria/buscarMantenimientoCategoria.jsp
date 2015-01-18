@@ -4,9 +4,18 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="categoria" styleId="formCategoria">
+<tr>
+    <td align="right">Clasificaci&oacute;n:</td>
+    <td> <html:select  property="iClasificacionId" styleId="iClasificacionId" styleClass="combo">       
+              <option value="0">::SELECCIONE::</option>
+              <html:options collection="listaClasificacioncategoria" property="iClasificacionId" labelProperty="vClasificacionDescripcion"/>
+         </html:select>
+    </td>
+    
+</tr>
 <tr class="trCodigo">
     <td align="right">C&oacute;digo:</td>
-    <td><html:text property="cCategoriaCodigo" styleId="cCategoriaCodigo" onkeyup="return mayuscula('cCategoriaCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text"/>
+    <td><html:text property="cCategoriaCodigo" styleId="cCategoriaCodigo" onkeyup="return mayuscula('cCategoriaCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="7" styleClass="text"/>
     	<span id="m_cCategoriaCodigo" class="importante">*</span>
     </td>
 </tr>

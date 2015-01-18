@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Estadocuentacliente;
 import com.entities.Letracliente;
 import com.entities.Letraproveedor;
@@ -15,7 +18,7 @@ public class EstadoCuentaClienteDao extends GenericaDao implements IEstadoCuenta
 	
 	@Override
 	public List<Estadocuentacliente> listaEstadocuentacliente(int pagInicio, int pagFin, Estadocuentacliente estadoCuentaCliente) {
-		Query q ;
+		String q ;
 		List<Estadocuentacliente> listaEstadocuentacliente = null ;
 		String where="";
     	
@@ -27,25 +30,23 @@ public class EstadoCuentaClienteDao extends GenericaDao implements IEstadoCuenta
 	        	where+= " where p.cEstadoCodigo LIKE '%"+estadoCuentaCliente.getcEstadoCodigo()+"%'";
 	        }
 	         System.out.println(" where ="+ where);
-	    	    q = getInstancia().createQuery("select p.venta from Estadocuentacliente p " +
+	    	    q = "select p.venta from Estadocuentacliente p " +
 	    	    		 " JOIN FETCH p.venta "+
-	    	             " JOIN FETCH p.cliente " + where);/**/
+	    	             " JOIN FETCH p.cliente " + where;/**/
 	    	    
-	    	    listaEstadocuentacliente = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaEstadocuentacliente = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
-		}// lista con busqueda
-		else{
-			 q = getInstancia().createQuery("select p.venta from Estadocuentacliente p " +
-    	    		 " JOIN FETCH p.venta "+
-    	             " JOIN FETCH p.cliente " + where);/**/
-    	    
-    	    listaEstadocuentacliente = q.setFirstResult(pagInicio)
-						  .setMaxResults(pagFin)
-						  .getResultList(); 
-				
+//		}// lista con busqueda
+//		else{
+//			 q = getInstancia().createQuery("select p.venta from Estadocuentacliente p " +
+//    	    		 " JOIN FETCH p.venta "+
+//    	             " JOIN FETCH p.cliente " + where);/**/
+//    	    
+//    	    listaEstadocuentacliente = q.setFirstResult(pagInicio)
+//						  .setMaxResults(pagFin)
+//						  .getResultList(); 
+//				
 		 
 		}//else , lista simple	        
  			
@@ -95,7 +96,7 @@ public class EstadoCuentaClienteDao extends GenericaDao implements IEstadoCuenta
                     " GROUP BY vClienteRazonSocial ";
 			 System.out.println("sql= "+sql);
 	    	    q = getInstancia().createNativeQuery(sql);
-
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    
 	    	    listaIngresoProducto = q.getResultList(); 
 				
@@ -110,7 +111,7 @@ public class EstadoCuentaClienteDao extends GenericaDao implements IEstadoCuenta
 	@Override
 	public List<Letracliente> listaLetraCliente(int pagInicio, int pagFin,
 			Letracliente letraCliente) {
-		Query q ;
+		String q ;
 		List<Letracliente> listaLetra= null ;
 		String where="";
     	
@@ -149,11 +150,9 @@ public class EstadoCuentaClienteDao extends GenericaDao implements IEstadoCuenta
 	        	where+= " and p.dFechaGiro BETWEEN '"+Fechas.fechaYYMMDD(letraCliente.getdFechaGiro())+"' and '"+Fechas.fechaYYMMDD(letraCliente.getdFechaActualiza())+"'";
 	        }
 			
-	            q = getInstancia().createQuery("select p from Letracliente p "+ where +" order by p.dFechaVencimiento asc");/**/
+	            q = "select p from Letracliente p "+ where +" order by p.dFechaVencimiento asc";/**/
 	    	    
-	    	    listaLetra = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaLetra = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
 		}// lista con busqueda

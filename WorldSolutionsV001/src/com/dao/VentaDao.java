@@ -8,6 +8,9 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Ingresoproductodetalle;
 import com.entities.Ventadetalle;
 import com.entities.Ventadevolucion;
@@ -63,23 +66,23 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 			
 	          System.out.println(" where ="+ where);
 	    	    q = em.createQuery("select p from Venta p " + where +" order by p.dVentaFecha desc");/**/
-	    	    
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    listaVenta = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
 							  .getResultList(); 
 
 			
 		}// lista con busqueda
-		else{
-				q= em.createQuery("select p from Venta p " +
-		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaVenta = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
-												  .setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-				
-		 
-		}//else , lista simple	        
+//		else{
+//				q= em.createQuery("select p from Venta p " +
+//		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
+//				listaVenta = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
+//												  .setFirstResult(pagInicio)
+//												  .setMaxResults(pagFin)
+//												  .getResultList(); 
+//				
+//		 
+//		}//else , lista simple	        
  			
 		
         return listaVenta;
@@ -131,7 +134,7 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 	          System.out.println(" where ingreso Producto Estado Cuenta ="+ where);
 	    	    q = em.createQuery("select p from Venta p " +
 	    	    				   " JOIN FETCH p.cliente " + where);/**/
-	    	    
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    listaVenta = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
 							  .getResultList(); 
@@ -274,7 +277,7 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 			
 	          System.out.println(" where ="+ where);
 	    	    q = em.createQuery("select p from Ventadevolucion p " + where +" order by p.dVentaDevFecha desc");/**/
-	    	    
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    listaVenta = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
 							  .getResultList(); 
@@ -361,7 +364,7 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 
 		        
 		  	    q = em.createQuery("select p from Ventadetalle p where p.venta.iVentaId="+iVentaId);/**/
-		  	    
+		  	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		  	    listaIngresoproducto = q.getResultList(); 
 		    
 				return listaIngresoproducto;
@@ -369,27 +372,25 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 
 	@Override
 	public String callSPNro_Documento(int iTipoDocumentoId) {
-				Query q ;
-				
-				 String nroDocumento ="";
-			    
-			    try {  
-			    
-			    	getInstancia().getTransaction().begin();  
-			            q = getInstancia().createNativeQuery("{ CALL SP_NRO_DOCUMENTO(?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
-			                    .setParameter(1,iTipoDocumentoId);         
-			    		     		            
-			            nroDocumento  = (String)q.getSingleResult();	           
-			            getInstancia().getTransaction().commit();  
-			            /*****q.executeUpdate();**/
-			        } catch (Exception ex) {  
-			            }  
+		Query q;
 
-			   
-				
-				
-				return nroDocumento;
+		String nroDocumento = "";
+
+		try {
+
+			getInstancia().getTransaction().begin();
+			q = getInstancia()
+					.createNativeQuery("{ CALL SP_NRO_DOCUMENTO(?) }")// createNamedQuery("SP_IDU_PERFIL_PERMISOS")
+					.setParameter(1, iTipoDocumentoId);
+
+			nroDocumento = (String) q.getSingleResult();
+			getInstancia().getTransaction().commit();
+			/***** q.executeUpdate(); **/
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return nroDocumento;
 	}
-
 	
 }
