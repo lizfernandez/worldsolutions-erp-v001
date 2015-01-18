@@ -2,9 +2,11 @@ package com.struts.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,10 +23,12 @@ import com.dao.ProveedorDao;
 import com.entities.Estado;
 import com.entities.Poblacion;
 import com.entities.Proveedor;
+import com.entities.Usuario;
 import com.google.gson.Gson;
 import com.struts.form.ProveedorForm;
 import com.util.Fechas;
 import com.util.Paginacion;
+import com.util.Util;
 
 public class ProveedorAction extends DispatchAction {
 	   // --------------------------------------------------------- Instance
@@ -258,7 +262,7 @@ public class ProveedorAction extends DispatchAction {
 		 * @return ActionForward
 		 */
 		public ActionForward iduProveedor(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) {
+				HttpServletRequest request, HttpServletResponse response)  throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException, ParseException {
 			
 			/** Inicializamos las variables **/ 
 			String msn = "";
@@ -267,28 +271,38 @@ public class ProveedorAction extends DispatchAction {
 			boolean resultado = false;
 		
 			/** Instanciamos las clase ProveedorForm y ProveedorDao **/
+			HttpSession sesion = request.getSession();
 			ProveedorForm pForm = (ProveedorForm) form;
 			Proveedor obj =pForm.getProveedor();
 			GenericaDao proveedorDao = new GenericaDao();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			
 			
 	        /** **/
 			if (pForm.getMode().equals("I")) {
 				
 				obj.setdFechaInserta(Fechas.getDate());
+				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 				resultado = proveedorDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
 				//Proveedor obj =pForm.getProveedor();
+				
+				obj = proveedorDao.findEndidad(pForm.getProveedor(), pForm.getProveedor().getiProveedorId());
+				obj = Util.comparar(obj, pForm.getProveedor());
+				
 				obj.setdFechaActualiza(Fechas.getDate());
+				obj.setiUsuarioModificaId(usu.getiUsuarioId());
 				resultado = proveedorDao.actualizarUnaEndidad(obj);
 				
 			}
 			else if (mode.equals("D")) { 
-				    proveedorDao.entityTransaction().begin();
+					EntityTransaction transaccion = proveedorDao.entityTransaction();
+					transaccion.begin();
 					proveedorDao.eliminarUnaEndidad(obj, "iProveedorId", ids);/**/
-					resultado =  proveedorDao.commitEndidad(proveedorDao.entityTransaction());
-				
+					resultado =  proveedorDao.commitEndidad(transaccion);
+
+					//proveedorDao.refreshEndidad(obj);
 				}
 				
 			if (resultado == true) {

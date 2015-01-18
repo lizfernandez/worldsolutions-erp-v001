@@ -14,7 +14,7 @@
 </tr>
 <tr class="trCodigo">
     <td align="right">C&oacute;digo:</td>
-    <td><html:text property="cCategoriaCodigo" styleId="cCategoriaCodigo" onkeyup="return mayuscula('cCategoriaCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text"/>
+    <td><html:text property="cCategoriaCodigo" styleId="cCategoriaCodigo" onkeyup="return mayuscula('cCategoriaCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="7" styleClass="text" readonly="true" />
     	<span id="m_cCategoriaCodigo" class="importante">*</span>
     </td>
 </tr>

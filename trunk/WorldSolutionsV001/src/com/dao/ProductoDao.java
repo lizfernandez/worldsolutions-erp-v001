@@ -6,6 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Producto;
 import com.interfaces.dao.IProductoDao;
 import com.util.Constantes;
@@ -68,21 +72,21 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 	        }
 	        System.out.println(" where ="+where);
 	        q = em.createQuery("select p from Producto p " + where +" order by p.vProductoNombre asc");/**/
-    	    
+	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaProducto = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)
 						  .getResultList(); 
 		
 			}// lista con busqueda
-			else{
-				q= em.createQuery("select p from Producto p " +
-		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaProducto = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
-							  .setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
-
-             }//else , lista simple	
+//			else{
+//				q= em.createQuery("select p from Producto p " +
+//		                    " where p.cEstadoCodigo = :EstadoCodigo");
+//				listaProducto = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
+//							  .setFirstResult(pagInicio)
+//							  .setMaxResults(pagFin)
+//							  .getResultList(); 
+//
+//             }//else , lista simple	
 		
         return listaProducto;
 	}

@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Configuracion;
 import com.entities.Ejerciciofiscal;
 import com.entities.Impuesto;
@@ -17,7 +20,7 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	
 	@Override
 	public List<Configuracion> listaConfiguracion(int pagInicio, int pagFin, Configuracion configuracion) {
-		Query q ;
+		String q ;
 		List<Configuracion> listaConfiguracion = null ;
 		String where="";
     	
@@ -26,25 +29,12 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	        	where+= " where p.vConcepto LIKE '%"+configuracion.getvConcepto()+"%'";
 	        }
 			
-			    q = getInstancia().createQuery("select p from Configuracion p "+where+" order by p.cEstadoCodigo asc , p.iConfiguracionId asc" + where);/**/
+			    q = "select p from Configuracion p "+where+" order by p.cEstadoCodigo asc , p.iConfiguracionId asc" + where;/**/
 	    	    
-	    	    listaConfiguracion = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaConfiguracion = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
-		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Configuracion p " +
-		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaConfiguracion = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
-												  .setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-				
-		 
-		}//else , lista simple	        
- 			
+		}
 		
         return listaConfiguracion;
 	}
@@ -54,6 +44,7 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	            
 	
 		 Query q =   getInstancia().createQuery("select p from Configuracion p  where p.vConcepto like '%"+vConcepto+"%' and p.cEstadoCodigo='"+Constantes.estadoActivo+"'");			     
+		 q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		 Configuracion obj = (Configuracion) q.getSingleResult(); 
         return obj;
 	}
@@ -62,6 +53,7 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	public Moneda buscarMoneda(String vConcepto) {
 		// TODO Auto-generated method stub
 		Query q =   getInstancia().createQuery("select p from Moneda p  where p.vMonedaDescripcion like '%"+vConcepto+"%'");//find(Configuracion.class, vConcepto);			     
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		Moneda obj = (Moneda) q.getSingleResult(); 
        return obj;
 	}
@@ -69,7 +61,7 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	@Override
 	public List<Ejerciciofiscal> listaEjercicioFiscal(int pagInicio,
 			int pagFin, Ejerciciofiscal ejerccio) {
-		Query q ;
+		String q ;
 		List<Ejerciciofiscal> listaConfiguracion = null ;
 		String where="";
     	
@@ -91,30 +83,18 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	        }
 		
 		
-			    q = getInstancia().createQuery("select p from Ejerciciofiscal p "+where);/**/
+			    q = "select p from Ejerciciofiscal p "+where;/**/
 	    	    
-	    	    listaConfiguracion = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaConfiguracion = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
-		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Ejerciciofiscal p ");
-				listaConfiguracion = q.setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-				
-		 
-		}//else , lista simple	        
- 			
-		
+		}
         return listaConfiguracion;
 	}
 
 	@Override
 	public List<Periodo> listaPeriodo(int pagInicio, int pagFin, Periodo periodo) {
-		Query q ;
+		String q ;
 		List<Periodo> listaConfiguracion = null ;
 		String where="";
     	
@@ -141,23 +121,12 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	        	where+= " and p.dFechaFin LIKE '%"+Fechas.fechaYYMMDD(periodo.getdFechaFin())+"%'";
 	        }
 		
-			    q = getInstancia().createQuery("select p from Periodo p "+where+" order by p.dFechaInicio asc ");/**/
+			    q = "select p from Periodo p "+where+" order by p.dFechaInicio asc ";/**/
 	    	    
-	    	    listaConfiguracion = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaConfiguracion = listaEntidadPaginada(q, pagInicio, pagFin); 
 
 			
-		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Periodo p " );
-				listaConfiguracion = q.setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-				
-		 
-		}//else , lista simple	        
- 			
+		}
 		
         return listaConfiguracion;
 	}
@@ -165,7 +134,7 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	@Override
 	public List<Impuesto> listaImpuestos(int pagInicio, int pagFin,
 			Impuesto impuesto) {
-		Query q ;
+		String q ;
 		List<Impuesto> listaConfiguracion = null ;
 		String where="";
     	
@@ -175,22 +144,20 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 	        }
 			
 		
-			    q = getInstancia().createQuery("select p from Impuesto p "+where);/**/
+			    q = "select p from Impuesto p "+where;/**/
 	    	    
-	    	    listaConfiguracion = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaConfiguracion = listaEntidadPaginada(q, pagInicio, pagFin); 
 
 			
 		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Impuesto p " );
-				listaConfiguracion = q.setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-				
-		 
-		}//else , lista simple	        
+//		else{
+//				q= getInstancia().createQuery("select p from Impuesto p " );
+//				listaConfiguracion = q.setFirstResult(pagInicio)
+//												  .setMaxResults(pagFin)
+//												  .getResultList(); 
+//				
+//		 
+//		}//else , lista simple	        
  			
 		
         return listaConfiguracion;
@@ -198,10 +165,11 @@ public class ConfiguracionDao  extends GenericaDao implements IConfiguracionDao 
 
 	@Override
 	public Impuesto buscarImpuesto(String vConcepto) {
-		 Query q =   getInstancia().createQuery("select p from Impuesto p  where p.vNombreImpuesto like '%"+vConcepto+"%' and p.cCodigoEstado='"+Constantes.estadoActivo+"'");			     
+		Query q =   getInstancia().createQuery("select p from Impuesto p  where p.vNombreImpuesto like '%"+vConcepto+"%' and p.cCodigoEstado='"+Constantes.estadoActivo+"'");			     
 		System.out.println("select p from Impuesto p  where p.vNombreImpuesto like '%"+vConcepto+"%' and p.cCodigoEstado='"+Constantes.estadoActivo+"'");
-		 Impuesto obj = (Impuesto) q.getSingleResult(); 
-       return obj;
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		Impuesto obj = (Impuesto) q.getSingleResult(); 
+		return obj;
 	}
 
 	

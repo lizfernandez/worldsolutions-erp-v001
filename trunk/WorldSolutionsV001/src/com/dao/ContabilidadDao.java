@@ -9,6 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Cajachica;
 import com.entities.Cuenta;
 import com.entities.Elementocuenta;
@@ -32,6 +35,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
        // .getResultList();
 		
 		//p where p.iElementoCuentasId in("+iElementoCuentasId+")"
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		List<Elementocuenta> lita = q.getResultList(); 
 		
 		return lita;
@@ -42,6 +46,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 		// TODO Auto-generated method stub
 	
 		Query q = getInstancia().createQuery("select p from Cuenta p where p.elementoCuenta.iElementoCuentasId="+iElementoCuentasId+" and  LENGTH(p.vCodigo)=2"); 
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		List<Cuenta> lita = q.getResultList(); 		
 		return lita;
 	}
@@ -51,10 +56,11 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 		// TODO Auto-generated method stub
 		Cuenta cuenta = new Cuenta();
 		Query q = getInstancia().createQuery("select p from Cuenta p where  p.iCuentasId="+iCuentasId);
-	
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		cuenta= (Cuenta) q.getSingleResult();
 		
 		Query qs = getInstancia().createQuery("select p from Cuenta p where  p.vCodigo like '"+cuenta.getvCodigo()+"%' and  LENGTH(p.vCodigo) =" +(cuenta.getvCodigo().length()+1)); 
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		List<Cuenta> lita = qs.getResultList(); 		
 		return lita;
 	}
@@ -64,6 +70,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 		// TODO Auto-generated method stub
 		
 		Query qs = getInstancia().createQuery("select p from Cuenta p where  p.vCodigo like '"+vCodigo+"%' and  LENGTH(p.vCodigo) =" +(vCodigo.length()+1)); 
+		qs.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		List<Cuenta> lita = qs.getResultList(); 		
 		return lita;
 	}
@@ -72,6 +79,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 	public Cuenta bucarCuenta(String vCodigo) {
 		
 		Query q = getInstancia().createQuery("select p from Cuenta p where p.vCodigo="+vCodigo); 
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		Cuenta lita = (Cuenta) q.getSingleResult(); 
 		return lita;
 	}
@@ -81,7 +89,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 	@Override
 	public List<Librodiario> listaCajaChica(int pagInicio, int pagFin,
 			Librodiario librodiario, int iPeriodoId) {
-			Query q ;
+			String q ;
 		List<Librodiario> listaCaja = null ;
 		String where="";
     	
@@ -100,12 +108,10 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 			}
 		
 	       
-			 q = getInstancia().createQuery("select p from Librodiario p " + where+" and p.cCajaBanco='1' " +
-			 		" order by p.iLibroDiarioId desc , p.dFechaInserta desc");/**/
+			 q = "select p from Librodiario p " + where+" and p.cCajaBanco='1' " +
+			 		" order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
 	    	     
-	    	    listaCaja = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaCaja = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
 		}// lista con busqueda
@@ -120,7 +126,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 		List<Librodiario> listaLibroDiario = new ArrayList<Librodiario>() ;
 		
 		String where="";
-		Query q ;
+		String q ;
 		if(libroDiario!=null){
 			if(libroDiario.getcEstadoCodigo()==null){
 	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
@@ -135,12 +141,10 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 				where+= " and p.iPeriodoId="+iPeriodoId;
 			}
 		
-	    	    q = getInstancia().createQuery("select p from Librodiario p " + where
-	    	    		+"order by p.iLibroDiarioId desc , p.dFechaInserta desc");/**/
+	    	    q = "select p from Librodiario p " + where
+	    	    		+"order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
 	    	    
-	    	    listaLibroDiario = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaLibroDiario = listaEntidadPaginada(q, pagInicio, pagFin);
 	    	 /*   
 	    	    GenericaDao genericaDao = new GenericaDao();
 	    	    for (Object[] obj : listaObjeto){
@@ -163,7 +167,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 			Librodiario libroDiario, int iPeriodoId) {
 		List<Librodiario> listaLibroDiario = null ;
 		String where="";
-		Query q ;
+		String q ;
 		if(libroDiario!=null){
 			if(libroDiario.getcEstadoCodigo()==null){
 	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
@@ -178,12 +182,10 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 				where+= " and p.iPeriodoId="+iPeriodoId;
 			}
 		
-	    	    q = getInstancia().createQuery("select p from Librodiario p " + where
-	    	    		+" order by p.iLibroDiarioId desc , p.dFechaInserta desc");/**/
+	    	    q = "select p from Librodiario p " + where
+	    	    		+" order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
 	    	    
-	    	    listaLibroDiario = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaLibroDiario = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
 		}// lista con busqueda
@@ -202,6 +204,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 		Query q ;
 		q = getInstancia().createNativeQuery("{ CALL SP_GENERAR_LIBROMAYOR(?) }")
 		        .setParameter(1,iPeriodoId);
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		listaObjeto =  q.setFirstResult(pagInicio)
 			  .setMaxResults(pagFin)
 			  .getResultList();  	           
@@ -237,7 +240,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 			Librodiario libroDiario, int iPeriodoId) {
 		List<Librodiario> listaLibroDiario = null ;
 		String where="";
-		Query q ;
+		String q ;
 		if(libroDiario!=null){
 			if(libroDiario.getcEstadoCodigo()==null){
 	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
@@ -252,12 +255,10 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 				where+= " and p.iPeriodoId="+iPeriodoId;
 			}
 		
-	    	    q = getInstancia().createQuery("select p from Librodiario p " + where
-	    	    		+" order by p.iLibroDiarioId desc , p.dFechaInserta desc");/**/
+	    	    q = "select p from Librodiario p " + where
+	    	    		+" order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
 	    	    
-	    	    listaLibroDiario = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaLibroDiario = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
 		}// lista con busqueda

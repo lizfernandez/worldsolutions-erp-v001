@@ -7,7 +7,7 @@
     <tr>
 	    <td align="right">C&oacute;digo:</td>
 	    <td>   
-	        <html:text property="cProveedorCodigo"  styleId="cProveedorCodigo"  onkeyup="return mayuscula('cProveedorCodigo')" maxlength="5" tabindex="1" styleClass="text"/>
+	        <html:text property="cProveedorCodigo"  styleId="cProveedorCodigo"  onkeyup="return mayuscula('cProveedorCodigo')" maxlength="7" tabindex="1" styleClass="text"/>
 	        
 	    </td>
         <td align="right">Ruc:</td>

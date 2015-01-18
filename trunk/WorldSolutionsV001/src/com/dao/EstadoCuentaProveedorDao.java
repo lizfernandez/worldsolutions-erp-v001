@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Estadocuentaproveedor;
 import com.interfaces.dao.IEstadoCuentaProveedorDao;
 import com.util.Constantes;
@@ -13,7 +16,7 @@ public class EstadoCuentaProveedorDao extends GenericaDao implements IEstadoCuen
 	
 	@Override
 	public List<Estadocuentaproveedor> listaEstadocuentaproveedor(int pagInicio, int pagFin, Estadocuentaproveedor estadoCuentaProveedor) {
-		Query q ;
+		String q ;
 		List<Estadocuentaproveedor> listaEstadocuentaproveedor = null ;
 		String where="";
     	
@@ -25,27 +28,25 @@ public class EstadoCuentaProveedorDao extends GenericaDao implements IEstadoCuen
 	        	where+= " where p.cEstadoCodigo LIKE '%"+estadoCuentaProveedor.getcEstadoCodigo()+"%'";
 	        }
 	         System.out.println(" where ="+ where);
-	    	    q = getInstancia().createQuery("select p.ingresoproducto from Estadocuentaproveedor p " +
+	    	    q = "select p.ingresoproducto from Estadocuentaproveedor p " +
 	    	    		 " JOIN FETCH p.ingresoproducto "+
-	    	             " JOIN FETCH p.proveedor " + where);/**/
+	    	             " JOIN FETCH p.proveedor " + where;/**/
 	    	    
-	    	    listaEstadocuentaproveedor = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaEstadocuentaproveedor = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
 		}// lista con busqueda
-		else{
-			 q = getInstancia().createQuery("select p.ingresoproducto from Estadocuentaproveedor p " +
-    	    		 " JOIN FETCH p.ingresoproducto "+
-    	             " JOIN FETCH p.proveedor " + where);/**/
-    	    
-    	    listaEstadocuentaproveedor = q.setFirstResult(pagInicio)
-						  .setMaxResults(pagFin)
-						  .getResultList(); 
-				
-		 
-		}//else , lista simple	        
+//		else{
+//			 q = getInstancia().createQuery("select p.ingresoproducto from Estadocuentaproveedor p " +
+//    	    		 " JOIN FETCH p.ingresoproducto "+
+//    	             " JOIN FETCH p.proveedor " + where);/**/
+//    	    
+//    	    listaEstadocuentaproveedor = q.setFirstResult(pagInicio)
+//						  .setMaxResults(pagFin)
+//						  .getResultList(); 
+//				
+//		 
+//		}//else , lista simple	        
  			
 		
         return listaEstadocuentaproveedor;
@@ -96,7 +97,7 @@ public class EstadoCuentaProveedorDao extends GenericaDao implements IEstadoCuen
 			 System.out.println("where =" +where);
 			 
 	    	    q = getInstancia().createNativeQuery(sql);
-
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    
 	    	    listaIngresoProducto = q.getResultList(); 
 	

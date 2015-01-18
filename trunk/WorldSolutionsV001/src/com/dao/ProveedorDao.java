@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Proveedor;
 import com.interfaces.dao.IProveedorDao;
 import com.util.Constantes;
@@ -47,6 +50,7 @@ public class ProveedorDao extends GenericaDao implements IProveedorDao {
 	       
 	        System.out.println(" where ="+ where);
 	    	    q = getInstancia().createQuery("select p from Proveedor p " + where);/**/
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    
 	    	    listaProveedor = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
@@ -54,15 +58,7 @@ public class ProveedorDao extends GenericaDao implements IProveedorDao {
 
 			
 		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Proveedor p " +
-		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaProveedor = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
-												  .setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-		 
-		}//else , lista simple	
+		
 		
         return listaProveedor;
 	}

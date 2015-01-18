@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.eclipse.persistence.config.HintValues;
+import org.eclipse.persistence.config.QueryHints;
+
 import com.entities.Area;
 import com.interfaces.dao.IAreaDao;
 import com.util.Constantes;
@@ -31,7 +34,7 @@ public class AreaDao extends GenericaDao  implements IAreaDao{
 	        }
 	        System.out.println(" where ="+ where);
 	    	    q = getInstancia().createQuery("select p from Area p " + where);/**/
-	    	    
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	    	    listaArea = q.setFirstResult(pagInicio)
 							  .setMaxResults(pagFin)
 							  .getResultList(); 
@@ -41,6 +44,7 @@ public class AreaDao extends GenericaDao  implements IAreaDao{
 		else{
 				q= getInstancia().createQuery("select p from Area p " +
 		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
+				q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 				listaArea = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
 												  .setFirstResult(pagInicio)
 												  .setMaxResults(pagFin)

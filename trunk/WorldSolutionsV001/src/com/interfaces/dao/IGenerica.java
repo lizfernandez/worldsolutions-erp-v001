@@ -13,6 +13,7 @@ public interface IGenerica {
 	public <E> Long totalLista(E entidad);
 	public <G> List<G> listaEntidadGenerica(G entidad);
 	public <G> List<G> listaEntidadGenericaSinCodigo(String entidad);
+	public <G> List<G> listaEntidadPaginada(String sentencia, int pagInicio, int pagFin);
 	public <E> E findEndidad(E entidad, int iEntidadId);
 	public <E> void persistEndidad(E entidad);
 	public <E> boolean insertarUnaEndidad(E entidad);

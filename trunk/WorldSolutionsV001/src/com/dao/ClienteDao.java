@@ -12,7 +12,7 @@ import com.util.Constantes;
 public class ClienteDao  extends GenericaDao implements IClienteDao {
 	@Override
 	public List<Cliente> listaCliente(int pagInicio, int pagFin, Cliente cliente) {
-		Query q ;
+		String q ;
 		List<Cliente> listaCliente = null ;
 		String where="";
     	
@@ -46,24 +46,12 @@ public class ClienteDao  extends GenericaDao implements IClienteDao {
 	        }
 	       
 	        System.out.println(" where ="+ where);
-	    	    q = getInstancia().createQuery("select p from Cliente p " + where);/**/
+	    	    q = "select p from Cliente p " + where;
 	    	    
-	    	    listaCliente = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+	    	    listaCliente = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
-		}// lista con busqueda
-		else{
-				q= getInstancia().createQuery("select p from Cliente p " +
-		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
-				listaCliente = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
-												  .setFirstResult(pagInicio)
-												  .setMaxResults(pagFin)
-												  .getResultList(); 
-		 
-		}//else , lista simple	
-		
+		}
         return listaCliente;
 	}
 /*
