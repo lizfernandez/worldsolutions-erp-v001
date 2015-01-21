@@ -15,21 +15,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.dao.CategoriaDao;
 import com.dao.ClasificacionCategoriaDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
-import com.dao.CategoriaDao;
-
+import com.entities.Categoria;
 import com.entities.Clasificacioncategoria;
 import com.entities.Estado;
-import com.entities.Categoria;
-
 import com.entities.Subcategoria;
 import com.google.gson.Gson;
 import com.struts.form.CategoriaForm;
 import com.util.Fechas;
 import com.util.Paginacion;
-import com.util.Util;
 
 public class CategoriaAction extends DispatchAction {
 	   // --------------------------------------------------------- Instance
@@ -322,6 +319,7 @@ public class CategoriaAction extends DispatchAction {
 				
 				int id = Integer.parseInt(request.getParameter("id"));
 				categoriaform.setSubCategoria(categoriaDao.findEndidad(categoriaform.getSubCategoria(),id));
+				categoriaform.setCategoria(categoriaform.getSubCategoria().getCategoria());
 				msn ="showEditSubCategoria";
 				
 			}

@@ -1,15 +1,12 @@
 package com.struts.form;
 
 
-import java.util.Date;
 import java.util.List;
+
 import org.apache.struts.action.ActionForm;
+
 import com.entities.Categoria;
-import com.entities.Clasificacioncategoria;
 import com.entities.Subcategoria;
-
-
-
 
 public class CategoriaForm extends ActionForm {
 	private List lista;	
