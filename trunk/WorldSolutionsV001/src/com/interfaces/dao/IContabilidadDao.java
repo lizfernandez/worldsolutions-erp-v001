@@ -26,9 +26,9 @@ public interface IContabilidadDao {
 	public List<Libromayor> listaLibroMayor(int pagInicio, int pagFin, Librodiario libroDiario, int iPeriodoId) throws ParseException;
 	public List<Librodiario> listaBalanceGeneral(int pagInicio, int pagFin, Librodiario libroDiario, int iPeriodoId);
 	
-	public void callCompraContabilidad(int iIngresoProductoId, Date fechaProximoPago,float fMontoAdelantado, int xiUsuarioId, int numeroLetras, int xnumeroDias, String mode, int iPeriodoId, int numeroLetra);
+	public void callCompraContabilidad(int iIngresoProductoId, Date fechaProximoPago,float fMontoAdelantado, int xiUsuarioId, int numeroLetras, int xnumeroDias, String mode, int iPeriodoId, int numeroLetra, int iFormaPagoId);
 	public void callDevCompraContabilidad(int iIngresoProductoId, int xiUsuarioId, String mode, int iPeriodoId);
-	public void callVentaContabilidad(int iVentaId, Date fechaProximoPago,float fMontoAdelantado, int xiUsuarioId, int numeroLetras, int xnumeroDias, String mode, int iPeriodoId,int nNumeroLetra);
+	public void callVentaContabilidad(int iVentaId, Date fechaProximoPago,float fMontoAdelantado, int xiUsuarioId, int numeroLetras, int xnumeroDias, String mode, int iPeriodoId,int nNumeroLetra, int iFormaPagoId);
 	public void callDevVentaContabilidad(int iVentaId, int xiUsuarioId, String mode, int iPeriodoId);
 	
 }

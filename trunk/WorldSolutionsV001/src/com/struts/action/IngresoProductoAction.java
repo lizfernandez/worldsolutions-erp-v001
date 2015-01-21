@@ -979,10 +979,11 @@ public class IngresoProductoAction extends DispatchAction {
 	         ingresogenericaDao.refreshEndidad(obj);
 	         if(resultado==true){
 	        	 int iIngresoProductoId=obj.getiIngresoProductoId();
+	        	 int iFormaPagoId= obj.getFormaPago().getiFormaPago();
 	        	 trx= ingresogenericaDao.entityTransaction();
 	        	 trx.begin();
 	        	 int nNumeroLetra=1;
-	        	 contabilidadDao.callCompraContabilidad(iIngresoProductoId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId, nNumeroLetra);
+	        	 contabilidadDao.callCompraContabilidad(iIngresoProductoId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId, nNumeroLetra,iFormaPagoId);
 	        	 resultado = ingresogenericaDao.commitEndidad(trx);
 	         }
              //ingresogenericaDao.refreshEndidad(obj);
@@ -1223,7 +1224,7 @@ public class IngresoProductoAction extends DispatchAction {
 		
 			ingresogenericaDao.persistEndidad(obj);	 
 			int nNumeroLetra=1;
-	        contabilidadDao.callCompraContabilidad(obj.getiIngresoProductoId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra);
+	        contabilidadDao.callCompraContabilidad(obj.getiIngresoProductoId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra,obj.getFormaPago().getiFormaPago());
 	        resultado = ingresogenericaDao.commitEndidad(trx);
             ingresogenericaDao.refreshEndidad(obj);
             
