@@ -1086,7 +1086,7 @@ public class VentaAction extends DispatchAction {
 	            	  int nNumeroLetra=1;
 	            	  trx= ventaDao.entityTransaction();
 	            	  ventaDao.entityTransaction().begin();
-	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra); 
+	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra,pForm.getFormaPago().getiFormaPago()); 
 	            	  resultado = ventaDao.commitEndidad(trx);
 	            	
 	              }
@@ -1455,7 +1455,7 @@ public class VentaAction extends DispatchAction {
 					  int idVentaId=obj1.getiVentaId();
 					  int nNumeroLetra=1;
 	            	  ventaDao.entityTransaction().begin();
-	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra); 
+	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra, obj1.getFormaPago().getiFormaPago()); 
 	            	  resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
 	              }
 				

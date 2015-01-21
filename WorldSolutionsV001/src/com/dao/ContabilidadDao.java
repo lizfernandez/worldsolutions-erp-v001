@@ -269,9 +269,9 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 
 	@Override
 	public void callCompraContabilidad( int iIngresoProductoId, Date fechaProximoPago,
-			float fMontoAdelantado, int xiUsuarioId, int xnumeroLetras, int xnumeroDias, String mode, int iPeriodoId, int numeroLetra) {
+			float fMontoAdelantado, int xiUsuarioId, int xnumeroLetras, int xnumeroDias, String mode, int iPeriodoId, int numeroLetra, int iFormaPagoId) {
 		Query q ;
-		       q = getInstancia().createNativeQuery("{ CALL SP_IDU_COMPRA_CONTABILIDAD(?,?,?,?,?,?,?,?,?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
+		       q = getInstancia().createNativeQuery("{ CALL SP_IDU_COMPRA_CONTABILIDAD(?,?,?,?,?,?,?,?,?,?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
 	                    .setParameter(1,iIngresoProductoId)
 	                    .setParameter(2,fechaProximoPago)
 	    		        .setParameter(3,fMontoAdelantado)
@@ -280,7 +280,8 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 	    		        .setParameter(6,xnumeroDias)
 	    		        .setParameter(7,mode)
 	    		        .setParameter(8,iPeriodoId)
-	    		        .setParameter(9,numeroLetra);		            
+	    		        .setParameter(9,numeroLetra)
+	    		        .setParameter(10, iFormaPagoId);		            
 	            q.getSingleResult();	           
 	  }
 
@@ -302,10 +303,10 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 	@Override
 	public void callVentaContabilidad(int iVentaId,
 			Date fechaProximoPago, float fMontoAdelantado, int xiUsuarioId,
-			int numeroLetras, int xnumeroDias, String mode, int iPeriodoId,int nNumeroLetra) {
+			int numeroLetras, int xnumeroDias, String mode, int iPeriodoId,int nNumeroLetra, int iFormaPagoId) {
 		Query q ;
 		
-	          q = getInstancia().createNativeQuery("{ CALL SP_IDU_VENTA_CONTABILIDAD(?,?,?,?,?,?,?,?,?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
+	          q = getInstancia().createNativeQuery("{ CALL SP_IDU_VENTA_CONTABILIDAD(?,?,?,?,?,?,?,?,?,?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
 	                    .setParameter(1,iVentaId)
 	                    .setParameter(2,fechaProximoPago)
 	    		        .setParameter(3,fMontoAdelantado)
@@ -314,7 +315,8 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 	    		        .setParameter(6,xnumeroDias)
 	    		        .setParameter(7,mode)
 	    		        .setParameter(8,iPeriodoId)
-	    		        .setParameter(9,nNumeroLetra);		            
+	    		        .setParameter(9,nNumeroLetra)
+	    		        .setParameter(10, iFormaPagoId);
 	          q.getSingleResult();     
 	    
 	}

@@ -502,7 +502,8 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 		         }
 		         
 		         if(pForm.getMode().equals("I")){
-					 contabilidadDao.callCompraContabilidad(obj.getIngresoProducto().getiIngresoProductoId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra());
+		        	 int iFormaPagoId= obj.getIngresoProducto().getFormaPago().getiFormaPago();
+					 contabilidadDao.callCompraContabilidad(obj.getIngresoProducto().getiIngresoProductoId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra(), iFormaPagoId);
 		        	 resultado = ingresoProductoDao.commitEndidad(trx);		         
 					 Ingresoproducto ingresoProducto =  ingresoProductoDao.findEndidad(obj.getIngresoProducto(), obj.getIngresoProducto().getiIngresoProductoId());
 				

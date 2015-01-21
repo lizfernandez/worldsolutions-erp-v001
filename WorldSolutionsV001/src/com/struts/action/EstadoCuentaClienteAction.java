@@ -524,7 +524,7 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 		         }
 		         
 		         if(pForm.getMode().equals("I")){
-					 contabilidadDao.callVentaContabilidad(obj.getVenta().getiVentaId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra());
+					 contabilidadDao.callVentaContabilidad(obj.getVenta().getiVentaId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra(),obj.getVenta().getFormaPago().getiFormaPago());
 		        	 resultado = ingresoProductoDao.commitEndidad(trx);		         
 					 Venta venta =  ingresoProductoDao.findEndidad(obj.getVenta(), obj.getVenta().getiVentaId());
 				
