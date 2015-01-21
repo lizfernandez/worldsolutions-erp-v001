@@ -23,10 +23,12 @@ import com.entities.Categoria;
 import com.entities.Clasificacioncategoria;
 import com.entities.Estado;
 import com.entities.Subcategoria;
+import com.entities.Usuario;
 import com.google.gson.Gson;
 import com.struts.form.CategoriaForm;
 import com.util.Fechas;
 import com.util.Paginacion;
+import com.util.Util;
 
 public class CategoriaAction extends DispatchAction {
 	   // --------------------------------------------------------- Instance
@@ -346,9 +348,14 @@ public class CategoriaAction extends DispatchAction {
 		 * @param request
 		 * @param response
 		 * @return ActionForward
+		 * @throws NoSuchFieldException 
+		 * @throws SecurityException 
+		 * @throws IllegalAccessException 
+		 * @throws IllegalArgumentException 
+		 * @throws ClassNotFoundException 
 		 */
 		public ActionForward iduSubCategoria(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) {
+				HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
 			
 			/** Inicializamos las variables **/ 
 			String msn = "";
@@ -358,26 +365,38 @@ public class CategoriaAction extends DispatchAction {
 		
 			/** Instanciamos las clase CategoriaForm y CategoriaDao **/
 			CategoriaForm pForm = (CategoriaForm) form;
-			Subcategoria obj =pForm.getSubCategoria();
+			HttpSession sesion = request.getSession();
+			/** Instanciamos las clase ProductoForm y ProductoDao **/
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			
 			GenericaDao categoriaDao = new GenericaDao();
-			obj.setCategoria(categoriaDao.findEndidad(new Categoria(), pForm.getiCategoriaId()));
-			obj.setcEstadoCodigo(pForm.getcEstadoCodigo());
-			
+			Subcategoria obj;
 	        /** **/
-			if (pForm.getMode().equals("I")) {				
+			if (pForm.getMode().equals("I")) {			
+				obj =pForm.getSubCategoria();
+				obj.setCategoria(categoriaDao.findEndidad(new Categoria(), pForm.getiCategoriaId()));
+				obj.setcEstadoCodigo(pForm.getcEstadoCodigo());
 				obj.setdFechaInserta(Fechas.getDate());
+				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
+				
 				resultado = categoriaDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
-				 obj.setdFechaActualiza(Fechas.getDate());
+				obj = categoriaDao.findEndidad(pForm.getSubCategoria(), pForm.getiSubCategoriaId());
+				obj = Util.comparar(obj, pForm.getSubCategoria());
+
+				obj.setCategoria(categoriaDao.findEndidad(new Categoria(), pForm.getiCategoriaId()));
+				obj.setcEstadoCodigo(pForm.getcEstadoCodigo());
+				obj.setdFechaActualiza(Fechas.getDate());
+				obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 				resultado = categoriaDao.actualizarUnaEndidad(obj);
 				
 			}
 			else if (mode.equals("D")) { 
-				    categoriaDao.entityTransaction().begin();
-					categoriaDao.eliminarUnaEndidad(obj, "iSubCategoriaId",ids);/**/
-					resultado = categoriaDao.commitEndidad(categoriaDao.entityTransaction());
+				    EntityTransaction transaccion = categoriaDao.entityTransaction();
+				    transaccion.begin();
+					categoriaDao.eliminarUnaEndidad(new Subcategoria(), "iSubCategoriaId",ids);/**/
+					resultado = categoriaDao.commitEndidad(transaccion);
 				}
 				
 			if (resultado == true) {
