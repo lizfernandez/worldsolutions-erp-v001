@@ -353,9 +353,11 @@
   function fn_calcularTotal(fila) {
         var capa = 'cantidad'+fila;
         var capaPrecio = 'precio'+fila;
+        var descuento = 'descuento'+fila; 
         var total = 'total'+fila;
         var precio =   ($.trim($("#precio").val())=="")?$.trim($("#"+capaPrecio).text()):$.trim($("#precio").val());
         var cantidad = ($.trim($("#numero").val())=="")?$.trim($("#"+capa).text()):$.trim($("#numero").val());
+        var fdescuento = $.trim($("#"+descuento).text());
        	
      if(parseInt(cantidad)>parseInt($("#cantidadMax"+fila).text())){
     	 alert("La cantidad ingresada debe ser menor o igual que "+$("#cantidadMax"+fila).text());
@@ -367,7 +369,7 @@
     	document.getElementById(total).innerHTML = precioTotal;   
     	 $("."+total).text( formatCurrency(precioTotal,''));
     
-        var cad = "ingresoProducto.do?metodo=detalleIngresoProducto&id="+fila+"&mode=U&cantidad="+cantidad+"&precio="+precio;
+        var cad = "ingresoProducto.do?metodo=detalleIngresoProducto&id="+fila+"&mode=U&iCantidad="+cantidad+"&fPrecioCompra="+precio+"&fDescuento=0.0";
         
         $.getJSON(cad, function retorna(obj){
        	      // 	 listar_detalleIngresoProducto(obj,'hijo');

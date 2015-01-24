@@ -863,8 +863,9 @@ public class VentaAction extends DispatchAction {
 	        obj.setdFechaProximoPago(fecha);
 	 
 	        /** Iniciamos instacia de transacion **/
-	         EntityTransaction trx = ventaDao.entityTransaction();
-	         trx.begin();
+	         EntityTransaction  entityTransaction = ventaDao.entityTransaction();
+	        
+	         entityTransaction.begin();
 			if (pForm.getMode().equals("I") || pForm.getMode().equals("IE")) {		
 				
 				/*** Informacion de la Venta****/
@@ -1080,14 +1081,14 @@ public class VentaAction extends DispatchAction {
 	    	       sesion.removeAttribute("listaProducto");
 	    	       
 	   			  ventaDao.persistEndidad(obj);	             
-	              resultado = ventaDao.commitEndidad(trx);
+	              resultado = ventaDao.commitEndidad(entityTransaction);
 	              if(resultado==true){
 	            	  int idVentaId=obj.getiVentaId();
 	            	  int nNumeroLetra=1;
-	            	  trx= ventaDao.entityTransaction();
+	            	  entityTransaction= ventaDao.entityTransaction();
 	            	  ventaDao.entityTransaction().begin();
 	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra,pForm.getFormaPago().getiFormaPago()); 
-	            	  resultado = ventaDao.commitEndidad(trx);
+	            	  resultado = ventaDao.commitEndidad(entityTransaction);
 	            	
 	              }
 	              
@@ -1578,7 +1579,8 @@ public class VentaAction extends DispatchAction {
 			
 			/*** Informacion de la devolcuion de compra****/
 			  obj.setdVentaDevFecha(Fechas.fechaDate(pForm.getdVentaDevFecha()));
-			  ventaDao.entityTransaction().begin();
+			  EntityTransaction entityTransaction =ventaDao.entityTransaction();
+			  entityTransaction.begin();
 			/** **/
 			if (pForm.getMode().equals("I")) {
 				obj.setdFechaInserta(Fechas.getDate());
@@ -1699,16 +1701,16 @@ public class VentaAction extends DispatchAction {
 		      		 }/// no null
 	      	    ventaDao.mergeEndidad(objVenta);
 	      	    ventaDao.persistEndidad(obj);    
-	      	    resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());  	
+	      	    resultado = ventaDao.commitEndidad(entityTransaction);  	
 	      	    
-	      	  if(resultado==true){
+	      	 /* if(resultado==true){
      		  int iVentaDevolucionId=obj.getiVentaDevolucionId();
             	  ventaDao.entityTransaction().begin();
             	  contabilidadDao.callDevVentaContabilidad(iVentaDevolucionId, usu.getiUsuarioId(), pForm.getMode(), iPeriodoId); 
             	  resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
-              }
+              }*/
 	      	    ventaDao.refreshEndidad(obj);
-	      	    ventaDao.refreshEndidad(objVenta);
+	      	  //  ventaDao.refreshEndidad(objVenta);
 	      	   }
 			if(pForm.getMode().equals("U")) {
 				obj = ventaDao.findEndidad(pForm.getVentaDev(),pForm.getVentaDev().getiVentaDevolucionId()); 
@@ -1917,15 +1919,15 @@ public class VentaAction extends DispatchAction {
 	    	   ventaDao.mergeEndidad(obj);
 	    	   ventaDao.mergeEndidad(objVenta);  
 	    	   
-	     	   resultado = ventaDao.commitEndidad(ventaDao.entityTransaction()); 	
-	     	  if(resultado==true){
+	     	   resultado = ventaDao.commitEndidad(entityTransaction); 	
+	     	 /* if(resultado==true){
 	     		  int iVentaDevolucionId=obj.getiVentaDevolucionId();
             	  ventaDao.entityTransaction().begin();
             	  contabilidadDao.callDevVentaContabilidad(iVentaDevolucionId, usu.getiUsuarioId(), pForm.getMode(), iPeriodoId); 
-            	  resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
+            	  resultado = ventaDao.commitEndidad(entityTransaction);
               }
 	     	    ventaDao.refreshEndidad(obj);
-			      	  
+			  */    	  
 			}
 			if (resultado == true) {
 				msn = "msnOk";

@@ -1294,6 +1294,8 @@ public class IngresoProductoAction extends DispatchAction {
 		
 		/*** Informacion de la devolcuion de compra****/
 		  obj.setdIngresoProductoDevFecha(Fechas.fechaDate(pForm.getdIngresoProductoDevFecha()));
+		  EntityTransaction entityTransaction= ingresogenericaDao.entityTransaction();
+		  entityTransaction.begin();
 		/** **/
 		if (pForm.getMode().equals("I")) {
 			obj.setdFechaInserta(Fechas.getDate());
@@ -1387,14 +1389,14 @@ public class IngresoProductoAction extends DispatchAction {
 	      	   
 		      	    ingresogenericaDao.mergeEndidad(objIngresoProducto);
 		      	    ingresogenericaDao.persistEndidad(obj);		      	   
-		      	    resultado=ingresogenericaDao.commitEndidad(ingresogenericaDao.entityTransaction());
-		        	 if(resultado==true){
+		      	    resultado=ingresogenericaDao.commitEndidad(entityTransaction);
+		        	/* if(resultado==true){
 		        		 int iIngresoProductoDevolucionId=obj.getiIngresoProductoDevolucionId();
 			        	 ingresogenericaDao.entityTransaction().begin();
 			        	 contabilidadDao.callDevCompraContabilidad(iIngresoProductoDevolucionId, usu.getiUsuarioId(), mode, iPeriodoId);
 			        	 resultado = ingresogenericaDao.commitEndidad(ingresogenericaDao.entityTransaction());
-			         }
-		        	ingresogenericaDao.refreshEndidad(obj);
+			         }*/
+		        	//ingresogenericaDao.refreshEndidad(obj);
 		        	
 		      }// if insercion de la lista detalle activa
       	   }
@@ -1489,14 +1491,15 @@ public class IngresoProductoAction extends DispatchAction {
     	   
     	    ingresogenericaDao.mergeEndidad(objIngresoProducto);
         	ingresogenericaDao.persistEndidad(obj);        	
-        	resultado=ingresogenericaDao.commitEndidad(ingresogenericaDao.entityTransaction());   
-        	if(resultado==true){
+        	resultado=ingresogenericaDao.commitEndidad(entityTransaction);   
+        	/*if(resultado==true){
         		int iIngresoProductoDevolucionId=obj.getiIngresoProductoDevolucionId();
 	        	 ingresogenericaDao.entityTransaction().begin();
 	        	 contabilidadDao.callDevCompraContabilidad(iIngresoProductoDevolucionId, usu.getiUsuarioId(), mode, iPeriodoId);
 	        	 resultado = ingresogenericaDao.commitEndidad(ingresogenericaDao.entityTransaction());
 	         }
 		      	  
+		      	*/
 		}
 		if (resultado == true) {
 			msn = "msnOk";
