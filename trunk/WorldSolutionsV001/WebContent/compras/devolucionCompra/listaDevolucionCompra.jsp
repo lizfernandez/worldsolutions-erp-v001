@@ -6,7 +6,7 @@
 
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=I',900,500)">
+        <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=I',900,700)">
                 <span class="new">Nuevo</span>
             </button>
         </td>        
@@ -56,7 +56,7 @@
 			<tr>
 				
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=U&id=<bean:write name="x" property="iIngresoProductoDevolucionId" />',1320,620)" /></td>
+		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=U&id=<bean:write name="x" property="iIngresoProductoDevolucionId" />',900,700)" /></td>
 				<td align="center">
 			        <img  onclick="fn_reporteIngresoProducto('',1080,830)"
 			                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="27%" title="Imprimir IngresoProducto"/>

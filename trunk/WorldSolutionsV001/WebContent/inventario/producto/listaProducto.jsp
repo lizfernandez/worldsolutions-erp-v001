@@ -66,7 +66,7 @@
 		
 		<td align="center">
      		<img  src="${pageContext.request.contextPath}/media/imagenes/approve_notes.png"   title="Visualizar Kardex" 
-     		onclick="popup('productos.do?metodo=listaKardex&mode=Kardex&id=<bean:write name="x" property="iProductoId" />',900,400)" />
+     		onclick="popup('productos.do?metodo=listaKardex&mode=Kardex&id=<bean:write name="x" property="iProductoId" />',900,500)" />
 		</td>
 	    <td><bean:write name="x" property="cProductoCodigo" /></td>
 		<td><bean:write name="x" property="vProductoNombre" /></td>

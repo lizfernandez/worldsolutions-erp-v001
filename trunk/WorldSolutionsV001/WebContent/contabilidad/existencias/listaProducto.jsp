@@ -59,13 +59,13 @@
 	<tr>
 	    <td align="center"><input type="checkbox" id="<bean:write name="x" property="iProductoId" />"/></td> 
 		<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoProducto&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iProductoId" />',430,500)" /></td>
+		                     onclick="popup('productos.do?metodo=mantenimientoProducto&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iProductoId" />',700,635)" /></td>
 		<td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iProductoId" />','productos.do?metodo=iduProducto&mode=D')" /></td>	
 		
 		<td align="center">
      		<img  src="${pageContext.request.contextPath}/media/imagenes/approve_notes.png"   title="Visualizar Kardex" 
-     		onclick="popup('productos.do?metodo=listaKardex&mode=Kardex&id=<bean:write name="x" property="iProductoId" />',900,400)" />
+     		onclick="popup('productos.do?metodo=listaKardex&mode=Kardex&id=<bean:write name="x" property="iProductoId" />',900,500)" />
 		</td>
 	    <td><bean:write name="x" property="cProductoCodigo" /></td>
 		<td><bean:write name="x" property="vProductoNombre" /></td>

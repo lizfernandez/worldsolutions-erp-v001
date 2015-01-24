@@ -6,7 +6,7 @@
 
 <table border="0">
      <tr>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=I',430,518)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=I',450,520)">
                 <span class="new">Nuevo</span>
             </button>
         </td>

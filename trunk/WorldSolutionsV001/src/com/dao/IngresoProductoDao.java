@@ -20,6 +20,8 @@ import com.util.Constantes;
 import com.util.Fechas;
 
 public class IngresoProductoDao extends GenericaDao implements IIngresoProductoDao {
+	
+	
 	private static final String PERSISTENCE_UNIT_NAME = "Stuct12";
 	private static EntityManagerFactory factory;
 	
