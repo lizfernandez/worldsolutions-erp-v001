@@ -65,7 +65,7 @@
 	        <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
 	        <strong >PLANILLA</strong> <br>
 	     </div>
-	   <li id="parametros"><a href="contabilidad.do?metodo=listaParametrosPlanilla">
+	   <li id="parametros"><a href="configuracion.do?metodo=listaConfiguracion">
             <span class="gestion">Parametros de planilla</span></a>
         </li>
         <li id="planilla"><a href="contabilidad.do?metodo=listaPlanilla">

@@ -1,5 +1,7 @@
 package com.util;
 
+import com.entities.Configuracion;
+
 
 public class Constantes {
 	     
@@ -34,6 +36,11 @@ public class Constantes {
 	public static String IGVPercepcion="PERCEPCION";
 	public static String IGVVenta="VENTA";
 
-	
+	public static String descSNP="DESC. SNP %";
+	public static String descAFP ="DESC. AFP %";
+	public static String descPS="DESC. P.S %";
+	public static String descCV="DESC. C.V %";
+	public static String aportESSALUD="APORT. ESSALUD %";
+	public static String aportIES="APORT. I.E.S %";
 	
 }
