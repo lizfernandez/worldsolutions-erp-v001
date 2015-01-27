@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.struts.action.ActionForm;
 
 import com.entities.Area;
+import com.entities.Ocupacion;
 import com.entities.Personal;
 import com.entities.Tipodocumento;
 import com.entities.Usuario;
@@ -260,6 +261,39 @@ public class PersonalForm extends ActionForm {
 		personal.setUsuarios(usuarios);
 	}
 
-    
+	public Ocupacion getOcupacion(){
+		Ocupacion ocupacion = personal.getOcupacion();
+		 if(ocupacion==null){
+			 ocupacion = new Ocupacion();
+			 personal.setOcupacion(ocupacion);
+		 }
+		 return personal.getOcupacion();
+	}
+	public int getiOcupacionId() {	
+		return getOcupacion().getiOcupacionId();
+	}
+
+	/**
+	 * @param ocupacion the ocupacion to set
+	 */
+	public void setiOcupacionId(int iOcupacionId) {
+		Ocupacion ocupacion= getOcupacion();
+		ocupacion.setiOcupacionId(iOcupacionId);
+		this.personal.setOcupacion(ocupacion);
+	}
+
+	/**
+	 * @return the fSueldo
+	 */
+	public float getfSueldo() {
+		return personal.getfSueldo();
+	}
+
+	/**
+	 * @param fSueldo the fSueldo to set
+	 */
+	public void setfSueldo(float fSueldo) {
+		this.personal.setfSueldo(fSueldo);
+	}
     
 }

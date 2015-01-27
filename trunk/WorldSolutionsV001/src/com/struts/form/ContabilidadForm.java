@@ -2,8 +2,11 @@ package com.struts.form;
 
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.ParseException;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
@@ -17,6 +20,9 @@ import com.entities.Formapago;
 import com.entities.Ingresoproducto;
 import com.entities.Librodiario;
 import com.entities.Moneda;
+import com.entities.Personal;
+import com.entities.Planilla;
+import com.entities.Planillade;
 import com.entities.Producto;
 import com.entities.Proveedor;
 import com.entities.Tipodocumentogestion;
@@ -35,6 +41,8 @@ public class ContabilidadForm extends ActionForm {
 	Ingresoproducto ingresoProducto = new Ingresoproducto();
 	Producto producto = new Producto();	
 	Librodiario librodiario = new Librodiario();
+	Planilla planilla = new Planilla();
+	Planillade paraPlanilla = new Planillade();
     private String mode;
     private List paginas;
     private int pagInicio; 
@@ -508,7 +516,20 @@ public class ContabilidadForm extends ActionForm {
 	 * @return the cEstadoCodigo
 	 */
 	public String getcEstadoCodigo() {
-		return ingresoProducto.getcEstadoCodigo();
+		String cEstadoCodigo= "";
+		List<String> listaEstadoCodigo = new ArrayList<String>();
+		listaEstadoCodigo.add(ingresoProducto.getcEstadoCodigo());
+		listaEstadoCodigo.add(planilla.getcEstadoCodigo());
+		listaEstadoCodigo.add(paraPlanilla.getcEstadoCodigo());
+		
+		for ( String lista:listaEstadoCodigo)	{
+			if(lista!=""){
+				cEstadoCodigo= lista.toString();
+			}
+		}	
+		
+			
+		return cEstadoCodigo;
 	}
 
 	/**
@@ -516,6 +537,8 @@ public class ContabilidadForm extends ActionForm {
 	 */
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.ingresoProducto.setcEstadoCodigo ( cEstadoCodigo);
+		this.planilla.setcEstadoCodigo(cEstadoCodigo);
+		this.paraPlanilla.setcEstadoCodigo(cEstadoCodigo);
 	}
 
 
@@ -1239,14 +1262,384 @@ public String getvProductoCapacidad() {
 	 * @return the iPeriodoId
 	 */
 	public int getiPeriodoId() {
-		return this.getIngresoProducto().getiPeriodoId();
+		int iPeriodoId= getIngresoProducto().getiPeriodoId();
+		if(iPeriodoId<0){
+			planilla.getiPeriodoId();
+		}
+		return iPeriodoId;
 	}
 
 	/**
 	 * @param iPeriodoId the iPeriodoId to set
 	 */
 	public void setiPeriodoId(int iPeriodoId) {
+		 
 		this.getIngresoProducto().setiPeriodoId(iPeriodoId);
+		this.planilla.setiPeriodoId(iPeriodoId);
 	}
+	
+	/**
+	 * @return the iPlanillaId
+	 */
+	public int getiPlanillaId() {
+		return planilla.getiPlanillaId();
+	}
+
+	/**
+	 * @param iPlanillaId the iPlanillaId to set
+	 */
+	public void setiPlanillaId(int iPlanillaId) {
+		this.planilla.setiPlanillaId(iPlanillaId);
+	}
+
+
+
+	/**
+	 * @return the fApoESSALUD
+	 */
+	public float getfApoESSALUD() {
+		return planilla.getfApoESSALUD();
+	}
+
+	/**
+	 * @param fApoESSALUD the fApoESSALUD to set
+	 */
+	public void setfApoESSALUD(float fApoESSALUD) {
+		this.planilla.setfApoESSALUD(fApoESSALUD);
+	}
+
+	/**
+	 * @return the fApoIES
+	 */
+	public float getfApoIES() {
+		return planilla.getfApoIES();
+	}
+
+	/**
+	 * @param fApoIES the fApoIES to set
+	 */
+	public void setfApoIES(float fApoIES) {
+		this.planilla.setfApoIES(fApoIES);
+	}
+
+	/**
+	 * @return the fAsignacionFamiliar
+	 */
+	public float getfAsignacionFamiliar() {
+		return planilla.getfAsignacionFamiliar();
+	}
+
+	/**
+	 * @param fAsignacionFamiliar the fAsignacionFamiliar to set
+	 */
+	public void setfAsignacionFamiliar(float fAsignacionFamiliar) {
+		this.planilla.setfAsignacionFamiliar(fAsignacionFamiliar);
+	}
+
+	/**
+	 * @return the fDesAFP
+	 */
+	public float getfDesAFP() {
+		return planilla.getfDesAFP();
+	}
+
+	/**
+	 * @param fDesAFP the fDesAFP to set
+	 */
+	public void setfDesAFP(float fDesAFP) {
+		this.planilla.setfDesAFP(fDesAFP);
+	}
+
+	/**
+	 * @return the fDesCV
+	 */
+	public float getfDesCV() {
+		return planilla.getfDesCV();
+	}
+
+	/**
+	 * @param fDesCV the fDesCV to set
+	 */
+	public void setfDesCV(float fDesCV) {
+		this.planilla.setfDesCV(fDesCV);
+	}
+
+	/**
+	 * @return the fDesPS
+	 */
+	public float getfDesPS() {
+		return planilla.getfDesPS();
+	}
+
+	/**
+	 * @param fDesPS the fDesPS to set
+	 */
+	public void setfDesPS(float fDesPS) {
+		this.planilla.setfDesPS(fDesPS);
+	}
+
+	/**
+	 * @return the fDesSNP
+	 */
+	public float getfDesSNP() {
+		return planilla.getfDesSNP();
+	}
+
+	/**
+	 * @param fDesSNP the fDesSNP to set
+	 */
+	public void setfDesSNP(float fDesSNP) {
+		this.planilla.setfDesSNP(fDesSNP);
+	}
+
+	/**
+	 * @return the fNetoPago
+	 */
+	public float getfNetoPago() {
+		return planilla.getfNetoPago();
+	}
+
+	/**
+	 * @param fNetoPago the fNetoPago to set
+	 */
+	public void setfNetoPago(float fNetoPago) {
+		this.planilla.setfNetoPago(fNetoPago);
+	}
+
+	/**
+	 * @return the fPorApoESSALUD
+	 */
+	public float getfPorApoESSALUD() {
+		return planilla.getfPorApoESSALUD();
+	}
+
+	/**
+	 * @param fPorApoESSALUD the fPorApoESSALUD to set
+	 */
+	public void setfPorApoESSALUD(float fPorApoESSALUD) {
+		this.planilla.setfPorApoESSALUD(fPorApoESSALUD);
+	}
+
+	/**
+	 * @return the fPorApoIES
+	 */
+	public float getfPorApoIES() {
+		return planilla.getfPorApoIES();
+	}
+
+	/**
+	 * @param fPorApoIES the fPorApoIES to set
+	 */
+	public void setfPorApoIES(float fPorApoIES) {
+		this.planilla.setfPorApoIES(fPorApoIES);
+	}
+
+	/**
+	 * @return the fPorDesAFP
+	 */
+	public float getfPorDesAFP() {
+		return planilla.getfPorDesAFP();
+	}
+
+	/**
+	 * @param fPorDesAFP the fPorDesAFP to set
+	 */
+	public void setfPorDesAFP(float fPorDesAFP) {
+		this.planilla.setfPorDesAFP(fPorDesAFP);
+	}
+
+	/**
+	 * @return the fPorDesCV
+	 */
+	public float getfPorDesCV() {
+		return planilla.getfPorDesCV();
+	}
+
+	/**
+	 * @param fPorDesCV the fPorDesCV to set
+	 */
+	public void setfPorDesCV(float fPorDesCV) {
+		this.planilla.setfPorDesCV(fPorDesCV) ;
+	}
+
+	/**
+	 * @return the fPorDesPS
+	 */
+	public float getfPorDesPS() {
+		return planilla.getfPorDesPS();
+	}
+
+	/**
+	 * @param fPorDesPS the fPorDesPS to set
+	 */
+	public void setfPorDesPS(float fPorDesPS) {
+		this.planilla.setfPorDesPS(fPorDesPS);
+	}
+
+	/**
+	 * @return the fPorDesSNP
+	 */
+	public float getfPorDesSNP() {
+		return planilla.getfPorDesSNP();
+	}
+
+	/**
+	 * @param fPorDesSNP the fPorDesSNP to set
+	 */
+	public void setfPorDesSNP(float fPorDesSNP) {
+		this.planilla.setfPorDesSNP(fPorDesSNP);
+	}
+
+	/**
+	 * @return the fSueldo
+	 */
+	public float getfSueldo() {
+		return planilla.getfSueldo();
+	}
+
+	/**
+	 * @param fSueldo the fSueldo to set
+	 */
+	public void setfSueldo(float fSueldo) {
+		this.planilla.setfSueldo(fSueldo);
+	}
+
+	/**
+	 * @return the fTotalAportes
+	 */
+	public float getfTotalAportes() {
+		return planilla.getfTotalAportes();
+	}
+
+	/**
+	 * @param fTotalAportes the fTotalAportes to set
+	 */
+	public void setfTotalAportes(float fTotalAportes) {
+		this.planilla.setfTotalAportes(fTotalAportes);
+	}
+
+	/**
+	 * @return the fTotalDescuento
+	 */
+	public float getfTotalDescuento() {
+		return planilla.getfTotalDescuento();
+	}
+
+	/**
+	 * @param fTotalDescuento the fTotalDescuento to set
+	 */
+	public void setfTotalDescuento(float fTotalDescuento) {
+		this.planilla.setfTotalDescuento(fTotalDescuento);
+	}
+
+	/**
+	 * @return the fTotalRemuneracion
+	 */
+	public float getfTotalRemuneracion() {
+		return planilla.getfTotalRemuneracion();
+	}
+
+	/**
+	 * @param fTotalRemuneracion the fTotalRemuneracion to set
+	 */
+	public void setfTotalRemuneracion(float fTotalRemuneracion) {
+		this.planilla.setfTotalRemuneracion(fTotalRemuneracion);
+	}
+
+	
+	/**
+	 * @return the persona
+	 */
+	public int getiPersonalId() {
+		return planilla.getPersonal().getiPersonalId();
+	}
+
+	/**
+	 * @param persona the persona to set
+	 */
+	public void setiPersonalId(int iPersonalId) {
+		Personal personal = planilla.getPersonal();//new Proveedor();
+		if(personal==null)
+			personal = new  Personal();
+		   personal.setiPersonalId(iPersonalId);		
+		this.planilla.setPersonal(personal);
+	}
+	/**
+	 * @return the planilla
+	 */
+	public Planilla getPlanilla() {
+		return planilla;
+	}
+	/**
+	 * @param planilla the planilla to set
+	 */
+	public void setPlanilla(Planilla planilla) {
+		this.planilla = planilla;
+	}
+
+	/*******************************/
+	/** PARAMETROS DE PLANILLAS ****/
+	/*******************************/
+	/**
+	 * @return the iPlanillaDesId
+	 */
+	public int getiPlanillaDesId() {
+		return paraPlanilla.getiPlanillaDesId();
+	}
+
+	/**
+	 * @param iPlanillaDesId the iPlanillaDesId to set
+	 */
+	public void setiPlanillaDesId(int iPlanillaDesId) {
+		this.paraPlanilla.setiPlanillaDesId(iPlanillaDesId);
+	}
+
+	/**
+	 * @return the cCodigoPlanillaDes
+	 */
+	public String getcCodigoPlanillaDes() {
+		return paraPlanilla.getcCodigoPlanillaDes();
+	}
+
+	/**
+	 * @param cCodigoPlanillaDes the cCodigoPlanillaDes to set
+	 */
+	public void setcCodigoPlanillaDes(String cCodigoPlanillaDes) {
+		this.paraPlanilla.setcCodigoPlanillaDes(cCodigoPlanillaDes);
+	}
+
+
+
+	/**
+	
+	/**
+	 * @return the fPorcentaje
+	 */
+	public float getfPorcentaje() {
+		return paraPlanilla.getfPorcentaje();
+	}
+
+	/**
+	 * @param fPorcentaje the fPorcentaje to set
+	 */
+	public void setfPorcentaje(float fPorcentaje) {
+		this.paraPlanilla.setfPorcentaje(fPorcentaje);
+	}
+
+	
+	/**
+	 * @return the vNombrePlanillaDes
+	 */
+	public String getvNombrePlanillaDes() {
+		return paraPlanilla.getvNombrePlanillaDes();
+	}
+
+	/**
+	 * @param vNombrePlanillaDes the vNombrePlanillaDes to set
+	 */
+	public void setvNombrePlanillaDes(String vNombrePlanillaDes) {
+		this.paraPlanilla.setvNombrePlanillaDes(vNombrePlanillaDes);
+	}
+	
 	
 }
