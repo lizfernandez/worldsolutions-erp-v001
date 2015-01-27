@@ -1,11 +1,21 @@
+       
+        <div  class="btn_admin" id="sucursal" >
+        <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
+        <a href="sucursal.do?metodo=listaSucursal">MANT. DE SUCURSAL</a>
+       </div>
+        <div  class="btn_admin" id="area" >
+        <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
+        <a href="area.do?metodo=listaArea">MANT. DE AREA</a>
+       </div>
        <div class="btn_admin" id="perfil">
            <img src="${pageContext.request.contextPath}/media/imagenes/cate.png" width="20" height="20" />
            <a href="perfil.do?metodo=listaPerfil">MANT. DE PERFIL</a>
        </div>
-       <div  class="btn_admin" id="area" >
-        <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
-        <a href="area.do?metodo=listaArea">MANT. DE AREA</a>
+      <div class="btn_admin" id="ocupacion">
+           <img src="${pageContext.request.contextPath}/media/imagenes/cate.png" width="20" height="20" />
+           <a href="ocupacion.do?metodo=listaOcupacion">MANT. DE OCUPACION</a>
        </div>
+      
        <div class="btn_admin" id="personal">
        <img src="${pageContext.request.contextPath}/media/imagenes/oca.png" width="20" height="20" />
         <a href="personal.do?metodo=listaPersonal" > MANT. DE PERSONAL</a>
