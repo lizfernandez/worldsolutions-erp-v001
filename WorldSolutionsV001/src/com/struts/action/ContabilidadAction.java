@@ -37,6 +37,7 @@ import com.entities.Kardex;
 import com.entities.Librodiario;
 import com.entities.Libromayor;
 import com.entities.Periodo;
+import com.entities.Planilla;
 
 import com.entities.Producto;
 
@@ -1044,6 +1045,86 @@ public class ContabilidadAction extends DispatchAction {
 			contabilidadForm.setTotalHaber(totalHaber);
 		
 				
+			//}// else
+			return mapping.findForward(msn);
+		}
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
+		 * @throws IOException 
+		 */
+		public ActionForward listaPlanilla(ActionMapping mapping, ActionForm form,
+				HttpServletRequest request, HttpServletResponse response) throws IOException {
+            
+			
+			
+			/***Validamos la session activa y logeada***/
+			String msn = "";
+			
+			HttpSession sesion = request.getSession();
+			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
+			
+			/***Inicializamos variables***/
+			
+			int pagina = Paginacion.paginaInicial;
+			int pagInicio = Paginacion.paginaInicial;
+			if(request.getParameter("pagina")!= null){
+				 pagina = Integer.parseInt(request.getParameter("pagina"));
+			}
+			msn ="showListPlanilla";
+			/** Instanciamos la Clase ProductoForm **/
+			
+			ContabilidadForm contabilidadForm = (ContabilidadForm) form;
+			
+		
+			/** Instanciamos las clase Daos **/
+			
+			ContabilidadDao contabilidadDao = new ContabilidadDao();
+			//Producto producto = new Producto();
+			
+			
+			
+			
+			
+			/**Seteamos los valores en las listas**/
+			List<Planilla> listaPlanilla =  contabilidadDao.listaPlanilla(Paginacion.pagInicio(pagina),Paginacion.pagFin(), contabilidadForm.getPlanilla(),iPeriodoId);
+			
+			/**Consultamos el total de registros segun criterio**/
+			List<Planilla> listaPlanillaTotal = contabilidadDao.listaPlanilla(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(), contabilidadForm.getPlanilla(),iPeriodoId);
+			
+	        /**Obtenemos el total del paginas***/
+			List<Long> paginas = Paginacion.listPaginas((long)(listaPlanillaTotal.size()));
+			
+			
+			 
+			 /** Seteamos las clase ProductoForm **/
+			contabilidadForm.setLista(listaPlanilla);
+			contabilidadForm.setPaginas(paginas);
+			contabilidadForm.setPagInicio(pagina);
+			Periodo periodo = new Periodo();
+			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio())
+                    +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
+           
+			/****obtenermos los total del debe y haber***/
+			if(listaPlanilla.size()<0){
+				for (Planilla planilla:listaPlanilla){
+				
+					contabilidadForm.setfPorApoESSALUD(planilla.getfPorApoESSALUD());
+					contabilidadForm.setfPorApoIES(planilla.getfPorApoIES());
+					contabilidadForm.setfPorDesAFP(planilla.getfPorDesAFP());
+					contabilidadForm.setfPorDesCV(planilla.getfPorDesCV());
+					contabilidadForm.setfPorDesPS(planilla.getfPorDesPS());
+					contabilidadForm.setfPorDesSNP(planilla.getfPorDesSNP());
+					break;
+				}
+			}
+					
 			//}// else
 			return mapping.findForward(msn);
 		}
