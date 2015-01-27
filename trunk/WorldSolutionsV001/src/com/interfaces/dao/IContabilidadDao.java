@@ -11,6 +11,7 @@ import com.entities.Ingresoproducto;
 import com.entities.Librodiario;
 import com.entities.Libromayor;
 import com.entities.Planilla;
+
 import com.entities.vo.LibroDiarioVo;
 
 
@@ -27,6 +28,7 @@ public interface IContabilidadDao {
 	public List<Libromayor> listaLibroMayor(int pagInicio, int pagFin, Librodiario libroDiario, int iPeriodoId) throws ParseException;
 	public List<Librodiario> listaBalanceGeneral(int pagInicio, int pagFin, Librodiario libroDiario, int iPeriodoId);
 	public List<Planilla> listaPlanilla(int pagInicio, int pagFin, Planilla planilla, int iPeriodoId);
+	
 	
 	public void callCompraContabilidad(int iIngresoProductoId, Date fechaProximoPago,float fMontoAdelantado, int xiUsuarioId, int numeroLetras, int xnumeroDias, String mode, int iPeriodoId, int numeroLetra, int iFormaPagoId);
 	public void callDevCompraContabilidad(int iIngresoProductoId, int xiUsuarioId, String mode, int iPeriodoId);

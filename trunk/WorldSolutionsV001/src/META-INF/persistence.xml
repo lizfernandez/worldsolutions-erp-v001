@@ -60,7 +60,6 @@
     <class>com.entities.Libromayor</class>
     <class>com.entities.Planilla</class>
     <class>com.entities.Ocupacion</class>
-    <class>com.entities.Planillade</class>
     	 
 	<!-- transaction-type="RESOURCE_LOCAL"-->
 		<properties>

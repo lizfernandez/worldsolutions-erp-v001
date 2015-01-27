@@ -22,7 +22,7 @@ import com.entities.Librodiario;
 import com.entities.Moneda;
 import com.entities.Personal;
 import com.entities.Planilla;
-import com.entities.Planillade;
+
 import com.entities.Producto;
 import com.entities.Proveedor;
 import com.entities.Tipodocumentogestion;
@@ -42,7 +42,7 @@ public class ContabilidadForm extends ActionForm {
 	Producto producto = new Producto();	
 	Librodiario librodiario = new Librodiario();
 	Planilla planilla = new Planilla();
-	Planillade paraPlanilla = new Planillade();
+	
     private String mode;
     private List paginas;
     private int pagInicio; 
@@ -520,7 +520,7 @@ public class ContabilidadForm extends ActionForm {
 		List<String> listaEstadoCodigo = new ArrayList<String>();
 		listaEstadoCodigo.add(ingresoProducto.getcEstadoCodigo());
 		listaEstadoCodigo.add(planilla.getcEstadoCodigo());
-		listaEstadoCodigo.add(paraPlanilla.getcEstadoCodigo());
+	
 		
 		for ( String lista:listaEstadoCodigo)	{
 			if(lista!=""){
@@ -538,7 +538,7 @@ public class ContabilidadForm extends ActionForm {
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.ingresoProducto.setcEstadoCodigo ( cEstadoCodigo);
 		this.planilla.setcEstadoCodigo(cEstadoCodigo);
-		this.paraPlanilla.setcEstadoCodigo(cEstadoCodigo);
+		
 	}
 
 
@@ -1575,70 +1575,6 @@ public String getvProductoCapacidad() {
 	 */
 	public void setPlanilla(Planilla planilla) {
 		this.planilla = planilla;
-	}
-
-	/*******************************/
-	/** PARAMETROS DE PLANILLAS ****/
-	/*******************************/
-	/**
-	 * @return the iPlanillaDesId
-	 */
-	public int getiPlanillaDesId() {
-		return paraPlanilla.getiPlanillaDesId();
-	}
-
-	/**
-	 * @param iPlanillaDesId the iPlanillaDesId to set
-	 */
-	public void setiPlanillaDesId(int iPlanillaDesId) {
-		this.paraPlanilla.setiPlanillaDesId(iPlanillaDesId);
-	}
-
-	/**
-	 * @return the cCodigoPlanillaDes
-	 */
-	public String getcCodigoPlanillaDes() {
-		return paraPlanilla.getcCodigoPlanillaDes();
-	}
-
-	/**
-	 * @param cCodigoPlanillaDes the cCodigoPlanillaDes to set
-	 */
-	public void setcCodigoPlanillaDes(String cCodigoPlanillaDes) {
-		this.paraPlanilla.setcCodigoPlanillaDes(cCodigoPlanillaDes);
-	}
-
-
-
-	/**
-	
-	/**
-	 * @return the fPorcentaje
-	 */
-	public float getfPorcentaje() {
-		return paraPlanilla.getfPorcentaje();
-	}
-
-	/**
-	 * @param fPorcentaje the fPorcentaje to set
-	 */
-	public void setfPorcentaje(float fPorcentaje) {
-		this.paraPlanilla.setfPorcentaje(fPorcentaje);
-	}
-
-	
-	/**
-	 * @return the vNombrePlanillaDes
-	 */
-	public String getvNombrePlanillaDes() {
-		return paraPlanilla.getvNombrePlanillaDes();
-	}
-
-	/**
-	 * @param vNombrePlanillaDes the vNombrePlanillaDes to set
-	 */
-	public void setvNombrePlanillaDes(String vNombrePlanillaDes) {
-		this.paraPlanilla.setvNombrePlanillaDes(vNombrePlanillaDes);
 	}
 	
 	

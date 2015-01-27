@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,8 @@ import com.dao.ContabilidadDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
+import com.dao.PerfilDao;
+import com.dao.UsuarioDao;
 
 import com.dao.ProductoDao;
 import com.dao.VentaDao;
@@ -36,7 +39,9 @@ import com.entities.Ingresoproductodevolucion;
 import com.entities.Kardex;
 import com.entities.Librodiario;
 import com.entities.Libromayor;
+import com.entities.Perfil;
 import com.entities.Periodo;
+import com.entities.Personal;
 import com.entities.Planilla;
 
 import com.entities.Producto;
@@ -50,6 +55,7 @@ import com.google.gson.Gson;
 
 import com.struts.form.ContabilidadForm;
 import com.struts.form.IngresoProductoForm;
+import com.struts.form.UsuarioForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.FormatosNumeros;
@@ -1491,4 +1497,5 @@ public class ContabilidadAction extends DispatchAction {
 			return null;
 			
 		}
+		
 }
