@@ -60,6 +60,19 @@
             <span class="gestion">Caja y bancos</span></a>
         </li>       
      </ul>
+      <ul id="planillas">
+          <div onclick="submenu('planillas')">
+	        <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
+	        <strong >PLANILLA</strong> <br>
+	     </div>
+	   <li id="parametros"><a href="contabilidad.do?metodo=listaParametrosPlanilla">
+            <span class="gestion">Parametros de planilla</span></a>
+        </li>
+        <li id="planilla"><a href="contabilidad.do?metodo=listaPlanilla">
+            <span class="gestion">registro de planilla</span></a>
+        </li>
+           
+     </ul>
      <ul id="plancontable">
         <div onclick="submenu('plancontable')">
 	        <img src="${pageContext.request.contextPath}/media/imagenes/tra.png" width="20" height="20" />
