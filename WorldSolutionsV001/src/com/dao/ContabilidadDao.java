@@ -19,6 +19,7 @@ import com.entities.Ingresoproducto;
 import com.entities.Kardex;
 import com.entities.Librodiario;
 import com.entities.Libromayor;
+import com.entities.Planilla;
 import com.entities.vo.LibroDiarioVo;
 import com.interfaces.dao.IContabilidadDao;
 import com.util.Constantes;
@@ -333,6 +334,40 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 			    		        .setParameter(4,iPeriodoId);		            
 			              q.getSingleResult();           
 			       
+	}
+
+	@Override
+	public List<Planilla> listaPlanilla(int pagInicio, int pagFin,
+			Planilla planilla, int iPeriodoId) {
+		String q ;
+		List<Planilla> listaPlanilla = null ;
+		String where="";
+    	
+		if(planilla!=null){
+			if(planilla.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }
+			if(planilla.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+planilla.getcEstadoCodigo()+"%'";
+	        }
+			if(planilla.getdFechaInserta()!=null){
+	        	where+= " and p.dFechaInserta BETWEEN '"+Fechas.fechaYYMMDD(planilla.getdFechaInserta())+"' and '"+Fechas.fechaYYMMDD(planilla.getdFechaInserta())+"'";
+	        }
+			else{
+				where+= " and p.iPeriodoId="+iPeriodoId;
+			}
+		
+	       
+			 q = "select p from Planilla p " + where+
+			 		" order by p.iPlanillaId desc , p.dFechaInserta desc";/**/
+	    	     
+	    	    listaPlanilla = listaEntidadPaginada(q, pagInicio, pagFin);
+
+			
+		}// lista con busqueda
+		
+		
+        return listaPlanilla;
 	}
 
 
