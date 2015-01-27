@@ -56,6 +56,14 @@ public class Personal implements Serializable {
     @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iAreaId", nullable=false)
 	private Area area;
+    
+  //bi-directional many-to-one association to Area
+    @ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="iOcupacionId", nullable=false)
+	private Ocupacion ocupacion;
+    
+    private float fSueldo;
+
         
 	//bi-directional many-to-one association to Sexo
     /*@ManyToOne
@@ -291,6 +299,34 @@ public class Personal implements Serializable {
 	 */
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	/**
+	 * @return the ocupacion
+	 */
+	public Ocupacion getOcupacion() {
+		return ocupacion;
+	}
+
+	/**
+	 * @param ocupacion the ocupacion to set
+	 */
+	public void setOcupacion(Ocupacion ocupacion) {
+		this.ocupacion = ocupacion;
+	}
+
+	/**
+	 * @return the fSueldo
+	 */
+	public float getfSueldo() {
+		return fSueldo;
+	}
+
+	/**
+	 * @param fSueldo the fSueldo to set
+	 */
+	public void setfSueldo(float fSueldo) {
+		this.fSueldo = fSueldo;
 	}
 
 	
