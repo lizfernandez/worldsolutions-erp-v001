@@ -53,12 +53,24 @@
          
 </tr>
 <tr>
+    <td align="right">Prosefi&oacute;n:</td>
+    <td><html:select  property="iOcupacionId" styleId="iOcupacionId"  styleClass="combo" style="width:154px" >       
+              <html:options collection="listaOcupacion" property="iOcupacionId" labelProperty="vOcupacionDescripcion" />
+         </html:select>
+     </td>
+</tr>
+<tr>
     <td align="right">Area:</td>
-    <td><html:select  property="iAreaId" styleId="iAreaId"  styleClass="combo"  style="width:154px" >  
-              <option value="00">::SELECCIONE::</option>     
+    <td><html:select  property="iAreaId" styleId="iAreaId"  styleClass="combo" style="width:154px" >       
               <html:options collection="listaArea" property="iAreaId" labelProperty="vAreaDescripcion" />
          </html:select>
      </td>
+</tr>
+<tr>
+    <td align="right">Sueldo:</td>
+    <td><html:text property="fSueldo"  styleId="fSueldo" styleClass="text" onkeypress="return Numeros(event)" maxlength="10"/>
+        <span id="fSueldo" class="importante">*</span>
+    </td>
 </tr>
 <tr>
     <td align="right">Estado:</td>
