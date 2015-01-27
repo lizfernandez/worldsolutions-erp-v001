@@ -64,6 +64,12 @@ public class Util {
     	 listaConf.add(new Configuracion(7,"RUC DE EMPRESA"));
     	 listaConf.add(new Configuracion(8,"TIPO CAMBIO"));
     	 listaConf.add(new Configuracion(9,"TIPO MONEDA"));
+    	 listaConf.add(new Configuracion(10,"DESC. SNP %"));
+    	 listaConf.add(new Configuracion(11,"DESC. AFP %"));
+    	 listaConf.add(new Configuracion(12,"DESC. P.S %"));
+    	 listaConf.add(new Configuracion(13,"DESC. C.V %"));
+    	 listaConf.add(new Configuracion(14,"APORT. ESSALUD %"));
+    	 listaConf.add(new Configuracion(15,"APORT. I.E.S %"));
     	 return listaConf;
      }
 	  
