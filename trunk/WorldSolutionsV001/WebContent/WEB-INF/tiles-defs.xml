@@ -124,6 +124,28 @@
     <put name="body" value="/mantenimiento/area/buscarMantenimientoArea.jsp"></put>   
 </definition>
 
+<definition name=".sucursal" extends=".plantilla">
+    <put name="body" value="/mantenimiento/sucursal/listaSucursal.jsp"></put>   
+    <put name="menuVertical" value="/mantenimiento/sidebar.jsp"></put>  
+</definition>
+<definition name=".mantenimientoSucursal" extends=".popup">
+    <put name="body" value="/mantenimiento/sucursal/mantenimientoSucursal.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientoSucursal" extends=".popup">
+    <put name="body" value="/mantenimiento/sucursal/buscarMantenimientoSucursal.jsp"></put>   
+</definition>
+
+<definition name=".ocupacion" extends=".plantilla">
+    <put name="body" value="/mantenimiento/ocupacion/listaOcupacion.jsp"></put>   
+    <put name="menuVertical" value="/mantenimiento/sidebar.jsp"></put>  
+</definition>
+<definition name=".mantenimientoOcupacion" extends=".popup">
+    <put name="body" value="/mantenimiento/ocupacion/mantenimientoOcupacion.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientoOcupacion" extends=".popup">
+    <put name="body" value="/mantenimiento/ocupacion/buscarMantenimientoOcupacion.jsp"></put>   
+</definition>
+
 <definition name=".categoria" extends=".plantilla">
     <put name="body" value="/inventario/categoria/listaCategoria.jsp"></put>   
     <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
@@ -439,7 +461,14 @@
 </definition>
 <definition name=".mantenimientoCuentas" extends=".popup">
      <put name="body" value="/contabilidad/tesoreria/mantenimientoCuentas.jsp"></put>   
-</definition>  
+</definition>
+
+<definition name=".listPlanilla" extends=".plantilla">
+<put name="body" value="/contabilidad/planilla/listaPlanilla.jsp"></put>   
+    <put name="menuVertical" value="/contabilidad/sidebar.jsp"></put>   
+</definition>
+
+  
 
 <definition name=".listLibroDiario" extends=".plantilla">
     <put name="body" value="/contabilidad/contable/listaLibroDiario.jsp"></put>   
