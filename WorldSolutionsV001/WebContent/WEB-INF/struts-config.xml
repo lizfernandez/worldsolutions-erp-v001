@@ -8,6 +8,8 @@
       </form-bean>
       <form-bean name="perfilForm" type="com.struts.form.PerfilForm" />
       <form-bean name="areaForm" type="com.struts.form.AreaForm" />
+      <form-bean name="sucursalForm" type="com.struts.form.SucursalForm" />
+      <form-bean name="ocupacionForm" type="com.struts.form.OcupacionForm" />
       <form-bean name="personalForm" type="com.struts.form.PersonalForm" />
       <form-bean name="usuarioForm" type="com.struts.form.UsuarioForm" />
       <form-bean name="categoriaForm" type="com.struts.form.CategoriaForm" />
@@ -107,6 +109,38 @@
 	                 <forward name="showList" path=".area" />
 	                 <forward name="showEdit" path=".mantenimientoArea" />
 	                 <forward name="showFind" path=".buscarMantenimientoArea" />
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="sucursalForm"  
+	    input="/mantenimiento/sucursal/listaSucursal.jsp"
+	    name="sucursalForm"
+	    parameter="metodo"
+	    path="/sucursal" 
+	    scope="request"
+	    type="com.struts.action.SucursalAction"
+	    validate="false">
+	                 <forward name="showList" path=".sucursal" />
+	                 <forward name="showEdit" path=".mantenimientoSucursal" />
+	                 <forward name="showFind" path=".buscarMantenimientoSucursal" />
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	     <action 
+	    attribute="ocupacionForm"  
+	    input="/mantenimiento/ocupacion/listaOcupacion.jsp"
+	    name="ocupacionForm"
+	    parameter="metodo"
+	    path="/ocupacion" 
+	    scope="request"
+	    type="com.struts.action.OcupacionAction"
+	    validate="false">
+	                 <forward name="showList" path=".ocupacion" />
+	                 <forward name="showEdit" path=".mantenimientoOcupacion" />
+	                 <forward name="showFind" path=".buscarMantenimientoOcupacion" />
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />
 	           
@@ -344,6 +378,9 @@
                      
                      <forward name="showListCajaBancos" path=".listCajaBancos" />
                      <forward name="showEditCuentas" path=".mantenimientoCuentas" />
+                     <forward name="showListPlanilla" path=".listPlanilla" />
+                     
+                     
                      
                      
                      <forward name="showListCuentas" path=".listCuentas" />
