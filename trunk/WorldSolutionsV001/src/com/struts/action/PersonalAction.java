@@ -20,6 +20,7 @@ import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.entities.Area;
 
+import com.entities.Ocupacion;
 import com.entities.Personal;
 import com.entities.Estado;
 
@@ -133,6 +134,7 @@ public class PersonalAction extends DispatchAction {
 
 		List<Estado> listaEstado = estadoDao.listEstado();
 		List<Area> listaArea = areaDao.listaArea(0, 0, area);
+		List<Ocupacion> listaOcupacion = personalDao.listaEntidadGenerica(new Ocupacion());
 
 		/**LLamamos al formulario mantenimientoPersonal.jsp para la insercion de datos **/
 		if(mode.equals("I")){
@@ -159,6 +161,7 @@ public class PersonalAction extends DispatchAction {
 		/** Colocamos en session las listas **/
 
 		sesion.setAttribute("listaEstado", listaEstado);
+		sesion.setAttribute("listaOcupacion", listaOcupacion);
 		sesion.setAttribute("listaArea", listaArea);
 		sesion.setAttribute("listaDoc", Util.listaaDoc());
 		sesion.setAttribute("listaSex", Util.listaSexo());
