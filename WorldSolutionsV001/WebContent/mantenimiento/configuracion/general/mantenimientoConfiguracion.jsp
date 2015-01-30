@@ -93,7 +93,7 @@
     	else{
     		$("#trTipoMoneda").hide(); 
     		$("#tipoValor").show();
-    		$("#vValor").val("");
+    	//	$("#vValor").val("");
     	}
     }
 
