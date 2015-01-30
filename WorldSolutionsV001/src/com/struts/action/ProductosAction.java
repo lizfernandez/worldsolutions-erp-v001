@@ -4,17 +4,18 @@
 package com.struts.action;
 
 import java.io.File;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -30,17 +31,13 @@ import com.dao.UnidadMedidaDao;
 import com.entities.Categoria;
 import com.entities.Clasificacioncategoria;
 import com.entities.Cuenta;
-
 import com.entities.Estado;
-import com.entities.Librodiario;
-import com.entities.Preciosproducto;
-import com.entities.Subcategoria;
-
 import com.entities.Kardex;
+import com.entities.Librodiario;
 import com.entities.Moneda;
-
+import com.entities.Preciosproducto;
 import com.entities.Producto;
-
+import com.entities.Subcategoria;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
 import com.google.gson.Gson;
@@ -436,12 +433,12 @@ public class ProductosAction extends DispatchAction {
 		
 		
 		/*** Instanciamos transacion ***/
-		productoDao.entityTransaction().begin();
+		EntityTransaction transaccion = productoDao.entityTransaction();
+		transaccion.begin();
 		
 		/**Cargamos Foto **/
 		if(pForm.getFoto()!=null){
 		FormFile fichero = pForm.getFoto();
-		String tipoContenido = fichero.getContentType();
 		String nombre = fichero.getFileName();
 		int tamanho = fichero.getFileSize();
 		String filePath = request.getRealPath("/").toString();
@@ -542,7 +539,7 @@ public class ProductosAction extends DispatchAction {
 			libroDiario.setiPeriodoId(iPeriodoId);
 			
 			 productoDao.persistEndidad(libroDiario);
-			 resultado = productoDao.commitEndidad(productoDao.entityTransaction());
+			 resultado = productoDao.commitEndidad(transaccion);
 			// productoDao.refreshEndidad(pro);
 			
 		} 
@@ -551,7 +548,7 @@ public class ProductosAction extends DispatchAction {
 			pro.setdFechaInserta(Fechas.getDate());
 			pro.setiUsuarioInsertaId(usu.getiUsuarioId());			
 			productoDao.persistEndidad(pro);
-		    resultado = productoDao.commitEndidad(productoDao.entityTransaction());
+		    resultado = productoDao.commitEndidad(transaccion);
 		    productoDao.refreshEndidad(pro);
 			
 		}
@@ -640,12 +637,12 @@ public class ProductosAction extends DispatchAction {
 			}
 			
 			 productoDao.mergeEndidad(pro);
-			 resultado = productoDao.commitEndidad(productoDao.entityTransaction());
+			 resultado = productoDao.commitEndidad(transaccion);
 			 productoDao.refreshEndidad(pro);
 		}
 		 else if (mode.equals("D")) { 	        	
 				productoDao.eliminarUnaEndidad(pro, "iProductoId", ids);/**/
-				resultado = productoDao.commitEndidad(productoDao.entityTransaction());
+				resultado = productoDao.commitEndidad(transaccion);
 			}
 		
 		if (resultado == true) {
