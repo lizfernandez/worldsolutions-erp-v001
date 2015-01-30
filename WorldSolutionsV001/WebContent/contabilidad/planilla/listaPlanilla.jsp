@@ -5,15 +5,15 @@
 
 <table border="0">
      <tr>
-        <td><button  class="button" onclick="popup('contabilidad.do?metodo=mantenimientoCuentas&mode=I',430,500)">
+        <td><button  class="button" onclick="popup('contabilidad.do?metodo=mantenimientoPlanilla&mode=I',630,550)">
                 <span class="new">Agregar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="eliminar('tabla','','contabilidad.do?metodo=iduCuentas&mode=D')">
+        <td><button  class="button" onclick="eliminar('tabla','','contabilidad.do?metodo=iduPlanilla&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=1',430,500)">
+        <td><button  class="button" onclick="popup('contabilidad.do?metodo=mantenimientoPlanilla&mode=F',430,500)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -38,12 +38,12 @@
        
       </tr>
       <tr>
-        <th align="center" >NSP<bean:write name="contabilidadForm" property="fPorDesSNP"/> %</th>  
-        <th align="center" >AFP<bean:write name="contabilidadForm" property="fPorDesAFP"/> %</th>  
-        <th align="center" >P.S<bean:write name="contabilidadForm" property="fPorDesPS"/> %</th>
-        <th align="center" >V.C<bean:write name="contabilidadForm" property="fPorDesCV"/> %</th>  
-       <th align="center" >ESSALUD <bean:write name="contabilidadForm" property="fPorApoESSALUD"/>  %</th>  
-        <th align="center" >I.E.S <bean:write name="contabilidadForm" property="fPorApoIES"/>  %</th>  
+        <th align="center" >NSP   <bean:write name="contabilidadForm" property="fPorDesSNP"/> %</th>  
+        <th align="center" >AFP  <bean:write name="contabilidadForm" property="fPorDesAFP"/> %</th>  
+        <th align="center" >P.S  <bean:write name="contabilidadForm" property="fPorDesPS"/> %</th>
+        <th align="center" >V.C  <bean:write name="contabilidadForm" property="fPorDesCV"/> %</th>  
+       <th align="center" >ESSALUD  <bean:write name="contabilidadForm" property="fPorApoESSALUD"/>  %</th>  
+        <th align="center" >I.E.S  <bean:write name="contabilidadForm" property="fPorApoIES"/>  %</th>  
        
       </tr>
     </thead>

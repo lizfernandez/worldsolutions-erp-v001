@@ -2,6 +2,7 @@ package com.struts.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +25,7 @@ import com.dao.ContabilidadDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
+import com.dao.OcupacionDao;
 import com.dao.PerfilDao;
 import com.dao.UsuarioDao;
 
@@ -40,6 +42,7 @@ import com.entities.Ingresoproductodevolucion;
 import com.entities.Kardex;
 import com.entities.Librodiario;
 import com.entities.Libromayor;
+import com.entities.Ocupacion;
 import com.entities.Perfil;
 import com.entities.Periodo;
 import com.entities.Personal;
@@ -1482,9 +1485,9 @@ public class ContabilidadAction extends DispatchAction {
 			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio())
                     +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
            
-			/****obtenermos los total del debe y haber***/
+			/****obtenermos los porcentajes de descuentos y aportes***/
 			
-				for (Configuracion planilla:Util.listaConfiguracion()){
+				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(new Configuracion())){
 				   if(planilla.getvConcepto().equals(Constantes.aportESSALUD)){
 					   contabilidadForm.setfPorApoESSALUD( Float.parseFloat( planilla.getvValor()));
 				   }
@@ -1501,7 +1504,8 @@ public class ContabilidadAction extends DispatchAction {
 					   contabilidadForm.setfPorDesPS( Float.parseFloat( planilla.getvValor()));
 				   }
 				   if(planilla.getvConcepto().equals(Constantes.descSNP)){
-					   contabilidadForm.setfPorDesSNP( Float.parseFloat( planilla.getvValor()));
+					   System.out.println(planilla.getvValor());
+					   contabilidadForm.setfPorDesSNP(Float.parseFloat( planilla.getvValor()));
 				   }
 				   
 					
@@ -1509,6 +1513,170 @@ public class ContabilidadAction extends DispatchAction {
 			
 					
 			//}// else
+			return mapping.findForward(msn);
+		}
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
+		 */
+		public ActionForward mantenimientoPlanilla(ActionMapping mapping,
+				ActionForm form, HttpServletRequest request,
+				HttpServletResponse response) {
+
+			
+
+			HttpSession sesion = request.getSession();			
+			String mode = request.getParameter("mode");
+			String msn="";
+			
+			
+			/** Instantacia al UsuarioForm **/			
+			ContabilidadForm contabilidadForm = (ContabilidadForm) form;
+			
+			
+			/** Instantacia a la capa Dao **/
+			EstadoDao estadoDao = new EstadoDao();
+			GenericaDao contabilidadDao = new GenericaDao();
+			
+			
+
+			/** llamado de los metodos de la clase dao **/
+
+			List<Estado> listaEstado = estadoDao.listEstado();
+		//	List<Ocupacion> listaOcupacion = contabilidadDao.listaEntidadGenerica(new Ocupacion());
+		
+
+			
+			/**LLamamos al formulario mantenimientoUsuario.jsp para la insercion de datos **/
+			if(mode.equals("I")){
+				/****obtenermos los porcentajes de descuentos y aportes***/
+				
+				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(new Configuracion())){
+				   if(planilla.getvConcepto().equals(Constantes.aportESSALUD)){
+					   contabilidadForm.setfPorApoESSALUD( Float.parseFloat( planilla.getvValor()));
+				   }
+				   if(planilla.getvConcepto().equals(Constantes.aportIES)){
+					   contabilidadForm.setfPorApoIES( Float.parseFloat( planilla.getvValor()));
+				   }
+				   if(planilla.getvConcepto().equals(Constantes.descAFP)){
+					   contabilidadForm.setfPorDesAFP( Float.parseFloat( planilla.getvValor()));
+				   }
+				   if(planilla.getvConcepto().equals(Constantes.descCV)){
+					   contabilidadForm.setfPorDesCV( Float.parseFloat( planilla.getvValor()));
+				   }
+				   if(planilla.getvConcepto().equals(Constantes.descPS)){
+					   contabilidadForm.setfPorDesPS( Float.parseFloat( planilla.getvValor()));
+				   }
+				   if(planilla.getvConcepto().equals(Constantes.descSNP)){
+					   System.out.println(planilla.getvValor());
+					   contabilidadForm.setfPorDesSNP(Float.parseFloat( planilla.getvValor()));
+				   }
+				   
+					
+				}
+				msn ="showEditPlanilla";
+			}
+			
+			/**LLamamos al formulario mantenimientoUsuario.jsp para mostrar los datos del UPDATE **/
+			/** Seteamos el Usuarioform la clase Usuario **/
+			else if(mode.equals("U") || mode.equals("D")){				
+				int id = Integer.parseInt(request.getParameter("id"));
+				Planilla planilla = contabilidadDao.findEndidad(contabilidadForm.getPlanilla(),id);
+				contabilidadForm.setPlanilla(planilla);
+				 
+					   contabilidadForm.setfPorApoESSALUD(planilla.getfPorApoESSALUD());
+				   	   contabilidadForm.setfPorApoIES(planilla.getfPorApoIES());
+				   	   contabilidadForm.setfPorDesAFP(planilla.getfPorDesAFP());
+				   	   contabilidadForm.setfPorDesCV(planilla.getfPorDesCV());
+				       contabilidadForm.setfPorDesPS(planilla.getfPorDesPS());
+				  	   contabilidadForm.setfPorDesSNP(planilla.getfPorDesSNP());
+				   
+				
+				msn ="showEditPlanilla";
+				
+			}
+			/**LLamamos al formulario buscarMantenimientoUsuario.jsp para realizar la busqueda **/
+			else if(mode.equals("F")){
+				msn ="showFindPlanilla";
+			}
+			
+			contabilidadForm.setMode(mode);
+
+			/** Colocamos en session las listas **/
+
+			
+			sesion.setAttribute("listaEstado", listaEstado);
+			//sesion.setAttribute("listaOcupacion", listaOcupacion);
+
+			return mapping.findForward(msn);
+		}
+
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
+		 */
+		public ActionForward iduPlanilla(ActionMapping mapping, ActionForm form,
+				HttpServletRequest request, HttpServletResponse response) {
+			
+			/** Inicializamos las variables **/ 
+			String msn = "";
+			String mode = request.getParameter("mode");		
+			String ids = request.getParameter("ids");		
+			boolean resultado = false;
+			GenericaDao contabilidadDao = new GenericaDao();
+			HttpSession sesion = request.getSession();
+			/** Instanciamos las clase UsuarioForm y UsuarioDao **/
+			ContabilidadForm pForm = (ContabilidadForm) form;
+			Planilla obj =pForm.getPlanilla();
+			obj.setPersonal(contabilidadDao.findEndidad(new Personal(), pForm.getiPersonalId()));
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
+			
+			EntityTransaction entityTransaction = contabilidadDao.entityTransaction();
+			entityTransaction.begin();
+	        /** **/
+			if (pForm.getMode().equals("I")) {
+				
+				obj.setdFechaInserta((Timestamp) Fechas.getDate());
+				obj.setiUsuarioInserta(usu.getiUsuarioId());
+				obj.setiPeriodoId(iPeriodoId);
+				resultado = contabilidadDao.insertarUnaEndidad(obj);
+				
+			} else if (pForm.getMode().equals("U")) {
+				//Usuario obj =pForm.getUsuario();
+				obj.setdFechaActualiza((Timestamp) Fechas.getDate());
+				obj.setiUsuarioActualiza(usu.getiUsuarioId());
+				resultado = contabilidadDao.actualizarUnaEndidad(obj);
+				
+			}
+			else if (mode.equals("D")) { 	
+				
+				contabilidadDao.eliminarUnaEndidad(obj, "iPlanillaId",ids);/**/
+				resultado = contabilidadDao.commitEndidad(entityTransaction);
+				
+				}
+				
+			if (resultado == true) {
+				msn = "msnOk";
+
+			}
+			else  {
+				msn = "msnError";
+
+			}
+			/** llamamos a listar Usuario **/
+			//listaUsuario(mapping, pForm, request, response);
+			
 			return mapping.findForward(msn);
 		}
 		
