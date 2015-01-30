@@ -11,6 +11,8 @@
 	    <html:text property="vPersonalNombres"  styleId="vPersonalNombres"  styleClass="text inputDisabled"/>
 	    <img  onclick="popupModal('personal.do?metodo=listaPersonal&mode=LP',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png"/>
 	    <span id="m_cPersonalCodigo" class="importante">*</span>
+	    <input type="hidden" id="vOcupacionDescripcion"/>
+	    <input type="hidden" id="fSueldo"/>
 	    </td>
 </tr>
 <tr>

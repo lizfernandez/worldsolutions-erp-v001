@@ -360,11 +360,15 @@ function busqueda(url, flag){
 }
 
 
-function retornar(txtid,id,txtcod,cod,txtnom,nom){
+function retornar(txtid,id,txtcod,cod,txtnom,nom,txtsueldo,sueldo,txtocup,ocup){
 
    window.opener.document.getElementById(txtid).value=id;/**/
    window.opener.document.getElementById(txtcod).value=cod;
    window.opener.document.getElementById(txtnom).value=nom;
+   
+   window.opener.document.getElementById(txtsueldo).value=sueldo;
+   window.opener.document.getElementById(txtocup).value=ocup;
+   
    window.close();
 }
 function retornarProv(txtid,id,txtcod,cod,txtnom,nom,txtruc, ruc, txtdir, dir, txtdir2){

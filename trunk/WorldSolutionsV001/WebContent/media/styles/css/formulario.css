@@ -11,7 +11,7 @@
 	display: none;
 	margin-top:  -13px;
 }
-.text, .textN, .combo, .comboCodigo,.textCodigo, .textExtraGrande{
+.text, .textN, .combo, .comboCodigo,.textCodigo, .textExtraGrande, .textNumero{
 	background-color: #FFFFFF;
     background-image: none;
     border: 1px solid #CCCCCC;
@@ -30,7 +30,7 @@
 }
 
 .textNumero{
-	width: 107px;
+	/*width: 107px;*/
 	text-align: right;
 }
 .textInvisible{
