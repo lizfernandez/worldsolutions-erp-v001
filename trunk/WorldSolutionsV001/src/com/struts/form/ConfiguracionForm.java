@@ -146,19 +146,7 @@ public class ConfiguracionForm extends ActionForm {
 		this.conf.setcEstadoCodigo(cEstadoCodigo);
 	}
 
-	/**
-	 * @return the dFechaInserta
-	 */
-	public Date getdFechaInserta() {
-		return conf.getdFechaInserta();
-	}
-
-	/**
-	 * @param dFechaInserta the dFechaInserta to set
-	 */
-	public void setdFechaInserta(Date dFechaInserta) {
-		this.conf.setdFechaInserta(dFechaInserta) ;
-	}
+	
 
 	/**
 	 * @return the vConcepto

@@ -42,7 +42,9 @@ public class ContabilidadForm extends ActionForm {
 	Producto producto = new Producto();	
 	Librodiario librodiario = new Librodiario();
 	Planilla planilla = new Planilla();
-	
+	private String vPersonalNombres;
+	private String vOcupacionDescripcion;
+    
     private String mode;
     private List paginas;
     private int pagInicio; 
@@ -520,11 +522,12 @@ public class ContabilidadForm extends ActionForm {
 		List<String> listaEstadoCodigo = new ArrayList<String>();
 		listaEstadoCodigo.add(ingresoProducto.getcEstadoCodigo());
 		listaEstadoCodigo.add(planilla.getcEstadoCodigo());
+		listaEstadoCodigo.add(librodiario.getcEstadoCodigo());
 	
 		
 		for ( String lista:listaEstadoCodigo)	{
-			if(lista!=""){
-				cEstadoCodigo= lista.toString();
+			if(lista!=null){
+				cEstadoCodigo= lista;
 			}
 		}	
 		
@@ -1547,23 +1550,70 @@ public String getvProductoCapacidad() {
 	}
 
 	
+	public Personal getPersonal(){
+		 Personal personal = planilla.getPersonal();
+		 if(personal==null){
+			 personal= new Personal();
+			 planilla.setPersonal(personal);
+		 }
+		 return planilla.getPersonal();
+	}
+
+	public void setPersonal(Personal personal) {
+		this.planilla.setPersonal(personal);
+	}
+	
+	/**
+	 * @return the cPersonalCodigo
+	 */
+	public String getcPersonalCodigo() {		 
+		return getPersonal().getcPersonalCodigo();
+	}
+
+	/**
+	 * @param cPersonalCodigo the cPersonalCodigo to set
+	 */
+	public void setcPersonalCodigo(String cPersonalCodigo) {
+	}
+	
+   /**
+	 * @return the vPersonalNombres
+	 */
+	public String getvPersonalNombres() {
+		Personal personal = getPersonal();	
+		if(personal.getvPersonalNombres()!=null){
+			vPersonalNombres = personal.getvPersonalNombres()+" "+personal.getvPersonalApellidoPaterno();
+		}
+		return vPersonalNombres;
+	}
+
+	
+	/**
+	 * @param vPersonalNombres the vPersonalNombres to set
+	 */
+	public void setvPersonalNombres(String vPersonalNombres) {
+		this.vPersonalNombres = vPersonalNombres;
+	}
+	
 	/**
 	 * @return the persona
 	 */
 	public int getiPersonalId() {
-		return planilla.getPersonal().getiPersonalId();
+		return getPersonal().getiPersonalId();
 	}
 
 	/**
 	 * @param persona the persona to set
 	 */
 	public void setiPersonalId(int iPersonalId) {
-		Personal personal = planilla.getPersonal();//new Proveedor();
+		Personal personal = getPersonal();//new Proveedor();
 		if(personal==null)
 			personal = new  Personal();
 		   personal.setiPersonalId(iPersonalId);		
 		this.planilla.setPersonal(personal);
 	}
+	
+	
 	/**
 	 * @return the planilla
 	 */
@@ -1577,5 +1627,18 @@ public String getvProductoCapacidad() {
 		this.planilla = planilla;
 	}
 	
+	/**
+	 * @return the vOcupacionDescripcion
+	 */
+	public String getvOcupacionDescripcion() {
+		return vOcupacionDescripcion;
+	}
+
+	/**
+	 * @param vOcupacionDescripcion the vOcupacionDescripcion to set
+	 */
+	public void setvOcupacionDescripcion(String vOcupacionDescripcion) {
+		this.vOcupacionDescripcion = vOcupacionDescripcion;
+	}
 	
 }
