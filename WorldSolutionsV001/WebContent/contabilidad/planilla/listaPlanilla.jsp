@@ -30,9 +30,9 @@
         <th align="left" rowspan="2" >Sueldo</th>        
         <th align="center" rowspan="2" >Asig. Familiar</th> 
         <th align="center" rowspan="2" >Total Remuner.</th>
-        <th align="center" colspan="3">Descuentos del trabajador</th>
+        <th align="center" colspan="4">Descuentos del trabajador</th>
          <th align="left" rowspan="2" >Total Desc.</th>  
-        <th align="center" colspan="3">Aportes del empleador</th>
+        <th align="center" colspan="2">Aportes del empleador</th>
          <th align="left"  rowspan="2">Total Aport.</th>
         <th align="left"  rowspan="2" >Neto a Pagar</th>                       
        
@@ -58,13 +58,13 @@
 	<tr>
 	    <td align="center"><input type="checkbox" id="<bean:write name="x" property="iPlanillaId" />"/></td> 
 		<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('contabilidad.do?metodo=mantenimientoPlanilla&mode=U&id=<bean:write name="x" property="iPlanillaId" />',430,500)" /></td>
+		                     onclick="popup('contabilidad.do?metodo=mantenimientoPlanilla&mode=U&id=<bean:write name="x" property="iPlanillaId" />',630,550)" /></td>
 		<td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iPlanillaId" />','contabilidad.do?metodo=iduPlanilla&mode=D')" /></td>	
 		
 		
-	    <td><bean:write name="x" property="persona.vPersonalNombres" /></td>
-	    <td><bean:write name="x" property="persona.vPersonalNombres" /></td>
+	    <td><bean:write name="x" property="personal.vPersonalNombres" /></td>
+	    <td><bean:write name="x" property="personal.ocupacion.vOcupacionDescripcion" /></td>
 	     <td><bean:write name="x" property="fSueldo" format="#,##0.00" locale="Localidad"/></td>
 	     <td><bean:write name="x" property="fAsignacionFamiliar" format="#,##0.00" locale="Localidad"/></td>
 	     <td><bean:write name="x" property="fTotalRemuneracion" format="#,##0.00" locale="Localidad"/></td>

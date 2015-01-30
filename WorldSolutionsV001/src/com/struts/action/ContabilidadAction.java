@@ -1642,25 +1642,49 @@ public class ContabilidadAction extends DispatchAction {
 			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 			
-			EntityTransaction entityTransaction = contabilidadDao.entityTransaction();
-			entityTransaction.begin();
+			
 	        /** **/
 			if (pForm.getMode().equals("I")) {
 				
-				obj.setdFechaInserta((Timestamp) Fechas.getDate());
+				obj.setdFechaInserta(Fechas.timestamp());
 				obj.setiUsuarioInserta(usu.getiUsuarioId());
 				obj.setiPeriodoId(iPeriodoId);
+				
+				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(new Configuracion())){
+					   if(planilla.getvConcepto().equals(Constantes.aportESSALUD)){
+						   obj.setfPorApoESSALUD( Float.parseFloat( planilla.getvValor()));
+					   }
+					   if(planilla.getvConcepto().equals(Constantes.aportIES)){
+						   obj.setfPorApoIES( Float.parseFloat( planilla.getvValor()));
+					   }
+					   if(planilla.getvConcepto().equals(Constantes.descAFP)){
+						   obj.setfPorDesAFP( Float.parseFloat( planilla.getvValor()));
+					   }
+					   if(planilla.getvConcepto().equals(Constantes.descCV)){
+						   obj.setfPorDesCV( Float.parseFloat( planilla.getvValor()));
+					   }
+					   if(planilla.getvConcepto().equals(Constantes.descPS)){
+						   obj.setfPorDesPS( Float.parseFloat( planilla.getvValor()));
+					   }
+					   if(planilla.getvConcepto().equals(Constantes.descSNP)){
+						   System.out.println(planilla.getvValor());
+						   obj.setfPorDesSNP(Float.parseFloat( planilla.getvValor()));
+					   }
+					   
+						
+					}
 				resultado = contabilidadDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
 				//Usuario obj =pForm.getUsuario();
-				obj.setdFechaActualiza((Timestamp) Fechas.getDate());
+				obj.setdFechaActualiza(Fechas.timestamp());
 				obj.setiUsuarioActualiza(usu.getiUsuarioId());
 				resultado = contabilidadDao.actualizarUnaEndidad(obj);
 				
 			}
 			else if (mode.equals("D")) { 	
-				
+				EntityTransaction entityTransaction = contabilidadDao.entityTransaction();
+				entityTransaction.begin();
 				contabilidadDao.eliminarUnaEndidad(obj, "iPlanillaId",ids);/**/
 				resultado = contabilidadDao.commitEndidad(entityTransaction);
 				

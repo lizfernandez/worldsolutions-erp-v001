@@ -60,9 +60,10 @@ public class Planilla implements Serializable {
 
 	private float fTotalRemuneracion;
 	//bi-directional many-to-one association to Cliente
-    @ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iPersonalId", nullable=false)
-	private Personal  persona;
+	
+	private Personal personal;
 
 	private int iPeriodoId;
 
@@ -381,19 +382,18 @@ public class Planilla implements Serializable {
 		this.fTotalRemuneracion = fTotalRemuneracion;
 	}
 
-	
 	/**
 	 * @return the persona
 	 */
 	public Personal getPersonal() {
-		return persona;
+		return personal;
 	}
 
 	/**
 	 * @param persona the persona to set
 	 */
 	public void setPersonal(Personal persona) {
-		this.persona = persona;
+		this.personal = persona;
 	}
 
 	/**
@@ -438,5 +438,5 @@ public class Planilla implements Serializable {
 		this.iUsuarioInserta = iUsuarioInserta;
 	}
 
-
+	
 }
