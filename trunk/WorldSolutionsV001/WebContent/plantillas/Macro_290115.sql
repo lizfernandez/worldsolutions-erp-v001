@@ -25,6 +25,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Estructura de tabla para la tabla `area`
 --
 
+CREATE DATABASE macrostruts;
+
+USE macrostruts;
+
 DROP TABLE IF EXISTS `area`;
 CREATE TABLE IF NOT EXISTS `area` (
   `iAreaId` int(11) NOT NULL AUTO_INCREMENT,
@@ -936,7 +940,7 @@ CREATE TABLE IF NOT EXISTS `ingresoproductodevoluciondetalle` (
   `dFechaInserta` date DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
   `dFechaActualiza` date DEFAULT NULL,
-  `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `cEstadoCodigo` char(2) COLLATE utf8_spanish_visitaclienteci DEFAULT NULL,
   `fDescuento` float DEFAULT NULL,
   PRIMARY KEY (`iIngresoProductoDevolucionDetalleId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=9 ;
