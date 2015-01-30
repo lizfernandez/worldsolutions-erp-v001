@@ -379,6 +379,9 @@
                      <forward name="showListCajaBancos" path=".listCajaBancos" />
                      <forward name="showEditCuentas" path=".mantenimientoCuentas" />
                      <forward name="showListPlanilla" path=".listPlanilla" />
+                     <forward name="showEditPlanilla" path=".mantenimientoPlanilla" />
+                     <forward name="showFindPlanilla" path=".buscarMantenimientoPlanilla" />
+                     
                      
                      
                      

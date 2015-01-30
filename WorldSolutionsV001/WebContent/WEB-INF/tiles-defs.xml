@@ -467,9 +467,14 @@
 <put name="body" value="/contabilidad/planilla/listaPlanilla.jsp"></put>   
     <put name="menuVertical" value="/contabilidad/sidebar.jsp"></put>   
 </definition>
-
-  
-
+<definition name=".mantenimientoPlanilla" extends=".popup">
+    <put name="body" value="/contabilidad/planilla/mantenimientoPlanilla.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientoPlanilla" extends=".popup">
+    <put name="body" value="/contabilidad/planilla/buscarMantenimientoPlanilla.jsp"></put>   
+</definition>
+                       
+                     
 <definition name=".listLibroDiario" extends=".plantilla">
     <put name="body" value="/contabilidad/contable/listaLibroDiario.jsp"></put>   
     <put name="menuVertical" value="/contabilidad/sidebar.jsp"></put>  
