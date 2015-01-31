@@ -1342,9 +1342,10 @@ public class ContabilidadAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) { 
-				    contabilidadDao.entityTransaction().begin();
+				    EntityTransaction transaction = contabilidadDao.entityTransaction();
+				    transaction.begin();
 					contabilidadDao.eliminarUnaEndidad(obj, "iLibroDiarioId",ids);/**/
-					resultado = contabilidadDao.commitEndidad(contabilidadDao.entityTransaction());
+					resultado = contabilidadDao.commitEndidad(transaction);
 				
 				}
 			

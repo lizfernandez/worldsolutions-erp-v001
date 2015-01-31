@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -203,9 +204,10 @@ public class PersonalAction extends DispatchAction {
 			
 		}
        else if (mode.equals("D")) { 
-    	   personalDao.entityTransaction().begin();
+    	   EntityTransaction transaction = personalDao.entityTransaction();
+    	   transaction.begin();
     	   personalDao.eliminarUnaEndidad(obj, "iPersonalId",ids);/**/
-		   resultado = personalDao.commitEndidad(personalDao.entityTransaction());
+		   resultado = personalDao.commitEndidad(transaction);
 		}
 		
 		if (resultado == true) {

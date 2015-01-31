@@ -1086,7 +1086,7 @@ public class VentaAction extends DispatchAction {
 	            	  int idVentaId=obj.getiVentaId();
 	            	  int nNumeroLetra=1;
 	            	  entityTransaction= ventaDao.entityTransaction();
-	            	  ventaDao.entityTransaction().begin();
+	            	  entityTransaction.begin();
 	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra,pForm.getFormaPago().getiFormaPago()); 
 	            	  resultado = ventaDao.commitEndidad(entityTransaction);
 	            	
@@ -1451,13 +1451,14 @@ public class VentaAction extends DispatchAction {
 				  }
 				  
 				ventaDao.mergeEndidad(obj1);
-				resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
+				resultado = ventaDao.commitEndidad(entityTransaction);
 				  if(resultado==true){
 					  int idVentaId=obj1.getiVentaId();
 					  int nNumeroLetra=1;
-	            	  ventaDao.entityTransaction().begin();
+					  entityTransaction = ventaDao.entityTransaction();
+					  entityTransaction.begin();
 	            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra, obj1.getFormaPago().getiFormaPago()); 
-	            	  resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
+	            	  resultado = ventaDao.commitEndidad(entityTransaction);
 	              }
 				
 				ventaDao.refreshEndidad(obj1);
@@ -1465,7 +1466,7 @@ public class VentaAction extends DispatchAction {
 			else if (mode.equals("D")) {
 
 				ventaDao.eliminarUnaEndidad(pForm.getVenta(),"iVentaId", ids);/**/
-				resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
+				resultado = ventaDao.commitEndidad(entityTransaction);
 
 			}
 
