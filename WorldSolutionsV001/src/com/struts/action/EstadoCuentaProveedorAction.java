@@ -246,7 +246,8 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 			
 			
 	        /**Instanciamos una transacion**/
-			ingresoProductoDao.entityTransaction().begin();
+			EntityTransaction transaction = ingresoProductoDao.entityTransaction();
+			transaction.begin();
 			if (pForm.getMode().equals("I")) {
 				obj = pForm.getEstadoCuentaProveedor();
 				obj.setdFechaInserta(Fechas.getDate());
@@ -271,7 +272,7 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 					estadoCuentaProveedorDao.persistEndidad(obj);
 				}
 				/** realizamos el commit del objeto estadocuenta proveedor**/
-				resultado = estadoCuentaProveedorDao.commitEndidad(ingresoProductoDao.entityTransaction());
+				resultado = estadoCuentaProveedorDao.commitEndidad(transaction);
 				ingresoProductoDao.refreshEndidad(obj);
 				
 			}// fin mode I;
@@ -301,7 +302,7 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 					ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
 					ingresoProductoDao.mergeEndidad(ingresoproducto);
 			    }
-			    resultado = ingresoProductoDao.commitEndidad(ingresoProductoDao.entityTransaction());
+			    resultado = ingresoProductoDao.commitEndidad(transaction);
 			    ingresoProductoDao.refreshEndidad(obj);
 				
 			}
@@ -312,7 +313,7 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 					Ingresoproducto ingresoproducto = obj.getIngresoproducto();
 					ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
 					ingresoProductoDao.mergeEndidad(ingresoproducto);
-					resultado = ingresoProductoDao.commitEndidad(ingresoProductoDao.entityTransaction());
+					resultado = ingresoProductoDao.commitEndidad(transaction);
 					/**/
 				
 				}

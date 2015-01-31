@@ -1233,7 +1233,7 @@ public class IngresoProductoAction extends DispatchAction {
 		else if (mode.equals("D")) {
 
 			ingresogenericaDao.eliminarUnaEndidad(obj, "iIngresoProductoId",ids);/**/
-			resultado = ingresogenericaDao.commitEndidad(ingresogenericaDao.entityTransaction());
+			resultado = ingresogenericaDao.commitEndidad(trx);
 
 		}
 

@@ -264,9 +264,12 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 			
 			
 	        /** Iniciamos Transacion **/
-			estadoCuentaClienteDao.entityTransaction().begin();
-			
+
+			EntityTransaction transaction = estadoCuentaClienteDao.entityTransaction();
+			transaction.begin();
 			if (pForm.getMode().equals("I")) {
+				
+
 				
 					obj.setdFechaInserta(Fechas.getDate());
 					obj.setcEstadoCodigo(Constantes.estadoActivo);
@@ -289,7 +292,7 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 					else{
 						estadoCuentaClienteDao.persistEndidad(obj);
 					}					
-					estadoCuentaClienteDao.commitEndidad(estadoCuentaClienteDao.entityTransaction());
+					estadoCuentaClienteDao.commitEndidad(transaction);
 					estadoCuentaClienteDao.refreshEndidad(obj);
 			   
 				
@@ -324,7 +327,7 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 					ingresoProductoDao.mergeEndidad(venta);
 			    }
 				
-				ingresoProductoDao.commitEndidad(ingresoProductoDao.entityTransaction());
+				ingresoProductoDao.commitEndidad(transaction);
 			}
 			else if (mode.equals("D")) { 
 				obj = estadoCuentaClienteDao.findEndidad(obj,Integer.parseInt(ids));
@@ -333,7 +336,7 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 					Venta venta = obj.getVenta();
 					venta.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
 					ingresoProductoDao.mergeEndidad(venta);
-					resultado = ingresoProductoDao.commitEndidad(estadoCuentaClienteDao.entityTransaction());
+					resultado = ingresoProductoDao.commitEndidad(transaction);
 					/**/
 				
 				}

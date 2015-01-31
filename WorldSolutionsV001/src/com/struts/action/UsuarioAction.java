@@ -3,6 +3,7 @@ package com.struts.action;
 import java.io.IOException;
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -184,9 +185,10 @@ public class UsuarioAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) { 	
-				usuarioDao.entityTransaction().begin();
+				EntityTransaction transaction = usuarioDao.entityTransaction();
+				transaction.begin();
 				usuarioDao.eliminarUnaEndidad(obj, "iUsuarioId",ids);/**/
-				resultado = usuarioDao.commitEndidad(usuarioDao.entityTransaction());
+				resultado = usuarioDao.commitEndidad(transaction);
 				
 				}
 				

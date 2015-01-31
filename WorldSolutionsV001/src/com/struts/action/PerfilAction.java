@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -359,9 +360,10 @@ public class PerfilAction extends DispatchAction {
 	  	
 		}
        else if (mode.equals("D")) {  
-    	   objPerfildao.entityTransaction().begin();
+    	   EntityTransaction transaction = objPerfildao.entityTransaction();
+    	   transaction.begin();
 			perfilDao.eliminarUnaEndidad(obj, "iPerfilId", ids);/**/
-			resultado = objPerfildao.commitEndidad(objPerfildao.entityTransaction());
+			resultado = objPerfildao.commitEndidad(transaction);
 		}
 		
 		if (resultado == true) {
