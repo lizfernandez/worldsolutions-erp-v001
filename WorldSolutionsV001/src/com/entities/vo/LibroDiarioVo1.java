@@ -2,7 +2,7 @@ package com.entities.vo;
 
 import java.util.Date;
 
-public class LibroDiarioVo {
+public class LibroDiarioVo1 {
 	private int iLibroDiarioId;
 	private float fMontoD;
 	private float fMontoH;

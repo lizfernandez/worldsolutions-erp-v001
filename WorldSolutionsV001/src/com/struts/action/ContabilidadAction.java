@@ -54,7 +54,7 @@ import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.Ventadevolucion;
 import com.entities.vo.EstadoCuentaVo;
-import com.entities.vo.LibroDiarioVo;
+import com.entities.vo.LibroDiarioVo1;
 import com.google.gson.Gson;
 
 import com.struts.form.ContabilidadForm;
@@ -826,10 +826,10 @@ public class ContabilidadAction extends DispatchAction {
 			
 			
 			
-			List<LibroDiarioVo> libroBalance= new ArrayList<LibroDiarioVo>();
+			List<LibroDiarioVo1> libroBalance= new ArrayList<LibroDiarioVo1>();
 			/****obtenermos los total del debe y haber***/
 			for(Libromayor libro:listaLibroDiarioTotal){
-				LibroDiarioVo li= new LibroDiarioVo();
+				LibroDiarioVo1 li= new LibroDiarioVo1();
 					if((libro.getfMontoDebe()-libro.getfMontoHaber())>0)
 				{
 					 li.setfMontoSaldoD(libro.getfMontoDebe()-libro.getfMontoHaber());
@@ -859,7 +859,7 @@ public class ContabilidadAction extends DispatchAction {
 			
 			}
 			for(Libromayor libro:listaLibroDiario){
-				LibroDiarioVo li= new LibroDiarioVo();
+				LibroDiarioVo1 li= new LibroDiarioVo1();
 				li.setcEstadoCodigo(libro.getCuenta().getvCodigo());
 				li.setvDescripcion(libro.getCuenta().getvDescripcion());
 				li.setfMontoD(libro.getfMontoDebe());
