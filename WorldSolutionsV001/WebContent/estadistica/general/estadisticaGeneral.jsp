@@ -45,7 +45,7 @@
 	            dateFormat: 'dd/mm/yy',
 	            defaultDate: -1,
 	            maxDate: '+0d'
-	    })
+	    });
  if(condicion=='diario') {	
 	 fn_cambiar(true);
 	 

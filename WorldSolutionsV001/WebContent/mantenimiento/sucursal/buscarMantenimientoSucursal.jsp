@@ -20,14 +20,14 @@
 <tr>
     <td align="right">Direcci&oacute;n:</td>
     <td>
-       <html:text property="vSucursalDireccion" styleId="vSucursalDireccion" onkeyup="return mayuscula('vSucursalNombre')" styleClass="text"/>
+       <html:text property="vSucursalDireccion" styleId="vSucursalDireccion" onkeyup="return mayuscula('vSucursalDireccion')" styleClass="text"/>
        <span id="m_vSucursalDireccion" class="importante">*</span>
    </td>
 </tr>
 <tr>
     <td align="right">Tel&eacute;fono:</td>
     <td>
-       <html:text property="vSucursalTelefono" styleId="vSucursalTelefono" onkeyup="return mayuscula('vSucursalNombre')" styleClass="text"/>
+       <html:text property="vSucursalTelefono" styleId="vSucursalTelefono" onkeyup="return mayuscula('vSucursalTelefono')" styleClass="text"/>
        <span id="m_vSucursalTelefono" class="importante">*</span>
    </td>
 </tr>

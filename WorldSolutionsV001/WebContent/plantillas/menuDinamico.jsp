@@ -1,9 +1,9 @@
 <%@page import="com.entities.Permiso"%>
 <%@ page language="java"%>
 <%@ page import="java.util.List" session="true"%>
-<%@ page import="com.entities.Usuario" %>
-<% // Usuario usu = (Usuario) session.getAttribute("Usuario");
-List<Permiso> listapermiso = (List<Permiso>)session.getAttribute("listaPermisoUsuario");
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+if(listapermiso!=null){
 %>
  <!-- <div id="menu">
       <div class="dock" id="dock2" >
@@ -101,28 +101,29 @@ List<Permiso> listapermiso = (List<Permiso>)session.getAttribute("listaPermisoUs
 
 <!-- div id="header"></div> -->
 	<div id="navigation" class="container">
-	<% for (Permiso per: listapermiso) {
-	   if(per.getvCodigoMenu().equals("10")){%>
+	<% for (String per: listapermiso) {
+		if(per!=null){
+	   if(per.equals("10")){%>
 		<div id="inventario" class="pri-nav"><div><a href="productos.do?metodo=listaProducto&iclasificacionId=1">inventario</a></div></div>
-	 <%}if(per.getvCodigoMenu().equals("20")){ %>	
+	 <%}if(per.equals("20")){ %>	
 		<div id="cliente" class="pri-nav"><div><a href="cliente.do?metodo=listaCliente">cliente</a></div></div>
-	 <%}if(per.getvCodigoMenu().equals("30")){ %>
+	 <%}if(per.equals("30")){ %>
 		<div id="proveedor" class="pri-nav"><div><a href="proveedor.do?metodo=listaProveedor">proveedor</a></div></div>
-     <%} if(per.getvCodigoMenu().equals("40")){%>
+     <%} if(per.equals("40")){%>
 		<div id="compra" class="pri-nav"><div><a href="ingresoProducto.do?metodo=listaIngresoproducto">compra</a></div></div>
-	 <%} if(per.getvCodigoMenu().equals("50")){%>
+	 <%} if(per.equals("50")){%>
 		<div id="venta" class="pri-nav"><div><a href="venta.do?metodo=listaVenta">venta</a></div></div>
-	 <%} if(per.getvCodigoMenu().equals("60")){%>
+	 <%} if(per.equals("60")){%>
 		<div id="contabilidad" class="pri-nav"><div><a href="contabilidad.do?metodo=listaVenta">contabilidad</a></div></div>
-	 <%}if(per.getvCodigoMenu().equals("70")){ %>
+	 <%}if(per.equals("70")){ %>
 		<div id="estadistica" class="pri-nav"><div><a href="estadistica.do?metodo=estadisticaGeneral&mode=GE">estadistica</a></div></div>
-	 <%} if(per.getvCodigoMenu().equals("80")){%>
+	 <%} if(per.equals("80")){%>
 		<div id="admin" class="pri-nav"><div><a href="perfil.do?metodo=listaPerfil">admin</a></div></div>
-	 <%}
+	 <%}}
 	 }// for %>
 	 
 	</div>
-	
+	<%} //if %>
 	<!-- div class="container">
 		<div class="content">
 			<div id="content-title"></div>

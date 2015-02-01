@@ -98,6 +98,10 @@ public class Venta implements Serializable {
     @ManyToOne
 	@JoinColumn(name="iUsuarioId", nullable=false)
 	private Usuario usuario;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="iSucursalId", nullable=false)
+	private Sucursal sucursal;
 
 	//bi-directional many-to-one association to Ventadetalle
 	@OneToMany(mappedBy="venta", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
@@ -644,6 +648,20 @@ public class Venta implements Serializable {
 	 */
 	public void setLetracliente(List<Letracliente> letracliente) {
 		this.letracliente = letracliente;
+	}
+
+	/**
+	 * @return the sucursal
+	 */
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	/**
+	 * @param sucursal the sucursal to set
+	 */
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
 	}
 
 	

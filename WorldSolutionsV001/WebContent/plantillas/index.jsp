@@ -16,20 +16,20 @@
 <head>  
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
     <title><tiles:getAsString name="title" ignore="true"/></title>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery-1.4.2.js"></script>
-    <!--  script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.ui.core.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.ui.widget.js"></script>    
-    <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/interface.js"></script>-->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/general.js"></script>
-    <!--script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/acciones.js"></script-->
+        <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery-1.4.2.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.ui.datepicker.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/general.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery-ui.min.js"></script>
+    
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/media/Plugin-estadisticas/extjs/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/media/Plugin-estadisticas/extjs/js/ext-all.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.js" ></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery-bp.js" ></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/navigation.js" ></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.ui.datepicker.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.multiselect.min.js"></script>
-    
+	  
  
 </head>
     <link href="${pageContext.request.contextPath}/media/styles/css/principal.css" rel="stylesheet" type="text/css"></link>
@@ -66,7 +66,7 @@
 					                </div-->	             
 			                      </a>    
 			                </div><!--logo-->
-			                <div id="datosLogeo">
+			                <!-- div id="datosLogeo">
 			                      <span class="font_8" >
 			                          <span class="color_15"><strong>Bienvenido:</strong>
 			                            &ensp;<%=usu.getPersonal().getvPersonalNombres()+" "+usu.getPersonal().getvPersonalApellidoPaterno()+" "+usu.getPersonal().getvPersonalApellidoMaterno()%>
@@ -79,7 +79,7 @@
               					     
              					 </a>
              					 </span>
-                            </div>
+                            </div-->
                      <div id="contenidoMenu"><tiles:insert attribute="menu"/> </div>
                             
 	            </div> 
@@ -92,7 +92,11 @@
 			          
 			           <a href="#"><strong>Bienvenido:</strong>
 			                            &ensp;<%=usu.getPersonal().getvPersonalNombres()+" "+usu.getPersonal().getvPersonalApellidoPaterno()%>
-			                         </a>
+			           </a>
+			           <br/>
+			           <a href="#" style="font-size:9px"><strong>Sucursal:</strong>
+			                         &ensp;&ensp;&ensp;<%=usu.getSucursal().getvSucursalNombre()%> 
+			           </a>
 			       </div> 
 			      <div class="btn_admin" id="home">
 			           <img src="${pageContext.request.contextPath}/media/imagenes/home.png" width="20" height="20" />

@@ -8,6 +8,7 @@ import org.apache.struts.action.ActionForm;
 import com.entities.Perfil;
 import com.entities.Personal;
 import com.entities.Session;
+import com.entities.Sucursal;
 import com.entities.Usuario;
 
 
@@ -192,9 +193,7 @@ public class UsuarioForm extends ActionForm {
 		 return usuario.getPersonal();
 	}
 
-	public void setPersonal(Personal personal) {
-		this.usuario.setPersonal(personal);
-	}
+	
 	
 	/**
 	 * @return the cPersonalCodigo
@@ -275,10 +274,41 @@ public class UsuarioForm extends ActionForm {
 		return usuario.getPerfil();
 	}
 
-	public void setPerfil(Perfil perfil) {
-		this.usuario.setPerfil(perfil);
-	}
 	
+	
+	/**
+	 * @return the iSucursalId
+	 */
+	public Sucursal getSucursal() {
+		Sucursal sucursal = usuario.getSucursal();
+		if(sucursal==null){
+			sucursal = new Sucursal();
+			usuario.setSucursal(sucursal);
+		}
+		return this.usuario.getSucursal();
+		
+	}
+
+	
+
+	/**
+	 * @return the iSucursalId
+	 */
+	public int getiSucursalId() {
+		return getSucursal().getiSucursalId();
+	}
+
+	/**
+	 * @param iSucursalId the iSucursalId to set
+	 */
+	public void setiSucursalId(int iSucursalId) {
+		System.out.println("iSucursalId= "+iSucursalId);
+		Sucursal sucursal = getSucursal();
+		sucursal.setiSucursalId(iSucursalId);
+			this.usuario.setSucursal(sucursal);
+		
+	}
+
 	
 	
 }

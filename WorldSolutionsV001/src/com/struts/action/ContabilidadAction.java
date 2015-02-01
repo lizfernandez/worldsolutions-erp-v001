@@ -1625,9 +1625,14 @@ public class ContabilidadAction extends DispatchAction {
 		 * @param request
 		 * @param response
 		 * @return ActionForward
+		 * @throws NoSuchFieldException 
+		 * @throws IllegalAccessException 
+		 * @throws ClassNotFoundException 
+		 * @throws SecurityException 
+		 * @throws IllegalArgumentException 
 		 */
 		public ActionForward iduPlanilla(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) {
+				HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
 			
 			/** Inicializamos las variables **/ 
 			String msn = "";
@@ -1678,6 +1683,10 @@ public class ContabilidadAction extends DispatchAction {
 				
 			} else if (pForm.getMode().equals("U")) {
 				//Usuario obj =pForm.getUsuario();
+				
+				
+				  obj =  contabilidadDao.findEndidad(obj,pForm.getiPlanillaId());
+				  obj= Util.comparar(obj, pForm.getPlanilla());
 				obj.setdFechaActualiza(Fechas.timestamp());
 				obj.setiUsuarioActualiza(usu.getiUsuarioId());
 				resultado = contabilidadDao.actualizarUnaEndidad(obj);

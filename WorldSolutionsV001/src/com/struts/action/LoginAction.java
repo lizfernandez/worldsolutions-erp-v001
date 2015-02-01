@@ -39,7 +39,19 @@ public class LoginAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 	
 		String msn="";
-		HttpSession sesion = request.getSession();		
+		HttpSession sesion = request.getSession();	
+		sesion.removeAttribute("Usuario");
+		sesion.removeAttribute("Fecha");
+		sesion.removeAttribute("id");
+		sesion.removeAttribute("listaMisPermisoUsuario");
+		sesion.removeAttribute("Moneda");
+		sesion.removeAttribute("TipoCambio");
+		sesion.removeAttribute("IGVCompras");
+		sesion.removeAttribute("IGVPercepcion");
+		sesion.removeAttribute("IGVVentas");
+		sesion.removeAttribute("iPeriodoId");
+		
+		
 		
 		/** Instanciamos la Clase LoginForm **/
 		LoginForm objform = (LoginForm) form;
@@ -54,6 +66,7 @@ public class LoginAction extends DispatchAction {
 		int j=0;
 		usuario= usuarioDao.login(objform.getvUsuarioLogin(), objform.getvUsuarioPassword(),"");
 		listapermiso = perfilDao.listaFindPermiso(usuario.get(0).getiUsuarioId());
+		
 		ConfiguracionDao configuracionDao = new ConfiguracionDao();
 		Configuracion confi = configuracionDao.buscarConfiguracion(Constantes.tipoMoneda);
 		Configuracion tipoCambio = configuracionDao.buscarConfiguracion(Constantes.tipoCambio);
@@ -69,7 +82,7 @@ public class LoginAction extends DispatchAction {
 				sesion.setAttribute("Usuario", usuario.get(0));			
 				sesion.setAttribute("Fecha",Fechas.fechaDDMMYY((Fechas.getDate())));
 				sesion.setAttribute("id", sesion.getId());
-				sesion.setAttribute("listaPermisoUsuario", listapermiso);	
+					
 				sesion.setAttribute("Moneda", configuracionDao.buscarMoneda(confi.getvValor()));
 				sesion.setAttribute("TipoCambio", tipoCambio.getvValor());
 				sesion.setAttribute("IGVCompras",impuestoCompras.getvPorcentaje());
@@ -77,6 +90,13 @@ public class LoginAction extends DispatchAction {
 				sesion.setAttribute("IGVVentas", impuestoVenta.getvPorcentaje());
 				sesion.setAttribute("iPeriodoId", iPeriodoId);
 				//sesion.setAttribute("listaMenu",  genericaDao.listaEntidadGenericaSinCodigo("Menu"));
+				List<String> listaMisPersmisos = new ArrayList<String>();
+				for(Permiso lista:listapermiso){
+					listaMisPersmisos.add(lista.getvCodigoMenu());
+					
+				}
+				
+				sesion.setAttribute("listaMisPermisoUsuario", listaMisPersmisos);
 								
 				/***determinamos la lista de años para visualizar las estadisticas del modulo estadistica**/
 				for(int i=-2;i<=0;i++){
@@ -95,9 +115,11 @@ public class LoginAction extends DispatchAction {
 			else{
 				if(listapermiso.size()==0){
 					objform.setMensaje("No se le han asignado permisos, Consulte con su Administrador ");
+					
 						
 				}else{
 					 objform.setMensaje("Usuario o Clave son incorrectos");
+					 
 				}
 				    objform.setMode("m_mensaje");				
 			        msn="login";

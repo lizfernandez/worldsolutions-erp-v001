@@ -30,6 +30,13 @@
    </td>
 </tr>
 <tr>
+	<td align="right">Sucursal:</td>
+	<td><html:select  property="iSucursalId" styleId="iSucursalId"  styleClass="combo" >       
+	              <html:options collection="listaSucursal" property="iSucursalId" labelProperty="vSucursalNombre" />
+	         </html:select>
+	  </td>
+</tr>
+<tr>
 	<td align="right">Perfil:</td>
 	<td><html:select  property="iPerfilId" styleId="iPerfilId"  styleClass="combo" >       
 	              <html:options collection="listaPerfil" property="iPerfilId" labelProperty="vPerfilDescripcion" />

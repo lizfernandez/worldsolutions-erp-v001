@@ -21,6 +21,7 @@ import com.entities.Ocupacion;
 import com.struts.form.OcupacionForm;
 import com.util.Fechas;
 import com.util.Paginacion;
+import com.util.Util;
 
 public class OcupacionAction extends DispatchAction {
 	   // --------------------------------------------------------- Instance
@@ -154,9 +155,14 @@ public class OcupacionAction extends DispatchAction {
 		 * @param request
 		 * @param response
 		 * @return ActionForward
+		 * @throws NoSuchFieldException 
+		 * @throws IllegalAccessException 
+		 * @throws ClassNotFoundException 
+		 * @throws SecurityException 
+		 * @throws IllegalArgumentException 
 		 */
 		public ActionForward iduOcupacion(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) {
+				HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
 			
 			/** Inicializamos las variables **/ 
 			String msn = "";
@@ -176,7 +182,9 @@ public class OcupacionAction extends DispatchAction {
 					resultado = ocupacionDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
-				
+				 obj =  ocupacionDao.findEndidad(obj,pForm.getiOcupacionId());
+				  obj= Util.comparar(obj, pForm.getOcupacion());
+			
 					obj.setdFechaActualiza(Fechas.getDate());
 					resultado = ocupacionDao.actualizarUnaEndidad(obj);
 				

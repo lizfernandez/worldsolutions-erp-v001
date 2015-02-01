@@ -20,10 +20,12 @@ import com.dao.UsuarioDao;
 import com.entities.Estado;
 import com.entities.Perfil;
 import com.entities.Personal;
+import com.entities.Sucursal;
 import com.entities.Usuario;
 import com.struts.form.UsuarioForm;
 import com.util.Fechas;
 import com.util.Paginacion;
+import com.util.Util;
 
 public class UsuarioAction extends DispatchAction {
 	   // --------------------------------------------------------- Instance
@@ -116,6 +118,7 @@ public class UsuarioAction extends DispatchAction {
 
 			List<Estado> listaEstado = estadoDao.listEstado();
 			List<Perfil> listaPerfil = perfilDao.listaPerfil(0, 0, perfil);
+			List<Sucursal> listaSucursal = UsuarioDao.listaEntidadGenerica(new Sucursal());
 
 			
 			/**LLamamos al formulario mantenimientoUsuario.jsp para la insercion de datos **/
@@ -143,6 +146,7 @@ public class UsuarioAction extends DispatchAction {
 
 			sesion.setAttribute("listaPerfil", listaPerfil);
 			sesion.setAttribute("listaEstado", listaEstado);
+			sesion.setAttribute("listaSucursal", listaSucursal);
 
 			return mapping.findForward(msn);
 		}
@@ -155,9 +159,14 @@ public class UsuarioAction extends DispatchAction {
 		 * @param request
 		 * @param response
 		 * @return ActionForward
+		 * @throws NoSuchFieldException 
+		 * @throws IllegalAccessException 
+		 * @throws ClassNotFoundException 
+		 * @throws SecurityException 
+		 * @throws IllegalArgumentException 
 		 */
 		public ActionForward iduUsuario(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) {
+				HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
 			
 			/** Inicializamos las variables **/ 
 			String msn = "";
@@ -170,6 +179,7 @@ public class UsuarioAction extends DispatchAction {
 			Usuario obj =pForm.getUsuario();
 			obj.setPersonal(usuarioDao.findEndidad(new Personal(), pForm.getiPersonalId()));
 			obj.setPerfil(usuarioDao.findEndidad(new Perfil(), pForm.getiPerfilId()));
+			obj.setSucursal(usuarioDao.findEndidad(new Sucursal(), pForm.getiSucursalId()));
 			
 			
 	        /** **/
@@ -179,7 +189,10 @@ public class UsuarioAction extends DispatchAction {
 				resultado = usuarioDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
-				//Usuario obj =pForm.getUsuario();
+			
+				  obj =  usuarioDao.findEndidad(obj,pForm.getiUsuarioId());
+				  obj= Util.comparar(obj, pForm.getUsuario());
+			
 				obj.setdFechaActualiza(Fechas.getDate());
 				resultado = usuarioDao.actualizarUnaEndidad(obj);
 				

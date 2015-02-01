@@ -877,6 +877,7 @@ public class VentaAction extends DispatchAction {
 	    	   obj.setIdireccionClienteId(pForm.getiClienteId());    	   
 	      	   obj.setUsuario(usu);
 	      	   obj.setiPeriodoId(iPeriodoId);
+	      	   obj.setSucursal(usu.getSucursal());
 	        
 	      	  
 	      	
