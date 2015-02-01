@@ -11,7 +11,8 @@ import java.io.Serializable;
 public class MeVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int iMesId;
-
+	private String vMesDescripcion;
+	
     public MeVo() {
     }
 
