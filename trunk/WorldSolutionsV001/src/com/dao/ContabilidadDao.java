@@ -21,7 +21,7 @@ import com.entities.Librodiario;
 import com.entities.Libromayor;
 import com.entities.Planilla;
 
-import com.entities.vo.LibroDiarioVo;
+import com.entities.vo.LibroDiarioVo1;
 import com.interfaces.dao.IContabilidadDao;
 import com.util.Constantes;
 import com.util.Fechas;
