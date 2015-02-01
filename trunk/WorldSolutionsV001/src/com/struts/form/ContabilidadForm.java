@@ -1631,7 +1631,12 @@ public String getvProductoCapacidad() {
 	 * @return the vOcupacionDescripcion
 	 */
 	public String getvOcupacionDescripcion() {
+		Personal personal = getPersonal();	
+		if(personal.getOcupacion()!=null){
+			vOcupacionDescripcion = personal.getOcupacion().getvOcupacionDescripcion();
+		}
 		return vOcupacionDescripcion;
+	
 	}
 
 	/**

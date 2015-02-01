@@ -40,7 +40,7 @@
 					<!-- input id="enviar" class="btnLogin" type="button" value="Ingresar" name="enviar" onclick="insertar('formLogin')"> -->
 				</span>
 				<br>
-     				<span id="m_mensaje" class="mensaje"></span>
+     				<div id="m_mensaje" class="mensaje"></div>
      			 <br>
 			</dl>
 			<%-- hidden field que contiene el mode --%>

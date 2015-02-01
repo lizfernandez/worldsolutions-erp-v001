@@ -45,6 +45,12 @@ public class Ingresoproducto implements Serializable {
 	@JoinColumn(name="iFormaPagoId", nullable=false)
 	private Formapago formaPago;
 	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="iSucursalId", nullable=false)
+	private Sucursal sucursal;
+	
+	
 	//private int iFormaPagoId;
 
 	private int iUsuarioActualizaId;
@@ -580,6 +586,20 @@ public class Ingresoproducto implements Serializable {
 	 */
 	public void setLetraproveedor(List<Letraproveedor> letraproveedor) {
 		this.letraproveedor = letraproveedor;
+	}
+
+	/**
+	 * @return the sucursal
+	 */
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	/**
+	 * @param sucursal the sucursal to set
+	 */
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
 	}
 
 	

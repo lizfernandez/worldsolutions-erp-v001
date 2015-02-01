@@ -174,6 +174,17 @@
          }
     }
     
+    $(document).find('#formContabilidad input:checkbox, input:text').each(function(key,val){ 	 
+	    	 if($.trim(this.value)!='0.0'){
+	    		 $("#ch_"+this.id).attr("checked",true);
+		    	 
+		    	}
+	    	     	
+	   });
+    
+    
+    
+    
     function fn_calcular(origen, destino){
     	
     	if(origen=="fAsignacionFamiliar"){

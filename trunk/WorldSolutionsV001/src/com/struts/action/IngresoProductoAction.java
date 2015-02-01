@@ -862,6 +862,7 @@ public class IngresoProductoAction extends DispatchAction {
       	   obj.setcEstadoCodigo(Constantes.estadoActivo);
       	   obj.setUsuario(usu);
       	   obj.setiPeriodoId(iPeriodoId);
+      	   obj.setSucursal(usu.getSucursal());
       	   
       	  	
       	   /****Informacion de detalle compra****/

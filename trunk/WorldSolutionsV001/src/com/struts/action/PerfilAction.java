@@ -124,13 +124,8 @@ public class PerfilAction extends DispatchAction {
 
 		/***Validamos la session activa y logeada***/
 		String msn = "";
-		/*HttpSession sesion = request.getSession();
 		
-		if(sesion.getId()!=(sesion.getAttribute("id"))){
-			response.sendRedirect("login.do?metodo=logout");				
-		}
-		else{*/
-		
+		HttpSession sesion = request.getSession();
 		
 		int pagina = Paginacion.paginaInicial;
 		int pagInicio = Paginacion.paginaInicial;
@@ -151,7 +146,10 @@ public class PerfilAction extends DispatchAction {
 		List<Permiso> listaUsuarioPermiso= new ArrayList<Permiso>();
 		List<Usuario> listaUsuarios= new ArrayList<Usuario>();
 		List<Menuopcione> listaMenu = genericaDao.listaEntidadGenericaSinCodigo("Menu");
-		List<Permiso> listaPermiso = perfilDao.listaPermiso(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax());
+		
+		
+		
+		List<Permiso> listaPermisoBD = perfilDao.listaPermiso(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax());
 		List<Usuario> listaUsuario = genericaDao.listaEntidadGenerica(new Usuario());
 		listaUsuarios = genericaDao.listaEntidadGenerica(new Usuario());
 	    msn ="showListPermiso";
@@ -168,7 +166,7 @@ public class PerfilAction extends DispatchAction {
 		 * los usuarios de la tabla usuarios**/
 	    
 	    for(Usuario usu:listaUsuario){
-	    { for(Permiso per:listaPermiso)	
+	    { for(Permiso per:listaPermisoBD)	
 	    		if(usu.equals(per.getUsuario())){
 	    			listaUsuarioPermiso.add(per);
 	    			listaUsuarios.remove(usu);
@@ -180,12 +178,16 @@ public class PerfilAction extends DispatchAction {
 	    
 		/** Seteamos las clase PerfilForm **/
 	    perfilForm.setLista(listaMenu);
-        perfilForm.setListaPermiso(listaPermiso);
+        perfilForm.setListaPermiso(listaPermisoBD);
         perfilForm.setListaUsuarioPermiso(listaUsuarioPermiso);
         perfilForm.setListaUsuario(listaUsuarios);
      
         perfilForm.setPaginas(paginas);
         perfilForm.setPagInicio(pagina);
+        
+        
+        
+
         
      //  }// else
 		return mapping.findForward(msn);

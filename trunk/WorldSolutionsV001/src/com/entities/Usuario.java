@@ -62,6 +62,10 @@ public class Usuario implements Serializable {
 	//bi-directional many-to-one association to Venta
 	@OneToMany(mappedBy="usuario")
 	private List<Venta> ventas;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="iSucursalId", nullable=false)
+	private Sucursal sucursal;
 
     public Usuario() {
     }
@@ -261,5 +265,25 @@ public class Usuario implements Serializable {
 	public void setVentas(List<Venta> ventas) {
 		this.ventas = ventas;
 	}
+
+
+
+	/**
+	 * @return the sucursal
+	 */
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+
+
+	/**
+	 * @param sucursal the sucursal to set
+	 */
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
+	}
+	
+	
 	
 }

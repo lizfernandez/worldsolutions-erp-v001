@@ -26,17 +26,21 @@ $( ".text" ).focus(function() {
 
 $(window).resize(function() {
 	 var windowWidth = $(window).width();
-     var windowWidthpor=windowWidth-(windowWidth*0.195);
-    // alert(windowWidth+" "+ windowWidthpor);
+	 var menuVerticalWidth=$(".menuVertical").width();
+     var windowWidthpor=windowWidth-menuVerticalWidth-8;
+ //  alert(windowWidth+" "+ menuVerticalWidth);
     // alert("windowWidth? "+windowWidth+" windowWidthpor="+windowWidthpor +"(windowWidth-windowWidthpor)/10 =" +((windowWidth-windowWidthpor)/10));
      
-     if(windowWidthpor<844)windowWidthpor=844;
+  //   if(windowWidthpor<844)windowWidthpor=844;
      $("#listado").css({ width: windowWidthpor });
      
      
 });
 
 $(document).ready(function(){
+	$(".btn_admin").click(function() {
+		location.href = $("#"+this.id+" a").attr('href');
+	});
         $('#vUsuarioPassword').click(function(){
     		  $(this).get(0).type='password';
     		});

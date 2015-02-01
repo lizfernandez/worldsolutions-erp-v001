@@ -90,13 +90,6 @@ public class Permiso implements Serializable {
 		this.usuario = usuario;
 	}
 
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	
 
 }

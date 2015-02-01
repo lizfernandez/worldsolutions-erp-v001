@@ -36,6 +36,7 @@
         <th width="10%" align="left">Nombres</th>
         <th width="10%"align="left">Ap. Paterno</th>
         <th width="10%"align="left">Ap. Materno</th>
+        <th width="10%" align="left">Sucural</th>
         <th width="10%" align="left">Perfil</th>
         <th width="8%" align="left">Estado</th>
          
@@ -52,13 +53,14 @@
 			<tr>
 				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iUsuarioId" />"/></td> 
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('usuario.do?metodo=mantenimientoUsuario&mode=U&id=<bean:write name="x" property="iUsuarioId" />',350,250)" /></td>
+		                     onclick="popup('usuario.do?metodo=mantenimientoUsuario&mode=U&id=<bean:write name="x" property="iUsuarioId" />',400,350)" /></td>
 		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iUsuarioId" />','usuario.do?metodo=iduUsuario&mode=D')" /></td>	
 				<td><bean:write name="x" property="vUsuarioLogin" /></td>
 				<td><bean:write name="x" property="personal.vPersonalNombres" /></td>
 				<td><bean:write name="x" property="personal.vPersonalApellidoPaterno" /></td>
 				<td><bean:write name="x" property="personal.vPersonalApellidoMaterno" /></td>
+				<td><bean:write name="x" property="sucursal.vSucursalNombre" /></td>
 				<td><bean:write name="x" property="perfil.vPerfilDescripcion" /></td>
 				<td><bean:write name="x" property="cEstadoCodigo" /></td>
 		 
