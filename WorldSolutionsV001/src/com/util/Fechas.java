@@ -91,4 +91,12 @@ public class Fechas {
 	   }
 	 return m;
 	 }
+
+	 public static String fechaConFormato(String formato){
+		   String CadenaFecha ="";
+		    SimpleDateFormat Formato = new SimpleDateFormat(formato);	    	
+		    CadenaFecha = Formato.format(getDate());
+	    	
+	    	return CadenaFecha;
+	 }
 }

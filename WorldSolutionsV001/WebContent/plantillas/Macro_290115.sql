@@ -940,7 +940,7 @@ CREATE TABLE IF NOT EXISTS `ingresoproductodevoluciondetalle` (
   `dFechaInserta` date DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
   `dFechaActualiza` date DEFAULT NULL,
-  `cEstadoCodigo` char(2) COLLATE utf8_spanish_visitaclienteci DEFAULT NULL,
+  `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fDescuento` float DEFAULT NULL,
   PRIMARY KEY (`iIngresoProductoDevolucionDetalleId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=9 ;

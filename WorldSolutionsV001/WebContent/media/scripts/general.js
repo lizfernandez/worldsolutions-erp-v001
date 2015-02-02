@@ -1049,5 +1049,8 @@ function listar_detalleVentaDevolucion(obj, destino, fecha, direccion){
 	//	 document.getElementById("detalle").innerHTML=newHtml;
 	 }	
 	 
+
 	
 };
+
+
