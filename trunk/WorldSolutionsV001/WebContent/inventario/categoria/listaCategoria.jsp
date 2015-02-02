@@ -16,6 +16,10 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <td><button class="button" onclick="fn_exportarExcel()">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -83,7 +87,16 @@
 <script>   
 paginacion();
 $("#inventario, #categoria").addClass("active");
-
+function fn_exportarExcel(){
+	var s = window.document.location.search;
+	var l=  s.split("?");
+	var metodo = l[1].split("&");
+	var nuev=l[1].substring(metodo[0].length,l[1].length);  
+	//window.opener.document.location.search = metodo[0]+valor;
+	//window.document.location.search = "metodo="+metodo+valor;
+	//alert(" metodo[0]= "+ metodo[0]+"  ***  metodo[1]="+ metodo[1]+" l[1]= "+l[1]+"** nuev="+nuev);
+	popup('categoria.do?metodo=exportarExcel'+nuev,350,220);
+}
 </script> 
 
  

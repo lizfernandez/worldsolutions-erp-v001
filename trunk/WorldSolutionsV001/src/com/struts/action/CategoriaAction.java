@@ -1,15 +1,27 @@
 package com.struts.action;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityTransaction;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,6 +38,7 @@ import com.entities.Subcategoria;
 import com.entities.Usuario;
 import com.google.gson.Gson;
 import com.struts.form.CategoriaForm;
+import com.struts.form.VentaForm;
 import com.util.Fechas;
 import com.util.Paginacion;
 import com.util.Util;
@@ -458,4 +471,44 @@ public class CategoriaAction extends DispatchAction {
 			return null;
 			
 		}
+		
+	public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws ParsePropertyException, InvalidFormatException, IOException {
+
+		String plantilla = request.getParameter("plantilla");
+		CategoriaForm objform = (CategoriaForm) form;
+		String filePath = request.getRealPath("/").toString();
+		String archivoPlantilla = filePath + File.separator + "plantillas"
+				+ File.separator + "reportes" + File.separator
+				+ "reporte-categoria.xls";
+
+		System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+
+		CategoriaDao categoriaDao = new CategoriaDao();
+		List categorias = categoriaDao.listaCategoria(0, 1000, objform.getCategoria());
+		System.out.println("Contenido lista [ " + categorias.size() + " ]");
+		Map<String, Object> beans = new HashMap<String, Object>();
+
+		beans.put("categorias", categorias);
+
+		response.setHeader("content-disposition", "attachment;filename=reporte_categorias_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
+		response.setContentType("application/octet-stream");
+		ServletOutputStream outputStream = response.getOutputStream();
+		
+		InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
+		XLSTransformer transformer = new XLSTransformer();
+		try {
+			HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
+			workbook.write(outputStream);
+			fis.close();
+			outputStream.flush();
+			outputStream.close();
+		} catch (ParsePropertyException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+		
 }

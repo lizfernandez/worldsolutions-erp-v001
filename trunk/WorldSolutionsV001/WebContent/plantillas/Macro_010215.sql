@@ -19,6 +19,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Base de datos: `macrostruts`
 --
 
+DROP DATABASE `macrostruts`;
+CREATE DATABASE IF NOT EXISTS `macrostruts`;
+USE `macrostruts`;
+
 -- --------------------------------------------------------
 
 --
