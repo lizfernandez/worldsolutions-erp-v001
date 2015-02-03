@@ -1052,5 +1052,13 @@ function listar_detalleVentaDevolucion(obj, destino, fecha, direccion){
 
 	
 };
+function fn_exportarExcel(urlmetodo){
+	var s = window.document.location.search;
+	var l=  s.split("?");
+	var metodo = l[1].split("&");
+	var nuev=l[1].substring(metodo[0].length,l[1].length);  
+	
+	popup(urlmetodo+''+nuev,350,220);
+};
 
 
