@@ -165,7 +165,7 @@ function insertar(form){
 		    	 this.value=='00'){
 		    	  
 		    	 error+=1;
-		    	 
+		    //	 alert(this.id+"= "+this.value);
 		    	  $("#m_"+this.id).css("display","block").text("*");
 		    	  $("#"+this.id).addClass("error");
 		    	   
@@ -1061,4 +1061,17 @@ function fn_exportarExcel(urlmetodo){
 	popup(urlmetodo+''+nuev,350,220);
 };
 
-
+function fn_recargar(){
+	var iclasificacionId= $("#iclasificacionId").val();
+	var url= window.document.location.search;
+	var metodo = url.split("&");
+	var mode ="";		
+	if(iclasificacionId=="5"){ ///  el id=5 es de servicio
+		//redireccionamos al padre los valores, sin hacer doble recarga por el return false;
+		mode="&mode=LPS";		
+	}
+	else{
+		mode="&mode=LP";	
+	}
+	window.document.location.search = metodo[0]+"&iclasificacionId="+iclasificacionId+mode;
+}

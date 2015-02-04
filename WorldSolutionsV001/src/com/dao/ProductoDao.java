@@ -77,16 +77,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 						  .setMaxResults(pagFin)
 						  .getResultList(); 
 		
-			}// lista con busqueda
-//			else{
-//				q= em.createQuery("select p from Producto p " +
-//		                    " where p.cEstadoCodigo = :EstadoCodigo");
-//				listaProducto = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
-//							  .setFirstResult(pagInicio)
-//							  .setMaxResults(pagFin)
-//							  .getResultList(); 
-//
-//             }//else , lista simple	
+			}
 		
         return listaProducto;
 	}

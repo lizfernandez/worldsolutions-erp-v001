@@ -8,7 +8,7 @@
         <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
         <a href="categoria.do?metodo=listaSubCategoria">MANT. DE SUBCATEGORIAS</a>
        </div>
-       <div class="btn_admin" id="producto">
+        <div class="btn_admin" id="producto">
        <img src="${pageContext.request.contextPath}/media/imagenes/oca.png" width="20" height="20" />
         <a href="productos.do?metodo=listaProducto&iclasificacionId=1" > PRODUCTOS</a>
        </div>
@@ -23,6 +23,10 @@
        <div class="btn_admin" id="emvase">
         <img src="${pageContext.request.contextPath}/media/imagenes/ped.png" width="20" height="20" />
          <a href="productos.do?metodo=listaProducto&iclasificacionId=4"> EMVASES Y EMBALAJE</a>
+       </div>
+          <div class="btn_admin" id="servicios">
+       <img src="${pageContext.request.contextPath}/media/imagenes/pro.png" width="20" height="20" />
+        <a href="productos.do?metodo=listaProducto&iclasificacionId=5" > SERVICIOS</a>
        </div>
        <div class="btn_admin" id="produccion">
         <img src="${pageContext.request.contextPath}/media/imagenes/tra.png" width="20" height="20" />

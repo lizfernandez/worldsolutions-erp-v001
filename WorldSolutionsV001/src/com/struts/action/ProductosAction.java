@@ -122,14 +122,16 @@ public class ProductosAction extends DispatchAction {
         case 3:  msn ="showListSuministros";
                  break;
         case 4:  msn ="showListEnvases";
-                 break;        
+                 break;   
+        case 5:  msn ="showListServicios";
+        	     break; 
        
        } 
 		
 		/**Lista de productos en Modal Popup Ventas***/
-		 if(mode!=null && mode.equals("LP") || mode!=null && mode.equals("LPC")){
+		 if(mode!=null && mode.equals("LP") || mode!=null && mode.equals("LPC") || mode!=null && mode.equals("LPS") ){
 			 UnidadMedidaDao unidadMedidaDao = new UnidadMedidaDao();
-			 List<Clasificacioncategoria> listaSubcategoria = Util.listaClasificacioncategoria();			 
+			 List<Clasificacioncategoria> listaSubcategoria =	productoDao.listaEntidadGenerica(new Clasificacioncategoria());		 
 			 List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
 			 
 			 sesion.setAttribute("listaClasificacioncategoria",listaSubcategoria);
@@ -138,6 +140,9 @@ public class ProductosAction extends DispatchAction {
 			 if(mode.equals("LP")){
 				 /**Lista de productos de ventas***/
 			    msn ="showListPopupProducto";}
+			 if(mode.equals("LPS")){
+				 /**Lista de productos de ventas***/
+			    msn ="showListPopupServicios";}
 			 if(mode.equals("LPC")){
 				 /**Lista de productos de compras***/
 				 msn ="showListPopupProductoCompra";}
@@ -313,6 +318,9 @@ public class ProductosAction extends DispatchAction {
 		case 4:
 			msn = "showEditEnvases";
 			break;
+		case 5:
+			msn = "showEditServicios";
+			break;
 
 		}
 		
@@ -376,7 +384,9 @@ public class ProductosAction extends DispatchAction {
 	        case 3:  msn ="showFindSuministros";
 	                 break;
 	        case 4:  msn ="showFindEnvases";
-	                 break;        
+	                 break;     
+	        case 5:  msn ="showFindServicios";
+                     break;
 	       
 	       } 
 		}		
@@ -753,5 +763,7 @@ public class ProductosAction extends DispatchAction {
 			return null;
 			
 		}
+		
+		
 	
 }
