@@ -74,23 +74,8 @@
            <html:options collection="listaCategoria" property="iCategoriaId" labelProperty="vCategoriaDescripcion"/>
      </html:select>    
     </td>
-    <td rowspan="3" width="9%">FOTO (ancho:225px):
-    							    (alto:225px):</td>
-     <td rowspan="3" colspan="3">
-      <img  src="${pageContext.request.contextPath}/media/fotos/<bean:write property="vFoto" name="productosForm"/>" width="50%" height="30%" border="1"/>
-     </td>
+    
 </tr>
-<tr>
-    <td align="right">SubCategor&iacute;a:</td>
-    <td>
-     <html:select  property="iSubCategoriaId" styleId="iSubCategoriaId" styleClass="combo" tabindex="2" style="width:205px">
-           <html:options collection="listaSubCategoria" property="iSubCategoriaId" labelProperty="vSubCategoriaDescripcion"/>
-     </html:select> 
-     <span id="m_iSubCategoriaId" class="importante">*</span>     
-    </td>
-   
-</tr>
-
 <tr class="trCodigo">
     <td align="right" >C&oacute;digo:</td>
     <td>
@@ -104,10 +89,7 @@
     <td><html:text property="vProductoNombre" styleId="vProductoNombre" size="27" onkeyup="return mayuscula('vProductoNombre') " styleClass="text" tabindex="4"/>
       <span id="m_vProductoNombre" class="importante">*</span>
     </td>
-    <td colspan="2"> 
-      <html:file property="foto" styleId="foto" style="width:273px"></html:file>
-      
-    </td>
+   
 </tr>
 <tr>
 	 <td colspan="4">
@@ -115,37 +97,12 @@
 	 <span id ="span2" class="btnOpciones" onclick="subMenuOpciones('2')">Lista Precios</span>
 	 <table class="tabla" id="tabla1">	  
 		
-		<tr>
-		    <td align="right" width="20%">Cantidad:</td>
-		    <td width="20%">
-		    <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad" maxlength="7"  styleClass="text" tabindex="5" /> 
-		    <span id="m_iProductoStockCantidad" class="importante">*</span>  
-		    </td>
-		    <td>
-		      <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px">
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select> 
-		    </td>
-		</tr>
-		<tr>
-		     <td align="right">Capacidad:</td>
-		    <td><html:text property="vProductoCapacidad" styleId="vProductoCapacidad" maxlength="7"  styleClass="textN"  tabindex="7"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-		    </td>
-		    <td>  
-		       <html:select  property="iUnidadMedidadIdC" styleId="iUnidadMedidadIdC" styleClass="comboCodigo" tabindex="8" style="width:140px">
-		          <option value="0">::SELECCIONE::</option> 
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select>  
-		    </td>
-		</tr>
 		
 		<tr>
-		    <td align="right">Precio Compra:</td>
+		    <td align="right">Precio Costo:</td>
 		    <td>
 			    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" tabindex="9"/>
-			    <span id="m_fProductoPrecioCompra" class="importante">*</span>
-			</td>
-		      <td>
+			    <span id="m_fProductoPrecioCompra" class="importante">*</span>			
 			     <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo" tabindex="10" style="width:140px">
 			          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
 			     </html:select> 
@@ -156,9 +113,7 @@
 		    <td align="right">Ganancia:</td>
 		    <td>
 		       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text" onblur="fn_calcularGanancia('G')" tabindex="11"/>
-		       </td>
-		       <td>
-		        <select class="comboCodigo" disabled="disabled" id="porcent" style="width:140px">
+		       <select class="comboCodigo" disabled="disabled" id="porcent" style="width:140px">
 			          <option value=""/> %</option>
 			     </select>
 		    </td>
@@ -168,9 +123,7 @@
 		    <td>
 		      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text" onblur="fn_calcularGanancia('V')" tabindex="12"/>
 		      <span id="m_fProductoPrecioVenta" class="importante">*</span>
-		    </td>
-		    <td>
-		    <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
+		      <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
 			          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
 			     </html:select>
 			     
@@ -180,15 +133,7 @@
 		    <td align="right">% Descuento:</td>
 		    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text"  tabindex="13"/></td>   <!-- onkeypress="return Numeros(event)" -->
 		</tr>
-		<tr>
-		    <td align="right">Stock Min:</td>
-		    <td colspan="2"><html:text property="iProductoStockMinimo" styleId="iProductoStockMinimo" styleClass="text"  tabindex="13"/></td>   <!-- onkeypress="return Numeros(event)" -->
-		</tr>
-		<tr>
-		    <td align="right">Stock Max:</td>
-		    <td colspan="2"><html:text property="iProductoStockMaximo" styleId="iProductoStockMaximo" styleClass="text"  tabindex="14"/></td>  <!-- onkeypress="return Numeros(event)" -->
-		</tr>
-		<tr>
+			<tr>
 		    <td align="right">Estado:</td>
 		    <td colspan="2">
 		      <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" tabindex="15">       

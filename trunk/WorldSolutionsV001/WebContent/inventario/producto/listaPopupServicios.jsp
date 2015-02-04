@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="productos" styleId="formPersonal">
     <tr>
-        <td> <html:select  property="iclasificacionId" styleId="iclasificacionId" styleClass="combo" style="width:150px" onchange="fn_recargar()">       
+        <td> <html:select  property="iclasificacionId" styleId="iclasificacionId" styleClass="combo" style="width:150px ">       
               <html:options collection="listaClasificacioncategoria" property="iClasificacionId" labelProperty="vClasificacionDescripcion"/>
            </html:select>
         </td>
@@ -41,9 +41,7 @@
     <thead>
     <tr >
         <th align="left">C&oacute;digo</th>
-        <th align="left">Nombre</th>        
-        <th align="left">Stock</th>
-        <th align="left">Unidad Medida</th>
+        <th align="left">Nombre</th> 
         <th align="right">P.Venta</th>
         <th align="right">P.Compra</th>
         
@@ -60,23 +58,14 @@
 		 <logic:iterate name="productosForm" property="produc" id="x">	
 		 
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
-			               '<bean:write name="x" property="iProductoStockCantidad" />',
+			          
 			               '<bean:write name="x" property="vProductoNombre" />',
-			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
-			               '<bean:write name="x" property="iUnidadMedidadIdC" />',
-			               '<bean:write name="x" property="vProductoCapacidad" />',
 			               '<bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/>')">
 		 		<td><bean:write name="x" property="cProductoCodigo" /></td>
 				<td><bean:write name="x" property="vProductoNombre" /></td>
 			
-				<td>
-				    <bean:write name="x" property="iProductoStockCantidad" />				    
-				</td>
-				<td>
-				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
-				</td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/></td>
 						
@@ -275,5 +264,4 @@ paginacion();
 	        
 	 }
  
-	
  </script>  
