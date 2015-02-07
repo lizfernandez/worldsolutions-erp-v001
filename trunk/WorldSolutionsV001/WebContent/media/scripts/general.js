@@ -529,8 +529,8 @@ function listar_detalleVenta(obj,destino){
    newHtml+='<th>CODIGO</th>';
    newHtml+='<th>CANTIDAD</th>';
    newHtml+='<th>UNID.</th>';
-   newHtml+='<th width="12%">CAPACIDAD</th>';
-   newHtml+='<th>DESCRIPCION</th>';
+   newHtml+='<th>CAPACIDAD</th>';
+   newHtml+='<th  width="25%">DESCRIPCION</th>';
    newHtml+='<th>P.U.</th>';
    newHtml+='<th>% DESC.</th>';
    newHtml+='<th>TOTAL</th>';
@@ -548,25 +548,38 @@ function listar_detalleVenta(obj,destino){
 			newHtml+=data['producto'].cProductoCodigo;
 		newHtml+='</td>';
 		newHtml+="<td '>";
-		  newHtml+="<input type='text' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+data.iVentaDetalleCantidad+"'/>";
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+data.iVentaDetalleCantidad+"'/>";
 	   newHtml+='</td>';
-		newHtml+='<td>';
-			newHtml+=data['producto']['unidadMedida'].vUnidadMedidaDescripcion;
-	    newHtml+='</td>';
+	   if(data['producto']['unidadMedida']!=null){
+	    newHtml+='<td>'; 
+	   
+            newHtml+=data['producto']['unidadMedida'].vUnidadMedidaDescripcion;
+        newHtml+='</td>';
 		newHtml+='<td>';
 		   if(data['producto'].vUnidadMedidaDescripcionC!=null)
 			newHtml+=data['producto'].vProductoCapacidad+" "+data['producto'].vUnidadMedidaDescripcionC;
-		   else
+		   else if(data['producto'].vProductoCapacidad!=null)
 			   newHtml+=data['producto'].vProductoCapacidad+"&nbsp;";
+		   else
+			   newHtml+=data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
 		newHtml+='</td>';
+	   }
+	   else{
+		   newHtml+='<td colspan="2">'; 
+		   empleado:
+			   newHtml+="empleado: "+data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
+		newHtml+='</td>';  
+	   }
+	 
+		
 		newHtml+='<td>';
 			newHtml+=data['producto'].vProductoNombre;
 		newHtml+='</td>';		
 	    newHtml+="<td align='right'>";
-		  newHtml+="<input type='text' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+formatCurrency(precio,' ')+"'/>";		  
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+formatCurrency(precio,' ')+"'/>";		  
 	    newHtml+='</td>';
 	    newHtml+="<td align='right'>";
-		  newHtml+="<input type='text' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+formatCurrency(data.fDescuento,' ')+"'/>";		  
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+formatCurrency(data.fDescuento,' ')+"'/>";		  
 	    newHtml+='</td>';
 	    newHtml+="<td align='right'>";
 		   newHtml+="<span class='total"+key+"' >"+formatCurrency(data.fVentaDetalleTotal,' ')+" </span>";

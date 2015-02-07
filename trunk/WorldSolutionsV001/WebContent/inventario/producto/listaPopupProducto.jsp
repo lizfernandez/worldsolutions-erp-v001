@@ -44,6 +44,7 @@
         <th align="left">Nombre</th>        
         <th align="left">Stock</th>
         <th align="left">Unidad Medida</th>
+        <th align="left">% Desc</th>
         <th align="right">P.Venta</th>
         <th align="right">P.Compra</th>
         
@@ -62,6 +63,7 @@
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
 			               '<bean:write name="x" property="iProductoStockCantidad" />',
 			               '<bean:write name="x" property="vProductoNombre" />',
+			               '<bean:write name="x" property="fProductoDescuento" />',
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
 			               '<bean:write name="x" property="iUnidadMedidadIdC" />',
 			               '<bean:write name="x" property="vProductoCapacidad" />',
@@ -70,6 +72,7 @@
 			               '<bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/>')">
 		 		<td><bean:write name="x" property="cProductoCodigo" /></td>
 				<td><bean:write name="x" property="vProductoNombre" /></td>
+				
 			
 				<td>
 				    <bean:write name="x" property="iProductoStockCantidad" />				    
@@ -77,6 +80,7 @@
 				<td>
 				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
 				</td>
+				<td align="right"><bean:write name="x" property="fProductoDescuento" format="#,##0.00" locale="Localidad" /></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/></td>
 						
@@ -214,7 +218,7 @@
 </div>   
 <script>   
 paginacion(); 
- function fn_cargarProducto(iProductoId,iStock,vNombreProducto,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
+ function fn_cargarProducto(iProductoId,iStock,vNombreProducto,fProductoDescuento,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
 	    $("#iProductoId").val(iProductoId);
 	    $("#iStock").val(iStock);
 		$("#vxProductoNombre").val(vNombreProducto);
@@ -224,6 +228,7 @@ paginacion();
 		$("#fProductoPrecioVenta").val(fProductoPrecioVenta);
 		$("#fProductoDescuento").val(fProductoDescuento);
 		$("#fPrecioCompra").val(fProductoPrecioCompra);
+		$("#fDescuento").val(fProductoDescuento);
 		var fDescuento =parseFloat(($("#fDescuento").val()/100));		
 		$("#fProductoPrecioVentaFinal").val(dosDecimales(fProductoPrecioVenta)-parseFloat(fProductoPrecioVenta)*fDescuento);		
 		$("#fTotal").val(dosDecimales(($("#iProductoStockCantidad").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
@@ -261,9 +266,10 @@ paginacion();
 		var fPrecioVenta =$("#fProductoPrecioVenta").val();
 		var fPrecioCompra =$("#fPrecioCompra").val();
 		var fTotal = $("#fTotal").val();
+		var iPersonalId=0;
 	    var cad = "venta.do?metodo=detalleVenta&id="+id+"&iCantidad="+iCantidad+
 	    		  "&fDescuento="+fDescuento+"&fPrecioVenta="+fPrecioVenta+"&fPrecioCompra="+fPrecioCompra+
-	    		  "&fTotal="+fTotal+"&mode=I";
+	    		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId;
 	         $.getJSON(cad, function retorna(obj){
 	        	// alert("obje"+obj.cProductoCodigo);
 	        	 listar_detalleVenta(obj,'padre');

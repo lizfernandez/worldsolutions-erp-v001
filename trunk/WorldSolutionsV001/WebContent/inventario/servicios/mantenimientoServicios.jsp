@@ -293,6 +293,7 @@
        // document.getElementById('cProductoCodigo').disabled = 'disabled';
         document.getElementById('btnGuardar').textContent="Actualizar";
         $("#popupCabecera").text('ACTUALIZAR DATOS');	
+        $("#span2").hide();
         if(mode=='F'){
         	$("#popupCabecera").text('BUSCAR DATOS');        	
          	/*$(":input").attr('disabled',true);

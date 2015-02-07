@@ -57,6 +57,11 @@ public class Ventadetalle implements Serializable {
     @Column(nullable=false)
 	private float fDescuento;
     
+    //bi-directional many-to-one association to Venta
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="iPersonalId", nullable=false)	
+    private Personal personal;
+    
     public Ventadetalle() {
     }
 
@@ -227,6 +232,22 @@ public class Ventadetalle implements Serializable {
 	public void setfDescuento(float fDescuento) {
 		this.fDescuento = fDescuento;
 	}
+
+	/**
+	 * @return the personal
+	 */
+	public Personal getPersonal() {
+		return personal;
+	}
+
+	/**
+	 * @param personal the personal to set
+	 */
+	public void setPersonal(Personal personal) {
+		this.personal = personal;
+	}
+
+	
 
 	
 	
