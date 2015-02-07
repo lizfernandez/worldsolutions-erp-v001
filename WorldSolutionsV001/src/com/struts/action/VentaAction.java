@@ -43,6 +43,7 @@ import com.entities.Estado;
 import com.entities.Cliente;
 import com.entities.Formapago;
 import com.entities.Moneda;
+import com.entities.Personal;
 import com.entities.Preciosproducto;
 import com.entities.Venta;
 import com.entities.Ventadetalle;
@@ -52,6 +53,7 @@ import com.entities.Kardex;
 import com.entities.Producto;
 import com.entities.Usuario;
 import com.entities.Tipodocumentogestion;
+import com.entities.vo.PersonalVo;
 
 import com.google.gson.Gson;
 import com.struts.form.VentaForm;
@@ -474,12 +476,14 @@ public class VentaAction extends DispatchAction {
 				float fPrecioVenta = Float.parseFloat(request.getParameter("fPrecioVenta"));
 				float fPrecioCompra = Float.parseFloat(request.getParameter("fPrecioCompra"));
 				float fTotal = Float.parseFloat(request.getParameter("fTotal"));
+				int iPersonalId = Integer.parseInt(request.getParameter("iPersonalId"));
 				
                 Producto producto  = productoDao.findEndidad(productoBean,iProductoId);	
 				
 				productoBean.setiProductoId(producto.getiProductoId());
 				productoBean.setcProductoCodigo(producto.getcProductoCodigo());
 				productoBean.setvProductoNombre(producto.getvProductoNombre());
+				
 				productoBean.setUnidadMedida(producto.getUnidadMedida());
 				productoBean.setvProductoCapacidad(producto.getvProductoCapacidad());				
 				productoBean.setfProductoPrecioVenta(producto.getfProductoPrecioVenta());
@@ -492,6 +496,16 @@ public class VentaAction extends DispatchAction {
 				ventadetalle.setfVentaDetalleTotal(fTotal);
 				ventadetalle.setfDescuento(fDescuento);
 				ventadetalle.setcEstadoCodigo(Constantes.estadoActivo);
+				if(iPersonalId>0){
+					Personal personalBean= new Personal();
+					Personal personal= new Personal();
+					personal=productoDao.findEndidad(personal,iPersonalId);	
+					personalBean.setiPersonalId(personal.getiPersonalId());
+					personalBean.setvPersonalNombres(personal.getvPersonalNombres());
+					personalBean.setvPersonalApellidoPaterno(personal.getvPersonalApellidoPaterno());
+					
+					ventadetalle.setPersonal(personalBean);
+				}
 				
 				lista.add(ventadetalle);
 				sesion.setAttribute("listaVentaDetalle", lista);
@@ -1116,8 +1130,8 @@ public class VentaAction extends DispatchAction {
 								  
 								   ventaDetalle.setVenta(obj1);
 				      			   ventaDetalle.setcEstadoCodigo(Constantes.estadoActivo);
-						      	   ventaDetalle.setdFechaInserta(Fechas.getDate());
-						      	   ventaDetalle.setiUsuarioInsertaId(0);
+						      	   ventaDetalle.setdFechaActualiza(Fechas.getDate());
+						      	   ventaDetalle.setiUsuarioActualizaId(usu.getiUsuarioId());
 						      	   						      	    
 						        	 
 				      			    /*******************************************/

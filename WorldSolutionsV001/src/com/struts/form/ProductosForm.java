@@ -45,6 +45,9 @@ public class ProductosForm extends ActionForm {
     String dFechaFin; // fecha del kardex
     private int iclasificacionId ;
     private FormFile foto;
+    private int iPersonalId;
+    private String cPersonalCodigo;
+    private String vPersonalNombres;
     
     /**
 	 * @return the paginas
@@ -435,6 +438,48 @@ public class ProductosForm extends ActionForm {
 	 */
 	public void setfProductoDescuento(float fProductoDescuento) {
 		this.getProducto().setfProductoDescuento(fProductoDescuento);
+	}
+
+	/**
+	 * @return the iPersonalId
+	 */
+	public int getiPersonalId() {
+		return iPersonalId;
+	}
+
+	/**
+	 * @param iPersonalId the iPersonalId to set
+	 */
+	public void setiPersonalId(int iPersonalId) {
+		this.iPersonalId = iPersonalId;
+	}
+
+	/**
+	 * @return the cPersonalCodigo
+	 */
+	public String getcPersonalCodigo() {
+		return cPersonalCodigo;
+	}
+
+	/**
+	 * @param cPersonalCodigo the cPersonalCodigo to set
+	 */
+	public void setcPersonalCodigo(String cPersonalCodigo) {
+		this.cPersonalCodigo = cPersonalCodigo;
+	}
+
+	/**
+	 * @return the vPersonalNombres
+	 */
+	public String getvPersonalNombres() {
+		return vPersonalNombres;
+	}
+
+	/**
+	 * @param vPersonalNombres the vPersonalNombres to set
+	 */
+	public void setvPersonalNombres(String vPersonalNombres) {
+		this.vPersonalNombres = vPersonalNombres;
 	}
 
 	
