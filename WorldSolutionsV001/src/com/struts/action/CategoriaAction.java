@@ -38,7 +38,6 @@ import com.entities.Subcategoria;
 import com.entities.Usuario;
 import com.google.gson.Gson;
 import com.struts.form.CategoriaForm;
-import com.struts.form.VentaForm;
 import com.util.Fechas;
 import com.util.Paginacion;
 import com.util.Util;
@@ -472,26 +471,36 @@ public class CategoriaAction extends DispatchAction {
 			
 		}
 		
+	@SuppressWarnings("deprecation")
 	public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws ParsePropertyException, InvalidFormatException, IOException {
 
 		String plantilla = request.getParameter("plantilla");
+		System.out.println("Plantilla solicitada [ " + plantilla + " ]");
 		CategoriaForm objform = (CategoriaForm) form;
+		
+		
 		String filePath = request.getRealPath("/").toString();
 		String archivoPlantilla = filePath + File.separator + "plantillas"
 				+ File.separator + "reportes" + File.separator
-				+ "reporte-categoria.xls";
-
-		System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+				+ "reporte-" + plantilla + ".xls";
+		
 
 		CategoriaDao categoriaDao = new CategoriaDao();
-		List categorias = categoriaDao.listaCategoria(0, 1000, objform.getCategoria());
-		System.out.println("Contenido lista [ " + categorias.size() + " ]");
 		Map<String, Object> beans = new HashMap<String, Object>();
-
-		beans.put("categorias", categorias);
-
-		response.setHeader("content-disposition", "attachment;filename=reporte_categorias_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
+		
+		if ("categoria".equals(plantilla)) {
+			List<Categoria> categorias = categoriaDao.listaCategoria(0, 1000, objform.getCategoria());
+			beans.put("categorias", categorias);
+			response.setHeader("content-disposition", "attachment;filename=reporte_categorias_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
+		} else if ("sub-categoria".equals(plantilla)) {
+			List<Subcategoria> subCategorias = categoriaDao.listaSubcategoria(0, 1000, objform.getSubCategoria());
+			beans.put("subCategorias", subCategorias);
+			
+		}
+		response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
+		
+				
 		response.setContentType("application/octet-stream");
 		ServletOutputStream outputStream = response.getOutputStream();
 		
