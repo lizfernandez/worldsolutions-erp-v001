@@ -17,12 +17,8 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=F',380,450)">
-                <span class="excel"> Excel</span>
-            </button>
-        </td>
-        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=F',380,450)">
-                <span class="pdf"> PDF</span>
+        <td><button class="button" onclick="fn_exportarExcel('cliente.do?metodo=exportarExcel&plantilla=cliente')">
+                <span class="excel">Exportar</span>
             </button>
         </td>
     </tr>
