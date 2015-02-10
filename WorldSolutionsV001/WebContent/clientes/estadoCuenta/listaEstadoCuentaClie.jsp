@@ -13,6 +13,10 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <td><button class="button" onclick="fn_exportarExcel('estadoCuentaCliente.do?metodo=exportarExcel&plantilla=cliente-estado-cuenta')">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>
     </tr>
 </table ><table class="tabla" border="0" width="100%" id="tabla">
     <caption>Lista de Estado Cuenta Cliente</caption>
@@ -66,12 +70,12 @@
 		              <td align="center"> </td>
 		          </logic:equal>
 		         <logic:equal name="x" property="venta.vPrincipal" value="0">
-		             <logic:equal name="x" property="pagoTotal" value="0.00">
+		             <logic:equal name="x" property="pagoTotal" value="0">
 			               <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 			                     onclick="eliminar('tabla','<bean:write name="x" property="venta.iVentaId" />','venta.do?metodo=iduVenta&mode=D')"/>
 			               </td>
 		             </logic:equal>
-		              <logic:notEqual name="x" property="pagoTotal" value="0.00">
+		              <logic:notEqual name="x" property="pagoTotal" value="0">
 			               <td align="center"></td>
 		             </logic:notEqual>
 		          </logic:equal>
@@ -95,8 +99,8 @@
 				 <td><bean:write name="x" property="venta.formaPago.vFormaPagoDescripcion" /></td>
 				 <td><bean:write name="x" property="venta.dVentaFecha" format="dd/MM/yyyy"/></td>
 				 <td align="right"><bean:write name="x" property="venta.fVentaTotal" format="#,##0.00" locale="Localidad"/></td>
-				 <td align="right"><bean:write name="x" property="pagoTotal" /></td>
-				 <td align="right"><bean:write name="x" property="saldoTotal" /></td>
+				 <td align="right"><bean:write name="x" property="pagoTotal" format="#,##0.00" locale="Localidad" /></td>
+				 <td align="right"><bean:write name="x" property="saldoTotal" format="#,##0.00" locale="Localidad" /></td>
 				 <td><bean:write name="x" property="venta.vEstadoDocumento" /></td>
 				 
 			</tr>
@@ -141,9 +145,9 @@
 				 <tr>
 					 <td colspan="8"></td>
 					 <td align="right"><strong>Monto Totales:</strong></td>
-					  <td align="right"><bean:write name="x" property="montosTotales" /></td>
-					 <td align="right"><bean:write name="x" property="pagosTotales" /></td>
-					 <td align="right"><bean:write name="x" property="saldosTotales" /></td>
+					  <td align="right"><bean:write name="x" property="montosTotales" format="#,##0.00" locale="Localidad" /></td>
+					 <td align="right"><bean:write name="x" property="pagosTotales" format="#,##0.00" locale="Localidad"/></td>
+					 <td align="right"><bean:write name="x" property="saldosTotales" format="#,##0.00" locale="Localidad"/></td>
 					 <td align="right"></td>
 					
 				</tr>

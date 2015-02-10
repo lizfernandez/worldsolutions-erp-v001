@@ -40,16 +40,20 @@
 		<td align="center"><button class="button"
 				onclick="buscarPopup('tab-grupo')">
 				<span class="find">Buscar</span>
-			</button></td>
-		<td align="center"><img onclick="fn_popupModales('',1080,830)"
-			src="${pageContext.request.contextPath}/media/imagenes/paste.png"
-			border="0" width="15%" /></td>
+			</button>
+			</td>
+		<td align="center">
+		   <button type="button" class="button" onclick="fn_exportarExcel('productos.do?metodo=exportarExcel&plantilla=producto-kardex')">
+                <span class="excel">Exportar</span>
+            </button>		
+		</td>
 	</tr>
 
 	<%-- hidden field que contiene el mode --%>
 	<html:text property="mode" styleId="mode" styleClass="textInvisible" />
 	<%-- set the parameter for the dispatch action --%>
 	<html:hidden property="metodo" value="listaKardex" styleId="metodo" />
+	
 </html:form>
 <table class="tabla" border="0" width="100%" id="tabla">
 	<caption>Movimiento del Producto - KARDEX</caption>

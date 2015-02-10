@@ -15,13 +15,13 @@ public class EstadoCuentaVo implements Serializable {
 	private String totalDocumentos;
 	private String primerFechaEmision;
 	private String ultFechaPagos;
-	private String montoTotal;
-	private String pagoTotal;
-	private String saldoTotal;
+	private float montoTotal;
+	private float pagoTotal;
+	private float saldoTotal;
 	private String cCodigoEstado;
-	private String montosTotales;
-	private String pagosTotales;
-	private String saldosTotales;
+	private float montosTotales;
+	private float pagosTotales;
+	private float saldosTotales;
 	private String vPrincipal;
 	
 	private String formaPago;
@@ -150,37 +150,37 @@ public class EstadoCuentaVo implements Serializable {
 	/**
 	 * @return the montoTotal
 	 */
-	public String getMontoTotal() {
+	public float getMontoTotal() {
 		return montoTotal;
 	}
 	/**
 	 * @param montoTotal the montoTotal to set
 	 */
-	public void setMontoTotal(String montoTotal) {
+	public void setMontoTotal(float montoTotal) {
 		this.montoTotal = montoTotal;
 	}
 	/**
 	 * @return the pagoTotal
 	 */
-	public String getPagoTotal() {
+	public float getPagoTotal() {
 		return pagoTotal;
 	}
 	/**
 	 * @param pagoTotal the pagoTotal to set
 	 */
-	public void setPagoTotal(String pagoTotal) {
+	public void setPagoTotal(float pagoTotal) {
 		this.pagoTotal = pagoTotal;
 	}
 	/**
 	 * @return the saldoTotal
 	 */
-	public String getSaldoTotal() {
+	public float getSaldoTotal() {
 		return saldoTotal;
 	}
 	/**
 	 * @param saldoTotal the saldoTotal to set
 	 */
-	public void setSaldoTotal(String saldoTotal) {
+	public void setSaldoTotal(float saldoTotal) {
 		this.saldoTotal = saldoTotal;
 	}
 	
@@ -189,37 +189,37 @@ public class EstadoCuentaVo implements Serializable {
 	/**
 	 * @return the montosTotales
 	 */
-	public String getMontosTotales() {
+	public float getMontosTotales() {
 		return montosTotales;
 	}
 	/**
 	 * @param montosTotales the montosTotales to set
 	 */
-	public void setMontosTotales(String montosTotales) {
+	public void setMontosTotales(float montosTotales) {
 		this.montosTotales = montosTotales;
 	}
 	/**
 	 * @return the pagosTotales
 	 */
-	public String getPagosTotales() {
+	public float getPagosTotales() {
 		return pagosTotales;
 	}
 	/**
 	 * @param pagosTotales the pagosTotales to set
 	 */
-	public void setPagosTotales(String pagosTotales) {
+	public void setPagosTotales(float pagosTotales) {
 		this.pagosTotales = pagosTotales;
 	}
 	/**
 	 * @return the saldosTotales
 	 */
-	public String getSaldosTotales() {
+	public float getSaldosTotales() {
 		return saldosTotales;
 	}
 	/**
 	 * @param saldosTotales the saldosTotales to set
 	 */
-	public void setSaldosTotales(String saldosTotales) {
+	public void setSaldosTotales(float saldosTotales) {
 		this.saldosTotales = saldosTotales;
 	}
 	/**

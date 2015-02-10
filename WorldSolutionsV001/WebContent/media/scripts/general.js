@@ -1071,7 +1071,7 @@ function fn_exportarExcel(urlmetodo){
 	var metodo = l[1].split("&");
 	var nuev=l[1].substring(metodo[0].length,l[1].length);  
 	
-	popup(urlmetodo+''+nuev,350,220);
+	popupModal(urlmetodo+''+nuev,350,220);
 };
 
 function fn_recargar(){
