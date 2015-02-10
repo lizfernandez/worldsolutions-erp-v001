@@ -2,11 +2,8 @@ package com.struts.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityTransaction;
@@ -14,55 +11,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-
 import com.dao.ContabilidadDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
-import com.dao.OcupacionDao;
-import com.dao.PerfilDao;
-import com.dao.UsuarioDao;
-
 import com.dao.ProductoDao;
 import com.dao.VentaDao;
 import com.entities.Configuracion;
-import com.entities.Estadocuentacliente;
-import com.entities.Estadocuentaproveedor;
 import com.entities.Cuenta;
 import com.entities.Elementocuenta;
 import com.entities.Estado;
+import com.entities.Estadocuentacliente;
+import com.entities.Estadocuentaproveedor;
 import com.entities.Ingresoproducto;
 import com.entities.Ingresoproductodevolucion;
-import com.entities.Kardex;
 import com.entities.Librodiario;
 import com.entities.Libromayor;
-import com.entities.Ocupacion;
-import com.entities.Perfil;
 import com.entities.Periodo;
 import com.entities.Personal;
 import com.entities.Planilla;
-
 import com.entities.Producto;
-
 import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.Ventadevolucion;
 import com.entities.vo.EstadoCuentaVo;
 import com.entities.vo.LibroDiarioVo1;
 import com.google.gson.Gson;
-
 import com.struts.form.ContabilidadForm;
-import com.struts.form.IngresoProductoForm;
-import com.struts.form.UsuarioForm;
 import com.util.Constantes;
 import com.util.Fechas;
-import com.util.FormatosNumeros;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -238,14 +220,16 @@ public class ContabilidadAction extends DispatchAction {
 			
 			/**Accedemos al Dao**/
 			 listaVenta = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getVenta(),0);
-			    double montosTotales =  0.0;
-			    double pagosTotales =  0.0;
-			    double saldosTotales =  0.0;
+			    float montosTotales =  0;
+			    float pagosTotales =  0;
+			    float saldosTotales =  0;
 			    int i=0;
 			    
 			    
 			 for(Venta obj:listaVenta)
-			 {   double pagoTotal=0.0, saldoTotal = 0.0;
+			 {   float pagoTotal=0;
+			 
+			 float saldoTotal = 0;
 				 EstadoCuentaVo e = new EstadoCuentaVo();
 			     
 		
@@ -267,15 +251,15 @@ public class ContabilidadAction extends DispatchAction {
 			     saldoTotal = obj.getfVentaTotal() -pagoTotal;
 			     montosTotales+= obj.getfVentaTotal();
 				 saldosTotales=(montosTotales - pagosTotales);
-			     e.setPagoTotal(FormatosNumeros.FormatoDecimalMoneda(pagoTotal));
-			     e.setSaldoTotal(FormatosNumeros.FormatoDecimalMoneda(saldoTotal));
+			     e.setPagoTotal(pagoTotal);
+			     e.setSaldoTotal(saldoTotal);
 		
 				i++;
 				
 				if(i==listaVenta.size()){
-					e.setMontosTotales((FormatosNumeros.FormatoDecimalMoneda(montosTotales)));
-					e.setPagosTotales((FormatosNumeros.FormatoDecimalMoneda(pagosTotales)));
-					e.setSaldosTotales((FormatosNumeros.FormatoDecimalMoneda(saldosTotales)));
+					e.setMontosTotales(montosTotales);
+					e.setPagosTotales(pagosTotales);
+					e.setSaldosTotales(saldosTotales);
 					
 				}
 			     
@@ -474,14 +458,15 @@ public class ContabilidadAction extends DispatchAction {
 				
 				/**Accedemos al Dao**/
 				 listaIngresoproducto = ingresoproductoDao.listaEstadoCuentaPorProveedor(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getIngresoProducto(),0);
-				    double montosTotales =  0.0;
-				    double pagosTotales =  0.0;
-				    double saldosTotales =  0.0;
+				    float montosTotales =  0;
+				    float pagosTotales =  0;
+				    float saldosTotales =  0;
 				    int i=0;
 				    
 				    
 				 for(Ingresoproducto obj:listaIngresoproducto)
-				 {   double pagoTotal=0.0, saldoTotal = 0.0;
+				 {   float pagoTotal=0;
+				 float saldoTotal = 0;
 					 EstadoCuentaVo e = new EstadoCuentaVo();
 				     
 		            	e.setIngresoProducto(obj);
@@ -504,15 +489,15 @@ public class ContabilidadAction extends DispatchAction {
 				     saldoTotal = obj.getfIngresoProductoTotal() -pagoTotal;
 				     montosTotales+= obj.getfIngresoProductoTotal();
 					 saldosTotales=(montosTotales - pagosTotales);
-				     e.setPagoTotal(FormatosNumeros.FormatoDecimalMoneda(pagoTotal));
-				     e.setSaldoTotal(FormatosNumeros.FormatoDecimalMoneda(saldoTotal));
+				     e.setPagoTotal(pagoTotal);
+				     e.setSaldoTotal(saldoTotal);
 			
 					i++;
 					
 					if(i==listaIngresoproducto.size()){
-						e.setMontosTotales((FormatosNumeros.FormatoDecimalMoneda(montosTotales)));
-						e.setPagosTotales((FormatosNumeros.FormatoDecimalMoneda(pagosTotales)));
-						e.setSaldosTotales((FormatosNumeros.FormatoDecimalMoneda(saldosTotales)));
+						e.setMontosTotales(montosTotales);
+						e.setPagosTotales(pagosTotales);
+						e.setSaldosTotales(saldosTotales);
 						
 					}
 				     
@@ -525,7 +510,7 @@ public class ContabilidadAction extends DispatchAction {
 			
 	        /**Obtenemos el total del paginas***/
 			paginas = Paginacion.listPaginas((long)(listaIngresoproductoTotal.size()));
-	 	     objform.setLista(listaEstadoCuenta);
+	 	    objform.setLista(listaEstadoCuenta);
 			objform.setPaginas(paginas);
 			objform.setPagInicio(pagina);
 			msn="showListEstadoCuentaProveedor";

@@ -52,7 +52,6 @@ import com.entities.Subcategoria;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
 import com.google.gson.Gson;
-import com.struts.form.CategoriaForm;
 import com.struts.form.ProductosForm;
 import com.util.Constantes;
 import com.util.Fechas;
@@ -230,11 +229,11 @@ public class ProductosAction extends DispatchAction {
 		 if(mode!=null && mode.equals("Kardex")){
 			
 			/**Obtenemos el id del producto para ver el detalle del kardex **/
-		    obj.setiProductoId(iProductoId);
-		    if(productosForm.getdFechaInicio()!=null && productosForm.getdFechaFin()!=null){
-		    obj.setdFechaInserta(Fechas.fechaDate(productosForm.getdFechaInicio()));
-		    obj.setdFechaActualiza(Fechas.fechaDate(productosForm.getdFechaFin()));
-		    }
+			obj.setiProductoId(iProductoId);
+			if (productosForm.getdFechaInicio() != null && productosForm.getdFechaFin() != null) {
+				obj.setdFechaInserta(Fechas.fechaDate(productosForm.getdFechaInicio()));
+				obj.setdFechaActualiza(Fechas.fechaDate(productosForm.getdFechaFin()));
+			}
 		    msn ="showListPopupProductoKardex";
 			
 		}
@@ -778,12 +777,12 @@ public class ProductosAction extends DispatchAction {
 		
 		@SuppressWarnings("deprecation")
 		public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-				throws ParsePropertyException, InvalidFormatException, IOException {
+				throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
 
 			String plantilla = request.getParameter("plantilla");
 			System.out.println("Plantilla solicitada [ " + plantilla + " ]");
 			ProductosForm objform = (ProductosForm) form;
-			
+			Producto obj = objform.getProducto();
 			
 			String filePath = request.getRealPath("/").toString();
 			String archivoPlantilla = filePath + File.separator + "plantillas"
@@ -792,10 +791,26 @@ public class ProductosAction extends DispatchAction {
 			
 
 			ProductoDao productoDao = new ProductoDao();
+			KardexDao kardexDao = new KardexDao();  
+			
 			Map<String, Object> beans = new HashMap<String, Object>();
-			int  iclasificacionId = Integer.parseInt(request.getParameter("iclasificacionId"));
-
-			List<Producto> productos = productoDao.listaProducto(0, 1000, objform.getProducto(), iclasificacionId);
+			List<Producto> productos = null;
+			List<Kardex> listaKardex = null;
+			if (!"producto-kardex".equals(plantilla)) {
+				int  iclasificacionId = Integer.parseInt(request.getParameter("iclasificacionId"));
+				productos = productoDao.listaProducto(0, 1000, obj, iclasificacionId);
+			} else {
+				int iProductoId = Integer.parseInt(request.getParameter("id"));
+				String cInsumo = "";
+				obj.setiProductoId(iProductoId);
+				if (objform.getdFechaInicio() != null && objform.getdFechaFin() != null) {
+					obj.setdFechaInserta(Fechas.fechaDate(objform.getdFechaInicio()));
+					obj.setdFechaActualiza(Fechas.fechaDate(objform.getdFechaFin()));
+				}
+				listaKardex =  kardexDao.listaKardex(0,1000, obj,cInsumo);
+				obj = productoDao.findEndidad(obj,iProductoId);
+			}
+			
 			if ("producto".equals(plantilla)) {
 				beans.put("productos", productos);
 			
@@ -808,8 +823,12 @@ public class ProductosAction extends DispatchAction {
 			} else if ("envases".equals(plantilla)) {
 				beans.put("envases", productos);
 				
+			} else if ("producto-kardex".equals(plantilla)) {
+				beans.put("listakardex", listaKardex);
+				beans.put("producto", obj);
+				
 			} else if ("servicio".equals(plantilla)) {
-				beans.put("servicios", productos);
+				
 				
 			}
 			

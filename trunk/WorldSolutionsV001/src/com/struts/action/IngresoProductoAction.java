@@ -17,14 +17,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import com.dao.ConfiguracionDao;
 import com.dao.ContabilidadDao;
-import com.dao.EstadoCuentaProveedorDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
 import com.dao.KardexDao;
-import com.entities.Cuenta;
 import com.entities.Estado;
 import com.entities.Estadocuentaproveedor;
 import com.entities.Formapago;
@@ -33,7 +30,6 @@ import com.entities.Ingresoproductodetalle;
 import com.entities.Ingresoproductodevolucion;
 import com.entities.Ingresoproductodevoluciondetalle;
 import com.entities.Kardex;
-import com.entities.Librodiario;
 import com.entities.Moneda;
 import com.entities.Periodo;
 import com.entities.Preciosproducto;
@@ -44,7 +40,6 @@ import com.entities.Usuario;
 import com.entities.Ventadetalle;
 import com.entities.vo.EstadoCuentaVo;
 import com.entities.vo.PagoEstadoCuentaVo;
-import com.entities.vo.ProductoVo;
 import com.google.gson.Gson;
 import com.struts.form.IngresoProductoForm;
 import com.util.Constantes;
@@ -118,14 +113,15 @@ public class IngresoProductoAction extends DispatchAction {
 					
 					/**Accedemos al Dao**/
 					 listaIngresoproducto = ingresogenericaDao.listaEstadoCuentaPorProveedor(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getIngresoProducto(),idProveedor);
-					    double montosTotales =  0.0;
-					    double pagosTotales =  0.0;
-					    double saldosTotales =  0.0;
+					    float montosTotales = 0;
+					    float pagosTotales = 0;
+					    float saldosTotales = 0;
 					    int i=0;
 					    
 					    
 					 for(Ingresoproducto obj:listaIngresoproducto)
-					 {   double pagoTotal=0.0, saldoTotal = 0.0;
+					 {   float pagoTotal = 0;
+					 float saldoTotal = 0;
 						 EstadoCuentaVo e = new EstadoCuentaVo();
 					     
 				
@@ -135,7 +131,7 @@ public class IngresoProductoAction extends DispatchAction {
 					     //Formapago f =  generica.findEndidad("Formapago", "iFormaPago", obj.getiFormaPagoId());
 					     e.setFormaPago(obj.getFormaPago().getvFormaPagoDescripcion());
 					     e.setPrimerFechaEmision(Fechas.fechaDDMMYY(obj.getdIngresoProductoFecha()));
-					     e.setMontoTotal(FormatosNumeros.FormatoDecimalMoneda(Double.parseDouble(String.valueOf(obj.getfIngresoProductoTotal()))));
+					     e.setMontoTotal(obj.getfIngresoProductoTotal());
 						 e.setcCodigoEstado(obj.getvEstadoDocumento());
 					     e.setIdClienteProveedor(obj.getProveedor().getiProveedorId());
 					     e.setIdDocumento(obj.getiIngresoProductoId());
@@ -166,15 +162,15 @@ public class IngresoProductoAction extends DispatchAction {
 					     saldoTotal = obj.getfIngresoProductoTotal() -pagoTotal;
 					     montosTotales+= obj.getfIngresoProductoTotal();
 						 saldosTotales=(montosTotales - pagosTotales);
-					     e.setPagoTotal(FormatosNumeros.FormatoDecimalMoneda(pagoTotal));
-					     e.setSaldoTotal(FormatosNumeros.FormatoDecimalMoneda(saldoTotal));
+					     e.setPagoTotal(pagoTotal);
+					     e.setSaldoTotal(saldoTotal);
 				
 						i++;
 						
 						if(i==listaIngresoproducto.size()){
-							e.setMontosTotales((FormatosNumeros.FormatoDecimalMoneda(montosTotales)));
-							e.setPagosTotales((FormatosNumeros.FormatoDecimalMoneda(pagosTotales)));
-							e.setSaldosTotales((FormatosNumeros.FormatoDecimalMoneda(saldosTotales)));
+							e.setMontosTotales(montosTotales);
+							e.setPagosTotales(pagosTotales);
+							e.setSaldosTotales(saldosTotales);
 							
 						}
 					     

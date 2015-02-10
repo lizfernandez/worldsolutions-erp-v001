@@ -86,14 +86,15 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 					
 					/**Accedemos al Dao**/
 					 listaIngresoproducto = ingresoproductoDao.listaEstadoCuentaPorProveedor(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getIngresoProducto(),0);
-					    double montosTotales =  0.0;
-					    double pagosTotales =  0.0;
-					    double saldosTotales =  0.0;
+					    float montosTotales =  0;
+					    float pagosTotales =  0;
+					    float saldosTotales = 0;
 					    int i=0;
 					    
 					    
 					 for(Ingresoproducto obj:listaIngresoproducto)
-					 {   double pagoTotal=0.0, saldoTotal = 0.0;
+					 {   float pagoTotal=0;
+					 float saldoTotal = 0;
 						 EstadoCuentaVo e = new EstadoCuentaVo();
 					     
 			            	e.setIngresoProducto(obj);
@@ -116,15 +117,15 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 					     saldoTotal = obj.getfIngresoProductoTotal() -pagoTotal;
 					     montosTotales+= obj.getfIngresoProductoTotal();
 						 saldosTotales=(montosTotales - pagosTotales);
-					     e.setPagoTotal(FormatosNumeros.FormatoDecimalMoneda(pagoTotal));
-					     e.setSaldoTotal(FormatosNumeros.FormatoDecimalMoneda(saldoTotal));
+					     e.setPagoTotal(pagoTotal);
+					     e.setSaldoTotal(saldoTotal);
 				
 						i++;
 						
 						if(i==listaIngresoproducto.size()){
-							e.setMontosTotales((FormatosNumeros.FormatoDecimalMoneda(montosTotales)));
-							e.setPagosTotales((FormatosNumeros.FormatoDecimalMoneda(pagosTotales)));
-							e.setSaldosTotales((FormatosNumeros.FormatoDecimalMoneda(saldosTotales)));
+							e.setMontosTotales(montosTotales);
+							e.setPagosTotales(pagosTotales);
+							e.setSaldosTotales(saldosTotales);
 							
 						}
 					     

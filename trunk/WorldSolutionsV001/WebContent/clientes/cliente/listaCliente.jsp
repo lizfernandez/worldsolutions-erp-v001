@@ -24,7 +24,7 @@
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
-    <caption>Lista de Clientees</caption>
+    <caption>Lista de Clientes</caption>
         <!-- tr>
             <th width="5%" >Nombre Cliente:</th>
             <td colspan="13"><input type="text" id="txtnombre" value="<?php echo $this->descripcion?>"/><button onclick="busqueda('<?php echo $this->baseUrl($this->currentController.'/index/descripcion/')?>')" class="button">

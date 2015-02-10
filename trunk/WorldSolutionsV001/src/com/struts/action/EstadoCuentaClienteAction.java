@@ -1,17 +1,28 @@
 package com.struts.action;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityTransaction;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -19,23 +30,18 @@ import org.apache.struts.actions.DispatchAction;
 
 import com.dao.ContabilidadDao;
 import com.dao.EstadoCuentaClienteDao;
-import com.dao.EstadoCuentaClienteDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
-
 import com.dao.VentaDao;
-
 import com.entities.Estado;
 import com.entities.Estadocuentacliente;
 import com.entities.Formapago;
-import com.entities.Ingresoproducto;
 import com.entities.Letracliente;
 import com.entities.Tipodocumentogestion;
 import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.vo.EstadoCuentaVo;
-import com.struts.form.EstadoCuentaClienteForm;
 import com.struts.form.EstadoCuentaClienteForm;
 import com.util.Constantes;
 import com.util.Fechas;
@@ -81,13 +87,7 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 			if(request.getParameter("pagina")!= null){
 				 pagina = Integer.parseInt(request.getParameter("pagina"));
 			}
-			String  vClienteCodigo = request.getParameter("vClienteCodigo");
-			String  iTipoDocumentoId = request.getParameter("iTipoDocumentoId");
-			String  nVentaNumero = request.getParameter("nVentaNumero");
-			String  dVentaFecha = request.getParameter("dVentaFecha");
-			String  fVentaTotal = request.getParameter("fVentaTotal");
-			String  iFormaPago = request.getParameter("iFormaPago");   
-			
+
 			List<Long> paginas = null;
 			/** Instanciamos la Clase EstadocuentaclienteForm **/
 			EstadoCuentaClienteForm objform = (EstadoCuentaClienteForm) form;
@@ -98,55 +98,55 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 		
 			 
 			 /**Seteamos los valores en las listas**/
-				List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
-				
-				
-				/**Accedemos al Dao**/
-				 listaVenta = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getVenta(),0);
-				    double montosTotales =  0.0;
-				    double pagosTotales =  0.0;
-				    double saldosTotales =  0.0;
-				    int i=0;
-				    
-				    
-				 for(Venta obj:listaVenta)
-				 {   double pagoTotal=0.0, saldoTotal = 0.0;
-					 EstadoCuentaVo e = new EstadoCuentaVo();
-				     
-			
-				   	 e.setVenta(obj);
-				     if(obj.getEstadocuentaclientes().size()>0){
-			   	 
-					     for(Estadocuentacliente obje:obj.getEstadocuentaclientes()){
-					    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-					    	 pagoTotal+= obje.getfMontoPago();						    	
-					    	 pagosTotales+= obje.getfMontoPago();
-					    	// e.setEstadocuenta(obj.getEstadocuentaclientes());
-					    	}
-					       } // for				    
-					     
-				     } // if
-					   
-						
-			
-				     saldoTotal = obj.getfVentaTotal() -pagoTotal;
-				     montosTotales+= obj.getfVentaTotal();
-					 saldosTotales=(montosTotales - pagosTotales);
-				     e.setPagoTotal(FormatosNumeros.FormatoDecimalMoneda(pagoTotal));
-				     e.setSaldoTotal(FormatosNumeros.FormatoDecimalMoneda(saldoTotal));
-			
-					i++;
-					
-					if(i==listaVenta.size()){
-						e.setMontosTotales((FormatosNumeros.FormatoDecimalMoneda(montosTotales)));
-						e.setPagosTotales((FormatosNumeros.FormatoDecimalMoneda(pagosTotales)));
-						e.setSaldosTotales((FormatosNumeros.FormatoDecimalMoneda(saldosTotales)));
-						
-					}
-				     
-				     listaEstadoCuenta.add(e);
-				     
-				 }
+				List<EstadoCuentaVo> listaEstadoCuenta = listarEstadoCuentaCliente(objform, ventaDao, Paginacion.pagInicio(pagina),Paginacion.pagFin());
+//				
+//				
+//				/**Accedemos al Dao**/
+//				 listaVenta = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getVenta(),0);
+//				    double montosTotales =  0.0;
+//				    double pagosTotales =  0.0;
+//				    double saldosTotales =  0.0;
+//				    int i=0;
+//				    
+//				    
+//				 for(Venta obj:listaVenta)
+//				 {   double pagoTotal=0.0, saldoTotal = 0.0;
+//					 EstadoCuentaVo e = new EstadoCuentaVo();
+//				     
+//			
+//				   	 e.setVenta(obj);
+//				     if(obj.getEstadocuentaclientes().size()>0){
+//			   	 
+//					     for(Estadocuentacliente obje:obj.getEstadocuentaclientes()){
+//					    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
+//					    	 pagoTotal+= obje.getfMontoPago();						    	
+//					    	 pagosTotales+= obje.getfMontoPago();
+//					    	// e.setEstadocuenta(obj.getEstadocuentaclientes());
+//					    	}
+//					       } // for				    
+//					     
+//				     } // if
+//					   
+//						
+//			
+//				     saldoTotal = obj.getfVentaTotal() -pagoTotal;
+//				     montosTotales+= obj.getfVentaTotal();
+//					 saldosTotales=(montosTotales - pagosTotales);
+//				     e.setPagoTotal(FormatosNumeros.FormatoDecimalMoneda(pagoTotal));
+//				     e.setSaldoTotal(FormatosNumeros.FormatoDecimalMoneda(saldoTotal));
+//			
+//					i++;
+//					
+//					if(i==listaVenta.size()){
+//						e.setMontosTotales((FormatosNumeros.FormatoDecimalMoneda(montosTotales)));
+//						e.setPagosTotales((FormatosNumeros.FormatoDecimalMoneda(pagosTotales)));
+//						e.setSaldosTotales((FormatosNumeros.FormatoDecimalMoneda(saldosTotales)));
+//						
+//					}
+//				     
+//				     listaEstadoCuenta.add(e);
+//				     
+//				 }
 				 
 			/**Consultamos el total de registros segun criterio**/
 			listaVentaTotal = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getVenta(),0);
@@ -592,4 +592,105 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 			}
 			return mapping.findForward(msn);
 		}
+		
+
+		@SuppressWarnings("deprecation")
+		public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+				throws ParsePropertyException, InvalidFormatException, IOException {
+
+			String plantilla = request.getParameter("plantilla");
+			System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+			EstadoCuentaClienteForm objform = (EstadoCuentaClienteForm) form;
+			
+			String filePath = request.getRealPath("/").toString();
+			String archivoPlantilla = filePath + File.separator + "plantillas"
+					+ File.separator + "reportes" + File.separator
+					+ "reporte-" + plantilla + ".xls";
+			
+
+			VentaDao ventaDao = new VentaDao();
+			Map<String, Object> beans = new HashMap<String, Object>();
+
+			List<EstadoCuentaVo> estadoCuentaClientes = listarEstadoCuentaCliente(objform, ventaDao, 0, 1000);
+			if ("cliente-estado-cuenta".equals(plantilla)) {
+				beans.put("estadoCuentaClientes", estadoCuentaClientes);
+			
+			}
+			
+			response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
+			response.setContentType("application/octet-stream");
+			ServletOutputStream outputStream = response.getOutputStream();
+			
+			InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
+			XLSTransformer transformer = new XLSTransformer();
+			try {
+				HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
+				workbook.write(outputStream);
+				fis.close();
+				outputStream.flush();
+				outputStream.close();
+			} catch (ParsePropertyException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		private List<EstadoCuentaVo> listarEstadoCuentaCliente(EstadoCuentaClienteForm objform, VentaDao ventaDao, int paginaInicio, int paginaFin) {
+			
+			List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
+			
+			
+			/**Accedemos al Dao**/
+			List<Venta> listaVenta = ventaDao.listaEstadoCuentaPorCliente(paginaInicio, paginaFin, objform.getVenta(),0);
+			    float montosTotales =  0;
+			    float pagosTotales =  0;
+			    float saldosTotales =  0;
+			    int i=0;
+			    
+			    
+			 for(Venta obj:listaVenta)
+			 {   float pagoTotal=0;
+			 float saldoTotal = 0;
+				 EstadoCuentaVo e = new EstadoCuentaVo();
+			     
+		
+			   	 e.setVenta(obj);
+			     if(obj.getEstadocuentaclientes().size()>0){
+		   	 
+				     for(Estadocuentacliente obje:obj.getEstadocuentaclientes()){
+				    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
+				    	 pagoTotal+= obje.getfMontoPago();						    	
+				    	 pagosTotales+= obje.getfMontoPago();
+				    	// e.setEstadocuenta(obj.getEstadocuentaclientes());
+				    	}
+				       } // for				    
+				     
+			     } // if
+				   
+					
+		
+			     saldoTotal = obj.getfVentaTotal() -pagoTotal;
+			     montosTotales+= obj.getfVentaTotal();
+				 saldosTotales=(montosTotales - pagosTotales);
+			     e.setPagoTotal(pagoTotal);
+			     e.setSaldoTotal(saldoTotal);
+		
+				i++;
+				
+				if(i==listaVenta.size()){
+					e.setMontosTotales(montosTotales);
+					e.setPagosTotales(pagosTotales);
+					e.setSaldosTotales(saldosTotales);
+					
+				}
+			     
+			     listaEstadoCuenta.add(e);
+			     
+			 }
+			 return listaEstadoCuenta;
+			 
+		}
+		
 }
