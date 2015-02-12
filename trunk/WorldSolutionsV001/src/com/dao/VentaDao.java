@@ -357,13 +357,11 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 	public List<Ventadetalle> buscarVentaDetalle(int iVentaId) {
 	
 		// TODO Auto-generated method stub
-				factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-				EntityManager em = factory.createEntityManager();     
 				Query q ;
 				List<Ventadetalle> listaIngresoproducto = null ;
 
 		        
-		  	    q = em.createQuery("select p from Ventadetalle p where p.venta.iVentaId="+iVentaId);/**/
+		  	    q = getInstancia().createQuery("select p from Ventadetalle p where p.venta.iVentaId="+iVentaId);/**/
 		  	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		  	    listaIngresoproducto = q.getResultList(); 
 		    
