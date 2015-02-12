@@ -5,6 +5,7 @@ package com.struts.form;
 
 
 
+import java.util.Date;
 import java.util.List;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.upload.FormFile;
@@ -15,6 +16,8 @@ import com.dao.ProductoDao;
 import com.entities.Categoria;
 
 import com.entities.Moneda;
+import com.entities.Produccion;
+import com.entities.Producciondetalle;
 import com.entities.Producto;
 
 import com.entities.Subcategoria;
@@ -36,6 +39,7 @@ public class ProductosForm extends ActionForm {
 	private static final long serialVersionUID = 1L;
 	private List produc;	
 	Producto producto = new Producto();
+	Produccion produccion = new Produccion();
     private String mode;
     private List paginas; 
     private int pagInicio;
@@ -126,11 +130,17 @@ public class ProductosForm extends ActionForm {
 	}
 
 	public String getcEstadoCodigo() {
-		return producto.getcEstadoCodigo();
+		String cEstadoCodigo=producto.getcEstadoCodigo();
+		if(cEstadoCodigo==""){
+			cEstadoCodigo= produccion.getcEstadoCodigo();
+		}
+		
+		return cEstadoCodigo;
 	}
 
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.producto.setcEstadoCodigo(cEstadoCodigo);
+		this.produccion.setcEstadoCodigo(cEstadoCodigo);
 	}
 
 
@@ -184,7 +194,7 @@ public class ProductosForm extends ActionForm {
 		this.producto.setCategoria(getProductoDao().findEndidad(getCategoria(), iCategoriaId));
 	}
 	
-
+/*
 	public int getiProduccionId() {
 		return producto.getiProduccionId();
 	}
@@ -192,7 +202,7 @@ public class ProductosForm extends ActionForm {
 	public void setiProduccionId(int iProduccionId) {
 		this.producto.setiProduccionId(iProduccionId);
 	}
-
+*/
 	public int getiProductoStockCantidad() {
 		return producto.getiProductoStockCantidad();
 	}
@@ -483,5 +493,80 @@ public class ProductosForm extends ActionForm {
 	}
 
 	
+
+	/******************************/
+	/** GESTION DE LA PRODUCCION **/
+	/******************************/
+	
+	public Produccion getProduccion() {
+		return produccion;
+	}
+
+	/**
+	 * @param produccion the produccion to set
+	 */
+	public void setProduccion(Produccion produccion) {
+		this.produccion = produccion;
+	}
+	/**
+	 * @return the iProduccionId
+	 */
+	public int getiProduccionId() {
+		return produccion.getiProduccionId();
+	}
+
+	/**
+	 * @param iProduccionId the iProduccionId to set
+	 */
+	public void setiProduccionId(int iProduccionId) {
+		this.produccion.setiProduccionId(iProduccionId);
+	}
+
+	
+
+	/**
+	 * @return the fCostoTotal
+	 */
+	public float getfCostoTotal() {
+		return produccion.getfCostoTotal();
+	}
+
+	/**
+	 * @param fCostoTotal the fCostoTotal to set
+	 */
+	public void setfCostoTotal(float fCostoTotal) {
+		this.produccion.setfCostoTotal(fCostoTotal);
+	}
+
+	/**
+	 * @return the fCostoUni
+	 */
+	public float getfCostoUni() {
+		return produccion.getfCostoUni();
+	}
+
+	/**
+	 * @param fCostoUni the fCostoUni to set
+	 */
+	public void setfCostoUni(float fCostoUni) {
+		this.produccion.setfCostoUni(fCostoUni);
+	}
+
+	/**
+	 * @return the iCantidad
+	 */
+	public int getiCantidad() {
+		return produccion.getiCantidad();
+	}
+
+	/**
+	 * @param iCantidad the iCantidad to set
+	 */
+	public void setiCantidad(int iCantidad) {
+		this.produccion.setiCantidad(iCantidad);
+	}
+
+	
+
 	
 }
