@@ -2,27 +2,25 @@ package com.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+
 import javax.persistence.Query;
 
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
+import com.entities.Produccion;
+import com.entities.Producciondetalle;
 import com.entities.Producto;
+import com.entities.Ventadetalle;
 import com.interfaces.dao.IProductoDao;
 import com.util.Constantes;
 
 
 
 public  class ProductoDao  extends GenericaDao implements IProductoDao {
-	private static final String PERSISTENCE_UNIT_NAME = "Stuct12";
-	private static EntityManagerFactory factory;
 	
 	public List<Producto> listaProducto(int pagInicio, int pagFin, Producto producto, int iclasificacionId) {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();  
+	  
 		Query q ;
 		List<Producto> listaProducto = null ;
 		String where=""; 
@@ -71,7 +69,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 	        	where+=" and  p.fProductoPrecioVenta LIKE '%"+producto.getfProductoPrecioVenta()+"%'";
 	        }
 	        System.out.println(" where ="+where);
-	        q = em.createQuery("select p from Producto p " + where +" order by p.vProductoNombre asc");/**/
+	        q = getInstancia().createQuery("select p from Producto p " + where +" order by p.vProductoNombre asc");/**/
 	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaProducto = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)
@@ -80,6 +78,55 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 			}
 		
         return listaProducto;
+	}
+
+	@Override
+	public List<Produccion> listaProduccion(int pagInicio, int pagFin,
+			Produccion produccion) {
+		// TODO Auto-generated method stub
+		Query q ;
+		List<Produccion> listaProduccion = null ;
+		String where=""; 
+	
+		
+
+		if(produccion!=null){
+			if(produccion.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }			
+			if(produccion.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+produccion.getcEstadoCodigo()+"%'";
+	        }
+			
+			if(produccion.getiProduccionId()>0){
+	        	where+= " and p.iProduccionId = '"+produccion.getiProduccionId()+"'";
+	        }
+			
+	        System.out.println(" where ="+where);
+	        q = getInstancia().createQuery("select p from Produccion p " + where );/**/
+	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	        listaProduccion = q.setFirstResult(pagInicio)
+						  .setMaxResults(pagFin)
+						  .getResultList(); 
+		
+			}
+		
+        return listaProduccion;
+	}
+
+	@Override
+	public List<Producciondetalle> buscarDetalleProduccion(int iProduccionId) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		Query q ;
+		List<Producciondetalle> listaProduccionDetalle = null ;
+
+        
+  	    q = getInstancia().createQuery("select p from Producciondetalle p where p.produccion.iProduccionId="+iProduccionId);/**/
+  	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+  	  listaProduccionDetalle = q.getResultList(); 
+    
+		return listaProduccionDetalle;
 	}
 	
 	
