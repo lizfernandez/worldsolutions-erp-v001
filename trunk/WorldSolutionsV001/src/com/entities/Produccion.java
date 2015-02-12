@@ -3,95 +3,187 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import java.util.Date;
+import java.util.List;
+
 
 /**
  * The persistent class for the produccion database table.
  * 
  */
 @Entity
-@Table(name="produccion")
 public class Produccion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int iProduccionId;
 
-	@Column(nullable=false, length=2)
 	private String cEstadoCodigo;
 
-	@Column(nullable=false)
-	private float fManoObra;
+    @Temporal( TemporalType.TIMESTAMP)
+	private Date dFechaActualiza;
 
-	@Column(nullable=false)
-	private float fOtros;
+    @Temporal( TemporalType.TIMESTAMP)
+	private Date dFechaInserta;
 
-	@Column(nullable=false)
-	private float fTotal;
+	private float fCostoTotal;
 
-	@Column(nullable=false)
-	private float fTransporte;
+	private float fCostoUni;
 
-	@Column(nullable=false)
 	private int iCantidad;
+
+	private int iUsuarioActualiza;
+
+	private int iUsuarioInsertaId;
+
+
+	//bi-directional many-to-one association to Produccion
+	@OneToMany(mappedBy="produccion", fetch=FetchType.EAGER)
+	private List<Producciondetalle> produccionDetalle;
 
     public Produccion() {
     }
 
-	public int getIProduccionId() {
-		return this.iProduccionId;
+	/**
+	 * @return the iProduccionId
+	 */
+	public int getiProduccionId() {
+		return iProduccionId;
 	}
 
-	public void setIProduccionId(int iProduccionId) {
+	/**
+	 * @param iProduccionId the iProduccionId to set
+	 */
+	public void setiProduccionId(int iProduccionId) {
 		this.iProduccionId = iProduccionId;
 	}
 
-	public String getCEstadoCodigo() {
-		return this.cEstadoCodigo;
+	/**
+	 * @return the cEstadoCodigo
+	 */
+	public String getcEstadoCodigo() {
+		return cEstadoCodigo;
 	}
 
-	public void setCEstadoCodigo(String cEstadoCodigo) {
+	/**
+	 * @param cEstadoCodigo the cEstadoCodigo to set
+	 */
+	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.cEstadoCodigo = cEstadoCodigo;
 	}
 
-	public float getFManoObra() {
-		return this.fManoObra;
+	/**
+	 * @return the dFechaActualiza
+	 */
+	public Date getdFechaActualiza() {
+		return dFechaActualiza;
 	}
 
-	public void setFManoObra(float fManoObra) {
-		this.fManoObra = fManoObra;
+	/**
+	 * @param dFechaActualiza the dFechaActualiza to set
+	 */
+	public void setdFechaActualiza(Date dFechaActualiza) {
+		this.dFechaActualiza = dFechaActualiza;
 	}
 
-	public float getFOtros() {
-		return this.fOtros;
+	/**
+	 * @return the dFechaInserta
+	 */
+	public Date getdFechaInserta() {
+		return dFechaInserta;
 	}
 
-	public void setFOtros(float fOtros) {
-		this.fOtros = fOtros;
+	/**
+	 * @param dFechaInserta the dFechaInserta to set
+	 */
+	public void setdFechaInserta(Date dFechaInserta) {
+		this.dFechaInserta = dFechaInserta;
 	}
 
-	public float getFTotal() {
-		return this.fTotal;
+	/**
+	 * @return the fCostoTotal
+	 */
+	public float getfCostoTotal() {
+		return fCostoTotal;
 	}
 
-	public void setFTotal(float fTotal) {
-		this.fTotal = fTotal;
+	/**
+	 * @param fCostoTotal the fCostoTotal to set
+	 */
+	public void setfCostoTotal(float fCostoTotal) {
+		this.fCostoTotal = fCostoTotal;
 	}
 
-	public float getFTransporte() {
-		return this.fTransporte;
+	/**
+	 * @return the fCostoUni
+	 */
+	public float getfCostoUni() {
+		return fCostoUni;
 	}
 
-	public void setFTransporte(float fTransporte) {
-		this.fTransporte = fTransporte;
+	/**
+	 * @param fCostoUni the fCostoUni to set
+	 */
+	public void setfCostoUni(float fCostoUni) {
+		this.fCostoUni = fCostoUni;
 	}
 
-	public int getICantidad() {
-		return this.iCantidad;
+	/**
+	 * @return the iCantidad
+	 */
+	public int getiCantidad() {
+		return iCantidad;
 	}
 
-	public void setICantidad(int iCantidad) {
+	/**
+	 * @param iCantidad the iCantidad to set
+	 */
+	public void setiCantidad(int iCantidad) {
 		this.iCantidad = iCantidad;
 	}
 
+	/**
+	 * @return the iUsuarioActualiza
+	 */
+	public int getiUsuarioActualiza() {
+		return iUsuarioActualiza;
+	}
+
+	/**
+	 * @param iUsuarioActualiza the iUsuarioActualiza to set
+	 */
+	public void setiUsuarioActualiza(int iUsuarioActualiza) {
+		this.iUsuarioActualiza = iUsuarioActualiza;
+	}
+
+	/**
+	 * @return the iUsuarioInsertaId
+	 */
+	public int getiUsuarioInsertaId() {
+		return iUsuarioInsertaId;
+	}
+
+	/**
+	 * @param iUsuarioInsertaId the iUsuarioInsertaId to set
+	 */
+	public void setiUsuarioInsertaId(int iUsuarioInsertaId) {
+		this.iUsuarioInsertaId = iUsuarioInsertaId;
+	}
+
+	/**
+	 * @return the produccionDetalle
+	 */
+	public List<Producciondetalle> getProduccionDetalle() {
+		return produccionDetalle;
+	}
+
+	/**
+	 * @param produccionDetalle the produccionDetalle to set
+	 */
+	public void setProduccionDetalle(List<Producciondetalle> produccionDetalle) {
+		this.produccionDetalle = produccionDetalle;
+	}
+
+	
 }
