@@ -707,6 +707,7 @@ newHtml+='</tbody>';
 	
 };
 
+
 //CARGAMOS EL detalle de la Compra
 function listar_detalleCompraDevolucion(obj, destino, fecha){
 	var datos='',datos1='',datos2='',datos3='';
@@ -857,6 +858,78 @@ function listar_detalleCompraDevolucion(obj, destino, fecha){
 		
 	//	 document.getElementById("detalle").innerHTML=newHtml;
 	 }	
+	 
+	
+};
+
+//CARGAMOS EL detalle de la Compra
+function listar_detalleProduccion(obj,destino){
+    
+	var newHtml='';
+	newHtml+='<tbody>';
+   newHtml+='<tr>';
+       newHtml+='<th align="left"></th> '; 
+       newHtml+='<th align="left">Codigo</th> '; 
+       newHtml+='<th align="left">Nombre</th> ';       
+	   newHtml+=' <th align="left">Cantidad</th>';
+       newHtml+='<th align="left">P.U</th> ';   
+       newHtml+='<th align="left">Descuento</th> ';  
+	   newHtml+=' <th align="right">Costo Total</th>';
+   newHtml+='</tr>';
+	$.each(obj,function(key,data){
+		
+		if(data.cEstadoCodigo=="AC"){			
+			
+			
+		newHtml+='<tr>';
+		newHtml+="<td><img src='/WorldSolutionsV001/media/imagenes/delete.png' onclick=\"fn_eliminar('"+key+"')\"  /></td>";
+		newHtml+='<td>';
+			newHtml+=data['producto'].cProductoCodigo;
+		newHtml+='</td>';
+		newHtml+='<td>';
+		newHtml+=data['producto'].vProductoNombre;
+	   newHtml+='</td>';
+		newHtml+="<td align='right'>";
+			  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iCantidad+"'/>";
+		newHtml+='</td>';		
+		newHtml+="<td align='right'>";
+		 newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+formatCurrency(data.fCostoUni,' ')+"'/>";		  
+	    newHtml+='</td>';	
+	    newHtml+="<td align='right'>";
+		 newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+formatCurrency(data['producto'].fProductoDescuento,' ')+"'/>";		  
+	    newHtml+='</td>';
+		newHtml+="<td align='right'>";
+		   newHtml+="<span class='total"+key+"' >"+formatCurrency(data.fTotal,' ')+" </span>";
+		   newHtml+="<span id='total"+key+"' class='totales' >"+data.fTotal+" </span>";
+		newHtml+='</td>';
+		
+		newHtml+='</tr>';
+		}// if
+	});
+	 newHtml+='<tr>';
+	 newHtml+="<td><img src='/WorldSolutionsV001/media/imagenes/new.png' onclick=\"fn_listarProducto()\"/></td>";
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+=' <td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 
+	 newHtml+='</tr>';
+newHtml+='</tbody>';
+	//$('.combo.Distrito').html(newHtml);
+
+	 if(destino=="padre"){
+		 window.opener.document.getElementById("detalleProduccion").innerHTML=newHtml;
+		 opener.window.fn_calcularTotales(); 
+		   window.close();
+	 }
+		
+	 if(destino=="hijo"){	
+		 document.getElementById("detalleProduccion").innerHTML=newHtml;
+		 window.fn_calcularTotales(); 
+	 }
+	 
 	 
 	
 };
