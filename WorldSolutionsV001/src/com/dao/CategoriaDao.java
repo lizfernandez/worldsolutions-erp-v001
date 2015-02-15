@@ -87,9 +87,8 @@ public class CategoriaDao  extends GenericaDao implements ICategoriaDao {
 	        	where+= " and c.vSubCategoriaDescripcion LIKE '%"+subCategoria.getvSubCategoriaDescripcion()+"%'";
 	        }
 		}
-		Query q = getInstancia().createQuery("select c from Subcategoria c " + where);
-		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
-		List<Subcategoria> listaCategoria = q.getResultList();
+		String q = "select c from Subcategoria c " + where;
+		List<Subcategoria> listaCategoria = listaEntidadPaginada(q, pagInicio, pagFin); 
 
         return listaCategoria;
 	}

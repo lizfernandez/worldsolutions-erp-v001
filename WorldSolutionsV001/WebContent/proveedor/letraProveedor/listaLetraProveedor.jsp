@@ -14,10 +14,6 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=F',350,350)">
-                <span class="pdf"> PDF</span>
-            </button>
-        </td>  
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">

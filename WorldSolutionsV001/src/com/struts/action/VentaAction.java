@@ -1,6 +1,10 @@
 package com.struts.action;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -24,7 +28,11 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -34,6 +42,7 @@ import com.dao.ContabilidadDao;
 
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
+import com.dao.IngresoProductoDao;
 import com.dao.KardexDao;
 import com.dao.VentaDao;
 
@@ -42,6 +51,7 @@ import com.entities.Estado;
 
 import com.entities.Cliente;
 import com.entities.Formapago;
+import com.entities.Ingresoproducto;
 import com.entities.Moneda;
 import com.entities.Personal;
 import com.entities.Preciosproducto;
@@ -56,6 +66,7 @@ import com.entities.Tipodocumentogestion;
 import com.entities.vo.PersonalVo;
 
 import com.google.gson.Gson;
+import com.struts.form.IngresoProductoForm;
 import com.struts.form.VentaForm;
 import com.util.Constantes;
 import com.util.Fechas;
@@ -1706,9 +1717,9 @@ public class VentaAction extends DispatchAction {
 	 		              				listaKardex.add(kardex);
 	 		              				i++;
 	 		              		}// for
-							    for(Kardex oKardex:kardexDao.buscarKardexProducto(producto.getiProductoId())){
-				      				oKardex.setcEstadoCodigo(Constantes.estadoInactivo);
-				      			 }
+//							    for(Kardex oKardex:kardexDao.buscarKardexProducto(producto.getiProductoId())){
+//				      				oKardex.setcEstadoCodigo(Constantes.estadoInactivo);
+//				      			 }
 				      			 producto.setKardexs(listaKardex);
 		      					ventaDao.persistEndidad(producto); 
 				      			}// if activo	
@@ -1954,5 +1965,52 @@ public class VentaAction extends DispatchAction {
 			}
 			return mapping.findForward(msn);
 		 }
+
+		@SuppressWarnings("deprecation")
+		public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+				throws ParsePropertyException, InvalidFormatException, IOException {
+
+			String plantilla = request.getParameter("plantilla");
+			System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+			VentaForm objform = (VentaForm) form;
+			
+			
+			String filePath = request.getRealPath("/").toString();
+			String archivoPlantilla = filePath + File.separator + "plantillas"
+					+ File.separator + "reportes" + File.separator
+					+ "reporte-" + plantilla + ".xls";
+			
+
+			VentaDao ventaDao = new VentaDao();
+			
+			Map<String, Object> beans = new HashMap<String, Object>();
+			if ("venta".equals(plantilla)) {
+				List<Venta> ventas = ventaDao.listaVenta(0,1000, objform.getVenta());
+				beans.put("ventas", ventas);
+			
+			} else if ("devolucion-venta".equals(plantilla)) {
+				List<Ventadevolucion>  listaVentaDevolucion = ventaDao.listaVentaDevolucion(0,1000, objform.getVenta());
+				beans.put("devolucionVentas", listaVentaDevolucion);
+			}
+			
+			response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
+			response.setContentType("application/octet-stream");
+			ServletOutputStream outputStream = response.getOutputStream();
+			
+			InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
+			XLSTransformer transformer = new XLSTransformer();
+			try {
+				HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
+				workbook.write(outputStream);
+				fis.close();
+				outputStream.flush();
+				outputStream.close();
+			} catch (ParsePropertyException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 		
 	}

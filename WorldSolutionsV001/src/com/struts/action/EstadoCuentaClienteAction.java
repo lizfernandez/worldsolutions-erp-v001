@@ -66,8 +66,7 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 		 * @throws IOException 
 		 * @throws ParseException 
 		 */
-		public ActionForward listaEstadoCuentaCliente(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
+		public ActionForward listaEstadoCuentaCliente(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
 
 			
 			/***Validamos la session activa y logeada***/
@@ -364,8 +363,7 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 		 * @throws IOException 
 		 * @throws ParseException 
 		 */
-		public ActionForward listaLetrasCliente(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
+		public ActionForward listaLetrasCliente(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
 
 			/*** Validamos la session activa y logeada ***/
 			String msn = "";
@@ -600,20 +598,26 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 
 			String plantilla = request.getParameter("plantilla");
 			System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+
 			EstadoCuentaClienteForm objform = (EstadoCuentaClienteForm) form;
-			
 			String filePath = request.getRealPath("/").toString();
 			String archivoPlantilla = filePath + File.separator + "plantillas"
 					+ File.separator + "reportes" + File.separator
 					+ "reporte-" + plantilla + ".xls";
 			
 
-			VentaDao ventaDao = new VentaDao();
 			Map<String, Object> beans = new HashMap<String, Object>();
 
-			List<EstadoCuentaVo> estadoCuentaClientes = listarEstadoCuentaCliente(objform, ventaDao, 0, 1000);
+			
 			if ("cliente-estado-cuenta".equals(plantilla)) {
+				VentaDao ventaDao = new VentaDao();
+				List<EstadoCuentaVo> estadoCuentaClientes = listarEstadoCuentaCliente(objform, ventaDao, 0, 1000);
 				beans.put("estadoCuentaClientes", estadoCuentaClientes);
+			
+			} else if ("cliente-estado-cuenta-letra".equals(plantilla)) {
+				EstadoCuentaClienteDao letraClienteDao = new EstadoCuentaClienteDao();
+				List<Letracliente> listaLetraCliente = letraClienteDao.listaLetraCliente(0, 1000, objform.getLetracliente());
+				beans.put("estadoCuentaLetrasClientes", listaLetraCliente);
 			
 			}
 			
@@ -637,60 +641,55 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 			return null;
 		}
 		
-		private List<EstadoCuentaVo> listarEstadoCuentaCliente(EstadoCuentaClienteForm objform, VentaDao ventaDao, int paginaInicio, int paginaFin) {
-			
-			List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
-			
-			
-			/**Accedemos al Dao**/
-			List<Venta> listaVenta = ventaDao.listaEstadoCuentaPorCliente(paginaInicio, paginaFin, objform.getVenta(),0);
-			    float montosTotales =  0;
-			    float pagosTotales =  0;
-			    float saldosTotales =  0;
-			    int i=0;
-			    
-			    
-			 for(Venta obj:listaVenta)
-			 {   float pagoTotal=0;
-			 float saldoTotal = 0;
-				 EstadoCuentaVo e = new EstadoCuentaVo();
-			     
-		
-			   	 e.setVenta(obj);
-			     if(obj.getEstadocuentaclientes().size()>0){
-		   	 
-				     for(Estadocuentacliente obje:obj.getEstadocuentaclientes()){
-				    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-				    	 pagoTotal+= obje.getfMontoPago();						    	
-				    	 pagosTotales+= obje.getfMontoPago();
-				    	// e.setEstadocuenta(obj.getEstadocuentaclientes());
-				    	}
-				       } // for				    
-				     
-			     } // if
-				   
-					
-		
-			     saldoTotal = obj.getfVentaTotal() -pagoTotal;
-			     montosTotales+= obj.getfVentaTotal();
-				 saldosTotales=(montosTotales - pagosTotales);
-			     e.setPagoTotal(pagoTotal);
-			     e.setSaldoTotal(saldoTotal);
-		
-				i++;
-				
-				if(i==listaVenta.size()){
-					e.setMontosTotales(montosTotales);
-					e.setPagosTotales(pagosTotales);
-					e.setSaldosTotales(saldosTotales);
-					
-				}
-			     
-			     listaEstadoCuenta.add(e);
-			     
-			 }
-			 return listaEstadoCuenta;
-			 
+	private List<EstadoCuentaVo> listarEstadoCuentaCliente(EstadoCuentaClienteForm objform, VentaDao ventaDao, int paginaInicio, int paginaFin) {
+
+		List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
+
+		/** Accedemos al Dao **/
+		List<Venta> listaVenta = ventaDao.listaEstadoCuentaPorCliente(paginaInicio, paginaFin, objform.getVenta(), 0);
+		float montosTotales = 0;
+		float pagosTotales = 0;
+		float saldosTotales = 0;
+		int i = 0;
+
+		for (Venta obj : listaVenta) {
+			float pagoTotal = 0;
+			float saldoTotal = 0;
+			EstadoCuentaVo estadoCuenta = new EstadoCuentaVo();
+
+			estadoCuenta.setVenta(obj);
+			if (obj.getEstadocuentaclientes().size() > 0) {
+
+				for (Estadocuentacliente obje : obj.getEstadocuentaclientes()) {
+					if (obje.getcEstadoCodigo().equals(Constantes.estadoActivo)) {
+						pagoTotal += obje.getfMontoPago();
+						pagosTotales += obje.getfMontoPago();
+						// e.setEstadocuenta(obj.getEstadocuentaclientes());
+					}
+				} // for
+
+			} // if
+
+			saldoTotal = obj.getfVentaTotal() - pagoTotal;
+			montosTotales += obj.getfVentaTotal();
+			saldosTotales = (montosTotales - pagosTotales);
+			estadoCuenta.setPagoTotal(pagoTotal);
+			estadoCuenta.setSaldoTotal(saldoTotal);
+
+			i++;
+
+			if (i == listaVenta.size()) {
+				estadoCuenta.setMontosTotales(montosTotales);
+				estadoCuenta.setPagosTotales(pagosTotales);
+				estadoCuenta.setSaldosTotales(saldosTotales);
+
+			}
+
+			listaEstadoCuenta.add(estadoCuenta);
+
 		}
-		
+		return listaEstadoCuenta;
+
+	}
+
 }

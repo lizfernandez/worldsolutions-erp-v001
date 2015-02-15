@@ -9,12 +9,7 @@
          <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
-        </td>
-        <td align="center" >
-             <img  onclick="pdf()"
-                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="63%" title="Exportar Venta"/>
-
-         </td>         
+        </td>     
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -32,7 +27,7 @@
         
           
 	         
-        <th colspan="2" >Operaciones</th>       
+        <th align="center">Operaciones</th>       
         <th align="left">Proveedor</th>
         <th align="left">Tipo Documento</th>
 	    <th align="left">Nro. Documento</th>
@@ -58,10 +53,6 @@
 				
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popup('contabilidad.do?metodo=mantenimientoVentaDevolucion&mode=U&id=<bean:write name="x" property="iVentaDevolucionId" />',1320,620)" /></td>
-				<td align="center">
-			        <img  onclick="fn_reporteVenta('',1080,830)"
-			                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="27%" title="Imprimir Venta"/>
-			    </td>
 				<td><bean:write name="x" property="venta.cliente.vClienteRazonSocial" /></td>
 				<td><bean:write name="x" property="venta.tipoDocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="venta.nVentaNumero" /></td>

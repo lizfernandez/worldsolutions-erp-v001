@@ -51,59 +51,61 @@
 	    </logic:empty>
 	    <logic:notEmpty name="estadoCuentaClienteForm" property="lista">
 	     	<logic:iterate name="estadoCuentaClienteForm" property="lista" id="x">	
-			<tr>
-				 
-				<logic:equal name="x" property="venta.vPrincipal" value="1">
-		            <td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',1320,620)" /></td>
-		          </logic:equal>
-		        <logic:equal name="x" property="venta.vPrincipal" value="0">  
-				<td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=UE&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',520,430)" /></td>
-		        </logic:equal>
-		        <logic:notEqual name="x" property="saldoTotal" value="0.00">
-			        <td align="center"><img title="Agregar Pago" src="${pageContext.request.contextPath}/media/imagenes/new.png"
-			                     onclick="popup('estadoCuentaCliente.do?metodo=mantenimientoEstadoCuentaCliente&mode=I&iVentaId=<bean:write name="x" property="venta.iVentaId" />&iClienteId=<bean:write name="x" property="venta.cliente.iClienteId" />&montoTotal=<bean:write name="x" property="venta.fVentaTotal" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',350,220)" />
-			         </td>
-		          </logic:notEqual>
-		          <logic:equal name="x" property="saldoTotal" value="0.00">
-		              <td align="center"> </td>
-		          </logic:equal>
-		         <logic:equal name="x" property="venta.vPrincipal" value="0">
-		             <logic:equal name="x" property="pagoTotal" value="0">
-			               <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-			                     onclick="eliminar('tabla','<bean:write name="x" property="venta.iVentaId" />','venta.do?metodo=iduVenta&mode=D')"/>
-			               </td>
-		             </logic:equal>
-		              <logic:notEqual name="x" property="pagoTotal" value="0">
-			               <td align="center"></td>
-		             </logic:notEqual>
-		          </logic:equal>
-		          <logic:equal name="x" property="venta.vPrincipal" value="1">
-		              <td align="center"> </td>
-		          </logic:equal>
-		           
-		         <logic:notEmpty name="x" property="venta.estadocuentaclientes">
-		         <td id="img_<bean:write name="x" property="venta.iVentaId" />">
-		               <img title="Visualizar Detalle" src="${pageContext.request.contextPath}/media/imagenes/mas.png"
-                        onclick="fn_pagosMas('<bean:write name="x" property="venta.iVentaId" />')" />
-                 </td> 
-                 </logic:notEmpty>                 
-                 <logic:empty name="x" property="venta.estadocuentaclientes"> 
-	                 <td id="img_<bean:write name="x" property="venta.iVentaId" />">	                     
-	                 </td> 
-                 </logic:empty>  
-                 <td><bean:write name="x" property="venta.cliente.vClienteRazonSocial" /></td>
-           		 <td><bean:write name="x" property="venta.tipoDocumento.vTipoDocumentoDescripcion" /></td>
-				 <td><bean:write name="x" property="venta.nVentaNumero" /></td>
-				 <td><bean:write name="x" property="venta.formaPago.vFormaPagoDescripcion" /></td>
-				 <td><bean:write name="x" property="venta.dVentaFecha" format="dd/MM/yyyy"/></td>
-				 <td align="right"><bean:write name="x" property="venta.fVentaTotal" format="#,##0.00" locale="Localidad"/></td>
-				 <td align="right"><bean:write name="x" property="pagoTotal" format="#,##0.00" locale="Localidad" /></td>
-				 <td align="right"><bean:write name="x" property="saldoTotal" format="#,##0.00" locale="Localidad" /></td>
-				 <td><bean:write name="x" property="venta.vEstadoDocumento" /></td>
-				 
-			</tr>
+				<tr>
+					<!-- Primera operacion --> 
+					<logic:equal name="x" property="venta.vPrincipal" value="1">
+			            <td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+			                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',1320,620)" /></td>
+			          </logic:equal>
+			        <logic:equal name="x" property="venta.vPrincipal" value="0">  
+					<td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+			                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=UE&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',520,430)" /></td>
+			        </logic:equal>
+			        
+			        <!-- Segunda operacion -->
+			        <logic:notEqual name="x" property="saldoTotal" value="0">
+						<td align="center"><img title="Agregar Pago" src="${pageContext.request.contextPath}/media/imagenes/new.png" 
+							onclick="popup('estadoCuentaCliente.do?metodo=mantenimientoEstadoCuentaCliente&mode=I&iVentaId=<bean:write name="x" property="venta.iVentaId" />&iClienteId=<bean:write name="x" property="venta.cliente.iClienteId" />&montoTotal=<bean:write name="x" property="venta.fVentaTotal" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',350,220)" />
+				        </td>
+				    </logic:notEqual>
+			        <logic:equal name="x" property="saldoTotal" value="0">
+			        	<td align="center"> </td>
+					</logic:equal>
+	
+			        <!-- Tercera operacion -->
+			        <logic:equal name="x" property="venta.vPrincipal" value="0">
+			        	<logic:equal name="x" property="pagoTotal" value="0">
+				        	<td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+				            	onclick="eliminar('tabla','<bean:write name="x" property="venta.iVentaId" />','venta.do?metodo=iduVenta&mode=D')"/></td>
+				        </logic:equal>
+			            <logic:notEqual name="x" property="pagoTotal" value="0">
+				        	<td align="center"></td>
+				        </logic:notEqual>
+				    </logic:equal>
+			        <logic:equal name="x" property="venta.vPrincipal" value="1">
+			        	<td align="center"> </td>
+			        </logic:equal>
+			        
+				    <!-- Cuarta Operacion -->
+			        <logic:notEmpty name="x" property="venta.estadocuentaclientes">
+			        	<td id="img_<bean:write name="x" property="venta.iVentaId" />">
+			        		<img title="Visualizar Detalle" src="${pageContext.request.contextPath}/media/imagenes/mas.png" onclick="fn_pagosMas('<bean:write name="x" property="venta.iVentaId" />')" />
+	                	</td> 
+	                </logic:notEmpty>                
+	                <logic:empty name="x" property="venta.estadocuentaclientes"> 
+		            	<td id="img_<bean:write name="x" property="venta.iVentaId" />"></td> 
+	                </logic:empty>
+	                
+	                <td><bean:write name="x" property="venta.cliente.vClienteRazonSocial" /></td>
+	           		<td><bean:write name="x" property="venta.tipoDocumento.vTipoDocumentoDescripcion" /></td>
+					<td><bean:write name="x" property="venta.nVentaNumero" /></td>
+					<td><bean:write name="x" property="venta.formaPago.vFormaPagoDescripcion" /></td>
+					<td><bean:write name="x" property="venta.dVentaFecha" format="dd/MM/yyyy"/></td>
+					<td align="right"><bean:write name="x" property="venta.fVentaTotal" format="#,##0.00" locale="Localidad"/></td>
+					<td align="right"><bean:write name="x" property="pagoTotal" format="#,##0.00" locale="Localidad" /></td>
+					<td align="right"><bean:write name="x" property="saldoTotal" format="#,##0.00" locale="Localidad" /></td>
+					<td><bean:write name="x" property="venta.vEstadoDocumento" /></td>
+				</tr>
 			<logic:notEmpty name="x" property="venta.estadocuentaclientes">
 			<tr class="textInvisible" id="tr_<bean:write name="x" property="venta.iVentaId" />" >
    				 <td colspan="11"  align="right">
@@ -141,7 +143,7 @@
    				 </td>
 			</tr>
 			</logic:notEmpty>
-			<logic:notEqual name="x" property="montosTotales" value="">
+			<logic:notEqual name="x" property="montosTotales" value="0">
 				 <tr>
 					 <td colspan="8"></td>
 					 <td align="right"><strong>Monto Totales:</strong></td>
