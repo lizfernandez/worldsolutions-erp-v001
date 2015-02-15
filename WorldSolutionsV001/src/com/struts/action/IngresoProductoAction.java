@@ -868,7 +868,7 @@ public class IngresoProductoAction extends DispatchAction {
 	      		   if(ingresoDetalle.getcEstadoCodigo().equals(Constantes.estadoActivo)){
 	      			  ingresoDetalle.setIngresoproducto(obj);      			   
 	      			  ingresoDetalle.setdFechaInserta(Fechas.getDate());
-	      			  ingresoDetalle.setiUsuarioInsertaId(0);
+	      			  ingresoDetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
 			      	   
 	      			  Producto producto = ingresogenericaDao.findEndidad(ingresoDetalle.getProducto(), ingresoDetalle.getProducto().getiProductoId());
 	      			    
