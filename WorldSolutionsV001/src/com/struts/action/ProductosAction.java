@@ -313,12 +313,15 @@ public class ProductosAction extends DispatchAction {
 		
 		/** llamado de los metodos de la clase dao **/
 		List<Categoria> listaCategoria = categoriaDao.listaCategoria(categoria);	
-		List<Subcategoria> listaSubCategoria = categoriaDao.listaSubcategoria(listaCategoria.get(0).getiCategoriaId());
+		
 		List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
 		List<Estado> listaEstado = estadoDao.listEstado();
 		List<Moneda> listaMoneda = genericoDao.listaEntidadGenerica(moneda);
 		List<Preciosproducto> listaPrecio = new ArrayList<Preciosproducto>();
-		
+		List<Subcategoria> listaSubCategoria = new ArrayList<Subcategoria>();
+		 if(listaCategoria.size()>0){
+			 listaSubCategoria = categoriaDao.listaSubcategoria(listaCategoria.get(0).getiCategoriaId());
+		 }
 		/**LLamamos al formulario mantenimientoProducto.jsp para la insercion de datos **/
 		/**
 		 * iclasificacionId:
@@ -332,6 +335,7 @@ public class ProductosAction extends DispatchAction {
 
 		case 1:
 			msn = "showEdit";
+			
 			break;
 		case 2:
 			msn = "showEditMateriaPrima";
