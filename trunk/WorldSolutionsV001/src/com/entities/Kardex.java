@@ -1,10 +1,9 @@
 package com.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import java.sql.Timestamp;
 import java.util.Date;
+
+import javax.persistence.*;
 
 
 /**
@@ -411,35 +410,5 @@ public class Kardex implements Serializable {
 	public void setProduccion(Produccion produccion) {
 		this.produccion = produccion;
 	}
-
-	/**
-	 * @return the produccion
-	 */
-	public Produccion getProduccion() {
-		return produccion;
-	}
-
-	/**
-	 * @param produccion the produccion to set
-	 */
-	public void setProduccion(Produccion produccion) {
-		this.produccion = produccion;
-	}
-
-	/**
-	 * @return the produccion
-	 */
-	public Produccion getProduccion() {
-		return produccion;
-	}
-
-	/**
-	 * @param produccion the produccion to set
-	 */
-	public void setProduccion(Produccion produccion) {
-		this.produccion = produccion;
-	}
-
-	
 
 }
