@@ -195,15 +195,20 @@ public class UsuarioAction extends DispatchAction {
 			
 				obj.setdFechaActualiza(Fechas.getDate());
 				resultado = usuarioDao.actualizarUnaEndidad(obj);
-				
-			}
-			else if (mode.equals("D")) { 	
-				EntityTransaction transaction = usuarioDao.entityTransaction();
-				transaction.begin();
-				usuarioDao.eliminarUnaEndidad(obj, "iUsuarioId",ids);/**/
-				resultado = usuarioDao.commitEndidad(transaction);
-				
+	
+			} else if (mode.equals("D")) {
+				EntityTransaction transaction;
+				try {
+					transaction = usuarioDao.entityTransaction();
+					transaction.begin();
+					usuarioDao.eliminarUnaEndidad(obj, "iUsuarioId", ids);/**/
+					resultado = usuarioDao.commitEndidad(transaction);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				} finally {
+					transaction = null;
 				}
+			}
 				
 			if (resultado == true) {
 				msn = "msnOk";

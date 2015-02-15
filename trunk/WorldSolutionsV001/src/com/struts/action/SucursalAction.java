@@ -190,11 +190,17 @@ public class SucursalAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) {
-				    EntityTransaction transaction = sucursalDao.entityTransaction();
+				EntityTransaction transaction;
+				try {
+				    transaction = sucursalDao.entityTransaction();
 				    transaction.begin();
 					sucursalDao.eliminarUnaEndidad(obj, "iSucursalId",ids);/**/
 					resultado = sucursalDao.commitEndidad(transaction);
-				
+			    } catch (Exception ex) {
+			    	ex.printStackTrace();
+			    } finally {
+			    	transaction = null;
+			    }
 			}
 				
 			if (resultado == true) {

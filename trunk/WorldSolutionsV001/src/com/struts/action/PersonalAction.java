@@ -204,10 +204,19 @@ public class PersonalAction extends DispatchAction {
 			
 		}
        else if (mode.equals("D")) { 
-    	   EntityTransaction transaction = personalDao.entityTransaction();
+    	   EntityTransaction transaction;
+    	   try {
+    	   transaction = personalDao.entityTransaction();
     	   transaction.begin();
     	   personalDao.eliminarUnaEndidad(obj, "iPersonalId",ids);/**/
 		   resultado = personalDao.commitEndidad(transaction);
+		   
+    	   } catch (Exception ex) {
+    		   ex.printStackTrace();
+     	   } finally {
+     		   transaction = null;
+     	   }
+		   
 		}
 		
 		if (resultado == true) {
