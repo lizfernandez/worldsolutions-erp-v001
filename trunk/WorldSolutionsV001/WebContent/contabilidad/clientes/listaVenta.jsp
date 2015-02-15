@@ -10,11 +10,10 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
-         <td align="center" >
-             <img  onclick="pdf()"
-                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="63%" title="Exportar Venta"/>
-
-         </td> 
+        <td><button class="button" onclick="fn_exportarExcel('contabilidad.do?metodo=exportarExcel&plantilla=contabilidad-venta')">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -33,7 +32,7 @@
           
 	         
          
-        <th colspan="2">Operaciones</th>              
+        <th align="center">Operaciones</th>              
         <th align="left">Cliente</th>
         <th align="left">TIPO DOC.</th>
 	    <th align="left">N&deg; DE DOC.</th>
@@ -59,11 +58,7 @@
 			 
 				<td align="center"><img title="Ver" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popup('contabilidad.do?metodo=mantenimientoVenta&mode=ED&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />',1320,620)" /></td>
-		 	 	<td align="center">
-			        <img  onclick="popup('contabilidad.do?metodo=reporteVenta&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />',230,230)"
-			                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="30%" title="Imprimir Venta"/>
-			    </td>
-				<td><bean:write name="x" property="cliente.vClienteRazonSocial" /></td>
+		 	 	<td><bean:write name="x" property="cliente.vClienteRazonSocial" /></td>
 				<td><bean:write name="x" property="tipoDocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="nVentaNumero" /></td>
 				<td><bean:write name="x" property="formaPago.vFormaPagoDescripcion" /></td>

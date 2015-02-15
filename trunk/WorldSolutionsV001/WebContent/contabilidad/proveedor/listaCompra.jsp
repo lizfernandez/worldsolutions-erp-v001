@@ -10,11 +10,6 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
-         <td align="center"  >
-             <img  onclick="fn_reporteIngresoProducto('',1080,830)"
-                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="63%" title="Exportar IngresoProducto"/>
-
-         </td> 
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -32,7 +27,7 @@
         
           
 	         
-        <th colspan="2">Operaciones</th>              
+        <th align="center">Operaciones</th>              
         <th align="left">Proveedor</th>
         <th align="left">TIPO DOC.</th>
 	    <th align="left">N&deg; DE DOC.</th>
@@ -57,10 +52,6 @@
 			<tr>
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="tipodocumento.iTipoDocumentoGestionId" />',1320,620)" /></td>
-		 		<td align="center">
-			        <img  onclick="fn_reporteIngresoProducto('',1080,830)"
-			                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="30%" title="Imprimir IngresoProducto"/>
-			    </td>
 				<td><bean:write name="x" property="proveedor.vProveedorRazonSocial" /></td>
 				<td><bean:write name="x" property="tipodocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="nIngresoProductoNumero" /></td>

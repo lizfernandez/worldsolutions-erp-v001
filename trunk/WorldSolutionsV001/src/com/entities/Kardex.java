@@ -60,7 +60,7 @@ public class Kardex implements Serializable {
 	private int iUsuarioActualizaId;
 
 	private int iUsuarioInsertaId;
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch=FetchType.LAZY)
+	@ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST}, fetch=FetchType.LAZY)
 	@JoinColumn(name="iVentaId", nullable=false)	
 	private Venta venta;
 	
@@ -396,6 +396,34 @@ public class Kardex implements Serializable {
 	 */
 	public void setVentadevolucion(Ventadevolucion ventadevolucion) {
 		this.ventadevolucion = ventadevolucion;
+	}
+
+	/**
+	 * @return the produccion
+	 */
+	public Produccion getProduccion() {
+		return produccion;
+	}
+
+	/**
+	 * @param produccion the produccion to set
+	 */
+	public void setProduccion(Produccion produccion) {
+		this.produccion = produccion;
+	}
+
+	/**
+	 * @return the produccion
+	 */
+	public Produccion getProduccion() {
+		return produccion;
+	}
+
+	/**
+	 * @param produccion the produccion to set
+	 */
+	public void setProduccion(Produccion produccion) {
+		this.produccion = produccion;
 	}
 
 	/**

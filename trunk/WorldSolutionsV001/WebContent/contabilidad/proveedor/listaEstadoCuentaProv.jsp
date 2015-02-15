@@ -9,11 +9,6 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
-        <td align="center" >
-             <img  onclick="pdf()"
-                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="63%" title="Exportar Venta"/>
-
-         </td>  
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">

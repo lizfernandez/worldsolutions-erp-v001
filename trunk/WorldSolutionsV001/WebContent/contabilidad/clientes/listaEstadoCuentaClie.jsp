@@ -8,12 +8,7 @@
          <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVenta&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
-        </td>
-        <td align="center" >
-             <img  onclick="pdf()"
-                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="63%" title="Exportar Venta"/>
-
-         </td>         
+        </td>    
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -28,7 +23,7 @@
 
     <thead>
     <tr>
-          <th colspan="4"width="5%" >Operaciones</th>
+          <th colspan="4" width="5%" >Operaciones</th>
           <th align="left">Cliente</th>
           <th align="left">Tipo Documento</th>
 	      <th align="left">Nro. Documento</th>

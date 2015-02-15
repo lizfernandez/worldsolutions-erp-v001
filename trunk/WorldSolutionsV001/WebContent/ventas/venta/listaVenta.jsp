@@ -37,8 +37,8 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('venta.do?metodo=reporteVenta',350,350)">
-                <span class="pdf"> PDF</span>
+        <td><button class="button" onclick="fn_exportarExcel('venta.do?metodo=exportarExcel&plantilla=venta')">
+                <span class="excel">Exportar</span>
             </button>
         </td>
     </tr>
@@ -58,7 +58,7 @@
         
           
 	         
-        <th colspan="4" width="5%" >Operaciones</th>       
+        <th colspan="3" width="5%" >Operaciones</th>       
         <th align="left">Cliente</th>
         <th align="left">Tipo Documento</th>
 	    <th align="left">Nro. Documento</th>
@@ -84,10 +84,7 @@
 		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />',900,700)" /></td>
 		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iVentaId" />','venta.do?metodo=iduVenta&mode=D')" /></td>	
-				<td align="center">
-			        <img  onclick="popup('venta.do?metodo=reporteVenta&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />',230,230)"
-			                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="55%" title="Imprimir Venta"/>
-			    </td>
+				
 				<td><bean:write name="x" property="cliente.vClienteRazonSocial" /></td>
 				<td><bean:write name="x" property="tipoDocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="nVentaNumero" /></td>

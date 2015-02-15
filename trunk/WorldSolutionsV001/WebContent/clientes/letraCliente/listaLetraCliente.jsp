@@ -14,10 +14,10 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=F',350,350)">
-                <span class="pdf"> PDF</span>
+        <td><button class="button" onclick="fn_exportarExcel('estadoCuentaCliente.do?metodo=exportarExcel&plantilla=cliente-estado-cuenta-letra')">
+                <span class="excel">Exportar</span>
             </button>
-        </td>  
+        </td>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -32,7 +32,7 @@
 
     <thead>
     <tr>
-          <th width="5%" colspan="3" >Operaciones</th>
+          <th width="5%" colspan="2" >Operaciones</th>
           <th align="left">Fecha Giro</th>
           <th align="left">Fecha Vencimiento</th>
           <th align="left">Fecha Pago</th>
@@ -54,12 +54,6 @@
 	    <logic:notEmpty name="estadoCuentaClienteForm" property="lista">
 	     	<logic:iterate name="estadoCuentaClienteForm" property="lista" id="x">	
 			<tr>
-		          
-		          
-		          
-		         <td align="center"><img title="Ver Compra" src="${pageContext.request.contextPath}/media/imagenes/search.png"
-		                     onclick="popupModal('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />',900,700)" />
-		         </td>
 		         <td align="center"><img title="Editar Letra" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popupModal('estadoCuentaCliente.do?metodo=mantenimientoLetraCliente&mode=U&id=<bean:write name="x" property="iLetraClienteId" />',530,530)" />
 		         </td>
@@ -83,20 +77,20 @@
     </tbody>
 </table>
 <div id="paginacion">
-<logic:notEmpty name="estadoCuentaClienteForm" property="paginas">	
-    <bean:size id="listSizes" name="estadoCuentaClienteForm" property="paginas"/>	
-    <input type="hidden" id="size" value="<bean:write name="listSizes" />"/>
-	<input type="hidden" id="pagInicio" value="<bean:write name="estadoCuentaClienteForm" property="pagInicio"/>"/>
-	<div class="btnPagInactivo" id="principio">&emsp;</div>
-	<div class="btnPagInactivo" id="back">&emsp;</div>	
-	<div id="pag">	
-		<logic:iterate name="estadoCuentaClienteForm" property="paginas" id="p">				
-			        <div class="btnPagInactivo" id="pg_<bean:write name="p" />" onclick="paginator('<bean:write name="p" />')" ><bean:write name="p" /></div>
-		</logic:iterate>
-	</div>
-	<div class="btnPagInactivo" id="Next" >&emsp;</div>
-	<div class="btnPagInactivo" id="Final" >&emsp; </div>
-</logic:notEmpty>	  
+	<logic:notEmpty name="estadoCuentaClienteForm" property="paginas">	
+	    <bean:size id="listSizes" name="estadoCuentaClienteForm" property="paginas"/>	
+	    <input type="hidden" id="size" value="<bean:write name="listSizes" />"/>
+		<input type="hidden" id="pagInicio" value="<bean:write name="estadoCuentaClienteForm" property="pagInicio"/>"/>
+		<div class="btnPagInactivo" id="principio">&emsp;</div>
+		<div class="btnPagInactivo" id="back">&emsp;</div>	
+		<div id="pag">	
+			<logic:iterate name="estadoCuentaClienteForm" property="paginas" id="p">				
+				        <div class="btnPagInactivo" id="pg_<bean:write name="p" />" onclick="paginator('<bean:write name="p" />')" ><bean:write name="p" /></div>
+			</logic:iterate>
+		</div>
+		<div class="btnPagInactivo" id="Next" >&emsp;</div>
+		<div class="btnPagInactivo" id="Final" >&emsp; </div>
+	</logic:notEmpty>	  
 </div> 
 <script>   
 paginacion();

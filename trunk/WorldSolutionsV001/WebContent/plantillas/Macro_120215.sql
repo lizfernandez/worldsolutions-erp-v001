@@ -7,6 +7,12 @@
 -- Versión del servidor: 5.1.41
 -- Versión de PHP: 5.3.1
 
+DROP database macrostruts;
+
+create database macrostruts;
+
+use macrostruts;
+
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
