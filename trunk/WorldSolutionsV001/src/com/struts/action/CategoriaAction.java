@@ -503,6 +503,10 @@ public class CategoriaAction extends DispatchAction {
 		Map<String, Object> beans = new HashMap<String, Object>();
 		
 		if ("categoria".equals(plantilla)) {
+			Clasificacioncategoria clasificacioncategoria = new Clasificacioncategoria();
+			clasificacioncategoria.setiClasificacionId(objform.getiClasificacionId());
+			objform.getCategoria().setClasificacionCategoria(clasificacioncategoria);
+			
 			List<Categoria> categorias = categoriaDao.listaCategoria(0, 1000, objform.getCategoria());
 			beans.put("categorias", categorias);
 			response.setHeader("content-disposition", "attachment;filename=reporte_categorias_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");

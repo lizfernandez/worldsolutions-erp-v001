@@ -11,14 +11,15 @@ import com.entities.Unidadmedida;
 import com.interfaces.dao.IUnidadMedidaDao;
 
 public class UnidadMedidaDao extends GenericaDao implements IUnidadMedidaDao {
-	
- public List<Unidadmedida> listaUnidadMedida() {
-	              
-    	   Query q = getInstancia().createQuery("select u from Unidadmedida u");
-    	   q.setHint(QueryHints.REFRESH, HintValues.TRUE);
-			List<Unidadmedida> listaUnidadMedida = q.getResultList();      
-		
-        return listaUnidadMedida;
+
+	public List<Unidadmedida> listaUnidadMedida() {
+
+		Query q = getInstancia().createQuery("select u from Unidadmedida u order by u.vUnidadMedidaDescripcion asc");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		@SuppressWarnings("unchecked")
+		List<Unidadmedida> listaUnidadMedida = q.getResultList();
+
+		return listaUnidadMedida;
 	}
 	/*@Override
 	public Unidadmedida buscarUnidadMedida(int iUnidadMedidaId) {
