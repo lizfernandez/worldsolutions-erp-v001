@@ -33,7 +33,7 @@
     <caption>Lista de Productos </caption>
     <thead>
      <tr>
-        <th colspan="4" width="5%">Operaciones</th>        
+        <th colspan="3" width="5%">Operaciones</th>        
         <th width="23%" align="left">Descripcion</th>        
         <th align="left">Cantidad</th>
         <th align="left">Precio Compra</th>
@@ -55,14 +55,14 @@
 	<tr>
 	    <td align="center"><input type="checkbox" id="<bean:write name="x" property="iProduccionId" />"/></td> 
 		<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoProduccion&mode=U&id=<bean:write name="x" property="iProduccionId" />',600,660)" /></td>
+		                     onclick="popup('productos.do?metodo=mantenimientoProduccion&mode=U&id=<bean:write name="x" property="iProduccionId" />',700,635)" /></td>
 		<td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iProductoId" />','productos.do?metodo=iduProduccion&mode=D')" /></td>	
-		<td><bean:write name="x" property="produccionDetalle.vDescripcion" /></td>		
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iProduccionId" />','productos.do?metodo=iduProduccion&mode=D')" /></td>	
+		<td><bean:write name="x" property="vDescripcion" /></td>		
 		
-	    <td><bean:write name="x" property="produccionDetalle.iCantidad" /></td>
-	    <td><bean:write name="x" property="produccionDetalle.fCostoUni" /></td>
-	    <td><bean:write name="x" property="produccionDetalle.fTotal" /></td>		
+	    <td><bean:write name="x" property="iCantidad" /></td>
+	    <td><bean:write name="x" property="fCostoUni" /></td>
+	    <td><bean:write name="x" property="fCostoTotal" /></td>		
 		<td><bean:write name="x" property="cEstadoCodigo" /></td>
 	   
 

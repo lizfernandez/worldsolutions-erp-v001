@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="productos" styleId="formPersonal">
     <tr>
-       <td> <html:select  property="iclasificacionId" styleId="iclasificacionId" styleClass="combo" style="width:150px ">       
+       <td> <html:select  property="iclasificacionId" styleId="iclasificacionId" styleClass="combo" style="width:150px " onchange="fn_recargar()">       
               <html:options collection="listaClasificacioncategoria" property="iClasificacionId" labelProperty="vClasificacionDescripcion"/>
            </html:select>
         </td>   
@@ -212,6 +212,7 @@
 <script>   
 paginacion();
 
+$("#iclasificacionId option[value=5]").attr('disabled', true);
 function fn_cargarProducto(iProductoId,vNombreProducto,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fGanancia){   
     $("#iProductoId").val(iProductoId);
 	$("#vxProductoNombre").val(vNombreProducto);

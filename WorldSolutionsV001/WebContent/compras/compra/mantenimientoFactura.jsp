@@ -483,7 +483,7 @@
     
    function fn_listarProducto(){
     	var iclasificacionId = $("#iclasificacionId").val();
-    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&mode=LPC',750,650);
+    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=compras&mode=LPC',750,650);
     }
 
 </script>
