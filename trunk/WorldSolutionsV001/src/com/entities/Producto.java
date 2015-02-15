@@ -64,7 +64,7 @@ public class Producto implements Serializable {
 	@JoinColumn(name="iSubCategoriaId")	
 	private Subcategoria subcategoria;
 
-	private int iProduccionId;
+	
 
 	@Column(nullable=false)
 	private int iProductoStockCantidad;
@@ -113,6 +113,10 @@ public class Producto implements Serializable {
     @ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="iMonedaId", nullable=false)
 	private Moneda moneda;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="iProduccionId", nullable=false)
+	private Produccion produccion;
 /*
 	//bi-directional many-to-one association to Salidaproducto
 	@OneToMany(mappedBy="producto",fetch=FetchType.LAZY)
@@ -133,6 +137,8 @@ public class Producto implements Serializable {
 	//bi-directional many-to-one association to Ingresoproducto
 	@OneToMany(mappedBy="producto")
 	private List<Ingresoproductodetalle> ingresoproductodetalle;
+	
+	
 
     public Producto() {
     }
@@ -211,9 +217,7 @@ public class Producto implements Serializable {
 	}
 */
 	
-	public int getiProduccionId() {
-		return iProduccionId;
-	}
+	
 
 	/**
 	 * @return the categoria
@@ -229,10 +233,7 @@ public class Producto implements Serializable {
 		this.categoria = categoria;
 	}
 
-	public void setiProduccionId(int iProduccionId) {
-		this.iProduccionId = iProduccionId;
-	}
-	
+
 	 /**
       * @return the vUnidadMedidaDescripcionC
 	  */
@@ -481,6 +482,20 @@ public class Producto implements Serializable {
 	 */
 	public void setfProductoDescuento(float fProductoDescuento) {
 		this.fProductoDescuento = fProductoDescuento;
+	}
+
+	/**
+	 * @return the produccion
+	 */
+	public Produccion getProduccion() {
+		return produccion;
+	}
+
+	/**
+	 * @param produccion the produccion to set
+	 */
+	public void setProduccion(Produccion produccion) {
+		this.produccion = produccion;
 	}
 
 	

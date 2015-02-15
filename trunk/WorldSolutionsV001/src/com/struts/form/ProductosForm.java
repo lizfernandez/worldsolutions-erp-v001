@@ -567,6 +567,32 @@ public class ProductosForm extends ActionForm {
 	}
 
 	
+	/**
+	 * @return the fOtrosCostos
+	 */
+	public float getfOtrosCostos() {
+		return produccion.getfOtrosCostos();
+	}
+
+	/**
+	 * @param fOtrosCostos the fOtrosCostos to set
+	 */
+	public void setfOtrosCostos(float fOtrosCostos) {
+		this.produccion.setfOtrosCostos(fOtrosCostos);
+	}
+	/**
+	 * @return the vDescripcion
+	 */
+	public String getvDescripcion() {
+		return produccion.getvDescripcion();
+	}
+
+	/**
+	 * @param vDescripcion the vDescripcion to set
+	 */
+	public void setvDescripcion(String vDescripcion) {
+		this.produccion.setvDescripcion(vDescripcion);
+	}
 
 	
 }

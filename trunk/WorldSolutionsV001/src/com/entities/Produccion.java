@@ -37,11 +37,19 @@ public class Produccion implements Serializable {
 
 	private int iUsuarioInsertaId;
 
-
+    private float fOtrosCostos;
+    
 	//bi-directional many-to-one association to Produccion
-	@OneToMany(mappedBy="produccion", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="produccion",cascade = CascadeType.ALL,  fetch=FetchType.EAGER)
 	private List<Producciondetalle> produccionDetalle;
+	
+	//bi-directional many-to-one association to Produccion
+	@OneToMany(mappedBy="produccion",fetch=FetchType.EAGER)
+	private List<Producto> producto;
+	
+	
 
+	private String vDescripcion;
     public Produccion() {
     }
 
@@ -183,6 +191,48 @@ public class Produccion implements Serializable {
 	 */
 	public void setProduccionDetalle(List<Producciondetalle> produccionDetalle) {
 		this.produccionDetalle = produccionDetalle;
+	}
+
+	/**
+	 * @return the fOtrosCostos
+	 */
+	public float getfOtrosCostos() {
+		return fOtrosCostos;
+	}
+
+	/**
+	 * @param fOtrosCostos the fOtrosCostos to set
+	 */
+	public void setfOtrosCostos(float fOtrosCostos) {
+		this.fOtrosCostos = fOtrosCostos;
+	}
+
+	/**
+	 * @return the vDescripcion
+	 */
+	public String getvDescripcion() {
+		return vDescripcion;
+	}
+
+	/**
+	 * @param vDescripcion the vDescripcion to set
+	 */
+	public void setvDescripcion(String vDescripcion) {
+		this.vDescripcion = vDescripcion;
+	}
+
+	/**
+	 * @return the producto
+	 */
+	public List<Producto> getProducto() {
+		return producto;
+	}
+
+	/**
+	 * @param producto the producto to set
+	 */
+	public void setProducto(List<Producto> producto) {
+		this.producto = producto;
 	}
 
 	

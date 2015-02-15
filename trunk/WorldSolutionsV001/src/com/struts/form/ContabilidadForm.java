@@ -819,13 +819,7 @@ public class ContabilidadForm extends ActionForm {
 		this.producto.setCategoria(categoria);
 	}
 
-	public int getiProduccionId() {
-		return producto.getiProduccionId();
-	}
-
-	public void setiProduccionId(int iProduccionId) {
-		this.producto.setiProduccionId(iProduccionId);
-	}
+	
 
 	public int getiProductoStockCantidad() {
 		return producto.getiProductoStockCantidad();

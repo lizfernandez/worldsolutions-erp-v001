@@ -1,6 +1,5 @@
 package com.util;
 
-import com.entities.Configuracion;
 
 
 public class Constantes {
@@ -16,6 +15,7 @@ public class Constantes {
 	public static String conceptoExistencia="Existencia Inicial ";
 	public static String conceptoCompra="COMPRA SEGÚN ";	
 	public static String conceptoVenta="VENTA SEGÚN ";
+	public static String conceptoProduccion="CONCEPTOS PRODUCCION";
 	public static String conceptoz="XSaldo ";
 	public static String conceptoDevCompra="DEV. COMPRA SEGÚN ";
 	public static String conceptoDevVenta="DEV. VENTA SEGÚN ";
@@ -42,5 +42,7 @@ public class Constantes {
 	public static String descCV="DESC. C.V %";
 	public static String aportESSALUD="APORT. ESSALUD %";
 	public static String aportIES="APORT. I.E.S %";
+	public static String costoServicios="Costos de servicios (agua, luz, tel.)";
+	public static String costosOtros="Otros Costos";
 	
 }
