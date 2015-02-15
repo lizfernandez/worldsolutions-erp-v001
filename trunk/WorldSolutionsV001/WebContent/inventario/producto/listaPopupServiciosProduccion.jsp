@@ -126,7 +126,7 @@
 			
 	  </tr>
 	  <tr>
-	        <td >Precio Venta:</td>
+	        <td >Costo Unitario</td>
 	       <td>
 	        <input type="hidden" id="fPrecioCompra"> 
 	        <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta"  size="5" styleClass="text" onblur="fn_CalcularTotal()"/>
@@ -173,13 +173,13 @@ paginacion();
  function fn_cargarProducto(iProductoId,vNombreProducto,fProductoDescuento,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
 	    $("#iProductoId").val(iProductoId);	    
 		$("#vxProductoNombre").val(vNombreProducto);
-		$("#fProductoPrecioVenta").val(fProductoPrecioVenta);
+		$("#fProductoPrecioVenta").val(fProductoPrecioCompra);
 		$("#fProductoDescuento").val(fProductoDescuento);
 		$("#fPrecioCompra").val(fProductoPrecioCompra);
 		$("#fDescuento").val(fProductoDescuento);
 		var fDescuento =parseFloat(($("#fDescuento").val()/100));		
 		
-		$("#fProductoPrecioVentaFinal").val(dosDecimales(fProductoPrecioVenta)-parseFloat(fProductoPrecioVenta)*fDescuento);		
+		$("#fProductoPrecioVentaFinal").val(dosDecimales(fProductoPrecioCompra)-parseFloat(fProductoPrecioCompra)*fDescuento);		
 		$("#fTotal").val(dosDecimales(($("#iProductoStockCantidad").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
 		$("#detalleListaPrecio").html($("#tr_"+iProductoId).html());
 	   
@@ -213,14 +213,17 @@ paginacion();
 		var fPrecioCompra =$("#fPrecioCompra").val();
 		var fTotal = $("#fTotal").val();
 		var iPersonalId = $("#iPersonalId").val();
-
-	    var cad = "venta.do?metodo=detalleVenta&id="+id+"&iCantidad="+iCantidad+
-	 		  "&fDescuento="+fDescuento+"&fPrecioVenta="+fPrecioVenta+"&fPrecioCompra="+fPrecioCompra+
-	 		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId;
-	       $.getJSON(cad, function retorna(obj){
-	      	// alert("obje"+obj.cProductoCodigo);
-	      	 listar_detalleVenta(obj,'padre');
-	      	 });
+		if ($_GET("tipo") == "produccion")
+		{
+			 var cad = "productos.do?metodo=detalleProduccion&id="+id+"&iCantidad="+iCantidad+
+			  "&fPrecioCompra="+fPrecioCompra+"&fDescuento="+fDescuento+
+			  "&fGanancia=0&fPrecioVenta="+fPrecioVenta+"&fTotal="+fTotal+"&iPersonalId="+iPersonalId+"&mode=I";
+    
+		         $.getJSON(cad, function retorna(obj){
+		        	// alert("obje"+obj.cProductoCodigo);
+		        	 listar_detalleProduccion(obj,'padre');
+		        	 });
+		}
 		
 		}
 		else{

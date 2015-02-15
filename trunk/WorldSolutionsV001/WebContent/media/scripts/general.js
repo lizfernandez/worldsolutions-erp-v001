@@ -866,6 +866,7 @@ function listar_detalleCompraDevolucion(obj, destino, fecha){
 function listar_detalleProduccion(obj,destino){
     
 	var newHtml='';
+	newHtml+='<caption>Lista de Producto</caption>';
 	newHtml+='<tbody>';
    newHtml+='<tr>';
        newHtml+='<th align="left"></th> '; 
@@ -886,9 +887,12 @@ function listar_detalleProduccion(obj,destino){
 		newHtml+='<td>';
 			newHtml+=data['producto'].cProductoCodigo;
 		newHtml+='</td>';
-		newHtml+='<td>';
-		newHtml+=data['producto'].vProductoNombre;
-	   newHtml+='</td>';
+		 
+	  newHtml+='<td>';
+	   newHtml+=data.vDescripcion;
+	  newHtml+='</td>';
+		   
+		
 		newHtml+="<td align='right'>";
 			  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iCantidad+"'/>";
 		newHtml+='</td>';		
@@ -1150,14 +1154,60 @@ function fn_exportarExcel(urlmetodo){
 function fn_recargar(){
 	var iclasificacionId= $("#iclasificacionId").val();
 	var url= window.document.location.search;
-	var metodo = url.split("&");
-	var mode ="";		
-	if(iclasificacionId=="5"){ ///  el id=5 es de servicio
-		//redireccionamos al padre los valores, sin hacer doble recarga por el return false;
-		mode="&mode=LPS";		
+	var metodo = url.split("&");	
+	var mode ="";	
+	var tipo=$_GET("tipo");
+	alert(tipo);
+	if(tipo=='ventas'){
+		if(iclasificacionId=="5"){ ///  el id=5 es de servicio
+			//redireccionamos al padre los valores, sin hacer doble recarga por el return false;
+			mode="&tipo=ventas&mode=LPS";		
+		}
+		else{
+			mode="&tipo=ventas&mode=LP";	
+		}
 	}
-	else{
-		mode="&mode=LP";	
+	if(tipo=='compras'){	
+			mode="&tipo=compras&mode=LPC";	
+		
+	}
+	if(tipo=='produccion'){	
+		if(iclasificacionId=="5"){ ///  el id=5 es de servicio
+			//redireccionamos al padre los valores, sin hacer doble recarga por el return false;
+			mode="&tipo=produccion&mode=LPSP";		
+		}else{
+			mode="&tipo=produccion&mode=LPP";	
+		}
+		
 	}
 	window.document.location.search = metodo[0]+"&iclasificacionId="+iclasificacionId+mode;
+}
+function $_GET(param)
+{
+	/* Obtener la url completa */
+	url = document.URL;
+	/* Buscar a partir del signo de interrogación ? */
+	url = String(url.match(/\?+.+/));
+	/* limpiar la cadena quitándole el signo ? */
+	url = url.replace("?", "");
+	/* Crear un array con parametro=valor */
+	url = url.split("&");
+	 
+	/*
+	Recorrer el array url
+	obtener el valor y dividirlo en dos partes a través del signo =
+	0 = parametro
+	1 = valor
+	Si el parámetro existe devolver su valor
+	*/
+	x = 0;
+	while (x < url.length)
+	{
+	p = url[x].split("=");
+	if (p[0] == param)
+	{
+	return decodeURIComponent(p[1]);
+	}
+	x++;
+	}
 }

@@ -61,6 +61,7 @@
          <logic:notEmpty name="productosForm" property="produc">
 		 <logic:iterate name="productosForm" property="produc" id="x">	
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
+			               '<bean:write name="x" property="cProductoCodigo" />',
 			               '<bean:write name="x" property="vProductoNombre" />',
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
 			               '<bean:write name="x" property="iUnidadMedidadIdC" />',
@@ -145,7 +146,8 @@
 	   <tr>
 	 		<td>Nombre de producto:</td>
 			<td colspan="3">
-			    <html:hidden property="iProductoId" styleId="iProductoId"/>
+			    <html:hidden property="iProductoId" styleId="iProductoId"/>			    
+			    <input type="hidden" id="xcProductoCodigo" size="45"  class="text"/>
 				<input type="text" id="vxProductoNombre" size="45"  class="text"/>
 				 Precio Final:
 				<input type="text" id="fProductoPrecioCompraFinal"  size="5" class="text" />
@@ -213,9 +215,11 @@
 paginacion();
 //$("#iclasificacionId option[value=5]").attr('disabled', true);
 //$("#iclasificacionId option[value=5]").attr('disabled','disabled');
-function fn_cargarProducto(iProductoId,vNombreProducto,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fGanancia){   
+function fn_cargarProducto(iProductoId,xcProductoCodigo,vNombreProducto,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fGanancia){   
     $("#iProductoId").val(iProductoId);
 	$("#vxProductoNombre").val(vNombreProducto);
+	$("#xcProductoCodigo").val(xcProductoCodigo);
+	
 	$("#iUnidadMedidadId").val(iUnidadMedidadId);
 	$("#iUnidadMedidadIdC").val(iUnidadMedidadIdC);
 	$("#vProductoCapacidad").val(vProductoCapacidad);	
@@ -240,24 +244,25 @@ function fn_CalcularTotal(){
 function fn_agregarProducto(){
 	var id=$("#iProductoId").val();
 	if(id!=''){
-	var iCantidad=$("#iProductoStockCantidad").val();
+	
 	var fPrecioCompra=$("#fProductoPrecioCompra").val();
 	var fDescuento=$("#fDescuento").val();	
 	var fGanancia = $("#fGanancia").val();
-	var fPrecioVenta =$("#fProductoPrecioVenta").val();
-	var fTotal = $("#fTotal").val();
-	var iPersonalId=0;
-   /* var cad = "productos.do?metodo=detalleProduccion&id="+id+"&iCantidad="+iCantidad+
-    		  "&fPrecioCompra="+fPrecioCompra+"&fTotal="+fTotal+"&iPersonalId="+iPersonalId+"&mode=I";*/
-    var cad = "productos.do?metodo=detalleProduccion&id="+id+"&iCantidad="+iCantidad+
-	  "&fPrecioCompra="+fPrecioCompra+"&fDescuento="+fDescuento+
-	  "&fGanancia="+fGanancia+"&fPrecioVenta="+fPrecioVenta+"&fTotal="+fTotal+"&iPersonalId="+iPersonalId+"&mode=I";
+	var vxProductoNombre=$("#vxProductoNombre").val();
+	var xcProductoCodigo=$("#xcProductoCodigo").val();
+	
+   
+	 window.opener.document.getElementById("fProductoDescuento").value=fDescuento;
+	 window.opener.document.getElementById("fProductoGanancia").value=fGanancia;
+	 window.opener.document.getElementById("vProductoNombre").value=vxProductoNombre;
+	 window.opener.document.getElementById("cProductoCodigo").value=xcProductoCodigo;
+	 window.opener.document.getElementById("iProductoId").value=id;
+	 window.opener.document.getElementById("iUnidadMedidadIdC").value=$("#iUnidadMedidadIdC").val();
+	 
+	
 
-     
-         $.getJSON(cad, function retorna(obj){
-        	// alert("obje"+obj.cProductoCodigo);
-        	 listar_detalleProduccion(obj,'padre');
-        	 });
+	 window.close();
+	
 	}
 	else{
 		alert("Debe de seleccionar producto");

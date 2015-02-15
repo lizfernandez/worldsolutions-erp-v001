@@ -493,7 +493,7 @@
     }
     function fn_listarProducto(){
     	var iclasificacionId = $("#iclasificacionId").val();
-    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&mode=LP',690,560);
+    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LP',690,560);
     	
     }
 
