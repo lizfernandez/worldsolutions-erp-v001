@@ -6,6 +6,10 @@
 -- Tiempo de generación: 15-02-2015 a las 12:59:02
 -- Versión del servidor: 5.1.41
 -- Versión de PHP: 5.3.1create datebase 
+drop schema IF EXISTS `macrostruts`;
+
+CREATE schema IF NOT EXISTS `macrostruts`;
+
 use macrostruts;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -2550,8 +2554,7 @@ CREATE TABLE IF NOT EXISTS `visitacliente` (
 --
 -- Filtros para la tabla `cuota`
 --
-ALTER TABLE `cuota`
-  ADD CONSTRAINT `fk_cuota_venta1` FOREIGN KEY (`iVentaId`) REFERENCES `venta` (`iVentaId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `cuota` ADD CONSTRAINT `fk_cuota_venta1` FOREIGN KEY (`iVentaId`) REFERENCES `venta` (`iVentaId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `ingresoproductodetalle`
