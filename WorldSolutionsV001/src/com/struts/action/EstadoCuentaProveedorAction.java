@@ -247,78 +247,85 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 			
 			
 	        /**Instanciamos una transacion**/
-			EntityTransaction transaction = ingresoProductoDao.entityTransaction();
-			transaction.begin();
-			if (pForm.getMode().equals("I")) {
-				obj = pForm.getEstadoCuentaProveedor();
-				obj.setdFechaInserta(Fechas.getDate());
-				obj.setcEstadoCodigo(Constantes.estadoActivo);
-				
-				/** llamamos a listar Estadocuentaproveedor **/
-				//listaEstadocuentaproveedor(mapping, pForm, request, response);
-				/**Actualizamos el estado a Cancelado En la tabla Ingreso Producto**/
-				if((double) pForm.getfMontoPago()>(pForm.getMontoTotal())||
-				   (double) pForm.getfMontoPago()>((pForm.getMontoTotal())-(pForm.getPagoTotal()))||
-				   FormatosNumeros.FormatoDecimalMonedaSum((double) pForm.getfMontoPago(), (double) (pForm.getPagoTotal())).equals(FormatosNumeros.FormatoDecimalMoneda((double) (pForm.getMontoTotal())))){
+			EntityTransaction transaction;
+			try {	
+				transaction = ingresoProductoDao.entityTransaction();
+				transaction.begin();
+				if (pForm.getMode().equals("I")) {
+					obj = pForm.getEstadoCuentaProveedor();
+					obj.setdFechaInserta(Fechas.getDate());
+					obj.setcEstadoCodigo(Constantes.estadoActivo);
 					
-					obj.setfMontoPago((float) ((pForm.getMontoTotal())-(pForm.getPagoTotal())));
+					/** llamamos a listar Estadocuentaproveedor **/
+					//listaEstadocuentaproveedor(mapping, pForm, request, response);
+					/**Actualizamos el estado a Cancelado En la tabla Ingreso Producto**/
+					if((double) pForm.getfMontoPago()>(pForm.getMontoTotal())||
+					   (double) pForm.getfMontoPago()>((pForm.getMontoTotal())-(pForm.getPagoTotal()))||
+					   FormatosNumeros.FormatoDecimalMonedaSum((double) pForm.getfMontoPago(), (double) (pForm.getPagoTotal())).equals(FormatosNumeros.FormatoDecimalMoneda((double) (pForm.getMontoTotal())))){
+						
+						obj.setfMontoPago((float) ((pForm.getMontoTotal())-(pForm.getPagoTotal())));
+						
+						estadoCuentaProveedorDao.persistEndidad(obj);
+						Ingresoproducto ingresoproducto = obj.getIngresoproducto();
+						ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
+						ingresoProductoDao.mergeEndidad(ingresoproducto);
+					}
 					
-					estadoCuentaProveedorDao.persistEndidad(obj);
-					Ingresoproducto ingresoproducto = obj.getIngresoproducto();
-					ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
-					ingresoProductoDao.mergeEndidad(ingresoproducto);
-				}
+					else{
+						estadoCuentaProveedorDao.persistEndidad(obj);
+					}
+					/** realizamos el commit del objeto estadocuenta proveedor**/
+					resultado = estadoCuentaProveedorDao.commitEndidad(transaction);
+					ingresoProductoDao.refreshEndidad(obj);
+					
+				}// fin mode I;
+				else if (pForm.getMode().equals("U")) {
+				   obj = estadoCuentaProveedorDao.findEndidad(pForm.getEstadoCuentaProveedor(), pForm.getEstadoCuentaProveedor().getiEstadoCuentaProveedor());
+				   obj.setdFechaPago(pForm.getEstadoCuentaProveedor().getdFechaPago());
+				   obj.setsVendedor(pForm.getsVendedor());
+				  
+				   	/**Actualizamos el estado a Cancelado En la tabla Ingreso Producto**/
+				   
+				   double saldo = (pForm.getPagoTotal()) - (double) obj.getfMontoPago();
 				
-				else{
-					estadoCuentaProveedorDao.persistEndidad(obj);
+				    if((saldo+(double) pForm.getfMontoPago())>=(pForm.getMontoTotal())){
+						
+					   obj.setfMontoPago((float) ((pForm.getMontoTotal()) - saldo));
+						
+						estadoCuentaProveedorDao.mergeEndidad(obj);
+						Ingresoproducto ingresoproducto = obj.getIngresoproducto();
+						ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
+						ingresoProductoDao.mergeEndidad(ingresoproducto);
+					}
+				    else{
+				    	obj.setfMontoPago(pForm.getfMontoPago());
+						 estadoCuentaProveedorDao.mergeEndidad(obj);
+						
+						Ingresoproducto ingresoproducto = obj.getIngresoproducto();
+						ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
+						ingresoProductoDao.mergeEndidad(ingresoproducto);
+				    }
+				    resultado = ingresoProductoDao.commitEndidad(transaction);
+				    ingresoProductoDao.refreshEndidad(obj);
+					
 				}
-				/** realizamos el commit del objeto estadocuenta proveedor**/
-				resultado = estadoCuentaProveedorDao.commitEndidad(transaction);
-				ingresoProductoDao.refreshEndidad(obj);
-				
-			}// fin mode I;
-			else if (pForm.getMode().equals("U")) {
-			   obj = estadoCuentaProveedorDao.findEndidad(pForm.getEstadoCuentaProveedor(), pForm.getEstadoCuentaProveedor().getiEstadoCuentaProveedor());
-			   obj.setdFechaPago(pForm.getEstadoCuentaProveedor().getdFechaPago());
-			   obj.setsVendedor(pForm.getsVendedor());
-			  
-			   	/**Actualizamos el estado a Cancelado En la tabla Ingreso Producto**/
-			   
-			   double saldo = (pForm.getPagoTotal()) - (double) obj.getfMontoPago();
+				else if (mode.equals("D")) { 
+					    obj = estadoCuentaProveedorDao.findEndidad(obj, Integer.parseInt(ids));
+						estadoCuentaProveedorDao.eliminarUnaEndidad(obj, "iEstadoCuentaProveedor",ids);
+						
+						Ingresoproducto ingresoproducto = obj.getIngresoproducto();
+						ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
+						ingresoProductoDao.mergeEndidad(ingresoproducto);
+						resultado = ingresoProductoDao.commitEndidad(transaction);
+						/**/
+					
+					}
 			
-			    if((saldo+(double) pForm.getfMontoPago())>=(pForm.getMontoTotal())){
-					
-				   obj.setfMontoPago((float) ((pForm.getMontoTotal()) - saldo));
-					
-					estadoCuentaProveedorDao.mergeEndidad(obj);
-					Ingresoproducto ingresoproducto = obj.getIngresoproducto();
-					ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
-					ingresoProductoDao.mergeEndidad(ingresoproducto);
-				}
-			    else{
-			    	obj.setfMontoPago(pForm.getfMontoPago());
-					 estadoCuentaProveedorDao.mergeEndidad(obj);
-					
-					Ingresoproducto ingresoproducto = obj.getIngresoproducto();
-					ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
-					ingresoProductoDao.mergeEndidad(ingresoproducto);
-			    }
-			    resultado = ingresoProductoDao.commitEndidad(transaction);
-			    ingresoProductoDao.refreshEndidad(obj);
-				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			} finally {
+				transaction = null;
 			}
-			else if (mode.equals("D")) { 
-				    obj = estadoCuentaProveedorDao.findEndidad(obj, Integer.parseInt(ids));
-					estadoCuentaProveedorDao.eliminarUnaEndidad(obj, "iEstadoCuentaProveedor",ids);
-					
-					Ingresoproducto ingresoproducto = obj.getIngresoproducto();
-					ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
-					ingresoProductoDao.mergeEndidad(ingresoproducto);
-					resultado = ingresoProductoDao.commitEndidad(transaction);
-					/**/
-				
-				}
-							
 	
 			
 			if (resultado == true) {
@@ -491,75 +498,81 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 			//obj.setIngresoProducto(pForm.getIngresoProducto());
 			
 	        /**Instanciamos una transacion**/
-			EntityTransaction trx= ingresoProductoDao.entityTransaction();
-			trx.begin();
+			EntityTransaction trx;
 			
-			
-			if (pForm.getMode().equals("I") || pForm.getMode().equals("U")) {
-				 Date fecha = Fechas.getDate();	
-		            fecha =obj.getIngresoProducto().getFormaPago().getiFormaPago()==3?Fechas.fechaDate("30/"+(Fechas.mesFecha(fecha)+1)+"/"+Fechas.anioFecha(fecha)):obj.getdFechaVencimiento();
-		         obj.setdFechaVencimiento(fecha);
-		         if(pForm.getdFechaPagoLetra()!=""){
-		        	 obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPagoLetra()));
-		         }
-		         
-		         if(pForm.getMode().equals("I")){
-		        	 int iFormaPagoId= obj.getIngresoProducto().getFormaPago().getiFormaPago();
-					 contabilidadDao.callCompraContabilidad(obj.getIngresoProducto().getiIngresoProductoId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra(), iFormaPagoId);
-		        	 resultado = ingresoProductoDao.commitEndidad(trx);		         
-					 Ingresoproducto ingresoProducto =  ingresoProductoDao.findEndidad(obj.getIngresoProducto(), obj.getIngresoProducto().getiIngresoProductoId());
-				
-					 ingresoProducto.setFormaPago(obj.getIngresoProducto().getFormaPago());
-					 ingresoProductoDao.mergeEndidad(ingresoProducto);
-		        	 resultado = ingresoProductoDao.commitEndidad(trx);
-					 ingresoProductoDao.refreshEndidad(ingresoProducto);
-				
-			}// fin mode I;
-			else if (pForm.getMode().equals("U")) {
-				    obj = ingresoProductoDao.findEndidad(pForm.getLetraProveedor(), pForm.getLetraProveedor().getIletraProveedorId());
-				   if(pForm.getdFechaPagoLetra()!=""){
-				       obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPagoLetra()));
-				    }
-				   
-				    if(pForm.getdFechaPagoLetra()!=""){
-				     obj.setvEstadoLetra(Constantes.estadoDocumentoCancelado);				     
-				    }
-				    int cantLetrasPagadas=0;
-				    List<Letraproveedor> listaLetra = new ArrayList<Letraproveedor>();
-				    for(Letraproveedor letraPagada:obj.getIngresoProducto().getLetraproveedor()){
-				    	if(letraPagada.getcEstadoCodigo().equalsIgnoreCase(Constantes.estadoActivo)){
-				    		if(letraPagada.getvEstadoLetra().equals(Constantes.estadoDocumentoCancelado)){				    	
-				    		cantLetrasPagadas++;				    		
-				    		}
-				    		listaLetra.add(letraPagada);
-				    	}
-				    }
-				    if(cantLetrasPagadas==listaLetra.size()){
-				    	Ingresoproducto ingresoproducto=obj.getIngresoProducto();
-				    	ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
-				    	ingresoProductoDao.mergeEndidad(ingresoproducto);
-				    }
-				    obj= Util.comparar(obj, pForm.getLetraProveedor());
-				    ingresoProductoDao.mergeEndidad(obj);
-				    resultado = ingresoProductoDao.commitEndidad(trx);
-				    ingresoProductoDao.refreshEndidad(obj);
-				
-			   }
-			}
-			else if (mode.equals("D")) { 
-				    obj = ingresoProductoDao.findEndidad(obj, Integer.parseInt(ids));
-				    ingresoProductoDao.eliminarUnaEndidad(obj, "iletraProveedorId",ids);
-					
-					Ingresoproducto ingresoproducto = obj.getIngresoProducto();
-					ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
-					ingresoProductoDao.mergeEndidad(ingresoproducto);
-					resultado = ingresoProductoDao.commitEndidad(trx);
-					/**/
-				
-				}
+			try {
+				trx= ingresoProductoDao.entityTransaction();
+				trx.begin();
 							
-	
-			
+				if (pForm.getMode().equals("I") || pForm.getMode().equals("U")) {
+					 Date fecha = Fechas.getDate();	
+			            fecha =obj.getIngresoProducto().getFormaPago().getiFormaPago()==3?Fechas.fechaDate("30/"+(Fechas.mesFecha(fecha)+1)+"/"+Fechas.anioFecha(fecha)):obj.getdFechaVencimiento();
+			         obj.setdFechaVencimiento(fecha);
+			         if(pForm.getdFechaPagoLetra()!=""){
+			        	 obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPagoLetra()));
+			         }
+			         
+			         if(pForm.getMode().equals("I")){
+			        	 int iFormaPagoId= obj.getIngresoProducto().getFormaPago().getiFormaPago();
+						 contabilidadDao.callCompraContabilidad(obj.getIngresoProducto().getiIngresoProductoId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra(), iFormaPagoId);
+			        	 resultado = ingresoProductoDao.commitEndidad(trx);		         
+						 Ingresoproducto ingresoProducto =  ingresoProductoDao.findEndidad(obj.getIngresoProducto(), obj.getIngresoProducto().getiIngresoProductoId());
+					
+						 ingresoProducto.setFormaPago(obj.getIngresoProducto().getFormaPago());
+						 ingresoProductoDao.mergeEndidad(ingresoProducto);
+			        	 resultado = ingresoProductoDao.commitEndidad(trx);
+						 ingresoProductoDao.refreshEndidad(ingresoProducto);
+					
+				}// fin mode I;
+				else if (pForm.getMode().equals("U")) {
+					    obj = ingresoProductoDao.findEndidad(pForm.getLetraProveedor(), pForm.getLetraProveedor().getIletraProveedorId());
+					   if(pForm.getdFechaPagoLetra()!=""){
+					       obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPagoLetra()));
+					    }
+					   
+					    if(pForm.getdFechaPagoLetra()!=""){
+					     obj.setvEstadoLetra(Constantes.estadoDocumentoCancelado);				     
+					    }
+					    int cantLetrasPagadas=0;
+					    List<Letraproveedor> listaLetra = new ArrayList<Letraproveedor>();
+					    for(Letraproveedor letraPagada:obj.getIngresoProducto().getLetraproveedor()){
+					    	if(letraPagada.getcEstadoCodigo().equalsIgnoreCase(Constantes.estadoActivo)){
+					    		if(letraPagada.getvEstadoLetra().equals(Constantes.estadoDocumentoCancelado)){				    	
+					    		cantLetrasPagadas++;				    		
+					    		}
+					    		listaLetra.add(letraPagada);
+					    	}
+					    }
+					    if(cantLetrasPagadas==listaLetra.size()){
+					    	Ingresoproducto ingresoproducto=obj.getIngresoProducto();
+					    	ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
+					    	ingresoProductoDao.mergeEndidad(ingresoproducto);
+					    }
+					    obj= Util.comparar(obj, pForm.getLetraProveedor());
+					    ingresoProductoDao.mergeEndidad(obj);
+					    resultado = ingresoProductoDao.commitEndidad(trx);
+					    ingresoProductoDao.refreshEndidad(obj);
+					
+				   }
+				}
+				else if (mode.equals("D")) { 
+					    obj = ingresoProductoDao.findEndidad(obj, Integer.parseInt(ids));
+					    ingresoProductoDao.eliminarUnaEndidad(obj, "iletraProveedorId",ids);
+						
+						Ingresoproducto ingresoproducto = obj.getIngresoProducto();
+						ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
+						ingresoProductoDao.mergeEndidad(ingresoproducto);
+						resultado = ingresoProductoDao.commitEndidad(trx);
+						/**/
+					
+					}
+								
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			} finally {
+				trx = null;
+			}
+				
 			if (resultado == true) {
 				msn = "msnOk";
 

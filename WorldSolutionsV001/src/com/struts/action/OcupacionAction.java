@@ -190,10 +190,17 @@ public class OcupacionAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) {
-				    EntityTransaction transaction = ocupacionDao.entityTransaction();
+				EntityTransaction transaction;
+				try {    
+				    transaction = ocupacionDao.entityTransaction();
 				    transaction.begin();
 					ocupacionDao.eliminarUnaEndidad(obj, "iOcupacionId",ids);/**/
 					resultado = ocupacionDao.commitEndidad(transaction);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				} finally {
+					transaction = null;
+				}
 				
 			}
 				

@@ -212,15 +212,21 @@ public class CategoriaAction extends DispatchAction {
 				 obj.setdFechaActualiza(Fechas.getDate());
 				
 				resultado = categoriaDao.actualizarUnaEndidad(obj);
-				
-			}
-			else if (mode.equals("D")) { 
-				EntityTransaction transaccion = categoriaDao.entityTransaction();
-				transaccion.begin();
-				categoriaDao.eliminarUnaEndidad(obj, "iCategoriaId",ids);/**/
-				resultado = categoriaDao.commitEndidad(transaccion);
+					
+			} else if (mode.equals("D")) {
+				EntityTransaction transaccion;
+				try {
+					transaccion = categoriaDao.entityTransaction();
+					transaccion.begin();
+					categoriaDao.eliminarUnaEndidad(obj, "iCategoriaId", ids);/**/
+					resultado = categoriaDao.commitEndidad(transaccion);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				} finally {
+					transaccion = null;
 				}
-				
+			}
+			
 			if (resultado == true) {
 				msn = "msnOk";
 
@@ -405,10 +411,17 @@ public class CategoriaAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) { 
-				    EntityTransaction transaccion = categoriaDao.entityTransaction();
-				    transaccion.begin();
-					categoriaDao.eliminarUnaEndidad(new Subcategoria(), "iSubCategoriaId",ids);/**/
-					resultado = categoriaDao.commitEndidad(transaccion);
+				    EntityTransaction transaccion;
+				    try {
+				    	transaccion = categoriaDao.entityTransaction();
+				    	transaccion.begin();
+						categoriaDao.eliminarUnaEndidad(new Subcategoria(), "iSubCategoriaId",ids);/**/
+						resultado = categoriaDao.commitEndidad(transaccion);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					} finally {
+						transaccion = null;
+					}
 				}
 				
 			if (resultado == true) {

@@ -1340,11 +1340,17 @@ public class ContabilidadAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) { 
-				    EntityTransaction transaction = contabilidadDao.entityTransaction();
-				    transaction.begin();
-					contabilidadDao.eliminarUnaEndidad(obj, "iLibroDiarioId",ids);/**/
-					resultado = contabilidadDao.commitEndidad(transaction);
-				
+				    EntityTransaction transaction;
+				    try {
+					    transaction = contabilidadDao.entityTransaction();
+					    transaction.begin();
+						contabilidadDao.eliminarUnaEndidad(obj, "iLibroDiarioId",ids);/**/
+						resultado = contabilidadDao.commitEndidad(transaction);
+				    } catch (Exception ex) {
+				    	ex.printStackTrace();
+				    } finally {
+				    	transaction = null;
+				    }
 				}
 			
 			if (resultado == true) {
@@ -1691,12 +1697,18 @@ public class ContabilidadAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) { 	
-				EntityTransaction entityTransaction = contabilidadDao.entityTransaction();
-				entityTransaction.begin();
-				contabilidadDao.eliminarUnaEndidad(obj, "iPlanillaId",ids);/**/
-				resultado = contabilidadDao.commitEndidad(entityTransaction);
-				
+				EntityTransaction entityTransaction;
+				try {
+					entityTransaction = contabilidadDao.entityTransaction();
+					entityTransaction.begin();
+					contabilidadDao.eliminarUnaEndidad(obj, "iPlanillaId",ids);/**/
+					resultado = contabilidadDao.commitEndidad(entityTransaction);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				} finally {
+					entityTransaction = null;
 				}
+			}
 				
 			if (resultado == true) {
 				msn = "msnOk";

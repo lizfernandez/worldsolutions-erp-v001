@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.transformer.XLSTransformer;
 
+import org.apache.jasper.tagplugins.jstl.core.Catch;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
@@ -466,218 +467,258 @@ public class ProductosAction extends DispatchAction {
 		
 		
 		/*** Instanciamos transacion ***/
-		EntityTransaction transaccion = productoDao.entityTransaction();
-		transaccion.begin();
 		
 		/**Cargamos Foto **/
-		if(pForm.getFoto()!=null){
-		FormFile fichero = pForm.getFoto();
-		String nombre = fichero.getFileName();
-		int tamanho = fichero.getFileSize();
-		String filePath = request.getRealPath("/").toString();
-		
+		if (pForm.getFoto() != null) {
+			FormFile fichero = pForm.getFoto();
+			String nombre = fichero.getFileName();
+			int tamanho = fichero.getFileSize();
+			String filePath = request.getRealPath("/").toString();
 
-		if ((tamanho>0)&&(!nombre.equals(""))){
-			pro.setvFoto(pro.getcProductoCodigo()+"-"+nombre);
-			if(!nombre.equals("")){
-	
-			File ficheroACrear = new File(filePath + File.separator + "media" + File.separator + "fotos" + File.separator +pro.getvFoto());
-			System.out.println(filePath+"    /media/fotos/" +"   "+ficheroACrear.getPath()+" "+request.getPathInfo()+ " " +request.getServletPath());
-			if(!ficheroACrear.exists()){				
-					ficheroACrear.createNewFile();
-					FileOutputStream fileOutStream = new FileOutputStream(ficheroACrear);
-					fileOutStream.write(fichero.getFileData());
-					fileOutStream.flush();
-					fileOutStream.close();
-					
-			}
-			
-		
-			   
-			  }
-		}
-		}
-        /**Insertamos Datos del producto **/
-		if (pForm.getMode().equals("I")) {			
-			pro.setdFechaInserta(Fechas.getDate());
-			pro.setiUsuarioInsertaId(usu.getiUsuarioId());
-			productoDao.persistEndidad(pro);
-			
-			/**Insertamos la existencia de un producto en el Kardex**/
-			Kardex  kardex = new Kardex();
-			kardex.setProducto(pro);
-			kardex.setdFecha(Fechas.getDate());
-			kardex.setvConcepto(Constantes.conceptoExistencia);
-			kardex.setiCantExistencia(pro.getiProductoStockCantidad());
-			kardex.setfPuExistencia(pro.getfProductoPrecioCompra());
-			kardex.setfTotalExistencia(kardex.getiCantExistencia()*kardex.getfPuExistencia());
-			kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
-			kardex.setdFechaInserta(Fechas.getDate());
-			kardex.setcEstadoCodigo(Constantes.estadoActivo);
-			kardex.setiPeriodoId(iPeriodoId);
-			//listaKardexs.add(kardex);
-			//pro.setKardexs(listaKardexs);
-			productoDao.persistEndidad(kardex);
-			
-			
-			 
-			/******************************************/
-			/**Insertamos detalle de lista de precios**/
-			/******************************************/
-			Preciosproducto preciosProducto = new Preciosproducto();
-			preciosProducto.setcEstadoCodigo(Constantes.estadoActivo);
-			preciosProducto.setdFechaInserta(Fechas.getDate());
-			preciosProducto.setfGanancia(pro.getfProductoGanancia());
-			preciosProducto.setfPrecioCompra(pro.getfProductoPrecioCompra());
-			preciosProducto.setfPrecioVenta(pro.getfProductoPrecioVenta());
-			preciosProducto.setiCantidadStock(pro.getiProductoStockCantidad());
-			preciosProducto.setProducto(pro);
-			preciosProducto.setfDescuento(pro.getfProductoDescuento());
-			preciosProducto.setiUsuarioInsertaId(usu.getiUsuarioId());
-			listaPrecios.add(preciosProducto);
-			pro.setPreciosproductodetallles(listaPrecios);
-			//resultado = productoDao.insertarEndidad(preciosProducto);
-			
-			
-			/**Insertamos en el libro Dirio la cuenta de Mercaredia 
-			 * 20(Mercaderia) y
-			 * 201(Almacem)
-			 * id=57; 201: mercaderia/ Almacen**/			
-			Cuenta cuenta =  new Cuenta();			
-			Librodiario libroDiario = new Librodiario();
-			libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
-			libroDiario.setCuenta(productoDao.findEndidad(cuenta, 57));
-			libroDiario.setfMonto(kardex.getiCantExistencia()*kardex.getfPuExistencia());
-			libroDiario.setvTipoConcepto(Constantes.debe);
-			libroDiario.setvConceptoGeneral("MERCADERIA / ALmacen ");
-			libroDiario.setdFechaInserta(Fechas.getDate());
-			libroDiario.setiUsuarioInsertaId(usu.getiUsuarioId());
-			libroDiario.setKardex(kardex);
-			libroDiario.setiPeriodoId(iPeriodoId);
-			productoDao.persistEndidad(libroDiario);
-			
-			/**Insertamos en el libro Dirio la cuenta de Mercaredia 
-			 * 50(Capital) y 
-			 * '212', '5', '50', 'CAPITAL'**/			
-			cuenta =  new Cuenta();			
-			libroDiario = new Librodiario();
-			libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
-			libroDiario.setCuenta(productoDao.findEndidad(cuenta, 212));
-			libroDiario.setfMonto(kardex.getiCantExistencia()*kardex.getfPuExistencia());
-			libroDiario.setvTipoConcepto(Constantes.haber);
-			libroDiario.setvConceptoGeneral("CAPITAL ");
-			libroDiario.setdFechaInserta(Fechas.getDate());
-			libroDiario.setiUsuarioInsertaId(usu.getiUsuarioId());
-			libroDiario.setKardex(kardex);
-			libroDiario.setiPeriodoId(iPeriodoId);
-			
-			 productoDao.persistEndidad(libroDiario);
-			 resultado = productoDao.commitEndidad(transaccion);
-			// productoDao.refreshEndidad(pro);
-			
-		} 
-	    /**Insertamos Datos del producto como Insumos **/
-		if (pForm.getMode().equals("II")) {			
-			pro.setdFechaInserta(Fechas.getDate());
-			pro.setiUsuarioInsertaId(usu.getiUsuarioId());			
-			productoDao.persistEndidad(pro);
-		    resultado = productoDao.commitEndidad(transaccion);
-		    productoDao.refreshEndidad(pro);
-			
-		}
-		/**Insertamos Datos del producto y de insumo **/		
-		else if (pForm.getMode().equals("U") || pForm.getMode().equals("UI")) {	
-			
-		    pro =  productoDao.findEndidad(pro,pForm.getProducto().getiProductoId());
-		    pro= Util.comparar(pro, pForm.getProducto());
-			try {
-				pro.setdFechaActualiza(Fechas.getDate());
-				pro.setiUsuarioActualizaId(usu.getiUsuarioId());
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			/**Actualizamos o agregamos precios del producto, como tambien actualizaremos la cantidad del producto**/
-			List<Preciosproducto> listaPrecio = (List<Preciosproducto>) sesion.getAttribute("listaPrecioProducto");			
-			if(listaPrecio.size()>0){
-				pro.setPreciosproductodetallles(listaPrecio);
-				int cantidadProducto = 0;
-				float precioVenta = (float) 0.0;
-				float precioCompra = (float) 0.0;
-				float fGanancia = (float) 0.0;
-				float fDescuento = (float) 0.0;
-				int i=0;
-				   /***********************************************************************************/
-	      		   /***Actualizamos la cantidad del producto en stock, el precio de compra y venta*****/	 
-	      		   /*** Segun metodologia FIFO- Primero en entrar, Primero en Salir                  **/
-	      		   /***********************************************************************************/
-				  
-	      			for(Preciosproducto objpreciosProducto:pro.getPreciosproductodetallles()){
-	      				 if(objpreciosProducto.getiCantidadStock()>0 && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)){					      					  
-	      					 cantidadProducto =    cantidadProducto + objpreciosProducto.getiCantidadStock();
-	      					 if(i==0){
-	      					 precioCompra = objpreciosProducto.getfPrecioCompra();
-	      					 precioVenta = objpreciosProducto.getfPrecioVenta();
-	      					 fGanancia = objpreciosProducto.getfGanancia();
-	      					 fDescuento= objpreciosProducto.getfDescuento();
-	      					 }
-	      				 }
-	      			}
-	      			pro.setiProductoStockCantidad(cantidadProducto);
-	      			pro.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(precioVenta));
-	      			pro.setfProductoGanancia(fGanancia);     		      		
-	      			pro.setfProductoPrecioCompra(precioCompra);
-	      			pro.setfProductoDescuento(fDescuento);
-			
-			}
-			/**Actualizamos los valores de la existencia del Kardex **/
-			/**si no existe ningun tipo de movimiento (Compras o ventas)**/
-			if(pForm.getSizeIngresoproductodetalles()==0 && pForm.getSizeVentaDetalles()==0){
-				int iKardexId=0;
-				List<Kardex> kardex = kardexDao.buscarKardexProducto(pro.getiProductoId());
-				iKardexId=kardex.get(0).getiKardexId();
-				kardex.get(0).setiCantExistencia(pro.getiProductoStockCantidad());
-				kardex.get(0).setfPuExistencia(pro.getfProductoPrecioCompra());
-			    kardex.get(0).setfTotalExistencia(kardex.get(0).getiCantExistencia()*kardex.get(0).getfPuExistencia());
-				kardex.get(0).setiUsuarioActualizaId(usu.getiUsuarioId());
-				kardex.get(0).setdFechaActualiza(Fechas.getDate());
-				
-				productoDao.mergeEndidad(kardex.get(0));
-								
-				/**Actualizamos los valores de la existencias del libro diario la cuenta de Mercaredia **/
-				
-				List<Librodiario> librodiario= kardexDao.buscarLibroDiarioKardex(iKardexId);
-				for(Librodiario listaLibros:librodiario ){
-					/**
-					 * 20(Mercaderia) y
-					 * 201(Almacem)
-					 * id=57; 201: mercaderia/ Almacen**/	
-					
-					
-					/**Insertamos en el libro Dirio la cuenta de Mercaredia 
-					 * 50(Capital) y 
-					 * '212', '5', '50', 'CAPITAL'**/
-					
-					listaLibros.setfMonto(kardex.get(0).getfTotalExistencia());
-					listaLibros.setiUsuarioActualizaId(usu.getiUsuarioId());
-					listaLibros.setdFechaActualiza(Fechas.getDate());
-					
-					productoDao.mergeEndidad(listaLibros);
+			if ((tamanho > 0) && (!nombre.equals(""))) {
+				pro.setvFoto(pro.getcProductoCodigo() + "-" + nombre);
+				if (!nombre.equals("")) {
+
+					File ficheroACrear = new File(filePath + File.separator
+							+ "media" + File.separator + "fotos"
+							+ File.separator + pro.getvFoto());
+					System.out.println(filePath + "    /media/fotos/" + "   "
+							+ ficheroACrear.getPath() + " "
+							+ request.getPathInfo() + " "
+							+ request.getServletPath());
+					if (!ficheroACrear.exists()) {
+						ficheroACrear.createNewFile();
+						FileOutputStream fileOutStream = new FileOutputStream(
+								ficheroACrear);
+						fileOutStream.write(fichero.getFileData());
+						fileOutStream.flush();
+						fileOutStream.close();
+
+					}
+
 				}
-				
-			
 			}
-			
-			 productoDao.mergeEndidad(pro);
-			 resultado = productoDao.commitEndidad(transaccion);
-			 productoDao.refreshEndidad(pro);
 		}
-		 else if (mode.equals("D")) { 	        	
+		EntityTransaction transaccion;
+		try {
+			transaccion = productoDao.entityTransaction();
+			transaccion.begin();
+			/** Insertamos Datos del producto **/
+			if (pForm.getMode().equals("I")) {
+				pro.setdFechaInserta(Fechas.getDate());
+				pro.setiUsuarioInsertaId(usu.getiUsuarioId());
+				productoDao.persistEndidad(pro);
+
+				/** Insertamos la existencia de un producto en el Kardex **/
+				Kardex kardex = new Kardex();
+				kardex.setProducto(pro);
+				kardex.setdFecha(Fechas.getDate());
+				kardex.setvConcepto(Constantes.conceptoExistencia);
+				kardex.setiCantExistencia(pro.getiProductoStockCantidad());
+				kardex.setfPuExistencia(pro.getfProductoPrecioCompra());
+				kardex.setfTotalExistencia(kardex.getiCantExistencia()
+						* kardex.getfPuExistencia());
+				kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
+				kardex.setdFechaInserta(Fechas.getDate());
+				kardex.setcEstadoCodigo(Constantes.estadoActivo);
+				kardex.setiPeriodoId(iPeriodoId);
+				// listaKardexs.add(kardex);
+				// pro.setKardexs(listaKardexs);
+				productoDao.persistEndidad(kardex);
+
+				/******************************************/
+				/** Insertamos detalle de lista de precios **/
+				/******************************************/
+				Preciosproducto preciosProducto = new Preciosproducto();
+				preciosProducto.setcEstadoCodigo(Constantes.estadoActivo);
+				preciosProducto.setdFechaInserta(Fechas.getDate());
+				preciosProducto.setfGanancia(pro.getfProductoGanancia());
+				preciosProducto
+						.setfPrecioCompra(pro.getfProductoPrecioCompra());
+				preciosProducto.setfPrecioVenta(pro.getfProductoPrecioVenta());
+				preciosProducto.setiCantidadStock(pro
+						.getiProductoStockCantidad());
+				preciosProducto.setProducto(pro);
+				preciosProducto.setfDescuento(pro.getfProductoDescuento());
+				preciosProducto.setiUsuarioInsertaId(usu.getiUsuarioId());
+				listaPrecios.add(preciosProducto);
+				pro.setPreciosproductodetallles(listaPrecios);
+				// resultado = productoDao.insertarEndidad(preciosProducto);
+
+				/**
+				 * Insertamos en el libro Dirio la cuenta de Mercaredia
+				 * 20(Mercaderia) y 201(Almacem) id=57; 201: mercaderia/ Almacen
+				 **/
+				Cuenta cuenta = new Cuenta();
+				Librodiario libroDiario = new Librodiario();
+				libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
+				libroDiario.setCuenta(productoDao.findEndidad(cuenta, 57));
+				libroDiario.setfMonto(kardex.getiCantExistencia()
+						* kardex.getfPuExistencia());
+				libroDiario.setvTipoConcepto(Constantes.debe);
+				libroDiario.setvConceptoGeneral("MERCADERIA / ALmacen ");
+				libroDiario.setdFechaInserta(Fechas.getDate());
+				libroDiario.setiUsuarioInsertaId(usu.getiUsuarioId());
+				libroDiario.setKardex(kardex);
+				libroDiario.setiPeriodoId(iPeriodoId);
+				productoDao.persistEndidad(libroDiario);
+
+				/**
+				 * Insertamos en el libro Dirio la cuenta de Mercaredia
+				 * 50(Capital) y '212', '5', '50', 'CAPITAL'
+				 **/
+				cuenta = new Cuenta();
+				libroDiario = new Librodiario();
+				libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
+				libroDiario.setCuenta(productoDao.findEndidad(cuenta, 212));
+				libroDiario.setfMonto(kardex.getiCantExistencia()
+						* kardex.getfPuExistencia());
+				libroDiario.setvTipoConcepto(Constantes.haber);
+				libroDiario.setvConceptoGeneral("CAPITAL ");
+				libroDiario.setdFechaInserta(Fechas.getDate());
+				libroDiario.setiUsuarioInsertaId(usu.getiUsuarioId());
+				libroDiario.setKardex(kardex);
+				libroDiario.setiPeriodoId(iPeriodoId);
+
+				productoDao.persistEndidad(libroDiario);
+				resultado = productoDao.commitEndidad(transaccion);
+				// productoDao.refreshEndidad(pro);
+
+			}
+			/** Insertamos Datos del producto como Insumos **/
+			if (pForm.getMode().equals("II")) {
+				pro.setdFechaInserta(Fechas.getDate());
+				pro.setiUsuarioInsertaId(usu.getiUsuarioId());
+				productoDao.persistEndidad(pro);
+				resultado = productoDao.commitEndidad(transaccion);
+				productoDao.refreshEndidad(pro);
+
+			}
+			/** Insertamos Datos del producto y de insumo **/
+			else if (pForm.getMode().equals("U")
+					|| pForm.getMode().equals("UI")) {
+
+				pro = productoDao.findEndidad(pro, pForm.getProducto()
+						.getiProductoId());
+				pro = Util.comparar(pro, pForm.getProducto());
+				try {
+					pro.setdFechaActualiza(Fechas.getDate());
+					pro.setiUsuarioActualizaId(usu.getiUsuarioId());
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				/**
+				 * Actualizamos o agregamos precios del producto, como tambien
+				 * actualizaremos la cantidad del producto
+				 **/
+				List<Preciosproducto> listaPrecio = (List<Preciosproducto>) sesion
+						.getAttribute("listaPrecioProducto");
+				if (listaPrecio.size() > 0) {
+					pro.setPreciosproductodetallles(listaPrecio);
+					int cantidadProducto = 0;
+					float precioVenta = (float) 0.0;
+					float precioCompra = (float) 0.0;
+					float fGanancia = (float) 0.0;
+					float fDescuento = (float) 0.0;
+					int i = 0;
+					/***********************************************************************************/
+					/***
+					 * Actualizamos la cantidad del producto en stock, el precio
+					 * de compra y venta
+					 *****/
+					/***
+					 * Segun metodologia FIFO- Primero en entrar, Primero en
+					 * Salir
+					 **/
+					/***********************************************************************************/
+
+					for (Preciosproducto objpreciosProducto : pro
+							.getPreciosproductodetallles()) {
+						if (objpreciosProducto.getiCantidadStock() > 0
+								&& objpreciosProducto.getcEstadoCodigo()
+										.equals(Constantes.estadoActivo)) {
+							cantidadProducto = cantidadProducto
+									+ objpreciosProducto.getiCantidadStock();
+							if (i == 0) {
+								precioCompra = objpreciosProducto
+										.getfPrecioCompra();
+								precioVenta = objpreciosProducto
+										.getfPrecioVenta();
+								fGanancia = objpreciosProducto.getfGanancia();
+								fDescuento = objpreciosProducto.getfDescuento();
+							}
+						}
+					}
+					pro.setiProductoStockCantidad(cantidadProducto);
+					pro.setfProductoPrecioVenta(FormatosNumeros
+							.redondedoDecimal(precioVenta));
+					pro.setfProductoGanancia(fGanancia);
+					pro.setfProductoPrecioCompra(precioCompra);
+					pro.setfProductoDescuento(fDescuento);
+
+				}
+				/** Actualizamos los valores de la existencia del Kardex **/
+				/** si no existe ningun tipo de movimiento (Compras o ventas) **/
+				if (pForm.getSizeIngresoproductodetalles() == 0
+						&& pForm.getSizeVentaDetalles() == 0) {
+					int iKardexId = 0;
+					List<Kardex> kardex = kardexDao.buscarKardexProducto(pro
+							.getiProductoId());
+					iKardexId = kardex.get(0).getiKardexId();
+					kardex.get(0).setiCantExistencia(
+							pro.getiProductoStockCantidad());
+					kardex.get(0).setfPuExistencia(
+							pro.getfProductoPrecioCompra());
+					kardex.get(0).setfTotalExistencia(
+							kardex.get(0).getiCantExistencia()
+									* kardex.get(0).getfPuExistencia());
+					kardex.get(0).setiUsuarioActualizaId(usu.getiUsuarioId());
+					kardex.get(0).setdFechaActualiza(Fechas.getDate());
+
+					productoDao.mergeEndidad(kardex.get(0));
+
+					/**
+					 * Actualizamos los valores de la existencias del libro
+					 * diario la cuenta de Mercaredia
+					 **/
+
+					List<Librodiario> librodiario = kardexDao
+							.buscarLibroDiarioKardex(iKardexId);
+					for (Librodiario listaLibros : librodiario) {
+						/**
+						 * 20(Mercaderia) y 201(Almacem) id=57; 201: mercaderia/
+						 * Almacen
+						 **/
+
+						/**
+						 * Insertamos en el libro Dirio la cuenta de Mercaredia
+						 * 50(Capital) y '212', '5', '50', 'CAPITAL'
+						 **/
+
+						listaLibros.setfMonto(kardex.get(0)
+								.getfTotalExistencia());
+						listaLibros.setiUsuarioActualizaId(usu.getiUsuarioId());
+						listaLibros.setdFechaActualiza(Fechas.getDate());
+
+						productoDao.mergeEndidad(listaLibros);
+					}
+
+				}
+
+				productoDao.mergeEndidad(pro);
+				resultado = productoDao.commitEndidad(transaccion);
+				productoDao.refreshEndidad(pro);
+			} else if (mode.equals("D")) {
 				productoDao.eliminarUnaEndidad(pro, "iProductoId", ids);/**/
 				resultado = productoDao.commitEndidad(transaccion);
 			}
-		
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			transaccion = null;
+		}
 		if (resultado == true) {
 			msn = "msnOk";
 

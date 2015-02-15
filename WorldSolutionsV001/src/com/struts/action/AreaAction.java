@@ -155,8 +155,7 @@ public class AreaAction extends DispatchAction {
 		 * @param response
 		 * @return ActionForward
 		 */
-		public ActionForward iduArea(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) {
+		public ActionForward iduArea(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 			
 			/** Inicializamos las variables **/ 
 			String msn = "";
@@ -182,11 +181,17 @@ public class AreaAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) {
-				    EntityTransaction transaccion = areaDao.entityTransaction();
+				EntityTransaction transaccion;
+				try {
+				    transaccion = areaDao.entityTransaction();
 				    transaccion.begin();
 					areaDao.eliminarUnaEndidad(obj, "iAreaId",ids);/**/
 					resultado = areaDao.commitEndidad(transaccion);
-				
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					transaccion = null;
+				}
 			}
 				
 			if (resultado == true) {

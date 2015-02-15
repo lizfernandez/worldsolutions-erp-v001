@@ -362,10 +362,17 @@ public class PerfilAction extends DispatchAction {
 	  	
 		}
        else if (mode.equals("D")) {  
-    	   EntityTransaction transaction = objPerfildao.entityTransaction();
-    	   transaction.begin();
-			perfilDao.eliminarUnaEndidad(obj, "iPerfilId", ids);/**/
-			resultado = objPerfildao.commitEndidad(transaction);
+    	   EntityTransaction transaction;
+    	   try {
+	    	   transaction = objPerfildao.entityTransaction();
+	    	   transaction.begin();
+	    	   perfilDao.eliminarUnaEndidad(obj, "iPerfilId", ids);/**/
+	    	   resultado = objPerfildao.commitEndidad(transaction);
+    	   } catch (Exception ex) {
+    		   ex.printStackTrace();
+    	   } finally {
+    		   transaction = null;
+    	   }
 		}
 		
 		if (resultado == true) {

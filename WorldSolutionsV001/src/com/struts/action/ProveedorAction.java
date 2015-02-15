@@ -307,16 +307,22 @@ public class ProveedorAction extends DispatchAction {
 				obj.setiUsuarioModificaId(usu.getiUsuarioId());
 				resultado = proveedorDao.actualizarUnaEndidad(obj);
 				
-			}
-			else if (mode.equals("D")) { 
-					EntityTransaction transaccion = proveedorDao.entityTransaction();
-					transaccion.begin();
-					proveedorDao.eliminarUnaEndidad(obj, "iProveedorId", ids);/**/
-					resultado =  proveedorDao.commitEndidad(transaccion);
+		} else if (mode.equals("D")) {
+			EntityTransaction transaccion;
 
-					//proveedorDao.refreshEndidad(obj);
-				}
-				
+			try {
+				transaccion = proveedorDao.entityTransaction();
+				transaccion.begin();
+				proveedorDao.eliminarUnaEndidad(obj, "iProveedorId", ids);/**/
+				resultado = proveedorDao.commitEndidad(transaccion);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			} finally {
+				transaccion = null;
+			}
+			// proveedorDao.refreshEndidad(obj);
+		}
+
 			if (resultado == true) {
 				msn = "msnOk";
 
