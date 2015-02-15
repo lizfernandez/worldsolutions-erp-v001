@@ -30,10 +30,12 @@ public class GenericaDao  implements IGenerica{
 		}
 		return em;
 	}
+	
 	public EntityManager setIntancia(){
 		em=null;
 		return em;
 	}
+	
     public EntityTransaction entityTransaction() {
 		EntityTransaction trx = null;
 		if(trx == null) {
@@ -54,27 +56,29 @@ public class GenericaDao  implements IGenerica{
 
 	@Override
 	public <G> List<G> listaEntidadGenerica(G entidad) {
-		
-			Query q =  getInstancia().createQuery("select p from "+ entidad.getClass().getSimpleName() +"  p"+
-                   " where p.cEstadoCodigo = :EstadoCodigo");
-			q.setHint(QueryHints.REFRESH, HintValues.TRUE);
-			List<G> lita = q.setParameter("EstadoCodigo", Constantes.estadoActivo)
-				  .getResultList(); 
-		return lita;
+
+		Query q = getInstancia().createQuery("select p from " + entidad.getClass().getSimpleName() + "  p" + " where p.cEstadoCodigo = :EstadoCodigo");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		@SuppressWarnings("unchecked")
+		List<G> lista = q.setParameter("EstadoCodigo", Constantes.estadoActivo).getResultList();
+		return lista;
 	}
+	
 	@Override
 	public <G> List<G> listaEntidadGenericaSinCodigo(String entidad) {
 		Query q =  getInstancia().createQuery("select p from "+entidad +"  p");
 		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
-		List<G> lita = q.getResultList(); 
-		return lita;
+		@SuppressWarnings("unchecked")
+		List<G> lista = q.getResultList(); 
+		return lista;
 	}
 
 
 	@Override
 	public <E> E findEndidad(E entidad, int iEntidadId) {
-		E lita = (E) getInstancia().find(entidad.getClass(), iEntidadId);		
-		return lita;
+		@SuppressWarnings("unchecked")
+		E objeto = (E) getInstancia().find(entidad.getClass(), iEntidadId);		
+		return objeto;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -85,36 +89,32 @@ public class GenericaDao  implements IGenerica{
 		query = getInstancia().createQuery(sentencia);
 		query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 
-		listaEntidad = query.setFirstResult(pagInicio).setMaxResults(pagFin)
-				.getResultList();
+		listaEntidad = query.setFirstResult(pagInicio).setMaxResults(pagFin).getResultList();
 
 		return listaEntidad;
 	}
 	
 	@Override
-	public  boolean commitEndidad(EntityTransaction ext) {
+	public boolean commitEndidad(EntityTransaction ext) {
 		boolean resultado = true;
-		try
-	    {
-	           ext.commit();
-	          // ext= null;
-	    }
-	    catch (Exception re)
-	    {
-	    	resultado = false;
-	        if (ext.isActive()){
-	        	ext.rollback();
-	        	//resultado = false;
-	        	}  // or could attempt to fix error and retry
-	        re.printStackTrace();
-	    }
-		finally{
-			ext= null;
-			//em=null;
+		try {
+			ext.commit();
+			// ext= null;
+		} catch (Exception re) {
+			resultado = false;
+			if (ext.isActive()) {
+				ext.rollback();
+				// resultado = false;
+			} // or could attempt to fix error and retry
+			re.printStackTrace();
+		} finally {
+			ext = null;
+			// em=null;
 		}
 		return resultado;
-	   
+
 	}
+	
 	@Override
 	public <E> void persistEndidad(E entidad) {
 			getInstancia().persist(entidad);
@@ -123,19 +123,29 @@ public class GenericaDao  implements IGenerica{
 	@Override
 	public <E> boolean insertarUnaEndidad(E entidad) {
 		// TODO Auto-generated method stub
-		EntityTransaction ext = entityTransaction();
-		ext.begin();
-		getInstancia().persist(entidad);			
-		resultado = commitEndidad(ext);
-		
-	   return resultado;
+		EntityTransaction ext;
+		try {
+			resultado = false;
+			ext = entityTransaction();
+			ext.begin();
+			getInstancia().persist(entidad);
+			resultado = commitEndidad(ext);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			ext = null;
+		}
+
+		return resultado;
 	}
+	
 	@Override
-	public <E> void refreshEndidad(E entidad) {	
-			getInstancia().refresh(entidad);
-			em=null;
+	public <E> void refreshEndidad(E entidad) {
+		getInstancia().refresh(entidad);
+		em = null;
 
 	}
+	
 	@Override
 	public <E> void mergeEndidad(E entidad) {
 		getInstancia().merge(entidad);		
@@ -143,54 +153,79 @@ public class GenericaDao  implements IGenerica{
 	
 	@Override
 	public <E> boolean actualizarUnaEndidad(E entidad) {
-		EntityTransaction ext = entityTransaction();
-		ext.begin();
+		EntityTransaction ext;
+		try {
+			resultado = false;
+			ext = entityTransaction();
+			ext.begin();
 			getInstancia().merge(entidad);
-			resultado = commitEndidad(ext);	   
+			resultado = commitEndidad(ext);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			
+		} finally {
+			ext = null;
+		}		
 		return resultado;
 	}
+
 	@Override
-	public <E> void eliminarUnaEndidad(E entidad, String sEntidadId,
-			String iEntidadId) {
-		Query q ;
-		  q=  getInstancia().createQuery("Update "+entidad.getClass().getSimpleName()+" p SET p.cEstadoCodigo = :EstadoCodigo " +
-		                    " where p."+sEntidadId+" IN ("+iEntidadId+")")
-		                    .setParameter("EstadoCodigo", Constantes.estadoInactivo);
-		    q.executeUpdate();
-		  
+	public <E> void eliminarUnaEndidad(E entidad, String sEntidadId, String iEntidadId) {
+		Query q;
+		q = getInstancia().createQuery("Update " + entidad.getClass().getSimpleName()
+								+ " p SET p.cEstadoCodigo = :EstadoCodigo "
+								+ " where p." + sEntidadId + " IN ("
+								+ iEntidadId + ")").
+								setParameter("EstadoCodigo", Constantes.estadoInactivo);
+		q.executeUpdate();
+
 	}
 
 	@Override
 	public <E> String callSPCalculoCodigo(E entidad) {
 		// TODO Auto-generated method stub
-		Query q ;		
-	   
-	   String codigoGenerado = "";  
-	   EntityTransaction ext = entityTransaction();
-	   ext.begin();
-	  
-	            q = getInstancia().createNativeQuery("{ CALL SP_CALCULO_CODIGO(?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
-	                    .setParameter(1, entidad.getClass().getSimpleName());	                   	 
-	            //q.executeUpdate();// SOBRA, el getSingleResult lo hace por el  
-	            codigoGenerado = (String)q.getSingleResult(); 	           
-	            resultado= commitEndidad(ext); 
-	        
+		Query q;
+
+		String codigoGenerado = "";
+		EntityTransaction ext;
+		try {
+			ext = entityTransaction();
+			ext.begin();
+
+			q = getInstancia().createNativeQuery("{ CALL SP_CALCULO_CODIGO(?) }") // createNamedQuery("SP_IDU_PERFIL_PERMISOS")
+					.setParameter(1, entidad.getClass().getSimpleName());
+			// q.executeUpdate();// SOBRA, el getSingleResult lo hace por el
+			codigoGenerado = (String) q.getSingleResult();
+			resultado = commitEndidad(ext);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			ext = null;
+		}
 		return codigoGenerado;
+
 	}
 
 	@Override
-	public  int callSPPeriodoActual() {
-	
-		Query q ;		
-	   
-	    int  iPeriodoId = 0; 
-	    EntityTransaction ext = entityTransaction();
-		ext.begin();
-		  
-	             q = em.createNativeQuery("{ CALL SP_PERIODO_ACTUAL() }");	                   	 
-	            //q.executeUpdate();// SOBRA, el getSingleResult lo hace por el  
-	            iPeriodoId = (Integer)q.getSingleResult(); 	          
-	            resultado= commitEndidad(ext); 
+	public int callSPPeriodoActual() {
+
+		Query q;
+		int iPeriodoId = 0;
+		EntityTransaction ext;
+		try {
+			ext = entityTransaction();
+			ext.begin();
+
+			q = em.createNativeQuery("{ CALL SP_PERIODO_ACTUAL() }");
+			// q.executeUpdate();// SOBRA, el getSingleResult lo hace por el
+			iPeriodoId = (Integer) q.getSingleResult();
+			resultado = commitEndidad(ext);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			ext = null;
+		}
 		return iPeriodoId;
 	}
 }
