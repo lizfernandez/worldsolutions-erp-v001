@@ -44,5 +44,6 @@ public class Constantes {
 	public static String aportIES="APORT. I.E.S %";
 	public static String costoServicios="Costos de servicios (agua, luz, tel.)";
 	public static String costosOtros="Otros Costos";
+	public static String usuAdministrador="ADMINISTRADOR";
 	
 }

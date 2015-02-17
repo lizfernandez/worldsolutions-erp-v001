@@ -1,6 +1,8 @@
 package com.struts.form;
 
 
+import java.util.List;
+
 import org.apache.struts.action.ActionForm;
 
 import com.entities.Perfil;
@@ -14,11 +16,15 @@ public class LoginForm extends ActionForm {
 	 */
 	private static final long serialVersionUID = 1L;
 	Usuario usuario = new Usuario();
+	private List lista;	
 	private String cPersonalCodigo;
 	private String vPersonalNombres;
     private String nPersonalNumeroDocumento;
     private String mode;
     private String mensaje;
+    private List paginas;
+    private int pagInicio;
+	
     
 
 	/**
@@ -234,6 +240,42 @@ public class LoginForm extends ActionForm {
 	 */
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
+	}
+	/**
+	 * @return the lista
+	 */
+	public List getLista() {
+		return lista;
+	}
+	/**
+	 * @param lista the lista to set
+	 */
+	public void setLista(List lista) {
+		this.lista = lista;
+	}
+	/**
+	 * @return the paginas
+	 */
+	public List getPaginas() {
+		return paginas;
+	}
+	/**
+	 * @param paginas the paginas to set
+	 */
+	public void setPaginas(List paginas) {
+		this.paginas = paginas;
+	}
+	/**
+	 * @return the pagInicio
+	 */
+	public int getPagInicio() {
+		return pagInicio;
+	}
+	/**
+	 * @param pagInicio the pagInicio to set
+	 */
+	public void setPagInicio(int pagInicio) {
+		this.pagInicio = pagInicio;
 	}
 	
 	

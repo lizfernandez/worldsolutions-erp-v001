@@ -40,11 +40,14 @@
 <put name="body" value="/plantillas/msn-Error.jsp"></put>
 </definition>
 
-<definition name=".bienvenido" extends=".plantilla">
-    <put name="body" value="/plantillas/bienvenido.jsp"></put>   
+<definition name=".bienvenidoAdmin" extends=".plantilla">
+    <put name="body" value="/home/homeAdmin.jsp"></put>   
     <put name="menuVertical" value="/plantillas/simple.jsp"></put>  
 </definition>
-
+<definition name=".bienvenidoUser" extends=".plantilla">
+    <put name="body" value="/home/homeUser.jsp"></put>   
+    <put name="menuVertical" value="/plantillas/simple.jsp"></put>  
+</definition>
 
 <definition name=".productos" extends=".plantilla">
     <put name="body" value="/inventario/producto/listaProducto.jsp"></put>   
