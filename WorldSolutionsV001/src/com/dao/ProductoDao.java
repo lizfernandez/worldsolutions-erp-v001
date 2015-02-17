@@ -128,6 +128,22 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
     
 		return listaProduccionDetalle;
 	}
+
+	@Override
+	public List<Producto> listaProductoStockMinimo(int pagInicio, int pagFin,
+			int iclasificacionId) {
+		Query q ;
+		List<Producto> listaProducto = null ;
+		String where=""; 
+		
+		 q = getInstancia().createQuery("select p from Producto p where p.iProductoStockCantidad<p.iProductoStockMinimo and p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'" + where );/**/
+	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	        listaProducto = q.setFirstResult(pagInicio)
+						  .setMaxResults(pagFin)
+						  .getResultList(); 
+		
+		return listaProducto;
+	}
 	
 	
 }

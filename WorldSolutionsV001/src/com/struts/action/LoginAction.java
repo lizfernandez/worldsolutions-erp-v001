@@ -15,16 +15,20 @@ import org.apache.struts.actions.DispatchAction;
 import com.dao.ConfiguracionDao;
 import com.dao.GenericaDao;
 import com.dao.PerfilDao;
+import com.dao.ProductoDao;
 import com.dao.UsuarioDao;
 import com.entities.Configuracion;
 import com.entities.Impuesto;
+import com.entities.Producto;
 
 import com.entities.Permiso;
 import com.entities.Usuario;
 import com.entities.vo.EstadisticaVo;
 import com.struts.form.LoginForm;
+import com.struts.form.ProductosForm;
 import com.util.Constantes;
 import com.util.Fechas;
+import com.util.Paginacion;
 
 public class LoginAction extends DispatchAction {
 	/** 
@@ -57,7 +61,16 @@ public class LoginAction extends DispatchAction {
 		LoginForm objform = (LoginForm) form;
 		List<Usuario> usuario = new ArrayList<Usuario>();
 		List<Permiso> listapermiso = new ArrayList<Permiso>();
+		int pagina = Paginacion.paginaInicial;
+		int pagInicio = Paginacion.paginaInicial;
+		if(request.getParameter("pagina")!= null){
+			 pagina = Integer.parseInt(request.getParameter("pagina"));
+		}
+	/** Instanciamos la Clase ProductoForm **/
 		
+	
+		
+		ProductoDao productoDao = new ProductoDao();		
 		
 		UsuarioDao usuarioDao = new UsuarioDao();
 		PerfilDao perfilDao = new PerfilDao();
@@ -91,6 +104,7 @@ public class LoginAction extends DispatchAction {
 				sesion.setAttribute("iPeriodoId", iPeriodoId);
 				//sesion.setAttribute("listaMenu",  genericaDao.listaEntidadGenericaSinCodigo("Menu"));
 				List<String> listaMisPersmisos = new ArrayList<String>();
+				Usuario usu = (Usuario) sesion.getAttribute("Usuario");	
 				for(Permiso lista:listapermiso){
 					listaMisPersmisos.add(lista.getvCodigoMenu());
 					
@@ -109,7 +123,8 @@ public class LoginAction extends DispatchAction {
 				/***Seteamos la localidad para dar formato a los numeros 2,000.00****/
 				sesion.setAttribute("Localidad",new Locale("en", "US"));
 				
-					msn="bienvenido";
+				return home(mapping, objform, request, response);
+					
 				
 			}	
 			else{
@@ -139,14 +154,46 @@ public class LoginAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response) {
 	
 		String msn="";
-		HttpSession sesion = request.getSession();		
+		HttpSession sesion = request.getSession();	
+		int pagina = Paginacion.paginaInicial;
+		int pagInicio = Paginacion.paginaInicial;
+		if(request.getParameter("pagina")!= null){
+			 pagina = Integer.parseInt(request.getParameter("pagina"));
+		}
+	/** Instanciamos la Clase ProductoForm **/
+
+		/** Instanciamos la Clase LoginForm **/
+		LoginForm objform = (LoginForm) form;
+		ProductoDao productoDao = new ProductoDao();		
+		
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");	
+		if(usu!=null){
+			
+			if(usu.getPerfil().getvPerfilDescripcion().equals(Constantes.usuAdministrador)){
+				List<Producto> listaProducto = productoDao.listaProductoStockMinimo(Paginacion.pagInicio(pagina),Paginacion.pagFin(),1);
 				
-		if(sesion.getAttribute("Usuario")!=null){
-					msn="bienvenido";
-			}	
-			else{
-				 msn="login";
+				/**Consultamos el total de registros segun criterio**/
+				List<Producto> listaPerfilTotal = productoDao.listaProductoStockMinimo(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),1);
+				
+		        /**Obtenemos el total del paginas***/
+				List<Long> paginas = Paginacion.listPaginas((long)(listaPerfilTotal.size()));
+				
+				
+				 
+				 /** Seteamos las clase ProductoForm **/
+				objform.setLista(listaProducto);
+				objform.setPaginas(paginas);
+				objform.setPagInicio(pagina);
+				msn="bienvenidoAdmin";
+			}else{
+				msn="bienvenidoUser";
 			}
+					
+					
+		}	
+		else{
+			 msn="login";
+		}
 				
 		return mapping.findForward(msn);
 	}

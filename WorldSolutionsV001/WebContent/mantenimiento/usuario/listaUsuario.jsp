@@ -54,8 +54,13 @@
 				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iUsuarioId" />"/></td> 
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popup('usuario.do?metodo=mantenimientoUsuario&mode=U&id=<bean:write name="x" property="iUsuarioId" />',400,350)" /></td>
+		 	    <logic:notEqual name="x" property="perfil.vPerfilDescripcion" value="ADMINISTRADOR">
 		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iUsuarioId" />','usuario.do?metodo=iduUsuario&mode=D')" /></td>	
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iUsuarioId" />','usuario.do?metodo=iduUsuario&mode=D')" /></td>
+		 	    </logic:notEqual>
+		 	    <logic:equal name="x" property="perfil.vPerfilDescripcion" value="ADMINISTRADOR">
+		 	    <td align="center"></td>
+		 	    </logic:equal>	
 				<td><bean:write name="x" property="vUsuarioLogin" /></td>
 				<td><bean:write name="x" property="personal.vPersonalNombres" /></td>
 				<td><bean:write name="x" property="personal.vPersonalApellidoPaterno" /></td>

@@ -36,7 +36,8 @@
    <action-mappings>
         <action path="/index"  forward="/plantillas/index.jsp" unknown="true" />       
 	    <action  path="/inicio" type="com.struts.action.BienvenidoAction">
-	        <forward name="bienvenido" path=".bienvenido"></forward>
+	        <forward name="bienvenidoAdmin" path=".bienvenidoAdmin"></forward>
+	        <forward name="bienvenidoUser" path=".bienvenidoUser"></forward>
 	        <forward name="login" path=".login"></forward>
 	    </action>
     <action 
@@ -47,7 +48,8 @@
 	    scope="request"
 	    type="com.struts.action.LoginAction"
 	    validate="false">
-	        <forward name="bienvenido" path=".bienvenido"></forward>
+	        <forward name="bienvenidoAdmin" path=".bienvenidoAdmin"></forward>
+	        <forward name="bienvenidoUser" path=".bienvenidoUser"></forward>
 	        <forward name="login" path=".login"></forward>
 	        <forward name="restablecer" path=".restablecer"></forward>
 	        
