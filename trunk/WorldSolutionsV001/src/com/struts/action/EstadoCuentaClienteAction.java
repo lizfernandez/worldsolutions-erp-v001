@@ -50,7 +50,7 @@ import com.util.Paginacion;
 import com.util.Util;
 
 
-public class EstadoCuentaClienteAction extends DispatchAction {
+public class EstadoCuentaClienteAction extends BaseAction {
 	   // --------------------------------------------------------- Instance
 		// Variables
 		// --------------------------------------------------------- Methods
@@ -97,55 +97,8 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 		
 			 
 			 /**Seteamos los valores en las listas**/
-				List<EstadoCuentaVo> listaEstadoCuenta = listarEstadoCuentaCliente(objform, ventaDao, Paginacion.pagInicio(pagina),Paginacion.pagFin());
-//				
-//				
-//				/**Accedemos al Dao**/
-//				 listaVenta = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getVenta(),0);
-//				    double montosTotales =  0.0;
-//				    double pagosTotales =  0.0;
-//				    double saldosTotales =  0.0;
-//				    int i=0;
-//				    
-//				    
-//				 for(Venta obj:listaVenta)
-//				 {   double pagoTotal=0.0, saldoTotal = 0.0;
-//					 EstadoCuentaVo e = new EstadoCuentaVo();
-//				     
-//			
-//				   	 e.setVenta(obj);
-//				     if(obj.getEstadocuentaclientes().size()>0){
-//			   	 
-//					     for(Estadocuentacliente obje:obj.getEstadocuentaclientes()){
-//					    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-//					    	 pagoTotal+= obje.getfMontoPago();						    	
-//					    	 pagosTotales+= obje.getfMontoPago();
-//					    	// e.setEstadocuenta(obj.getEstadocuentaclientes());
-//					    	}
-//					       } // for				    
-//					     
-//				     } // if
-//					   
-//						
-//			
-//				     saldoTotal = obj.getfVentaTotal() -pagoTotal;
-//				     montosTotales+= obj.getfVentaTotal();
-//					 saldosTotales=(montosTotales - pagosTotales);
-//				     e.setPagoTotal(FormatosNumeros.FormatoDecimalMoneda(pagoTotal));
-//				     e.setSaldoTotal(FormatosNumeros.FormatoDecimalMoneda(saldoTotal));
-//			
-//					i++;
-//					
-//					if(i==listaVenta.size()){
-//						e.setMontosTotales((FormatosNumeros.FormatoDecimalMoneda(montosTotales)));
-//						e.setPagosTotales((FormatosNumeros.FormatoDecimalMoneda(pagosTotales)));
-//						e.setSaldosTotales((FormatosNumeros.FormatoDecimalMoneda(saldosTotales)));
-//						
-//					}
-//				     
-//				     listaEstadoCuenta.add(e);
-//				     
-//				 }
+				List<EstadoCuentaVo> listaEstadoCuenta = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina),Paginacion.pagFin());
+
 				 
 			/**Consultamos el total de registros segun criterio**/
 			listaVentaTotal = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getVenta(),0);
@@ -615,7 +568,7 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 			
 			if ("cliente-estado-cuenta".equals(plantilla)) {
 				VentaDao ventaDao = new VentaDao();
-				List<EstadoCuentaVo> estadoCuentaClientes = listarEstadoCuentaCliente(objform, ventaDao, 0, 1000);
+				List<EstadoCuentaVo> estadoCuentaClientes = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, 0, 1000);
 				beans.put("estadoCuentaClientes", estadoCuentaClientes);
 			
 			} else if ("cliente-estado-cuenta-letra".equals(plantilla)) {
@@ -645,55 +598,6 @@ public class EstadoCuentaClienteAction extends DispatchAction {
 			return null;
 		}
 		
-	private List<EstadoCuentaVo> listarEstadoCuentaCliente(EstadoCuentaClienteForm objform, VentaDao ventaDao, int paginaInicio, int paginaFin) {
-
-		List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
-
-		/** Accedemos al Dao **/
-		List<Venta> listaVenta = ventaDao.listaEstadoCuentaPorCliente(paginaInicio, paginaFin, objform.getVenta(), 0);
-		float montosTotales = 0;
-		float pagosTotales = 0;
-		float saldosTotales = 0;
-		int i = 0;
-
-		for (Venta obj : listaVenta) {
-			float pagoTotal = 0;
-			float saldoTotal = 0;
-			EstadoCuentaVo estadoCuenta = new EstadoCuentaVo();
-
-			estadoCuenta.setVenta(obj);
-			if (obj.getEstadocuentaclientes().size() > 0) {
-
-				for (Estadocuentacliente obje : obj.getEstadocuentaclientes()) {
-					if (obje.getcEstadoCodigo().equals(Constantes.estadoActivo)) {
-						pagoTotal += obje.getfMontoPago();
-						pagosTotales += obje.getfMontoPago();
-						// e.setEstadocuenta(obj.getEstadocuentaclientes());
-					}
-				} // for
-
-			} // if
-
-			saldoTotal = obj.getfVentaTotal() - pagoTotal;
-			montosTotales += obj.getfVentaTotal();
-			saldosTotales = (montosTotales - pagosTotales);
-			estadoCuenta.setPagoTotal(pagoTotal);
-			estadoCuenta.setSaldoTotal(saldoTotal);
-
-			i++;
-
-			if (i == listaVenta.size()) {
-				estadoCuenta.setMontosTotales(montosTotales);
-				estadoCuenta.setPagosTotales(pagosTotales);
-				estadoCuenta.setSaldosTotales(saldosTotales);
-
-			}
-
-			listaEstadoCuenta.add(estadoCuenta);
-
-		}
-		return listaEstadoCuenta;
-
-	}
+	
 
 }

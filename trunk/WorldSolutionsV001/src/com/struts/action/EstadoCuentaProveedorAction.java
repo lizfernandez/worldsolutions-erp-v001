@@ -36,7 +36,7 @@ import com.util.FormatosNumeros;
 import com.util.Paginacion;
 import com.util.Util;
 
-public class EstadoCuentaProveedorAction extends DispatchAction {
+public class EstadoCuentaProveedorAction extends BaseAction {
 	   // --------------------------------------------------------- Instance
 		// Variables
 		// --------------------------------------------------------- Methods
@@ -80,59 +80,8 @@ public class EstadoCuentaProveedorAction extends DispatchAction {
 			List<Long> paginas = new ArrayList<Long>();
 		
 			 
-			 /**Seteamos los valores en las listas**/
-				List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
-					
-					
-					/**Accedemos al Dao**/
-					 listaIngresoproducto = ingresoproductoDao.listaEstadoCuentaPorProveedor(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getIngresoProducto(),0);
-					    float montosTotales =  0;
-					    float pagosTotales =  0;
-					    float saldosTotales = 0;
-					    int i=0;
-					    
-					    
-					 for(Ingresoproducto obj:listaIngresoproducto)
-					 {   float pagoTotal=0;
-					 float saldoTotal = 0;
-						 EstadoCuentaVo e = new EstadoCuentaVo();
-					     
-			            	e.setIngresoProducto(obj);
-					     if(obj.getEstadocuentaproveedors().size()>0){
-					    	
-					    	 
-						     for(Estadocuentaproveedor obje:obj.getEstadocuentaproveedors()){
-						    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-						    	 pagoTotal+= obje.getfMontoPago();						    	
-						    	 pagosTotales+= obje.getfMontoPago();
-						    	
-						    	// listaEstaProve.add(pagoEsta);
-						    	}
-						       } // for
-						     e.setEstadocuenta(obj.getEstadocuentaproveedors());
-					     } // if
-						   
-							
-				
-					     saldoTotal = obj.getfIngresoProductoTotal() -pagoTotal;
-					     montosTotales+= obj.getfIngresoProductoTotal();
-						 saldosTotales=(montosTotales - pagosTotales);
-					     e.setPagoTotal(pagoTotal);
-					     e.setSaldoTotal(saldoTotal);
-				
-						i++;
-						
-						if(i==listaIngresoproducto.size()){
-							e.setMontosTotales(montosTotales);
-							e.setPagosTotales(pagosTotales);
-							e.setSaldosTotales(saldosTotales);
-							
-						}
-					     
-					     listaEstadoCuenta.add(e);
-					     
-					 }
-					 
+		
+		  	List<EstadoCuentaVo> listaEstadoCuenta = listaEstadoCuentaPorProveedor(objform.getIngresoproducto(), ingresoproductoDao, Paginacion.pagInicio(pagInicio), Paginacion.pagFin());
 				/**Consultamos el total de registros segun criterio**/
 				listaIngresoproductoTotal = ingresoproductoDao.listaEstadoCuentaPorProveedor(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getIngresoProducto(),0);
 				

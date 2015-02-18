@@ -18,7 +18,8 @@
             </button>
         </td>
     </tr>
-</table ><table class="tabla" border="0" width="100%" id="tabla">
+</table >
+<table class="tabla" border="0" width="100%" id="tabla">
     <caption>Lista de Estado Cuenta Cliente</caption>
         <!-- tr>
             <th width="5%" >Nombre EstadoCuentaCliente:</th>
@@ -55,7 +56,7 @@
 					<!-- Primera operacion --> 
 					<logic:equal name="x" property="venta.vPrincipal" value="1">
 			            <td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-			                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',1320,620)" /></td>
+			                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',900,700)" /></td>
 			          </logic:equal>
 			        <logic:equal name="x" property="venta.vPrincipal" value="0">  
 					<td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
