@@ -17,6 +17,7 @@ import com.dao.GenericaDao;
 import com.dao.PerfilDao;
 import com.dao.ProductoDao;
 import com.dao.UsuarioDao;
+import com.dao.VentaDao;
 import com.entities.Configuracion;
 import com.entities.Impuesto;
 import com.entities.Producto;
@@ -24,13 +25,15 @@ import com.entities.Producto;
 import com.entities.Permiso;
 import com.entities.Usuario;
 import com.entities.vo.EstadisticaVo;
+import com.entities.vo.EstadoCuentaVo;
+import com.struts.form.EstadoCuentaClienteForm;
 import com.struts.form.LoginForm;
 import com.struts.form.ProductosForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.Paginacion;
 
-public class LoginAction extends DispatchAction {
+public class LoginAction extends BaseAction {
 	/** 
 	 * Method execute
 	 * @param mapping
@@ -164,12 +167,17 @@ public class LoginAction extends DispatchAction {
 
 		/** Instanciamos la Clase LoginForm **/
 		LoginForm objform = (LoginForm) form;
-		ProductoDao productoDao = new ProductoDao();		
+		ProductoDao productoDao = new ProductoDao();
+		VentaDao ventaDao = new VentaDao();	
 		
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");	
 		if(usu!=null){
 			
 			if(usu.getPerfil().getvPerfilDescripcion().equals(Constantes.usuAdministrador)){
+				
+				/******************************************/
+				/** LISTADO DE PRODUCTOS CON STOCK MINIMO**/
+				/****************************************/
 				List<Producto> listaProducto = productoDao.listaProductoStockMinimo(Paginacion.pagInicio(pagina),Paginacion.pagFin(),1);
 				
 				/**Consultamos el total de registros segun criterio**/
@@ -178,12 +186,37 @@ public class LoginAction extends DispatchAction {
 		        /**Obtenemos el total del paginas***/
 				List<Long> paginas = Paginacion.listPaginas((long)(listaPerfilTotal.size()));
 				
-				
-				 
 				 /** Seteamos las clase ProductoForm **/
 				objform.setLista(listaProducto);
 				objform.setPaginas(paginas);
 				objform.setPagInicio(pagina);
+				
+				/**********************************/
+				/** LISTADO DE DEUDA DE CLIENTES **/
+				/**********************************/				
+				List<EstadoCuentaVo> listaDeudaCliente = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina), Paginacion.pagFin());
+				List<EstadoCuentaVo> listaDeudaClienteTotal = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina), Paginacion.pagFinMax());
+				List<Long> paginasDeudaCliente = Paginacion.listPaginas((long)(listaDeudaClienteTotal.size()));
+				 
+				 /** Seteamos las clase ProductoForm **/
+				objform.setListaDeudaCliente(listaDeudaCliente);
+				objform.setPaginasDeudaCliente(paginasDeudaCliente);
+				objform.setPagInicioDeudaCliente(pagina);
+				
+				/**********************************/
+				/** LISTADO DE DEUDA DE PROVEEDORES **/
+				/**********************************/				
+				List<EstadoCuentaVo> listaDeudaProveedor = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina), Paginacion.pagFin());
+				List<EstadoCuentaVo> listaDeudaProveedorTotal = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina), Paginacion.pagFinMax());
+				List<Long> paginasDeudaProveedor = Paginacion.listPaginas((long)(listaDeudaProveedorTotal.size()));
+				
+				 /** Seteamos las clase ProductoForm **/
+				objform.setListaDeudaProveedor(listaDeudaProveedor);
+				objform.setPaginasDeudaProveedor(paginasDeudaProveedor);
+				objform.setPagInicioDeudaProveedor(pagina);
+				
+				
+				
 				msn="bienvenidoAdmin";
 			}else{
 				msn="bienvenidoUser";

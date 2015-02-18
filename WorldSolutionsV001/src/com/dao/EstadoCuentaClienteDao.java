@@ -37,17 +37,7 @@ public class EstadoCuentaClienteDao extends GenericaDao implements IEstadoCuenta
 	    	    listaEstadocuentacliente = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
-//		}// lista con busqueda
-//		else{
-//			 q = getInstancia().createQuery("select p.venta from Estadocuentacliente p " +
-//    	    		 " JOIN FETCH p.venta "+
-//    	             " JOIN FETCH p.cliente " + where);/**/
-//    	    
-//    	    listaEstadocuentacliente = q.setFirstResult(pagInicio)
-//						  .setMaxResults(pagFin)
-//						  .getResultList(); 
-//				
-		 
+	 
 		}//else , lista simple	        
  			
 		
