@@ -27,7 +27,7 @@ public class ClienteDao  extends GenericaDao implements IClienteDao {
 	        	where+= " and p.iClienteId = "+cliente.getiClienteId()+"";
 	        }
 	        if(cliente.getvClienteCodigo()!=null){
-	        	where+=" and  p.cClienteCodigo LIKE '%"+cliente.getvClienteCodigo()+"%'";
+	        	where+=" and  p.vClienteCodigo LIKE '%"+cliente.getvClienteCodigo()+"%'";
 	        }
 	        if(cliente.getvClienteRazonSocial()!=null){
 	        	where+=" and  p.vClienteRazonSocial LIKE '%"+cliente.getvClienteRazonSocial()+"%'";
