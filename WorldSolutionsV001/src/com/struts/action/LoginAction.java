@@ -14,6 +14,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import com.dao.ConfiguracionDao;
 import com.dao.GenericaDao;
+import com.dao.IngresoProductoDao;
 import com.dao.PerfilDao;
 import com.dao.ProductoDao;
 import com.dao.UsuarioDao;
@@ -168,7 +169,8 @@ public class LoginAction extends BaseAction {
 		/** Instanciamos la Clase LoginForm **/
 		LoginForm objform = (LoginForm) form;
 		ProductoDao productoDao = new ProductoDao();
-		VentaDao ventaDao = new VentaDao();	
+		VentaDao ventaDao = new VentaDao();
+		IngresoProductoDao ingresoProductoDao = new IngresoProductoDao();
 		
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");	
 		if(usu!=null){
@@ -206,8 +208,8 @@ public class LoginAction extends BaseAction {
 				/**********************************/
 				/** LISTADO DE DEUDA DE PROVEEDORES **/
 				/**********************************/				
-				List<EstadoCuentaVo> listaDeudaProveedor = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina), Paginacion.pagFin());
-				List<EstadoCuentaVo> listaDeudaProveedorTotal = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina), Paginacion.pagFinMax());
+				List<EstadoCuentaVo> listaDeudaProveedor = listaEstadoCuentaPorProveedor(objform.getIngresoProducto(), ingresoProductoDao, Paginacion.pagInicio(pagina), Paginacion.pagFin());
+				List<EstadoCuentaVo> listaDeudaProveedorTotal = listaEstadoCuentaPorProveedor(objform.getIngresoProducto(), ingresoProductoDao, Paginacion.pagInicio(pagina), Paginacion.pagFinMax());
 				List<Long> paginasDeudaProveedor = Paginacion.listPaginas((long)(listaDeudaProveedorTotal.size()));
 				
 				 /** Seteamos las clase ProductoForm **/
