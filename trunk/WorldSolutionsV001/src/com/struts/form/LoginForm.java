@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
+import com.entities.Ingresoproducto;
 import com.entities.Perfil;
 import com.entities.Personal;
 import com.entities.Usuario;
@@ -18,6 +19,7 @@ public class LoginForm extends ActionForm {
 	private static final long serialVersionUID = 1L;
 	Usuario usuario = new Usuario();
 	Venta venta = new Venta();
+	Ingresoproducto ingresoProducto = new Ingresoproducto();
 	private List lista;	
 	private String cPersonalCodigo;
 	private String vPersonalNombres;
@@ -462,6 +464,18 @@ public class LoginForm extends ActionForm {
 	 */
 	public void setPagInicioDeudaProveedorLetra(int pagInicioDeudaProveedorLetra) {
 		this.pagInicioDeudaProveedorLetra = pagInicioDeudaProveedorLetra;
+	}
+	/**
+	 * @return the ingresoProducto
+	 */
+	public Ingresoproducto getIngresoProducto() {
+		return ingresoProducto;
+	}
+	/**
+	 * @param ingresoProducto the ingresoProducto to set
+	 */
+	public void setIngresoProducto(Ingresoproducto ingresoProducto) {
+		this.ingresoProducto = ingresoProducto;
 	}
 	
 	

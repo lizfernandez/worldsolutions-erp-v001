@@ -84,7 +84,11 @@
                             
 	            </div> 
 			</div>
-        
+         <div id="pie">
+			    <div class="wrapper">  
+			           <tiles:insert attribute="pie"/>
+			    </div>
+           </div>
 		<div id="contenido">
 			    <div id="btns" class="btnEntrada" onclick="menuVertical()"></div>
 			    <div class="menuVertical">
@@ -112,17 +116,14 @@
 			        <div id="cont_admin"><tiles:insert attribute="body"/> </div> 
 			    </div>            
 			</div> 	    
-            <div id="pie">
-			    <div class="wrapper">  
-			           <tiles:insert attribute="pie"/>
-			    </div>
-           </div>
+           
 
             
         </div>
     </body>
 </html>
 <script>
+//$("#pie").css("top","765px");
 function mensaje(opcion){
     alert("No tiene Permiso a "+opcion+",\n Consulte con su Administrador");
 }
