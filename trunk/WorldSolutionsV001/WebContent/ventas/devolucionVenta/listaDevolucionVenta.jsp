@@ -14,7 +14,7 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
-        <td><button class="button" onclick="fn_exportarExcel('venta.do?metodo=exportarExcel&plantilla=devolucion-venta')">
+        <td><button class="button" onclick="fn_exportarExcel('venta.do?metodo=exportarExcel&plantilla=venta-devolucion')">
                 <span class="excel">Exportar</span>
             </button>
         </td>    

@@ -4,15 +4,15 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('categoria.do?metodo=mantenimientoSubCategoria&mode=I',350,235)">
+        <td><button  class="button" onclick="popup('categoria.do?metodo=mantenimientoSubCategoria&mode=I&iClasificacionId=1',350,235)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
-        <td><button  class="button" onclick="eliminar('tabla','','categoria.do?metodo=iduSubCategoria&mode=D')">
+        <td><button  class="button" onclick="eliminar('tabla','','categoria.do?metodo=iduSubCategoria&mode=D&iClasificacionId=1')">
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('categoria.do?metodo=mantenimientoSubCategoria&mode=F',350,220)">
+        <td><button  class="button" onclick="popup('categoria.do?metodo=mantenimientoSubCategoria&mode=F&iClasificacionId=1',350,220)">
                 <span class="find">Buscar</span>
             </button>
         </td>

@@ -1996,7 +1996,7 @@ public class VentaAction extends DispatchAction {
 				List<Venta> ventas = ventaDao.listaVenta(0,1000, objform.getVenta());
 				beans.put("ventas", ventas);
 			
-			} else if ("devolucion-venta".equals(plantilla)) {
+			} else if ("venta-devolucion".equals(plantilla)) {
 				List<Ventadevolucion>  listaVentaDevolucion = ventaDao.listaVentaDevolucion(0,1000, objform.getVenta());
 				beans.put("devolucionVentas", listaVentaDevolucion);
 			}

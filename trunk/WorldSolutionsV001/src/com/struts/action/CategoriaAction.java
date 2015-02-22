@@ -79,11 +79,6 @@ public class CategoriaAction extends DispatchAction {
 			CategoriaForm objform = (CategoriaForm) form;
 			
 			Categoria categoria = objform.getCategoria();
-			Clasificacioncategoria clasificacioncategoria = new Clasificacioncategoria();
-			clasificacioncategoria.setiClasificacionId(objform.getiClasificacionId());
-			
-			categoria.setClasificacionCategoria(clasificacioncategoria);
-			
 			/** Instanciamos las clase Daos **/
 			
 			CategoriaDao categoriaDao = new CategoriaDao();
@@ -318,13 +313,14 @@ public class CategoriaAction extends DispatchAction {
 			
 			/** Instantacia a la capa Dao **/
 			EstadoDao estadoDao = new EstadoDao();
-			GenericaDao categoriaDao = new GenericaDao();
+			CategoriaDao categoriaDao = new CategoriaDao();
 
 			/** llamado de los metodos de la clase dao **/
 
 			List<Estado> listaEstado = estadoDao.listEstado();
-			List<Categoria> listaCategoria = categoriaDao.listaEntidadGenerica(categoriaform.getCategoria());
-
+			//List<Categoria> listaCategoria = categoriaDao.listaEntidadGenerica(categoriaform.getCategoria());
+			System.out.println("iClasificacionId [ " + categoriaform.getiClasificacionId() + " ]");
+			List<Categoria> listaCategoria = categoriaDao.listaCategoria(categoriaform.getCategoria());
 			
 			/**LLamamos al formulario mantenimientoCategoria.jsp para la insercion de datos **/
 			if(mode.equals("I")){
@@ -503,10 +499,6 @@ public class CategoriaAction extends DispatchAction {
 		Map<String, Object> beans = new HashMap<String, Object>();
 		
 		if ("categoria".equals(plantilla)) {
-			Clasificacioncategoria clasificacioncategoria = new Clasificacioncategoria();
-			clasificacioncategoria.setiClasificacionId(objform.getiClasificacionId());
-			objform.getCategoria().setClasificacionCategoria(clasificacioncategoria);
-			
 			List<Categoria> categorias = categoriaDao.listaCategoria(0, 1000, objform.getCategoria());
 			beans.put("categorias", categorias);
 			response.setHeader("content-disposition", "attachment;filename=reporte_categorias_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
