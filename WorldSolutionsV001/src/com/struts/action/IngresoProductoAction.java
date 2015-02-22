@@ -1554,12 +1554,14 @@ public class IngresoProductoAction extends DispatchAction {
 		
 
 		IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
-		List<Ingresoproducto> listaIngresoproducto = ingresogenericaDao.listaIngresoproducto(0,1000,objform.getIngresoProducto());
-		
 		Map<String, Object> beans = new HashMap<String, Object>();
 		if ("compra".equals(plantilla)) {
+			List<Ingresoproducto> listaIngresoproducto = ingresogenericaDao.listaIngresoproducto(0,1000,objform.getIngresoProducto());
 			beans.put("compras", listaIngresoproducto);
 		
+		} else if ("compra-devolucion".equals(plantilla)) {
+			List<Ingresoproductodevolucion> listaIngresoproducto = ingresogenericaDao.listaIngresoproductoDevolucion(0,1000, objform.getIngresoProducto());
+			beans.put("devolucionCompras", listaIngresoproducto);
 		}
 		
 		response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");

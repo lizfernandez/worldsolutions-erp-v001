@@ -13,6 +13,10 @@
         <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
+        <td><button class="button" onclick="fn_exportarExcel('ingresoProducto.do?metodo=exportarExcel&plantilla=compra-devolucion')">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>
         </td>        
     </tr>
 </table >
@@ -31,7 +35,7 @@
         
           
 	         
-        <th colspan="2" >Operaciones</th>       
+        <th align="center">Operaciones</th>       
         <th align="left">Proveedor</th>
         <th align="left">Tipo Documento</th>
 	    <th align="left">Nro. Documento</th>
@@ -57,10 +61,6 @@
 				
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=U&id=<bean:write name="x" property="iIngresoProductoDevolucionId" />',900,700)" /></td>
-				<td align="center">
-			        <img  onclick="fn_reporteIngresoProducto('',1080,830)"
-			                   src="${pageContext.request.contextPath}/media/imagenes/paste.png"  border="0" width="27%" title="Imprimir IngresoProducto"/>
-			    </td>
 				<td><bean:write name="x" property="ingresoProducto.proveedor.vProveedorRazonSocial" /></td>
 				<td><bean:write name="x" property="ingresoProducto.tipodocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="ingresoProducto.nIngresoProductoNumero" /></td>

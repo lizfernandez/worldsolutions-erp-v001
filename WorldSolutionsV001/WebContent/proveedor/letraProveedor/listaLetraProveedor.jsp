@@ -14,6 +14,10 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <td><button class="button" onclick="fn_exportarExcel('estadoCuentaProveedor.do?metodo=exportarExcel&plantilla=proveedor-estado-cuenta-letra')">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -28,7 +32,7 @@
 
     <thead>
     <tr>
-          <th width="5%" colspan="3" >Operaciones</th>
+          <th width="5%" colspan="2" >Operaciones</th>
           <th align="left">Fecha Giro</th>
           <th align="left">Fecha Vencimiento</th>
           <th align="left">Fecha Pago</th>
@@ -50,12 +54,6 @@
 	    <logic:notEmpty name="estadoCuentaProveedorForm" property="lista">
 	     	<logic:iterate name="estadoCuentaProveedorForm" property="lista" id="x">	
 			<tr>
-		          
-		          
-		          
-		         <td align="center"><img title="Ver Compra" src="${pageContext.request.contextPath}/media/imagenes/search.png"
-		                     onclick="popupModal('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="ingresoProducto.iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="ingresoProducto.tipodocumento.iTipoDocumentoGestionId" />',900,700)" />
-		         </td>
 		         <td align="center"><img title="Editar Letra" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popupModal('estadoCuentaProveedor.do?metodo=mantenimientoLetraProveedor&mode=U&id=<bean:write name="x" property="iletraProveedorId" />',530,530)" />
 		         </td>

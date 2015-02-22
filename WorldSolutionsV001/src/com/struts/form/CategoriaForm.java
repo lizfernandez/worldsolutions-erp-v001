@@ -6,12 +6,14 @@ import java.util.List;
 import org.apache.struts.action.ActionForm;
 
 import com.entities.Categoria;
+import com.entities.Clasificacioncategoria;
 import com.entities.Subcategoria;
 
 public class CategoriaForm extends ActionForm {
 	private List lista;	
 	Categoria categoria = new Categoria();
 	Subcategoria subCategoria = new Subcategoria();
+	Clasificacioncategoria clasificacioncategoria = new Clasificacioncategoria();
     private String mode;
     private List paginas;
     private int pagInicio;
@@ -20,7 +22,6 @@ public class CategoriaForm extends ActionForm {
     /** Creamos atributos de entidades para evitar */
     /**  persistencias                             */
     /**********************************************/
-     private int iClasificacionId;
     
 	/**
 	 * @return the lista
@@ -157,13 +158,14 @@ public class CategoriaForm extends ActionForm {
 	 * @return the iClasificacionId
 	 */
 	public int getiClasificacionId() {
-		return iClasificacionId;
+		return this.clasificacioncategoria.getiClasificacionId();
 	}
 	/**
 	 * @param iClasificacionId the iClasificacionId to set
 	 */
 	public void setiClasificacionId(int iClasificacionId) {
-		this.iClasificacionId = iClasificacionId;
+		this.clasificacioncategoria.setiClasificacionId(iClasificacionId);
+		categoria.setClasificacionCategoria(clasificacioncategoria);
 
 	}
 	
