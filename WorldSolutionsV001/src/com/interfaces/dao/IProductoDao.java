@@ -10,6 +10,8 @@ public interface IProductoDao {
 	
 	public List<Producto> listaProducto(int pagInicio, int pagFin, Producto producto, int iclasificacionId);
 	public List<Producto> listaProductoStockMinimo(int pagInicio, int pagFin, int iclasificacionId);
+	public List<Producto> listaProductoStockMaximo(int pagInicio, int pagFin, int iclasificacionId);
+	
 	public List<Produccion> listaProduccion(int pagInicio, int pagFin, Produccion produccion);
 	public List<Producciondetalle> buscarDetalleProduccion(int iProduccionId);
 	/*public Producto buscarProducto(int iProductoId);

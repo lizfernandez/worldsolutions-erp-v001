@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.struts.action.ActionForm;
 
 import com.entities.Ingresoproducto;
+import com.entities.Letracliente;
+import com.entities.Letraproveedor;
 import com.entities.Perfil;
 import com.entities.Personal;
 import com.entities.Usuario;
@@ -20,6 +22,8 @@ public class LoginForm extends ActionForm {
 	Usuario usuario = new Usuario();
 	Venta venta = new Venta();
 	Ingresoproducto ingresoProducto = new Ingresoproducto();
+	Letracliente letracliente = new Letracliente();
+	Letraproveedor letraProveedor = new Letraproveedor();
 	private List lista;	
 	private String cPersonalCodigo;
 	private String vPersonalNombres;
@@ -28,6 +32,13 @@ public class LoginForm extends ActionForm {
     private String mensaje;
     private List paginas;
     private int pagInicio;
+
+    /*****************************/
+    /**producto stock maximo **/
+    /*****************************/
+    private List listaProductoMax;	
+    private List paginasProductoMax;
+    private int pagInicioProductoMax;
     
     /*****************************/
     /**estado de cuenta cliente **/
@@ -476,6 +487,66 @@ public class LoginForm extends ActionForm {
 	 */
 	public void setIngresoProducto(Ingresoproducto ingresoProducto) {
 		this.ingresoProducto = ingresoProducto;
+	}
+	/**
+	 * @return the listaProductoMax
+	 */
+	public List getListaProductoMax() {
+		return listaProductoMax;
+	}
+	/**
+	 * @param listaProductoMax the listaProductoMax to set
+	 */
+	public void setListaProductoMax(List listaProductoMax) {
+		this.listaProductoMax = listaProductoMax;
+	}
+	/**
+	 * @return the paginasProductoMax
+	 */
+	public List getPaginasProductoMax() {
+		return paginasProductoMax;
+	}
+	/**
+	 * @param paginasProductoMax the paginasProductoMax to set
+	 */
+	public void setPaginasProductoMax(List paginasProductoMax) {
+		this.paginasProductoMax = paginasProductoMax;
+	}
+	/**
+	 * @return the pagInicioProductoMax
+	 */
+	public int getPagInicioProductoMax() {
+		return pagInicioProductoMax;
+	}
+	/**
+	 * @param pagInicioProductoMax the pagInicioProductoMax to set
+	 */
+	public void setPagInicioProductoMax(int pagInicioProductoMax) {
+		this.pagInicioProductoMax = pagInicioProductoMax;
+	}
+	/**
+	 * @return the letracliente
+	 */
+	public Letracliente getLetracliente() {
+		return letracliente;
+	}
+	/**
+	 * @param letracliente the letracliente to set
+	 */
+	public void setLetracliente(Letracliente letracliente) {
+		this.letracliente = letracliente;
+	}
+	/**
+	 * @return the letraProveedor
+	 */
+	public Letraproveedor getLetraProveedor() {
+		return letraProveedor;
+	}
+	/**
+	 * @param letraProveedor the letraProveedor to set
+	 */
+	public void setLetraProveedor(Letraproveedor letraProveedor) {
+		this.letraProveedor = letraProveedor;
 	}
 	
 	
