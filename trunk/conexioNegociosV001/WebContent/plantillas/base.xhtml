@@ -1,0 +1,536 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+    <!ENTITY bull "&#8226;">
+    <!ENTITY copy "&#169;">
+]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/media/images/favicon.ico" />
+    </f:facet>
+
+    <title>RED SOCIAL DE NEGOCIOS - CONEXIONEGOCIOS</title>
+    
+  <link rel="stylesheet" href="#{request.contextPath}/media/css/grid.css" />
+  <link rel="stylesheet" href="#{request.contextPath}/media/css/contact-form.css" />
+  <link rel="stylesheet" href="#{request.contextPath}/media/css/camera.css" />
+  <link rel="stylesheet" href="#{request.contextPath}/media/css/owl.carousel.css" />
+  <link rel="stylesheet" href="#{request.contextPath}/media/css/touchTouch.css" />
+  <link rel="stylesheet" href="#{request.contextPath}/media/css/style.css" />
+  <script src="#{request.contextPath}/media/js/jquery-1.11.2.js"></script>
+  <script src="#{request.contextPath}/media/js/jquery-migrate-1.2.1.js"></script>
+  <script src="#{request.contextPath}/media/js/camera.js"></script>
+  <script src="#{request.contextPath}/media/js/owl.carousel.js"></script>
+  <script src="#{request.contextPath}/media/js/TMForm.js"></script>
+  <script src="#{request.contextPath}/media/js/modal.js"></script>
+  <script src="#{request.contextPath}/media/js/touchTouch.jquery.js"></script>
+  <script src="#{request.contextPath}/media/js/jquery.equalheights.js"></script>
+  <!--[if (gt IE 9)|!(IE)]><!-->
+  <script src="#{request.contextPath}/media/js/jquery.mobile.customized.min.js"></script>
+  <script src="#{request.contextPath}/media/js/wow/wow.js"></script>
+    
+    <!-- h:outputStylesheet name="../media/css/grid.css" /-->
+    <ui:insert name="head" />
+    <script>
+    $(document).ready(function () {
+      if ($('html').hasClass('desktop')) {
+        new WOW().init();
+      }
+    });
+  </script>
+  <!--<![endif]-->
+  <script>
+    $(document).ready(function () {
+      $('#camera_wrap').camera({
+        loader: true,
+        pagination: true,
+        minHeight: '',
+        thumbnails: false,
+        height: '45.9375%',
+        caption: false,
+        navigation: false,
+        fx: 'simpleFade',
+        onLoaded: function () {
+          $('.slider-wrapper')[0].style.height = 'auto';
+        }
+      });
+      $('.gallery1 a.big-image').touchTouch();
+      $("#owl").owlCarousel({
+        items: 1, //10 items above 1000px browser width
+        itemsDesktop: [1199, 1], //5 items between 1000px and 901px
+        itemsDesktopSmall: [767, 1], // betweem 900px and 601px
+        itemsTablet: [700, 1], //2 items between 600 and 0
+        itemsMobile: [479, 1], // itemsMobile disabled - inherit from itemsTablet option
+        navigation: false,
+        pagination: true
+      });
+    });
+  </script>
+ 
+   
+</h:head>
+
+<h:body>
+         
+ <!--========================================================
+                          HEADER
+=========================================================-->
+<header id="header">
+  <div id="stuck_container">
+    <div class="container">
+      <div class="row">
+        <div class="grid_12">
+          <div class="wrapper">
+            <h1>
+              <a href="index.html">
+                <img src="media/images/logo.png" alt="CONEXION NEGOCIOS"/>
+                CONEXION <SPAN class="color1">NEGOCIOS</SPAN>                
+                 <DIV class="slogan font1 color2 textRight">Publica, Vende y Crece</DIV>
+              </a>
+            </h1>
+            <nav>
+              <ul class="sf-menu">
+                <li class="current"><a href="index.html">Home</a></li>
+                <li><a href="index-1.html">About</a>
+                  <ul>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">Articles</a>
+                      <ul>
+                        <li><a href="#">Lorem</a></li>
+                        <li><a href="#">Dolor</a></li>
+                        <li><a href="#">Sit amet</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#">Clients</a></li>
+                  </ul>
+                </li>
+                <li><a href="index-2.html">Services</a></li>
+                <li><a href="index-3.html">News</a></li>
+                <li><a href="index-4.html">Gallery</a></li>
+                <li><a href="index-5.html">Contacts</a></li>
+              </ul>
+            </nav>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slider-wrapper">
+    <div id="camera_wrap">
+      <div data-src="media/images/slider1.png">
+        <div class="caption fadeIn">
+
+        </div>
+      </div>
+      <div data-src="media/images/slider2.png">
+        <div class="caption fadeIn">
+
+        </div>
+      </div>
+      <div data-src="media/images/slider3.png">
+        <div class="caption fadeIn">
+
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <!--<img class="triangle" src="media/images/triangle1_1.png" alt=""/>-->
+  <svg class="triangle" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="198" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L0 102 L100 102 Z"></path>
+  </svg>
+</header>
+
+
+<!--========================================================
+                          CONTENT
+=========================================================-->
+<section id="content">
+  <div class="wrapper1">
+    <div class="container">
+      <div class="row">
+        <div class="grid_12">
+          <div class="box1">
+            <div class="row">
+              <div class="grid_3">
+                <img src="media/images/page1_img1.png" alt="" class="wow fadeInUp" data-wow-duration="1s"
+                     data-wow-delay="0.1s"/>
+              </div>
+              <div class="grid_3">
+                <img src="media/images/page1_img2.png" alt="" class="wow fadeInUp" data-wow-duration="1s"
+                     data-wow-delay="0.2s"/>
+              </div>
+              <div class="grid_4 preffix_1">
+                <h6 class="wow fadeInDown">Welcome</h6>
+                <span class="heading wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.1s"><a href="#">Nam liber tempor cum soluta nobis eleifend</a></span>
+                <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">Sutem vel eum iriure dolor in
+                  hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent lupta</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="owl">
+    <div class="item">
+      <div class="gallery1">
+        <div class="gallery_image wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.1s">
+          <a class="big-image" href="media/images/gallery1.jpg">
+            <img src="media/images/page1_img3.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.2s">
+          <a class="big-image" href="media/images/gallery2.jpg">
+            <img src="media/images/page1_img4.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
+          <a class="big-image" href="media/images/gallery3.jpg">
+            <img src="media/images/page1_img5.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.4s">
+          <a class="big-image" href="media/images/gallery4.jpg">
+            <img src="media/images/page1_img6.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
+          <a class="big-image" href="media/images/gallery5.jpg">
+            <img src="media/images/page1_img7.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+          <a class="big-image" href="media/images/gallery6.jpg">
+            <img src="media/images/page1_img8.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+          <a class="big-image" href="media/images/gallery7.jpg">
+            <img src="media/images/page1_img9.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.4s">
+          <a class="big-image" href="media/images/gallery8.jpg">
+            <img src="media/images/page1_img10.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="gallery1">
+        <div class="gallery_image">
+          <a class="big-image" href="media/images/gallery1.jpg">
+            <img src="media/images/page1_img3.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image">
+          <a class="big-image" href="media/images/gallery2.jpg">
+            <img src="media/images/page1_img4.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image">
+          <a class="big-image" href="media/images/gallery3.jpg">
+            <img src="media/images/page1_img5.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image">
+          <a class="big-image" href="media/images/gallery4.jpg">
+            <img src="media/images/page1_img6.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image">
+          <a class="big-image" href="media/images/gallery5.jpg">
+            <img src="media/images/page1_img7.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image">
+          <a class="big-image" href="media/images/gallery6.jpg">
+            <img src="media/images/page1_img8.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image">
+          <a class="big-image" href="media/images/gallery7.jpg">
+            <img src="media/images/page1_img9.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="gallery_image">
+          <a class="big-image" href="media/images/gallery8.jpg">
+            <img src="media/images/page1_img10.png" alt=""/>
+            <div class="gallery_hover">
+              <div class="icon"></div>
+            </div>
+          </a>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapper2">
+    <div class="container">
+      <div class="row">
+        <div class="grid_12">
+          <div class="heading1">
+            <h2 class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.1s">Services</h2>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper-for-divider">
+        <div class="row">
+          <div class="grid_6 preffix_1">
+            <div class="box2 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.1s">
+              <a href="#"><img src="media/images/page1_img11.png" alt=""/></a>
+              <h3>
+                <a href="#">Professional care</a>
+              </h3>
+              <p>Em iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et ius</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="grid_6 preffix_5">
+            <div class="box2 box2__inset1 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.1s">
+              <a href="#"><img src="media/images/page1_img12.png" alt=""/></a>
+              <h3>
+                <a href="#">Birds for sale</a>
+              </h3>
+              <p>Retem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsa</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="grid_6 preffix_1">
+            <div class="box2 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.1s">
+              <a href="#"><img src="media/images/page1_img13.png" alt=""/></a>
+              <h3>
+                <a href="#">Useful articles advice</a>
+              </h3>
+              <p>Weum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla lisis at vero eros et accumsan</p>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper3">
+    <div class="container">
+      <div class="row">
+        <div class="grid_12">
+          <div class="heading1">
+            <h2 class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.1s">News</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="grid_4">
+          <div class="post1 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
+            <a class="wrapper maxheight" href="#">
+              <img src="media/images/page1_img14.png" alt=""/>
+              <time datetime="2014-01-01">21 Sept 2014</time>
+              <h3>Nam liber tempor cum</h3>
+              <p>Em iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid_4">
+          <div class="post1 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+            <a class="wrapper maxheight" href="#">
+              <img src="media/images/page1_img15.png" alt=""/>
+              <time datetime="2014-01-01">21 Sept 2014</time>
+              <h3>Nam liber tempor cum</h3>
+              <p>Em iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid_4">
+          <div class="post1 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+            <a class="wrapper maxheight" href="#">
+              <img src="media/images/page1_img16.png" alt=""/>
+              <time datetime="2014-01-01">21 Sept 2014</time>
+              <h3>Nam liber tempor cum</h3>
+              <p>Em iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--========================================================
+                          FOOTER
+=========================================================-->
+<footer id="footer">
+  <svg class="triangle" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="198" viewBox="0 0 100 102" preserveAspectRatio="none">
+    <path d="M0 0 L0 102 L100 102 Z"></path>
+  </svg>
+  <div class="wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="grid_4">
+          <div class="heading1">
+            <h2 class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.1s">Contact form</h2>
+          </div>
+          <form id="contact-form">
+            <div class="contact-form-loader"></div>
+            <fieldset>
+              <label class="name wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
+                <input type="text" name="name" placeholder="Name:" data-constraints="@Required @JustLetters"/>
+                <span class="empty-message">*This field is required.</span>
+              </label>
+              <label class="phone wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+                <input type="text" name="phone" placeholder="Phone" value=""
+                       data-constraints="@Required @JustNumbers"/>
+                <span class="empty-message">*This field is required.</span>
+                <span class="error-message">*This is not a valid phone.</span>
+              </label>
+              <label class="email wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                <input type="text" name="email" placeholder="Email:" value=""
+                       data-constraints="@Required @Email"/>
+                <span class="empty-message">*This field is required.</span>
+                <span class="error-message">*This is not a valid email.</span>
+              </label>
+
+              <label class="message wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
+                <textarea name="message" placeholder="Message:"
+                          data-constraints='@Required @Length(min=20,max=999999)'></textarea>
+                <span class="empty-message">*This field is required.</span>
+                <span class="error-message">*The message is too short.</span>
+              </label>
+              <!-- <label class="recaptcha"><span class="empty-message">*This field is required.</span></label> -->
+              <div class="contact-form-buttons wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+                <a href="#" data-type="submit" class="btn-big">Send</a>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="grid_8">
+          <div class="privacy-block">
+            <h1 class="wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.1s">
+              <a href="index.html">
+                <img src="media/images/logo.png" alt=""/>
+                Conexión Negocios
+              </a>
+            </h1>
+            <div class="info wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
+              Copyright <span id="copyright-year"></span> | <a
+                    href="index-6.html">Privacy Policy</a>
+              <!--{%FOOTER_LINK} -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="modal fade response-message">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">times</button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        You message has been sent! We will be in touch soon.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="#{request.contextPath}/media/js/script.js"></script> 
+<script type="text/javascript">
+ var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7078796-5']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();</script>
+
+    
+    
+    <ui:insert name="body"></ui:insert>
+</h:body>
+</html>
