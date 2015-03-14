@@ -192,6 +192,7 @@ h6 {
     top: 0;
     text-align: center;
   }
+
 }
 #header #stuck_container .wrapper {
   background: url(../images/background1.png) repeat;
@@ -204,6 +205,7 @@ h6 {
   #header #stuck_container .wrapper {
     background: transparent;
   }
+  
 }
 #header #stuck_container.isStuck .wrapper {
   background: transparent;
@@ -233,7 +235,7 @@ h1 {
 }
 h1 a {
   display: block;
-  /*background: #202020;*/
+  background: #202020;
   position: relative;
   padding: 30px 20px 26px 80px;
   font: 400 16px/26px "Paytone One", sans-serif;
@@ -255,7 +257,7 @@ h1 a img {
   h1 {
     float: none;
     display: block;
-    background: #0064d1;
+    /*background: #0064d1;*/
   }
   h1 a {
     display: inline-block;
@@ -519,6 +521,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
 @media (max-width: 767px) {
   .box1 img {
     margin-bottom: 20px;
+  }
+  h1 a img {
+    left: 25px;
+    position: absolute;
+    top: 12px;
+    width: 21%;
   }
 }
 /* ======= Gallery 1  ======= */
@@ -1043,6 +1051,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
 @media (max-width: 479px) {
   .vimeo-video1 iframe {
     height: 187.57894736842107px;
+  }
+ h1 a img {
+    left: 57px;
+    position: absolute;
+    top: 24px;
+    width: 21%;
   }
 }
 @media (max-width: 767px) {
