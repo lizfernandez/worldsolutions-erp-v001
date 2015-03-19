@@ -160,19 +160,19 @@
   text-decoration: none;
 }
 .camera_loader {
-  background: #ffffff url(../images/camera-loader.gif) no-repeat center;
+  background: url(../images/camera-loader.gif) no-repeat center;
   background: rgba(255, 255, 255, 0.9) url(../images/camera-loader.gif) no-repeat center;
   border: 1px solid #ffffff;
-  -webkit-border-radius: 18px;
-  -moz-border-radius: 18px;
-  border-radius: 18px;
-  height: 36px;
+  -webkit-border-radius: 23px;
+  -moz-border-radius: 263px;
+  border-radius: 23px;
+  height: 46px;
   left: 50%;
   overflow: hidden;
   position: absolute;
   margin: -18px 0 0 -18px;
   top: 50%;
-  width: 36px;
+  width: 46px;
   z-index: 3;
 }
 .camera_bar {
@@ -239,5 +239,24 @@
   display: block;
   position: absolute;
   width: 100%;
+  text-align: center;
+}
+.caption {
+  bottom: 0;
+  top: 117px;    
+  left: 30px;
+  right: 0;
+  display: block;
+  position: absolute;
+  width: 29%;
+  height:35%;
+  padding: 20px;
+  /*text-align: center;*/
+  background-image: url(../images/backgroundSlider.png);/*no-repeat center;*/
+  
+}
+.caption h6{
+ font: 900 27px/27px "Open Sans",sans-serif;
+  color: #ffffff;
   text-align: center;
 }

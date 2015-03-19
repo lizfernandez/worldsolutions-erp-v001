@@ -5,7 +5,7 @@ function include(url){
 
 /* cookie.JS
 ========================================================*/
-include('media/js/jquery.cookie.js');
+/*include('media/js/jquery.cookie.js');*/
 
 
 /* DEVICE.JS
@@ -51,7 +51,7 @@ $(function () {
 
 /* Stellar.js
 ========================================================*/
-include('media/js/stellar/jquery.stellar.js');
+/*include('media/js/stellar/jquery.stellar.js');
 $(document).ready(function() { 
   if ($('html').hasClass('desktop')) {
       $.stellar({
@@ -61,14 +61,14 @@ $(document).ready(function() {
   }
 });
 
-
+*/
 /* Copyright Year
 ========================================================*/
-var currentYear = (new Date).getFullYear();
+/*var currentYear = (new Date).getFullYear();
 $(document).ready(function() {
   $("#copyright-year").text( (new Date).getFullYear() );
 });
-
+*/
 
 /* Superfish menu
 ========================================================*/
