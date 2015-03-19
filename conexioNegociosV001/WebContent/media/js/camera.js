@@ -345,7 +345,7 @@
 	
 	
 	var started;
-	
+
 	wrap.show();
 	var w = target.width();
 	var h = target.height();
@@ -392,12 +392,16 @@
 		var res;
 		function resizeImageWork(){
 			w = wrap.width();
+			
+			
 			if(opts.height.indexOf('%')!=-1) {
 				var startH = Math.round(w / (100/parseFloat(opts.height)));
 				if(opts.minHeight != '' && startH < parseFloat(opts.minHeight)){
+					
 					h = parseFloat(opts.minHeight);
 				} else {
 					h = startH;
+					//alert("si "+h+" B;"+parseFloat(opts.height)+" w:"+w)
 				}
 				wrap.css({height:h});
 			} else if (opts.height=='auto') {
@@ -428,7 +432,8 @@
 					if(portrait==false||portrait=='false'){
 						if((wT/hT)<(w/h)) {
 							var r = w / wT;
-							var d = (Math.abs(h - (hT*r)))*0.5;
+							var d = (Math.abs(h - (hT*r)))*0.2;
+						//	alert("w: "+w+"wT: "+wT+"h: "+h+" hT:"+hT+"r: "+r)
 							switch(alignment){
 								case 'topLeft':
 									mTop = 0;
