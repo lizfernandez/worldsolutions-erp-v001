@@ -202,7 +202,7 @@ h6 {
 @media (max-width: 767px) {
   #header #stuck_container {
     position: relative;
-    background: #0064d1;
+    background: #202020;
   }
   #header #stuck_container .wrapper {
     background: transparent;
@@ -257,7 +257,7 @@ h1 a img {
 }
 @media (max-width: 979px) {
   h1 {
-    float: none;
+    float: left;
     display: block;
     /*background: #0064d1;*/
   }
@@ -438,9 +438,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
     float: none;
   }
   .select-menu {
-    border-radius: none;
+    
     display: block;
-    text-transform: capitalize;
+    
     float: none;
     color: #0064d1;
     width: 100%;
@@ -449,8 +449,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
     background: #ffffff;
     font: 900 16px/16px "Open Sans", sans-serif;
     text-align: left;
-    border: 1px solid #c1c1c1;
-    padding: 2px 0;
+   background:url(../images/selectMenu.png);
     position: relative;
   }
   .select-menu option {
@@ -1057,9 +1056,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
     height: 187.57894736842107px;
   }
  h1 a img {
-    left: 57px;
+    left: 25px;
     position: absolute;
-    top: 24px;
+    top: 12px;
     width: 21%;
   }
 }
