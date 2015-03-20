@@ -395,7 +395,21 @@
 			
 			
 			if(opts.height.indexOf('%')!=-1) {
-				var startH = Math.round(w / (100/parseFloat(opts.height)));
+				var startH;
+				if(w>1199){
+					startH = Math.round(w / (100/parseFloat(opts.height)));
+				}
+				else if(w>979 && w<1199){
+					startH = Math.round(w / (90/parseFloat(opts.height)));
+					
+				}
+				else if(w>767 && w<979){
+					startH = Math.round(w / (80/parseFloat(opts.height)));
+				}
+				else {
+					startH = Math.round(w / (70/parseFloat(opts.height)));
+				}
+				
 				if(opts.minHeight != '' && startH < parseFloat(opts.minHeight)){
 					
 					h = parseFloat(opts.minHeight);
