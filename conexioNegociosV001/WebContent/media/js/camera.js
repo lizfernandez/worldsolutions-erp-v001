@@ -396,18 +396,28 @@
 			
 			if(opts.height.indexOf('%')!=-1) {
 				var startH;
+				if(w>750){
+					$('#navigation').hide();
+				}
 				if(w>1199){
 					startH = Math.round(w / (100/parseFloat(opts.height)));
 				}
 				else if(w>979 && w<1199){
 					startH = Math.round(w / (90/parseFloat(opts.height)));
+					/*$('.sf-menu').show();
+					$('.sf-menu  li').css({'float': 'left'});
+					*/
 					
 				}
 				else if(w>767 && w<979){
 					startH = Math.round(w / (80/parseFloat(opts.height)));
+					/*$('.sf-menu').show();
+					$('.sf-menu  li').css({'float': 'left'});
+					*/
 				}
 				else {
-					startH = Math.round(w / (70/parseFloat(opts.height)));
+					startH = Math.round(w / (60/parseFloat(opts.height)));
+					/*$('.sf-menu').hide();*/
 				}
 				
 				if(opts.minHeight != '' && startH < parseFloat(opts.minHeight)){

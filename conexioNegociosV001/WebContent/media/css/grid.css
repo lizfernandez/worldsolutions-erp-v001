@@ -250,6 +250,9 @@ table {
   clear: both;
 }
 @media (min-width: 980px) and (max-width: 1199px) {
+	 #navigation {  
+    display: none !important;;   
+  }
   .row {
     margin-left: -20px;
   }
@@ -437,9 +440,10 @@ table {
     margin-left: 84px;
   }
 }
+/*
 .select-menu {
   display: none !important;
-}
+}*/
 @media (max-width: 767px) {
   .container {
     width: 420px;
@@ -457,9 +461,9 @@ table {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
-  .select-menu {
+ /* .select-menu {
     display: block !important;
-  }
+  }*/
 }
 @media (max-width: 479px) {
   body {

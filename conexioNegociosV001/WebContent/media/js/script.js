@@ -72,7 +72,7 @@ $(document).ready(function() {
 
 /* Superfish menu
 ========================================================*/
-include('media/js/superfish.js');
+/*include('media/js/superfish.js');*/
 include('media/js/jquery.mobilemenu.js');
 
 
