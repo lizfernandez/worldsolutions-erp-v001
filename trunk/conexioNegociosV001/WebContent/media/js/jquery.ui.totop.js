@@ -15,7 +15,7 @@
 		var containerIDhash = '#' + settings.containerID;
 		var containerHoverIDHash = '#'+settings.containerHoverID;
 			
-		$('body').append('<a href="#" id="'+settings.containerID+'" class="'+settings.containerClass+'" >'+settings.text+'</a>');		
+		$('body').append('<a href="#" id="'+settings.containerID+'" class="'+settings.containerClass+'" > <img src="media/images/toTop.png" />'+settings.text+'</a>');		
 		
 		$(containerIDhash).hide().click(function(){			
 			$('html, body').stop().animate({scrollTop:0}, settings.scrollSpeed, settings.easingType);
