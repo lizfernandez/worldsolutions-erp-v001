@@ -2,23 +2,16 @@ package com.dao;
 
 import java.util.List;
 
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TransactionRequiredException;
 
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
-import org.eclipse.persistence.queries.ReadObjectQuery;
-import org.eclipse.persistence.queries.StoredProcedureCall;
 
 import com.entities.Perfil;
 import com.entities.Permiso;
 import com.interfaces.dao.IPerfilDao;
-import com.sun.istack.logging.Logger;
 import com.util.Constantes;
 
 
