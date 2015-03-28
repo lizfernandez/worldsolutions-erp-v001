@@ -174,7 +174,8 @@ table {
   width: 870px;
 }
 .grid_8 {
-  width: 770px;
+/*width: 770px; */
+  margin-top: -247px;
 }
 .grid_7 {
   width: 670px;
@@ -189,7 +190,7 @@ table {
   width: 370px;
 }
 .grid_3 {
-  width: 270px;
+ /* width: 270px;*/
 }
 .grid_2 {
   width: 170px;
@@ -286,7 +287,7 @@ table {
     width: 700px;
   }
   .grid_8 {
-    width: 620px;
+   /* width: 620px;*/
   }
   .grid_7 {
     width: 540px;
@@ -345,6 +346,45 @@ table {
   .preffix_1 {
     margin-left: 100px;
   }
+  .box7_price{
+    top:38% !important;
+  }
+  .box7_simbolo{
+    top:36% !important;
+  }
+  .box7_valor{
+   top:39% !important;
+  }
+  .box7_pre_fond{  
+	  top: 217px !important;
+	  font: 500 11px/18px "Open Sans", sans-serif !important; 
+	  width: 256px;
+  }
+  .box7_pre {  
+    width: 81px;
+  }
+  .btn-more{
+    margin-right: -4px !important;
+    padding: 9px 6px 10px 8px !important;
+  }
+  .box7_log_emp{    
+    padding: 7px 0px 0px 0px !important;
+  }
+  .box7_log_emp img{
+   width: 82% !important;
+  }
+  .box7_emp {
+  padding: 8px 6px 15px 0px !important;
+  height: 64px !important;
+  font-size: 12px !important;
+  }
+  .box7_cont{
+  margin-top:-89px !important;
+  }
+  .box7 h3{
+  font-size: 18px !important;
+  }
+  .socios{margin-top:-97px !important;}
 }
 @media (min-width: 768px) and (max-width: 979px) {
   .row {
@@ -380,7 +420,8 @@ table {
     width: 556px;
   }
   .grid_8 {
-    width: 492px;
+   float: right;
+  margin-top: -284px;
   }
   .grid_7 {
     width: 428px;
@@ -439,6 +480,56 @@ table {
   .preffix_1 {
     margin-left: 84px;
   }
+  .box7_pre_fond{  
+	  top: 175px !important;
+	  font: 500 11px/18px "Open Sans", sans-serif !important;
+	  width: 100%
+  }
+  .box7_pre {  
+    width: 74px;
+  }
+  .btn-more{
+      margin-right: -4px !important;
+      padding: 9px 5px 10px 5px !important;
+  }
+  .box7_price {   
+	  padding: 14px 30px 12px 20px !important;
+	  top: 44% !important;
+  }
+ .box7_simbolo{
+ 	  font:500 12px/15px "Open Sans", sans-serif !important; 
+      padding: 15px 19px 0 3px !important;
+      top: 41% !important;
+ } 
+ .box7_valor{
+  font: 500 21px/26px "Open Sans", sans-serif !important; 
+  top: 41% !important;
+ }
+  .box7_log_emp{    
+    padding: 0px 0px 0px 0px !important;
+    margin-left: -18px !important;
+    margin-top: 6px !important;
+  }
+  .box7_log_emp img{
+   width: 61% !important;
+  }
+  .box7_emp {
+  padding: 7px 22px 13px 0px !important;
+  height: 64px !important;
+  font-size: 12px !important;
+  }
+  .box7_cont{
+  margin-top:-85px !important;
+  }
+  .box7 h3{
+  font-size: 14px !important;
+  }
+  .box7 h7{
+  font-size: 11px !important;
+  }
+  .post4 .info, .post4 a {
+  font-size: 11px !important;
+  }
 }
 /*
 .select-menu {
@@ -461,9 +552,34 @@ table {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
+  .grid_8 {
+  
+  margin-top: 0px !important;
+  }
  /* .select-menu {
     display: block !important;
   }*/
+  .box7_pre_fond{  
+	  top: 68.5% !important;
+	  
+  }
+  .box7_pre {  
+    width: 89px;
+  }
+  .btn-more{
+      
+      padding: 10px 5px 9px 7px  !important;
+  }
+  .box7_emp {
+  padding: 16px 69px 15px 0px !important;
+  
+  }
+  .tops{
+  margin-top: 25px !important;
+  }
+  .box7_cont{
+   margin-top:-99px !important;
+  }
 }
 @media (max-width: 479px) {
   body {
@@ -475,5 +591,55 @@ table {
   }
   .row {
     margin-left: 0;
+  }
+  .box7_pre_fond{  
+	 top: 197px !important;
+     font: 500 11px/18px "Open Sans", sans-serif !important;
+     /* width: 88%;*/
+  }
+  .box7_pre {  
+    width: 74px;
+  }
+  .btn-more{
+      margin-right: -4px !important;
+      padding: 9px 5px 10px 5px !important;
+  }
+  .box7_price {   
+	  padding: 14px 30px 12px 20px !important;
+	  top: 44% !important;
+  }
+ .box7_simbolo{
+ 	  font:500 12px/15px "Open Sans", sans-serif !important; 
+      padding: 15px 19px 0 3px !important;
+      top: 41% !important;
+ } 
+ .box7_valor{
+  font: 500 21px/26px "Open Sans", sans-serif !important; 
+  top: 41% !important;
+ }
+ .box7_log_emp{    
+    padding: 0px 0px 0px 0px !important;
+    margin-left: -18px !important;
+    margin-top: 6px !important;
+  }
+  .box7_log_emp img{
+   width: 61% !important;
+  }
+  .box7_emp {
+  padding: 7px 50px 13px 0px !important;
+  height: 64px !important;
+  font-size: 12px !important;
+  }
+  .box7_cont{
+  margin-top:-85px !important;
+  }
+  .socios{
+  margin-top:-97px !important;
+  }
+  .box7 h3{
+  font-size: 14px !important;
+  }
+  .box7 h7{
+  font-size: 11px !important;
   }
 }

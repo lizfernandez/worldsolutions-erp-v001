@@ -12,6 +12,7 @@ $(function(){
 $(window).bind("resize", height_handler).bind("load", height_handler)
 function height_handler(){
 	if($(window).width()>767){
+		
 		$(".maxheight").equalHeights();
 	}else{
 		$(".maxheight").css({'height':'auto'});
@@ -28,7 +29,8 @@ function height_handler(){
 		tallest=(minHeight)?minHeight:0;
 		this.each(function(){
 			if($(">.box_inner", this).outerHeight()>tallest){
-				tallest=$(">.box_inner", this).outerHeight()
+				tallest=$(">.box_inner", this).outerHeight();
+			
 			}
 		});
 		if((maxHeight)&&tallest>maxHeight) tallest=maxHeight;
