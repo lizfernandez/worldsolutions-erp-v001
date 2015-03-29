@@ -8,38 +8,37 @@ import java.util.Collections;
 import java.util.List;
 
 
-import com.entities.Clasificacioncategoria;
-import com.entities.Configuracion;
-import com.entities.Estado;
 
-import com.entities.Perfil;
-import com.entities.Sexo;
+import com.entitie.Configuracion;
+import com.entitie.Estado;
 
-import com.entities.Tipodocumento;
-import com.entities.Tipodocumentogestion;
+import com.entitie.Perfil;
+
+
 
 public class Util {
 	
-	public static List<Sexo> listaSexo(){
+	/*public static List<Sexo> listaSexo(){
 		List<Sexo> listaSexo = new ArrayList<Sexo>();	
 		listaSexo.add(new Sexo(1,"FEMENINO"));
 		listaSexo.add(new Sexo(2,"MASCULINO"));		
 		return listaSexo;
-	}
-	public static List<Estado> listaEstadoFiscal(){
+	}*/
+	/*public static List<Estado> listaEstadoFiscal(){
 		List<Estado> listaSexo = new ArrayList<Estado>();	
 		listaSexo.add(new Estado(1,"ABIERTO"));
 		listaSexo.add(new Estado(2,"CERRADO"));		
 		return listaSexo;
-	}
-	 public static List<Tipodocumento> listaaDoc(){
+	}*/
+	/* public static List<Tipodocumento> listaaDoc(){
 		 List<Tipodocumento> listaDoc = new ArrayList<Tipodocumento>();	
 		 listaDoc.add(new Tipodocumento(1,"D.N.I"));
 		 listaDoc.add(new Tipodocumento(2,"LIBRETA MILITAR"));
 		 listaDoc.add(new Tipodocumento(3,"DOC. PASAPORTE"));	
 		 listaDoc.add(new Tipodocumento(5,"RUC"));	
 	  return listaDoc; 
-	 }
+	 }*/
+	/*
 	 public static List<Tipodocumentogestion> listaDocGest(){
 		 List<Tipodocumentogestion> listaDoc = new ArrayList<Tipodocumentogestion>();	
 		 listaDoc.add(new Tipodocumentogestion(1,"FACTURA"));
@@ -91,7 +90,7 @@ public class Util {
     	 
     	 return listaEstado;
      }
-     
+     */
 	public static  String armarWhereLike(Class<? extends Perfil > class1) {
 		// TODO Auto-generated method stub
 		System.out.println(" getDeclaredFields= "+class1.getDeclaredFields());
