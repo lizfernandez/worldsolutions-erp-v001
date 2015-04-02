@@ -103,7 +103,7 @@
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
             <td>	           
 	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
-	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockCantidad" />'/>;
+	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockCantidad" />'/>
             </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
             <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
@@ -407,13 +407,7 @@
     	var precioReal = (precio)-(precio*(fDescuento/100));
         var precioTotal = parseFloat(cantidad*precioReal);
     
-        if(cantidad>cantiStock){
-        	alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+cantiStock); 
-        	cantidad=cantiStock;
-        	$("#numero"+fila).val(cantiStock);
         	
-        	
-        }
         
       
       	document.getElementById(total).innerHTML = precioTotal;   
