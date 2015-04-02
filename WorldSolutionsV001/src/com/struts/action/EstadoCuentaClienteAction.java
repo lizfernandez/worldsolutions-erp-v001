@@ -211,7 +211,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			EstadoCuentaClienteForm pForm = (EstadoCuentaClienteForm) form;
 			Estadocuentacliente obj =pForm.getEstadoCuentaCliente();
 			GenericaDao estadoCuentaClienteDao = new GenericaDao();
-			VentaDao ingresoProductoDao= new VentaDao();
+			VentaDao ventaDao= new VentaDao();
 						
 	        /** Iniciamos Transacion **/
 
@@ -236,9 +236,9 @@ public class EstadoCuentaClienteAction extends BaseAction {
 							obj.setfMontoPago((float) ((pForm.getMontoTotal())-(pForm.getPagoTotal())));						
 							estadoCuentaClienteDao.persistEndidad(obj);
 							
-							Venta venta = obj.getVenta();
+							Venta venta = ventaDao.findEndidad(obj.getVenta(), obj.getVenta().getiVentaId());
 							venta.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
-							ingresoProductoDao.mergeEndidad(venta);
+							ventaDao.mergeEndidad(venta);
 						}
 						
 						else{
@@ -268,7 +268,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 						estadoCuentaClienteDao.mergeEndidad(obj);
 						Venta venta = obj.getVenta();
 						venta.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
-						ingresoProductoDao.mergeEndidad(venta);
+						ventaDao.mergeEndidad(venta);
 					}
 				    else{
 				    	obj.setfMontoPago(pForm.getfMontoPago());
@@ -276,10 +276,10 @@ public class EstadoCuentaClienteAction extends BaseAction {
 						
 						Venta venta = obj.getVenta();
 						venta.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
-						ingresoProductoDao.mergeEndidad(venta);
+						ventaDao.mergeEndidad(venta);
 				    }
 					
-					ingresoProductoDao.commitEndidad(transaction);
+					ventaDao.commitEndidad(transaction);
 				}
 				else if (mode.equals("D")) { 
 					obj = estadoCuentaClienteDao.findEndidad(obj,Integer.parseInt(ids));
@@ -287,8 +287,8 @@ public class EstadoCuentaClienteAction extends BaseAction {
 						
 						Venta venta = obj.getVenta();
 						venta.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
-						ingresoProductoDao.mergeEndidad(venta);
-						resultado = ingresoProductoDao.commitEndidad(transaction);
+						ventaDao.mergeEndidad(venta);
+						resultado = ventaDao.commitEndidad(transaction);
 						/**/
 					
 					}

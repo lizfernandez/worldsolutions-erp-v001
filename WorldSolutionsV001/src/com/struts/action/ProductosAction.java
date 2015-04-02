@@ -25,7 +25,6 @@ import javax.servlet.http.HttpSession;
 import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.transformer.XLSTransformer;
 
-import org.apache.jasper.tagplugins.jstl.core.Catch;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
@@ -151,7 +150,8 @@ public class ProductosAction extends DispatchAction {
 		 if(mode!=null && mode.equals("LP") || mode!=null && mode.equals("LPC") || mode!=null && mode.equals("LPS") 
 				 || mode!=null && mode.equals("LPP")|| mode!=null && mode.equals("LPSP") || mode!=null && mode.equals("LPPU")){
 			 UnidadMedidaDao unidadMedidaDao = new UnidadMedidaDao();
-			 List<Clasificacioncategoria> listaSubcategoria =	productoDao.listaEntidadGenerica(new Clasificacioncategoria());		 
+			 //Aqui se debera cambiar el método para solo cargar las categorias de los productos que son validos para vender.
+			 List<Clasificacioncategoria> listaSubcategoria = productoDao.listaEntidadGenerica(new Clasificacioncategoria());		 
 			 List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
 			 
 			 sesion.setAttribute("listaClasificacioncategoria",listaSubcategoria);

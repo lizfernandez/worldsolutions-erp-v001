@@ -45,6 +45,7 @@ public class Constantes {
 	public static String costoServicios="Costos de servicios (agua, luz, tel.)";
 	public static String costosOtros="Otros Costos";
 	public static String usuAdministrador="ADMINISTRADOR";
+	public static String formaPagoCredito = "CREDITO";
 	public static String proMax="proMasVend";
 	public static String proMes="proMenVend";
 	
