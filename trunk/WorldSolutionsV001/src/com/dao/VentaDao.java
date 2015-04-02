@@ -6,15 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TransactionRequiredException;
 
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
-import com.entities.Ingresoproductodetalle;
-import com.entities.Ventadetalle;
-import com.entities.Ventadevolucion;
 import com.entities.Venta;
+import com.entities.Ventadetalle;
 import com.entities.Ventadevolucion;
 import com.interfaces.dao.IVentaDao;
 import com.util.Constantes;
@@ -103,9 +100,9 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 			if(venta.getcEstadoCodigo()!=null){
 	        	where+= " where p.cEstadoCodigo LIKE '%"+venta.getcEstadoCodigo()+"%'";
 	        }
-			if(venta.getvEstadoDocumento()==null){
-	        	where+= " and p.vEstadoDocumento LIKE '%"+Constantes.estadoDocumentoDeuda+"%'";
-	        }
+//			if(venta.getvEstadoDocumento()==null){
+//	        	where+= " and p.vEstadoDocumento LIKE '%"+Constantes.estadoDocumentoDeuda+"%'";
+//	        }
 			if(venta.getvEstadoDocumento()!=null){
 	        	where+= " and p.vEstadoDocumento LIKE '%"+venta.getvEstadoDocumento()+"%'";
 	        }
@@ -116,7 +113,9 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 	        	where+= " and p.cliente.vClienteRazonSocial LIKE '%"+venta.getCliente().getvClienteRazonSocial()+"%'";
 	        }
 			if(venta.getFormaPago()!=null && venta.getFormaPago().getiFormaPago()!=00){
-	        	where+= " and p.formaPago.iFormaPago='"+venta.getFormaPago().getiFormaPago()+"'";
+	        	where+= " and p.formaPago.iFormaPago="+venta.getFormaPago().getiFormaPago();
+	        } else {
+	        	where+= " and p.formaPago.vFormaPagoDescripcion LIKE '%"+Constantes.formaPagoCredito + "%'";
 	        }
 			if(venta.getTipoDocumento()!=null && venta.getTipoDocumento().getiTipoDocumentoGestionId()!=00){
 	        	where+= " and p.tipoDocumento.iTipoDocumentoGestionId='"+venta.getTipoDocumento().getiTipoDocumentoGestionId()+"'";

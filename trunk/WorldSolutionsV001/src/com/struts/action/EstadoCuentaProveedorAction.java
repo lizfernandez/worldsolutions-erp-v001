@@ -26,25 +26,20 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 import com.dao.ContabilidadDao;
-import com.dao.EstadoCuentaClienteDao;
 import com.dao.EstadoCuentaProveedorDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
-import com.dao.VentaDao;
 import com.entities.Estado;
 import com.entities.Estadocuentaproveedor;
 import com.entities.Formapago;
 import com.entities.Ingresoproducto;
-import com.entities.Letracliente;
 import com.entities.Letraproveedor;
 import com.entities.Tipodocumentogestion;
 import com.entities.Usuario;
 import com.entities.vo.EstadoCuentaVo;
-import com.struts.form.EstadoCuentaClienteForm;
 import com.struts.form.EstadoCuentaProveedorForm;
 import com.util.Constantes;
 import com.util.Fechas;
@@ -91,7 +86,6 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 			/** Instanciamos la Clase VentaForm **/
 			EstadoCuentaProveedorForm objform = (EstadoCuentaProveedorForm) form;
 	    //	IngresoProductoForm ingreso = (IngresoProductoForm) form;
-	    	List<Ingresoproducto> listaIngresoproducto = new ArrayList<Ingresoproducto>();
 			List<Ingresoproducto> listaIngresoproductoTotal = new ArrayList<Ingresoproducto>();
 			List<Long> paginas = new ArrayList<Long>();
 		
@@ -231,7 +225,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 						obj.setfMontoPago((float) ((pForm.getMontoTotal())-(pForm.getPagoTotal())));
 						
 						estadoCuentaProveedorDao.persistEndidad(obj);
-						Ingresoproducto ingresoproducto = obj.getIngresoproducto();
+						Ingresoproducto ingresoproducto = ingresoProductoDao.findEndidad(obj.getIngresoproducto(), obj.getIngresoproducto().getiIngresoProductoId());
 						ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
 						ingresoProductoDao.mergeEndidad(ingresoproducto);
 					}

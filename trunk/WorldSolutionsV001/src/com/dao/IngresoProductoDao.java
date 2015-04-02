@@ -2,11 +2,8 @@ package com.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TransactionRequiredException;
 
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
@@ -106,9 +103,7 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 			if(ingresoproducto.getcEstadoCodigo()!=null){
 	        	where+= " where p.cEstadoCodigo LIKE '%"+ingresoproducto.getcEstadoCodigo()+"%'";
 	        }
-			if(ingresoproducto.getvEstadoDocumento()==null){
-	        	where+= " and p.vEstadoDocumento LIKE '%"+Constantes.estadoDocumentoDeuda+"%'";
-	        }
+			
 			if(ingresoproducto.getvEstadoDocumento()!=null){
 	        	where+= " and p.vEstadoDocumento LIKE '%"+ingresoproducto.getvEstadoDocumento()+"%'";
 	        }
@@ -119,8 +114,10 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 			if(ingresoproducto.getProveedor()!=null  && ingresoproducto.getProveedor().getvProveedorRazonSocial()!=null){
 	        	where+= " and p.proveedor.vProveedorRazonSocial LIKE '%"+ingresoproducto.getProveedor().getvProveedorRazonSocial()+"%'";
 	        }
-			if(ingresoproducto.getFormaPago()!=null && ingresoproducto.getFormaPago().getiFormaPago()!=00){
-	        	where+= " and p.formaPago.iFormaPago='"+ingresoproducto.getFormaPago().getiFormaPago()+"'";
+			if(ingresoproducto.getFormaPago()!=null && ingresoproducto.getFormaPago().getiFormaPago()!=0){
+	        	where+= " and p.formaPago.iFormaPago="+ingresoproducto.getFormaPago().getiFormaPago();
+	        } else {
+	        	where+= " and p.formaPago.vFormaPagoDescripcion LIKE '%"+Constantes.formaPagoCredito + "%'";
 	        }
 			if(ingresoproducto.getTipodocumento()!=null && ingresoproducto.getTipodocumento().getiTipoDocumentoGestionId()!=00){
 	        	where+= " and p.tipodocumento.iTipoDocumentoGestionId='"+ingresoproducto.getTipodocumento().getiTipoDocumentoGestionId()+"'";
@@ -138,9 +135,9 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 	        	where+= " and p.dIngresoProductoFecha BETWEEN '"+Fechas.fechaYYMMDD(ingresoproducto.getdIngresoProductoFecha())+"' and '"+Fechas.fechaYYMMDD(ingresoproducto.getdFechaActualiza())+"'";
 	        }
 			
+			
 	          System.out.println(" where ingreso Producto Estado Cuenta ="+ where);
-	    	    q = "select p from Ingresoproducto p " +
-	    	    				   " JOIN FETCH p.proveedor " + where +" order by p.dIngresoProductoFecha desc";/**/
+	    	    q = "select p from Ingresoproducto p  JOIN FETCH p.proveedor " + where +" order by p.dIngresoProductoFecha desc";/**/
 	    	    
 	    	    listaIngresoproducto = listaEntidadPaginada(q, pagInicio, pagFin);
 

@@ -21,7 +21,6 @@ public class BaseAction  extends DispatchAction {
 	protected List<EstadoCuentaVo> listarEstadoCuentaCliente(Venta venta, VentaDao ventaDao, int paginaInicio, int paginaFin) {
 
 		List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
-
 		/** Accedemos al Dao **/
 		List<Venta> listaVenta = ventaDao.listaEstadoCuentaPorCliente(paginaInicio, paginaFin, venta, 0);
 		float montosTotales = 0;
@@ -71,61 +70,52 @@ public class BaseAction  extends DispatchAction {
 	
 	protected List<EstadoCuentaVo> listaEstadoCuentaPorProveedor(Ingresoproducto ingresoProducto, IngresoProductoDao ingresoproductoDao, int paginaInicio, int paginaFin) {
 
-	
-
-		 /**Seteamos los valores en las listas**/
+		/** Seteamos los valores en las listas **/
 		List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
+
+		/** Accedemos al Dao **/
+		List<Ingresoproducto> listaIngresoproducto = ingresoproductoDao.listaEstadoCuentaPorProveedor(paginaInicio, paginaFin, ingresoProducto, 0);
+		float montosTotales = 0;
+		float pagosTotales = 0;
+		float saldosTotales = 0;
+
+		for (Ingresoproducto obj : listaIngresoproducto) {
+			float pagoTotal = 0;
+			float saldoTotal = 0;
+			EstadoCuentaVo e = new EstadoCuentaVo();
+
+			e.setIngresoProducto(obj);
+			if (obj.getEstadocuentaproveedors().size() > 0) {
+
+				for (Estadocuentaproveedor obje : obj.getEstadocuentaproveedors()) {
+					if (obje.getcEstadoCodigo().equals(Constantes.estadoActivo)) {
+						pagoTotal += obje.getfMontoPago();
+						pagosTotales += obje.getfMontoPago();
+
+						// listaEstaProve.add(pagoEsta);
+					}
+				} // for
+				e.setEstadocuenta(obj.getEstadocuentaproveedors());
+			} // if
+
+			saldoTotal = obj.getfIngresoProductoTotal() - pagoTotal;
+			montosTotales += obj.getfIngresoProductoTotal();
+			saldosTotales = (montosTotales - pagosTotales);
+			e.setPagoTotal(pagoTotal);
+			e.setSaldoTotal(saldoTotal);
 			
-			
-			/**Accedemos al Dao**/
-		List<Ingresoproducto>  listaIngresoproducto = ingresoproductoDao.listaEstadoCuentaPorProveedor(paginaInicio,paginaFin,ingresoProducto,0);
-			    float montosTotales =  0;
-			    float pagosTotales =  0;
-			    float saldosTotales = 0;
-			    int i=0;
-			    
-			    
-			 for(Ingresoproducto obj:listaIngresoproducto)
-			 {   float pagoTotal=0;
-			 float saldoTotal = 0;
-				 EstadoCuentaVo e = new EstadoCuentaVo();
-			     
-	            	e.setIngresoProducto(obj);
-			     if(obj.getEstadocuentaproveedors().size()>0){
-			    	
-			    	 
-				     for(Estadocuentaproveedor obje:obj.getEstadocuentaproveedors()){
-				    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-				    	 pagoTotal+= obje.getfMontoPago();						    	
-				    	 pagosTotales+= obje.getfMontoPago();
-				    	
-				    	// listaEstaProve.add(pagoEsta);
-				    	}
-				       } // for
-				     e.setEstadocuenta(obj.getEstadocuentaproveedors());
-			     } // if
-				   
-					
+			if (saldoTotal > 0) {
+				listaEstadoCuenta.add(e);
+			}
+		}
 		
-			     saldoTotal = obj.getfIngresoProductoTotal() -pagoTotal;
-			     montosTotales+= obj.getfIngresoProductoTotal();
-				 saldosTotales=(montosTotales - pagosTotales);
-			     e.setPagoTotal(pagoTotal);
-			     e.setSaldoTotal(saldoTotal);
+		int iUltimoRegistro = listaEstadoCuenta.size() - 1;
 		
-				i++;
-				
-				if(i==listaIngresoproducto.size()){
-					e.setMontosTotales(montosTotales);
-					e.setPagosTotales(pagosTotales);
-					e.setSaldosTotales(saldosTotales);
-					
-				}
-			     
-			     listaEstadoCuenta.add(e);
-			     
-			 }
-			return listaEstadoCuenta;
+		listaEstadoCuenta.get(iUltimoRegistro).setMontosTotales(montosTotales);
+		listaEstadoCuenta.get(iUltimoRegistro).setPagosTotales(pagosTotales);
+		listaEstadoCuenta.get(iUltimoRegistro).setSaldosTotales(saldosTotales);
+		
+		return listaEstadoCuenta;
 
 	}
 }
