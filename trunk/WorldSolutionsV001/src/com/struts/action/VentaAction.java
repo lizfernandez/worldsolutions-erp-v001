@@ -1119,13 +1119,14 @@ public class VentaAction extends BaseAction {
 							  
 							  for(Ventadetalle ventaDetalle:list){
 								  Producto producto = ventaDao.findEndidad(ventaDetalle.getProducto(), ventaDetalle.getProducto().getiProductoId());
-								  
+								 
 								  if(ventaDetalle.getiVentaDetalleId()==0 && ventaDetalle.getcEstadoCodigo().equals(Constantes.estadoActivo)){
 									  
 									   ventaDetalle.setVenta(obj1);
 					      			   ventaDetalle.setcEstadoCodigo(Constantes.estadoActivo);
 							      	   ventaDetalle.setdFechaActualiza(Fechas.getDate());
 							      	   ventaDetalle.setiUsuarioActualizaId(usu.getiUsuarioId());
+							      	   ventaDetalle.setdFechaInserta(obj1.getdFechaInserta());
 							      	   						      	    
 							        	 
 					      			    /*******************************************/

@@ -949,7 +949,54 @@ public class ProductosAction extends BaseAction {
 				Produccion produccion = genericoDao.findEndidad(productoForm.getProduccion(),id);
 				productoForm.setProduccion(produccion);
 				
-				listaProduccion=produccion.getProduccionDetalle();
+				
+				for(Producciondetalle produce:produccion.getProduccionDetalle()){
+					Producto pro = new Producto();
+					Personal pers = new Personal();
+					Produccion produc= new Produccion();
+					Producciondetalle prodetalle= new Producciondetalle();
+					prodetalle.setiProduccionDetalleId(produce.getiProduccionDetalleId());
+					prodetalle.setvDescripcion(produce.getvDescripcion());
+					prodetalle.setcEstadoCodigo(produce.getcEstadoCodigo());
+					prodetalle.setfCostoUni(produce.getfCostoUni());
+					prodetalle.setfDescuento(produce.getfDescuento());
+					prodetalle.setfTotal(produce.getfTotal());
+					prodetalle.setiCantidad(produce.getiCantidad());
+					
+					produc.setcEstadoCodigo(produce.getProduccion().getcEstadoCodigo());
+					produc.setfCostoTotal(produce.getProduccion().getfCostoTotal());
+					produc.setfCostoUni(produce.getProduccion().getfCostoUni());
+					produc.setfOtrosCostos(produce.getProduccion().getfOtrosCostos());
+					produc.setiCantidad(produce.getProduccion().getiCantidad());
+					produc.setiProduccionId(produce.getProduccion().getiProduccionId());
+					
+					prodetalle.setProduccion(produc);
+					
+					pro.setCategoria(produce.getProducto().getCategoria());
+					pro.setcProductoCodigo(produce.getProducto().getcProductoCodigo());
+					pro.setfProductoDescuento(produce.getProducto().getfProductoDescuento());
+					pro.setfProductoPrecioCompra(produce.getProducto().getfProductoPrecioCompra());
+					pro.setiProductoId(produce.getProducto().getiProductoId());
+					pro.setiProductoStockCantidad(produce.getProducto().getiProductoStockCantidad());
+					pro.setMoneda(produce.getProducto().getMoneda());
+					pro.setUnidadMedida(produce.getProducto().getUnidadMedida());
+					pro.setvProductoNombre(produce.getProducto().getvProductoNombre());
+					
+					prodetalle.setProducto(pro);
+					if(produce.getPersonal()!=null){
+						pers.setcPersonalCodigo(produce.getPersonal().getcPersonalCodigo());
+						pers.setiPersonalId(produce.getPersonal().getiPersonalId());
+						pers.setvPersonalNombres(produce.getPersonal().getvPersonalNombres());
+						pers.setvPersonalApellidoPaterno(produce.getPersonal().getvPersonalApellidoPaterno());
+						pers.setvPersonalApellidoMaterno(produce.getPersonal().getvPersonalApellidoMaterno());
+						prodetalle.setPersonal(pers);
+					}
+					
+					
+					
+					listaProduccion.add(prodetalle);
+				}
+				
 				sesion.setAttribute("listaProduccionDetalle", listaProduccion);
 				
 				
@@ -1229,7 +1276,11 @@ public class ProductosAction extends BaseAction {
 				/***********************************/
 				/** Registro de produccion detalle**/
 				/***********************************/
-				listaProduccion = (List<Producciondetalle>) sesion.getAttribute("listaProduccionDetalle");	
+				listaProduccion = (List<Producciondetalle>) sesion.getAttribute("listaProduccionDetalle");
+			    Producciondetalle proDeOriginal= new Producciondetalle();
+			    Producto material= new Producto();
+			    int cantidad;
+			    
 				for(Producciondetalle prodeta:listaProduccion){
 					if(prodeta.getcEstadoCodigo().equals(Constantes.estadoActivo)){
 				
@@ -1239,14 +1290,27 @@ public class ProductosAction extends BaseAction {
 					/*****************************************/
 					/** Reducimos el stock de los materiales**/
 					/*****************************************/
-					int cantidad;
-					Producto material= new Producto();
-					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId()) ;
-					    cantidad= material.getiProductoStockCantidad()-prodeta.getiCantidad();
+					    
+					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId()) ;					    
+					   
+					    if(prodeta.getiProduccionDetalleId()>0){
+					    	/// exite producto  en el detalle original y se cambia la cantidad
+					    	proDeOriginal= productoDao.findEndidad(proDeOriginal, prodeta.getiProduccionDetalleId());
+					    	cantidad= proDeOriginal.getiCantidad()-prodeta.getiCantidad()+material.getiProductoStockCantidad();
+					    }
+					    else{
+					    	// cuando se agrega nueva materia prima
+					    	cantidad= material.getiProductoStockCantidad()-prodeta.getiCantidad();
+					    }
 					    material.setiProductoStockCantidad(cantidad); 
-					    productoDao.mergeEndidad(material);
+					  
 					}
 					
+					if(prodeta.getiProduccionDetalleId()>0 && prodeta.getcEstadoCodigo().equals(Constantes.estadoInactivo)){
+						cantidad= material.getiProductoStockCantidad()+prodeta.getiCantidad();
+					}
+					/// actualizamos cantidad
+					  productoDao.mergeEndidad(material);
 				}
 				
 				
