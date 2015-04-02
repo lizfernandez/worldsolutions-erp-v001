@@ -102,7 +102,8 @@
           <td><img  src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" /></td>
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
             <td>	           
-	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}','<bean:write name="x" property="producto.iProductoStockCantidad" />','<bean:write name="x" property="iVentaDetalleCantidad" />')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
+	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
+	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockCantidad" />'/>;
             </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
             <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
@@ -390,13 +391,18 @@
         }
     }
 
-    function fn_calcularTotal(fila,cantidadStock,cantidadventa) {    	
-    	var cantiVenta = cantidadventa=="undefined"?0:parseFloat(cantidadventa);
+    function fn_calcularTotal(fila) {    
+    	var cantidad = parseFloat($.trim($("#numero"+fila).val()));
+   	   var cantidadReal = parseFloat($.trim($("#numeroReal"+fila).val()));
+   	 if(cantidadReal<cantidad){
+   		 alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+cantidadReal);
+   			$("#numero"+fila).val(cantidadReal);
+   			
+   		 }
+   	   cantidad = parseFloat($.trim($("#numero"+fila).val()));
     	
-    	var cantiStock =  parseFloat(cantidadStock)+parseFloat(cantiVenta);
         var total = 'total'+fila;
-        var precio =  parseFloat($.trim($("#precio"+fila).val()));
-        var cantidad = parseFloat($.trim($("#numero"+fila).val()));
+        var precio =  parseFloat($.trim($("#precio"+fila).val()));        
         var fDescuento = parseFloat($.trim($("#descuento"+fila).val()));   	
     	var precioReal = (precio)-(precio*(fDescuento/100));
         var precioTotal = parseFloat(cantidad*precioReal);

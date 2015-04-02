@@ -586,6 +586,7 @@ public class ProductosAction extends DispatchAction {
 
 				productoDao.persistEndidad(libroDiario);
 				resultado = productoDao.commitEndidad(transaccion);
+				pro=null;
 				// productoDao.refreshEndidad(pro);
 
 			}
@@ -604,14 +605,10 @@ public class ProductosAction extends DispatchAction {
 
 				pro = productoDao.findEndidad(pro, pForm.getProducto()
 						.getiProductoId());
-				pro = Util.comparar(pro, pForm.getProducto());
-				try {
-					pro.setdFechaActualiza(Fechas.getDate());
-					pro.setiUsuarioActualizaId(usu.getiUsuarioId());
-				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				pro = Util.comparar(pro, pForm.getProducto());			
+				pro.setdFechaActualiza(Fechas.getDate());
+				pro.setiUsuarioActualizaId(usu.getiUsuarioId());
+			
 
 				/**
 				 * Actualizamos o agregamos precios del producto, como tambien
@@ -720,7 +717,8 @@ public class ProductosAction extends DispatchAction {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally {
+		}
+		finally {
 			transaccion = null;
 		}
 		if (resultado == true) {
@@ -1056,9 +1054,13 @@ public class ProductosAction extends DispatchAction {
 			List<Preciosproducto> listaPrecios = new ArrayList<Preciosproducto>();
 			List<Producciondetalle> listaProduccion= new ArrayList<Producciondetalle>();
 			List<Kardex> listaKadex = new ArrayList<Kardex>();
+			EntityTransaction transaccion = productoDao.entityTransaction();
+			
+			try {
+				
 			
 			/*** Instanciamos transacion ***/
-			EntityTransaction transaccion = productoDao.entityTransaction();
+			
 			transaccion.begin();
 			
 			/**Cargamos Foto **/
@@ -1090,7 +1092,52 @@ public class ProductosAction extends DispatchAction {
 			}
 			}
 	        /**Insertamos Datos del producto **/
-			if (pForm.getMode().equals("I")) {			
+			if (pForm.getMode().equals("I")) {	
+				
+				/******************************************/
+				/**Insertamos la gestion de la produccion**/
+				/******************************************/
+				produBean.setdFechaInserta(Fechas.getDate());
+				produBean.setiUsuarioInsertaId(usu.getiUsuarioId());
+				productoDao.persistEndidad(produBean);
+				
+				/***********************************/
+				/** Registro de producto**/
+				/***********************************/			
+				pro.setProduccion(produBean);			
+				pro.setdFechaInserta(Fechas.getDate());
+				pro.setiUsuarioInsertaId(usu.getiUsuarioId());
+				productoDao.persistEndidad(pro);
+				
+				/***********************************/
+				/** Registro de produccion detalle**/
+				/***********************************/
+				listaProduccion = (List<Producciondetalle>) sesion.getAttribute("listaProduccionDetalle");	
+				for(Producciondetalle prodeta:listaProduccion){
+					if(prodeta.getcEstadoCodigo().equals(Constantes.estadoActivo)){
+				
+					prodeta.setProduccion(produBean);
+					productoDao.persistEndidad(prodeta);
+					
+					/*****************************************/
+					/** Reducimos el stock de los materiales**/
+					/*****************************************/
+					int cantidad;
+					Producto material= new Producto();
+					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId()) ;
+					    cantidad= material.getiProductoStockCantidad()-prodeta.getiCantidad();
+					    material.setiProductoStockCantidad(cantidad); 
+					    productoDao.mergeEndidad(material);
+					}
+					
+				}
+				
+				
+					
+				/***********************************/
+				/** Registro de producto**/
+				/***********************************/			
+				pro.setProduccion(produBean);			
 				pro.setdFechaInserta(Fechas.getDate());
 				pro.setiUsuarioInsertaId(usu.getiUsuarioId());
 				productoDao.persistEndidad(pro);
@@ -1099,7 +1146,7 @@ public class ProductosAction extends DispatchAction {
 				Kardex  kardex = new Kardex();
 				kardex.setProducto(pro);
 				kardex.setdFecha(Fechas.getDate());
-				kardex.setvConcepto(Constantes.conceptoExistencia);
+				kardex.setvConcepto(Constantes.conceptoProduccion);
 				kardex.setiCantExistencia(pro.getiProductoStockCantidad());
 				kardex.setfPuExistencia(pro.getfProductoPrecioCompra());
 				kardex.setfTotalExistencia(kardex.getiCantExistencia()*kardex.getfPuExistencia());
@@ -1148,21 +1195,7 @@ public class ProductosAction extends DispatchAction {
 				libroDiario.setiPeriodoId(iPeriodoId);
 				productoDao.persistEndidad(libroDiario);
 				
-				/**Insertamos en el libro Dirio la cuenta de Mercaredia 
-				 * 50(Capital) y 
-				 * '212', '5', '50', 'CAPITAL'**/			
-				cuenta =  new Cuenta();			
-				libroDiario = new Librodiario();
-				libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
-				libroDiario.setCuenta(productoDao.findEndidad(cuenta, 212));
-				libroDiario.setfMonto(kardex.getiCantExistencia()*kardex.getfPuExistencia());
-				libroDiario.setvTipoConcepto(Constantes.haber);
-				libroDiario.setvConceptoGeneral("CAPITAL ");
-				libroDiario.setdFechaInserta(Fechas.getDate());
-				libroDiario.setiUsuarioInsertaId(usu.getiUsuarioId());
-				libroDiario.setKardex(kardex);
-				libroDiario.setiPeriodoId(iPeriodoId);
-				
+						
 				 productoDao.persistEndidad(libroDiario);
 				 resultado = productoDao.commitEndidad(transaccion);
 				// productoDao.refreshEndidad(pro);
@@ -1278,6 +1311,15 @@ public class ProductosAction extends DispatchAction {
 				msn = "msnError";
 
 			}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				transaccion.rollback();
+				//transaccion = null;
+				
+			}finally {
+				
+				transaccion= null;
+			}
 			/** llamamos a listar producto **/
 			//listaProducto(mapping, pForm, request, response);
 			
@@ -1314,15 +1356,16 @@ public class ProductosAction extends DispatchAction {
 				Producciondetalle producciondetalle  = new Producciondetalle();
 				if(mode.equals("U")){
 					
-					    int iCantidad = Integer.parseInt(request.getParameter("iCantidad"));	
+					    int iCantidad = Integer.parseInt(request.getParameter("iCantidad"));					    
 						float fPrecioCompra = Float.parseFloat(request.getParameter("fPrecioCompra"));	
 						float fDescuento = Float.parseFloat(request.getParameter("fDescuento"));					
 						float fPrecioCompraFinal = (fPrecioCompra-fPrecioCompra*fDescuento/100);
 						
-					  
+				
 					   lista.get(iProductoId).setfCostoUni(fPrecioCompra);
 					   lista.get(iProductoId).setfTotal((iCantidad*fPrecioCompraFinal));
 					   lista.get(iProductoId).setiCantidad(iCantidad);
+					  
 				
 					   
 				
@@ -1348,6 +1391,7 @@ public class ProductosAction extends DispatchAction {
 					productoBean.setvProductoCapacidad(producto.getvProductoCapacidad());
 					productoBean.setfProductoGanancia(fGanancia);
 					productoBean.setfProductoPrecioVenta(fPrecioVenta);
+					productoBean.setiProductoStockCantidad(producto.getiProductoStockCantidad());
 					producciondetalle.setvDescripcion(productoBean.getvProductoNombre());
 					
 					if(iPersonalId>0){

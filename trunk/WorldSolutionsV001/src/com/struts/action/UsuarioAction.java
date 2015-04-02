@@ -166,7 +166,7 @@ public class UsuarioAction extends DispatchAction {
 		 * @throws IllegalArgumentException 
 		 */
 		public ActionForward iduUsuario(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
+				HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException, NullPointerException {
 			
 			/** Inicializamos las variables **/ 
 			String msn = "";
@@ -205,7 +205,9 @@ public class UsuarioAction extends DispatchAction {
 					resultado = usuarioDao.commitEndidad(transaction);
 				} catch (Exception ex) {
 					ex.printStackTrace();
-				} finally {
+					transaction = null;
+					
+				}finally {
 					transaction = null;
 				}
 			}

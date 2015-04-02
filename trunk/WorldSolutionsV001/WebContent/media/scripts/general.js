@@ -348,6 +348,7 @@ function popup(url,width,heigth){
 	var transp=document.getElementById("transp");
 	transp.style.display='block';
     window.showModalDialog(url,"Dialogo","dialogWidth:"+width+"px;dialogHeight:"+heigth+"px;center:yes;");
+    
     if(window.close){
         cancelar("popup");
     }
@@ -558,8 +559,9 @@ function listar_detalleVenta(obj,destino){
 			newHtml+=data['producto'].cProductoCodigo;
 		newHtml+='</td>';
 		newHtml+="<td '>";
-		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+data.iVentaDetalleCantidad+"'/>";
-	   newHtml+='</td>';
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iVentaDetalleCantidad+"'/>";
+		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockCantidad+"'/>";
+		  newHtml+='</td>';
 	   if(data['producto']['unidadMedida']!=null){
 	    newHtml+='<td>'; 
 	   
@@ -905,6 +907,7 @@ function listar_detalleProduccion(obj,destino){
 		
 		newHtml+="<td align='right'>";
 			  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iCantidad+"'/>";
+			  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockCantidad+"'/>";
 		newHtml+='</td>';		
 		newHtml+="<td align='right'>";
 		 newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+formatCurrency(data.fCostoUni,' ')+"'/>";		  
@@ -921,7 +924,7 @@ function listar_detalleProduccion(obj,destino){
 		}// if
 	});
 	 newHtml+='<tr>';
-	 newHtml+="<td><img src='/WorldSolutionsV001/media/imagenes/new.png' onclick=\"fn_listarProducto()\"/></td>";
+	 newHtml+="<td><img src='/WorldSolutionsV001/media/imagenes/new.png' onclick=\"fn_listarProducto(2,'LPP')\"/></td>";
 	 newHtml+='<td>&nbsp;</td>';
 	 newHtml+=' <td>&nbsp;</td>';
 	 newHtml+='<td>&nbsp;</td>';

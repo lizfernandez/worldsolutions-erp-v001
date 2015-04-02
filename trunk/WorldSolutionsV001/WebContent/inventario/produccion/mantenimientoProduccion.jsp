@@ -503,9 +503,16 @@
     
  }
  function fn_calcularTotal(fila) {
-       var total = 'total'+fila;
-       var precio =  parseFloat($.trim($("#precio"+fila).val()));
-       var cantidad = parseFloat($.trim($("#numero"+fila).val()));
+	 var cantidad = parseFloat($.trim($("#numero"+fila).val()));
+	 var cantidadReal = parseFloat($.trim($("#numeroReal"+fila).val()));
+	 if(cantidadReal<cantidad){
+		 alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+cantidadReal);
+			$("#numero"+fila).val(cantidadReal);
+			
+		 }
+	   cantidad = parseFloat($.trim($("#numero"+fila).val()));
+       var total = 'total'+fila;       
+       var precio =  parseFloat($.trim($("#precio"+fila).val()));      
        var fDescuento = parseFloat($.trim($("#descuento"+fila).val()));   	
     	var precioReal = (precio)-(precio*(fDescuento/100));
        var precioTotal = parseFloat(cantidad*precioReal);
@@ -513,13 +520,13 @@
        
        document.getElementById(total).innerHTML = precioTotal;   
 	    $("."+total).text( formatCurrency(precioTotal,''));
- var cad = "productos.do?metodo=detalleProduccion&id="+fila+"&mode=U&iCantidad="+cantidad+"&fPrecioCompra="+precio+"&fDescuento="+fDescuento;
+          var cad = "productos.do?metodo=detalleProduccion&id="+fila+"&mode=U&iCantidad="+cantidad+"&fPrecioCompra="+precio+"&fDescuento="+fDescuento;
   
  
-	 $.getJSON(cad, function retorna(obj){
-	      
-		 
-	 });
+		 $.getJSON(cad, function retorna(obj){
+		      
+			 
+		 });
 
 
  fn_calcularTotales();

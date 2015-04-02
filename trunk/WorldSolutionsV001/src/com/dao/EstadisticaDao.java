@@ -12,15 +12,13 @@ import com.interfaces.dao.IEstadisticaDao;
 import com.struts.form.EstadisticaForm;
 import com.util.Fechas;
 
-public class EstadisticaDao implements IEstadisticaDao {
+public class EstadisticaDao extends GenericaDao  implements IEstadisticaDao {
 	private static final String PERSISTENCE_UNIT_NAME = "Stuct12";
 	private static EntityManagerFactory factory;
 	
 
 	@Override
 	public List<Object[]> obtenerCompraEstadistica(EstadisticaForm objFom) throws ParseException {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();     
 		Query q ;
 		List<Object[]> listaEstadisticaGeneral = null ;		
 		String sql= "";
@@ -50,7 +48,7 @@ public class EstadisticaDao implements IEstadisticaDao {
 		
 		
 		System.out.println("sql ="+sql);
-    	    q = em.createNativeQuery(sql);
+    	    q = getInstancia().createNativeQuery(sql);
 
     	    listaEstadisticaGeneral = q.getResultList(); 
     	    return listaEstadisticaGeneral;
@@ -58,8 +56,6 @@ public class EstadisticaDao implements IEstadisticaDao {
 
 	@Override
 	public List<Object[]> obtenerVentasEstadistica(EstadisticaForm objFom) throws ParseException {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();     
 		Query q ;
 		String sql="";
 		List<Object[]> listaEstadisticaGeneral = null ;
@@ -87,7 +83,7 @@ public class EstadisticaDao implements IEstadisticaDao {
 		}
 
 	
-    	    q = em.createNativeQuery(sql);
+    	    q = getInstancia().createNativeQuery(sql);
 
     	    listaEstadisticaGeneral = q.getResultList(); 
     	    return listaEstadisticaGeneral;
@@ -95,8 +91,6 @@ public class EstadisticaDao implements IEstadisticaDao {
 
 	@Override
 	public List<Object[]> obtenerUtilidadesEstadistica(EstadisticaForm objFom) throws ParseException {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();     
 		Query q ;
 		List<Object[]> listaEstadisticaGeneral = null ;
 		String sql="";
@@ -127,7 +121,7 @@ public class EstadisticaDao implements IEstadisticaDao {
 			
 		}
 
-    	    q = em.createNativeQuery(sql);
+    	    q = getInstancia().createNativeQuery(sql);
 
     	    listaEstadisticaGeneral = q.getResultList(); 
     	    return listaEstadisticaGeneral;
@@ -136,8 +130,6 @@ public class EstadisticaDao implements IEstadisticaDao {
 	@Override
 	public List<Object[]> obtenerEstadisticaMejoresClientes(
 			EstadisticaForm objFom) throws ParseException {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();     
 		Query q ;
 		String sql="";
 		List<Object[]> listaEstadisticaGeneral = null ;
@@ -170,7 +162,7 @@ public class EstadisticaDao implements IEstadisticaDao {
 		}
 
 	
-    	    q = em.createNativeQuery(sql);
+    	    q = getInstancia().createNativeQuery(sql);
 
     	    listaEstadisticaGeneral = q.getResultList(); 
     	    return listaEstadisticaGeneral;
@@ -178,6 +170,63 @@ public class EstadisticaDao implements IEstadisticaDao {
 
 	@Override
 	public List<Object[]> obtenerEstadisticaClientesDeudores(
+			EstadisticaForm objFom) throws ParseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object[]> obtenerEstadisticaMejoresProveedor(
+			EstadisticaForm objFom) throws ParseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object[]> obtenerEstadisticaProveedorDeudores(
+			EstadisticaForm objFom) throws ParseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object[]> obtenerEstadisticaProductosMasVendidos(
+			EstadisticaForm objFom) throws ParseException {
+		Query q ;
+		String sql="";
+		List<Object[]> listaEstadisticaGeneral = null ;
+		if(objFom.getCondicion()!=null){			
+			if(objFom.getCondicion().equals("diario")){
+				sql= "SELECT DAYNAME(dventaFecha) AS Gestores, SUM(fVentaTotal) AS Cantidad FROM venta "+
+	                    "WHERE WEEK(dventaFecha)=WEEK(now())"+
+	                    " GROUP BY DAYNAME (dventaFecha),WEEK(now()), year(now()) "+
+	                    " ORDER BY (dventaFecha) asc";
+			}
+			else if(objFom.getCondicion().equals("mensual") && objFom.getFechaInicio()=="" || objFom.getFechaFin()==""){
+			sql= "SELECT MONTHNAME(dventaFecha), SUM(fVentaTotal) AS Cantidad FROM venta "+
+				  "WHERE year(dventaFecha)='"+objFom.getAnio()+"'"+
+                  "GROUP BY  MONTHNAME(dventaFecha) "+
+                  " ORDER BY (dventaFecha) asc";
+			}
+			else if(objFom.getCondicion().equals("mensual") &&  objFom.getFechaInicio()!="" && objFom.getFechaFin()!=""){
+					sql= "SELECT MONTHNAME(dventaFecha), SUM(fVentaTotal) AS Cantidad FROM ingresoproducto "+
+							  "WHERE year(dventaFecha)='"+objFom.getAnio()+"'"+
+							  " and dventaFecha BETWEEN '"+Fechas.fechaYYMMDD(Fechas.fechaDate(objFom.getFechaInicio()))+"' and '"+Fechas.fechaYYMMDD(Fechas.fechaDate(objFom.getFechaFin()))+"'"+
+			                  " GROUP BY  MONTHNAME(dventaFecha) "+
+			                  " ORDER BY (dventaFecha) asc";	
+				}
+			
+		}
+
+	
+    	    q = getInstancia().createNativeQuery(sql);
+
+    	    listaEstadisticaGeneral = q.getResultList(); 
+    	    return listaEstadisticaGeneral;
+	}
+
+	@Override
+	public List<Object[]> obtenerEstadisticaProductosMenosVendidos(
 			EstadisticaForm objFom) throws ParseException {
 		// TODO Auto-generated method stub
 		return null;
