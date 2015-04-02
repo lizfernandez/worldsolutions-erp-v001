@@ -146,7 +146,7 @@ public abstract class BaseAction  extends DispatchAction {
 		System.out.println("Plantilla solicitada [ " + plantilla + " ]");
 		
 		String filePath = request.getRealPath("/").toString();
-		String archivoPlantilla = filePath + File.separator + "plantillas" + File.separator + "reportes" + File.separator;
+		String archivoPlantilla = filePath + File.separator + "plantillas" + File.separator + "reportes" + File.separator + "reporte-" + plantilla + ".xls";
 			
 		Map<String, Object> beans = cargarContenidoExportar(form, request, plantilla);
 		
