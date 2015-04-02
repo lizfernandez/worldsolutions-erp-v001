@@ -1,7 +1,9 @@
 package com.struts.action;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 import com.dao.ConfiguracionDao;
 import com.dao.EstadoCuentaClienteDao;
@@ -24,16 +25,12 @@ import com.entities.Configuracion;
 import com.entities.Impuesto;
 import com.entities.Letracliente;
 import com.entities.Letraproveedor;
-import com.entities.Producto;
-
 import com.entities.Permiso;
+import com.entities.Producto;
 import com.entities.Usuario;
 import com.entities.vo.EstadisticaVo;
 import com.entities.vo.EstadoCuentaVo;
-import com.struts.form.EstadoCuentaClienteForm;
-import com.struts.form.EstadoCuentaProveedorForm;
 import com.struts.form.LoginForm;
-import com.struts.form.ProductosForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.Paginacion;
@@ -332,6 +329,12 @@ public class LoginAction extends BaseAction {
 			msn = "restablecer"; 
 	    }
 		 return mapping.findForward(msn);
+	}
+	@Override
+	public Map<String, Object> cargarContenidoExportar(ActionForm form,
+			HttpServletRequest request, String plantilla) throws ParseException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

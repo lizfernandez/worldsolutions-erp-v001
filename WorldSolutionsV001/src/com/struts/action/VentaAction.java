@@ -1,10 +1,6 @@
 package com.struts.action;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -28,15 +24,10 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jxls.exception.ParsePropertyException;
-import net.sf.jxls.transformer.XLSTransformer;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 import com.dao.ContabilidadDao;
 import com.dao.EstadoDao;
@@ -64,7 +55,7 @@ import com.util.Fechas;
 import com.util.Paginacion;
 import com.util.Util;
 
-public class VentaAction extends DispatchAction {
+public class VentaAction extends BaseAction {
 	// --------------------------------------------------------- Instance
 	// Variables
 	// --------------------------------------------------------- Methods
@@ -1973,22 +1964,14 @@ public class VentaAction extends DispatchAction {
 			}
 			return mapping.findForward(msn);
 		 }
+		
+		@Override
+		public Map<String, Object> cargarContenidoExportar(ActionForm form,
+				HttpServletRequest request, String plantilla)
+				throws ParseException {
 
-		@SuppressWarnings("deprecation")
-		public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-				throws ParsePropertyException, InvalidFormatException, IOException {
-
-			String plantilla = request.getParameter("plantilla");
-			System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+			
 			VentaForm objform = (VentaForm) form;
-			
-			
-			String filePath = request.getRealPath("/").toString();
-			String archivoPlantilla = filePath + File.separator + "plantillas"
-					+ File.separator + "reportes" + File.separator
-					+ "reporte-" + plantilla + ".xls";
-			
-
 			VentaDao ventaDao = new VentaDao();
 			
 			Map<String, Object> beans = new HashMap<String, Object>();
@@ -2001,24 +1984,7 @@ public class VentaAction extends DispatchAction {
 				beans.put("devolucionVentas", listaVentaDevolucion);
 			}
 			
-			response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
-			response.setContentType("application/octet-stream");
-			ServletOutputStream outputStream = response.getOutputStream();
-			
-			InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
-			XLSTransformer transformer = new XLSTransformer();
-			try {
-				HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
-				workbook.write(outputStream);
-				fis.close();
-				outputStream.flush();
-				outputStream.close();
-			} catch (ParsePropertyException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
+			return beans;
 		}
 		
 	}
