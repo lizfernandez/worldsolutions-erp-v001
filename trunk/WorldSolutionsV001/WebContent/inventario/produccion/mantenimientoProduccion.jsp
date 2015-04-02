@@ -193,7 +193,7 @@
          
          <tr id="tr_RegProductos" style="display: none">
              <td id="td_RegProductoNuevo" style="display: none" colspan="4">
-             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabla" >     
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabla" id="tablaNuevoProducto" >     
 			
 					  <tr> <td colspan="4" ><span class="titulosTd"  id="po">Clasificaci&oacute;n:</span></td></tr>
 						<tr>
@@ -223,7 +223,7 @@
 						<tr class="trCodigo">
 						    <td align="right" >C&oacute;digo:</td>
 						    <td>
-						        <html:text property="cProductoCodigo" styleId="cProductoCodigo"  size="10" styleClass="text" maxlength="8"  onkeyup="return mayuscula('cProductoCodigo') " tabindex="3"/>
+						        <html:text property="cProductoCodigo" styleId="cProductoCodigo"  size="10" styleClass="textCodigo" maxlength="8"  onkeyup="return mayuscula('cProductoCodigo') " tabindex="3"/>
 						        <span id="m_cProductoCodigo" class="importante">*</span>
 						        <img id="td_RegProductoExistente"  src="${pageContext.request.contextPath}/media/imagenes/buscar.png" onclick="fn_listarProducto(1,'LPPU')" />
 						    </td>
@@ -379,6 +379,10 @@
     
    
     var mode = document.getElementById('mode').value;	
+    $("#iMonedaId").change(function () {
+    	var mival = $("#iMonedaId option:selected").val();
+    	$(".comboCodigo.change option[value="+mival+"]").attr("selected",true); 
+   });
     if(mode=='I') {
         
         document.getElementById('btnGuardar').textContent="Insertar";
@@ -480,7 +484,7 @@
  }
  function fn_listarProducto(iclasificacionId,mode){
 	 
- 	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=produccion&mode='+mode,750,650);
+ 	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=produccion&mode='+mode,750,400);
  }
 
  function fn_eliminar(key){
@@ -594,6 +598,9 @@ function fn_RegProductos(tipo){
 if(tipo==0){// 0: producto nuevo
 	
 	$("#td_RegProductoExistente").hide();
+	limpiar("tablaNuevoProducto");
+	$("#cProductoCodigo").val($("#cProductoCodigo").val());
+	$("#iProductoId").val(0);
  }
 if(tipo==1){// 1: producto existente
 	$("#td_RegProductoExistente").show();

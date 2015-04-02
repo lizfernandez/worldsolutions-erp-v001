@@ -89,6 +89,10 @@
 <definition name=".listPopupProductoProduccion" extends=".popup">
     <put name="body" value="/inventario/producto/listaPopupProductoProduccion.jsp"></put>   
 </definition>
+<definition name=".listPopupProductoExitProduccion" extends=".popup">
+    <put name="body" value="/inventario/producto/listaPopupProductoExitProduccion.jsp"></put>   
+</definition>
+
 <definition name=".listPopupProductoProduccionUni" extends=".popup">
     <put name="body" value="/inventario/producto/listaPopupProductoProduccionUni.jsp"></put>   
 </definition>
