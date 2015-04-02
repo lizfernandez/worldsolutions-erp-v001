@@ -29,13 +29,13 @@
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="estadisticaGeneral" styleId="metodo"/>
 </html:form>
-  <div id="Barras" style="margin-left: 2em; margin-top: 0.8em;"></div>
-  <div id="torta" style="margin-left: 28em; margin-top: -21.5em;"></div>
-  <div id="Lineal" style="margin-left: 54em; margin-top: -21.5em;"></div>
+  <div id="Barras" style="margin-left: 0em; margin-top: 0.8em;"></div>
+  <div id="torta" style="margin-left: 26em; margin-top: -21.5em;"></div>
+  <div id="Lineal" style="margin-left: 52em; margin-top: -21.5em;"></div>
  <script type="text/javascript">
  var mode = document.getElementById('mode').value;	
  var condicion=$("#condicion").val();
- 
+ $("#compras,#compras").addClass("active");
  
  $("#fechaInicio,#fechaFin").datepicker(
 	        {

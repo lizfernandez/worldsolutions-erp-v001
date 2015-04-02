@@ -62,6 +62,7 @@
 		 <logic:iterate name="productosForm" property="produc" id="x">	
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
 			               '<bean:write name="x" property="vProductoNombre" />',
+			               '<bean:write name="x" property="iProductoStockCantidad" />',			               
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
 			               '<bean:write name="x" property="iUnidadMedidadIdC" />',
 			               '<bean:write name="x" property="vProductoCapacidad" />',
@@ -156,6 +157,7 @@
 	  <tr>
 	        <td>Cantidad:</td>
 	        <td>
+	        <input  type="hidden" id="iProductoStockReal" />
 			   <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>
 			   <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px" disabled="true">
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
@@ -213,9 +215,11 @@
 paginacion();
 //$("#iclasificacionId option[value=5]").attr('disabled', true);
 //$("#iclasificacionId option[value=5]").attr('disabled','disabled');
-function fn_cargarProducto(iProductoId,vNombreProducto,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fGanancia){   
+function fn_cargarProducto(iProductoId,vNombreProducto,iCantidadProducto,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fGanancia){   
     $("#iProductoId").val(iProductoId);
 	$("#vxProductoNombre").val(vNombreProducto);
+	$("#iProductoStockReal").val(iCantidadProducto);
+	
 	$("#iUnidadMedidadId").val(iUnidadMedidadId);
 	$("#iUnidadMedidadIdC").val(iUnidadMedidadIdC);
 	$("#vProductoCapacidad").val(vProductoCapacidad);	
@@ -225,10 +229,18 @@ function fn_cargarProducto(iProductoId,vNombreProducto,iUnidadMedidadId,iUnidadM
 	$("#fProductoPrecioCompraFinal").val(dosDecimales(fProductoPrecioCompra));		
 	$("#fTotal").val(dosDecimales(($("#iProductoStockCantidad").val()*$("#fProductoPrecioCompra").val()),''));   
 	$("#detalleListaPrecio").html($("#tr_"+iProductoId).html());
+	
    
 }
 function fn_CalcularTotal(){ 
-	
+	var cantidadReal=parseFloat($("#iProductoStockReal").val());
+	var cantidadIngresado= parseFloat($("#iProductoStockCantidad").val());
+	if(cantidadReal<cantidadIngresado){
+		alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+cantidadReal);
+		
+		$("#iProductoStockCantidad").val(cantidadReal);
+		
+	 }
 	var iCantidad =parseFloat($("#iProductoStockCantidad").val());		
 	var fPrecioCompra=$("#fProductoPrecioCompra").val();	
 	var fDescuento =parseFloat(($("#fDescuento").val()/100));

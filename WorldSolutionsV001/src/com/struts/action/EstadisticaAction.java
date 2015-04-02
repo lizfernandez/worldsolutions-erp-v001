@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 
 import com.struts.form.EstadisticaForm;
 
+import com.util.Constantes;
 import com.util.FormatosNumeros;
 
 public class EstadisticaAction extends DispatchAction {
@@ -112,6 +113,58 @@ public class EstadisticaAction extends DispatchAction {
 		EstadisticaDao estadisticaDao = new EstadisticaDao();
 		EstadisticaForm objFom = (EstadisticaForm) form;
 		listaEstadistica = estadisticaDao.obtenerCompraEstadistica(objFom);
+
+		for (Object[] obj : listaEstadistica) {
+			EstadisticaVo obs = new EstadisticaVo();
+			obs.setDia(obj[0].toString());
+			obs.setCantidad(FormatosNumeros.redondedoDecimal(Double
+					.parseDouble(obj[1].toString())));
+			lista.add(obs);
+		}
+
+		Gson gson = new Gson();
+
+		String jsonOutput = gson.toJson(lista);
+
+		PrintWriter pw;
+		pw = response.getWriter();
+		pw.write(jsonOutput);
+		System.out.println(jsonOutput.toString());
+		pw.flush();
+		pw.close();
+
+		return null;
+
+	}
+	/**
+	 * Method execute
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return ActionForward
+	 * @throws ParseException
+	 */
+	public ActionForward jsonEstadisticaProductosCompra(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParseException {
+		response.setContentType("text/json");
+
+		List<EstadisticaVo> lista = new ArrayList<EstadisticaVo>();
+		List<Object[]> listaEstadistica = new ArrayList<Object[]>();
+	
+
+		EstadisticaDao estadisticaDao = new EstadisticaDao();
+		EstadisticaForm objFom = (EstadisticaForm) form;
+		
+		String tipoCompra = request.getParameter("tipoCompra");
+		if(tipoCompra.equals(Constantes.proMax)){
+			listaEstadistica = estadisticaDao.obtenerCompraEstadistica(objFom);
+		}
+		if(tipoCompra.equals(Constantes.proMes)){
+			listaEstadistica = estadisticaDao.obtenerCompraEstadistica(objFom);
+		}
 
 		for (Object[] obj : listaEstadistica) {
 			EstadisticaVo obs = new EstadisticaVo();

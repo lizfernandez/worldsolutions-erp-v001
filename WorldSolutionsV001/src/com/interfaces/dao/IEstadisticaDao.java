@@ -11,5 +11,10 @@ public interface IEstadisticaDao {
 	public List<Object[]> obtenerUtilidadesEstadistica(EstadisticaForm objFom)throws ParseException;
 	public List<Object[]> obtenerEstadisticaMejoresClientes(EstadisticaForm objFom)throws ParseException;
 	public List<Object[]> obtenerEstadisticaClientesDeudores(EstadisticaForm objFom)throws ParseException;
+	public List<Object[]> obtenerEstadisticaMejoresProveedor(EstadisticaForm objFom)throws ParseException;
+	public List<Object[]> obtenerEstadisticaProveedorDeudores(EstadisticaForm objFom)throws ParseException;
+
+	public List<Object[]> obtenerEstadisticaProductosMasVendidos(EstadisticaForm objFom)throws ParseException;
+	public List<Object[]> obtenerEstadisticaProductosMenosVendidos(EstadisticaForm objFom)throws ParseException;
 	
 }

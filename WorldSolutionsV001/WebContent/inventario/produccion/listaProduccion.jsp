@@ -36,8 +36,9 @@
         <th colspan="3" width="5%">Operaciones</th>        
         <th width="23%" align="left">Descripcion</th>        
         <th align="left">Cantidad</th>
-        <th align="left">Precio Compra</th>
-        <th align="left">Precio Total</th>             
+        <th align="left">Costo Unitario</th>
+        <th align="left">Otros Costos</th>
+        <th align="left">Costo Total</th>             
         <th align="left">Estado</th>
       </tr>
     </thead>
@@ -62,6 +63,7 @@
 		
 	    <td><bean:write name="x" property="iCantidad" /></td>
 	    <td><bean:write name="x" property="fCostoUni" /></td>
+	    <td><bean:write name="x" property="fOtrosCostos" /></td>
 	    <td><bean:write name="x" property="fCostoTotal" /></td>		
 		<td><bean:write name="x" property="cEstadoCodigo" /></td>
 	   
