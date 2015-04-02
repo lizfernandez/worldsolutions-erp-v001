@@ -1,10 +1,6 @@
 package com.struts.action;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,20 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityTransaction;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.jxls.exception.ParsePropertyException;
-import net.sf.jxls.transformer.XLSTransformer;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 import com.dao.ContabilidadDao;
 import com.dao.EstadoCuentaClienteDao;
@@ -48,7 +37,6 @@ import com.util.Fechas;
 import com.util.FormatosNumeros;
 import com.util.Paginacion;
 import com.util.Util;
-
 
 public class EstadoCuentaClienteAction extends BaseAction {
 	   // --------------------------------------------------------- Instance
@@ -91,7 +79,6 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			/** Instanciamos la Clase EstadocuentaclienteForm **/
 			EstadoCuentaClienteForm objform = (EstadoCuentaClienteForm) form;
 
-	    	List<Venta> listaVenta = new ArrayList<Venta>();
 			List<Venta> listaVentaTotal = new ArrayList<Venta>();
 			VentaDao ventaDao = new VentaDao();
 		
@@ -547,57 +534,29 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			}
 			return mapping.findForward(msn);
 		}
-		
 
-		@SuppressWarnings("deprecation")
-		public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-				throws ParsePropertyException, InvalidFormatException, IOException {
-
-			String plantilla = request.getParameter("plantilla");
-			System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+		@Override
+		public Map<String, Object> cargarContenidoExportar(ActionForm form,
+				HttpServletRequest request, String plantilla)
+				throws ParseException {
 
 			EstadoCuentaClienteForm objform = (EstadoCuentaClienteForm) form;
-			String filePath = request.getRealPath("/").toString();
-			String archivoPlantilla = filePath + File.separator + "plantillas"
-					+ File.separator + "reportes" + File.separator
-					+ "reporte-" + plantilla + ".xls";
-			
-
 			Map<String, Object> beans = new HashMap<String, Object>();
 
-			
 			if ("cliente-estado-cuenta".equals(plantilla)) {
 				VentaDao ventaDao = new VentaDao();
 				List<EstadoCuentaVo> estadoCuentaClientes = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, 0, 1000);
 				beans.put("estadoCuentaClientes", estadoCuentaClientes);
-			
+
 			} else if ("cliente-estado-cuenta-letra".equals(plantilla)) {
 				EstadoCuentaClienteDao letraClienteDao = new EstadoCuentaClienteDao();
 				List<Letracliente> listaLetraCliente = letraClienteDao.listaLetraCliente(0, 1000, objform.getLetracliente());
 				beans.put("estadoCuentaLetrasClientes", listaLetraCliente);
-			
+
 			}
-			
-			response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
-			response.setContentType("application/octet-stream");
-			ServletOutputStream outputStream = response.getOutputStream();
-			
-			InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
-			XLSTransformer transformer = new XLSTransformer();
-			try {
-				HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
-				workbook.write(outputStream);
-				fis.close();
-				outputStream.flush();
-				outputStream.close();
-			} catch (ParsePropertyException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
+
+			return beans;
 		}
-		
 	
 
 }

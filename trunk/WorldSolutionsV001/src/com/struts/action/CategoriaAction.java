@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,7 @@ import com.util.Fechas;
 import com.util.Paginacion;
 import com.util.Util;
 
-public class CategoriaAction extends DispatchAction {
+public class CategoriaAction extends BaseAction {
 	   // --------------------------------------------------------- Instance
 		// Variables
 		// --------------------------------------------------------- Methods
@@ -479,54 +480,25 @@ public class CategoriaAction extends DispatchAction {
 			return null;
 			
 		}
-		
-	@SuppressWarnings("deprecation")
-	public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws ParsePropertyException, InvalidFormatException, IOException {
 
-		String plantilla = request.getParameter("plantilla");
-		System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+	@Override
+	public Map<String, Object> cargarContenidoExportar(ActionForm form, HttpServletRequest request, String plantilla) throws ParseException {
+		
 		CategoriaForm objform = (CategoriaForm) form;
-		
-		
-		String filePath = request.getRealPath("/").toString();
-		String archivoPlantilla = filePath + File.separator + "plantillas"
-				+ File.separator + "reportes" + File.separator
-				+ "reporte-" + plantilla + ".xls";
-		
-
 		CategoriaDao categoriaDao = new CategoriaDao();
 		Map<String, Object> beans = new HashMap<String, Object>();
-		
+
 		if ("categoria".equals(plantilla)) {
-			List<Categoria> categorias = categoriaDao.listaCategoria(0, 1000, objform.getCategoria());
+			List<Categoria> categorias = categoriaDao.listaCategoria(0, 1000,objform.getCategoria());
 			beans.put("categorias", categorias);
-			response.setHeader("content-disposition", "attachment;filename=reporte_categorias_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
+
 		} else if ("sub-categoria".equals(plantilla)) {
 			List<Subcategoria> subCategorias = categoriaDao.listaSubcategoria(0, 1000, objform.getSubCategoria());
 			beans.put("subCategorias", subCategorias);
-			
+
 		}
-		response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
-		
-				
-		response.setContentType("application/octet-stream");
-		ServletOutputStream outputStream = response.getOutputStream();
-		
-		InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
-		XLSTransformer transformer = new XLSTransformer();
-		try {
-			HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
-			workbook.write(outputStream);
-			fis.close();
-			outputStream.flush();
-			outputStream.close();
-		} catch (ParsePropertyException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
+
+		return beans;
 	}
 		
 }

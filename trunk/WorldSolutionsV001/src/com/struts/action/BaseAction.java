@@ -1,8 +1,27 @@
 package com.struts.action;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jxls.exception.ParsePropertyException;
+import net.sf.jxls.transformer.XLSTransformer;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import com.dao.IngresoProductoDao;
@@ -12,11 +31,11 @@ import com.entities.Estadocuentaproveedor;
 import com.entities.Ingresoproducto;
 import com.entities.Venta;
 import com.entities.vo.EstadoCuentaVo;
-import com.struts.form.EstadoCuentaClienteForm;
 import com.util.Constantes;
-import com.util.Paginacion;
+import com.util.Fechas;
 
-public class BaseAction  extends DispatchAction {
+
+public abstract class BaseAction  extends DispatchAction {
 
 	protected List<EstadoCuentaVo> listarEstadoCuentaCliente(Venta venta, VentaDao ventaDao, int paginaInicio, int paginaFin) {
 
@@ -118,4 +137,52 @@ public class BaseAction  extends DispatchAction {
 		return listaEstadoCuenta;
 
 	}
+	
+	@SuppressWarnings("deprecation")
+	public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
+
+		String plantilla = request.getParameter("plantilla");
+		System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+		
+		String filePath = request.getRealPath("/").toString();
+		String archivoPlantilla = filePath + File.separator + "plantillas" + File.separator + "reportes" + File.separator;
+			
+		Map<String, Object> beans = cargarContenidoExportar(form, request, plantilla);
+		
+		response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
+		response.setContentType("application/octet-stream");
+		ServletOutputStream outputStream = response.getOutputStream();
+		
+		InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
+		XLSTransformer transformer = new XLSTransformer();
+		try {
+			HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
+			workbook.write(outputStream);
+			fis.close();
+			
+		} catch (ParsePropertyException e) {
+			throw e;
+			
+		} catch (IOException e) {
+			throw e;
+			
+		} finally {
+			try {
+				outputStream.flush();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				outputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+
+	public abstract Map<String, Object> cargarContenidoExportar(ActionForm form, HttpServletRequest request, String plantilla) throws ParseException;
+	
 }

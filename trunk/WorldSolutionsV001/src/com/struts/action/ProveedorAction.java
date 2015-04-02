@@ -1,10 +1,6 @@
 package com.struts.action;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -13,20 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityTransaction;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.jxls.exception.ParsePropertyException;
-import net.sf.jxls.transformer.XLSTransformer;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
@@ -42,7 +31,7 @@ import com.util.Fechas;
 import com.util.Paginacion;
 import com.util.Util;
 
-public class ProveedorAction extends DispatchAction {
+public class ProveedorAction extends BaseAction {
 	   // --------------------------------------------------------- Instance
 		// Variables
 		// --------------------------------------------------------- Methods
@@ -338,21 +327,10 @@ public class ProveedorAction extends DispatchAction {
 		}
 		
 
-		@SuppressWarnings("deprecation")
-		public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-				throws ParsePropertyException, InvalidFormatException, IOException {
-
-			String plantilla = request.getParameter("plantilla");
-			System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+		@Override
+		public Map<String, Object> cargarContenidoExportar(ActionForm form, HttpServletRequest request, String plantilla) throws ParseException {
+			
 			ProveedorForm objform = (ProveedorForm) form;
-			
-			
-			String filePath = request.getRealPath("/").toString();
-			String archivoPlantilla = filePath + File.separator + "plantillas"
-					+ File.separator + "reportes" + File.separator
-					+ "reporte-" + plantilla + ".xls";
-			
-
 			ProveedorDao proveedorDao = new ProveedorDao();
 			List<Proveedor> listaProveedor = proveedorDao.listaProveedor(0, 1000,objform.getProveedor());
 			
@@ -362,24 +340,7 @@ public class ProveedorAction extends DispatchAction {
 			
 			}
 			
-			response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
-			response.setContentType("application/octet-stream");
-			ServletOutputStream outputStream = response.getOutputStream();
-			
-			InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
-			XLSTransformer transformer = new XLSTransformer();
-			try {
-				HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
-				workbook.write(outputStream);
-				fis.close();
-				outputStream.flush();
-				outputStream.close();
-			} catch (ParsePropertyException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
+			return beans;
 		}
 		
 }

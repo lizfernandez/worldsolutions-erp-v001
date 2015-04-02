@@ -1,10 +1,6 @@
 package com.struts.action;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,16 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityTransaction;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.jxls.exception.ParsePropertyException;
-import net.sf.jxls.transformer.XLSTransformer;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -544,53 +534,28 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 		}
 		
 
-		@SuppressWarnings("deprecation")
-		public ActionForward exportarExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-				throws ParsePropertyException, InvalidFormatException, IOException {
 
-			String plantilla = request.getParameter("plantilla");
-			System.out.println("Plantilla solicitada [ " + plantilla + " ]");
+	@Override
+	public Map<String, Object> cargarContenidoExportar(ActionForm form, HttpServletRequest request, String plantilla) throws ParseException {
 
-			EstadoCuentaProveedorForm objform = (EstadoCuentaProveedorForm) form;
-			String filePath = request.getRealPath("/").toString();
-			String archivoPlantilla = filePath + File.separator + "plantillas"
-					+ File.separator + "reportes" + File.separator
-					+ "reporte-" + plantilla + ".xls";
-			
+		EstadoCuentaProveedorForm objform = (EstadoCuentaProveedorForm) form;
+		Map<String, Object> beans = new HashMap<String, Object>();
 
-			Map<String, Object> beans = new HashMap<String, Object>();
+		if ("proveedor-estado-cuenta".equals(plantilla)) {
+			IngresoProductoDao ingresoProductoDao = new IngresoProductoDao();
+			List<EstadoCuentaVo> estadoCuentaProveedores = listaEstadoCuentaPorProveedor(
+					objform.getIngresoproducto(), ingresoProductoDao, 0, 1000);
+			beans.put("estadoCuentaProveedores", estadoCuentaProveedores);
 
-			
-			if ("proveedor-estado-cuenta".equals(plantilla)) {
-				IngresoProductoDao ingresoProductoDao = new IngresoProductoDao();
-				List<EstadoCuentaVo> estadoCuentaProveedores = listaEstadoCuentaPorProveedor(objform.getIngresoproducto(), ingresoProductoDao, 0, 1000);
-				beans.put("estadoCuentaProveedores", estadoCuentaProveedores);
-			
-			} else if ("proveedor-estado-cuenta-letra".equals(plantilla)) {
-				IngresoProductoDao ingresoProductoDao = new IngresoProductoDao();
-				List<Letraproveedor> listaLetraCliente = ingresoProductoDao.listaLetraProveedor(0, 1000, objform.getLetraProveedor());
-				beans.put("estadoCuentaLetrasProveedores", listaLetraCliente);
-			
-			}
-			
-			response.setHeader("content-disposition", "attachment;filename=reporte_" + plantilla + "_" + Fechas.fechaConFormato("yyyyMMddHHmm") + ".xls");
-			response.setContentType("application/octet-stream");
-			ServletOutputStream outputStream = response.getOutputStream();
-			
-			InputStream fis = new BufferedInputStream(new FileInputStream(archivoPlantilla));
-			XLSTransformer transformer = new XLSTransformer();
-			try {
-				HSSFWorkbook workbook = (HSSFWorkbook) transformer.transformXLS(fis, beans);
-				workbook.write(outputStream);
-				fis.close();
-				outputStream.flush();
-				outputStream.close();
-			} catch (ParsePropertyException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
+		} else if ("proveedor-estado-cuenta-letra".equals(plantilla)) {
+			IngresoProductoDao ingresoProductoDao = new IngresoProductoDao();
+			List<Letraproveedor> listaLetraCliente = ingresoProductoDao
+					.listaLetraProveedor(0, 1000, objform.getLetraProveedor());
+			beans.put("estadoCuentaLetrasProveedores", listaLetraCliente);
+
 		}
+
+		return beans;
+	}
 		
 }
