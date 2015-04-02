@@ -162,14 +162,17 @@ public class ProductosAction extends DispatchAction {
 			    msn ="showListPopupProducto";}			 
 			 
 			 if(mode.equals("LPS")){
-				 /**Lista de productos de ventas***/
+				 /**Lista de productos de para servicios***/
 			    msn ="showListPopupServicios";}
 			 if(mode.equals("LPC")){
 				 /**Lista de productos de compras***/
 				 msn ="showListPopupProductoCompra";}
 			 if(mode.equals("LPP")){
-				 /**Lista de productos de compras***/
+				 /**Lista de productos para generar la produccion***/
 				 msn ="showListPopupProductoProduccion";}
+			 if(mode.equals("LPPU")){
+				 /**Lista de productos existenta***/
+				 msn ="showListPopupProductoExitProduccion";}
 			
 		}
 		
@@ -1213,15 +1216,52 @@ public class ProductosAction extends DispatchAction {
 			/**Insertamos Datos del producto y de insumo **/		
 			else if (pForm.getMode().equals("U") || pForm.getMode().equals("UI")) {	
 				
-			    pro =  productoDao.findEndidad(pro,pForm.getProducto().getiProductoId());
-			    pro= Util.comparar(pro, pForm.getProducto());
-				try {
-					pro.setdFechaActualiza(Fechas.getDate());
-					pro.setiUsuarioActualizaId(usu.getiUsuarioId());
-				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				/******************************************/
+				/**Insertamos la gestion de la produccion**/
+				/******************************************/
+				produBean =  productoDao.findEndidad(produBean,pForm.getiProduccionId());
+				produBean= Util.comparar(produBean, pForm.getProduccion());
+				produBean.setdFechaActualiza(Fechas.getDate());
+				produBean.setiUsuarioActualiza(usu.getiUsuarioId());
+				
+				productoDao.mergeEndidad(produBean);
+				
+				/***********************************/
+				/** Registro de producto**/
+				/***********************************/		
+				 pro =  productoDao.findEndidad(pro,pForm.getProducto().getiProductoId());
+				 pro= Util.comparar(pro, pForm.getProducto());				
+				 pro.setdFechaActualiza(Fechas.getDate());
+				 pro.setiUsuarioActualizaId(usu.getiUsuarioId());
+				 
+				 productoDao.mergeEndidad(pro);
+				
+				/***********************************/
+				/** Registro de produccion detalle**/
+				/***********************************/
+				listaProduccion = (List<Producciondetalle>) sesion.getAttribute("listaProduccionDetalle");	
+				for(Producciondetalle prodeta:listaProduccion){
+					if(prodeta.getcEstadoCodigo().equals(Constantes.estadoActivo)){
+				
+					prodeta.setProduccion(produBean);
+					productoDao.persistEndidad(prodeta);
+					
+					/*****************************************/
+					/** Reducimos el stock de los materiales**/
+					/*****************************************/
+					int cantidad;
+					Producto material= new Producto();
+					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId()) ;
+					    cantidad= material.getiProductoStockCantidad()-prodeta.getiCantidad();
+					    material.setiProductoStockCantidad(cantidad); 
+					    productoDao.mergeEndidad(material);
+					}
+					
 				}
+				
+				
+			   
+				
 				
 				/**Actualizamos o agregamos precios del producto, como tambien actualizaremos la cantidad del producto**/
 				List<Preciosproducto> listaPrecio = (List<Preciosproducto>) sesion.getAttribute("listaPrecioProducto");			

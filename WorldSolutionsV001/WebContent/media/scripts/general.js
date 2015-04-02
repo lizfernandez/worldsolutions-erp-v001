@@ -245,7 +245,7 @@ function buscar(form){
     // 
 }
 function limpiar(id){
-	$(document).find('#'+id+' input:text, input:text.textInvisible').each(function(key,val){ 	 
+	$(document).find('#'+id+' .text').each(function(key,val){ 	 
 	     $(this).val(" ");
 	    	     	
 	   });
@@ -386,6 +386,38 @@ function retornar(txtid,id,txtcod,cod,txtnom,nom,txtsueldo,sueldo,txtocup,ocup){
    
    window.close();
 }
+function retornarProducto(
+		txtid,id,
+		txtcod,cod,
+		txtnom,nom,
+		txtCantidad,Cantidad,
+		txtUniMedida,UniMedida,
+		txtUniCapacidad,UniCapacidad,
+		txtCapacidad,Capacidad,
+		txtfPCompra,fPCompra,
+		txtfPventa, fPVenta,
+		txtMoneda, moneda,
+		txtIMoneda, moneda,
+		txtGanancia, ganancia,
+		txtDescuento, descuento){
+
+	   window.opener.document.getElementById(txtid).value=id;/**/
+	   window.opener.document.getElementById(txtcod).value=cod;
+	   window.opener.document.getElementById(txtnom).value=nom;	   
+	   window.opener.document.getElementById(txtCantidad).value=Cantidad;
+	   window.opener.document.getElementById(txtUniMedida).value=UniMedida;
+	   window.opener.document.getElementById(txtUniCapacidad).value=UniCapacidad;
+	   window.opener.document.getElementById(txtCapacidad).value=Capacidad;
+	   window.opener.document.getElementById(txtfPCompra).value=fPCompra;
+	   window.opener.document.getElementById(txtfPventa).value=fPVenta;
+	   window.opener.document.getElementById(txtMoneda).value=moneda;
+	   window.opener.document.getElementsByClassName(txtIMoneda).value=moneda;
+	   window.opener.document.getElementById(txtGanancia).value=ganancia;
+	   window.opener.document.getElementById(txtDescuento).value=descuento;
+	   
+       
+	   window.close();
+	}
 function retornarProv(txtid,id,txtcod,cod,txtnom,nom,txtruc, ruc, txtdir, dir, txtdir2){
 
 	   window.opener.document.getElementById(txtid).value=id;/**/
