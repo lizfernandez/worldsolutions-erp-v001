@@ -40,7 +40,7 @@ public class Produccion implements Serializable {
     private float fOtrosCostos;
     
 	//bi-directional many-to-one association to Produccion
-	@OneToMany(mappedBy="produccion",cascade = CascadeType.ALL,  fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="produccion", fetch=FetchType.EAGER)
 	private List<Producciondetalle> produccionDetalle;
 	
 	//bi-directional many-to-one association to Produccion

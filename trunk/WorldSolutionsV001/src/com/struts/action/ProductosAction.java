@@ -44,6 +44,7 @@ import com.entities.Producto;
 import com.entities.Subcategoria;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
+import com.entities.vo.ProducciondetalleVo;
 import com.google.gson.Gson;
 import com.struts.form.ProductosForm;
 import com.util.Constantes;
@@ -1256,12 +1257,13 @@ public class ProductosAction extends BaseAction {
 				/******************************************/
 				/**Insertamos la gestion de la produccion**/
 				/******************************************/
-				produBean =  productoDao.findEndidad(produBean,pForm.getiProduccionId());
-				produBean= Util.comparar(produBean, pForm.getProduccion());
-				produBean.setdFechaActualiza(Fechas.getDate());
-				produBean.setiUsuarioActualiza(usu.getiUsuarioId());
+				Produccion produccion= new Produccion();
+				produccion =  productoDao.findEndidad(produccion,produBean.getiProduccionId());
+				produccion= Util.comparar(produccion, produBean);
+				produccion.setdFechaActualiza(Fechas.getDate());
+				produccion.setiUsuarioActualiza(usu.getiUsuarioId());
 				
-				productoDao.mergeEndidad(produBean);
+				productoDao.mergeEndidad(produccion);
 				
 				/***********************************/
 				/** Registro de producto**/
@@ -1284,8 +1286,7 @@ public class ProductosAction extends BaseAction {
 				for(Producciondetalle prodeta:listaProduccion){
 					if(prodeta.getcEstadoCodigo().equals(Constantes.estadoActivo)){
 				
-					prodeta.setProduccion(produBean);
-					productoDao.persistEndidad(prodeta);
+				
 					
 					/*****************************************/
 					/** Reducimos el stock de los materiales**/
@@ -1295,7 +1296,7 @@ public class ProductosAction extends BaseAction {
 					   
 					    if(prodeta.getiProduccionDetalleId()>0){
 					    	/// exite producto  en el detalle original y se cambia la cantidad
-					    	proDeOriginal= productoDao.findEndidad(proDeOriginal, prodeta.getiProduccionDetalleId());
+					    	proDeOriginal= productoDao.findEndidadBD(proDeOriginal,"iProduccionDetalleId", prodeta.getiProduccionDetalleId());
 					    	cantidad= proDeOriginal.getiCantidad()-prodeta.getiCantidad()+material.getiProductoStockCantidad();
 					    }
 					    else{
@@ -1310,10 +1311,11 @@ public class ProductosAction extends BaseAction {
 						cantidad= material.getiProductoStockCantidad()+prodeta.getiCantidad();
 					}
 					/// actualizamos cantidad
-					  productoDao.mergeEndidad(material);
+					  productoDao.mergeEndidad(material);						
+						prodeta.setProduccion(produccion);
+						productoDao.mergeEndidad(prodeta);
 				}
-				
-				
+			
 			   
 				
 				

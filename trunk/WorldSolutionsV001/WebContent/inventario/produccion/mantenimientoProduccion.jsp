@@ -91,6 +91,7 @@
             <td><bean:write name="x" property="vDescripcion" /></td>
             <td>
               <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iCantidad" />"/>
+	          <input type="hidden" class="inputderecha" id="numeroReal${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="producto.iProductoStockCantidad" />"/>
 	        </td>
             <td align="right">
                 <input type="text" class="inputderecha" id="precio${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fCostoUni" format="#,##0.00" locale="Localidad" />"/>                
@@ -354,6 +355,8 @@
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iProductoId" styleId="iProductoId"/>
 
+<html:hidden property="iProduccionId" styleId="iProduccionId"/>
+
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="vUnidadMedidaDescripcionC"  styleId="vUnidadMedidaDescripcionC"/>
 
@@ -390,9 +393,7 @@
         $("#popupCabecera").text('INSERTAR GESTION DE LA PRODUCCION');	
        
     } else {
-        $(".trCodigo").show();
-        document.getElementById('vProductoNombre').focus();      
-        document.getElementById('btnGuardar').textContent="Actualizar";
+          document.getElementById('btnGuardar').textContent="Actualizar";
         $("#iCantidadR").val($("#iCantidad").val());
         $("#fCostoUniR").val($("#fCostoUni").val());
         $("#fCostoTotalR").val(parseFloat($("#fCostoTotal").val())+parseFloat($("#fOtrosCostos").val()));
@@ -400,7 +401,7 @@
         $("#td_RegProductoNuevo").show();
         
         
-        $("#popupCabecera").text('ACTUALIZAR DATOS');	
+        $("#popupCabecera").text('ACTUALIZAR GESTION DE LA PRODUCCION');		
         if(mode=='F'){
         	$("#popupCabecera").text('BUSCAR DATOS');        	
          	/*$(":input").attr('disabled',true);
@@ -509,6 +510,7 @@
  function fn_calcularTotal(fila) {
 	 var cantidad = parseFloat($.trim($("#numero"+fila).val()));
 	 var cantidadReal = parseFloat($.trim($("#numeroReal"+fila).val()));
+	 
 	 if(cantidadReal<cantidad){
 		 alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+cantidadReal);
 			$("#numero"+fila).val(cantidadReal);

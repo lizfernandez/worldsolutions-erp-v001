@@ -15,6 +15,7 @@ public interface IGenerica {
 	public <G> List<G> listaEntidadGenericaSinCodigo(String entidad);
 	public <G> List<G> listaEntidadPaginada(String sentencia, int pagInicio, int pagFin);
 	public <E> E findEndidad(E entidad, int iEntidadId);
+	public <E> E findEndidadBD(E entidad, String siEntidadId , int iEntidadId);
 	public <E> void persistEndidad(E entidad);
 	public <E> boolean insertarUnaEndidad(E entidad);
 	public <E> boolean actualizarUnaEndidad(E entidad);
