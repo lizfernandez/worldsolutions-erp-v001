@@ -30,6 +30,6 @@
        </div>
        <div class="btn_admin" id="produccion">
         <img src="${pageContext.request.contextPath}/media/imagenes/tra.png" width="20" height="20" />
-         <a  href="productos.do?metodo=listaProduccion"> Gesti&oacute;n de Producci&oacute;n * </a>
+         <a  href="productos.do?metodo=listaProduccion"> Gesti&oacute;n de Producci&oacute;n</a>
        </div>      
        

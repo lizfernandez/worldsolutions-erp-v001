@@ -268,7 +268,7 @@ function fn_agregarProducto(){
      
          $.getJSON(cad, function retorna(obj){
         	// alert("obje"+obj.cProductoCodigo);
-        	 listar_detalleProduccion(obj,'padre');
+        	 listar_detalleProduccion(obj,'padre',mode);
         	 });
 	}
 	else{

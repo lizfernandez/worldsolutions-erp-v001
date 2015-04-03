@@ -907,7 +907,7 @@ function listar_detalleCompraDevolucion(obj, destino, fecha){
 };
 
 //CARGAMOS EL detalle de la Compra
-function listar_detalleProduccion(obj,destino){
+function listar_detalleProduccion(obj,destino,mode){
     
 	var newHtml='';
 	newHtml+='<caption>Lista de Producto</caption>';
@@ -939,7 +939,15 @@ function listar_detalleProduccion(obj,destino){
 		
 		newHtml+="<td align='right'>";
 			  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iCantidad+"'/>";
-			  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockCantidad+"'/>";
+			  var stock;
+			  if(mode='U'){
+				  stock=parseInt(data.iCantidad)+parseInt(data['producto'].iProductoStockCantidad);
+				  
+			  }
+			  else{
+				  stock=parseInt(data['producto'].iProductoStockCantidad); 
+			  }
+			  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+stock+"'/>";
 		newHtml+='</td>';		
 		newHtml+="<td align='right'>";
 		 newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+formatCurrency(data.fCostoUni,' ')+"'/>";		  
@@ -1202,7 +1210,7 @@ function fn_recargar(){
 	var metodo = url.split("&");	
 	var mode ="";	
 	var tipo=$_GET("tipo");
-	alert(tipo);
+	
 	if(tipo=='ventas'){
 		if(iclasificacionId=="5"){ ///  el id=5 es de servicio
 			//redireccionamos al padre los valores, sin hacer doble recarga por el return false;

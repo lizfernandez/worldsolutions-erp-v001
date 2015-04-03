@@ -2,8 +2,11 @@ package com.dao;
 
 
 
+import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.CacheRetrieveMode;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -76,11 +79,22 @@ public class GenericaDao  implements IGenerica{
 
 	@Override
 	public <E> E findEndidad(E entidad, int iEntidadId) {
+		HashMap findProperties = new HashMap();
+		findProperties.put(QueryHints.CACHE_RETRIEVE_MODE, CacheRetrieveMode.BYPASS);
+		findProperties.put(QueryHints.CACHE_STORE_MODE, CacheStoreMode.USE);
 		@SuppressWarnings("unchecked")
-		E objeto = (E) getInstancia().find(entidad.getClass(), iEntidadId);		
+		E objeto = (E) getInstancia().find(entidad.getClass(), iEntidadId,findProperties);		
 		return objeto;
 	}
+	@Override
+	public <E> E findEndidadBD(E entidad, String siEntidadId , int iEntidadId) {
 
+		Query q = getInstancia().createQuery("select p from " + entidad.getClass().getSimpleName() + "  p" + " where p."+siEntidadId+" = :iEntidadId");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		@SuppressWarnings("unchecked")
+		E objeto = (E)q.setParameter("iEntidadId", iEntidadId).getSingleResult();
+		return objeto;
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public <G> List<G> listaEntidadPaginada(String sentencia, int pagInicio, int pagFin) {
