@@ -9,6 +9,10 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <td><button class="button" onclick="fn_exportarExcel('estadoCuentaProveedor.do?metodo=exportarExcel&plantilla=proveedor-estado-cuenta')">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -132,7 +136,7 @@
    				 </td>
 			</tr>
 			</logic:notEmpty>
-			<logic:notEqual name="x" property="montosTotales" value="">
+			<logic:notEqual name="x" property="montosTotales" value="0">
 				 <tr>
 					 <td colspan="8"></td>
 					 <td align="right"><strong>Monto Totales:</strong></td>

@@ -9,7 +9,11 @@
         <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
-        </td>        
+        </td>
+        <td><button class="button" onclick="fn_exportarExcel('contabilidad.do?metodo=exportarExcel&plantilla=contabilidad-compra-devolucion')">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>   
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">

@@ -18,6 +18,10 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <td><button class="button" onclick="fn_exportarExcel('productos.do?metodo=exportarExcel&plantilla=materia-prima')">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
