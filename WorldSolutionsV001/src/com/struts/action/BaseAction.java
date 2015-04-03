@@ -45,8 +45,7 @@ public abstract class BaseAction  extends DispatchAction {
 		float montosTotales = 0;
 		float pagosTotales = 0;
 		float saldosTotales = 0;
-		int i = 0;
-
+		
 		for (Venta obj : listaVenta) {
 			float pagoTotal = 0;
 			float saldoTotal = 0;
@@ -71,18 +70,17 @@ public abstract class BaseAction  extends DispatchAction {
 			estadoCuenta.setPagoTotal(pagoTotal);
 			estadoCuenta.setSaldoTotal(saldoTotal);
 
-			i++;
-
-			if (i == listaVenta.size()) {
-				estadoCuenta.setMontosTotales(montosTotales);
-				estadoCuenta.setPagosTotales(pagosTotales);
-				estadoCuenta.setSaldosTotales(saldosTotales);
-
+			if (saldoTotal > 0) {
+				listaEstadoCuenta.add(estadoCuenta);
 			}
 
-			listaEstadoCuenta.add(estadoCuenta);
-
 		}
+
+		int i = listaEstadoCuenta.size() - 1;
+		listaEstadoCuenta.get(i).setMontosTotales(montosTotales);
+		listaEstadoCuenta.get(i).setPagosTotales(pagosTotales);
+		listaEstadoCuenta.get(i).setSaldosTotales(saldosTotales);
+
 		return listaEstadoCuenta;
 
 	}
