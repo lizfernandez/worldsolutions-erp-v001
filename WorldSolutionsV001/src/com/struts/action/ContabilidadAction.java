@@ -27,8 +27,6 @@ import com.entities.Configuracion;
 import com.entities.Cuenta;
 import com.entities.Elementocuenta;
 import com.entities.Estado;
-import com.entities.Estadocuentacliente;
-import com.entities.Estadocuentaproveedor;
 import com.entities.Ingresoproducto;
 import com.entities.Ingresoproductodevolucion;
 import com.entities.Librodiario;
@@ -177,109 +175,54 @@ public class ContabilidadAction extends BaseAction {
 			// }// else
 			return mapping.findForward(msn);
 			}
-		/**
-		 * 
-		 * @param mapping
-		 * @param form
-		 * @param request
-		 * @param response
-		 * @return
-		 * @throws ParseException
-		 * @throws IOException
-		 */
-		public ActionForward listaEstadoCuentaCliente(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+
+	/**
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public ActionForward listaEstadoCuentaCliente(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
 
 		/*** Validamos la session activa y logeada ***/
 		String msn = "";
-		
 
 		/*** Inicializamos variables ***/
-		
+
 		int pagina = Paginacion.paginaInicial;
 		int pagInicio = Paginacion.paginaInicial;
 		if (request.getParameter("pagina") != null) {
 			pagina = Integer.parseInt(request.getParameter("pagina"));
 		}
-		
+
 		/** Instanciamos las clase Daos **/
-	
+
 		VentaDao ventaDao = new VentaDao();
-		
-	
+
 		/** Instanciamos la Clase VentaForm **/
 		ContabilidadForm objform = (ContabilidadForm) form;
-    	
-    	List<Venta> listaVenta = new ArrayList<Venta>();
 		List<Venta> listaVentaTotal = new ArrayList<Venta>();
 		List<Long> paginas = new ArrayList<Long>();
-	
-		 
-		 /**Seteamos los valores en las listas**/
-			List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
-			
-			
-			/**Accedemos al Dao**/
-			 listaVenta = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getVenta(),0);
-			    float montosTotales =  0;
-			    float pagosTotales =  0;
-			    float saldosTotales =  0;
-			    int i=0;
-			    
-			    
-			 for(Venta obj:listaVenta)
-			 {   float pagoTotal=0;
-			 
-			 float saldoTotal = 0;
-				 EstadoCuentaVo e = new EstadoCuentaVo();
-			     
-		
-			   	 e.setVenta(obj);
-			     if(obj.getEstadocuentaclientes().size()>0){
-		   	 
-				     for(Estadocuentacliente obje:obj.getEstadocuentaclientes()){
-				    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-				    	 pagoTotal+= obje.getfMontoPago();						    	
-				    	 pagosTotales+= obje.getfMontoPago();
-				    	// e.setEstadocuenta(obj.getEstadocuentaclientes());
-				    	}
-				       } // for				    
-				     
-			     } // if
-				   
-					
-		
-			     saldoTotal = obj.getfVentaTotal() -pagoTotal;
-			     montosTotales+= obj.getfVentaTotal();
-				 saldosTotales=(montosTotales - pagosTotales);
-			     e.setPagoTotal(pagoTotal);
-			     e.setSaldoTotal(saldoTotal);
-		
-				i++;
-				
-				if(i==listaVenta.size()){
-					e.setMontosTotales(montosTotales);
-					e.setPagosTotales(pagosTotales);
-					e.setSaldosTotales(saldosTotales);
-					
-				}
-			     
-			     listaEstadoCuenta.add(e);
-			     
-			 }
-			 
-		/**Consultamos el total de registros segun criterio**/
-		listaVentaTotal = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getVenta(),0);
-		
-        /**Obtenemos el total del paginas***/
-		paginas = Paginacion.listPaginas((long)(listaVentaTotal.size()));
- 	     
+
+		/** Seteamos los valores en las listas **/
+		List<EstadoCuentaVo> listaEstadoCuenta = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina), Paginacion.pagFin());
+
+		/** Consultamos el total de registros segun criterio **/
+		listaVentaTotal = ventaDao.listaEstadoCuentaPorCliente(Paginacion.pagInicio(pagInicio), Paginacion.pagFinMax(), objform.getVenta(), 0);
+
+		/** Obtenemos el total del paginas ***/
+		paginas = Paginacion.listPaginas((long) (listaVentaTotal.size()));
+
 		objform.setLista(listaEstadoCuenta);
 		objform.setPaginas(paginas);
 		objform.setPagInicio(pagina);
-		msn="showListEstadoCuentaCliente";
+		msn = "showListEstadoCuentaCliente";
 		return mapping.findForward(msn);
-		}
+	}
 		/**
 		 * Method execute
 		 * 
@@ -415,110 +358,53 @@ public class ContabilidadAction extends BaseAction {
 			// }// else
 			return mapping.findForward(msn);
 			}
-		/**
-		 * 
-		 * @param mapping
-		 * @param form
-		 * @param request
-		 * @param response
-		 * @return
-		 * @throws ParseException
-		 * @throws IOException
-		 */
-		public ActionForward listaEstadoCuentaProveedor(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+
+	/**
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public ActionForward listaEstadoCuentaProveedor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
 
 		/*** Validamos la session activa y logeada ***/
 		String msn = "";
-		
 
 		/*** Inicializamos variables ***/
-		
+
 		int pagina = Paginacion.paginaInicial;
 		int pagInicio = Paginacion.paginaInicial;
 		if (request.getParameter("pagina") != null) {
 			pagina = Integer.parseInt(request.getParameter("pagina"));
 		}
-		
+
 		/** Instanciamos las clase Daos **/
-	
+
 		IngresoProductoDao ingresoproductoDao = new IngresoProductoDao();
-		
-	
+
 		/** Instanciamos la Clase VentaForm **/
 		ContabilidadForm objform = (ContabilidadForm) form;
-    	
-    	List<Ingresoproducto> listaIngresoproducto = new ArrayList<Ingresoproducto>();
 		List<Ingresoproducto> listaIngresoproductoTotal = new ArrayList<Ingresoproducto>();
 		List<Long> paginas = new ArrayList<Long>();
-	
-		 
-		 /**Seteamos los valores en las listas**/
-			List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
-				
-				
-				/**Accedemos al Dao**/
-				 listaIngresoproducto = ingresoproductoDao.listaEstadoCuentaPorProveedor(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getIngresoProducto(),0);
-				    float montosTotales =  0;
-				    float pagosTotales =  0;
-				    float saldosTotales =  0;
-				    int i=0;
-				    
-				    
-				 for(Ingresoproducto obj:listaIngresoproducto)
-				 {   float pagoTotal=0;
-				 float saldoTotal = 0;
-					 EstadoCuentaVo e = new EstadoCuentaVo();
-				     
-		            	e.setIngresoProducto(obj);
-				     if(obj.getEstadocuentaproveedors().size()>0){
-				    	
-				    	 
-					     for(Estadocuentaproveedor obje:obj.getEstadocuentaproveedors()){
-					    	if(obje.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-					    	 pagoTotal+= obje.getfMontoPago();						    	
-					    	 pagosTotales+= obje.getfMontoPago();
-					    	
-					    	// listaEstaProve.add(pagoEsta);
-					    	}
-					       } // for
-					     e.setEstadocuenta(obj.getEstadocuentaproveedors());
-				     } // if
-					   
-						
-			
-				     saldoTotal = obj.getfIngresoProductoTotal() -pagoTotal;
-				     montosTotales+= obj.getfIngresoProductoTotal();
-					 saldosTotales=(montosTotales - pagosTotales);
-				     e.setPagoTotal(pagoTotal);
-				     e.setSaldoTotal(saldoTotal);
-			
-					i++;
-					
-					if(i==listaIngresoproducto.size()){
-						e.setMontosTotales(montosTotales);
-						e.setPagosTotales(pagosTotales);
-						e.setSaldosTotales(saldosTotales);
-						
-					}
-				     
-				     listaEstadoCuenta.add(e);
-				     
-				 }
-				 
-			/**Consultamos el total de registros segun criterio**/
-			listaIngresoproductoTotal = ingresoproductoDao.listaEstadoCuentaPorProveedor(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getIngresoProducto(),0);
-			
-	        /**Obtenemos el total del paginas***/
-			paginas = Paginacion.listPaginas((long)(listaIngresoproductoTotal.size()));
-	 	    objform.setLista(listaEstadoCuenta);
-			objform.setPaginas(paginas);
-			objform.setPagInicio(pagina);
-			msn="showListEstadoCuentaProveedor";
-			return mapping.findForward(msn);
-			
-		
-		}
+
+		/** Seteamos los valores en las listas **/
+		List<EstadoCuentaVo> listaEstadoCuenta = listaEstadoCuentaPorProveedor(objform.getIngresoProducto(), ingresoproductoDao, Paginacion.pagInicio(pagInicio), Paginacion.pagFin());
+		/** Consultamos el total de registros segun criterio **/
+		listaIngresoproductoTotal = ingresoproductoDao.listaEstadoCuentaPorProveedor(Paginacion.pagInicio(pagInicio), Paginacion.pagFinMax(), objform.getIngresoProducto(), 0);
+
+		/** Obtenemos el total del paginas ***/
+		paginas = Paginacion.listPaginas((long) (listaIngresoproductoTotal.size()));
+		objform.setLista(listaEstadoCuenta);
+		objform.setPaginas(paginas);
+		objform.setPagInicio(pagina);
+		msn = "showListEstadoCuentaProveedor";
+		return mapping.findForward(msn);
+
+	}
 		/**
 		 * Method execute
 		 * 
@@ -1723,7 +1609,26 @@ public class ContabilidadAction extends BaseAction {
 			VentaDao ventaDao = new VentaDao();
 			List<Venta> ventas = ventaDao.listaVenta(0, 1000, objform.getVenta());
 			beans.put("ventas", ventas);
-			beans.put("igvActaul", sesion.getAttribute("IGVVentas").toString());
+			beans.put("igvActaul", Double.parseDouble(sesion.getAttribute("IGVVentas").toString()));
+			
+		} else if ("contabilidad-venta-devolucion".equals(plantilla)) {
+			VentaDao ventaDao = new VentaDao();
+			List<Ventadevolucion> ventas = ventaDao.listaVentaDevolucion(0, 1000, objform.getVenta());
+			beans.put("ventaDevoluciones", ventas);
+			beans.put("igvActaul", Double.parseDouble(sesion.getAttribute("IGVVentas").toString()));
+			
+		} else if ("contabilidad-compra".equals(plantilla)) {
+			IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
+			List<Ingresoproducto> listaIngresoproducto = ingresogenericaDao.listaIngresoproducto(0,1000,objform.getIngresoProducto());
+			beans.put("igvActaul", Double.parseDouble(sesion.getAttribute("IGVCompras").toString()));
+			beans.put("compras", listaIngresoproducto);
+			
+		} else if ("contabilidad-compra-devolucion".equals(plantilla)) {
+			IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
+			List<Ingresoproductodevolucion> listaIngresoproducto = ingresogenericaDao.listaIngresoproductoDevolucion(0, 1000, objform.getIngresoProducto());
+			beans.put("igvActaul", Double.parseDouble(sesion.getAttribute("IGVCompras").toString()));
+			beans.put("devolucionCompras", listaIngresoproducto);
+			
 		}
 
 		return beans;
