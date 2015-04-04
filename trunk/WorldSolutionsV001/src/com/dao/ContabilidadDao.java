@@ -144,7 +144,8 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 			}
 		
 	    	    q = "select p from Librodiario p " + where
-	    	    		+"order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
+	    	    		//+"order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
+	    	    		+" order by p.cuenta.vCodigo asc, p.dFechaInserta desc";/**/
 	    	    
 	    	    listaLibroDiario = listaEntidadPaginada(q, pagInicio, pagFin);
 	    	 /*   
@@ -185,8 +186,8 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 			}
 		
 	    	    q = "select p from Librodiario p " + where
-	    	    		+" order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
-	    	    
+	    	    		//+" order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
+	    	    		+" order by p.cuenta.vCodigo asc, p.dFechaInserta desc";/**/
 	    	    listaLibroDiario = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			
