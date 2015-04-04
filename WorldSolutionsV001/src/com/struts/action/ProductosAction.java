@@ -711,6 +711,7 @@ public class ProductosAction extends BaseAction {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			productoDao.limpiarInstancia();
 		}
 		finally {
 			transaccion = null;
@@ -1095,13 +1096,13 @@ public class ProductosAction extends BaseAction {
 			List<Preciosproducto> listaPrecios = new ArrayList<Preciosproducto>();
 			List<Producciondetalle> listaProduccion= new ArrayList<Producciondetalle>();
 			List<Kardex> listaKadex = new ArrayList<Kardex>();
-			EntityTransaction transaccion = productoDao.entityTransaction();
+			EntityTransaction transaccion = null;
 			
 			try {
 				
 			
 			/*** Instanciamos transacion ***/
-			
+				transaccion = productoDao.entityTransaction();
 			transaccion.begin();
 			
 			/**Cargamos Foto **/
@@ -1409,7 +1410,7 @@ public class ProductosAction extends BaseAction {
 			}
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				transaccion.rollback();
+				productoDao.limpiarInstancia();
 				//transaccion = null;
 				
 			}finally {

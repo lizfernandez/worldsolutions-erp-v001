@@ -1482,6 +1482,7 @@ public class VentaAction extends BaseAction {
 
 	         } catch (Exception ex) {
 	        	 ex.printStackTrace();
+	        	 ventaDao.limpiarInstancia();
 	         } finally {
 	        	 entityTransaction = null;
 	         }

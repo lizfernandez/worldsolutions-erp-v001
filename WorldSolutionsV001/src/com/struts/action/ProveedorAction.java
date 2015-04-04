@@ -306,6 +306,7 @@ public class ProveedorAction extends BaseAction {
 				resultado = proveedorDao.commitEndidad(transaccion);
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				proveedorDao.limpiarInstancia();
 			} finally {
 				transaccion = null;
 			}

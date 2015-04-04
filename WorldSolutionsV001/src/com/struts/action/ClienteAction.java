@@ -408,10 +408,9 @@ public class ClienteAction extends BaseAction {
 		} else if (pForm.getMode().equals("U")) {
 
 			/**** Iniciamos el begin transaction ****/
-			EntityTransaction transaction;
+			EntityTransaction transaction = null;
 			try {
 				transaction = clienteDao.entityTransaction();
-				
 				transaction.begin();
 	
 				obj = clienteDao.findEndidad(pForm.getCliente(), pForm.getCliente().getiClienteId());
@@ -492,18 +491,20 @@ public class ClienteAction extends BaseAction {
 				resultado = clienteDao.commitEndidad(transaction);
 			} catch (Exception e) {
 				e.printStackTrace();
+				clienteDao.limpiarInstancia();
 			} finally {
 				transaction = null;
 			}
 		} else if (mode.equals("D")) {
-			EntityTransaction transaction;
+			EntityTransaction transaction = null;
 			try {
 				transaction = clienteDao.entityTransaction();
 				transaction.begin();
 				clienteDao.eliminarUnaEndidad(obj, "iClienteId", ids);
 				resultado = clienteDao.commitEndidad(transaction);
 			} catch (Exception ex) {
-				ex.printStackTrace();				
+				ex.printStackTrace();
+				clienteDao.limpiarInstancia();
 			} finally {
 				transaction = null;
 			}
@@ -679,7 +680,7 @@ public class ClienteAction extends BaseAction {
 				resultado = areaDao.commitEndidad(transaccion);
 			} catch (Exception e) {
 				e.printStackTrace();
-				
+				areaDao.limpiarInstancia();
 			} finally {
 				transaccion = null;
 			}

@@ -209,7 +209,7 @@ public class UsuarioAction extends DispatchAction {
 					resultado = usuarioDao.commitEndidad(transaction);
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					transaction = null;
+					usuarioDao.limpiarInstancia();
 					
 				}finally {
 					transaction = null;

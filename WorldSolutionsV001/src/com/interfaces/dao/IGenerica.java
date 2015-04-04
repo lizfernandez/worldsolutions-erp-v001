@@ -25,6 +25,7 @@ public interface IGenerica {
 	public int  callSPPeriodoActual();
 	public <E> void refreshEndidad(E entidad);
 	public boolean commitEndidad(EntityTransaction ext);
+	public void revertirCambios(EntityTransaction ext);
 	
 	
 	

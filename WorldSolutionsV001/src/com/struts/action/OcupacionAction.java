@@ -203,6 +203,7 @@ public class OcupacionAction extends DispatchAction {
 					resultado = ocupacionDao.commitEndidad(transaction);
 				} catch (Exception ex) {
 					ex.printStackTrace();
+					ocupacionDao.limpiarInstancia();
 				} finally {
 					transaction = null;
 				}

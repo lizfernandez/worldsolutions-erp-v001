@@ -373,6 +373,7 @@ public class PerfilAction extends DispatchAction {
 	    	   resultado = objPerfildao.commitEndidad(transaction);
     	   } catch (Exception ex) {
     		   ex.printStackTrace();
+    		   objPerfildao.limpiarInstancia();
     	   } finally {
     		   transaction = null;
     	   }

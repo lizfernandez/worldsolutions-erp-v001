@@ -185,7 +185,7 @@ public class AreaAction extends DispatchAction {
 				
 			}
 			else if (mode.equals("D")) {
-				EntityTransaction transaccion;
+				EntityTransaction transaccion = null;
 				try {
 				    transaccion = areaDao.entityTransaction();
 				    transaccion.begin();
@@ -193,6 +193,7 @@ public class AreaAction extends DispatchAction {
 					resultado = areaDao.commitEndidad(transaccion);
 				} catch (Exception e) {
 					e.printStackTrace();
+					areaDao.limpiarInstancia();
 				} finally {
 					transaccion = null;
 				}
