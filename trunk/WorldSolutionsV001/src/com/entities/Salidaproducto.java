@@ -24,10 +24,10 @@ public class Salidaproducto implements Serializable {
 	@Column(nullable=false, length=1)
 	private String cSalidaProductoAutorizado;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
     @Temporal( TemporalType.DATE)

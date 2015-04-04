@@ -22,7 +22,7 @@ public class Impuesto implements Serializable {
 
 	private String cCodigoEstado;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private int iUsuarioInserta;

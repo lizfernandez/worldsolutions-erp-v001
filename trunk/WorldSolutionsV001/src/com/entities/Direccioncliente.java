@@ -21,10 +21,10 @@ public class Direccioncliente implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private String iPoblacionId;

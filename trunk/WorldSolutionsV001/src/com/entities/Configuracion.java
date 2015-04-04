@@ -19,7 +19,7 @@ public class Configuracion implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private String vConcepto;

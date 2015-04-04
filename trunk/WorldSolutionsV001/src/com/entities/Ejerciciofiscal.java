@@ -22,7 +22,7 @@ public class Ejerciciofiscal implements Serializable {
 
 	private String cCodigoEstado;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
 	@Temporal(TemporalType.DATE)
@@ -31,7 +31,7 @@ public class Ejerciciofiscal implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dFechaInicio;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private int iUsuarioActualiza;

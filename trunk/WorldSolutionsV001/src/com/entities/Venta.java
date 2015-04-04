@@ -28,10 +28,10 @@ public class Venta implements Serializable {
 	@Column(length=10)
 	private String cVentaOrdenCompra;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
     @Temporal(TemporalType.DATE)

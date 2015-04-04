@@ -20,13 +20,13 @@ public class Letracliente implements Serializable {
 
 	private String cEstadoCodigo;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
 	@Temporal(TemporalType.DATE)
 	private Date dFechaGiro;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	@Temporal(TemporalType.DATE)

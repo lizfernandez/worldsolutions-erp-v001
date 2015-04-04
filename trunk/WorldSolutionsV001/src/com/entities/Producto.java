@@ -40,10 +40,10 @@ public class Producto implements Serializable {
 	@Column(nullable=false, length=7)
 	private String cProductoCodigo;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	@Column(nullable=true)
 	private Date dFechaInserta;
 

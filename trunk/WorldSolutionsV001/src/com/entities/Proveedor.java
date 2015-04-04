@@ -28,10 +28,10 @@ public class Proveedor implements Serializable {
 	@Column(nullable=false, length=5)
 	private String cProveedorCodigo;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	@Column(nullable=false)
 	private Date dFechaInserta;
 

@@ -24,10 +24,10 @@ public class Visitacliente implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dFecaProxVisita;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date  dFechaActualiza;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	@Temporal(TemporalType.DATE)

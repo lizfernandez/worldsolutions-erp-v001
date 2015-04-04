@@ -28,10 +28,10 @@ public class Personal implements Serializable {
 	@Column(nullable=false, length=5)
 	private String cPersonalCodigo;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaAcualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	@Column(nullable=false)
 	private Date dFechaInserta;
 

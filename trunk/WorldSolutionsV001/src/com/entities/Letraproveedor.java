@@ -18,13 +18,13 @@ public class Letraproveedor implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int iletraProveedorId;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
 	@Temporal(TemporalType.DATE)
 	private Date dFechaGiro;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dfechaInserta;
 
 	@Temporal(TemporalType.DATE)

@@ -27,10 +27,10 @@ public class Perfil implements Serializable {
 	@Column(nullable=false, length=5)
 	private String cPerfilCodigo;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	@Column(nullable=false)
 	private Date dFechaInserta;
 

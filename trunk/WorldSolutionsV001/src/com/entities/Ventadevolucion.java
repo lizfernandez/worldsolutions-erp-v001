@@ -21,10 +21,10 @@ public class Ventadevolucion implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
     @Temporal( TemporalType.DATE)
