@@ -186,7 +186,8 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 			String mode = request.getParameter("mode");		
 			String ids = request.getParameter("ids");		
 			boolean resultado = false;
-		
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			/** Instanciamos las clase EstadocuentaproveedorForm y EstadocuentaproveedorDao **/
 			EstadoCuentaProveedorForm pForm = (EstadoCuentaProveedorForm) form;
 			GenericaDao estadoCuentaProveedorDao = new GenericaDao();
@@ -203,6 +204,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 				if (pForm.getMode().equals("I")) {
 					obj = pForm.getEstadoCuentaProveedor();
 					obj.setdFechaInserta(Fechas.getDate());
+					obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 					obj.setcEstadoCodigo(Constantes.estadoActivo);
 					
 					/** llamamos a listar Estadocuentaproveedor **/
@@ -232,6 +234,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 				   obj = estadoCuentaProveedorDao.findEndidad(pForm.getEstadoCuentaProveedor(), pForm.getEstadoCuentaProveedor().getiEstadoCuentaProveedor());
 				   obj.setdFechaPago(pForm.getEstadoCuentaProveedor().getdFechaPago());
 				   obj.setsVendedor(pForm.getsVendedor());
+				   
 				  
 				   	/**Actualizamos el estado a Cancelado En la tabla Ingreso Producto**/
 				   
@@ -457,6 +460,8 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 					 Date fecha = Fechas.getDate();	
 			            fecha =obj.getIngresoProducto().getFormaPago().getiFormaPago()==3?Fechas.fechaDate("30/"+(Fechas.mesFecha(fecha)+1)+"/"+Fechas.anioFecha(fecha)):obj.getdFechaVencimiento();
 			         obj.setdFechaVencimiento(fecha);
+			         obj.setiUsuarioInsertaId(usu.getiUsuarioId());
+			         obj.setDfechaInserta(Fechas.getDate());
 			         if(pForm.getdFechaPagoLetra()!=""){
 			        	 obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPagoLetra()));
 			         }
@@ -475,6 +480,8 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 				}// fin mode I;
 				else if (pForm.getMode().equals("U")) {
 					    obj = ingresoProductoDao.findEndidad(pForm.getLetraProveedor(), pForm.getLetraProveedor().getIletraProveedorId());
+					    obj.setiUsuarioActualizaId(usu.getiUsuarioId());
+					    obj.setdFechaActualiza(Fechas.getDate());
 					   if(pForm.getdFechaPagoLetra()!=""){
 					       obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPagoLetra()));
 					    }

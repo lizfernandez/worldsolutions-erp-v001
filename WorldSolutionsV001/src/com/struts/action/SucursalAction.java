@@ -18,6 +18,7 @@ import com.dao.GenericaDao;
 import com.dao.SucursalDao;
 import com.entities.Estado;
 import com.entities.Sucursal;
+import com.entities.Usuario;
 import com.struts.form.SucursalForm;
 import com.util.Fechas;
 import com.util.Paginacion;
@@ -169,7 +170,8 @@ public class SucursalAction extends DispatchAction {
 			String mode = request.getParameter("mode");		
 			String ids = request.getParameter("ids");		
 			boolean resultado = false;
-		
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			/** Instanciamos las clase SucursalForm y SucursalDao **/
 			SucursalForm pForm = (SucursalForm) form;
 			Sucursal obj =pForm.getSucursal();
@@ -179,12 +181,13 @@ public class SucursalAction extends DispatchAction {
 			if (pForm.getMode().equals("I")) {
 				
 					obj.setdFechaInserta(Fechas.getDate());
+					obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 					resultado = sucursalDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
 				  obj =  sucursalDao.findEndidad(obj,pForm.getiSucursalId());
 				  obj= Util.comparar(obj, pForm.getSucursal());
-			
+			      obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 					obj.setdFechaActualiza(Fechas.getDate());
 					resultado = sucursalDao.actualizarUnaEndidad(obj);
 				

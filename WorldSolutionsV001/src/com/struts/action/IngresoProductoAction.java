@@ -998,6 +998,9 @@ public class IngresoProductoAction extends BaseAction {
 				
 			    obj = ingresogenericaDao.findEndidad(pForm.getIngresoProducto(),pForm.getIngresoProducto().getiIngresoProductoId()); 
 				obj= Util.comparar(obj, pForm.getIngresoProducto());//pForm.getVenta();
+				obj.setiUsuarioActualizaId(usu.getiUsuarioId());
+				obj.setdFechaActualiza(Fechas.getDate());
+				
 				int i= 0;
 					 
 					 List<Ingresoproductodetalle>  listSession = (List<Ingresoproductodetalle>) sesion.getAttribute("listaIngresoProductoDetalle");			

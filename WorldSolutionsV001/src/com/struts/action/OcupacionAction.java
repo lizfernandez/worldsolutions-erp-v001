@@ -18,6 +18,7 @@ import com.dao.GenericaDao;
 import com.dao.OcupacionDao;
 import com.entities.Estado;
 import com.entities.Ocupacion;
+import com.entities.Usuario;
 import com.struts.form.OcupacionForm;
 import com.util.Fechas;
 import com.util.Paginacion;
@@ -169,7 +170,8 @@ public class OcupacionAction extends DispatchAction {
 			String mode = request.getParameter("mode");		
 			String ids = request.getParameter("ids");		
 			boolean resultado = false;
-		
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			/** Instanciamos las clase OcupacionForm y OcupacionDao **/
 			OcupacionForm pForm = (OcupacionForm) form;
 			Ocupacion obj =pForm.getOcupacion();
@@ -179,11 +181,14 @@ public class OcupacionAction extends DispatchAction {
 			if (pForm.getMode().equals("I")) {
 				
 					obj.setdFechaInserta(Fechas.getDate());
+					obj.setiUsuarioInserta(usu.getiUsuarioId());
 					resultado = ocupacionDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
 				 obj =  ocupacionDao.findEndidad(obj,pForm.getiOcupacionId());
 				  obj= Util.comparar(obj, pForm.getOcupacion());
+				  obj.setiUsuarioModifica(usu.getiUsuarioId());
+				  obj.setdFechaActualiza(Fechas.getDate());
 			
 					obj.setdFechaActualiza(Fechas.getDate());
 					resultado = ocupacionDao.actualizarUnaEndidad(obj);
