@@ -848,10 +848,10 @@ public class IngresoProductoAction extends BaseAction {
          obj.setdFechaProximoPago(fecha);
   
 		/** Iniciamos instacia de transacion **/
-         EntityTransaction trx;
+         EntityTransaction transaccion = null;
          try {
-         	trx = ingresogenericaDao.entityTransaction();
-	        trx.begin();
+         	transaccion = ingresogenericaDao.entityTransaction();
+	        transaccion.begin();
 	         
 			if (pForm.getMode().equals("I") || pForm.getMode().equals("IE")) {
 				
@@ -975,16 +975,16 @@ public class IngresoProductoAction extends BaseAction {
 		      	
 		         
 		         ingresogenericaDao.persistEndidad(obj);
-		         resultado = ingresogenericaDao.commitEndidad(trx);
+		         resultado = ingresogenericaDao.commitEndidad(transaccion);
 		         ingresogenericaDao.refreshEndidad(obj);
 		         if(resultado==true){
 		        	 int iIngresoProductoId=obj.getiIngresoProductoId();
 		        	 int iFormaPagoId= obj.getFormaPago().getiFormaPago();
-		        	 trx= ingresogenericaDao.entityTransaction();
-		        	 trx.begin();
+		        	 transaccion= ingresogenericaDao.entityTransaction();
+		        	 transaccion.begin();
 		        	 int nNumeroLetra=1;
 		        	 contabilidadDao.callCompraContabilidad(iIngresoProductoId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId, nNumeroLetra,iFormaPagoId);
-		        	 resultado = ingresogenericaDao.commitEndidad(trx);
+		        	 resultado = ingresogenericaDao.commitEndidad(transaccion);
 		         }
 	             //ingresogenericaDao.refreshEndidad(obj);
 		         
@@ -1228,7 +1228,7 @@ public class IngresoProductoAction extends BaseAction {
 				ingresogenericaDao.persistEndidad(obj);	 
 				int nNumeroLetra=1;
 		        contabilidadDao.callCompraContabilidad(obj.getiIngresoProductoId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra,obj.getFormaPago().getiFormaPago());
-		        resultado = ingresogenericaDao.commitEndidad(trx);
+		        resultado = ingresogenericaDao.commitEndidad(transaccion);
 	            ingresogenericaDao.refreshEndidad(obj);
 	            
 			      } // fin Actualizar 
@@ -1236,13 +1236,14 @@ public class IngresoProductoAction extends BaseAction {
 			else if (mode.equals("D")) {
 	
 				ingresogenericaDao.eliminarUnaEndidad(obj, "iIngresoProductoId",ids);/**/
-				resultado = ingresogenericaDao.commitEndidad(trx);
+				resultado = ingresogenericaDao.commitEndidad(transaccion);
 	
 			}
          } catch (Exception ex) {
         	 ex.printStackTrace();
+        	 ingresogenericaDao.limpiarInstancia();
          } finally {
-        	 trx = null;
+        	 transaccion = null;
          }
 			
 		if (resultado == true) {
@@ -1514,6 +1515,7 @@ public class IngresoProductoAction extends BaseAction {
 			
 		  } catch (Exception ex) {
 			  ex.printStackTrace();
+			  ingresogenericaDao.limpiarInstancia();
 		  } finally {
 			  entityTransaction = null;
 		  }

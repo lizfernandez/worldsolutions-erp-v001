@@ -214,7 +214,7 @@ public class CategoriaAction extends BaseAction {
 				resultado = categoriaDao.actualizarUnaEndidad(obj);
 					
 			} else if (mode.equals("D")) {
-				EntityTransaction transaccion;
+				EntityTransaction transaccion = null;
 				try {
 					transaccion = categoriaDao.entityTransaction();
 					transaccion.begin();
@@ -222,6 +222,7 @@ public class CategoriaAction extends BaseAction {
 					resultado = categoriaDao.commitEndidad(transaccion);
 				} catch (Exception ex) {
 					ex.printStackTrace();
+					categoriaDao.limpiarInstancia();
 				} finally {
 					transaccion = null;
 				}
@@ -412,7 +413,7 @@ public class CategoriaAction extends BaseAction {
 				
 			}
 			else if (mode.equals("D")) { 
-				    EntityTransaction transaccion;
+				    EntityTransaction transaccion = null;
 				    try {
 				    	transaccion = categoriaDao.entityTransaction();
 				    	transaccion.begin();
@@ -420,6 +421,7 @@ public class CategoriaAction extends BaseAction {
 						resultado = categoriaDao.commitEndidad(transaccion);
 					} catch (Exception ex) {
 						ex.printStackTrace();
+						categoriaDao.limpiarInstancia();
 					} finally {
 						transaccion = null;
 					}

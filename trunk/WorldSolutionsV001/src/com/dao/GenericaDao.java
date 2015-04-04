@@ -38,6 +38,10 @@ public class GenericaDao  implements IGenerica{
 		em=null;
 		return em;
 	}
+
+	public void limpiarInstancia(){
+		em = null;
+	}
 	
     public EntityTransaction entityTransaction() {
 		EntityTransaction trx = null;
@@ -116,10 +120,10 @@ public class GenericaDao  implements IGenerica{
 			// ext= null;
 		} catch (Exception re) {
 			resultado = false;
-			if (ext.isActive()) {
-				ext.rollback();
+//			if (ext.isActive()) {
+				revertirCambios(ext);
 				// resultado = false;
-			} // or could attempt to fix error and retry
+//			} // or could attempt to fix error and retry
 			re.printStackTrace();
 		} finally {
 			ext = null;
@@ -242,6 +246,20 @@ public class GenericaDao  implements IGenerica{
 		}
 		return iPeriodoId;
 	}
+
+	@Override
+	public void revertirCambios(EntityTransaction ext) {
+		try {
+			if (ext != null) {
+				ext.rollback();
+			}
+		} catch (Exception e) {
+			System.err.println("Error al ejecutar roolback");
+		} finally {
+			ext = null;
+		}
+	}
+	
 }
 
 

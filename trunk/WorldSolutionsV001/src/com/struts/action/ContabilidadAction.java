@@ -1216,7 +1216,7 @@ public class ContabilidadAction extends BaseAction {
 				
 			}
 			else if (mode.equals("D")) { 
-				    EntityTransaction transaction;
+				    EntityTransaction transaction = null;
 				    try {
 					    transaction = contabilidadDao.entityTransaction();
 					    transaction.begin();
@@ -1224,6 +1224,7 @@ public class ContabilidadAction extends BaseAction {
 						resultado = contabilidadDao.commitEndidad(transaction);
 				    } catch (Exception ex) {
 				    	ex.printStackTrace();
+				    	contabilidadDao.limpiarInstancia();
 				    } finally {
 				    	transaction = null;
 				    }
@@ -1573,16 +1574,17 @@ public class ContabilidadAction extends BaseAction {
 				
 			}
 			else if (mode.equals("D")) { 	
-				EntityTransaction entityTransaction;
+				EntityTransaction transaccion = null;
 				try {
-					entityTransaction = contabilidadDao.entityTransaction();
-					entityTransaction.begin();
+					transaccion = contabilidadDao.entityTransaction();
+					transaccion.begin();
 					contabilidadDao.eliminarUnaEndidad(obj, "iPlanillaId",ids);/**/
-					resultado = contabilidadDao.commitEndidad(entityTransaction);
+					resultado = contabilidadDao.commitEndidad(transaccion);
 				} catch (Exception ex) {
 					ex.printStackTrace();
+					contabilidadDao.limpiarInstancia();
 				} finally {
-					entityTransaction = null;
+					transaccion = null;
 				}
 			}
 				
