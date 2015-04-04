@@ -23,10 +23,10 @@ public class Subcategoria implements Serializable {
 
 	private String cSubCategoriaCodigo;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 	
 	@ManyToOne(cascade= CascadeType.REFRESH)

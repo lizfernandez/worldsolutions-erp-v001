@@ -27,10 +27,10 @@ public class Ingresoproducto implements Serializable {
     @Temporal( TemporalType.DATE)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	@Column(nullable=false)
 	private Date dIngresoProductoFecha;
 

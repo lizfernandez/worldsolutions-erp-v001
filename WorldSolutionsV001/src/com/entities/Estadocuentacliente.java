@@ -22,7 +22,7 @@ public class Estadocuentacliente implements Serializable {
 	@Column(length=2)
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
     @Temporal( TemporalType.DATE)

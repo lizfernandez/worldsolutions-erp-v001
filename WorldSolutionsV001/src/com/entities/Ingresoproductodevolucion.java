@@ -19,10 +19,10 @@ public class Ingresoproductodevolucion implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int iIngresoProductoDevolucionId;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
     @Temporal( TemporalType.DATE)

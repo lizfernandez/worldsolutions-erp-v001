@@ -25,7 +25,7 @@ public class Kardex implements Serializable {
     @Temporal( TemporalType.DATE)
 	private Date dFecha;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
     
     @Temporal(TemporalType.TIMESTAMP)

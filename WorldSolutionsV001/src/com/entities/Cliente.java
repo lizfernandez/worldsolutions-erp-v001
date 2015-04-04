@@ -25,10 +25,10 @@ public class Cliente implements Serializable {
 	@Column(length=2)
 	private String cEstadoCodigo;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private int iUsuarioActualizaId;
