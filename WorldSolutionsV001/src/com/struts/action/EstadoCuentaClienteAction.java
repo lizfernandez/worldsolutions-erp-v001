@@ -467,21 +467,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 				transaccion= ingresoProductoDao.entityTransaction();
 				transaccion.begin();
 			
-			if (pForm.getMode().equals("I") || pForm.getMode().equals("U")) {
-				 Date fecha = Fechas.getDate();	
-		            fecha =obj.getVenta().getFormaPago().getiFormaPago()==3?Fechas.fechaDate("30/"+(Fechas.mesFecha(fecha)+1)+"/"+Fechas.anioFecha(fecha)):obj.getdFechaVencimiento();
-		         obj.setdFechaVencimiento(fecha);
-		         obj.setiUsuarioInsertaId(usu.getiUsuarioId());
-		         obj.setdFechaInserta(Fechas.getDate());
-		         if(pForm.getdFechaPago()!=""){
-		        	 obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPago()));
-		         }
-		         
-		         if(pForm.getMode().equals("I")){
-					 contabilidadDao.callVentaContabilidad(obj.getVenta().getiVentaId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra(),obj.getVenta().getFormaPago().getiFormaPago());
-		        	 resultado = ingresoProductoDao.commitEndidad(trx);		         
-					 Venta venta =  ingresoProductoDao.findEndidad(obj.getVenta(), obj.getVenta().getiVentaId());
-				
+					
 				
 				if (pForm.getMode().equals("I") || pForm.getMode().equals("U")) {
 					 Date fecha = Fechas.getDate();	
@@ -558,7 +544,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 				    }
 				    obj= Util.comparar(obj, pForm.getLetracliente());
 				    ingresoProductoDao.mergeEndidad(obj);
-				    resultado = ingresoProductoDao.commitEndidad(trx);
+				    resultado = ingresoProductoDao.commitEndidad(transaccion);
 				    ingresoProductoDao.refreshEndidad(obj);
 				
 			   }
@@ -568,18 +554,8 @@ public class EstadoCuentaClienteAction extends BaseAction {
 				    ingresoProductoDao.eliminarUnaEndidad(obj, "iLetraClienteId",ids);
 					
 				   }
-				}
-				else if (mode.equals("D")) { 
-					    obj = ingresoProductoDao.findEndidad(obj, Integer.parseInt(ids));
-					    ingresoProductoDao.eliminarUnaEndidad(obj, "iLetraClienteId",ids);
-						
-						Venta venta = obj.getVenta();
-						venta.setvEstadoDocumento(Constantes.estadoDocumentoDeuda);
-						ingresoProductoDao.mergeEndidad(venta);
-						resultado = ingresoProductoDao.commitEndidad(transaccion);
-						/**/
-					
-					}
+				
+				
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
