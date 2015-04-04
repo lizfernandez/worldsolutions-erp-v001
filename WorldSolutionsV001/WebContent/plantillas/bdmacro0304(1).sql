@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-04-2015 a las 21:26:30
+-- Tiempo de generación: 03-04-2015 a las 22:56:48
 -- Versión del servidor: 5.1.41
 -- Versión de PHP: 5.3.1
 
@@ -25,26 +25,28 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Estructura de tabla para la tabla `area`
 --
 
+DROP TABLE IF EXISTS `area`;
 CREATE TABLE IF NOT EXISTS `area` (
   `iAreaId` int(11) NOT NULL AUTO_INCREMENT,
   `cAreaCodigo` char(7) NOT NULL,
   `vAreaDescripcion` varchar(45) NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
   `iUsuarioModificaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   PRIMARY KEY (`iAreaId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcar la base de datos para la tabla `area`
 --
 
 INSERT INTO `area` (`iAreaId`, `cAreaCodigo`, `vAreaDescripcion`, `iUsuarioInsertaId`, `iUsuarioModificaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`) VALUES
-(1, 'ARE02', 'AREA DE SISTEMAS', 1, 1, '2011-04-24', '2011-04-24', 'AC'),
-(3, 'ARE03', 'AREA DE ADMINISTRACION', 1, NULL, '2011-04-24', NULL, 'AC'),
-(4, 'AR00004', 'NBN', 0, 0, '2015-01-01', NULL, 'IN');
+(1, 'ARE02', 'AREA DE SISTEMAS', 1, 1, '2011-04-24 00:00:00', '2011-04-24 00:00:00', 'AC'),
+(3, 'ARE03', 'AREA DE ADMINISTRACION', 1, NULL, '2011-04-24 00:00:00', NULL, 'AC'),
+(4, 'AR00004', 'NBN', 0, 0, '2015-01-01 00:00:00', NULL, 'IN'),
+(5, 'AR00005', 'WE', 0, 0, NULL, '2015-04-03 00:00:00', 'AC');
 
 -- --------------------------------------------------------
 
@@ -52,15 +54,16 @@ INSERT INTO `area` (`iAreaId`, `cAreaCodigo`, `vAreaDescripcion`, `iUsuarioInser
 -- Estructura de tabla para la tabla `cajachica`
 --
 
+DROP TABLE IF EXISTS `cajachica`;
 CREATE TABLE IF NOT EXISTS `cajachica` (
   `iCajaChicaId` int(11) NOT NULL AUTO_INCREMENT,
   `iCuentasId` int(11) DEFAULT NULL,
   `fMonto` float DEFAULT NULL,
   `vTipoConcepto` varchar(1) COLLATE utf8_spanish_ci DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   `vConceptoGeneral` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`iCajaChicaId`)
@@ -77,14 +80,15 @@ CREATE TABLE IF NOT EXISTS `cajachica` (
 -- Estructura de tabla para la tabla `categoria`
 --
 
+DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE IF NOT EXISTS `categoria` (
   `iCategoriaId` int(11) NOT NULL AUTO_INCREMENT,
   `cCategoriaCodigo` char(7) NOT NULL,
   `vCategoriaDescripcion` varchar(45) NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   `iClasificacionId` int(11) DEFAULT NULL,
   PRIMARY KEY (`iCategoriaId`)
@@ -95,8 +99,8 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 --
 
 INSERT INTO `categoria` (`iCategoriaId`, `cCategoriaCodigo`, `vCategoriaDescripcion`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `iClasificacionId`) VALUES
-(15, 'CA00001', 'DILSOLVENTE', 0, 0, '2015-02-15', NULL, 'AC', 1),
-(16, 'CA00016', 'MATARIA PRIMA', 0, 0, NULL, '2015-02-15', 'AC', 2);
+(15, 'CA00001', 'DILSOLVENTE', 0, 0, '2015-02-15 00:00:00', NULL, 'AC', 1),
+(16, 'CA00016', 'MATARIA PRIMA', 0, 0, NULL, '2015-02-15 00:00:00', 'AC', 2);
 
 -- --------------------------------------------------------
 
@@ -104,6 +108,7 @@ INSERT INTO `categoria` (`iCategoriaId`, `cCategoriaCodigo`, `vCategoriaDescripc
 -- Estructura de tabla para la tabla `clasificacioncategoria`
 --
 
+DROP TABLE IF EXISTS `clasificacioncategoria`;
 CREATE TABLE IF NOT EXISTS `clasificacioncategoria` (
   `iClasificacionId` int(11) NOT NULL AUTO_INCREMENT,
   `cClasificacionCodigo` char(7) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -129,6 +134,7 @@ INSERT INTO `clasificacioncategoria` (`iClasificacionId`, `cClasificacionCodigo`
 -- Estructura de tabla para la tabla `clasificacioncliente`
 --
 
+DROP TABLE IF EXISTS `clasificacioncliente`;
 CREATE TABLE IF NOT EXISTS `clasificacioncliente` (
   `iClasificacionClienteId` int(11) NOT NULL AUTO_INCREMENT,
   `vNombre` varchar(45) DEFAULT NULL,
@@ -155,6 +161,7 @@ INSERT INTO `clasificacioncliente` (`iClasificacionClienteId`, `vNombre`, `fDesc
 -- Estructura de tabla para la tabla `cliente`
 --
 
+DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE IF NOT EXISTS `cliente` (
   `iClienteId` int(11) NOT NULL AUTO_INCREMENT,
   `vClienteCodigo` char(7) NOT NULL,
@@ -164,9 +171,9 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `nClienteTelefono` varchar(50) DEFAULT NULL,
   `vRubro` varchar(45) DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) DEFAULT NULL,
   `iClasificacionClienteId` int(11) DEFAULT NULL,
   `fDescuento` float DEFAULT NULL,
@@ -178,9 +185,9 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 --
 
 INSERT INTO `cliente` (`iClienteId`, `vClienteCodigo`, `vNombreCliente`, `vClienteRazonSocial`, `nClienteNumeroDocumento`, `nClienteTelefono`, `vRubro`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `iClasificacionClienteId`, `fDescuento`) VALUES
-(3, 'CL00001', NULL, 'LIZ FERNADEZ', '43746389', '5485540', NULL, 0, '2015-02-16', 0, NULL, 'AC', NULL, NULL),
-(4, 'CL00004', NULL, 'DIEGO EMPRESADS', '20154545412', '548545210', NULL, 0, '2015-04-03', 0, NULL, 'AC', NULL, 15),
-(5, 'CL00005', NULL, 'LIZ FERNADEZ', '43746389', '548545210', NULL, 2, '2015-04-03', 0, '2015-04-03', 'AC', 1, 16);
+(3, 'CL00001', NULL, 'LIZ FERNADEZ', '43746389', '5485540', NULL, 0, '2015-02-16 00:00:00', 0, NULL, 'AC', NULL, NULL),
+(4, 'CL00004', NULL, 'DIEGO EMPRESADS', '20154545412', '548545210', NULL, 0, '2015-04-03 00:00:00', 0, NULL, 'AC', NULL, 15),
+(5, 'CL00005', NULL, 'LIZ FERNADEZ', '43746389', '548545210', NULL, 2, '2015-04-03 00:00:00', 0, '2015-04-03 00:00:00', 'AC', 1, 16);
 
 -- --------------------------------------------------------
 
@@ -188,11 +195,12 @@ INSERT INTO `cliente` (`iClienteId`, `vClienteCodigo`, `vNombreCliente`, `vClien
 -- Estructura de tabla para la tabla `configuracion`
 --
 
+DROP TABLE IF EXISTS `configuracion`;
 CREATE TABLE IF NOT EXISTS `configuracion` (
   `iConfiguracionId` int(11) NOT NULL AUTO_INCREMENT,
   `vConcepto` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
   `vValor` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`iConfiguracionId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=12 ;
@@ -202,17 +210,17 @@ CREATE TABLE IF NOT EXISTS `configuracion` (
 --
 
 INSERT INTO `configuracion` (`iConfiguracionId`, `vConcepto`, `vValor`, `dFechaInserta`, `cEstadoCodigo`) VALUES
-(1, 'TIPO MONEDA', 'SOLES', '2014-12-30', 'AC'),
+(1, 'TIPO MONEDA', 'SOLES', '2014-12-30 00:00:00', 'AC'),
 (2, 'TIPO CAMBIO', '2.75', NULL, 'AC'),
-(3, 'NRO FACTURA VENTA', '0001-000001', '2015-01-08', 'AC'),
-(4, 'NRO BOLETA VENTA', '000B1-000001', '2015-01-09', 'AC'),
-(5, 'NRO GUIA REMISION VENTA', '000G1-000001', '2015-01-09', 'AC'),
-(6, 'DESC. SNP %', '13', '2015-01-27', 'AC'),
-(7, 'DESC. AFP %', '10', '2015-01-29', 'AC'),
-(8, 'DESC. P.S %', '1.35', '2015-01-27', 'AC'),
-(9, 'DESC. C.V %', '2', '2015-01-27', 'AC'),
-(10, 'APORT. ESSALUD %', '9', '2015-01-27', 'AC'),
-(11, 'APORT. I.E.S %', '2', '2015-01-27', 'AC');
+(3, 'NRO FACTURA VENTA', '0001-000001', '2015-01-08 00:00:00', 'AC'),
+(4, 'NRO BOLETA VENTA', '000B1-000001', '2015-01-09 00:00:00', 'AC'),
+(5, 'NRO GUIA REMISION VENTA', '000G1-000001', '2015-01-09 00:00:00', 'AC'),
+(6, 'DESC. SNP %', '13', '2015-01-27 00:00:00', 'AC'),
+(7, 'DESC. AFP %', '10', '2015-01-29 00:00:00', 'AC'),
+(8, 'DESC. P.S %', '1.35', '2015-01-27 00:00:00', 'AC'),
+(9, 'DESC. C.V %', '2', '2015-01-27 00:00:00', 'AC'),
+(10, 'APORT. ESSALUD %', '9', '2015-01-27 00:00:00', 'AC'),
+(11, 'APORT. I.E.S %', '2', '2015-01-27 00:00:00', 'AC');
 
 -- --------------------------------------------------------
 
@@ -220,6 +228,7 @@ INSERT INTO `configuracion` (`iConfiguracionId`, `vConcepto`, `vValor`, `dFechaI
 -- Estructura de tabla para la tabla `cuentas`
 --
 
+DROP TABLE IF EXISTS `cuentas`;
 CREATE TABLE IF NOT EXISTS `cuentas` (
   `iCuentasId` int(11) NOT NULL AUTO_INCREMENT,
   `iElementoCuentasId` int(11) DEFAULT NULL,
@@ -580,6 +589,7 @@ INSERT INTO `cuentas` (`iCuentasId`, `iElementoCuentasId`, `vCodigo`, `vDescripc
 -- Estructura de tabla para la tabla `cuota`
 --
 
+DROP TABLE IF EXISTS `cuota`;
 CREATE TABLE IF NOT EXISTS `cuota` (
   `iCuotaId` int(11) NOT NULL AUTO_INCREMENT,
   `iCuotaNumero` int(11) NOT NULL,
@@ -589,8 +599,8 @@ CREATE TABLE IF NOT EXISTS `cuota` (
   `vCuotaDescripcion` varchar(45) NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date NOT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime NOT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   `iVentaId` int(11) NOT NULL,
   PRIMARY KEY (`iCuotaId`),
@@ -608,6 +618,7 @@ CREATE TABLE IF NOT EXISTS `cuota` (
 -- Estructura de tabla para la tabla `direccioncliente`
 --
 
+DROP TABLE IF EXISTS `direccioncliente`;
 CREATE TABLE IF NOT EXISTS `direccioncliente` (
   `idireccionClienteId` int(11) NOT NULL AUTO_INCREMENT,
   `iClienteId` int(11) NOT NULL,
@@ -615,9 +626,9 @@ CREATE TABLE IF NOT EXISTS `direccioncliente` (
   `vDireccion` varchar(45) DEFAULT NULL,
   `vReferencia` varchar(45) DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) DEFAULT NULL,
   `vPrincipal` char(2) DEFAULT NULL,
   PRIMARY KEY (`idireccionClienteId`),
@@ -631,9 +642,9 @@ CREATE TABLE IF NOT EXISTS `direccioncliente` (
 --
 
 INSERT INTO `direccioncliente` (`idireccionClienteId`, `iClienteId`, `iPoblacionId`, `vDireccion`, `vReferencia`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `vPrincipal`) VALUES
-(77, 3, '140501', 'AV.PUENTE', NULL, 2, '2015-02-16', 0, NULL, 'AC', '1'),
-(78, 4, '140501', 'WE', NULL, 2, '2015-04-03', 0, NULL, 'AC', '1'),
-(79, 5, '140501', 'AV.PUENTE', NULL, 2, '2015-04-03', 2, '2015-04-03', 'AC', '1');
+(77, 3, '140501', 'AV.PUENTE', NULL, 2, '2015-02-16 00:00:00', 0, NULL, 'AC', '1'),
+(78, 4, '140501', 'WE', NULL, 2, '2015-04-03 00:00:00', 0, NULL, 'AC', '1'),
+(79, 5, '140501', 'AV.PUENTE', NULL, 2, '2015-04-03 00:00:00', 2, '2015-04-03 00:00:00', 'AC', '1');
 
 -- --------------------------------------------------------
 
@@ -641,6 +652,7 @@ INSERT INTO `direccioncliente` (`idireccionClienteId`, `iClienteId`, `iPoblacion
 -- Estructura de tabla para la tabla `ejerciciofiscal`
 --
 
+DROP TABLE IF EXISTS `ejerciciofiscal`;
 CREATE TABLE IF NOT EXISTS `ejerciciofiscal` (
   `iEjercicioFiscalId` int(11) NOT NULL AUTO_INCREMENT,
   `vCodigoEjercicio` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -649,8 +661,8 @@ CREATE TABLE IF NOT EXISTS `ejerciciofiscal` (
   `dFechaFin` date DEFAULT NULL,
   `iUsuarioInserta` int(11) DEFAULT NULL,
   `iUsuarioActualiza` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cCodigoEstado` char(10) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`iEjercicioFiscalId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=7 ;
@@ -660,7 +672,7 @@ CREATE TABLE IF NOT EXISTS `ejerciciofiscal` (
 --
 
 INSERT INTO `ejerciciofiscal` (`iEjercicioFiscalId`, `vCodigoEjercicio`, `vNombreEjercicio`, `dFechaInicio`, `dFechaFin`, `iUsuarioInserta`, `iUsuarioActualiza`, `dFechaInserta`, `dFechaActualiza`, `cCodigoEstado`) VALUES
-(6, '01', 'EJERCICIO 2015', '2015-01-01', '2015-12-31', 0, 0, '2015-01-01', NULL, 'ABIERTO');
+(6, '01', 'EJERCICIO 2015', '2015-01-01', '2015-12-31', 0, 0, '2015-01-01 00:00:00', NULL, 'ABIERTO');
 
 -- --------------------------------------------------------
 
@@ -668,6 +680,7 @@ INSERT INTO `ejerciciofiscal` (`iEjercicioFiscalId`, `vCodigoEjercicio`, `vNombr
 -- Estructura de tabla para la tabla `elementocuentas`
 --
 
+DROP TABLE IF EXISTS `elementocuentas`;
 CREATE TABLE IF NOT EXISTS `elementocuentas` (
   `iElementoCuentasId` int(11) NOT NULL AUTO_INCREMENT,
   `vElemento` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -697,6 +710,7 @@ INSERT INTO `elementocuentas` (`iElementoCuentasId`, `vElemento`, `vDescripcion`
 -- Estructura de tabla para la tabla `estado`
 --
 
+DROP TABLE IF EXISTS `estado`;
 CREATE TABLE IF NOT EXISTS `estado` (
   `iEstadoId` int(11) NOT NULL AUTO_INCREMENT,
   `cEstadoCodigo` char(2) NOT NULL,
@@ -719,13 +733,14 @@ INSERT INTO `estado` (`iEstadoId`, `cEstadoCodigo`, `vEstadoDescripcion`) VALUES
 -- Estructura de tabla para la tabla `estadocuentacliente`
 --
 
+DROP TABLE IF EXISTS `estadocuentacliente`;
 CREATE TABLE IF NOT EXISTS `estadocuentacliente` (
   `iEstadoCuentaCliente` int(11) NOT NULL AUTO_INCREMENT,
   `iClienteId` int(11) NOT NULL,
   `fMontoPago` float NOT NULL,
   `iVentaId` int(11) NOT NULL,
   `dFechaPago` date DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
   `cEstadoCodigo` char(2) DEFAULT NULL,
   PRIMARY KEY (`iEstadoCuentaCliente`),
@@ -738,15 +753,15 @@ CREATE TABLE IF NOT EXISTS `estadocuentacliente` (
 --
 
 INSERT INTO `estadocuentacliente` (`iEstadoCuentaCliente`, `iClienteId`, `fMontoPago`, `iVentaId`, `dFechaPago`, `dFechaInserta`, `iUsuarioInsertaId`, `cEstadoCodigo`) VALUES
-(3, 3, 200, 17, '2015-02-17', '2015-02-17', 0, 'AC'),
-(4, 3, 8640, 19, '2015-02-22', '2015-02-22', 2, 'EL'),
-(5, 3, 11880, 20, '2015-02-22', '2015-02-22', 2, 'AC'),
-(6, 3, 4860, 21, '2015-02-22', '2015-02-22', 2, 'AC'),
-(7, 3, 4329.84, 19, '2015-04-02', '2015-04-02', 2, 'AC'),
-(8, 3, 324, 24, '2015-04-03', '2015-04-03', 2, 'AC'),
-(9, 3, 32.4, 25, '2015-04-03', '2015-04-03', 2, 'AC'),
-(10, 4, 20.7, 26, '2015-04-03', '2015-04-03', 2, 'AC'),
-(11, 4, 20.7, 27, '2015-04-03', '2015-04-03', 2, 'AC');
+(3, 3, 200, 17, '2015-02-17', '2015-02-17 00:00:00', 0, 'AC'),
+(4, 3, 8640, 19, '2015-02-22', '2015-02-22 00:00:00', 2, 'EL'),
+(5, 3, 11880, 20, '2015-02-22', '2015-02-22 00:00:00', 2, 'AC'),
+(6, 3, 4860, 21, '2015-02-22', '2015-02-22 00:00:00', 2, 'AC'),
+(7, 3, 4329.84, 19, '2015-04-02', '2015-04-02 00:00:00', 2, 'AC'),
+(8, 3, 324, 24, '2015-04-03', '2015-04-03 00:00:00', 2, 'AC'),
+(9, 3, 32.4, 25, '2015-04-03', '2015-04-03 00:00:00', 2, 'AC'),
+(10, 4, 20.7, 26, '2015-04-03', '2015-04-03 00:00:00', 2, 'AC'),
+(11, 4, 20.7, 27, '2015-04-03', '2015-04-03 00:00:00', 2, 'AC');
 
 -- --------------------------------------------------------
 
@@ -754,11 +769,12 @@ INSERT INTO `estadocuentacliente` (`iEstadoCuentaCliente`, `iClienteId`, `fMonto
 -- Estructura de tabla para la tabla `estadocuentaproveedor`
 --
 
+DROP TABLE IF EXISTS `estadocuentaproveedor`;
 CREATE TABLE IF NOT EXISTS `estadocuentaproveedor` (
   `iEstadoCuentaProveedor` int(11) NOT NULL AUTO_INCREMENT,
   `fMontoPago` float NOT NULL,
   `dFechaPago` date DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
   `cEstadoCodigo` char(2) DEFAULT NULL,
   `iProveedorId` int(11) NOT NULL,
@@ -774,8 +790,8 @@ CREATE TABLE IF NOT EXISTS `estadocuentaproveedor` (
 --
 
 INSERT INTO `estadocuentaproveedor` (`iEstadoCuentaProveedor`, `fMontoPago`, `dFechaPago`, `dFechaInserta`, `iUsuarioInsertaId`, `cEstadoCodigo`, `iProveedorId`, `iIngresoProductoId`, `sVendedor`) VALUES
-(3, 12, '2015-02-16', '2015-02-16', 2, 'AC', 3, 25, NULL),
-(4, 20000, '2015-02-22', '2015-02-22', 2, 'AC', 3, 27, NULL);
+(3, 12, '2015-02-16', '2015-02-16 00:00:00', 2, 'AC', 3, 25, NULL),
+(4, 20000, '2015-02-22', '2015-02-22 00:00:00', 2, 'AC', 3, 27, NULL);
 
 -- --------------------------------------------------------
 
@@ -783,6 +799,7 @@ INSERT INTO `estadocuentaproveedor` (`iEstadoCuentaProveedor`, `fMontoPago`, `dF
 -- Estructura de tabla para la tabla `formapago`
 --
 
+DROP TABLE IF EXISTS `formapago`;
 CREATE TABLE IF NOT EXISTS `formapago` (
   `iFormaPago` int(11) NOT NULL AUTO_INCREMENT,
   `vFormaPagoDescripcion` varchar(45) DEFAULT NULL,
@@ -807,13 +824,14 @@ INSERT INTO `formapago` (`iFormaPago`, `vFormaPagoDescripcion`) VALUES
 -- Estructura de tabla para la tabla `impuestos`
 --
 
+DROP TABLE IF EXISTS `impuestos`;
 CREATE TABLE IF NOT EXISTS `impuestos` (
   `iImpuestosId` int(11) NOT NULL AUTO_INCREMENT,
   `vNombreImpuesto` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `vAplicacionImpuesto` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `vPorcentaje` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `iUsuarioInserta` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `cCodigoEstado` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`iImpuestosId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='os' AUTO_INCREMENT=4 ;
@@ -823,9 +841,9 @@ CREATE TABLE IF NOT EXISTS `impuestos` (
 --
 
 INSERT INTO `impuestos` (`iImpuestosId`, `vNombreImpuesto`, `vAplicacionImpuesto`, `vPorcentaje`, `iUsuarioInserta`, `dFechaInserta`, `cCodigoEstado`) VALUES
-(1, 'IGV 18% COMPRA', 'COMPRAS', '15', 0, '2015-01-02', 'AC'),
-(2, 'IGV 18% VENTA', 'VENTAS', '18', 0, '2014-05-08', 'AC'),
-(3, 'PERCEPCION IGV 2%', 'COMPRAS', '2', 0, '2014-05-08', 'AC');
+(1, 'IGV 18% COMPRA', 'COMPRAS', '15', 0, '2015-01-02 00:00:00', 'AC'),
+(2, 'IGV 18% VENTA', 'VENTAS', '18', 0, '2014-05-08 00:00:00', 'AC'),
+(3, 'PERCEPCION IGV 2%', 'COMPRAS', '2', 0, '2014-05-08 00:00:00', 'AC');
 
 -- --------------------------------------------------------
 
@@ -833,6 +851,7 @@ INSERT INTO `impuestos` (`iImpuestosId`, `vNombreImpuesto`, `vAplicacionImpuesto
 -- Estructura de tabla para la tabla `ingresoproducto`
 --
 
+DROP TABLE IF EXISTS `ingresoproducto`;
 CREATE TABLE IF NOT EXISTS `ingresoproducto` (
   `iIngresoProductoId` int(11) NOT NULL AUTO_INCREMENT,
   `nIngresoProductoNumero` varchar(25) NOT NULL,
@@ -881,15 +900,16 @@ INSERT INTO `ingresoproducto` (`iIngresoProductoId`, `nIngresoProductoNumero`, `
 -- Estructura de tabla para la tabla `ingresoproductodetalle`
 --
 
+DROP TABLE IF EXISTS `ingresoproductodetalle`;
 CREATE TABLE IF NOT EXISTS `ingresoproductodetalle` (
   `iIngresoProductoDetalleId` int(11) NOT NULL AUTO_INCREMENT,
   `fIngresoProductoDetallePrecio` float NOT NULL,
   `iIngresoProductoDetalleCantidad` int(11) NOT NULL,
   `fIngresoProductoDetalleTotal` float NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) NOT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   `iIngresoProductoId` int(11) NOT NULL,
   `iProductoId` int(11) NOT NULL,
@@ -905,10 +925,10 @@ CREATE TABLE IF NOT EXISTS `ingresoproductodetalle` (
 --
 
 INSERT INTO `ingresoproductodetalle` (`iIngresoProductoDetalleId`, `fIngresoProductoDetallePrecio`, `iIngresoProductoDetalleCantidad`, `fIngresoProductoDetalleTotal`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `iIngresoProductoId`, `iProductoId`, `fDescuento`, `iSubCta`) VALUES
-(21, 80, 100, 8000, 2, '2015-02-16', 0, NULL, 'AC', 24, 23, 0, NULL),
-(22, 80, 100, 8000, 2, '2015-02-16', 0, NULL, 'AC', 25, 23, 0, NULL),
-(23, 80, 100, 8000, 2, '2015-02-16', 0, NULL, 'AC', 26, 23, 0, NULL),
-(24, 20, 1000, 20000, 2, '2015-02-22', 0, NULL, 'AC', 27, 22, 0, NULL);
+(21, 80, 100, 8000, 2, '2015-02-16 00:00:00', 0, NULL, 'AC', 24, 23, 0, NULL),
+(22, 80, 100, 8000, 2, '2015-02-16 00:00:00', 0, NULL, 'AC', 25, 23, 0, NULL),
+(23, 80, 100, 8000, 2, '2015-02-16 00:00:00', 0, NULL, 'AC', 26, 23, 0, NULL),
+(24, 20, 1000, 20000, 2, '2015-02-22 00:00:00', 0, NULL, 'AC', 27, 22, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -916,6 +936,7 @@ INSERT INTO `ingresoproductodetalle` (`iIngresoProductoDetalleId`, `fIngresoProd
 -- Estructura de tabla para la tabla `ingresoproductodevolucion`
 --
 
+DROP TABLE IF EXISTS `ingresoproductodevolucion`;
 CREATE TABLE IF NOT EXISTS `ingresoproductodevolucion` (
   `iIngresoProductoDevolucionId` int(11) NOT NULL AUTO_INCREMENT,
   `iIngresoProductoId` int(11) DEFAULT NULL,
@@ -924,9 +945,9 @@ CREATE TABLE IF NOT EXISTS `ingresoproductodevolucion` (
   `fIngresoProductoDevSubTotal` float DEFAULT NULL,
   `fIngresoProductoDevIGV` float DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `vEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fDescuento` float DEFAULT NULL,
   `iPeriodoId` int(11) DEFAULT NULL,
@@ -944,6 +965,7 @@ CREATE TABLE IF NOT EXISTS `ingresoproductodevolucion` (
 -- Estructura de tabla para la tabla `ingresoproductodevoluciondetalle`
 --
 
+DROP TABLE IF EXISTS `ingresoproductodevoluciondetalle`;
 CREATE TABLE IF NOT EXISTS `ingresoproductodevoluciondetalle` (
   `iIngresoProductoDevolucionDetalleId` int(11) NOT NULL AUTO_INCREMENT,
   `iIngresoProductoDevolucionId` int(11) DEFAULT NULL,
@@ -952,9 +974,9 @@ CREATE TABLE IF NOT EXISTS `ingresoproductodevoluciondetalle` (
   `iIngresoProductoDevDetalleCantidad` int(11) DEFAULT NULL,
   `fIngresoProductoDevDetalleTotal` float DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fDescuento` float DEFAULT NULL,
   `iSubCta` int(11) DEFAULT NULL,
@@ -972,6 +994,7 @@ CREATE TABLE IF NOT EXISTS `ingresoproductodevoluciondetalle` (
 -- Estructura de tabla para la tabla `kardex`
 --
 
+DROP TABLE IF EXISTS `kardex`;
 CREATE TABLE IF NOT EXISTS `kardex` (
   `iKardexId` int(11) NOT NULL AUTO_INCREMENT,
   `iProductoId` int(11) DEFAULT NULL,
@@ -989,9 +1012,9 @@ CREATE TABLE IF NOT EXISTS `kardex` (
   `fPuExistencia` float DEFAULT NULL,
   `fTotalExistencia` float DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   `iPeriodoId` int(11) DEFAULT NULL,
   `iVentaDevolucionId` int(11) DEFAULT NULL,
@@ -1004,41 +1027,41 @@ CREATE TABLE IF NOT EXISTS `kardex` (
 --
 
 INSERT INTO `kardex` (`iKardexId`, `iProductoId`, `iIngresoProductoId`, `iVentaId`, `dFecha`, `vConcepto`, `iCantIngresoProducto`, `fPuIngresoProducto`, `fTotalngresoProducto`, `iCantVenta`, `fPuVenta`, `fTotalVenta`, `iCantExistencia`, `fPuExistencia`, `fTotalExistencia`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `iPeriodoId`, `iVentaDevolucionId`, `iProduccionId`) VALUES
-(225, 22, NULL, NULL, '2015-02-15', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 100, 20, 2000, 2, '2015-02-15', 0, NULL, 'IN', 18, NULL, NULL),
-(226, 23, NULL, NULL, '2015-02-15', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 50, 80, 4000, 2, '2015-02-15', 0, NULL, 'IN', 18, NULL, NULL),
-(227, 22, NULL, 17, '2015-02-16', 'VENTA SEGÚN FACTURA N° 0001-000001', 0, 0, 0, 100, 20, 2000, 0, 20, 0, 2, '2015-02-16', 0, NULL, 'IN', 18, NULL, NULL),
-(228, 23, NULL, 18, '2015-02-16', 'VENTA SEGÚN FACTURA N° 0001-02', 0, 0, 0, 1, 80, 80, 49, 80, 3920, 2, '2015-02-16', 0, NULL, 'IN', 18, NULL, NULL),
-(229, 23, 24, NULL, '2015-02-16', 'COMPRA SEGÚN BOLETA N° 00021', 100, 80, 8000, 0, 0, 0, 149, 80, 11920, 2, '2015-02-16', 0, NULL, 'IN', 18, NULL, NULL),
-(230, 23, 25, NULL, '2015-02-16', 'COMPRA SEGÚN BOLETA N° 00001-0001', 100, 80, 8000, 0, 0, 0, 249, 80, 19920, 2, '2015-02-16', 0, NULL, 'IN', 18, NULL, NULL),
-(231, 23, 26, NULL, '2015-02-16', 'COMPRA SEGÚN BOLETA N° 0002', 100, 80, 8000, 0, 0, 0, 349, 80, 27920, 2, '2015-02-16', 0, NULL, 'IN', 18, NULL, NULL),
-(232, 23, NULL, 22, '2015-02-22', 'VENTA SEGÚN FACTURA N° 0001-03', 0, 0, 0, 50, 80, 6400, 50, 80, 4000, 2, '2015-02-22', 2, '2015-04-02', 'IN', 18, NULL, NULL),
-(233, 22, 27, NULL, '2015-02-22', 'COMPRA SEGÚN BOLETA N° 0002', 1000, 20, 20000, 0, 0, 0, 1000, 20, 20000, 2, '2015-02-22', 0, NULL, 'IN', 18, NULL, NULL),
-(234, 23, NULL, 20, '2015-02-22', 'VENTA SEGÚN FACTURA N° 0001-04', 0, 0, 0, 100, 80, 8000, 149, 80, 11920, 2, '2015-02-22', 0, NULL, 'IN', 18, NULL, NULL),
-(235, 22, NULL, 20, '2015-02-22', 'VENTA SEGÚN FACTURA N° 0001-04', 0, 0, 0, 100, 20, 2000, 900, 20, 18000, 2, '2015-02-22', 0, NULL, 'IN', 18, NULL, NULL),
-(236, 22, NULL, 21, '2015-02-22', 'VENTA SEGÚN FACTURA N° 0001-05', 0, 0, 0, 150, 20, 3000, 750, 20, 15000, 2, '2015-02-22', 0, NULL, 'IN', 18, NULL, NULL),
-(237, 24, NULL, NULL, '2015-04-01', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 20, 2, 40, 2, '2015-04-01', 0, NULL, 'AC', 11, NULL, NULL),
-(238, 25, NULL, NULL, '2015-04-01', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 20, 99, 1980, 2, '2015-04-01', 0, NULL, 'AC', 11, NULL, NULL),
-(239, 26, NULL, NULL, '2015-04-01', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 100, 100, 10000, 2, '2015-04-01', 0, NULL, 'AC', 11, NULL, NULL),
-(240, 27, NULL, NULL, '2015-04-01', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 100, 99.1, 9910, 2, '2015-04-01', 0, NULL, 'AC', 11, NULL, NULL),
-(241, 28, NULL, NULL, '2015-04-01', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 100, 99, 9900, 2, '2015-04-01', 0, NULL, 'AC', 11, NULL, NULL),
-(242, 29, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 100, 99.1, 9910, 2, '2015-04-02', 0, NULL, 'AC', 11, NULL, NULL),
-(243, 30, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 20, 99, 1980, 2, '2015-04-02', 0, NULL, 'AC', 11, NULL, NULL),
-(244, 31, NULL, NULL, '2015-04-02', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 80, 15, 1200, 2, '2015-04-02', 2, '2015-04-03', 'AC', 11, NULL, NULL),
-(245, 32, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 30, 15, 450, 2, '2015-04-02', 2, '2015-04-02', 'AC', 11, NULL, NULL),
-(246, 33, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 10, 15, 150, 2, '2015-04-02', 2, '2015-04-02', 'AC', 11, NULL, NULL),
-(247, 34, NULL, NULL, '2015-04-02', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 85, 20, 1700, 2, '2015-04-02', 0, NULL, 'IN', 11, NULL, NULL),
-(248, 35, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 18, 15, 270, 2, '2015-04-02', 2, '2015-04-02', 'AC', 11, NULL, NULL),
-(249, 36, NULL, NULL, '2015-04-02', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 10, 10, 100, 2, '2015-04-02', 0, NULL, 'AC', 11, NULL, NULL),
-(250, 37, NULL, NULL, '2015-04-02', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 10, 10, 100, 2, '2015-04-02', 0, NULL, 'IN', 11, NULL, NULL),
-(251, 23, NULL, 22, '2015-04-02', 'VENTA SEGÚN FACTURA N° 0001-03', 0, 0, 0, 10, 80, 800, 40, 80, 3200, 2, '2015-04-02', 0, NULL, 'AC', 11, NULL, NULL),
-(252, 37, NULL, 23, '2015-04-02', 'VENTA SEGÚN FACTURA N° 0001-03', 0, 0, 0, 1, 10, 10, 9, 10, 90, 2, '2015-04-02', 0, NULL, 'AC', 11, NULL, NULL),
-(253, 38, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 95, 20, 1900, 2, '2015-04-02', 2, '2015-04-02', 'IN', 11, NULL, NULL),
-(254, 39, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 115, 20, 2300, 2, '2015-04-02', 2, '2015-04-03', 'AC', 11, NULL, NULL),
-(255, 40, NULL, NULL, '2015-04-03', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 199, 80, 15920, 2, '2015-04-03', 2, '2015-04-03', 'AC', 11, NULL, NULL),
-(256, 22, NULL, 24, '2015-04-03', 'VENTA SEGÚN FACTURA N° 0001-000006', 0, 0, 0, 10, 20, 200, 740, 20, 14800, 2, '2015-04-03', 0, NULL, 'IN', 11, NULL, NULL),
-(257, 22, NULL, 25, '2015-04-03', 'VENTA SEGÚN FACTURA N° 0001-000007', 0, 0, 0, 1, 20, 20, 739, 20, 14780, 2, '2015-04-03', 0, NULL, 'AC', 11, NULL, NULL),
-(258, 34, NULL, 26, '2015-04-03', 'VENTA SEGÚN FACTURA N° 0001-000008', 0, 0, 0, 1, 20, 20, 84, 20, 1680, 2, '2015-04-03', 0, NULL, 'AC', 11, NULL, NULL),
-(259, 38, NULL, 27, '2015-04-03', 'VENTA SEGÚN FACTURA N° 0001-000009', 0, 0, 0, 1, 20, 20, 94, 20, 1880, 2, '2015-04-03', 0, NULL, 'AC', 11, NULL, NULL);
+(225, 22, NULL, NULL, '2015-02-15', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 100, 20, 2000, 2, '2015-02-15 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(226, 23, NULL, NULL, '2015-02-15', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 50, 80, 4000, 2, '2015-02-15 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(227, 22, NULL, 17, '2015-02-16', 'VENTA SEGÚN FACTURA N° 0001-000001', 0, 0, 0, 100, 20, 2000, 0, 20, 0, 2, '2015-02-16 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(228, 23, NULL, 18, '2015-02-16', 'VENTA SEGÚN FACTURA N° 0001-02', 0, 0, 0, 1, 80, 80, 49, 80, 3920, 2, '2015-02-16 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(229, 23, 24, NULL, '2015-02-16', 'COMPRA SEGÚN BOLETA N° 00021', 100, 80, 8000, 0, 0, 0, 149, 80, 11920, 2, '2015-02-16 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(230, 23, 25, NULL, '2015-02-16', 'COMPRA SEGÚN BOLETA N° 00001-0001', 100, 80, 8000, 0, 0, 0, 249, 80, 19920, 2, '2015-02-16 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(231, 23, 26, NULL, '2015-02-16', 'COMPRA SEGÚN BOLETA N° 0002', 100, 80, 8000, 0, 0, 0, 349, 80, 27920, 2, '2015-02-16 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(232, 23, NULL, 22, '2015-02-22', 'VENTA SEGÚN FACTURA N° 0001-03', 0, 0, 0, 50, 80, 6400, 50, 80, 4000, 2, '2015-02-22 00:00:00', 2, '2015-04-02 00:00:00', 'IN', 18, NULL, NULL),
+(233, 22, 27, NULL, '2015-02-22', 'COMPRA SEGÚN BOLETA N° 0002', 1000, 20, 20000, 0, 0, 0, 1000, 20, 20000, 2, '2015-02-22 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(234, 23, NULL, 20, '2015-02-22', 'VENTA SEGÚN FACTURA N° 0001-04', 0, 0, 0, 100, 80, 8000, 149, 80, 11920, 2, '2015-02-22 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(235, 22, NULL, 20, '2015-02-22', 'VENTA SEGÚN FACTURA N° 0001-04', 0, 0, 0, 100, 20, 2000, 900, 20, 18000, 2, '2015-02-22 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(236, 22, NULL, 21, '2015-02-22', 'VENTA SEGÚN FACTURA N° 0001-05', 0, 0, 0, 150, 20, 3000, 750, 20, 15000, 2, '2015-02-22 00:00:00', 0, NULL, 'IN', 18, NULL, NULL),
+(237, 24, NULL, NULL, '2015-04-01', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 20, 2, 40, 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(238, 25, NULL, NULL, '2015-04-01', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 20, 99, 1980, 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(239, 26, NULL, NULL, '2015-04-01', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 100, 100, 10000, 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(240, 27, NULL, NULL, '2015-04-01', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 100, 99.1, 9910, 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(241, 28, NULL, NULL, '2015-04-01', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 100, 99, 9900, 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(242, 29, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 100, 99.1, 9910, 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(243, 30, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 20, 99, 1980, 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(244, 31, NULL, NULL, '2015-04-02', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 80, 15, 1200, 2, '2015-04-02 00:00:00', 2, '2015-04-03 00:00:00', 'AC', 11, NULL, NULL),
+(245, 32, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 30, 15, 450, 2, '2015-04-02 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 11, NULL, NULL),
+(246, 33, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 10, 15, 150, 2, '2015-04-02 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 11, NULL, NULL),
+(247, 34, NULL, NULL, '2015-04-02', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 85, 20, 1700, 2, '2015-04-02 00:00:00', 0, NULL, 'IN', 11, NULL, NULL),
+(248, 35, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 18, 15, 270, 2, '2015-04-02 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 11, NULL, NULL),
+(249, 36, NULL, NULL, '2015-04-02', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 10, 10, 100, 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(250, 37, NULL, NULL, '2015-04-02', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 10, 10, 100, 2, '2015-04-02 00:00:00', 0, NULL, 'IN', 11, NULL, NULL),
+(251, 23, NULL, 22, '2015-04-02', 'VENTA SEGÚN FACTURA N° 0001-03', 0, 0, 0, 10, 80, 800, 40, 80, 3200, 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(252, 37, NULL, 23, '2015-04-02', 'VENTA SEGÚN FACTURA N° 0001-03', 0, 0, 0, 1, 10, 10, 9, 10, 90, 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(253, 38, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 95, 20, 1900, 2, '2015-04-02 00:00:00', 2, '2015-04-02 00:00:00', 'IN', 11, NULL, NULL),
+(254, 39, NULL, NULL, '2015-04-02', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 115, 20, 2300, 2, '2015-04-02 00:00:00', 2, '2015-04-03 00:00:00', 'AC', 11, NULL, NULL),
+(255, 40, NULL, NULL, '2015-04-03', 'CONCEPTOS PRODUCCION', 0, 0, 0, 0, 0, 0, 199, 80, 15920, 2, '2015-04-03 00:00:00', 2, '2015-04-03 00:00:00', 'AC', 11, NULL, NULL),
+(256, 22, NULL, 24, '2015-04-03', 'VENTA SEGÚN FACTURA N° 0001-000006', 0, 0, 0, 10, 20, 200, 740, 20, 14800, 2, '2015-04-03 00:00:00', 0, NULL, 'IN', 11, NULL, NULL),
+(257, 22, NULL, 25, '2015-04-03', 'VENTA SEGÚN FACTURA N° 0001-000007', 0, 0, 0, 1, 20, 20, 739, 20, 14780, 2, '2015-04-03 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(258, 34, NULL, 26, '2015-04-03', 'VENTA SEGÚN FACTURA N° 0001-000008', 0, 0, 0, 1, 20, 20, 84, 20, 1680, 2, '2015-04-03 00:00:00', 0, NULL, 'AC', 11, NULL, NULL),
+(259, 38, NULL, 27, '2015-04-03', 'VENTA SEGÚN FACTURA N° 0001-000009', 0, 0, 0, 1, 20, 20, 94, 20, 1880, 2, '2015-04-03 00:00:00', 0, NULL, 'AC', 11, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1046,6 +1069,7 @@ INSERT INTO `kardex` (`iKardexId`, `iProductoId`, `iIngresoProductoId`, `iVentaI
 -- Estructura de tabla para la tabla `letracliente`
 --
 
+DROP TABLE IF EXISTS `letracliente`;
 CREATE TABLE IF NOT EXISTS `letracliente` (
   `iLetraClienteId` int(11) NOT NULL AUTO_INCREMENT,
   `iClienteId` int(11) DEFAULT NULL,
@@ -1059,8 +1083,8 @@ CREATE TABLE IF NOT EXISTS `letracliente` (
   `nImporte` decimal(10,2) DEFAULT NULL,
   `vImporteLetras` varchar(45) DEFAULT NULL,
   `iEmpresaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
   `vEstadoLetra` varchar(50) DEFAULT NULL,
   `cEstadoCodigo` char(5) DEFAULT NULL,
@@ -1076,7 +1100,7 @@ CREATE TABLE IF NOT EXISTS `letracliente` (
 --
 
 INSERT INTO `letracliente` (`iLetraClienteId`, `iClienteId`, `nNumeroLetra`, `nNumeroUnico`, `nRefGirador`, `vLugarGiro`, `dFechaGiro`, `dFechaVencimiento`, `dFechaProrroga`, `nImporte`, `vImporteLetras`, `iEmpresaId`, `dFechaInserta`, `dFechaActualiza`, `iUsuarioInsertaId`, `vEstadoLetra`, `cEstadoCodigo`, `dFechaPago`, `fImporteIntereses`, `nPlazoLetra`, `iVentaId`) VALUES
-(1, 3, 1, '', NULL, NULL, '2015-02-16', '2015-03-03', NULL, '86.40', NULL, NULL, '2015-02-16', NULL, 2, 'DEUDA', 'AC', NULL, NULL, NULL, 18);
+(1, 3, 1, '', NULL, NULL, '2015-02-16', '2015-03-03', NULL, '86.40', NULL, NULL, '2015-02-16 00:00:00', NULL, 2, 'DEUDA', 'AC', NULL, NULL, NULL, 18);
 
 -- --------------------------------------------------------
 
@@ -1084,6 +1108,7 @@ INSERT INTO `letracliente` (`iLetraClienteId`, `iClienteId`, `nNumeroLetra`, `nN
 -- Estructura de tabla para la tabla `letraproveedor`
 --
 
+DROP TABLE IF EXISTS `letraproveedor`;
 CREATE TABLE IF NOT EXISTS `letraproveedor` (
   `iletraProveedorId` int(11) NOT NULL AUTO_INCREMENT,
   `iProveedorId` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -1093,9 +1118,9 @@ CREATE TABLE IF NOT EXISTS `letraproveedor` (
   `dFechaVencimiento` date DEFAULT NULL,
   `dFechaProrroga` date DEFAULT NULL,
   `nImporte` float DEFAULT NULL,
-  `dfechaInserta` date DEFAULT NULL,
+  `dfechaInserta` datetime DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
   `vEstadoLetra` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `cEstadoCodigo` char(5) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -1111,7 +1136,7 @@ CREATE TABLE IF NOT EXISTS `letraproveedor` (
 --
 
 INSERT INTO `letraproveedor` (`iletraProveedorId`, `iProveedorId`, `nNumeroLetra`, `nNumeroUnico`, `dFechaGiro`, `dFechaVencimiento`, `dFechaProrroga`, `nImporte`, `dfechaInserta`, `iUsuarioInsertaId`, `dFechaActualiza`, `iUsuarioActualizaId`, `vEstadoLetra`, `cEstadoCodigo`, `dFechaPago`, `fImporteIntereses`, `nPlazoLetra`, `iIngresoProductoId`) VALUES
-(1, '3', 1, 0, '2015-02-16', '2015-03-03', NULL, 8000, '2015-02-16', 2, NULL, NULL, 'DEUDA', 'AC', NULL, NULL, NULL, 26);
+(1, '3', 1, 0, '2015-02-16', '2015-03-03', NULL, 8000, '2015-02-16 00:00:00', 2, NULL, NULL, 'DEUDA', 'AC', NULL, NULL, NULL, 26);
 
 -- --------------------------------------------------------
 
@@ -1119,15 +1144,16 @@ INSERT INTO `letraproveedor` (`iletraProveedorId`, `iProveedorId`, `nNumeroLetra
 -- Estructura de tabla para la tabla `librodiario`
 --
 
+DROP TABLE IF EXISTS `librodiario`;
 CREATE TABLE IF NOT EXISTS `librodiario` (
   `iLibroDiarioId` int(11) NOT NULL AUTO_INCREMENT,
   `iCuentasId` int(11) DEFAULT NULL,
   `fMonto` float DEFAULT NULL,
   `vTipoConcepto` varchar(1) COLLATE utf8_spanish_ci DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` varchar(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   `vConceptoGeneral` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
   `iKardexId` int(11) DEFAULT NULL,
@@ -1144,109 +1170,109 @@ CREATE TABLE IF NOT EXISTS `librodiario` (
 --
 
 INSERT INTO `librodiario` (`iLibroDiarioId`, `iCuentasId`, `fMonto`, `vTipoConcepto`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `vConceptoGeneral`, `iKardexId`, `iIngresoProductoId`, `iVentaId`, `vNumeroAsiento`, `cCajaBanco`, `iPeriodoId`) VALUES
-(40, 212, 2000, 'H', 2, '2015-02-15', 0, NULL, 'AC', 'CAPITAL ', 225, '0', NULL, NULL, NULL, 18),
-(41, 57, 2000, 'D', 2, '2015-02-15', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 225, '0', NULL, NULL, NULL, 18),
-(42, 212, 4000, 'H', 2, '2015-02-15', 0, NULL, 'AC', 'CAPITAL ', 226, '0', NULL, NULL, NULL, 18),
-(43, 57, 4000, 'D', 2, '2015-02-15', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 226, '0', NULL, NULL, NULL, 18),
-(44, 311, 2745.76, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000001', NULL, NULL, '17', 'ASIENTO N1', '0', 18),
-(45, 168, 494.24, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000001', NULL, NULL, '17', 'ASIENTO N1', '0', 18),
-(46, 8, 3240, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '17', 'ASIENTO N1', '0', 18),
-(47, 8, 3240, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '17', 'ASIENTO N1', '0', 18),
-(48, 2, 3240, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-03-03 Por el pago de la venta de mercaderia de la FACTURA NÃ‚Â°: 0001-000001', NULL, NULL, '17', 'ASIENTO N3', '1', 13),
-(49, 311, 73.22, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-02', NULL, NULL, '18', 'ASIENTO N1', '0', 18),
-(50, 168, 13.18, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-02', NULL, NULL, '18', 'ASIENTO N1', '0', 18),
-(51, 8, 86.4, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '18', 'ASIENTO N1', '0', 18),
-(52, 8, 86.4, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '18', 'ASIENTO N1', '0', 18),
-(53, 10, 86.4, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'Clientes/ letras por pagar / 2015-03-18 por el canje de la FACTURA N°: 0001-02', NULL, NULL, '18', 'ASIENTO N3', '0', 13),
-(54, 220, 6956.52, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'COMPRA/ Mercaderia / NRO de BOLETA: 00021', NULL, '24', NULL, 'ASIENTO N1', '0', 18),
-(55, 168, 1043.48, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de BOLETA: 00021', NULL, '24', NULL, 'ASIENTO N1', '0', 18),
-(56, 199, 8000, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar', NULL, '24', NULL, 'ASIENTO N1', '0', 18),
-(57, 57, 6956.52, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'MERCADERIA / Almacen / NRO deBOLETA: 00021', NULL, '24', NULL, 'ASIENTO N2', '0', 18),
-(58, 225, 6956.52, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'VARIACION DE EXISTENCIAS / Mercaderia / NRO deBOLETA: 00021', NULL, '24', NULL, 'ASIENTO N2', '0', 18),
-(59, 199, 8000, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar ', NULL, '24', NULL, 'ASIENTO 3', '0', 18),
-(60, 2, 8000, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-03-03 Por el pago del anticipo en la compra de mercaderÃƒÂ­a de la BOLETA NÃ‚Â°: 00021', NULL, '24', NULL, 'ASIENTO N3', '1', 13),
-(61, 220, 6956.52, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'COMPRA/ Mercaderia / NRO de BOLETA: 00001-0001', NULL, '25', NULL, 'ASIENTO N1', '0', 18),
-(62, 168, 1043.48, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de BOLETA: 00001-0001', NULL, '25', NULL, 'ASIENTO N1', '0', 18),
-(63, 199, 8000, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar', NULL, '25', NULL, 'ASIENTO N1', '0', 18),
-(64, 57, 6956.52, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'MERCADERIA / Almacen / NRO deBOLETA: 00001-0001', NULL, '25', NULL, 'ASIENTO N2', '0', 18),
-(65, 225, 6956.52, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'VARIACION DE EXISTENCIAS / Mercaderia / NRO deBOLETA: 00001-0001', NULL, '25', NULL, 'ASIENTO N2', '0', 18),
-(66, 199, 8000, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar ', NULL, '25', NULL, 'ASIENTO 3', '0', 18),
-(67, 2, 7988, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-03-30 Por el pago realizado de la compra al vencimiento de laBOLETA NÃ‚Â°: 00001-0001', NULL, '25', NULL, 'ASIENTO N3', '1', 13),
-(68, 220, 6956.52, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'COMPRA/ Mercaderia / NRO de BOLETA: 0002', NULL, '26', NULL, 'ASIENTO N1', '0', 18),
-(69, 168, 1043.48, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de BOLETA: 0002', NULL, '26', NULL, 'ASIENTO N1', '0', 18),
-(70, 199, 8000, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar', NULL, '26', NULL, 'ASIENTO N1', '0', 18),
-(71, 57, 6956.52, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'MERCADERIA / Almacen / NRO deBOLETA: 0002', NULL, '26', NULL, 'ASIENTO N2', '0', 18),
-(72, 225, 6956.52, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'VARIACION DE EXISTENCIAS / Mercaderia / NRO deBOLETA: 0002', NULL, '26', NULL, 'ASIENTO N2', '0', 18),
-(73, 199, 8000, 'D', 2, '2015-02-16', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar ', NULL, '26', NULL, 'ASIENTO 3', '0', 18),
-(74, 201, 8000, 'H', 2, '2015-02-16', NULL, NULL, 'AC', 'PROVEEDORES/ letras por pagar / 2015-03-18 por el canje de la BOLETA NÃ‚Â°: 0002', NULL, '26', NULL, 'ASIENTO N3', '0', 13),
-(75, 311, 7322.03, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-03', NULL, NULL, '19', 'ASIENTO N1', '0', 18),
-(76, 168, 1317.97, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-03', NULL, NULL, '19', 'ASIENTO N1', '0', 18),
-(77, 8, 8640, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '19', 'ASIENTO N1', '0', 18),
-(78, 8, 8640, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '19', 'ASIENTO N1', '0', 18),
-(79, 2, 8640, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-02-22 14:11:18 Por la venta de la mercaderia de la FACTURA N°: 0001-03', NULL, NULL, '19', 'ASIENTO N3', '1', 18),
-(80, 220, 17391.3, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'COMPRA/ Mercaderia / NRO de BOLETA: 0002', NULL, '27', NULL, 'ASIENTO N1', '0', 18),
-(81, 168, 2608.7, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de BOLETA: 0002', NULL, '27', NULL, 'ASIENTO N1', '0', 18),
-(82, 199, 20000, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar', NULL, '27', NULL, 'ASIENTO N1', '0', 18),
-(83, 57, 17391.3, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'MERCADERIA / Almacen / NRO deBOLETA: 0002', NULL, '27', NULL, 'ASIENTO N2', '0', 18),
-(84, 225, 17391.3, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'VARIACION DE EXISTENCIAS / Mercaderia / NRO deBOLETA: 0002', NULL, '27', NULL, 'ASIENTO N2', '0', 18),
-(85, 199, 20000, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar ', NULL, '27', NULL, 'ASIENTO 3', '0', 18),
-(86, 2, 20000, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-02-22 22:50:47 Por el pago realizado de la compra de la mercaderia de la BOLETA NÃ‚Â°: 0002', NULL, '27', NULL, 'ASIENTO N3', '1', 18),
-(87, 311, 10067.8, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-04', NULL, NULL, '20', 'ASIENTO N1', '0', 18),
-(88, 168, 1812.2, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-04', NULL, NULL, '20', 'ASIENTO N1', '0', 18),
-(89, 8, 11880, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '20', 'ASIENTO N1', '0', 18),
-(90, 8, 11880, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '20', 'ASIENTO N1', '0', 18),
-(91, 2, 11880, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-02-22 22:51:16 Por la venta de la mercaderia de la FACTURA N°: 0001-04', NULL, NULL, '20', 'ASIENTO N3', '1', 18),
-(92, 311, 4118.64, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-05', NULL, NULL, '21', 'ASIENTO N1', '0', 18),
-(93, 168, 741.36, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-05', NULL, NULL, '21', 'ASIENTO N1', '0', 18),
-(94, 8, 4860, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '21', 'ASIENTO N1', '0', 18),
-(95, 8, 4860, 'H', 2, '2015-02-22', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '21', 'ASIENTO N1', '0', 18),
-(96, 2, 4860, 'D', 2, '2015-02-22', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-02-22 22:56:20 Por la venta de la mercaderia de la FACTURA N°: 0001-05', NULL, NULL, '21', 'ASIENTO N3', '1', 18),
-(97, 212, 40, 'H', 2, '2015-04-01', 0, NULL, 'AC', 'CAPITAL ', 237, '0', NULL, NULL, NULL, 11),
-(98, 57, 40, 'D', 2, '2015-04-01', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 237, '0', NULL, NULL, NULL, 11),
-(99, 57, 1980, 'D', 2, '2015-04-01', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 238, '0', NULL, NULL, NULL, 11),
-(100, 212, 1980, 'H', 2, '2015-04-01', 0, NULL, 'AC', 'CAPITAL ', 238, '0', NULL, NULL, NULL, 11),
-(101, 212, 10000, 'H', 2, '2015-04-01', 0, NULL, 'AC', 'CAPITAL ', 239, '0', NULL, NULL, NULL, 11),
-(102, 57, 10000, 'D', 2, '2015-04-01', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 239, '0', NULL, NULL, NULL, 11),
-(103, 57, 9910, 'D', 2, '2015-04-01', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 240, '0', NULL, NULL, NULL, 11),
-(104, 212, 9910, 'H', 2, '2015-04-01', 0, NULL, 'AC', 'CAPITAL ', 240, '0', NULL, NULL, NULL, 11),
-(105, 57, 9900, 'D', 2, '2015-04-01', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 241, '0', NULL, NULL, NULL, 11),
-(106, 57, 9910, 'D', 2, '2015-04-02', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 242, '0', NULL, NULL, NULL, 11),
-(107, 57, 1980, 'D', 2, '2015-04-02', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 243, '0', NULL, NULL, NULL, 11),
-(108, 57, 1200, 'D', 2, '2015-04-02', 2, '2015-04-03', 'AC', 'MERCADERIA / ALmacen ', 244, '0', NULL, NULL, NULL, 11),
-(109, 212, 1200, 'H', 2, '2015-04-02', 2, '2015-04-03', 'AC', 'CAPITAL ', 244, '0', NULL, NULL, NULL, 11),
-(110, 57, 450, 'D', 2, '2015-04-02', 2, '2015-04-02', 'AC', 'MERCADERIA / ALmacen ', 245, '0', NULL, NULL, NULL, 11),
-(111, 57, 150, 'D', 2, '2015-04-02', 2, '2015-04-02', 'AC', 'MERCADERIA / ALmacen ', 246, '0', NULL, NULL, NULL, 11),
-(112, 212, 1700, 'H', 2, '2015-04-02', 0, NULL, 'AC', 'CAPITAL ', 247, '0', NULL, NULL, NULL, 11),
-(113, 57, 1700, 'D', 2, '2015-04-02', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 247, '0', NULL, NULL, NULL, 11),
-(114, 57, 270, 'D', 2, '2015-04-02', 2, '2015-04-02', 'AC', 'MERCADERIA / ALmacen ', 248, '0', NULL, NULL, NULL, 11),
-(115, 212, 100, 'H', 2, '2015-04-02', 0, NULL, 'AC', 'CAPITAL ', 249, '0', NULL, NULL, NULL, 11),
-(116, 57, 100, 'D', 2, '2015-04-02', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 249, '0', NULL, NULL, NULL, 11),
-(117, 212, 100, 'H', 2, '2015-04-02', 0, NULL, 'AC', 'CAPITAL ', 250, '0', NULL, NULL, NULL, 11),
-(118, 57, 100, 'D', 2, '2015-04-02', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 250, '0', NULL, NULL, NULL, 11),
-(119, 2, 4329.84, 'D', 2, '2015-04-02', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-02 18:23:16 Por el pago realizado de la venta de la mercaderia de la FACTURA NÃ‚Â°: 0001-03', NULL, NULL, '19', 'ASIENTO N3', '1', 11),
-(120, 57, 1900, 'D', 2, '2015-04-02', 2, '2015-04-02', 'AC', 'MERCADERIA / ALmacen ', 253, '0', NULL, NULL, NULL, 11),
-(121, 57, 2300, 'D', 2, '2015-04-02', 2, '2015-04-03', 'AC', 'MERCADERIA / ALmacen ', 254, '0', NULL, NULL, NULL, 11),
-(122, 57, 15920, 'D', 2, '2015-04-03', 2, '2015-04-03', 'AC', 'MERCADERIA / ALmacen ', 255, '0', NULL, NULL, NULL, 11),
-(123, 311, 274.58, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000006', NULL, NULL, '24', 'ASIENTO N1', '0', 11),
-(124, 168, 49.42, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000006', NULL, NULL, '24', 'ASIENTO N1', '0', 11),
-(125, 8, 324, 'D', 2, '2015-04-03', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '24', 'ASIENTO N1', '0', 11),
-(126, 8, 324, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '24', 'ASIENTO N1', '0', 11),
-(127, 2, 324, 'D', 2, '2015-04-03', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-03 15:30:10 Por la venta de la mercaderia de la FACTURA N°: 0001-000006', NULL, NULL, '24', 'ASIENTO N3', '1', 11),
-(128, 311, 27.46, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000007', NULL, NULL, '25', 'ASIENTO N1', '0', 11),
-(129, 168, 4.94, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000007', NULL, NULL, '25', 'ASIENTO N1', '0', 11),
-(130, 8, 32.4, 'D', 2, '2015-04-03', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '25', 'ASIENTO N1', '0', 11),
-(131, 8, 32.4, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '25', 'ASIENTO N1', '0', 11),
-(132, 2, 32.4, 'D', 2, '2015-04-03', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-03 15:30:44 Por la venta de la mercaderia de la FACTURA N°: 0001-000007', NULL, NULL, '25', 'ASIENTO N3', '1', 11),
-(133, 311, 17.54, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000008', NULL, NULL, '26', 'ASIENTO N1', '0', 11),
-(134, 168, 3.16, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000008', NULL, NULL, '26', 'ASIENTO N1', '0', 11),
-(135, 8, 20.7, 'D', 2, '2015-04-03', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '26', 'ASIENTO N1', '0', 11),
-(136, 8, 20.7, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '26', 'ASIENTO N1', '0', 11),
-(137, 2, 20.7, 'D', 2, '2015-04-03', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-03 15:30:56 Por la venta de la mercaderia de la FACTURA N°: 0001-000008', NULL, NULL, '26', 'ASIENTO N3', '1', 11),
-(138, 311, 17.54, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000009', NULL, NULL, '27', 'ASIENTO N1', '0', 11),
-(139, 168, 3.16, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000009', NULL, NULL, '27', 'ASIENTO N1', '0', 11),
-(140, 8, 20.7, 'D', 2, '2015-04-03', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '27', 'ASIENTO N1', '0', 11),
-(141, 8, 20.7, 'H', 2, '2015-04-03', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '27', 'ASIENTO N1', '0', 11),
-(142, 2, 20.7, 'D', 2, '2015-04-03', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-03 15:31:11 Por la venta de la mercaderia de la FACTURA N°: 0001-000009', NULL, NULL, '27', 'ASIENTO N3', '1', 11);
+(40, 212, 2000, 'H', 2, '2015-02-15 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 225, '0', NULL, NULL, NULL, 18),
+(41, 57, 2000, 'D', 2, '2015-02-15 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 225, '0', NULL, NULL, NULL, 18),
+(42, 212, 4000, 'H', 2, '2015-02-15 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 226, '0', NULL, NULL, NULL, 18),
+(43, 57, 4000, 'D', 2, '2015-02-15 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 226, '0', NULL, NULL, NULL, 18),
+(44, 311, 2745.76, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000001', NULL, NULL, '17', 'ASIENTO N1', '0', 18),
+(45, 168, 494.24, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000001', NULL, NULL, '17', 'ASIENTO N1', '0', 18),
+(46, 8, 3240, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '17', 'ASIENTO N1', '0', 18),
+(47, 8, 3240, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '17', 'ASIENTO N1', '0', 18),
+(48, 2, 3240, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-03-03 Por el pago de la venta de mercaderia de la FACTURA NÃ‚Â°: 0001-000001', NULL, NULL, '17', 'ASIENTO N3', '1', 13),
+(49, 311, 73.22, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-02', NULL, NULL, '18', 'ASIENTO N1', '0', 18),
+(50, 168, 13.18, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-02', NULL, NULL, '18', 'ASIENTO N1', '0', 18),
+(51, 8, 86.4, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '18', 'ASIENTO N1', '0', 18),
+(52, 8, 86.4, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '18', 'ASIENTO N1', '0', 18),
+(53, 10, 86.4, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'Clientes/ letras por pagar / 2015-03-18 por el canje de la FACTURA N°: 0001-02', NULL, NULL, '18', 'ASIENTO N3', '0', 13),
+(54, 220, 6956.52, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'COMPRA/ Mercaderia / NRO de BOLETA: 00021', NULL, '24', NULL, 'ASIENTO N1', '0', 18),
+(55, 168, 1043.48, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de BOLETA: 00021', NULL, '24', NULL, 'ASIENTO N1', '0', 18),
+(56, 199, 8000, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar', NULL, '24', NULL, 'ASIENTO N1', '0', 18),
+(57, 57, 6956.52, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'MERCADERIA / Almacen / NRO deBOLETA: 00021', NULL, '24', NULL, 'ASIENTO N2', '0', 18),
+(58, 225, 6956.52, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'VARIACION DE EXISTENCIAS / Mercaderia / NRO deBOLETA: 00021', NULL, '24', NULL, 'ASIENTO N2', '0', 18),
+(59, 199, 8000, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar ', NULL, '24', NULL, 'ASIENTO 3', '0', 18),
+(60, 2, 8000, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-03-03 Por el pago del anticipo en la compra de mercaderÃƒÂ­a de la BOLETA NÃ‚Â°: 00021', NULL, '24', NULL, 'ASIENTO N3', '1', 13),
+(61, 220, 6956.52, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'COMPRA/ Mercaderia / NRO de BOLETA: 00001-0001', NULL, '25', NULL, 'ASIENTO N1', '0', 18),
+(62, 168, 1043.48, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de BOLETA: 00001-0001', NULL, '25', NULL, 'ASIENTO N1', '0', 18),
+(63, 199, 8000, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar', NULL, '25', NULL, 'ASIENTO N1', '0', 18),
+(64, 57, 6956.52, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'MERCADERIA / Almacen / NRO deBOLETA: 00001-0001', NULL, '25', NULL, 'ASIENTO N2', '0', 18),
+(65, 225, 6956.52, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'VARIACION DE EXISTENCIAS / Mercaderia / NRO deBOLETA: 00001-0001', NULL, '25', NULL, 'ASIENTO N2', '0', 18),
+(66, 199, 8000, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar ', NULL, '25', NULL, 'ASIENTO 3', '0', 18),
+(67, 2, 7988, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-03-30 Por el pago realizado de la compra al vencimiento de laBOLETA NÃ‚Â°: 00001-0001', NULL, '25', NULL, 'ASIENTO N3', '1', 13),
+(68, 220, 6956.52, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'COMPRA/ Mercaderia / NRO de BOLETA: 0002', NULL, '26', NULL, 'ASIENTO N1', '0', 18),
+(69, 168, 1043.48, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de BOLETA: 0002', NULL, '26', NULL, 'ASIENTO N1', '0', 18),
+(70, 199, 8000, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar', NULL, '26', NULL, 'ASIENTO N1', '0', 18),
+(71, 57, 6956.52, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'MERCADERIA / Almacen / NRO deBOLETA: 0002', NULL, '26', NULL, 'ASIENTO N2', '0', 18),
+(72, 225, 6956.52, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'VARIACION DE EXISTENCIAS / Mercaderia / NRO deBOLETA: 0002', NULL, '26', NULL, 'ASIENTO N2', '0', 18),
+(73, 199, 8000, 'D', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar ', NULL, '26', NULL, 'ASIENTO 3', '0', 18),
+(74, 201, 8000, 'H', 2, '2015-02-16 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES/ letras por pagar / 2015-03-18 por el canje de la BOLETA NÃ‚Â°: 0002', NULL, '26', NULL, 'ASIENTO N3', '0', 13),
+(75, 311, 7322.03, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-03', NULL, NULL, '19', 'ASIENTO N1', '0', 18),
+(76, 168, 1317.97, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-03', NULL, NULL, '19', 'ASIENTO N1', '0', 18),
+(77, 8, 8640, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '19', 'ASIENTO N1', '0', 18),
+(78, 8, 8640, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '19', 'ASIENTO N1', '0', 18),
+(79, 2, 8640, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-02-22 14:11:18 Por la venta de la mercaderia de la FACTURA N°: 0001-03', NULL, NULL, '19', 'ASIENTO N3', '1', 18),
+(80, 220, 17391.3, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'COMPRA/ Mercaderia / NRO de BOLETA: 0002', NULL, '27', NULL, 'ASIENTO N1', '0', 18),
+(81, 168, 2608.7, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de BOLETA: 0002', NULL, '27', NULL, 'ASIENTO N1', '0', 18),
+(82, 199, 20000, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar', NULL, '27', NULL, 'ASIENTO N1', '0', 18),
+(83, 57, 17391.3, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'MERCADERIA / Almacen / NRO deBOLETA: 0002', NULL, '27', NULL, 'ASIENTO N2', '0', 18),
+(84, 225, 17391.3, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'VARIACION DE EXISTENCIAS / Mercaderia / NRO deBOLETA: 0002', NULL, '27', NULL, 'ASIENTO N2', '0', 18),
+(85, 199, 20000, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'PROVEEDORES / Facturas, boletas y otros comprobantes por pagar ', NULL, '27', NULL, 'ASIENTO 3', '0', 18),
+(86, 2, 20000, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-02-22 22:50:47 Por el pago realizado de la compra de la mercaderia de la BOLETA NÃ‚Â°: 0002', NULL, '27', NULL, 'ASIENTO N3', '1', 18),
+(87, 311, 10067.8, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-04', NULL, NULL, '20', 'ASIENTO N1', '0', 18),
+(88, 168, 1812.2, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-04', NULL, NULL, '20', 'ASIENTO N1', '0', 18),
+(89, 8, 11880, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '20', 'ASIENTO N1', '0', 18),
+(90, 8, 11880, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '20', 'ASIENTO N1', '0', 18),
+(91, 2, 11880, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-02-22 22:51:16 Por la venta de la mercaderia de la FACTURA N°: 0001-04', NULL, NULL, '20', 'ASIENTO N3', '1', 18),
+(92, 311, 4118.64, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-05', NULL, NULL, '21', 'ASIENTO N1', '0', 18),
+(93, 168, 741.36, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-05', NULL, NULL, '21', 'ASIENTO N1', '0', 18),
+(94, 8, 4860, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '21', 'ASIENTO N1', '0', 18),
+(95, 8, 4860, 'H', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '21', 'ASIENTO N1', '0', 18),
+(96, 2, 4860, 'D', 2, '2015-02-22 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-02-22 22:56:20 Por la venta de la mercaderia de la FACTURA N°: 0001-05', NULL, NULL, '21', 'ASIENTO N3', '1', 18),
+(97, 212, 40, 'H', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 237, '0', NULL, NULL, NULL, 11),
+(98, 57, 40, 'D', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 237, '0', NULL, NULL, NULL, 11),
+(99, 57, 1980, 'D', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 238, '0', NULL, NULL, NULL, 11),
+(100, 212, 1980, 'H', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 238, '0', NULL, NULL, NULL, 11),
+(101, 212, 10000, 'H', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 239, '0', NULL, NULL, NULL, 11),
+(102, 57, 10000, 'D', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 239, '0', NULL, NULL, NULL, 11),
+(103, 57, 9910, 'D', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 240, '0', NULL, NULL, NULL, 11),
+(104, 212, 9910, 'H', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 240, '0', NULL, NULL, NULL, 11),
+(105, 57, 9900, 'D', 2, '2015-04-01 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 241, '0', NULL, NULL, NULL, 11),
+(106, 57, 9910, 'D', 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 242, '0', NULL, NULL, NULL, 11),
+(107, 57, 1980, 'D', 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 243, '0', NULL, NULL, NULL, 11),
+(108, 57, 1200, 'D', 2, '2015-04-02 00:00:00', 2, '2015-04-03 00:00:00', 'AC', 'MERCADERIA / ALmacen ', 244, '0', NULL, NULL, NULL, 11),
+(109, 212, 1200, 'H', 2, '2015-04-02 00:00:00', 2, '2015-04-03 00:00:00', 'AC', 'CAPITAL ', 244, '0', NULL, NULL, NULL, 11),
+(110, 57, 450, 'D', 2, '2015-04-02 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 'MERCADERIA / ALmacen ', 245, '0', NULL, NULL, NULL, 11),
+(111, 57, 150, 'D', 2, '2015-04-02 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 'MERCADERIA / ALmacen ', 246, '0', NULL, NULL, NULL, 11),
+(112, 212, 1700, 'H', 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 247, '0', NULL, NULL, NULL, 11),
+(113, 57, 1700, 'D', 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 247, '0', NULL, NULL, NULL, 11),
+(114, 57, 270, 'D', 2, '2015-04-02 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 'MERCADERIA / ALmacen ', 248, '0', NULL, NULL, NULL, 11),
+(115, 212, 100, 'H', 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 249, '0', NULL, NULL, NULL, 11),
+(116, 57, 100, 'D', 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 249, '0', NULL, NULL, NULL, 11),
+(117, 212, 100, 'H', 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 'CAPITAL ', 250, '0', NULL, NULL, NULL, 11),
+(118, 57, 100, 'D', 2, '2015-04-02 00:00:00', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 250, '0', NULL, NULL, NULL, 11),
+(119, 2, 4329.84, 'D', 2, '2015-04-02 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-02 18:23:16 Por el pago realizado de la venta de la mercaderia de la FACTURA NÃ‚Â°: 0001-03', NULL, NULL, '19', 'ASIENTO N3', '1', 11),
+(120, 57, 1900, 'D', 2, '2015-04-02 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 'MERCADERIA / ALmacen ', 253, '0', NULL, NULL, NULL, 11),
+(121, 57, 2300, 'D', 2, '2015-04-02 00:00:00', 2, '2015-04-03 00:00:00', 'AC', 'MERCADERIA / ALmacen ', 254, '0', NULL, NULL, NULL, 11),
+(122, 57, 15920, 'D', 2, '2015-04-03 00:00:00', 2, '2015-04-03 00:00:00', 'AC', 'MERCADERIA / ALmacen ', 255, '0', NULL, NULL, NULL, 11),
+(123, 311, 274.58, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000006', NULL, NULL, '24', 'ASIENTO N1', '0', 11),
+(124, 168, 49.42, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000006', NULL, NULL, '24', 'ASIENTO N1', '0', 11),
+(125, 8, 324, 'D', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '24', 'ASIENTO N1', '0', 11),
+(126, 8, 324, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '24', 'ASIENTO N1', '0', 11),
+(127, 2, 324, 'D', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-03 15:30:10 Por la venta de la mercaderia de la FACTURA N°: 0001-000006', NULL, NULL, '24', 'ASIENTO N3', '1', 11),
+(128, 311, 27.46, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000007', NULL, NULL, '25', 'ASIENTO N1', '0', 11),
+(129, 168, 4.94, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000007', NULL, NULL, '25', 'ASIENTO N1', '0', 11),
+(130, 8, 32.4, 'D', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '25', 'ASIENTO N1', '0', 11),
+(131, 8, 32.4, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '25', 'ASIENTO N1', '0', 11),
+(132, 2, 32.4, 'D', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-03 15:30:44 Por la venta de la mercaderia de la FACTURA N°: 0001-000007', NULL, NULL, '25', 'ASIENTO N3', '1', 11),
+(133, 311, 17.54, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000008', NULL, NULL, '26', 'ASIENTO N1', '0', 11),
+(134, 168, 3.16, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000008', NULL, NULL, '26', 'ASIENTO N1', '0', 11),
+(135, 8, 20.7, 'D', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '26', 'ASIENTO N1', '0', 11),
+(136, 8, 20.7, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '26', 'ASIENTO N1', '0', 11),
+(137, 2, 20.7, 'D', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-03 15:30:56 Por la venta de la mercaderia de la FACTURA N°: 0001-000008', NULL, NULL, '26', 'ASIENTO N3', '1', 11),
+(138, 311, 17.54, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000009', NULL, NULL, '27', 'ASIENTO N1', '0', 11),
+(139, 168, 3.16, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000009', NULL, NULL, '27', 'ASIENTO N1', '0', 11),
+(140, 8, 20.7, 'D', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '27', 'ASIENTO N1', '0', 11),
+(141, 8, 20.7, 'H', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '27', 'ASIENTO N1', '0', 11),
+(142, 2, 20.7, 'D', 2, '2015-04-03 00:00:00', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-03 15:31:11 Por la venta de la mercaderia de la FACTURA N°: 0001-000009', NULL, NULL, '27', 'ASIENTO N3', '1', 11);
 
 -- --------------------------------------------------------
 
@@ -1254,6 +1280,7 @@ INSERT INTO `librodiario` (`iLibroDiarioId`, `iCuentasId`, `fMonto`, `vTipoConce
 -- Estructura de tabla para la tabla `libromayor`
 --
 
+DROP TABLE IF EXISTS `libromayor`;
 CREATE TABLE IF NOT EXISTS `libromayor` (
   `iLibroMayorId` int(11) NOT NULL AUTO_INCREMENT,
   `iCuentasId` int(11) DEFAULT NULL,
@@ -1274,6 +1301,7 @@ CREATE TABLE IF NOT EXISTS `libromayor` (
 -- Estructura de tabla para la tabla `menu`
 --
 
+DROP TABLE IF EXISTS `menu`;
 CREATE TABLE IF NOT EXISTS `menu` (
   `idMenu` int(11) NOT NULL AUTO_INCREMENT,
   `vMenu` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -1301,6 +1329,7 @@ INSERT INTO `menu` (`idMenu`, `vMenu`, `vCodigo`) VALUES
 -- Estructura de tabla para la tabla `menuaccion`
 --
 
+DROP TABLE IF EXISTS `menuaccion`;
 CREATE TABLE IF NOT EXISTS `menuaccion` (
   `iMenuAccionId` int(11) NOT NULL AUTO_INCREMENT,
   `idmenuOpciones` int(11) DEFAULT NULL,
@@ -1536,6 +1565,7 @@ INSERT INTO `menuaccion` (`iMenuAccionId`, `idmenuOpciones`, `vAccion`, `vCodigo
 -- Estructura de tabla para la tabla `menuopciones`
 --
 
+DROP TABLE IF EXISTS `menuopciones`;
 CREATE TABLE IF NOT EXISTS `menuopciones` (
   `idmenuOpciones` int(11) NOT NULL AUTO_INCREMENT,
   `idMenutitulo` int(11) DEFAULT NULL,
@@ -1600,6 +1630,7 @@ INSERT INTO `menuopciones` (`idmenuOpciones`, `idMenutitulo`, `vOpciones`, `vCod
 -- Estructura de tabla para la tabla `menutitulo`
 --
 
+DROP TABLE IF EXISTS `menutitulo`;
 CREATE TABLE IF NOT EXISTS `menutitulo` (
   `idmenuTitulo` int(11) NOT NULL,
   `idMenu` int(11) DEFAULT NULL,
@@ -1632,6 +1663,7 @@ INSERT INTO `menutitulo` (`idmenuTitulo`, `idMenu`, `vMenuTitulo`, `vCodigo`) VA
 -- Estructura de tabla para la tabla `mes`
 --
 
+DROP TABLE IF EXISTS `mes`;
 CREATE TABLE IF NOT EXISTS `mes` (
   `iMesId` int(11) NOT NULL AUTO_INCREMENT,
   `vMesDescripcion` varchar(45) NOT NULL,
@@ -1649,6 +1681,7 @@ CREATE TABLE IF NOT EXISTS `mes` (
 -- Estructura de tabla para la tabla `moneda`
 --
 
+DROP TABLE IF EXISTS `moneda`;
 CREATE TABLE IF NOT EXISTS `moneda` (
   `iMonedaId` int(11) NOT NULL AUTO_INCREMENT,
   `cModenaCodigo` varchar(3) NOT NULL,
@@ -1672,6 +1705,7 @@ INSERT INTO `moneda` (`iMonedaId`, `cModenaCodigo`, `vMonedaDescripcion`, `cEsta
 -- Estructura de tabla para la tabla `ocupacion`
 --
 
+DROP TABLE IF EXISTS `ocupacion`;
 CREATE TABLE IF NOT EXISTS `ocupacion` (
   `iOcupacionId` int(11) NOT NULL AUTO_INCREMENT,
   `cOcupacionCodigo` char(7) DEFAULT NULL,
@@ -1697,14 +1731,15 @@ INSERT INTO `ocupacion` (`iOcupacionId`, `cOcupacionCodigo`, `vOcupacionDescripc
 -- Estructura de tabla para la tabla `perfil`
 --
 
+DROP TABLE IF EXISTS `perfil`;
 CREATE TABLE IF NOT EXISTS `perfil` (
   `iPerfilId` int(11) NOT NULL AUTO_INCREMENT,
   `cPerfilCodigo` char(7) NOT NULL,
   `vPerfilDescripcion` varchar(45) NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   `cInventario` char(1) DEFAULT NULL,
   `cProveedor` char(1) DEFAULT NULL,
@@ -1721,11 +1756,11 @@ CREATE TABLE IF NOT EXISTS `perfil` (
 --
 
 INSERT INTO `perfil` (`iPerfilId`, `cPerfilCodigo`, `vPerfilDescripcion`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `cInventario`, `cProveedor`, `cClientes`, `cCompras`, `cVentas`, `cEstadisticas`, `cMantenimiento`) VALUES
-(2, 'PER02', 'SISTEMAS', 12, 18, '2013-02-02', '2013-02-15', 'AC', '1', '1', '1', '1', '1', '1', '1'),
-(3, 'PER03', 'ADMINISTRADOR', 0, NULL, NULL, '2013-02-15', 'AC', '1', '1', '1', '1', '0', '0', '1'),
-(4, 'PER04', 'CONTADORES', 0, NULL, NULL, '2013-02-14', 'AC', '0', '1', '1', '0', '1', '0', '1'),
-(5, 'PER05', 'CLIENTE EXTERNO', 0, NULL, NULL, '2013-01-04', 'AC', '0', '0', '1', '0', '0', '0', '1'),
-(6, 'PE00006', 'LO', 0, 0, '2015-01-01', NULL, 'IN', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(2, 'PER02', 'SISTEMAS', 12, 18, '2013-02-02 00:00:00', '2013-02-15 00:00:00', 'AC', '1', '1', '1', '1', '1', '1', '1'),
+(3, 'PER03', 'ADMINISTRADOR', 0, NULL, NULL, '2013-02-15 00:00:00', 'AC', '1', '1', '1', '1', '0', '0', '1'),
+(4, 'PER04', 'CONTADORES', 0, NULL, NULL, '2013-02-14 00:00:00', 'AC', '0', '1', '1', '0', '1', '0', '1'),
+(5, 'PER05', 'CLIENTE EXTERNO', 0, NULL, NULL, '2013-01-04 00:00:00', 'AC', '0', '0', '1', '0', '0', '0', '1'),
+(6, 'PE00006', 'LO', 0, 0, '2015-01-01 00:00:00', NULL, 'IN', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1733,6 +1768,7 @@ INSERT INTO `perfil` (`iPerfilId`, `cPerfilCodigo`, `vPerfilDescripcion`, `iUsua
 -- Estructura de tabla para la tabla `periodo`
 --
 
+DROP TABLE IF EXISTS `periodo`;
 CREATE TABLE IF NOT EXISTS `periodo` (
   `iPeriodoId` int(11) NOT NULL AUTO_INCREMENT,
   `vCodigoPeriodo` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -1741,8 +1777,8 @@ CREATE TABLE IF NOT EXISTS `periodo` (
   `dFechaFin` date DEFAULT NULL,
   `iUsuarioInserta` int(11) DEFAULT NULL,
   `iUsuarioActualiza` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cCodigoEstado` varchar(10) COLLATE utf8_spanish_ci DEFAULT NULL,
   `iEjercicioFiscalId` int(11) DEFAULT NULL,
   PRIMARY KEY (`iPeriodoId`)
@@ -1772,6 +1808,7 @@ INSERT INTO `periodo` (`iPeriodoId`, `vCodigoPeriodo`, `vNombrePeriodo`, `dFecha
 -- Estructura de tabla para la tabla `permisos`
 --
 
+DROP TABLE IF EXISTS `permisos`;
 CREATE TABLE IF NOT EXISTS `permisos` (
   `idpermisos` int(11) NOT NULL AUTO_INCREMENT,
   `iUsuarioId` int(11) DEFAULT NULL,
@@ -1940,6 +1977,7 @@ INSERT INTO `permisos` (`idpermisos`, `iUsuarioId`, `vCodigoMenu`, `cEstado`) VA
 -- Estructura de tabla para la tabla `personal`
 --
 
+DROP TABLE IF EXISTS `personal`;
 CREATE TABLE IF NOT EXISTS `personal` (
   `iPersonalId` int(11) NOT NULL AUTO_INCREMENT,
   `cPersonalCodigo` char(7) NOT NULL,
@@ -1949,8 +1987,8 @@ CREATE TABLE IF NOT EXISTS `personal` (
   `nPersonalNumeroDocumento` decimal(10,0) NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaAcualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaAcualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) DEFAULT NULL,
   `iSexoId` int(11) NOT NULL,
   `iTipoDocumentoId` int(11) NOT NULL,
@@ -1968,11 +2006,11 @@ CREATE TABLE IF NOT EXISTS `personal` (
 --
 
 INSERT INTO `personal` (`iPersonalId`, `cPersonalCodigo`, `vPersonalNombres`, `vPersonalApellidoPaterno`, `vPersonalApellidoMaterno`, `nPersonalNumeroDocumento`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaAcualiza`, `cEstadoCodigo`, `iSexoId`, `iTipoDocumentoId`, `iAreaId`, `iOcupacionId`, `fSueldo`) VALUES
-(2, 'PER02', 'LIZ ', 'FERANADEZ', 'MELGAREJO', '12345678', 0, NULL, NULL, '2013-02-04', 'AC', 1, 1, 1, 1, NULL),
-(13, 'P003', 'DANIEL', 'CARPIO', 'NARVARTE', '25948454', 0, 0, NULL, '2014-03-13', 'AC', 2, 1, 3, 1, NULL),
-(14, 'SF001', 'SARITA', 'FERNANDEZ', 'MELGAREJO', '574456454', 0, 0, '2014-02-15', NULL, 'AC', 1, 1, 3, 1, NULL),
-(15, 'PE00015', 'DIEGO', 'GONZALES', 'VALDEZ', '46521231', 0, 0, '2015-01-01', NULL, 'AC', 2, 1, 3, 1, NULL),
-(16, 'PE00016', 'CAMILA', 'GONZALES', 'FERNANDEZ', '154515', 0, 0, '2015-01-27', NULL, 'AC', 1, 1, 1, 1, 5500);
+(2, 'PER02', 'LIZ ', 'FERANADEZ', 'MELGAREJO', '12345678', 0, NULL, NULL, '2013-02-04 00:00:00', 'AC', 1, 1, 1, 1, NULL),
+(13, 'P003', 'DANIEL', 'CARPIO', 'NARVARTE', '25948454', 0, 0, NULL, '2014-03-13 00:00:00', 'AC', 2, 1, 3, 1, NULL),
+(14, 'SF001', 'SARITA', 'FERNANDEZ', 'MELGAREJO', '574456454', 0, 0, '2014-02-15 00:00:00', NULL, 'AC', 1, 1, 3, 1, NULL),
+(15, 'PE00015', 'DIEGO', 'GONZALES', 'VALDEZ', '46521231', 0, 0, '2015-01-01 00:00:00', NULL, 'AC', 2, 1, 3, 1, NULL),
+(16, 'PE00016', 'CAMILA', 'GONZALES', 'FERNANDEZ', '154515', 0, 0, '2015-01-27 00:00:00', NULL, 'AC', 1, 1, 1, 1, 5500);
 
 -- --------------------------------------------------------
 
@@ -1980,6 +2018,7 @@ INSERT INTO `personal` (`iPersonalId`, `cPersonalCodigo`, `vPersonalNombres`, `v
 -- Estructura de tabla para la tabla `planilla`
 --
 
+DROP TABLE IF EXISTS `planilla`;
 CREATE TABLE IF NOT EXISTS `planilla` (
   `iPlanillaId` int(11) NOT NULL AUTO_INCREMENT,
   `iPersonalId` int(11) DEFAULT NULL,
@@ -2021,6 +2060,7 @@ CREATE TABLE IF NOT EXISTS `planilla` (
 -- Estructura de tabla para la tabla `poblacion`
 --
 
+DROP TABLE IF EXISTS `poblacion`;
 CREATE TABLE IF NOT EXISTS `poblacion` (
   `iPoblacionId` int(10) NOT NULL AUTO_INCREMENT,
   `cCodigo` char(6) NOT NULL,
@@ -2455,6 +2495,7 @@ INSERT INTO `poblacion` (`iPoblacionId`, `cCodigo`, `vDescripcion`) VALUES
 -- Estructura de tabla para la tabla `preciosproducto`
 --
 
+DROP TABLE IF EXISTS `preciosproducto`;
 CREATE TABLE IF NOT EXISTS `preciosproducto` (
   `iPreciosProductoId` int(11) NOT NULL AUTO_INCREMENT,
   `iProductoId` int(11) DEFAULT NULL,
@@ -2502,6 +2543,7 @@ INSERT INTO `preciosproducto` (`iPreciosProductoId`, `iProductoId`, `iCantidadSt
 -- Estructura de tabla para la tabla `produccion`
 --
 
+DROP TABLE IF EXISTS `produccion`;
 CREATE TABLE IF NOT EXISTS `produccion` (
   `iProduccionId` int(11) NOT NULL AUTO_INCREMENT,
   `iCantidad` int(11) DEFAULT NULL,
@@ -2530,6 +2572,7 @@ INSERT INTO `produccion` (`iProduccionId`, `iCantidad`, `fCostoUni`, `fCostoTota
 -- Estructura de tabla para la tabla `producciondetalle`
 --
 
+DROP TABLE IF EXISTS `producciondetalle`;
 CREATE TABLE IF NOT EXISTS `producciondetalle` (
   `iProduccionDetalleId` int(11) NOT NULL AUTO_INCREMENT,
   `iProductoId` int(11) DEFAULT NULL,
@@ -2562,6 +2605,7 @@ INSERT INTO `producciondetalle` (`iProduccionDetalleId`, `iProductoId`, `iCantid
 -- Estructura de tabla para la tabla `producto`
 --
 
+DROP TABLE IF EXISTS `producto`;
 CREATE TABLE IF NOT EXISTS `producto` (
   `iProductoId` int(11) NOT NULL AUTO_INCREMENT,
   `cProductoCodigo` char(7) NOT NULL,
@@ -2575,8 +2619,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `fProductoPrecioCompra` float NOT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) DEFAULT NULL,
   `iUnidadMedidadId` int(11) DEFAULT NULL,
   `iCategoriaId` int(11) DEFAULT NULL,
@@ -2598,18 +2642,18 @@ CREATE TABLE IF NOT EXISTS `producto` (
 --
 
 INSERT INTO `producto` (`iProductoId`, `cProductoCodigo`, `vProductoNombre`, `vProductoCapacidad`, `iProductoStockCantidad`, `iProductoStockMaximo`, `iProductoStockMinimo`, `fProductoPrecioVenta`, `fProductoGanancia`, `fProductoPrecioCompra`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `iUnidadMedidadId`, `iCategoriaId`, `iProduccionId`, `iUnidadMedidadIdC`, `iMonedaId`, `vUnidadMedidaDescripcionC`, `iSubCategoriaId`, `vfoto`, `fProductoDescuento`) VALUES
-(22, 'PR00001', 'PRODUCTO 01', '2', 739, 150, 50, 36, 80, 20, 2, 0, '2015-02-15', NULL, 'AC', 1, 15, NULL, 0, 1, '', 1, '', 10),
-(23, 'PR00023', 'PRODUCTO02', '1', 199, 500, 100, 96, 20, 80, 2, 0, '2015-02-15', NULL, 'AC', 1, 15, NULL, 1, 1, 'KILOGRAMO', 1, '', 10),
-(31, 'PR00024', 'MATERIA PRIMA', '5', 40, 0, 50, 0, 0, 15, 2, 2, '2015-04-02', '2015-04-03', 'AC', 7, 16, NULL, 0, 1, NULL, NULL, NULL, 0),
-(32, 'PR00032', 'PRUEBA -30', '14', 30, 0, 0, 18, 20, 15, 2, 2, '2015-04-02', '2015-04-02', 'AC', 7, 15, 22, 0, 1, '', 1, NULL, 0),
-(33, 'PR00033', 'PRUEBA -10', '21', 10, 0, 0, 15.3, 2, 15, 2, 2, '2015-04-02', '2015-04-02', 'AC', 7, 15, 23, 0, 1, '', 1, NULL, 0),
-(34, 'PR00034', '5855', '22', 84, 0, 100, 23, 15, 20, 2, 0, '2015-04-02', NULL, 'AC', 7, 15, NULL, 0, 2, '', 1, '', 10),
-(35, 'PR00033', 'PRUEBA -10', '21', 18, 0, 0, 15.3, 2, 15, 2, 2, '2015-04-02', '2015-04-02', 'AC', 7, 15, 24, 0, 1, '', 1, NULL, 0),
-(36, 'PR00036', 'MA DOLARES', '5', 0, 10, 10, 0, 0, 10, 2, 0, '2015-04-02', NULL, 'AC', 7, 16, NULL, 0, 2, NULL, NULL, NULL, 0),
-(37, 'PR00037', 'P DOLARES', '20', 9, 0, 100, 12, 20, 10, 2, 0, '2015-04-02', NULL, 'AC', 3, NULL, NULL, 2, NULL, 'LITRO', NULL, '', 18),
-(38, 'PR00034', '5855', '22', 94, 0, 0, 23, 15, 20, 2, 2, '2015-04-02', '2015-04-02', 'AC', 7, 15, 25, 0, 2, '', 1, NULL, 10),
-(39, 'PR00034', '5855', '22', 115, 0, 0, 23, 15, 20, 2, 2, '2015-04-02', '2015-04-03', 'AC', 7, 15, 26, 0, 2, '', 1, NULL, 10),
-(40, 'PR00023', 'PRODUCTO02', '1', 199, 0, 0, 96, 20, 80, 2, 2, '2015-04-03', '2015-04-03', 'AC', 1, 15, 27, 1, 1, '', 1, NULL, 10);
+(22, 'PR00001', 'PRODUCTO 01', '2', 739, 150, 50, 36, 80, 20, 2, 0, '2015-02-15 00:00:00', NULL, 'AC', 1, 15, NULL, 0, 1, '', 1, '', 10),
+(23, 'PR00023', 'PRODUCTO02', '1', 199, 500, 100, 96, 20, 80, 2, 0, '2015-02-15 00:00:00', NULL, 'AC', 1, 15, NULL, 1, 1, 'KILOGRAMO', 1, '', 10),
+(31, 'PR00024', 'MATERIA PRIMA', '5', 40, 0, 50, 0, 0, 15, 2, 2, '2015-04-02 00:00:00', '2015-04-03 00:00:00', 'AC', 7, 16, NULL, 0, 1, NULL, NULL, NULL, 0),
+(32, 'PR00032', 'PRUEBA -30', '14', 30, 0, 0, 18, 20, 15, 2, 2, '2015-04-02 00:00:00', '2015-04-02 00:00:00', 'AC', 7, 15, 22, 0, 1, '', 1, NULL, 0),
+(33, 'PR00033', 'PRUEBA -10', '21', 10, 0, 0, 15.3, 2, 15, 2, 2, '2015-04-02 00:00:00', '2015-04-02 00:00:00', 'AC', 7, 15, 23, 0, 1, '', 1, NULL, 0),
+(34, 'PR00034', '5855', '22', 84, 0, 100, 23, 15, 20, 2, 0, '2015-04-02 00:00:00', NULL, 'AC', 7, 15, NULL, 0, 2, '', 1, '', 10),
+(35, 'PR00033', 'PRUEBA -10', '21', 18, 0, 0, 15.3, 2, 15, 2, 2, '2015-04-02 00:00:00', '2015-04-02 00:00:00', 'AC', 7, 15, 24, 0, 1, '', 1, NULL, 0),
+(36, 'PR00036', 'MA DOLARES', '5', 0, 10, 10, 0, 0, 10, 2, 0, '2015-04-02 00:00:00', NULL, 'AC', 7, 16, NULL, 0, 2, NULL, NULL, NULL, 0),
+(37, 'PR00037', 'P DOLARES', '20', 9, 0, 100, 12, 20, 10, 2, 0, '2015-04-02 00:00:00', NULL, 'AC', 3, NULL, NULL, 2, NULL, 'LITRO', NULL, '', 18),
+(38, 'PR00034', '5855', '22', 94, 0, 0, 23, 15, 20, 2, 2, '2015-04-02 00:00:00', '2015-04-02 00:00:00', 'AC', 7, 15, 25, 0, 2, '', 1, NULL, 10),
+(39, 'PR00034', '5855', '22', 115, 0, 0, 23, 15, 20, 2, 2, '2015-04-02 00:00:00', '2015-04-03 00:00:00', 'AC', 7, 15, 26, 0, 2, '', 1, NULL, 10),
+(40, 'PR00023', 'PRODUCTO02', '1', 199, 0, 0, 96, 20, 80, 2, 2, '2015-04-03 00:00:00', '2015-04-03 00:00:00', 'AC', 1, 15, 27, 1, 1, '', 1, NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -2617,6 +2661,7 @@ INSERT INTO `producto` (`iProductoId`, `cProductoCodigo`, `vProductoNombre`, `vP
 -- Estructura de tabla para la tabla `proveedor`
 --
 
+DROP TABLE IF EXISTS `proveedor`;
 CREATE TABLE IF NOT EXISTS `proveedor` (
   `iProveedorId` int(11) NOT NULL AUTO_INCREMENT,
   `cProveedorCodigo` char(7) NOT NULL,
@@ -2626,8 +2671,8 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
   `nProveedorNumeroDocumento` decimal(11,0) NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
   `iUsuarioModificaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   `iPoblacionId` varchar(6) NOT NULL,
   PRIMARY KEY (`iProveedorId`)
@@ -2638,7 +2683,7 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
 --
 
 INSERT INTO `proveedor` (`iProveedorId`, `cProveedorCodigo`, `vProveedorRazonSocial`, `vProveedorDireccion`, `vProveedorTelefono`, `nProveedorNumeroDocumento`, `iUsuarioInsertaId`, `iUsuarioModificaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `iPoblacionId`) VALUES
-(3, 'PR00001', 'PRODUCTOS QUIMICOS SA', 'AB.LKF', '6454', '20512459955', 2, 0, '2015-02-16', NULL, 'AC', '140501');
+(3, 'PR00001', 'PRODUCTOS QUIMICOS SA', 'AB.LKF', '6454', '20512459955', 2, 0, '2015-02-16 00:00:00', NULL, 'AC', '140501');
 
 -- --------------------------------------------------------
 
@@ -2646,6 +2691,7 @@ INSERT INTO `proveedor` (`iProveedorId`, `cProveedorCodigo`, `vProveedorRazonSoc
 -- Estructura de tabla para la tabla `salidaproducto`
 --
 
+DROP TABLE IF EXISTS `salidaproducto`;
 CREATE TABLE IF NOT EXISTS `salidaproducto` (
   `iSalidaProductoId` int(11) NOT NULL AUTO_INCREMENT,
   `vSalidaProductoMotivo` varchar(45) NOT NULL,
@@ -2654,8 +2700,8 @@ CREATE TABLE IF NOT EXISTS `salidaproducto` (
   `cSalidaProductoAutorizado` char(1) NOT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) DEFAULT NULL,
   `iProveedorId` int(11) NOT NULL,
   `iProductoId` int(11) NOT NULL,
@@ -2675,6 +2721,7 @@ CREATE TABLE IF NOT EXISTS `salidaproducto` (
 -- Estructura de tabla para la tabla `session`
 --
 
+DROP TABLE IF EXISTS `session`;
 CREATE TABLE IF NOT EXISTS `session` (
   `iSessionId` int(11) NOT NULL AUTO_INCREMENT,
   `dSessionFechaInicio` date NOT NULL,
@@ -2696,6 +2743,7 @@ CREATE TABLE IF NOT EXISTS `session` (
 -- Estructura de tabla para la tabla `sexo`
 --
 
+DROP TABLE IF EXISTS `sexo`;
 CREATE TABLE IF NOT EXISTS `sexo` (
   `iSexoId` int(11) NOT NULL AUTO_INCREMENT,
   `cSexoCodigo` char(1) NOT NULL,
@@ -2718,6 +2766,7 @@ INSERT INTO `sexo` (`iSexoId`, `cSexoCodigo`, `vSexoDescripcion`, `cEstadoCodigo
 -- Estructura de tabla para la tabla `subcategoria`
 --
 
+DROP TABLE IF EXISTS `subcategoria`;
 CREATE TABLE IF NOT EXISTS `subcategoria` (
   `iSubCategoriaId` int(11) NOT NULL AUTO_INCREMENT,
   `iCategoriaId` int(11) DEFAULT NULL,
@@ -2725,8 +2774,8 @@ CREATE TABLE IF NOT EXISTS `subcategoria` (
   `vSubCategoriaDescripcion` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`iSubCategoriaId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2 ;
@@ -2736,7 +2785,7 @@ CREATE TABLE IF NOT EXISTS `subcategoria` (
 --
 
 INSERT INTO `subcategoria` (`iSubCategoriaId`, `iCategoriaId`, `cSubCategoriaCodigo`, `vSubCategoriaDescripcion`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`) VALUES
-(1, 15, 'SU00001', 'THINNER', 2, 0, '2015-02-15', NULL, 'AC');
+(1, 15, 'SU00001', 'THINNER', 2, 0, '2015-02-15 00:00:00', NULL, 'AC');
 
 -- --------------------------------------------------------
 
@@ -2744,6 +2793,7 @@ INSERT INTO `subcategoria` (`iSubCategoriaId`, `iCategoriaId`, `cSubCategoriaCod
 -- Estructura de tabla para la tabla `sucursal`
 --
 
+DROP TABLE IF EXISTS `sucursal`;
 CREATE TABLE IF NOT EXISTS `sucursal` (
   `iSucursalId` int(11) NOT NULL AUTO_INCREMENT,
   `vSucursalNombre` varchar(45) NOT NULL,
@@ -2751,8 +2801,8 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
   `vSucursalTelefono` varchar(45) NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date NOT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime NOT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   `cSucursalCodigo` char(7) DEFAULT NULL,
   PRIMARY KEY (`iSucursalId`)
@@ -2763,9 +2813,9 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
 --
 
 INSERT INTO `sucursal` (`iSucursalId`, `vSucursalNombre`, `vSucursalDireccion`, `vSucursalTelefono`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `cSucursalCodigo`) VALUES
-(2, 'Macroquimica del Peru', 'Av. pachacutec', '5485540', 1, NULL, '2010-12-18', NULL, 'Ac', NULL),
-(3, 'LOCAL AVIACION', 'av.klskld', '55544', 0, 0, '2015-01-26', '2015-01-31', 'AC', 'SU00003'),
-(4, 'LOCAL SURCO', 'surco viejo', '54852', 0, 0, '2015-01-31', NULL, 'AC', 'SU00004');
+(2, 'Macroquimica del Peru', 'Av. pachacutec', '5485540', 1, NULL, '2010-12-18 00:00:00', NULL, 'Ac', NULL),
+(3, 'LOCAL AVIACION', 'av.klskld', '55544', 0, 0, '2015-01-26 00:00:00', '2015-01-31 00:00:00', 'AC', 'SU00003'),
+(4, 'LOCAL SURCO', 'surco viejo', '54852', 0, 0, '2015-01-31 00:00:00', NULL, 'AC', 'SU00004');
 
 -- --------------------------------------------------------
 
@@ -2773,6 +2823,7 @@ INSERT INTO `sucursal` (`iSucursalId`, `vSucursalNombre`, `vSucursalDireccion`, 
 -- Estructura de tabla para la tabla `tipodocumento`
 --
 
+DROP TABLE IF EXISTS `tipodocumento`;
 CREATE TABLE IF NOT EXISTS `tipodocumento` (
   `iTipoDocumentoId` int(11) NOT NULL AUTO_INCREMENT,
   `cTipoDocumentoCodigo` char(2) NOT NULL,
@@ -2800,6 +2851,7 @@ INSERT INTO `tipodocumento` (`iTipoDocumentoId`, `cTipoDocumentoCodigo`, `vTipoD
 -- Estructura de tabla para la tabla `tipodocumentogestion`
 --
 
+DROP TABLE IF EXISTS `tipodocumentogestion`;
 CREATE TABLE IF NOT EXISTS `tipodocumentogestion` (
   `iTipoDocumentoGestionId` int(11) NOT NULL AUTO_INCREMENT,
   `cTipoDocumentoGestionCodigo` char(2) NOT NULL,
@@ -2823,6 +2875,7 @@ INSERT INTO `tipodocumentogestion` (`iTipoDocumentoGestionId`, `cTipoDocumentoGe
 -- Estructura de tabla para la tabla `unidadmedida`
 --
 
+DROP TABLE IF EXISTS `unidadmedida`;
 CREATE TABLE IF NOT EXISTS `unidadmedida` (
   `iUnidadMedidaId` int(11) NOT NULL AUTO_INCREMENT,
   `cUnidadMedidaCodigo` varchar(5) NOT NULL,
@@ -2852,6 +2905,7 @@ INSERT INTO `unidadmedida` (`iUnidadMedidaId`, `cUnidadMedidaCodigo`, `vUnidadMe
 -- Estructura de tabla para la tabla `usuario`
 --
 
+DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE IF NOT EXISTS `usuario` (
   `iUsuarioId` int(11) NOT NULL AUTO_INCREMENT,
   `cUsuarioCodigo` char(7) DEFAULT NULL,
@@ -2859,8 +2913,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `vUsuarioPassword` varchar(10) NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) DEFAULT NULL,
   `iPerfilId` int(11) NOT NULL,
   `iPersonalId` int(11) NOT NULL,
@@ -2875,10 +2929,10 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`iUsuarioId`, `cUsuarioCodigo`, `vUsuarioLogin`, `vUsuarioPassword`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `iPerfilId`, `iPersonalId`, `iSucursalId`) VALUES
-(2, NULL, 'LFERNANDEZ', '123456', 0, NULL, NULL, '2015-01-31', 'AC', 3, 2, 3),
-(10, NULL, 'SARITAFERNANDEZ', 'sarita2014', 0, 0, NULL, '2015-01-31', 'AC', 4, 14, 3),
-(12, NULL, 'DCARPIO', '123456', 0, 0, '2014-03-13', '2015-02-15', 'AC', 5, 13, 4),
-(23, NULL, 'DGONZALES', '123456', 0, 0, '2015-01-31', NULL, 'AC', 3, 15, 4);
+(2, NULL, 'LFERNANDEZ', '123456', 0, NULL, NULL, '2015-01-31 00:00:00', 'AC', 3, 2, 3),
+(10, NULL, 'SARITAFERNANDEZ', 'sarita2014', 0, 0, NULL, '2015-01-31 00:00:00', 'AC', 4, 14, 3),
+(12, NULL, 'DCARPIO', '123456', 0, 0, '2014-03-13 00:00:00', '2015-02-15 00:00:00', 'AC', 5, 13, 4),
+(23, NULL, 'DGONZALES', '123456', 0, 0, '2015-01-31 00:00:00', NULL, 'AC', 3, 15, 4);
 
 -- --------------------------------------------------------
 
@@ -2886,15 +2940,16 @@ INSERT INTO `usuario` (`iUsuarioId`, `cUsuarioCodigo`, `vUsuarioLogin`, `vUsuari
 -- Estructura de tabla para la tabla `venta`
 --
 
+DROP TABLE IF EXISTS `venta`;
 CREATE TABLE IF NOT EXISTS `venta` (
   `iVentaId` int(11) NOT NULL AUTO_INCREMENT,
   `nVentaNumero` varchar(50) NOT NULL,
   `dVentaFecha` date NOT NULL,
   `fVentaTotal` float NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   `iUsuarioId` int(11) NOT NULL,
   `iClienteId` int(11) NOT NULL,
@@ -2934,16 +2989,16 @@ CREATE TABLE IF NOT EXISTS `venta` (
 --
 
 INSERT INTO `venta` (`iVentaId`, `nVentaNumero`, `dVentaFecha`, `fVentaTotal`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `iUsuarioId`, `iClienteId`, `idireccionClienteId`, `iTipoDocumentoId`, `iFormaPago`, `cVentaOrdenCompra`, `nVentaRuc`, `vVentaPuntoLlegada`, `vPrincipal`, `fVentaGanancia`, `vEstadoVenta`, `fVentaSubTotal`, `fVentaIGV`, `vEstadoDocumento`, `dFechaTraslado`, `dFechaProximoPago`, `fDescuento`, `fMontoAdelantado`, `fVentaTotalReal`, `iNumeroDias`, `iNumeroLetras`, `IperiodoId`, `iSucursalId`, `fTipoCambio`, `iMonedaId`) VALUES
-(17, '0001-000001', '2015-02-16', 3240, 0, '2015-02-16', 0, NULL, 'AC', 2, 3, 3, 1, 2, '', NULL, 'AV.PUENTE', '1', '0.00', 'DEUDA', 2745.76, 494.24, 'DEUDA', NULL, '2015-03-03', 360, 0, 3600, 15, '1', '18', 3, NULL, NULL),
-(18, '0001-000002', '2015-02-16', 86.4, 0, '2015-02-16', 0, NULL, 'AC', 2, 3, 3, 1, 5, '', NULL, 'AV.PUENTE', '1', '0.00', 'DEUDA', 73.22, 13.18, 'DEUDA', NULL, '2015-03-03', 9.6, 0, 96, 15, '1', '18', 3, NULL, NULL),
-(19, '0001-000003', '2015-02-22', 4329.84, 0, '2015-02-22', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 3669.36, 660.48, 'CANCELADO', NULL, '2015-04-02', 482.16, 0, 4812, 0, '1', '18', 3, NULL, NULL),
-(20, '0001-000004', '2015-02-22', 11880, 0, '2015-02-22', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 10067.8, 1812.2, 'CANCELADO', NULL, '2015-02-22', 1320, 0, 13200, 0, '1', '18', 3, NULL, NULL),
-(21, '0001-000005', '2015-02-22', 4860, 0, '2015-02-22', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 4118.64, 741.36, 'CANCELADO', NULL, '2015-02-22', 540, 0, 5400, 0, '1', '18', 3, NULL, NULL),
-(23, '0001-000003', '2015-02-22', 4329.84, 0, '2015-02-22', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 3669.36, 660.48, 'CANCELADO', NULL, '2015-04-02', 482.16, 0, 4812, 0, '1', '18', 3, NULL, NULL),
-(24, '0001-000006', '2015-04-03', 324, 0, '2015-04-03', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 274.58, 49.42, 'CANCELADO', NULL, '2015-04-03', 36, 0, 360, 0, '1', '11', 3, NULL, NULL),
-(25, '0001-000007', '2015-04-03', 32.4, 0, '2015-04-03', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 27.46, 4.94, 'CANCELADO', NULL, '2015-04-03', 3.6, 0, 36, 0, '1', '11', 3, NULL, NULL),
-(26, '0001-000008', '2015-04-03', 20.7, 0, '2015-04-03', 0, NULL, 'AC', 2, 4, 4, 1, 1, '', NULL, 'WE', '1', '0.00', 'CANCELADO', 17.54, 3.16, 'CANCELADO', NULL, '2015-04-03', 2.3, 0, 23, 0, '1', '11', 3, NULL, NULL),
-(27, '0001-000099', '2015-04-03', 20.7, 0, '2015-04-03', 0, NULL, 'AC', 2, 4, 4, 1, 1, '', NULL, 'WE', '1', '0.00', 'CANCELADO', 17.54, 3.16, 'CANCELADO', NULL, '2015-04-03', 2.3, 0, 23, 0, '1', '11', 3, NULL, NULL);
+(17, '0001-000001', '2015-02-16', 3240, 0, '2015-02-16 00:00:00', 0, NULL, 'AC', 2, 3, 3, 1, 2, '', NULL, 'AV.PUENTE', '1', '0.00', 'DEUDA', 2745.76, 494.24, 'DEUDA', NULL, '2015-03-03', 360, 0, 3600, 15, '1', '18', 3, NULL, NULL),
+(18, '0001-000002', '2015-02-16', 86.4, 0, '2015-02-16 00:00:00', 0, NULL, 'AC', 2, 3, 3, 1, 5, '', NULL, 'AV.PUENTE', '1', '0.00', 'DEUDA', 73.22, 13.18, 'DEUDA', NULL, '2015-03-03', 9.6, 0, 96, 15, '1', '18', 3, NULL, NULL),
+(19, '0001-000003', '2015-02-22', 4329.84, 0, '2015-02-22 00:00:00', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 3669.36, 660.48, 'CANCELADO', NULL, '2015-04-02', 482.16, 0, 4812, 0, '1', '18', 3, NULL, NULL),
+(20, '0001-000004', '2015-02-22', 11880, 0, '2015-02-22 00:00:00', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 10067.8, 1812.2, 'CANCELADO', NULL, '2015-02-22', 1320, 0, 13200, 0, '1', '18', 3, NULL, NULL),
+(21, '0001-000005', '2015-02-22', 4860, 0, '2015-02-22 00:00:00', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 4118.64, 741.36, 'CANCELADO', NULL, '2015-02-22', 540, 0, 5400, 0, '1', '18', 3, NULL, NULL),
+(23, '0001-000003', '2015-02-22', 4329.84, 0, '2015-02-22 00:00:00', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 3669.36, 660.48, 'CANCELADO', NULL, '2015-04-02', 482.16, 0, 4812, 0, '1', '18', 3, NULL, NULL),
+(24, '0001-000006', '2015-04-03', 324, 0, '2015-04-03 00:00:00', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 274.58, 49.42, 'CANCELADO', NULL, '2015-04-03', 36, 0, 360, 0, '1', '11', 3, NULL, NULL),
+(25, '0001-000007', '2015-04-03', 32.4, 0, '2015-04-03 00:00:00', 0, NULL, 'AC', 2, 3, 3, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 27.46, 4.94, 'CANCELADO', NULL, '2015-04-03', 3.6, 0, 36, 0, '1', '11', 3, NULL, NULL),
+(26, '0001-000008', '2015-04-03', 20.7, 0, '2015-04-03 00:00:00', 0, NULL, 'AC', 2, 4, 4, 1, 1, '', NULL, 'WE', '1', '0.00', 'CANCELADO', 17.54, 3.16, 'CANCELADO', NULL, '2015-04-03', 2.3, 0, 23, 0, '1', '11', 3, NULL, NULL),
+(27, '0001-000099', '2015-04-03', 20.7, 0, '2015-04-03 00:00:00', 0, NULL, 'AC', 2, 4, 4, 1, 1, '', NULL, 'WE', '1', '0.00', 'CANCELADO', 17.54, 3.16, 'CANCELADO', NULL, '2015-04-03', 2.3, 0, 23, 0, '1', '11', 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2951,15 +3006,16 @@ INSERT INTO `venta` (`iVentaId`, `nVentaNumero`, `dVentaFecha`, `fVentaTotal`, `
 -- Estructura de tabla para la tabla `ventadetalle`
 --
 
+DROP TABLE IF EXISTS `ventadetalle`;
 CREATE TABLE IF NOT EXISTS `ventadetalle` (
   `iVentaDetalleId` int(11) NOT NULL AUTO_INCREMENT,
   `fVentaDetallePrecio` float NOT NULL,
   `iVentaDetalleCantidad` int(11) NOT NULL,
   `fVentaDetalleTotal` float NOT NULL,
   `iUsuarioInsertaId` int(11) NOT NULL,
-  `dFechaInserta` date NOT NULL,
+  `dFechaInserta` datetime NOT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) NOT NULL,
   `iProductoId` int(11) NOT NULL,
   `iVentaId` int(11) NOT NULL,
@@ -2976,18 +3032,18 @@ CREATE TABLE IF NOT EXISTS `ventadetalle` (
 --
 
 INSERT INTO `ventadetalle` (`iVentaDetalleId`, `fVentaDetallePrecio`, `iVentaDetalleCantidad`, `fVentaDetalleTotal`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `iProductoId`, `iVentaId`, `fDescuento`, `iPersonalId`, `iSubCta`) VALUES
-(16, 36, 100, 3240, 2, '2015-02-16', 0, NULL, 'AC', 22, 17, 10, NULL, NULL),
-(17, 96, 1, 86.4, 2, '2015-02-16', 0, NULL, 'AC', 23, 18, 10, NULL, NULL),
-(18, 96, 50, 4320, 2, '2015-02-22', 2, '2015-04-02', 'AC', 23, 23, 10, NULL, NULL),
-(19, 36, 100, 3240, 2, '2015-02-22', 0, NULL, 'AC', 22, 20, 10, NULL, NULL),
-(20, 96, 100, 8640, 2, '2015-02-22', 0, NULL, 'AC', 23, 20, 10, NULL, NULL),
-(21, 36, 150, 4860, 2, '2015-02-22', 0, NULL, 'AC', 22, 21, 10, NULL, NULL),
-(22, 12, 1, 9.84, 0, '2015-02-22', 2, '2015-04-02', 'AC', 37, 23, 18, NULL, NULL),
-(23, 12, 1, 9.84, 0, '2015-02-22', 2, '2015-04-02', 'AC', 37, 19, 18, NULL, NULL),
-(24, 36, 10, 324, 2, '2015-04-03', 0, NULL, 'AC', 22, 24, 10, NULL, 0),
-(25, 36, 1, 32.4, 2, '2015-04-03', 0, NULL, 'AC', 22, 25, 10, NULL, 0),
-(26, 23, 1, 20.7, 2, '2015-04-03', 0, NULL, 'AC', 34, 26, 10, NULL, 0),
-(27, 23, 1, 20.7, 2, '2015-04-03', 0, NULL, 'AC', 38, 27, 10, NULL, 0);
+(16, 36, 100, 3240, 2, '2015-02-16 00:00:00', 0, NULL, 'AC', 22, 17, 10, NULL, NULL),
+(17, 96, 1, 86.4, 2, '2015-02-16 00:00:00', 0, NULL, 'AC', 23, 18, 10, NULL, NULL),
+(18, 96, 50, 4320, 2, '2015-02-22 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 23, 23, 10, NULL, NULL),
+(19, 36, 100, 3240, 2, '2015-02-22 00:00:00', 0, NULL, 'AC', 22, 20, 10, NULL, NULL),
+(20, 96, 100, 8640, 2, '2015-02-22 00:00:00', 0, NULL, 'AC', 23, 20, 10, NULL, NULL),
+(21, 36, 150, 4860, 2, '2015-02-22 00:00:00', 0, NULL, 'AC', 22, 21, 10, NULL, NULL),
+(22, 12, 1, 9.84, 0, '2015-02-22 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 37, 23, 18, NULL, NULL),
+(23, 12, 1, 9.84, 0, '2015-02-22 00:00:00', 2, '2015-04-02 00:00:00', 'AC', 37, 19, 18, NULL, NULL),
+(24, 36, 10, 324, 2, '2015-04-03 00:00:00', 0, NULL, 'AC', 22, 24, 10, NULL, 0),
+(25, 36, 1, 32.4, 2, '2015-04-03 00:00:00', 0, NULL, 'AC', 22, 25, 10, NULL, 0),
+(26, 23, 1, 20.7, 2, '2015-04-03 00:00:00', 0, NULL, 'AC', 34, 26, 10, NULL, 0),
+(27, 23, 1, 20.7, 2, '2015-04-03 00:00:00', 0, NULL, 'AC', 38, 27, 10, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2995,6 +3051,7 @@ INSERT INTO `ventadetalle` (`iVentaDetalleId`, `fVentaDetallePrecio`, `iVentaDet
 -- Estructura de tabla para la tabla `ventadevolucion`
 --
 
+DROP TABLE IF EXISTS `ventadevolucion`;
 CREATE TABLE IF NOT EXISTS `ventadevolucion` (
   `iVentaDevolucionId` int(11) NOT NULL AUTO_INCREMENT,
   `iVentaId` int(11) DEFAULT NULL,
@@ -3003,9 +3060,9 @@ CREATE TABLE IF NOT EXISTS `ventadevolucion` (
   `fVentaDevSubTotal` float DEFAULT NULL,
   `fVentaDevIGV` float DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fDescuento` float DEFAULT NULL,
   `iPeriodoId` int(11) DEFAULT NULL,
@@ -3023,6 +3080,7 @@ CREATE TABLE IF NOT EXISTS `ventadevolucion` (
 -- Estructura de tabla para la tabla `ventadevoluciondetalle`
 --
 
+DROP TABLE IF EXISTS `ventadevoluciondetalle`;
 CREATE TABLE IF NOT EXISTS `ventadevoluciondetalle` (
   `iVentaDevolucionDetalleId` int(11) NOT NULL AUTO_INCREMENT,
   `iVentaDevolucionId` int(11) DEFAULT NULL,
@@ -3031,9 +3089,9 @@ CREATE TABLE IF NOT EXISTS `ventadevoluciondetalle` (
   `iVentaDevDetalleCantidad` int(11) DEFAULT NULL,
   `fVentaDevDetalleTotal` float DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   `cEstadoCodigo` char(2) COLLATE utf8_spanish_ci DEFAULT NULL,
   `fDescuento` float DEFAULT NULL,
   `iSubCta` int(11) DEFAULT NULL,
@@ -3051,6 +3109,7 @@ CREATE TABLE IF NOT EXISTS `ventadevoluciondetalle` (
 -- Estructura de tabla para la tabla `via`
 --
 
+DROP TABLE IF EXISTS `via`;
 CREATE TABLE IF NOT EXISTS `via` (
   `iViaId` int(11) NOT NULL,
   `vAbreviatura` varchar(5) DEFAULT NULL,
@@ -3073,6 +3132,7 @@ INSERT INTO `via` (`iViaId`, `vAbreviatura`, `vDescripcion`) VALUES
 -- Estructura de tabla para la tabla `visitacliente`
 --
 
+DROP TABLE IF EXISTS `visitacliente`;
 CREATE TABLE IF NOT EXISTS `visitacliente` (
   `iVisitaClienteId` int(11) NOT NULL AUTO_INCREMENT,
   `iClienteId` int(11) DEFAULT NULL,
@@ -3085,8 +3145,8 @@ CREATE TABLE IF NOT EXISTS `visitacliente` (
   `vObservacion` varchar(500) COLLATE utf8_spanish_ci DEFAULT NULL,
   `iUsuarioInsertaId` int(11) DEFAULT NULL,
   `iUsuarioActualizaId` int(11) DEFAULT NULL,
-  `dFechaInserta` date DEFAULT NULL,
-  `dFechaActualiza` date DEFAULT NULL,
+  `dFechaInserta` datetime DEFAULT NULL,
+  `dFechaActualiza` datetime DEFAULT NULL,
   PRIMARY KEY (`iVisitaClienteId`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=4 ;
 
@@ -3136,6 +3196,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+DROP PROCEDURE IF EXISTS `diasMes`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `diasMes`(
 mes int, anio int )
 BEGIN
@@ -3157,6 +3218,7 @@ DECLARE  m INT;
 	 select  m;
 END$$
 
+DROP PROCEDURE IF EXISTS `SP_CALCULO_CODIGO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_CALCULO_CODIGO`(tabla varchar(45))
 BEGIN
      DECLARE codigo varchar(7);
@@ -3193,6 +3255,7 @@ BEGIN
      SELECT codigo; 
     END$$
 
+DROP PROCEDURE IF EXISTS `SP_IDU_COMPRA_CONTABILIDAD`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_IDU_COMPRA_CONTABILIDAD`(  
     IN xId int, /**key de las compras**/
     IN xfechaProximoPago date,
@@ -3660,6 +3723,7 @@ BEGIN
                  
     END$$
 
+DROP PROCEDURE IF EXISTS `SP_IDU_DEVCOMPRA_CONTABILIDAD`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_IDU_DEVCOMPRA_CONTABILIDAD`(  
     IN xId int, /**key de las compras**/
     IN xiUsuarioId        INT,  
@@ -4110,6 +4174,7 @@ BEGIN
                  
     END$$
 
+DROP PROCEDURE IF EXISTS `SP_IDU_PERFIL_PERMISOS`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_IDU_PERFIL_PERMISOS`(
     IN  xiUsuarioId int,
 		IN  xvCodigoPermiso VARCHAR(500), 
@@ -4126,6 +4191,7 @@ BEGIN
      END WHILE;
 END$$
 
+DROP PROCEDURE IF EXISTS `SP_IDU_VENTA_CONTABILIDAD`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_IDU_VENTA_CONTABILIDAD`(  
     IN xId int, /**key de las Ventas**/
     IN xfechaProximoPago date,
@@ -4539,6 +4605,7 @@ BEGIN
                  
     END$$
 
+DROP PROCEDURE IF EXISTS `SP_NRO_DOCUMENTO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_NRO_DOCUMENTO`(
 IN xitipoDocumentoId INT)
 BEGIN
@@ -4581,6 +4648,7 @@ BEGIN
 
 END$$
 
+DROP PROCEDURE IF EXISTS `SP_PERIODO_ACTUAL`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_PERIODO_ACTUAL`()
 BEGIN
     
@@ -4591,6 +4659,7 @@ END$$
 --
 -- Funciones
 --
+DROP FUNCTION IF EXISTS `SPLIT_STR`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `SPLIT_STR`(
   x VARCHAR(255),
   delim VARCHAR(12),
