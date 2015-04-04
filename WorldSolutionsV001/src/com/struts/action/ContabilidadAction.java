@@ -524,9 +524,6 @@ public class ContabilidadAction extends BaseAction {
 			HttpSession sesion = request.getSession();
 			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 			
-			
-			
-			
 			/**Seteamos los valores en las listas**/
 			List<Librodiario> listaLibroDiario =  contabilidadDao.listaLibroDiario(Paginacion.pagInicio(pagina),Paginacion.pagFin(), contabilidadForm.getLibrodiario(),iPeriodoId);
 			
@@ -548,6 +545,11 @@ public class ContabilidadAction extends BaseAction {
 					totalHaber= totalHaber+libro.getfMonto();
 			
 			}
+			
+			Periodo periodo = new Periodo();
+			periodo = contabilidadDao.findEndidad(periodo, iPeriodoId);
+			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio()) +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
+			
 			 /** Seteamos las clase ProductoForm **/
 			contabilidadForm.setLista(listaLibroDiario);
 			contabilidadForm.setPaginas(paginas);
@@ -1628,6 +1630,60 @@ public class ContabilidadAction extends BaseAction {
 			List<Ingresoproductodevolucion> listaIngresoproducto = ingresogenericaDao.listaIngresoproductoDevolucion(0, 1000, objform.getIngresoProducto());
 			beans.put("igvActaul", Double.parseDouble(sesion.getAttribute("IGVCompras").toString()));
 			beans.put("devolucionCompras", listaIngresoproducto);
+			
+		} else if ("contabilidad-ingreso-cuentas".equals(plantilla)) {
+			ContabilidadDao contabilidadDao = new ContabilidadDao();
+			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
+			List<Librodiario> listaCuentasLibroDiario =  contabilidadDao.listaCuentas(0, 1000, objform.getLibrodiario(), iPeriodoId);
+			beans.put("cuentasLibroDiario", listaCuentasLibroDiario);
+			
+		} else if ("contabilidad-caja-banco".equals(plantilla)) {
+			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");;
+			
+			ContabilidadDao contabilidadDao= new ContabilidadDao();
+			List<Librodiario> listaCajaBanco =  contabilidadDao.listaCajaChica(0, 1000, objform.getLibrodiario(), iPeriodoId);
+			Periodo periodo = new Periodo();
+			periodo = contabilidadDao.findEndidad(periodo, iPeriodoId);
+			String detallePeriodo = " mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio()) +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")";
+			
+			beans.put("cuentasLibroDiario", listaCajaBanco);
+			beans.put("periodoActual", detallePeriodo);
+			
+		} else if ("contabilidad-plantilla-personal".equals(plantilla)) {
+			
+			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
+			ContabilidadDao contabilidadDao = new ContabilidadDao();
+			List<Planilla> listaPlanilla =  contabilidadDao.listaPlanilla(0, 1000, objform.getPlanilla(), iPeriodoId);
+			
+			Periodo periodo = new Periodo();
+			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			String detallePeriodo = " mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio()) +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")";
+			
+			beans.put("planillasPersonal", listaPlanilla);
+			beans.put("periodoActual", detallePeriodo);
+
+			List<Configuracion> listaConfPlanilla = contabilidadDao.listaEntidadGenerica(new Configuracion());
+			for (Configuracion planilla : listaConfPlanilla) {
+				if (planilla.getvConcepto().equals(Constantes.aportESSALUD)) {
+					beans.put("esApor", Float.parseFloat(planilla.getvValor()));
+				}
+				if (planilla.getvConcepto().equals(Constantes.aportIES)) {
+					beans.put("iesApor", Float.parseFloat(planilla.getvValor()));
+				}
+				if (planilla.getvConcepto().equals(Constantes.descAFP)) {
+					beans.put("afpDesc", Float.parseFloat(planilla.getvValor()));
+				}
+				if (planilla.getvConcepto().equals(Constantes.descCV)) {
+					beans.put("cvDesc", Float.parseFloat(planilla.getvValor()));
+				}
+				if (planilla.getvConcepto().equals(Constantes.descPS)) {
+					beans.put("psDesc", Float.parseFloat(planilla.getvValor()));
+				}
+				if (planilla.getvConcepto().equals(Constantes.descSNP)) {
+					beans.put("nspDesc", Float.parseFloat(planilla.getvValor()));
+				}
+
+			}
 			
 		}
 

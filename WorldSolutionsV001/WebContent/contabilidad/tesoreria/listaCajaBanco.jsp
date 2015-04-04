@@ -14,6 +14,10 @@
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <td><button class="button" onclick="fn_exportarExcel('contabilidad.do?metodo=exportarExcel&plantilla=contabilidad-caja-banco')">
+                <span class="excel">Exportar</span>
+            </button>
+        </td>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -21,13 +25,13 @@
     <thead>
     <tr><th colspan="8"><bean:write name="contabilidadForm" property="mes"/> </th></tr>
     <tr>
-        <th colspan="2" width="5%">Operaciones</th>
-        <th align="left"  width="7%">Fecha Operaci&oacute;n</th> 
-        <th align="left"  width="5%">C&oacute;digo Cuenta</th>               
-        <th align="left"  width="30%">Nombre de cuentas</th>        
-        <th align="center"  width="5%">Monto Ingreso (D)</th> 
-        <th align="center"  width="5%">Monto Egreso (H)</th>              
-        <th align="left" width="5%">Estado</th>
+        <th colspan="2" width="4%">Operaciones</th>
+        <th align="left"  width="5%">Fecha Operaci&oacute;n</th> 
+        <th align="left"  width="3%">C&oacute;digo Cuenta</th>               
+        <th align="left">Nombre de cuentas</th>        
+        <th align="center"  width="4%">Monto Ingreso (D)</th> 
+        <th align="center"  width="4%">Monto Egreso (H)</th>              
+        <th align="left" width="3%">Estado</th>
       </tr>
     </thead>
     <tbody>    

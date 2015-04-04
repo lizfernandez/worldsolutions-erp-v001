@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Paginacion {
 	
-	public static int paginado=12;
+	public static int paginado=10;
 	public static int paginaInicial = 1;
 	public static int paginaMax = 1000;
 	
