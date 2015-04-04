@@ -62,6 +62,8 @@ public class Ventadetalle implements Serializable {
 	@JoinColumn(name="iPersonalId", nullable=false)	
     private Personal personal;
     
+    private int iSubCta;
+    
     public Ventadetalle() {
     }
 
@@ -245,6 +247,20 @@ public class Ventadetalle implements Serializable {
 	 */
 	public void setPersonal(Personal personal) {
 		this.personal = personal;
+	}
+
+	/**
+	 * @return the iSubCta
+	 */
+	public int getiSubCta() {
+		return iSubCta;
+	}
+
+	/**
+	 * @param iSubCta the iSubCta to set
+	 */
+	public void setiSubCta(int iSubCta) {
+		this.iSubCta = iSubCta;
 	}
 
 	

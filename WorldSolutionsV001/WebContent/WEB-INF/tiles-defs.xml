@@ -375,7 +375,18 @@
 <definition name=".direccionClienteListaPopup" extends=".popup">
     <put name="body" value="/clientes/cliente/listaPopupDireccionCliente.jsp"></put>   
 </definition>
-
+ 
+ <definition name=".listaClasificacionCliente" extends=".plantilla">
+    <put name="body" value="/clientes/clasificacionCliente/listaClasifCliente.jsp"></put>   
+    <put name="menuVertical" value="/clientes/sidebar.jsp"></put>  
+</definition>	               
+<definition name=".mantenimientoClasificacionCliente" extends=".popup">
+    <put name="body" value="/clientes/clasificacionCliente/mantenimientoClasifCliente.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientoClasifCliente" extends=".popup">
+    <put name="body" value="/clientes/clasificacionCliente/buscarMantenimientoClasifCliente.jsp"></put>   
+</definition>	               
+	               
 
 <definition name=".estadoCuentaCliente" extends=".plantilla">
     <put name="body" value="/clientes/estadoCuenta/listaEstadoCuenta.jsp"></put>   

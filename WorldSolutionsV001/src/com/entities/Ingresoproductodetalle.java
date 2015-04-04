@@ -57,7 +57,7 @@ public class Ingresoproductodetalle implements Serializable {
     @Column(nullable=false)
 	private float fDescuento;
    
-    
+    private int iSubCta;
 
     public Ingresoproductodetalle() {
     }
@@ -229,6 +229,20 @@ public class Ingresoproductodetalle implements Serializable {
 	 */
 	public void setfDescuento(float fDescuento) {
 		this.fDescuento = fDescuento;
+	}
+
+	/**
+	 * @return the iSubCta
+	 */
+	public int getiSubCta() {
+		return iSubCta;
+	}
+
+	/**
+	 * @param iSubCta the iSubCta to set
+	 */
+	public void setiSubCta(int iSubCta) {
+		this.iSubCta = iSubCta;
 	}
 
 	

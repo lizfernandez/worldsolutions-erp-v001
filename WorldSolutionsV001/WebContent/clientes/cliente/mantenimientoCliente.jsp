@@ -39,6 +39,21 @@
     </td>
    
 </tr>
+<td align="right">Clasificaci&oacute;n:</td>
+    <td>
+    <html:select  property="iClasificacionClienteId" styleId="iClasificacionClienteId" styleClass="combo Departamento" style="width:160px" onchange="fn_cambio()">       
+              <html:options collection="listaClasificacion" property="iClasificacionClienteId" labelProperty="vNombre"/>
+    </html:select>
+   </td>
+</tr>
+<tr>
+    <td align="right">% Descuento:</td>
+    <td>        
+        <html:text property="fDescuento" styleId="fDescuento" styleClass="textN" />
+     
+    </td>
+   
+</tr>
 <tr>
 <td align="right">Tipo Direcci&oacute;n:</td>
     <td>
@@ -48,6 +63,7 @@
     </select>
    </td>
 </tr>
+
 <tr>
 	<td align="right">Departamento:</td>
      <td> <html:select  property="vDepartamento" styleId="vDepartamento" styleClass="combo Departamento" onchange="fn_cambioPoblacion('DEP')" style="width:160px">       
@@ -163,6 +179,13 @@ $("#dFechaVisista").datepicker(
 
          }
      }
+    function fn_cambio(){
+    	var iclasificacion = $("#iClasificacionClienteId").val();
+    	var cad = "cliente.do?metodo=cambioClasificacion&iClasificacion="+iclasificacion;
+        $.getJSON(cad, function retorna(obj){
+        	$("#fDescuento").val(obj.fDescuento);
+        });
+    }
 
         //CARGAMOS EL COMBO DE ESTADO
     function listar_poblacion(obj,valor){

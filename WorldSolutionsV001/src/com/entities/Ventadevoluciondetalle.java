@@ -46,6 +46,8 @@ public class Ventadevoluciondetalle implements Serializable {
     
     private float fDescuento;
     
+    private int iSubCta;
+    
     public Ventadevoluciondetalle() {
     }
 
@@ -217,6 +219,20 @@ public class Ventadevoluciondetalle implements Serializable {
 	 */
 	public void setfDescuento(float fDescuento) {
 		this.fDescuento = fDescuento;
+	}
+
+	/**
+	 * @return the iSubCta
+	 */
+	public int getiSubCta() {
+		return iSubCta;
+	}
+
+	/**
+	 * @param iSubCta the iSubCta to set
+	 */
+	public void setiSubCta(int iSubCta) {
+		this.iSubCta = iSubCta;
 	}
 
 

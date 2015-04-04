@@ -2,10 +2,12 @@ package com.struts.form;
 
 import java.math.BigDecimal;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
+import com.entities.Clasificacioncliente;
 import com.entities.Cliente;
 import com.entities.Direccioncliente;
 
@@ -17,6 +19,7 @@ public class ClienteForm extends ActionForm{
 	private static final long serialVersionUID = 1L;
 	private List lista;	
 	Cliente cliente = new Cliente();
+	Clasificacioncliente clasifCliente = new Clasificacioncliente();
     private String mode;
     private List paginas;
     private int pagInicio;
@@ -141,7 +144,12 @@ public class ClienteForm extends ActionForm{
 	 * @return the cEstadoCodigo
 	 */
 	public String getcEstadoCodigo() {
-		return cliente.getcEstadoCodigo();
+		String cEstadoCodigo=cliente.getcEstadoCodigo();
+		if(cEstadoCodigo=="")
+			cEstadoCodigo=clasifCliente.getcEstadoCodigo();
+		
+		
+		return cEstadoCodigo;
 	}
 
 	/**
@@ -149,6 +157,7 @@ public class ClienteForm extends ActionForm{
 	 */
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.cliente.setcEstadoCodigo (cEstadoCodigo);
+		this.clasifCliente.setcEstadoCodigo(cEstadoCodigo);
 	}
 
 
@@ -371,6 +380,71 @@ public class ClienteForm extends ActionForm{
 	 */
 	public void setvObservacion(String vObservacion) {
 		this.vObservacion = vObservacion;
+	}
+	/**
+	 * @return the clasifCliente
+	 */
+	public Clasificacioncliente getClasifCliente() {
+		return clasifCliente;
+	}
+	/**
+	 * @param clasifCliente the clasifCliente to set
+	 */
+	public void setClasifCliente(Clasificacioncliente clasifCliente) {
+		this.clasifCliente = clasifCliente;
+	}
+	
+	/**
+	 * @return the iClasificacionClienteId
+	 */
+	public int getiClasificacionClienteId() {
+		return this.clasifCliente.getiClasificacionClienteId();
+	}
+
+	/**
+	 * @param iClasificacionClienteId the iClasificacionClienteId to set
+	 */
+	public void setiClasificacionClienteId(int iClasificacionClienteId) {
+		this.clasifCliente.setiClasificacionClienteId(iClasificacionClienteId);
+		this.cliente.setClasificacion(getClasifCliente());
+	}
+
+	
+
+	
+	/**
+	 * @return the fDescuento
+	 */
+	public float getfDescuento() {
+		float fDescuento=clasifCliente.getfDescuento();
+		if(fDescuento==Float.parseFloat("0.0")){
+			fDescuento=cliente.getfDescuento();
+		}
+		return fDescuento ;
+	}
+
+	/**
+	 * @param fDescuento the fDescuento to set
+	 */
+	public void setfDescuento(float fDescuento) {
+		this.clasifCliente.setfDescuento(fDescuento);
+		this.cliente.setfDescuento(fDescuento);
+	}
+
+	
+
+	/**
+	 * @return the vNombre
+	 */
+	public String getvNombre() {
+		return this.clasifCliente.getvNombre();
+	}
+
+	/**
+	 * @param vNombre the vNombre to set
+	 */
+	public void setvNombre(String vNombre) {
+		this.clasifCliente.setvNombre(vNombre) ;
 	}
 	
 	

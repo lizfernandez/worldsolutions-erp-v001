@@ -46,6 +46,7 @@ public class Ingresoproductodevoluciondetalle implements Serializable {
 	
 	private float fDescuento;
 
+	private int iSubCta;
     public Ingresoproductodevoluciondetalle() {
     }
 
@@ -222,6 +223,20 @@ public class Ingresoproductodevoluciondetalle implements Serializable {
 	 */
 	public void setfDescuento(float fDescuento) {
 		this.fDescuento = fDescuento;
+	}
+
+	/**
+	 * @return the iSubCta
+	 */
+	public int getiSubCta() {
+		return iSubCta;
+	}
+
+	/**
+	 * @param iSubCta the iSubCta to set
+	 */
+	public void setiSubCta(int iSubCta) {
+		this.iSubCta = iSubCta;
 	}
 
 	

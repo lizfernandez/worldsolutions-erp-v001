@@ -28,6 +28,7 @@
        <img src="${pageContext.request.contextPath}/media/imagenes/tra.png" width="20" height="20" />
         <a href="perfil.do?metodo=listaPermisos">MANT. DE PERMISOS</a>
        </div>
+       
        <div id ="cont2" class="cont">
 		        <ul id="configuracion">
 		        <div onclick="submenu('configuracion')">

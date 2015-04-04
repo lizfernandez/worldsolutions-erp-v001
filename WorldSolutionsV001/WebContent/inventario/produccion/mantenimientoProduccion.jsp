@@ -91,7 +91,7 @@
             <td><bean:write name="x" property="vDescripcion" /></td>
             <td>
               <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iCantidad" />"/>
-	          <input type="hidden" class="inputderecha" id="numeroReal${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="producto.iProductoStockCantidad" />"/>
+	          <input type="hidden" class="inputderecha" id="numeroReal${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="producto.iProductoStockCantidad"/>"/>
 	        </td>
             <td align="right">
                 <input type="text" class="inputderecha" id="precio${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fCostoUni" format="#,##0.00" locale="Localidad" />"/>                

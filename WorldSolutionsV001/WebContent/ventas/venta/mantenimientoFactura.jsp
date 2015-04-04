@@ -147,7 +147,7 @@
     <td>
      <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr> 
-               <td width="70%">
+               <td width="60%">
 	               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera"  style="display: none;" id="formaPago">
 			            <thead>
 			            <tr> <td align="center" colspan="4"><strong> Forma de Pago a <span id="tipoFormaPago"> </span></strong></tr>
@@ -195,7 +195,7 @@
               </td>
            </tr>
            <tr>
-	           <td  width="70%">
+	           <td  width="60%">
 	           </td>
            <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" >                

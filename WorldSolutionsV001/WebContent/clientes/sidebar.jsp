@@ -1,4 +1,8 @@
 
+       <div class="btn_admin" id="clasifCliente">
+       <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
+        <a href="cliente.do?metodo=listaClasifCliente">CLAF. DE CLIENTES</a>
+       </div>
        <div class="btn_admin" id="clientes">
            <img src="${pageContext.request.contextPath}/media/imagenes/cli.png" width="20" height="20" />
            <a href="cliente.do?metodo=listaCliente">MANT. DE CLIENTES</a>

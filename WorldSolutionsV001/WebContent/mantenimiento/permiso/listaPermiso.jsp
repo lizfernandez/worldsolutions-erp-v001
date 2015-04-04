@@ -95,7 +95,7 @@
 				           		   <logic:iterate name="x" property="menutitulo" id="d" indexId="i">	           		    
 									<tr>
 				                      <td>
-					                      	<div style="margin-left: 10%" st id="op<bean:write name="x" property="idMenu" />" >
+					                      	<div style="margin-left: 10%"  id="op<bean:write name="x" property="idMenu" />" >
 								           		 <span id="img_op<bean:write name="d" property="idmenuTitulo" />" style="width: 2%">
 								      				  <img    src="${pageContext.request.contextPath}/media/imagenes/mas.png"
 							                        onclick="fn_pagosMas('op<bean:write name="d" property="idmenuTitulo" />')" />
@@ -111,9 +111,39 @@
 										           		   <logic:iterate name="d" property="menuopciones" id="m" indexId="i">	           		    
 															<tr>
 										                      <td>
-										                       <input type="checkbox"  class="ck_<bean:write name="x" property="idMenu"/>" onclick="CkPadres('<bean:write name="m" property="vCodigo" />','<bean:write name="x" property="vCodigo" />','<bean:write name="d" property="vCodigo" />')"
-										                       id="<bean:write name="m" property="vCodigo" />"/><bean:write name="m" property="vOpciones" />
-										                      </td>
+										                      <div style="margin-left: 10%"  id="op<bean:write name="x" property="idMenu" />" >
+																<span
+																	id="img_opop<bean:write name="m" property="idmenuOpciones" />"
+																	style="width: 2%"> <img
+																	src="${pageContext.request.contextPath}/media/imagenes/mas.png"
+																	onclick="fn_pagosMas('opop<bean:write name="m" property="idmenuOpciones" />')" />
+																</span> 
+																<input type="checkbox" 
+										                        class="ck_<bean:write name="x" property="idMenu"/>" 
+										                        onclick="CktodoHijos('<bean:write name="m" property="vCodigo" />','<bean:write name="m" property="idmenuOpciones" />','<bean:write name="x" property="vCodigo" />','<bean:write name="d" property="vCodigo" />')"
+								                                 id="<bean:write name="m" property="vCodigo" />"/><bean:write name="m" property="vOpciones" />
+																</div>
+										                       
+
+														<table class="tabladetalle" border="0"
+															style="display: none; margin-left: 26%; width:70%;"
+															id="opopop<bean:write name="m" property="idmenuOpciones" />">
+															<tbody>
+																<logic:iterate name="m" property="menuacciones"
+																	id="n" indexId="i">
+																	<tr>
+																		<td>
+																		 
+																			<input type="checkbox"
+																			class="ck_<bean:write name="x" property="idMenu"/>"
+																			onclick="CkPadres('<bean:write name="n" property="vCodigo" />','<bean:write name="x" property="vCodigo" />','<bean:write name="d" property="vCodigo" />','<bean:write name="m" property="vCodigo" />')"
+																			id="<bean:write name="n" property="vCodigo" />" />
+																		<bean:write name="n" property="vAccion" /></td>
+																	</tr>
+																</logic:iterate>
+															</tbody>
+														</table>
+																	</td>
 										                      </tr>	                    
 										                 </logic:iterate>
 								                     </tbody>
@@ -159,6 +189,7 @@ paginacion();
 $("#admin,#permisos").addClass("active");
 
 function fn_pagosMas(valor){
+	
     $("#op"+valor).show();
     var tag = "<img title='Ocultar Detalle'src='${pageContext.request.contextPath}/media/imagenes/menos.png' onclick=\"fn_pagosMenos('"+valor+"')\" />";
     $("#img_"+valor).html(tag);
@@ -178,13 +209,32 @@ function Cktodo(id,codigo){
       }
 	
 }
+function CktodoHijos(id,idform,padre1,padre2){
+	$(document).find('#opopop'+idform+' input:checkbox').each(function(key,val){ 	 
+		if($("#"+id).is(':checked')) {  
+			  $("#"+this.id).attr('checked', true); 
+			  $("#"+padre1).attr('checked', true);
+			  $("#"+padre2).attr('checked', true); 
+			  
+	      } else {  
+	    	  $("#"+this.id).attr('checked', false);
+	      }    	
+	   });
+	 
+		
+	}
 
-function CkPadres(id, padre1, padre2){
+
+function CkPadres(id, padre1, padre2,padre3){
+	alert("id="+id+" padre1="+padre1+" padre2="+padre2);
 	if($("#"+id).is(':checked')) {  
 		  $("#"+padre1).attr('checked', true);
 		  $("#"+padre2).attr('checked', true); 
+		  $("#"+padre3).attr('checked', true);
+		  
     } 
 }
+
 function permisoUsuario(idUsu,iPermiso, nomUsu){
 //	var htm="<span style='background-color:#0D63A20'>"+nomUsu+"</span>";
 	$("#permisoUsuario").text("PERMISOS DEL SISTEMA - "+nomUsu);	
