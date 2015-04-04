@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=I',380,480)">
+        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=I',380,520)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -13,7 +13,7 @@
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=F',380,480)">
+        <td><button  class="button" onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=F',380,520)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -58,7 +58,7 @@
 						id="<bean:write name="x" property="iClienteId" />" /></td>
 					<td align="center"><img title="Editar"
 						src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-						onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=U&id=<bean:write name="x" property="iClienteId" />',380,450)" /></td>
+						onclick="popup('cliente.do?metodo=mantenimientoCliente&mode=U&id=<bean:write name="x" property="iClienteId" />',380,520)" /></td>
 					<td align="center"><img title="Eliminar"
 						src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 						onclick="eliminar('tabla','<bean:write name="x" property="iClienteId" />','cliente.do?metodo=iduCliente&mode=D')" /></td>

@@ -2,6 +2,7 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -64,7 +65,13 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy="cliente", fetch = FetchType.EAGER, cascade=CascadeType.PERSIST )
 	private List<Visitacliente> visitaCliente;
 
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="iClasificacionClienteId", nullable=false)		
+	private Clasificacioncliente clasificacion;
+	
+	private float fDescuento;
+	
+	
 	public Cliente() {
 	}
 
@@ -307,6 +314,38 @@ public class Cliente implements Serializable {
 	 */
 	public void setVisitaCliente(List<Visitacliente> visitaCliente) {
 		this.visitaCliente = visitaCliente;
+	}
+
+
+	/**
+	 * @return the clasificacion
+	 */
+	public Clasificacioncliente getClasificacion() {
+		return clasificacion;
+	}
+
+
+	/**
+	 * @param clasificacion the clasificacion to set
+	 */
+	public void setClasificacion(Clasificacioncliente clasificacion) {
+		this.clasificacion = clasificacion;
+	}
+
+
+	/**
+	 * @return the fDescuento
+	 */
+	public float getfDescuento() {
+		return fDescuento;
+	}
+
+
+	/**
+	 * @param fDescuento the fDescuento to set
+	 */
+	public void setfDescuento(float fDescuento) {
+		this.fDescuento = fDescuento;
 	}
 
 

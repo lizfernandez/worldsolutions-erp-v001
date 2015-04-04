@@ -21,6 +21,8 @@ import com.dao.ClienteDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.PoblacionDao;
+import com.entities.Area;
+import com.entities.Clasificacioncliente;
 import com.entities.Cliente;
 import com.entities.Direccioncliente;
 import com.entities.Estado;
@@ -28,6 +30,7 @@ import com.entities.Poblacion;
 import com.entities.Usuario;
 import com.entities.Visitacliente;
 import com.google.gson.Gson;
+import com.struts.form.AreaForm;
 import com.struts.form.ClienteForm;
 import com.util.Constantes;
 import com.util.Fechas;
@@ -127,6 +130,7 @@ public class ClienteAction extends BaseAction {
 		 * @return ActionForward
 		 * @throws IOException 
 		 */
+		
 		public ActionForward cambioPoblacion(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response) throws IOException{
 			response.setContentType("text/json");
@@ -177,6 +181,49 @@ public class ClienteAction extends BaseAction {
 			return null;
 			
 		}
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
+		 * @throws IOException 
+		 */
+		
+		public ActionForward cambioClasificacion(ActionMapping mapping, ActionForm form,
+					HttpServletRequest request, HttpServletResponse response) throws IOException{
+			response.setContentType("text/json");
+			
+		  // Type collectionType = new TypeToken<Object>(){}.getType();
+			
+			Clasificacioncliente clasificacion = new Clasificacioncliente();
+			int iClasificacion = Integer.parseInt(request.getParameter("iClasificacion"));
+			
+			GenericaDao genericoDao = new GenericaDao();
+			clasificacion = genericoDao.findEndidad(clasificacion, iClasificacion);
+			
+			
+			Gson gson = new Gson();			
+		
+			String jsonOutput = gson.toJson(clasificacion);
+			//Object[] listPersona2 = {gson.fromJson(jsonOutput,collectionType )};
+			//Poblacion[] listPersona2 = {gson.fromJson(jsonOutput,collectionType )};
+			//System.out.println("listPersona2 ="+listPersona2);
+			
+			
+			PrintWriter pw;
+			pw = response.getWriter();
+			pw.write(jsonOutput);
+			System.out.println( jsonOutput.toString() );
+			pw.flush();
+			pw.close();
+				
+			
+			return null;
+			
+		}
 		
 		/**
 		 * Method execute
@@ -211,10 +258,11 @@ public class ClienteAction extends BaseAction {
 
 			
 			List<Estado> listaEstado = estadoDao.listEstado();
+			List<Clasificacioncliente> listaClasificacion = clienteDao.listaEntidadGenerica(new Clasificacioncliente());
 			List<Poblacion> listaDepartamento = poblacionDao.listaDepartamento();
 			List<Poblacion> listaProvincia = new ArrayList<Poblacion>();// codigo de provincia lima
 			List<Poblacion> listaDistrito =  new ArrayList<Poblacion>();// codigo distrito lima
-	
+		
 
 			
 			/**LLamamos al formulario mantenimientoCliente.jsp para la insercion de datos **/
@@ -223,6 +271,10 @@ public class ClienteAction extends BaseAction {
 			    listaDistrito = poblacionDao.listaDistrito("1405");// codigo distrito lima
 			    
 			    clienteform.getCliente().setvClienteCodigo(clienteDao.callSPCalculoCodigo(clienteform.getCliente()));
+			    if(listaClasificacion.size()>0){
+			    	clienteform.getCliente().setfDescuento(listaClasificacion.get(0).getfDescuento());
+			    }
+			    
 
 				msn ="showEdit";
 			}
@@ -275,6 +327,7 @@ public class ClienteAction extends BaseAction {
 			/** Colocamos en session las listas **/
 
 			sesion.setAttribute("listaEstado", listaEstado);
+			sesion.setAttribute("listaClasificacion", listaClasificacion);
 			sesion.setAttribute("listaDepartamento", listaDepartamento);
 			sesion.setAttribute("listaProvincia", listaProvincia);
 			sesion.setAttribute("listaDistrito", listaDistrito);
@@ -348,6 +401,8 @@ public class ClienteAction extends BaseAction {
 			direccion.setiUsuarioInsertaId(usu.getiUsuarioId());
 			obj.setDireccionclientes(listaDirec);
 			obj.setVisitaCliente(listavisitaCliente);
+			obj.setiUsuarioInsertaId(usu.getiUsuarioId());
+			obj.setClasificacion(pForm.getClasifCliente());
 			resultado = clienteDao.insertarUnaEndidad(obj);
 
 		} else if (pForm.getMode().equals("U")) {
@@ -460,6 +515,187 @@ public class ClienteAction extends BaseAction {
 			msn = "msnError";
 		}
 
+		return mapping.findForward(msn);
+	}
+	/**
+	 * Method execute
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return ActionForward
+	 * @throws IOException 
+	 */
+	public ActionForward listaClasifCliente(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		/***Validamos la session activa y logeada***/
+		String msn = "";
+		/*HttpSession sesion = request.getSession();
+		
+		if(sesion.getId()!=(sesion.getAttribute("id"))){
+			response.sendRedirect("login.do?metodo=logout");				
+		}
+		else{*/
+		
+		
+		/***Inicializamos variables***/
+		String mode = request.getParameter("mode");			
+		int pagina = Paginacion.paginaInicial;
+		int pagInicio = Paginacion.paginaInicial;
+		if(request.getParameter("pagina")!= null){
+			 pagina = Integer.parseInt(request.getParameter("pagina"));
+		}
+	
+		/** Instanciamos la Clase ClienteForm **/
+		ClienteForm objform = (ClienteForm) form;
+		
+
+		/** Instanciamos las clase Daos **/
+	
+		ClienteDao clienteDao = new ClienteDao();
+		 
+		/***Redirecionamos  al ***/
+		msn ="showListClasifCliente";
+	   /**Seteamos los valores en las listas**/
+		List<Clasificacioncliente> listaCliente = clienteDao.listaClasificacionCliente(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getClasifCliente());
+		
+    
+		/**Consultamos el total de registros segun criterio**/
+		List<Clasificacioncliente> listaClienteTotal = clienteDao.listaClasificacionCliente(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getClasifCliente());
+		
+        /**Obtenemos el total del paginas***/
+		List<Long> paginas = Paginacion.listPaginas((long)(listaClienteTotal.size()));
+ 	  			
+		/** Seteamos las clase ClienteForm **/
+        objform.setLista(listaCliente);
+        objform.setPaginas(paginas);
+        objform.setPagInicio(pagina);
+       // }//else
+		
+		return mapping.findForward(msn);
+	}
+	/**
+	 * Method execute
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return ActionForward
+	 */
+	public ActionForward mantenimientoClasifCliente(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		
+
+		HttpSession sesion = request.getSession();			
+		String mode = request.getParameter("mode");
+		String msn="";
+		
+		
+		/** Instantacia al AreaForm **/			
+		ClienteForm clienteform = (ClienteForm) form;
+		
+		/** Instantacia a la capa Dao **/
+		EstadoDao estadoDao = new EstadoDao();
+		GenericaDao genericaDao = new GenericaDao();
+
+		/** llamado de los metodos de la clase dao **/
+
+		List<Estado> listaEstado = estadoDao.listEstado();
+
+		 
+		/**LLamamos al formulario mantenimientoArea.jsp para la insercion de datos **/
+		if(mode.equals("I")){
+			msn ="showEditClasifCliente";
+		}
+		
+		/**LLamamos al formulario mantenimientoArea.jsp para mostrar los datos del UPDATE **/
+		/** Seteamos el areaform la clase Area **/
+		else if(mode.equals("U") || mode.equals("D")){
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			clienteform.setClasifCliente((Clasificacioncliente) genericaDao.findEndidad(clienteform.getClasifCliente(), id));
+			msn ="showEditClasifCliente";
+			
+		}
+		/**LLamamos al formulario buscarMantenimientoPerfil.jsp para realizar la busqueda **/
+		else if(mode.equals("F")){
+			msn ="showFindClasifCliente";
+		}
+		
+		clienteform.setMode(mode);
+
+		/** Colocamos en session las listas **/
+
+		sesion.setAttribute("listaEstado", listaEstado);
+
+		return mapping.findForward(msn);
+	}
+
+	/**
+	 * Method execute
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return ActionForward
+	 */
+	public ActionForward iduClasificacionCliente(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+		
+		/** Inicializamos las variables **/ 
+		String msn = "";
+		String mode = request.getParameter("mode");		
+		String ids = request.getParameter("ids");		
+		boolean resultado = false;
+	
+		/** Instanciamos las clase AreaForm y AreaDao **/
+		ClienteForm pForm = (ClienteForm) form;
+		Clasificacioncliente obj =pForm.getClasifCliente();
+		
+		GenericaDao areaDao = new GenericaDao();
+		
+		if (pForm.getMode().equals("I")) {
+			
+				obj.setdFechaInserta(Fechas.getDate());
+				resultado = areaDao.insertarUnaEndidad(obj);
+			
+		} else if (pForm.getMode().equals("U")) {
+			
+				obj.setdFechaActualiza(Fechas.getDate());
+				resultado = areaDao.actualizarUnaEndidad(obj);
+			
+		}
+		else if (mode.equals("D")) {
+			EntityTransaction transaccion;
+			try {
+			    transaccion = areaDao.entityTransaction();
+			    transaccion.begin();
+				areaDao.eliminarUnaEndidad(obj, "iClasificacionClienteId",ids);/**/
+				resultado = areaDao.commitEndidad(transaccion);
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			} finally {
+				transaccion = null;
+			}
+		}
+			
+		if (resultado == true) {
+			msn = "msnOk";
+
+		}
+		else  {
+			msn = "msnError";
+
+		}
+		/** llamamos a listar Area **/
+		//listaArea(mapping, pForm, request, response);
+		
 		return mapping.findForward(msn);
 	}
 

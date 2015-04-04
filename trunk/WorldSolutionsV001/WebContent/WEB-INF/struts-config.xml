@@ -319,7 +319,12 @@
 	                 <forward name="showListPopup" path=".clienteListaPopup" />
 	                 <forward name="showListDireccionPopup" path=".direccionClienteListaPopup" />
 	                 <forward name="showEdit" path=".mantenimientoCliente" />
-	                 <forward name="showFind" path=".buscarMantenimientoCliente" />	                 
+	                 <forward name="showFind" path=".buscarMantenimientoCliente" />	  
+	                     
+	                 <forward name="showListClasifCliente" path=".listaClasificacionCliente" />
+	                 <forward name="showEditClasifCliente" path=".mantenimientoClasificacionCliente" />
+	                 <forward name="showFindClasifCliente" path=".buscarMantenimientoClasifCliente" />	  
+	                          
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />
 	           

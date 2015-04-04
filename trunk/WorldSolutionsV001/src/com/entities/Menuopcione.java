@@ -1,6 +1,8 @@
 package com.entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -24,6 +26,10 @@ public class Menuopcione implements Serializable {
 	private String vOpciones;
 	
 	private String vCodigo;
+
+	//bi-directional many-to-one association to Venta
+  	@OneToMany(mappedBy="menuopcione")
+  	private List<Menuaccion> menuacciones;
 
 	public Menuopcione() {
 	}
@@ -89,6 +95,20 @@ public class Menuopcione implements Serializable {
 	 */
 	public void setvCodigo(String vCodigo) {
 		this.vCodigo = vCodigo;
+	}
+
+	/**
+	 * @return the menuacciones
+	 */
+	public List<Menuaccion> getMenuacciones() {
+		return menuacciones;
+	}
+
+	/**
+	 * @param menuacciones the menuacciones to set
+	 */
+	public void setMenuacciones(List<Menuaccion> menuacciones) {
+		this.menuacciones = menuacciones;
 	}
 
 	

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.entities.Clasificacioncliente;
 import com.entities.Cliente;
 import com.interfaces.dao.IClienteDao;
 import com.util.Constantes;
@@ -54,145 +55,38 @@ public class ClienteDao  extends GenericaDao implements IClienteDao {
 		}
         return listaCliente;
 	}
-/*
-	@Override
-	public Cliente buscarCliente(int iClienteId) {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();     
-                 
-		Cliente cliente = (Cliente) em.find(Cliente.class, iClienteId);		     
-	
-        return cliente;
-	}
+
 
 	@Override
-	public boolean insertarCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-				factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-				EntityManager em = factory.createEntityManager();
-				boolean resultado = false;
-				
-			try {
-				em.getTransaction().begin();
-				em.persist(cliente);
-				em.getTransaction().commit();
-				
-			
-				//em.flush();
-				resultado = true;
-				
-			} catch (TransactionRequiredException e) {
-				e.printStackTrace();
-				// TODO: handle exception
-			} 			
-		   return resultado;
-	}
-	@Override
-	public boolean insertarDireccionCliente(Direccioncliente cliente) {
-		// TODO Auto-generated method stub
-				factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-				EntityManager em = factory.createEntityManager();
-				boolean resultado = false;
-				
-			try {
-				em.getTransaction().begin();
-				em.persist(cliente);
-				em.getTransaction().commit();
-				em.refresh(cliente);
-				
-			
-				//em.flush();
-				resultado = true;
-				
-			} catch (TransactionRequiredException e) {
-				e.printStackTrace();
-				// TODO: handle exception
-			} 			
-		   return resultado;
-	}
+	public List<Clasificacioncliente> listaClasificacionCliente(int pagInicio, int pagFin,
+			Clasificacioncliente clasifcliente) {
+			String q ;
+			List<Clasificacioncliente> listaCliente = null ;
+			String where="";
+	    	
+			if(clasifcliente!=null){
+				if(clasifcliente.getcEstadoCodigo()==null){
+		        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+		        }			
+				if(clasifcliente.getcEstadoCodigo()!=null){
+		        	where+= " where p.cEstadoCodigo LIKE '%"+clasifcliente.getcEstadoCodigo()+"%'";
+		        }
+				if(clasifcliente.getiClasificacionClienteId()>0){
+		        	where+= " and p.iClasificacionClienteId = "+clasifcliente.getiClasificacionClienteId()+"";
+		        }
+		        
+		        if(clasifcliente.getvNombre()!=null){
+		        	where+=" and  p.vNombre LIKE '%"+clasifcliente.getvNombre()+"%'";
+		        }
+		        
+		       
+		        System.out.println(" where ="+ where);
+		    	    q = "select p from Clasificacioncliente p " + where;
+		    	    
+		    	    listaCliente = listaEntidadPaginada(q, pagInicio, pagFin);
 
-	@Override
-	public boolean actualizarCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();
-		boolean resultado = false;
-		
-	try {
-		em.getTransaction().begin();
-		em.merge(cliente);
-		em.getTransaction().commit();
-		
-	
-		//em.flush();
-		 resultado = true;
-		
-	} catch (TransactionRequiredException e) {
-		e.printStackTrace();
-		
-		// TODO: handle exception
+				
+			}
+	        return listaCliente;
 	}
-		
-		
-		return resultado;
-	}
-	@Override
-	public boolean actualizarDireccionCliente(Direccioncliente cliente) {
-		// TODO Auto-generated method stub
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();
-		boolean resultado = false;
-		
-	try {
-		em.getTransaction().begin();
-		em.merge(cliente);
-		em.getTransaction().commit();
-	//    em.refresh(cliente);
-		
-		
-	
-		//em.flush();
-		 resultado = true;
-		
-	} catch (TransactionRequiredException e) {
-		e.printStackTrace();
-		
-		// TODO: handle exception
-	}
-		
-		
-		return resultado;
-	}
-
-	@Override
-	public boolean eliminarCliente(String iClienteId) {
-		// TODO Auto-generated method stub
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();
-		boolean resultado = false;
-		
-	try {
-		
-		  Query q = em.createQuery("Update Cliente p SET p.cEstadoCodigo = :EstadoCodigo " +
-	                    " where p.iClienteId IN ("+iClienteId+")")
-	                    .setParameter("EstadoCodigo", Constantes.estadoInactivo);
-			           // .setParameter("iClienteId", iClienteId); 
-
-       em.getTransaction().begin();
-       int x= q.executeUpdate();       
-       em.getTransaction().commit();
-	
-		//em.flush();
-       resultado = true;
-		
-	} catch (TransactionRequiredException e) {
-		e.printStackTrace();
-		
-		// TODO: handle exception
-	}
-		
-		
-		return resultado;
-	}
-*/
 }
