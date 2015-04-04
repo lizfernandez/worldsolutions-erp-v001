@@ -18,6 +18,7 @@ import com.dao.GenericaDao;
 import com.dao.AreaDao;
 import com.entities.Estado;
 import com.entities.Area;
+import com.entities.Usuario;
 import com.struts.form.AreaForm;
 import com.util.Fechas;
 import com.util.Paginacion;
@@ -162,7 +163,8 @@ public class AreaAction extends DispatchAction {
 			String mode = request.getParameter("mode");		
 			String ids = request.getParameter("ids");		
 			boolean resultado = false;
-		
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			/** Instanciamos las clase AreaForm y AreaDao **/
 			AreaForm pForm = (AreaForm) form;
 			Area obj =pForm.getArea();
@@ -172,11 +174,13 @@ public class AreaAction extends DispatchAction {
 			if (pForm.getMode().equals("I")) {
 				
 					obj.setdFechaInserta(Fechas.getDate());
+					obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 					resultado = areaDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
 				
 					obj.setdFechaActualiza(Fechas.getDate());
+					obj.setiUsuarioModificaId(usu.getiUsuarioId());
 					resultado = areaDao.actualizarUnaEndidad(obj);
 				
 			}

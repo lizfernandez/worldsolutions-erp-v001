@@ -193,7 +193,8 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			String mode = request.getParameter("mode");		
 			String ids = request.getParameter("ids");		
 			boolean resultado = false;
-		
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			/** Instanciamos las clase EstadocuentaclienteForm y EstadocuentaclienteDao **/
 			EstadoCuentaClienteForm pForm = (EstadoCuentaClienteForm) form;
 			Estadocuentacliente obj =pForm.getEstadoCuentaCliente();
@@ -211,6 +212,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 	
 					
 						obj.setdFechaInserta(Fechas.getDate());
+						obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 						obj.setcEstadoCodigo(Constantes.estadoActivo);
 						
 						/** llamamos a listar Estadocuentacliente **/
@@ -241,6 +243,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 					
 				   obj = estadoCuentaClienteDao.findEndidad(obj,obj.getiEstadoCuentaCliente());
 				   obj.setdFechaPago(obj.getdFechaPago());
+				   
 				  
 					/** llamamos a listar Estadocuentacliente **/
 					//listaEstadocuentacliente(mapping, pForm, request, response);
@@ -464,6 +467,8 @@ public class EstadoCuentaClienteAction extends BaseAction {
 				 Date fecha = Fechas.getDate();	
 		            fecha =obj.getVenta().getFormaPago().getiFormaPago()==3?Fechas.fechaDate("30/"+(Fechas.mesFecha(fecha)+1)+"/"+Fechas.anioFecha(fecha)):obj.getdFechaVencimiento();
 		         obj.setdFechaVencimiento(fecha);
+		         obj.setiUsuarioInsertaId(usu.getiUsuarioId());
+		         obj.setdFechaInserta(Fechas.getDate());
 		         if(pForm.getdFechaPago()!=""){
 		        	 obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPago()));
 		         }
@@ -481,6 +486,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			}// fin mode I;
 			else if (pForm.getMode().equals("U")) {
 				    obj = ingresoProductoDao.findEndidad(pForm.getLetracliente(), pForm.getLetracliente().getiLetraClienteId());
+				    obj.setdFechaActualiza(Fechas.getDate());
 				   if(pForm.getdFechaPago()!=""){
 				       obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPago()));
 				    }

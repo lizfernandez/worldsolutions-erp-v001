@@ -171,7 +171,9 @@ public class UsuarioAction extends DispatchAction {
 			/** Inicializamos las variables **/ 
 			String msn = "";
 			String mode = request.getParameter("mode");		
-			String ids = request.getParameter("ids");		
+			String ids = request.getParameter("ids");	
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			boolean resultado = false;
 			GenericaDao usuarioDao = new GenericaDao();
 			/** Instanciamos las clase UsuarioForm y UsuarioDao **/
@@ -186,6 +188,7 @@ public class UsuarioAction extends DispatchAction {
 			if (pForm.getMode().equals("I")) {
 				
 				obj.setdFechaInserta(Fechas.getDate());
+				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 				resultado = usuarioDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
@@ -194,6 +197,7 @@ public class UsuarioAction extends DispatchAction {
 				  obj= Util.comparar(obj, pForm.getUsuario());
 			
 				obj.setdFechaActualiza(Fechas.getDate());
+				obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 				resultado = usuarioDao.actualizarUnaEndidad(obj);
 	
 			} else if (mode.equals("D")) {

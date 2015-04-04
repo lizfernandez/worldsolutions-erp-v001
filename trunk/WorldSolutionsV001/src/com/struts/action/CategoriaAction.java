@@ -187,7 +187,9 @@ public class CategoriaAction extends BaseAction {
 			String mode = request.getParameter("mode");		
 			String ids = request.getParameter("ids");		
 			boolean resultado = false;
-		
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+			
 			/** Instanciamos las clase CategoriaForm y CategoriaDao **/
 			CategoriaForm pForm = (CategoriaForm) form;
 			Categoria obj =pForm.getCategoria();
@@ -201,11 +203,13 @@ public class CategoriaAction extends BaseAction {
 			
 	       
 			if (pForm.getMode().equals("I")) {				
-				obj.setdFechaInserta(Fechas.getDate());				
+				obj.setdFechaInserta(Fechas.getDate());	
+				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 				resultado = categoriaDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
 				 obj.setdFechaActualiza(Fechas.getDate());
+				 obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 				
 				resultado = categoriaDao.actualizarUnaEndidad(obj);
 					

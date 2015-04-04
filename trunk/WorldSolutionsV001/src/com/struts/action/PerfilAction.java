@@ -323,7 +323,8 @@ public class PerfilAction extends DispatchAction {
 		String ids = request.getParameter("ids");
 		String vCodigoPermiso=request.getParameter("vCodigoPermiso");
 		String iUsuarioId=request.getParameter("iUsuarioId");
-		
+		HttpSession sesion = request.getSession();
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		boolean resultado = false;
 		
 		/** Instanciamos las clase PerfilForm y PerfilDao **/
@@ -336,6 +337,7 @@ public class PerfilAction extends DispatchAction {
         /**Insertamos datos del perfil **/
 		if (pForm.getMode().equals("I")) {
 			obj.setdFechaInserta(Fechas.getDate());
+			obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 			resultado = perfilDao.insertarUnaEndidad(obj);
 			
 		} else if (pForm.getMode().equals("U")) {
@@ -343,6 +345,7 @@ public class PerfilAction extends DispatchAction {
 			
 			try {
 				obj.setdFechaActualiza(Fechas.getDate());
+				obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 				obj = Util.comparar(obj,pForm.getPerfil());
 			} catch (SecurityException e) {
 				// TODO Auto-generated catch block

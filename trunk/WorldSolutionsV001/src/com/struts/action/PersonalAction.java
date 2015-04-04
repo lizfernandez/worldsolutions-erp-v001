@@ -24,6 +24,7 @@ import com.entities.Area;
 import com.entities.Ocupacion;
 import com.entities.Personal;
 import com.entities.Estado;
+import com.entities.Usuario;
 
 import com.struts.form.PersonalForm;
 import com.util.Fechas;
@@ -187,7 +188,8 @@ public class PersonalAction extends DispatchAction {
 		String mode = request.getParameter("mode");		
 		String ids = request.getParameter("ids");		
 		boolean resultado = false;
-		
+		HttpSession sesion = request.getSession();
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		/** Instanciamos las clase PersonalForm y PersonalDao **/
 		PersonalForm pForm = (PersonalForm) form;
 		Personal obj =pForm.getPersonal();
@@ -196,10 +198,12 @@ public class PersonalAction extends DispatchAction {
 		/**Insertamos datos del perfil **/
 		if (pForm.getMode().equals("I")) {			
 			obj.setdFechaInserta(Fechas.getDate());
+			obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 			resultado = personalDao.insertarUnaEndidad(obj);
 			
 		} else if (pForm.getMode().equals("U")) {
 			obj.setdFechaAcualiza(Fechas.getDate());
+			
 			resultado = personalDao.actualizarUnaEndidad(obj);
 			
 		}
