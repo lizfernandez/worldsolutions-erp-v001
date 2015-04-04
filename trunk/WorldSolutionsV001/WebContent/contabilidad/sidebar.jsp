@@ -81,7 +81,7 @@
         <li id="diario"><a href="contabilidad.do?metodo=listaLibroDiario">
             <span class="gestion">Libro Diario</span></a>
         </li>
-        <li id="mayor"><a href="contabilidad.do?metodo=listaLibroMayor">
+        <!-- li id="mayor"><a href="contabilidad.do?metodo=listaLibroMayor">
             <span class="gestion">Libro Mayor</span></a>
         </li>
         <li id="balance"><a href="contabilidad.do?metodo=listaBalanceGeneral">
@@ -89,7 +89,7 @@
         </li>
         <li id="estadoFinanciero"><a href="contabilidad.do?metodo=listaEstadoFinanciero">
             <span class="gestion">Estados Financieros</span></a>
-        </li>
+        </li-->
       </ul>   
 </div>
 
