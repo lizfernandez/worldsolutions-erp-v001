@@ -187,7 +187,7 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 		
 	    	    q = "select p from Librodiario p " + where
 	    	    		//+" order by p.iLibroDiarioId desc , p.dFechaInserta desc";/**/
-	    	    		+" order by p.cuenta.vCodigo asc, p.dFechaInserta desc";/**/
+	    	    		+" order by p.dFechaInserta desc, p.cuenta.vCodigo asc";/**/
 	    	    listaLibroDiario = listaEntidadPaginada(q, pagInicio, pagFin);
 
 			

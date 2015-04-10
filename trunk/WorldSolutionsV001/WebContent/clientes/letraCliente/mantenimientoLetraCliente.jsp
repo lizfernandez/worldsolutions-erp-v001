@@ -170,6 +170,7 @@
                 changeYear: true,
                 dateFormat: 'dd/mm/yy',
                 defaultDate: -1,
+	            maxDate: '+0d'
                  
         });
     $("input:text.inputDisabled").attr("readonly",true);
