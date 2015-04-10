@@ -233,16 +233,16 @@ public class EstadoCuentaClienteAction extends BaseAction {
 						else{
 							estadoCuentaClienteDao.persistEndidad(obj);
 						}					
-						estadoCuentaClienteDao.commitEndidad(transaction);
-						estadoCuentaClienteDao.refreshEndidad(obj);
-				   
-					
+						resultado = estadoCuentaClienteDao.commitEndidad(transaction);
+						
 					
 				}// fin mode I;
 				else if (pForm.getMode().equals("U")) {
 					
 				   obj = estadoCuentaClienteDao.findEndidad(obj,obj.getiEstadoCuentaCliente());
-				   obj.setdFechaPago(obj.getdFechaPago());
+				   
+				   obj.setdFechaPago(pForm.getEstadoCuentaCliente().getdFechaPago());
+				   obj.setfMontoPago(pForm.getfMontoPago());
 				   
 				  
 					/** llamamos a listar Estadocuentacliente **/
@@ -269,7 +269,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 						ventaDao.mergeEndidad(venta);
 				    }
 					
-					ventaDao.commitEndidad(transaction);
+				    resultado = ventaDao.commitEndidad(transaction);
 				}
 				else if (mode.equals("D")) { 
 					obj = estadoCuentaClienteDao.findEndidad(obj,Integer.parseInt(ids));
