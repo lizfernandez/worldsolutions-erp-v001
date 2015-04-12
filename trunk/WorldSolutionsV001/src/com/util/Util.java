@@ -59,8 +59,9 @@ public class Util {
     	 List<Configuracion> listaConf = new ArrayList<Configuracion>();
     	 listaConf.add(new Configuracion(3,"NRO FACTURA VENTA"));
     	 listaConf.add(new Configuracion(4,"NRO BOLETA VENTA"));
-    	 listaConf.add(new Configuracion(5,"NRO NOTA VENTA"));
-    	 listaConf.add(new Configuracion(6,"NRO GUIA REMISION VENTA"));
+    	 listaConf.add(new Configuracion(5,"NRO NOTA CREDITO"));
+    	 listaConf.add(new Configuracion(5,"NRO NOTA DEBITO"));
+    	 listaConf.add(new Configuracion(6,"NRO GUIA REMISION "));
     	 listaConf.add(new Configuracion(7,"RUC DE EMPRESA"));
     	 listaConf.add(new Configuracion(8,"TIPO CAMBIO"));
     	 listaConf.add(new Configuracion(9,"TIPO MONEDA"));
@@ -88,6 +89,7 @@ public class Util {
     	 listaEstado.add(new Estado(2, "CANCELADO"));
     	 listaEstado.add(new Estado(3, "DEVOLUCION TOTAL"));
     	 listaEstado.add(new Estado(4, "DEVOLUCION PARCIAL"));
+    	 listaEstado.add(new Estado(5, "ANULADO"));
     	 
     	 return listaEstado;
      }

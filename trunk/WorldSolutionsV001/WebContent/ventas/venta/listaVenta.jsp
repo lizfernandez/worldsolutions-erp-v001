@@ -58,7 +58,7 @@
         
           
 	         
-        <th colspan="3" width="5%" >Operaciones</th>       
+        <th colspan="1" width="5%" >Ope.</th>       
         <th align="left">Cliente</th>
         <th align="left">Tipo Documento</th>
 	    <th align="left">Nro. Documento</th>
@@ -79,11 +79,11 @@
 	    <logic:notEmpty name="ventaForm" property="lista">
 	    <logic:iterate name="ventaForm" property="lista" id="x">	
 			<tr>
-				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iVentaId" />"/></td> 
+				<!-- td align="center"><input type="checkbox" id="<bean:write name="x" property="iVentaId" />"/></td--> 
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />&iclasificacionId=1',900,700)" /></td>
-		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iVentaId" />','venta.do?metodo=iduVenta&mode=D')" /></td>	
+		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=ED&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />&iclasificacionId=1',1100,600)" /></td>
+		 	    <!-- td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iVentaId" />','venta.do?metodo=iduVenta&mode=D')" /></td-->	
 				
 				<td><bean:write name="x" property="cliente.vClienteRazonSocial" /></td>
 				<td><bean:write name="x" property="tipoDocumento.vTipoDocumentoDescripcion" /></td>
@@ -125,7 +125,7 @@ $("#venta,#mantVentas").addClass("active");
 	//tipoDoc== 2;// $("#selTipoDocumento").val();
 	var tipoDoc= 1;//$("#selTipoDocumento").val();
 	var iclasificacionId= 1;/*$("#iclasificacionId").val();*/
-	 popup('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,900,700);
+	 popup('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1100,600);
  }
  </script> 
  

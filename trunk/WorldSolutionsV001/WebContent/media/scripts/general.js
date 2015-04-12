@@ -418,7 +418,7 @@ function retornarProducto(
        
 	   window.close();
 	}
-function retornarProv(txtid,id,txtcod,cod,txtnom,nom,txtruc, ruc, txtdir, dir, txtdir2){
+function retornarProv(txtid,id,txtcod,cod,txtnom,nom,txtruc, ruc, txtdir, dir, txtdir2,txtclas, clas, txtdes, des){
 
 	   window.opener.document.getElementById(txtid).value=id;/**/
 	   window.opener.document.getElementById(txtcod).value=cod;
@@ -426,18 +426,10 @@ function retornarProv(txtid,id,txtcod,cod,txtnom,nom,txtruc, ruc, txtdir, dir, t
 	   window.opener.document.getElementById(txtruc).value=ruc;
 	   window.opener.document.getElementById(txtdir).value=dir;
 	   window.opener.document.getElementById(txtdir2).value=dir;
-	  // $('#'+txtdir,window.opener.document).val(dir);
-	 //  $("input[type='text'][name='"+txtdir+"']"+txtdir,window.opener.document).val(dir); 
-	   
-	 //  alert('svfs');
+	   window.opener.document.getElementById(txtclas).value=clas;
+	   window.opener.document.getElementById(txtdes).value=des;
 	   window.close();
-	  // return false;
-	  
-	  /* $("form").submit(function() {
-	    	alert('hola');
-	    	 window.close();return false;	
-	    	});*/
-	   $('button').click(function(){
+		   $('button').click(function(){
 	        // code to cancel changes
 	        return false;
 	    });
@@ -754,6 +746,7 @@ newHtml+='</tbody>';
 
 //CARGAMOS EL detalle de la Compra
 function listar_detalleCompraDevolucion(obj, destino, fecha){
+	alert("hola");
 	var datos='',datos1='',datos2='',datos3='';
 	var newHtml='';
 	var newHtmlD='';

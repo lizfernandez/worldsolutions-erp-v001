@@ -140,8 +140,22 @@ public class Venta implements Serializable {
 	@Column(nullable=false)
 	private float fDescuento;
     
+	private  float fMontoPago;
+	
+	private float fTipoCambio;
+	
+	private float fMontoVuelto;
+	
+	private String vTipoPago;
+	
+	private String vTipoVenta;
 	
 	private int iPeriodoId;
+	
+	private float fDescClienteVenta;
+	
+	private String vIncluyeIGV;
+	
     public Venta() {
     }
 
@@ -662,6 +676,104 @@ public class Venta implements Serializable {
 	 */
 	public void setSucursal(Sucursal sucursal) {
 		this.sucursal = sucursal;
+	}
+
+	/**
+	 * @return the fMontoPago
+	 */
+	public float getfMontoPago() {
+		return fMontoPago;
+	}
+
+	/**
+	 * @param fMontoPago the fMontoPago to set
+	 */
+	public void setfMontoPago(float fMontoPago) {
+		this.fMontoPago = fMontoPago;
+	}
+
+	/**
+	 * @return the fTipoCambio
+	 */
+	public float getfTipoCambio() {
+		return fTipoCambio;
+	}
+
+	/**
+	 * @param fTipoCambio the fTipoCambio to set
+	 */
+	public void setfTipoCambio(float fTipoCambio) {
+		this.fTipoCambio = fTipoCambio;
+	}
+
+	/**
+	 * @return the fMontoVuelto
+	 */
+	public float getfMontoVuelto() {
+		return fMontoVuelto;
+	}
+
+	/**
+	 * @param fMontoVuelto the fMontoVuelto to set
+	 */
+	public void setfMontoVuelto(float fMontoVuelto) {
+		this.fMontoVuelto = fMontoVuelto;
+	}
+
+	/**
+	 * @return the vTipoPago
+	 */
+	public String getvTipoPago() {
+		return vTipoPago;
+	}
+
+	/**
+	 * @param vTipoPago the vTipoPago to set
+	 */
+	public void setvTipoPago(String vTipoPago) {
+		this.vTipoPago = vTipoPago;
+	}
+
+	/**
+	 * @return the fDescClienteVenta
+	 */
+	public float getfDescClienteVenta() {
+		return fDescClienteVenta;
+	}
+
+	/**
+	 * @param fDescClienteVenta the fDescClienteVenta to set
+	 */
+	public void setfDescClienteVenta(float fDescClienteVenta) {
+		this.fDescClienteVenta = fDescClienteVenta;
+	}
+
+	/**
+	 * @return the vIncluyeIGV
+	 */
+	public String getvIncluyeIGV() {
+		return vIncluyeIGV;
+	}
+
+	/**
+	 * @param vIncluyeIGV the vIncluyeIGV to set
+	 */
+	public void setvIncluyeIGV(String vIncluyeIGV) {
+		this.vIncluyeIGV = vIncluyeIGV;
+	}
+
+	/**
+	 * @return the vTipoVenta
+	 */
+	public String getvTipoVenta() {
+		return vTipoVenta;
+	}
+
+	/**
+	 * @param vTipoVenta the vTipoVenta to set
+	 */
+	public void setvTipoVenta(String vTipoVenta) {
+		this.vTipoVenta = vTipoVenta;
 	}
 
 	
