@@ -54,6 +54,9 @@ public class Ventadevolucion implements Serializable {
     private int iPeriodoId;
     
     private float fDescuento;
+    
+    private String nNroNotaCredito;
+    
     public Ventadevolucion() {
     }
 
@@ -296,6 +299,22 @@ public class Ventadevolucion implements Serializable {
 	 */
 	public void setKardexs(List<Kardex> kardexs) {
 		this.kardexs = kardexs;
+	}
+
+
+	/**
+	 * @return the nNroNotaCredito
+	 */
+	public String getnNroNotaCredito() {
+		return nNroNotaCredito;
+	}
+
+
+	/**
+	 * @param nNroNotaCredito the nNroNotaCredito to set
+	 */
+	public void setnNroNotaCredito(String nNroNotaCredito) {
+		this.nNroNotaCredito = nNroNotaCredito;
 	}
 	
 	

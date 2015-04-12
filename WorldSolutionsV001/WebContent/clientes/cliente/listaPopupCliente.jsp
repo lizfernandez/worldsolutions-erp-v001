@@ -61,7 +61,7 @@
 	     </logic:empty>
          <logic:notEmpty name="clienteForm" property="lista">
 		 <logic:iterate name="clienteForm" property="lista" id="x">	
-			<tr onclick="retornarProv('iClienteId','<bean:write name="x" property="iClienteId" />','vClienteCodigo','<bean:write name="x" property="vClienteCodigo" />','vClienteRazonSocial','<bean:write name="x" property="vClienteRazonSocial" />','nClienteNumeroDocumento','<bean:write name="x" property="nClienteNumeroDocumento" />','vClienteDireccion','<logic:notEmpty name="x" property="direccionclientes"><logic:iterate name="x" property="direccionclientes" id="z"><logic:equal name="z"  property="vPrincipal" value="1"><bean:write name="z" property="vDireccion" /></logic:equal></logic:iterate></logic:notEmpty>','vVentaPuntoLlegada')">
+			<tr onclick="retornarProv('iClienteId','<bean:write name="x" property="iClienteId" />','vClienteCodigo','<bean:write name="x" property="vClienteCodigo" />','vClienteRazonSocial','<bean:write name="x" property="vClienteRazonSocial" />','nClienteNumeroDocumento','<bean:write name="x" property="nClienteNumeroDocumento" />','vClienteDireccion','<logic:notEmpty name="x" property="direccionclientes"><logic:iterate name="x" property="direccionclientes" id="z"><logic:equal name="z"  property="vPrincipal" value="1"><bean:write name="z" property="vDireccion" /></logic:equal></logic:iterate></logic:notEmpty>','vVentaPuntoLlegada','vClasificacion','<bean:write name="x" property="clasificacion.vNombre" />','fDescuentoCliente','<bean:write name="x" property="fDescuento" />')">
 		 		<td><bean:write name="x" property="vClienteCodigo" /></td>
 				<td><bean:write name="x" property="vClienteRazonSocial" /></td>
 				<td><bean:write name="x" property="nClienteNumeroDocumento" /></td>

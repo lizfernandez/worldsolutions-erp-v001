@@ -281,6 +281,7 @@ public class VentaAction extends BaseAction {
 			sesion.removeAttribute("listaVentaDetalle"); 
 			sesion.removeAttribute("listaVentaDetalleCompra");
 			sesion.removeAttribute("listaVentaDetalleOriginal");
+			ventaform.getVentaDev().setnNroNotaCredito(ventaDao.callSPNro_Documento(7));
 			
 		}
      
@@ -663,7 +664,7 @@ public class VentaAction extends BaseAction {
 			VentaDao ventaDao = new VentaDao();
 			Usuario usu = (Usuario) sesion.getAttribute("Usuario");		
 			Moneda moneda = (Moneda)sesion.getAttribute("Moneda");
-			
+			float tipoCambio = Float.parseFloat((String) sesion.getAttribute("TipoCambio"));
 
 			/** llamado de los metodos de la clase dao **/
 
@@ -685,6 +686,8 @@ public class VentaAction extends BaseAction {
 				ventaform.setvPersonalNombres(usu.getPersonal().getvPersonalNombres()+" "+ usu.getPersonal().getvPersonalApellidoPaterno());
 				ventaform.setIclasificacionId(Integer.parseInt( request.getParameter("iclasificacionId")));
 				
+				ventaform.setfTipoCambio(tipoCambio);
+				
 				ventaform.getVenta().setnVentaNumero(ventaDao.callSPNro_Documento(Integer.parseInt(tipoDocumento)));
 				
 				 /***LISTA DE DETALLE VENTA***/
@@ -697,9 +700,9 @@ public class VentaAction extends BaseAction {
 				 
 				 if(tipoDocumento.equals("1"))
 						msn = "showEditFactura";			
-				 if(tipoDocumento.equals("2"))
-					   msn = "showEditBoleta";
 				 if(tipoDocumento.equals("3"))
+					   msn = "showEditBoleta";
+				 if(tipoDocumento.equals("7"))
 					   msn = "showEditNotaDebito";
 				 if(tipoDocumento.equals("4"))
 					   msn = "showEditGuiaRemision";
@@ -729,7 +732,9 @@ public class VentaAction extends BaseAction {
 				String tipoDocumento = request.getParameter("idTipoDocumento");
 				Venta venta = ventaDao.findEndidad(ventaform.getVenta(),id);
 				
+				ventaform.setvClasificacion(venta.getCliente().getClasificacion().getvNombre());				
 				ventaform.setVenta(venta);
+				
 				if(mode.equals("UE")){
 					
 					/***INGRESO DE VENTAS MEDIANTE EL ESTADO DE CUENTA DEL CLIENTE***/		
@@ -1724,12 +1729,12 @@ public class VentaAction extends BaseAction {
 		      	    ventaDao.persistEndidad(obj);    
 		      	    resultado = ventaDao.commitEndidad(entityTransaction);  	
 		      	    
-		      	 /* if(resultado==true){
+		      	  if(resultado==true){
 	     		  int iVentaDevolucionId=obj.getiVentaDevolucionId();
 	            	  ventaDao.entityTransaction().begin();
-	            	  contabilidadDao.callDevVentaContabilidad(iVentaDevolucionId, usu.getiUsuarioId(), pForm.getMode(), iPeriodoId); 
+	            	  contabilidadDao.callDevVentaContabilidad(iVentaDevolucionId, usu.getiUsuarioId(), pForm.getMode(),obj.getVenta().getvEstadoDocumento(), iPeriodoId); 
 	            	  resultado = ventaDao.commitEndidad(ventaDao.entityTransaction());
-	              }*/
+	              }
 		      	    ventaDao.refreshEndidad(obj);
 		      	  //  ventaDao.refreshEndidad(objVenta);
 		      	   }

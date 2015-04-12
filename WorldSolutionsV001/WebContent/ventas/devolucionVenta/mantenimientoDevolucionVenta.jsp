@@ -16,12 +16,12 @@
             <td width="100%">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabla">
             <tr>
-                <td>FECHA DEVOLUCI&Oacute;N:</td>
+                <td>R.U.C :</td>
                 <td >
-                	<html:text property="dVentaDevFecha" styleId="dVentaDevFecha"  size="11%" styleClass="text"/>
-                	&ensp;&ensp;&ensp;
+                    <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  disabled="true" styleClass="text inputDisabled " size="12%" />
+                	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 	FECHA VENTA:
-                	<html:text property="dVentaFecha" styleId="dVentaFecha"  size="11%" disabled="true" styleClass="text"/>
+                	<html:text property="dVentaFecha" styleId="dVentaFecha"  size="20%" disabled="true" styleClass="text inputDisabled "/>
     		     </td>
               <td>NRO. DOCUMENTO:</td>
                 <td>
@@ -35,35 +35,37 @@
             <tr>
                 <td>CLIENTE:</td>
                 <td>
-              		  <html:text property="vClienteCodigo"  styleId="vClienteCodigo"  styleClass="textCodigo" />
-	   				  <html:text property="vClienteRazonSocial"  styleId="vClienteRazonSocial"  size="38%" styleClass="text"/>
+              		  <html:text property="vClienteCodigo"  styleId="vClienteCodigo"  styleClass="textCodigo inputDisabled " />
+	   				  <html:text property="vClienteRazonSocial"  styleId="vClienteRazonSocial"  size="38%" styleClass="text inputDisabled "/>
 	                
-                <td>TIPO DOCUMENTO:</td>
+                <td>NRO. NOTA CREDITO:</td>
                 <td>    
-                 <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo" style="width:160px">       
-                 <html:options collection="listaTipoDoc" property="iTipoDocumentoGestionId" labelProperty="vTipoDocumentoDescripcion"/>
-                </html:select>
-                          
-				
+                   <html:text property="nNroNotaCredito" styleId="nNroNotaCredito" size="20%" styleClass="text" />
 				</td>
             </tr>
           <tr>
           <td>DIRECCI&Oacute;N :</td>
           <td>
-	          <html:text property="vClienteDireccion" styleId="vClienteDireccion" size="56%" styleClass="text"/>      
+	          <html:text property="vClienteDireccion" styleId="vClienteDireccion" size="56%" styleClass="text inputDisabled "/>      
 	      </td>
-           <td>FORMA DE PAGO :</td>
+           <td>FECHA DEVOLUCI&Oacute;N:</td>
             <td>
-                <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo" style="width:160px">       
-                 <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
-                </html:select>
+              <html:text property="dVentaDevFecha" styleId="dVentaDevFecha"  size="20%" styleClass="text"/>
+                	
                 
             </td>
           </tr>
-          <tr>
-          <td>R.U.C :</td>
+         
+           <tr>
+          <td>TIPO DOCUMENTO:</td>
           <td>
-              <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  disabled="true" styleClass="text" /></td>
+               <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo inputDisabled " style="width:160px">       
+                 <html:options collection="listaTipoDoc" property="iTipoDocumentoGestionId" labelProperty="vTipoDocumentoDescripcion"/>
+                </html:select>
+                FORMA DE PAGO :
+                <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo inputDisabled " style="width:160px">       
+                 <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
+                </html:select>
            <td>ESTADO DOCUMENTO:</td>
            <td>
                 <html:select  property="vEstadoDocumento" styleId="vEstadoDocumento" styleClass="combo" style="width:160px">       
@@ -328,7 +330,7 @@
         //document.getElementById('vVentaCodigo').focus();
         document.getElementById('btnGuardar').textContent="Insertar";
         $(".trCodigo").show();
-        $("#popupCabecera").text('INSERTAR DEVOLUCION DE COMPRAS');	
+        $("#popupCabecera").text('INSERTAR NOTA CREDITO -VENTAS');	
         
       
     } else {
@@ -342,7 +344,7 @@
     function fn_eliminar(key,opc){
     	var cad = "venta.do?metodo=detalleVenta&id="+key+"&mode=D";        
         $.getJSON(cad, function retorna(obj){
-        listar_detalleCompraDevolucion(obj,'hijo');
+        	listar_detalleVentaDevolucion(obj,'hijo');
        	 fn_calcularGlobal();
        	 });
         /**se elimina el detalle de la devolucion**/

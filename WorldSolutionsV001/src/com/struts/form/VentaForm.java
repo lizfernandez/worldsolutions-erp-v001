@@ -39,12 +39,14 @@ public class VentaForm extends ActionForm {
 	private String vClienteDireccion;
 	private String cPersonalCodigo;
 	private String vPersonalNombres;
+	private String vClasificacion;
 	private int iclasificacionId;
 	/*************************/
 	/**SESIONES DE INPUESTOS**/
 	/*************************/
 	private String tipoMoneda;
 	private String IGVVentas;
+	
 	
    
 	
@@ -356,7 +358,28 @@ public class VentaForm extends ActionForm {
 		cliente.setvClienteRazonSocial(vClienteRazonSocial);
 		this.venta.setCliente(cliente);
 	}
-
+    
+	/**
+	 * @return the vClasificacion
+	 */
+	public String getvClasificacion() {
+		return this.vClasificacion;
+	}
+	
+	
+	/**
+	 * @param vClasificacion the vClasificacion to set
+	 */
+	public void setvClasificacion(String vClasificacion) {
+		this.vClasificacion = vClasificacion;
+	}
+	/**
+	 * @return the fDescuentoCliente
+	 */
+	public float getfDescuentoCliente() {
+		return getCliente().getfDescuento();
+	}
+	
 	/**
 	 * @return the tipodocumento
 	 */
@@ -771,5 +794,117 @@ public class VentaForm extends ActionForm {
 	public void setiPeriodoId(int iPeriodoId) {
 		this.getVenta().setiPeriodoId(iPeriodoId);
 	}
-    
+	/**
+	 * @return the fMontoPago
+	 */
+	public float getfMontoPago() {
+		return getVenta().getfMontoPago();
+	}
+
+	/**
+	 * @param fMontoPago the fMontoPago to set
+	 */
+	public void setfMontoPago(float fMontoPago) {
+		this.getVenta().setfMontoPago(fMontoPago);
+	}
+
+	/**
+	 * @return the fTipoCambio
+	 */
+	public float getfTipoCambio() {
+		return getVenta().getfTipoCambio();
+	}
+
+	/**
+	 * @param fTipoCambio the fTipoCambio to set
+	 */
+	public void setfTipoCambio(float fTipoCambio) {
+		this.getVenta().setfTipoCambio(fTipoCambio);
+	}
+
+	/**
+	 * @return the fMontoVuelto
+	 */
+	public float getfMontoVuelto() {
+		return getVenta().getfMontoVuelto();
+	}
+
+	/**
+	 * @param fMontoVuelto the fMontoVuelto to set
+	 */
+	public void setfMontoVuelto(float fMontoVuelto) {
+		this.getVenta().setfMontoVuelto(fMontoVuelto);
+	}
+
+	/**
+	 * @return the vTipoPago
+	 */
+	public String getvTipoPago() {
+		return getVenta().getvTipoPago();
+	}
+
+	/**
+	 * @param vTipoPago the vTipoPago to set
+	 */
+	public void setvTipoPago(String vTipoPago) {
+		this.getVenta().setvTipoPago(vTipoPago);
+	}
+	/**
+	 * @return the fDescClienteVenta
+	 */
+	public float getfDescClienteVenta() {
+		return getVenta().getfDescClienteVenta();
+	}
+
+	/**
+	 * @param fDescClienteVenta the fDescClienteVenta to set
+	 */
+	public void setfDescClienteVenta(float fDescClienteVenta) {
+		this.getVenta().setfDescClienteVenta(fDescClienteVenta);
+	}
+
+	/**
+	 * @return the vIncluyeIGV
+	 */
+	public String getvIncluyeIGV() {
+		return this.getVenta().getvIncluyeIGV();
+	}
+
+	/**
+	 * @param vIncluyeIGV the vIncluyeIGV to set
+	 */
+	public void setvIncluyeIGV(String vIncluyeIGV) {
+		this.getVenta().setvIncluyeIGV(vIncluyeIGV);
+	}
+
+	/**
+	 * @return the vTipoVenta
+	 */
+	public String getvTipoVenta() {
+		return getVenta().getvTipoVenta();
+	}
+
+	/**
+	 * @param vTipoVenta the vTipoVenta to set
+	 */
+	public void setvTipoVenta(String vTipoVenta) {
+		this.getVenta().setvTipoVenta(vTipoVenta);
+	}
+	
+	/**
+	 * @return the nNroNotaCredito
+	 */
+	public String getnNroNotaCredito() {
+		return ventaDev.getnNroNotaCredito();
+	}
+
+
+	/**
+	 * @param nNroNotaCredito the nNroNotaCredito to set
+	 */
+	public void setnNroNotaCredito(String nNroNotaCredito) {
+		this.ventaDev.setnNroNotaCredito(nNroNotaCredito);
+	}
+	
+	
 }

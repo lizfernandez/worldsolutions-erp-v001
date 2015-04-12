@@ -53,6 +53,8 @@ public class Ingresoproductodevolucion implements Serializable {
 	
 	private float fDescuento;
 	
+	private String nNroNotaDebito;
+	
     public Ingresoproductodevolucion() {
     }
 
@@ -251,6 +253,20 @@ public class Ingresoproductodevolucion implements Serializable {
 	 */
 	public void setfDescuento(float fDescuento) {
 		this.fDescuento = fDescuento;
+	}
+
+	/**
+	 * @return the nNroNotaDebito
+	 */
+	public String getnNroNotaDebito() {
+		return nNroNotaDebito;
+	}
+
+	/**
+	 * @param nNroNotaDebito the nNroNotaDebito to set
+	 */
+	public void setnNroNotaDebito(String nNroNotaDebito) {
+		this.nNroNotaDebito = nNroNotaDebito;
 	}
 
 	

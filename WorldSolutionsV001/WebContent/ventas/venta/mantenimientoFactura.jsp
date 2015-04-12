@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="venta" styleId="formVenta" enctype="echarset=utf-8">
-<table width="1296" height="439" border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla">
+<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 70%; float: left;">
     <tr style="height: 1px;">
       <td>
       
@@ -61,7 +61,13 @@
           <tr>
           <td>R.U.C :</td>
           <td colspan="3">
-              <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  styleClass="text textCodigo inputDisabled" readonly="true" /></td>
+              <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  styleClass="text textCodigo inputDisabled" readonly="true" />
+           CLASIF:   
+           <html:text property="vClasificacion" styleId="vClasificacion"  styleClass="text textCodigo inputDisabled" readonly="true" />
+          %DESC:
+           <html:text property="fDescuentoCliente" styleId="fDescuentoCliente"  styleClass="text inputDisabled" readonly="true" size="6" />
+          </td>
+          
            <td width="5%">ORDEN DE COMPRA :</td>
            <td width="14%">
               <html:text property="cVentaOrdenCompra"  styleId="cVentaOrdenCompra" styleClass="textN" />
@@ -99,7 +105,7 @@
       <logic:iterate id="x" name="listaVentaDetalle" indexId="i">
        <logic:equal  name="x"  property="cEstadoCodigo" value="AC">
          <tr id="fila${i}">
-          <td><img  src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" /></td>
+          <td><img  src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" class="imgDelete" /></td>
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
             <td>	           
 	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
@@ -127,7 +133,7 @@
       </logic:iterate>      
     </logic:notEmpty>
       <tr>
-        <td><img  src="${pageContext.request.contextPath}/media/imagenes/new.png" onclick="fn_listarProducto()" /></td>
+        <td><img  src="${pageContext.request.contextPath}/media/imagenes/new.png" onclick="fn_listarProducto()" class="imgNew" /></td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -175,28 +181,70 @@
 			            </tr> 
 	               </table>
                </td>  
+               
+           </tr>
+           
+        </table>
+    </td>    
+  </tr> 
+  
+<tr height="50px">   
+    <td align="center" colspan="2">
+     <br>
+     <span id="m_mensaje" class="mensaje"></span>
+     <br>
+    </td>
+</tr>
+
+
+
+
+
+
+
+<%-- hidden field que contiene el mode --%>
+<html:hidden property="mode" styleId="mode" />
+			
+<%-- set the parameter for the dispatch action --%>
+<html:hidden property="metodo" value="iduVenta" styleId="metodo" />	
+</table>
+<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 30%; float: right;">
+<tr style="height: 1px;"> 
+    <td>
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr> 
+        
                <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" id="tablaImpuesto" >                
 		             <tr>
 		                
-		                <td align="right">TOTAL<span class="tipoMoneda"></span> </td>
+		                <td align="right">TOTAL:</td>
 		                <td align="right">
-		                  <input type="text" id="fVentaTotalRealR"  class="text inputDisabled textNumero" readonly="true" />		                  
+		                <span class="tipoMoneda"></span>
+		                  <input type="text" id="fVentaTotalRealR"  class="text inputDisabled textNumero" readonly="true"  size="10" />		                  
 		                </td>
 		            </tr>
 		             <tr>
 		                
-		                <td align="right">Descuento <span class="tipoMoneda"></span> </td>
+		                <td align="right">Desc. Producto:</td>
 		                <td align="right">
-		                   <input type="text" id="fDescuentoR" class="text inputDisabled textNumero" onblur="fn_descuento()" />	                 
+		                <span class="tipoMoneda"></span>
+		                   <input type="text" id="fDescuentoR" class="text inputDisabled textNumero" onblur="fn_descuentoProducto()"  size="10"/>	                 
+		                 </td>
+		             </tr>
+		             <tr>
+		                
+		                <td align="right">Desc. Cliente:</td>
+		                <td align="right">
+		                <span class="tipoMoneda"></span>
+		                   <input type="text" id="fDescClienteVentaR" class="text inputDisabled textNumero" onblur="fn_descuentoCliente()"  size="10"/>	                 
 		                 </td>
 		             </tr>		      
                </table>
               </td>
            </tr>
            <tr>
-	           <td  width="60%">
-	           </td>
+	           
            <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" >                
 		
@@ -209,26 +257,66 @@
 		                 </td>
 		            </tr>
 		            <tr> 
-		                <td width="50%" align="right">Base Imponible <span class="tipoMoneda"></span></td>
+		                <td width="50%" align="right">Base Imponible:</td>
 		                <td align="right">
-		                   <input type="text" id="fVentaSubTotalR"  class="text inputDisabled textNumero" readonly="true" />
-		                 </td>
+		                <span class="tipoMoneda"></span>
+		                   <input type="text" id="fVentaSubTotalR"
+										class="text inputDisabled textNumero" readonly="true" size="10"/>
+									</td>
 		            </tr>
 		            <tr>		                
-		                <td align="right"><!--  input type="checkbox"  checked="checked" onclick="fn_SinIGV()" id="sinIGV" />-->IGV(<span class="IGVVentas"></span>%)  <span class="tipoMoneda"></span> </td>
-		                <td align="right">
-		                 <input type="text" id="fVentaIGVR"  class="text inputDisabled textNumero" readonly="true"  />
+		                <td align="right">IGV(<span class="IGVVentas"></span>%):</td>
+		                <td align="right"><span class="tipoMoneda"></span>
+		                 <input type="text" id="fVentaIGVR"  class="text inputDisabled textNumero" readonly="true"  size="10"/>
 		                 </td>
 		            </tr>
 		            <tr>
 		                
-		                <td align="right">TOTAL  FINAL<span class="tipoMoneda"></span> </td>
-		                <td align="right">
-		                  <input type="text" id="fVentaTotalR"  class="text inputDisabled textNumero" readonly="true" />
-		                  <span id="m_fVentaTotalR" class="importante">*</span>
+		                <td align="right">TOTAL  FINAL:</td>
+		                <td align="right"><span class="tipoMoneda"></span>
+		                  <input type="text" id="fVentaTotalR"  class="text inputDisabled textNumero" readonly="true" size="10" />
+		                  
 		                </td>
+		            </tr>		           
+               </table>
+           </td>
+           </tr>
+           <tr>
+	           
+           <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" id="detallePago">                
+		
+		            <tr> 
+		                <td align="left" colspan="2">
+		                TIPO CAMBIO: <html:text property="fTipoCambio" styleId="fTipoCambio" styleClass="text inputDisabled textNumero" size="3" onblur="fn_tipoPago()"  /> 
+		                  
+		                TIPO PAGO:
+		                <input type="radio" id="monedaSoles" onclick="fn_tipoPago()"  class="textN"  name="iMoneda" />S/.
+		                <input type="radio" id="monedaDolares" onclick="fn_tipoPago()"  class="textN" name="iMoneda" />$.
+		                 </td>		              	                
+		                 
 		            </tr>
 		           
+		            <tr>		                
+		                <td align="right">MONTO PAGO:</td>
+		                <td align="right">
+		                 S/.
+		                 <input type="text" id="fMontoPagoSoles"  class="textN inputDisabled textNumero" size="7" onblur="fn_tipoPago()"/>
+		                 $.
+		                 <input type="text" id="fMontoPagoDolares"  class="textN inputDisabled textNumero"  size="7" onblur="fn_tipoPago()"/>
+		                 </td>
+		            </tr>
+		            <tr>
+		                
+		                <td align="right">VUELTO:</td>
+		                <td align="right">
+		                  S/.
+		                  <input type="text" id="fMontoVueltoSoles"  class="textN inputDisabled textNumero" readonly="true" size="7" />
+		                  $.
+		                  <input type="text" id="fMontoVueltoDolares"  class="textN inputDisabled textNumero" readonly="true" size="7" />
+		                  
+		                </td>
+		            </tr>		           
                </table>
            </td>
            </tr>
@@ -247,21 +335,21 @@
 				           <button onclick="insertar('tabla')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
 				           
 				        </td>
-				        <td><button onclick="cancelar('');" class="button" type="button"><span class='cancel'>Cancelar</span></button></td>
+				        <td align="left">
+				           <button onclick="imprimir('tabla')"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+				           
+				        </td>
+				        <td><button onclick="cancelar('');" class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
 				    </tr>
 				</table>
               </td>
                
         </table>
     </td>    
-  </tr> 
-<tr height="50px">   
-    <td align="center" colspan="2">
-     <br>
-     <span id="m_mensaje" class="mensaje"></span>
-     <br>
-    </td>
-</tr>
+  </tr>
+
+</table>
+
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iVentaId" />
 
@@ -275,20 +363,17 @@
 <html:hidden property="vEstadoDocumento" styleId="vEstadoDocumento" value="CANCELADO"/>
 <html:hidden property="fVentaTotalReal" styleId="fVentaTotalReal" />
 <html:hidden property="fDescuento" styleId="fDescuento" />
+<html:hidden property="fDescClienteVenta" styleId="fDescClienteVenta" />
 <html:hidden property="fVentaSubTotal" styleId="fVentaSubTotal" />
 <html:hidden property="fVentaIGV" styleId="fVentaIGV" />
 <html:hidden property="fVentaTotal" styleId="fVentaTotal" />
 <html:hidden property="tipoMoneda" styleId="tipoMoneda" />
+<html:hidden property="vTipoPago" styleId="vTipoPago" />
+<html:hidden property="vTipoVenta" styleId="vTipoVenta" />
 <html:hidden property="IGVVentas" styleId="IGVVentas" />
-
-
-
-
-<%-- hidden field que contiene el mode --%>
-<html:hidden property="mode" styleId="mode" />
-			
-<%-- set the parameter for the dispatch action --%>
-<html:hidden property="metodo" value="iduVenta" styleId="metodo" />	
+<html:hidden property="vIncluyeIGV" styleId="vIncluyeIGV" />
+<html:hidden property="fMontoVuelto" styleId="fMontoVuelto" />
+<html:hidden property="fMontoPago" styleId="fMontoPago" />
 </html:form>
 <script>
     var mode = document.getElementById('mode').value;
@@ -298,7 +383,10 @@
     document.getElementById('fVentaTotalR').value =formatCurrency($("#fVentaTotal").val(),'');
     document.getElementById('fVentaTotalRealR').value =formatCurrency($("#fVentaTotalReal").val(),'');
     document.getElementById('fDescuentoR').value =formatCurrency($("#fDescuento").val(),'');
-
+    document.getElementById('fDescClienteVentaR').value =formatCurrency($("#fDescClienteVenta").val(),'');
+    document.getElementById('vTipoVenta').value =$("#tipoMoneda").val();
+    
+    
     $("#dIngresoProductoFecha").datepicker(
 	        {
 	            changeMonth: true,
@@ -318,7 +406,6 @@
 	    }); 
     $(".tipoMoneda").text($("#tipoMoneda").val());
     $(".IGVVentas").text($("#IGVVentas").val());
-  
 
     $("#iNumeroLetras").val($("#iNumeroLetras").val()==0?1:$("#iNumeroLetras").val());
     
@@ -327,6 +414,14 @@
         //document.getElementById('vVentaCodigo').focus();
         document.getElementById('btnGuardar').textContent="Insertar";
         $(".trCodigo").show();
+        if($("#tipoMoneda").val()=="S/."){
+        	$("#monedaSoles").attr("checked",true);
+        	$("#vTipoPago").val('S/.');
+        }
+        if($("#tipoMoneda").val()=="$"){
+        	$("#monedaDolares").attr("checked",true);
+        	$("#vTipoPago").val('$');
+        }
         $("#popupCabecera").text('INSERTAR VENTAS');	
         
         
@@ -334,6 +429,32 @@
          document.getElementById('btnGuardar').textContent="Actualizar";
         $("#popupCabecera").text('ACTUALIZAR DATOS');	
         fn_PagoCredito();
+	    var tipoCambio= parseFloat($("#fTipoCambio").val());
+        $(".tipoMoneda").text($("#vTipoVenta").val());
+	       
+	        if($("#vTipoPago").val()=="S/."){
+	        	$("#monedaSoles").attr("checked",true);
+	        	
+	        	$("#fMontoPagoDolares").val(dosDecimales(parseFloat($("#fMontoPago").val())/tipoCambio));
+	        	$("#fMontoVueltoDolares").val(dosDecimales(parseFloat($("#fMontoVuelto").val())/tipoCambio));
+	        	$("#fMontoPagoSoles").val(dosDecimales(parseFloat($("#fMontoPago").val())));
+	        	$("#fMontoVueltoSoles").val(dosDecimales(parseFloat($("#fMontoVuelto").val())));
+    			
+	        }
+	        if($("#vTipoPago").val()=="$"){
+	        	$("#monedaDolares").attr("checked",true);
+	        	$("#fMontoPagoDolares").val(dosDecimales(parseFloat($("#fMontoPago").val())));
+	        	$("#fMontoVueltoDolares").val(dosDecimales(parseFloat($("#fMontoVuelto").val())));	        
+	        	$("#fMontoPagoSoles").val(dosDecimales(parseFloat($("#fMontoPago").val())*tipoCambio));
+	        	$("#fMontoVueltoSoles").val(dosDecimales(parseFloat($("#fMontoVuelto").val())*tipoCambio));
+    		
+	        }
+	        if($("#vIncluyeIGV").val()=="siIgv"){
+	        	$("#siIgv").attr("checked",true);
+	        }
+	        if($("#vIncluyeIGV").val()=="noIgv"){
+	        	$("#noIgv").attr("checked",true);
+	        }
         if(mode=='F'){
         	$("#popupCabecera").text('BUSCAR DATOS');        	
          	$("#btnGuardar").removeClass('save');
@@ -341,8 +462,12 @@
         	$("#btnGuardar").text('Buscar');
          }
         if(mode=="ED"){// visualizar venta
-        	$(":input").attr("disabled",true);
-            $(".imgpopup").hide();
+        	$(":input").addClass("inputDisabled").attr("disabled",true);
+            $(".imgpopup, .imgDelete, .imgNew").hide();
+            $("#btnImprimir, #btnCancel").removeClass("inputDisabled").attr("disabled",false);
+            $("#detallePago :input").removeClass("inputDisabled").attr("disabled",false);
+            
+            
         }
     }
 
@@ -424,9 +549,17 @@
         fn_calcularTotales();
        
     }
-    function fn_descuento(){    	
-    	$("#fVentaTotal").val(parseFloat($("#fVentaTotalReal").val())-parseFloat(numeroFloat($("#fDescuentoR").val())));
+    function fn_descuentoProducto(){    	
+    	$("#fVentaTotal").val(parseFloat($("#fVentaTotalReal").val())-parseFloat(numeroFloat($("#fDescuentoR").val()))-parseFloat(numeroFloat($("#fDescClienteVenta").val())));
     	$("#fDescuento").val($("#fDescuentoR").val());
+	   	 $("#siIgv").attr("checked",true);
+	   	 $("#vIncluyeIGV").val('siIgv');
+	   	fn_calcularGlobal();
+    }
+    function fn_descuentoCliente(){    	
+    	$("#fVentaTotal").val(parseFloat($("#fVentaTotalReal").val())-parseFloat(numeroFloat($("#fDescuento").val()))-parseFloat(numeroFloat($("#fDescClienteVentaR").val())));
+    	$("#fDescClienteVenta").val($("#fDescClienteVentaR").val());
+    	 $("#siIgv").attr("checked",true);
     	fn_calcularGlobal();
     }
     
@@ -435,16 +568,77 @@
     	var total = parseFloat($('#fVentaTotal').val());
     	var totalReal = parseFloat($('#fVentaTotalReal').val());
     	var totalDescuento = parseFloat($('#fDescuento').val());
+    	var fDescClienteVenta = parseFloat($('#fDescClienteVenta').val());
     	if($("#noIgv").is(":checked")){  
          	total = parseFloat(total)+parseFloat(total*igvCompra);
+         	$("#vIncluyeIGV").val('noIgv');
          }
          else{
-         	total = totalReal-totalDescuento;
+         	total = totalReal-totalDescuento-fDescClienteVenta;
+         	$("#vIncluyeIGV").val('siIgv');
          }
     	 document.getElementById('fVentaTotal').value =(total);
     	 fn_calcularGlobal();
     }
+    function fn_tipoPago(){
+    	    var fVentaTotalR = parseFloat($("#fVentaTotal").val());
+    	    var tipoCambio=parseFloat($("#fTipoCambio").val());  
+    	    var montoPagoS=$("#fMontoPagoSoles").val()==""?0:parseFloat($("#fMontoPagoSoles").val()); 
+    	    var montoPagoD=$("#fMontoPagoDolares").val()==""?0:parseFloat($("#fMontoPagoDolares").val()); 
+    	   
+    	    
+    		 if($("#monedaDolares").is(":checked")){// mixto 
+    			if(montoPagoD==""){
+    				alert("Debe de ingresar monto en dolares");
+    			}
+    			else{
+	    			 $("#fMontoPagoSoles").val(dosDecimales(montoPagoD*tipoCambio));
+	    			 $("#fMontoVuelto").val(dosDecimales($("#fMontoVueltoDolares").val()));
+	     			 $("#fMontoPago").val(montoPagoD);
+	     			 $("#vTipoPago").val("$");
+	     			 
+	     			if($("#vTipoVenta").val()=='S/.'){
+	        			$("#fMontoVueltoSoles").val(dosDecimales(montoPagoS-fVentaTotalR));
+	        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoS-fVentaTotalR)/tipoCambio));
+	        			
+	        		}
+	        		else{
+	        			$("#fMontoVueltoDolares").val(dosDecimales(montoPagoD-fVentaTotalR));
+	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD-fVentaTotalR)*tipoCambio));
+	        			
+	        		}
+    			}
+    		 }
+    		 if($("#monedaSoles").is(":checked")){// mixto    	
+    			
+    			 if(montoPagoS==""){
+     				alert("Debe de ingresar monto en Soles");
+     			}
+     			else{
+	    			 $("#fMontoPagoDolares").val(dosDecimales(montoPagoS/tipoCambio));
+	    			 $("#fMontoVuelto").val($("#fMontoVueltoSoles").val());
+	     			 $("#fMontoPago").val(montoPagoS);
+	     			 $("#vTipoPago").val("S/.");
+	     			if($("#vTipoVenta").val()=='S/.'){
+	        			$("#fMontoVueltoSoles").val(dosDecimales(montoPagoS-fVentaTotalR));
+	        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoS-fVentaTotalR)/tipoCambio));
+	        			
+	        		}
+	        		else{
+	        			$("#fMontoVueltoDolares").val(dosDecimales(montoPagoD-fVentaTotalR));
+	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD-fVentaTotalR)*tipoCambio));
+	        			
+	        		}
+     			}
+    		 }
+    		
+    		
+    	
+    }
+   
     function fn_calcularTotales(){
+	   	 $("#siIgv").attr("checked",true);
+	   	 $("#vIncluyeIGV").val('siIgv');
     	var sumaTotalReal=parseFloat(0.0);
     	var sumaTotal=parseFloat(0.0);
     	var sumaDescuento=parseFloat(0.0);    	
@@ -462,16 +656,19 @@
              sumaDescuento = sumaDescuento+(precio*(descuento/100))* cantidad;
       
         }
-    	 document.getElementById('fVentaTotalReal').value=sumaTotalReal;
-         document.getElementById('fVentaTotal').value=sumaTotal;
+    	 document.getElementById('fVentaTotalReal').value=sumaTotalReal;        
     	 document.getElementById('fDescuento').value=sumaDescuento;
+    	 document.getElementById('fDescClienteVenta').value=(sumaTotalReal-sumaDescuento)*(parseFloat($("#fDescuentoCliente").val())/100);
+    	 document.getElementById('fVentaTotal').value=sumaTotal-$("#fDescClienteVenta").val();
+    	
     		 
         fn_calcularGlobal();
     }
     function fn_calcularGlobal(){
     	var sumaTotalReal= document.getElementById('fVentaTotalReal').value;
     	var sumaTotal=document.getElementById('fVentaTotal').value;
-    	var sumaDescuento=document.getElementById('fDescuento').value;  	
+    	var sumaDescuento=document.getElementById('fDescuento').value;
+    	var sumaDescuentoCliente=document.getElementById('fDescClienteVenta').value;  
 
         
         var igvCompra =(document.getElementById('IGVVentas').value)/100;
@@ -480,6 +677,7 @@
         document.getElementById('fVentaTotalR').value =formatCurrency(sumaTotal,'');
         document.getElementById('fVentaTotalRealR').value =formatCurrency(sumaTotalReal,'');
         document.getElementById('fDescuentoR').value =formatCurrency(sumaDescuento,'');
+        document.getElementById('fDescClienteVentaR').value =formatCurrency(sumaDescuentoCliente,'');
         
         document.getElementById('fVentaSubTotal').value =(Math.round(sumaTotal/(1+igvCompra)*100)/100);
         document.getElementById('fVentaIGV').value =( Math.round(sumaTotal/(1+igvCompra)*(igvCompra)*100)/100);
