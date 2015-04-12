@@ -290,15 +290,16 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 
 	@Override
 	public void callDevCompraContabilidad(int iIngresoProductoId,
-			int xiUsuarioId, String mode, int iPeriodoId) {
+			int xiUsuarioId, String mode,String estadoDoc, int iPeriodoId) {
 		// TODO Auto-generated method stub
 		Query q ;
 	    
-	            q = getInstancia().createNativeQuery("{ CALL SP_IDU_DEVCOMPRA_CONTABILIDAD(?,?,?,?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
+	            q = getInstancia().createNativeQuery("{ CALL SP_IDU_DEVCOMPRA_CONTABILIDAD(?,?,?,?,?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
 	                    .setParameter(1,iIngresoProductoId)	                  
 	    		        .setParameter(2,xiUsuarioId)	    		    
 	    		        .setParameter(3,mode)
-	    		        .setParameter(4,iPeriodoId);		            
+	    		        .setParameter(4,estadoDoc)
+	    		        .setParameter(5,iPeriodoId);		            
 	            q.getSingleResult();         
 	    
 	}
@@ -324,16 +325,16 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 	    
 	}
 
-	@Override
 	public void callDevVentaContabilidad(int iVentaId,
-			int xiUsuarioId, String mode, int iPeriodoId) {
+			int xiUsuarioId, String mode,String estadoDoc,  int iPeriodoId) {
 		// TODO Auto-generated method stub
 				Query q ;
-				           q = getInstancia().createNativeQuery("{ CALL SP_IDU_DEVVENTA_CONTABILIDAD(?,?,?,?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
+				           q = getInstancia().createNativeQuery("{ CALL SP_IDU_DEVVENTA_CONTABILIDAD(?,?,?,?,?) }")//createNamedQuery("SP_IDU_PERFIL_PERMISOS")           
 			                    .setParameter(1,iVentaId)	                  
 			    		        .setParameter(2,xiUsuarioId)	    		    
 			    		        .setParameter(3,mode)
-			    		        .setParameter(4,iPeriodoId);		            
+			    		        .setParameter(4,estadoDoc)
+			    		        .setParameter(5,iPeriodoId);		            
 			              q.getSingleResult();           
 			       
 	}
