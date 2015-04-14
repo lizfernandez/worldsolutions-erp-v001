@@ -462,26 +462,20 @@ function LetrasNumeros(e) {
     
     return patron.test(te);
   }
-   function Numeros(e) {
-   
+   function Numeros(e) {   
 	   tecla = (document.all)?e.keyCode:e.which;
-	   if (tecla==8||tecla==13||tecla==46){ return true;
+	  
+	   if (tecla==8||tecla==13||tecla==46 ||tecla==0){ return true;
 	   }if(48<=tecla && tecla<=57){
 	   patron = /[\d.-_-]/;/*/\d/;*/
 	   te = String.fromCharCode(tecla);
 	   return patron.test(te);
 	   }
+	   
 	   else{
-	   //  window.alert('Sólo se aceptan números');
-	   return false;
+		   return true;  
 	   }
-	  /* 
-	   tecla = (document.all) ? e.keyCode : e.which; // 2
-    if (tecla==8) return true; // 3
-    patron =/[\d.-_-]/;//patron = /\d/; // 4
-    te = String.fromCharCode(tecla); // 5
-    return patron.test(te); // 6
-*/
+	 
   }
 function BorCarEsp(num)
     {
