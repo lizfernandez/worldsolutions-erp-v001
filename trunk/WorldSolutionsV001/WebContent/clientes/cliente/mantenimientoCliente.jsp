@@ -14,34 +14,34 @@
 <tr>
    <td align="right" ><span id="razonSocial">Raz&oacute;n Social :</span></td>
     <td width="74%">        
-        <html:text property="vClienteRazonSocial" styleId="vClienteRazonSocial" onkeyup="return mayuscula('vClienteRazonSocial')" styleClass="text" size="37"/>
+        <html:text property="vClienteRazonSocial" styleId="vClienteRazonSocial" onkeyup="return mayuscula('vClienteRazonSocial')" styleClass="text" size="37" tabindex="1"/>
        <span id="m_vClienteRazonSocial" class="importante">*</span>
    </td>
 </tr>
 <tr>
     <td align="right"><span id="Ruc">Dni /Ruc:</span></td>
     <td>
-        <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  styleClass="textN" maxlength="11" onkeypress="return Numeros(event)"/>
+        <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  styleClass="textN" maxlength="11" onkeypress="return Numeros(event)" tabindex="2" />
         <span id="m_nClienteNumeroDocumento" class="importante">*</span> 
     </td>    
 </tr>
 <tr>
     <td align="right">Tel&eacute;fono:</td>
     <td>
-        <html:text property="nClienteTelefono" styleId="nClienteTelefono"  styleClass="textN"/>
+        <html:text property="nClienteTelefono" styleId="nClienteTelefono"  styleClass="textN" tabindex="3"/>
     </td>
 </tr>
 <tr>
     <td align="right">Direcci&oacute;n :</td>
     <td>        
-        <html:text property="vDireccion" styleId="vDireccion" onkeyup="return mayuscula('vDireccion')" styleClass="text" size="37"/>
-       <span id="m_vDireccion" class="importante">*</span>
+        <html:text property="vDireccion" styleId="vDireccion" onkeyup="return mayuscula('vDireccion')" styleClass="text" size="37" tabindex="4"/>
+        <span id="m_vDireccion" class="importante">*</span>
     </td>
    
 </tr>
 <td align="right">Clasificaci&oacute;n:</td>
     <td>
-    <html:select  property="iClasificacionClienteId" styleId="iClasificacionClienteId" styleClass="combo Departamento" style="width:160px" onchange="fn_cambio()">       
+    <html:select  property="iClasificacionClienteId" styleId="iClasificacionClienteId" styleClass="combo Departamento" style="width:160px" onchange="fn_cambio()" tabindex="5">       
               <html:options collection="listaClasificacion" property="iClasificacionClienteId" labelProperty="vNombre"/>
     </html:select>
    </td>
@@ -49,7 +49,7 @@
 <tr>
     <td align="right">% Descuento:</td>
     <td>        
-        <html:text property="fDescuento" styleId="fDescuento" styleClass="textN" />
+        <html:text property="fDescuento" styleId="fDescuento" styleClass="textN"  tabindex="6"/>
      
     </td>
    
@@ -57,7 +57,7 @@
 <tr>
 <td align="right">Tipo Direcci&oacute;n:</td>
     <td>
-    <select name="vPrincipal" id="vPrincipal" class="combo" style="width:160px">
+    <select name="vPrincipal" id="vPrincipal" class="combo" style="width:160px" tabindex="7">
             <option value="1">PRINCIPAL</option>
             <option value="0">SEGUNDARIA</option>
     </select>
@@ -66,28 +66,28 @@
 
 <tr>
 	<td align="right">Departamento:</td>
-     <td> <html:select  property="vDepartamento" styleId="vDepartamento" styleClass="combo Departamento" onchange="fn_cambioPoblacion('DEP')" style="width:160px">       
+     <td> <html:select  property="vDepartamento" styleId="vDepartamento" styleClass="combo Departamento" onchange="fn_cambioPoblacion('DEP')" style="width:160px" tabindex="8">       
               <html:options collection="listaDepartamento" property="cCodigo" labelProperty="vDescripcion"/>
            </html:select>
     </td>
 </tr>
 <tr>
     <td align="right">Provincia:</td>
-     <td> <html:select  property="vProvincia" styleId="vProvincia" styleClass="combo Provincia" onchange="fn_cambioPoblacion('PRO')" style="width:160px">       
+     <td> <html:select  property="vProvincia" styleId="vProvincia" styleClass="combo Provincia" onchange="fn_cambioPoblacion('PRO')" style="width:160px" tabindex="9">       
               <html:options collection="listaProvincia" property="cCodigo" labelProperty="vDescripcion"/>
            </html:select>
     </td>
 </tr>
 <tr>
     <td align="right">Distrito</td>
-     <td> <html:select  property="iPoblacionId" styleId="iPoblacionId" styleClass="combo Distrito" style="width:160px">       
+     <td> <html:select  property="iPoblacionId" styleId="iPoblacionId" styleClass="combo Distrito" style="width:160px" tabindex="10">       
               <html:options collection="listaDistrito" property="cCodigo" labelProperty="vDescripcion" />
            </html:select>
       </td>
 </tr>
 <tr>
     <td align="right">Estado:</td>
-    <td colspan="3"> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" style="width:160px">       
+    <td colspan="3"> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" style="width:160px" tabindex="11">       
               <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
          </html:select>
     </td>
@@ -96,8 +96,8 @@
 <tr height="50px">   
     <td align="center" colspan="4">
     <br>    
-     <button onclick="insertar('tab-grupo')" class="button"><span class='save' id="btnGuardar">Guardar</span></button>
-     <button onclick="cancelar('');" class="button" type="button"><span class='cancel'>Cancelar</span></button>
+     <button onclick="insertar('tab-grupo')" class="button" tabindex="12"><span class='save' id="btnGuardar">Guardar</span></button>
+     <button onclick="cancelar('');" class="button" type="button" tabindex="13"><span class='cancel'>Cancelar</span></button>
      <br>
      <br>
      <span id="m_mensaje" class="mensaje"></span>
@@ -137,9 +137,9 @@ $("#dFechaVisista").datepicker(
     var mode = document.getElementById('mode').value;
     
     if(mode=='I') {
-        document.getElementById('vClienteCodigo').focus();
+        document.getElementById('vClienteRazonSocial').focus();
         document.getElementById('btnGuardar').textContent="Insertar";
-        $(".trCodigo").show();
+       
         $("#popupCabecera").text('INSERTAR DATOS');	
         
         $(".combo.Departamento option[value='140000']").attr("selected",true);

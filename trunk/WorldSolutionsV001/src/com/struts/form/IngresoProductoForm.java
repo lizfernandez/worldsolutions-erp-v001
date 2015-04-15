@@ -732,5 +732,117 @@ public class IngresoProductoForm extends ActionForm {
 	public void setiPeriodoId(int iPeriodoId) {
 		this.getIngresoProducto().setiPeriodoId(iPeriodoId);
 	}
+	/**
+	 * @return the fMontoPago
+	 */
+	public float getfMontoPago() {
+		return getIngresoProducto().getfMontoPago();
+	}
+
+	/**
+	 * @param fMontoPago the fMontoPago to set
+	 */
+	public void setfMontoPago(float fMontoPago) {
+		this.getIngresoProducto().setfMontoPago(fMontoPago);
+	}
+
+	/**
+	 * @return the fTipoCambio
+	 */
+	public float getfTipoCambio() {
+		return getIngresoProducto().getfTipoCambio();
+	}
+
+	/**
+	 * @param fTipoCambio the fTipoCambio to set
+	 */
+	public void setfTipoCambio(float fTipoCambio) {
+		this.getIngresoProducto().setfTipoCambio(fTipoCambio) ;
+	}
+
+	/**
+	 * @return the fMontoVuelto
+	 */
+	public float getfMontoVuelto() {
+		return getIngresoProducto().getfMontoVuelto();
+	}
+
+	/**
+	 * @param fMontoVuelto the fMontoVuelto to set
+	 */
+	public void setfMontoVuelto(float fMontoVuelto) {
+		this.getIngresoProducto().setfMontoVuelto(fMontoVuelto) ;
+	}
+
+	/**
+	 * @return the vTipoPago
+	 */
+	public String getvTipoPago() {
+		return getIngresoProducto().getvTipoPago();
+	}
+
+	/**
+	 * @param vTipoPago the vTipoPago to set
+	 */
+	public void setvTipoPago(String vTipoPago) {
+		this.getIngresoProducto().setvTipoPago(vTipoPago);
+	}
+
+	/**
+	 * @return the vTipoCompra
+	 */
+	public String getvTipoCompra() {
+		return getIngresoProducto().getvTipoCompra();
+	}
+
+	/**
+	 * @param vTipoCompra the vTipoCompra to set
+	 */
+	public void setvTipoCompra(String vTipoCompra) {
+		this.getIngresoProducto().setvTipoCompra(vTipoCompra);
+	}
+
+	/**
+	 * @return the fDescProveedorCompra
+	 */
+	public float getfDescProveedorCompra() {
+		return getIngresoProducto().getfDescProveedorCompra();
+	}
+
+	/**
+	 * @param fDescProveedorCompra the fDescProveedorCompra to set
+	 */
+	public void setfDescProveedorCompra(float fDescProveedorCompra) {
+		this.getIngresoProducto().setfDescProveedorCompra(fDescProveedorCompra);
+	}
+
+	/**
+	 * @return the vIncluyeIGV
+	 */
+	public String getvIncluyeIGV() {
+		return getIngresoProducto().getvIncluyeIGV();
+	}
+
+	/**
+	 * @param vIncluyeIGV the vIncluyeIGV to set
+	 */
+	public void setvIncluyeIGV(String vIncluyeIGV) {
+		this.getIngresoProducto().setvIncluyeIGV(vIncluyeIGV);
+	}
+
+	/**
+	 * @return the nNroNotaDebito
+	 */
+	public String getnNroNotaDebito() {
+		return getIngresoProductoDev().getnNroNotaDebito();
+	}
+
+	/**
+	 * @param nNroNotaDebito the nNroNotaDebito to set
+	 */
+	public void setnNroNotaDebito(String nNroNotaDebito) {
+		this.getIngresoProductoDev().setnNroNotaDebito(nNroNotaDebito);
+	}
+
 	
 }

@@ -192,7 +192,7 @@
       <logic:iterate id="x" name="listaVentaDetalle" indexId="i">
        <logic:equal  name="x"  property="cEstadoCodigo" value="AC">
          <tr id="fila${i}">
-          <td id='elim'${i}><img src='${pageContext.request.contextPath}/media/imagenes/delete.png' onclick="fn_eliminar('${i}','2')"  /></td>
+          <td id='elim'${i}><img src='${pageContext.request.contextPath}/media/imagenes/delete.png' onclick="fn_eliminar('${i}','2')"  class="imgDelete" /></td>
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
             <td>
                <input id="numero${i}"  class='inputderecha'  onblur="fn_calcularTotal('${i}')" type="text" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/> 
@@ -272,7 +272,11 @@
 				           <button onclick="insertar('tabla')" class="button"><span class='save' id="btnGuardar">Guardar</span></button>
 				           
 				        </td>
-				        <td><button onclick="cancelar('');"  class="button" type="button"><span class='cancel'>Cancelar</span></button></td>
+				        <td align="left">
+				           <button onclick="imprimir('tabla')"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+				           
+				        </td>
+				        <td><button onclick="cancelar('');"  class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
 				    </tr>
 				</table>
               </td>
@@ -335,8 +339,16 @@
       
     } else {
          document.getElementById('btnGuardar').textContent="Actualizar";
-        $("#popupCabecera").text('ACTUALIZAR DATOS');	
+        $("#popupCabecera").text('VISUALIZACION DE DATOS DE NOTA DE CREDITO');	
         $("#spanImgNroDoc").hide();
+        if(mode=="ED"){// visualizar venta
+        	$(":input, :checkbox").addClass("inputDisabled").attr("disabled",true);
+            $(".imgDelete").hide();
+            $("#btnImprimir, #btnCancel").removeClass("inputDisabled").attr("disabled",false);
+            
+            
+            
+        }
       
     }
 

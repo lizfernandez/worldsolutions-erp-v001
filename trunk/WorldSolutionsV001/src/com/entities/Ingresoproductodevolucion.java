@@ -42,7 +42,11 @@ public class Ingresoproductodevolucion implements Serializable {
 	//bi-directional many-to-one association to Ingresoproductodetalle
 	@OneToMany(mappedBy="ingresoproductodevolucion" ,cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Ingresoproductodevoluciondetalle> ingresoproductodevoluciondetalles;
-	 
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="iTipoDocumentoId", nullable=false)          
+	private Tipodocumentogestion  tipoDocumento;
+
 	private int iUsuarioActualizaId;
 
 	private int iUsuarioInsertaId;
@@ -267,6 +271,20 @@ public class Ingresoproductodevolucion implements Serializable {
 	 */
 	public void setnNroNotaDebito(String nNroNotaDebito) {
 		this.nNroNotaDebito = nNroNotaDebito;
+	}
+
+	/**
+	 * @return the tipoDocumento
+	 */
+	public Tipodocumentogestion getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	/**
+	 * @param tipoDocumento the tipoDocumento to set
+	 */
+	public void setTipoDocumento(Tipodocumentogestion tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
 	

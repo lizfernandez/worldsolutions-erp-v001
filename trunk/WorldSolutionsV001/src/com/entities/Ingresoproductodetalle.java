@@ -59,6 +59,7 @@ public class Ingresoproductodetalle implements Serializable {
    
     private int iSubCta;
 
+  
     public Ingresoproductodetalle() {
     }
 

@@ -127,6 +127,23 @@ public class Ingresoproducto implements Serializable {
 	
 	private int iPeriodoId;
 	
+	 
+	private float fMontoPago;
+
+	private float fTipoCambio;
+
+	private float fMontoVuelto;
+
+	private String vTipoPago;
+
+	private String vTipoCompra;
+	
+	private float fDescProveedorCompra;
+
+	private String vIncluyeIGV;
+	
+	private String vPorcentajeIGV;
+	
     public Ingresoproducto() {
     }
 
@@ -600,6 +617,118 @@ public class Ingresoproducto implements Serializable {
 	 */
 	public void setSucursal(Sucursal sucursal) {
 		this.sucursal = sucursal;
+	}
+
+	/**
+	 * @return the fMontoPago
+	 */
+	public float getfMontoPago() {
+		return fMontoPago;
+	}
+
+	/**
+	 * @param fMontoPago the fMontoPago to set
+	 */
+	public void setfMontoPago(float fMontoPago) {
+		this.fMontoPago = fMontoPago;
+	}
+
+	/**
+	 * @return the fTipoCambio
+	 */
+	public float getfTipoCambio() {
+		return fTipoCambio;
+	}
+
+	/**
+	 * @param fTipoCambio the fTipoCambio to set
+	 */
+	public void setfTipoCambio(float fTipoCambio) {
+		this.fTipoCambio = fTipoCambio;
+	}
+
+	/**
+	 * @return the fMontoVuelto
+	 */
+	public float getfMontoVuelto() {
+		return fMontoVuelto;
+	}
+
+	/**
+	 * @param fMontoVuelto the fMontoVuelto to set
+	 */
+	public void setfMontoVuelto(float fMontoVuelto) {
+		this.fMontoVuelto = fMontoVuelto;
+	}
+
+	/**
+	 * @return the vTipoPago
+	 */
+	public String getvTipoPago() {
+		return vTipoPago;
+	}
+
+	/**
+	 * @param vTipoPago the vTipoPago to set
+	 */
+	public void setvTipoPago(String vTipoPago) {
+		this.vTipoPago = vTipoPago;
+	}
+
+	/**
+	 * @return the vTipoCompra
+	 */
+	public String getvTipoCompra() {
+		return vTipoCompra;
+	}
+
+	/**
+	 * @param vTipoCompra the vTipoCompra to set
+	 */
+	public void setvTipoCompra(String vTipoCompra) {
+		this.vTipoCompra = vTipoCompra;
+	}
+
+	/**
+	 * @return the fDescProveedorCompra
+	 */
+	public float getfDescProveedorCompra() {
+		return fDescProveedorCompra;
+	}
+
+	/**
+	 * @param fDescProveedorCompra the fDescProveedorCompra to set
+	 */
+	public void setfDescProveedorCompra(float fDescProveedorCompra) {
+		this.fDescProveedorCompra = fDescProveedorCompra;
+	}
+
+	/**
+	 * @return the vIncluyeIGV
+	 */
+	public String getvIncluyeIGV() {
+		return vIncluyeIGV;
+	}
+
+	/**
+	 * @param vIncluyeIGV the vIncluyeIGV to set
+	 */
+	public void setvIncluyeIGV(String vIncluyeIGV) {
+		this.vIncluyeIGV = vIncluyeIGV;
+	}
+
+	/**
+	 * @return the vPorcentajeIGV
+	 */
+	public String getvPorcentajeIGV() {
+		return vPorcentajeIGV;
+	}
+
+	/**
+	 * @param vPorcentajeIGV the vPorcentajeIGV to set
+	 */
+	public void setvPorcentajeIGV(String vPorcentajeIGV) {
+		this.vPorcentajeIGV = vPorcentajeIGV;
 	}
 
 	

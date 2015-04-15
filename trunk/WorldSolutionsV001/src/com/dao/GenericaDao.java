@@ -259,6 +259,30 @@ public class GenericaDao  implements IGenerica{
 			ext = null;
 		}
 	}
+	@Override
+	public String callSPNro_Documento(int iTipoDocumentoId,String tabla, String campoTablaNumeroDoc) {
+		Query q;
+
+		String nroDocumento = "";
+
+		try {
+
+			getInstancia().getTransaction().begin();
+			q = getInstancia()
+					.createNativeQuery("{ CALL SP_NRO_DOCUMENTO(?,?,?) }")// createNamedQuery("SP_IDU_PERFIL_PERMISOS")
+					.setParameter(1, iTipoDocumentoId)
+					.setParameter(2, tabla)
+					.setParameter(3, campoTablaNumeroDoc);
+
+			nroDocumento = (String) q.getSingleResult();
+			getInstancia().getTransaction().commit();
+			/***** q.executeUpdate(); **/
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return nroDocumento;
+	}
 	
 }
 

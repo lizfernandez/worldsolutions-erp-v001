@@ -23,7 +23,9 @@
     <td align="right"><span id="Ruc">Ruc :</span></td>
     <td>
        <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  styleClass="text inputDisabled" readonly="true" />
-       
+       <input type="hidden" id="vClasificacion"  class="text textCodigo inputDisabled" readonly="true" />
+       <input type="hidden" id="fDescuentoCliente"  class="text inputDisabled" readonly="true" size="6" />
+         
    </td>
 </tr>
 <tr>

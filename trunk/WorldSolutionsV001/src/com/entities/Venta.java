@@ -156,6 +156,8 @@ public class Venta implements Serializable {
 	
 	private String vIncluyeIGV;
 	
+	private String vPorcentajeIGV;
+	
     public Venta() {
     }
 
@@ -774,6 +776,20 @@ public class Venta implements Serializable {
 	 */
 	public void setvTipoVenta(String vTipoVenta) {
 		this.vTipoVenta = vTipoVenta;
+	}
+
+	/**
+	 * @return the vPorcentajeIGV
+	 */
+	public String getvPorcentajeIGV() {
+		return vPorcentajeIGV;
+	}
+
+	/**
+	 * @param vPorcentajeIGV the vPorcentajeIGV to set
+	 */
+	public void setvPorcentajeIGV(String vPorcentajeIGV) {
+		this.vPorcentajeIGV = vPorcentajeIGV;
 	}
 
 	

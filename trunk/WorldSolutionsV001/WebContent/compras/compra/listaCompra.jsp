@@ -58,7 +58,7 @@
         
           
 	         
-        <th colspan="2"width="5%" >Operaciones</th>       
+        <th colspan="1"width="5%" >Ope.</th>       
         <th align="left">Proveedor</th>
         <th align="left">Tipo Documento</th>
 	    <th align="left">Nro. Documento</th>
@@ -79,9 +79,9 @@
 	    <logic:notEmpty name="ingresoProductoForm" property="lista">
 	    <logic:iterate name="ingresoProductoForm" property="lista" id="x">	
 			<tr>
-				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iIngresoProductoId" />"/></td> 
+				<!-- td align="center"><input type="checkbox" id="<bean:write name="x" property="iIngresoProductoId" />"/></td--> 
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="tipodocumento.iTipoDocumentoGestionId" />',900,500)" /></td>
+		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="tipodocumento.iTipoDocumentoGestionId" />',1130,500)" /></td>
 		 	    <!--  td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iIngresoProductoId" />','ingresoProducto.do?metodo=iduIngresoproducto&mode=D')" /></td-->	
 				<td><bean:write name="x" property="proveedor.vProveedorRazonSocial" /></td>
@@ -121,7 +121,7 @@ paginacion();
  function fn_nuevoDocumento(){
 	var tipoDoc= 2;//$("#selTipoDocumento").val();
 	var iclasificacionId= 1;//$("#iclasificacionId").val();
-	 popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,900,700);
+	 popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1090,700);
  }
  $("#compra,#mantCompras").addClass("active");
  </script> 

@@ -61,7 +61,7 @@
 	     </logic:empty>
          <logic:notEmpty name="proveedorForm" property="lista">
 		 <logic:iterate name="proveedorForm" property="lista" id="x">	
-			<tr onclick="retornarProv('iProveedorId','<bean:write name="x" property="iProveedorId" />','cProveedorCodigo','<bean:write name="x" property="cProveedorCodigo" />','vProveedorRazonSocial','<bean:write name="x" property="vProveedorRazonSocial" />','nProveedorNumeroDocumento','<bean:write name="x" property="nProveedorNumeroDocumento" />','vProveedorDireccion','<bean:write name="x" property="vProveedorDireccion" />','vIngresoProductoPuntoLlegada')">
+			<tr onclick="retornarProv('iProveedorId','<bean:write name="x" property="iProveedorId" />','cProveedorCodigo','<bean:write name="x" property="cProveedorCodigo" />','vProveedorRazonSocial','<bean:write name="x" property="vProveedorRazonSocial" />','nProveedorNumeroDocumento','<bean:write name="x" property="nProveedorNumeroDocumento" />','vProveedorDireccion','<bean:write name="x" property="vProveedorDireccion" />','vIngresoProductoPuntoLlegada','vClasificacion','','fDescuentoProveedor','')">
 		 		<td><bean:write name="x" property="cProveedorCodigo" /></td>
 				<td><bean:write name="x" property="vProveedorRazonSocial" /></td>
 				<td><bean:write name="x" property="nProveedorNumeroDocumento" /></td>

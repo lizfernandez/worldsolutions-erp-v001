@@ -341,6 +341,7 @@ public class IngresoProductoAction extends BaseAction {
 			sesion.removeAttribute("listaIngresoProductoDetalle"); 
 			sesion.removeAttribute("listaIngresoProductoDetalleCompra");
 			sesion.removeAttribute("listaIngresoProductoDetalleOriginal");
+			ingresoproductoform.getIngresoProductoDev().setnNroNotaDebito(ingresogenericaDao.callSPNro_Documento(8,"Ingresoproductodevolucion","nNroNotaDebito"));
 		}
      
 		/**
@@ -650,6 +651,7 @@ public class IngresoProductoAction extends BaseAction {
 		IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		Moneda moneda = (Moneda)sesion.getAttribute("Moneda");
+		float tipoCambio = Float.parseFloat((String) sesion.getAttribute("TipoCambio"));
 		
 		
 
@@ -661,11 +663,7 @@ public class IngresoProductoAction extends BaseAction {
 	    List<Tipodocumentogestion> listaTipoDoc = ingresogenericaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
 	    List<Periodo> listaPeriodo =  ingresogenericaDao.listaEntidadGenericaSinCodigo("Periodo");
 	    
-	    ingresoproductoform.setvPersonalNombres(usu.getPersonal().getvPersonalNombres()+" "+usu.getPersonal().getvPersonalApellidoPaterno()); 
-		ingresoproductoform.setcPersonalCodigo(usu.getPersonal().getcPersonalCodigo());
-		ingresoproductoform.setTipoMoneda(moneda.getcModenaCodigo());
-		ingresoproductoform.setIGVCompra(sesion.getAttribute("IGVCompras").toString());
-		ingresoproductoform.setIGVPercepcion(sesion.getAttribute("IGVPercepcion").toString());
+	    
 		
 	    /**
 		 * LLamamos al formulario mantenimientoIngresoproducto.jsp para la
@@ -673,8 +671,17 @@ public class IngresoProductoAction extends BaseAction {
 		 **/
 		if (mode.equals("I")) {
 			String tipoDocumento = request.getParameter("idTipoDocumento");
+			
+			 ingresoproductoform.setTipoMoneda(moneda.getcModenaCodigo());
+			 ingresoproductoform.setIGVCompra(sesion.getAttribute("IGVCompras").toString());
+			 ingresoproductoform.setIGVPercepcion(sesion.getAttribute("IGVPercepcion").toString());
+			 ingresoproductoform.setvPersonalNombres(usu.getPersonal().getvPersonalNombres()+" "+usu.getPersonal().getvPersonalApellidoPaterno()); 
+			 ingresoproductoform.setcPersonalCodigo(usu.getPersonal().getcPersonalCodigo());
+				
+			
 			ingresoproductoform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
 			ingresoproductoform.setIclasificacionId(Integer.parseInt( request.getParameter("iclasificacionId")));
+			ingresoproductoform.setfTipoCambio(tipoCambio);
 			/***LISTA DE DETALLE VENTA***/
 			sesion.removeAttribute("listaIngresoProductoDetalle");
 			 
@@ -683,7 +690,7 @@ public class IngresoProductoAction extends BaseAction {
 			 }
 			
 			 
-			 if(tipoDocumento.equals("1"))
+			 /*if(tipoDocumento.equals("1"))
 					msn = "showEditFactura";			
 			 if(tipoDocumento.equals("2"))
 				  // msn = "showEditBoleta";
@@ -695,7 +702,7 @@ public class IngresoProductoAction extends BaseAction {
 				 //  msn = "showEditGuiaRemision";
 				 msn = "showEditFactura";
 			 if(tipoDocumento.equals("5"))
-				 //  msn = "showEditPedido";
+				 //  msn = "showEditPedido";*/
 				 msn = "showEditFactura";
 		}
        else if (mode.equals("IE")) {
@@ -717,6 +724,9 @@ public class IngresoProductoAction extends BaseAction {
 			Ingresoproducto ingresoProducto = ingresogenericaDao.findEndidad(ingresoproductoform.getIngresoProducto(),id);
 			
 			ingresoproductoform.setIngresoProducto(ingresoProducto);
+			ingresoproductoform.setTipoMoneda(ingresoProducto.getvTipoCompra());
+			ingresoproductoform.setIGVCompra(ingresoProducto.getvPorcentajeIGV());
+			
 			if(mode.equals("UE")){
 				
 				/***INGRESO DE VENTAS MEDIANTE EL ESTADO DE CUENTA DEL CLIENTE***/		
@@ -757,10 +767,13 @@ public class IngresoProductoAction extends BaseAction {
 				ingresoproductoform.setvProveedorDireccion(ingresoProducto.getProveedor().getvProveedorDireccion());
 				ingresoproductoform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
 			//	ingresoproductoform.setIclasificacionId(Integer.parseInt( request.getParameter("iclasificacionId")));
+				ingresoproductoform.setcPersonalCodigo(ingresoProducto.getUsuario().getPersonal().getcPersonalCodigo());
+				ingresoproductoform.setvPersonalNombres(ingresoProducto.getUsuario().getPersonal().getvPersonalNombres()+" "+ ingresoProducto.getUsuario().getPersonal().getvPersonalApellidoPaterno());
+				
 				ingresoproductoform.setIngresoProducto(ingresoProducto);
 			   	
 
-				 if(tipoDocumento.equals("1"))
+				/* if(tipoDocumento.equals("1"))
 						msn = "showEditFactura";			
 				 if(tipoDocumento.equals("2"))
 					 msn = "showEditFactura";
@@ -771,7 +784,7 @@ public class IngresoProductoAction extends BaseAction {
 				 if(tipoDocumento.equals("4"))
 					 msn = "showEditFactura";
 					// msn = "showEditGuiaRemision";
-				 if(tipoDocumento.equals("5"))
+				 if(tipoDocumento.equals("5"))*/
 					 msn = "showEditFactura";
 					// msn = "showEditPedido";
 			}
@@ -862,6 +875,7 @@ public class IngresoProductoAction extends BaseAction {
 	      	   obj.setUsuario(usu);
 	      	   obj.setiPeriodoId(iPeriodoId);
 	      	   obj.setSucursal(usu.getSucursal());
+	           obj.setvPorcentajeIGV(sesion.getAttribute("IGVCompras").toString());
 	      	   
 	      	  	
 	      	   /****Informacion de detalle compra****/
@@ -1313,6 +1327,7 @@ public class IngresoProductoAction extends BaseAction {
 		   	    obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 		   	    obj.setvEstadoCodigo(Constantes.estadoActivo);
 		   	    obj.setiPeriodoId(iPeriodoId);
+		   	    obj.setTipoDocumento(Util.listaDocGest().get(3));/* get(3)= 8: NOTA DE DEBITO **/
 		   	    /****Informacion de detalle compra****/
 	      	   if(sesion.getAttribute("listaIngresoProductoDetalle")!=null){
 	      		    /**Actualizamos el estado de la Compra**/
@@ -1401,12 +1416,12 @@ public class IngresoProductoAction extends BaseAction {
 			      	    ingresogenericaDao.mergeEndidad(objIngresoProducto);
 			      	    ingresogenericaDao.persistEndidad(obj);		      	   
 			      	    resultado=ingresogenericaDao.commitEndidad(entityTransaction);
-			        	/* if(resultado==true){
+			        	if(resultado==true){
 			        		 int iIngresoProductoDevolucionId=obj.getiIngresoProductoDevolucionId();
 				        	 ingresogenericaDao.entityTransaction().begin();
-				        	 contabilidadDao.callDevCompraContabilidad(iIngresoProductoDevolucionId, usu.getiUsuarioId(), mode, iPeriodoId);
+				        	 contabilidadDao.callDevCompraContabilidad(iIngresoProductoDevolucionId, usu.getiUsuarioId(), mode,obj.getnNroNotaDebito(), iPeriodoId);
 				        	 resultado = ingresogenericaDao.commitEndidad(ingresogenericaDao.entityTransaction());
-				         }*/
+				         }
 			        	//ingresogenericaDao.refreshEndidad(obj);
 			        	
 			      }// if insercion de la lista detalle activa
