@@ -51,6 +51,11 @@ public class Ventadevolucion implements Serializable {
   	@OneToMany(mappedBy="ventadevolucion" ,cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Kardex> kardexs;
   	
+  	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="iTipoDocumentoId", nullable=false)          
+ 	private Tipodocumentogestion  tipoDocumento;
+
+  	
     private int iPeriodoId;
     
     private float fDescuento;
@@ -315,6 +320,22 @@ public class Ventadevolucion implements Serializable {
 	 */
 	public void setnNroNotaCredito(String nNroNotaCredito) {
 		this.nNroNotaCredito = nNroNotaCredito;
+	}
+
+
+	/**
+	 * @return the tipoDocumento
+	 */
+	public Tipodocumentogestion getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+
+	/**
+	 * @param tipoDocumento the tipoDocumento to set
+	 */
+	public void setTipoDocumento(Tipodocumentogestion tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 	
 	

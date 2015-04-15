@@ -26,6 +26,7 @@ public interface IGenerica {
 	public <E> void refreshEndidad(E entidad);
 	public boolean commitEndidad(EntityTransaction ext);
 	public void revertirCambios(EntityTransaction ext);
+	public String  callSPNro_Documento(int iTipoDocumentoId,String tabla, String campoTablaNumeroDoc);
 	
 	
 	

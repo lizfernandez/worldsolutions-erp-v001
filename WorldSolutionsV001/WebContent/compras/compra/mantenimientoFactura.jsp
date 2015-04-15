@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="ingresoProducto" styleId="formIngresoProducto" >
-<table width="1296" height="439" border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla">
+<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 70%; float: left;" >
   <tr style="height: 1px;">
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr style="height: 1px;">
@@ -32,6 +32,9 @@
                 <td colspan="3" width="50%" align="left">
               		  <html:text property="cProveedorCodigo"  styleId="cProveedorCodigo" maxlength="5" styleClass="textCodigo inputDisabled"/>
 	   				  <html:text property="vProveedorRazonSocial"  styleId="vProveedorRazonSocial"  styleClass="text textGrande inputDisabled" size="55%"/>
+	   				  <input type="hidden" id="vClasificacion"  class="text textCodigo inputDisabled" readonly="true" />
+                      <input type="hidden" id="fDescuentoProveedor"  class="text inputDisabled" readonly="true" size="6" />
+  
 	   				   <button type="button"  class="button" onclick="popupModal('proveedor.do?metodo=listaProveedor&mode=LP',580,350)" tabindex="1" ><span class='imgpopup'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></button>
 	                  
 	                  <span id="m_vProveedorRazonSocial" class="importante">*</span>
@@ -95,7 +98,7 @@
       <logic:iterate id="x" name="listaIngresoProductoDetalle" indexId="i">
        <logic:equal  name="x"  property="cEstadoCodigo" value="AC">
          <tr id="fila${i}">
-          <td><img src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" /></td>
+          <td><img src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')"  class="imgDelete"/></td>
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
             <td>
               <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iIngresoProductoDetalleCantidad" />"/>
@@ -122,7 +125,7 @@
       </logic:iterate>      
     </logic:notEmpty>
       <tr>
-        <td><img src="${pageContext.request.contextPath}/media/imagenes/new.png" onclick="fn_listarProducto()" /></td>
+        <td><img src="${pageContext.request.contextPath}/media/imagenes/new.png" onclick="fn_listarProducto()" class="imgNew" /></td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -172,29 +175,52 @@
                </table>
                
                </td>  
-                <td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera"  id="tablaImpuesto">
-		            <tr>
+               
+           </tr>
+           
+        </table>
+    </td>    
+  </tr> 
+ 
+<tr height="50px">   
+    <td align="center" colspan="2">
+     <br>
+     <span id="m_mensaje" class="mensaje"></span>
+     <br>
+    </td>
+</tr>
+</table>
+<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 30%; float: right;">
+<tr style="height: 1px;"> 
+    <td>
+     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr> 
+        
+               <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" id="tablaImpuesto" >                
+		             <tr>
 		                
-		                <td align="right">TOTAL<span class="tipoMoneda"></span> </td>
+		                <td align="right">TOTAL:</td>
 		                <td align="right">
-		                  <input type="text" id="fIngresoProductoTotalRealR"  class="text inputDisabled textNumero" readonly="true" />		                  
+		                  <span class="tipoMoneda"></span> 
+		                  <input type="text" id="fIngresoProductoTotalRealR"  class="text inputDisabled textNumero" size="13"  readonly="true" />		                  
 		                </td>
 		            </tr>
 		             <tr>
 		                
-		                <td align="right">Descuento <span class="tipoMoneda"></span> </td>
+		                <td align="right">Desc. Producto:</td>
 		                <td align="right">
-		                   <input type="text" id="fDescuentoR" class="text inputDisabled textNumero" onblur="fn_descuento()" />	                 
+		                    <span class="tipoMoneda"></span> 
+		                   <input type="text" id="fDescuentoR" class="text  textNumero" onblur="fn_descuento()" size="13" />	                 
 		                 </td>
-		             </tr>		            		 
+		             </tr>			      
                </table>
               </td>
            </tr>
            <tr>
-            <td width="50%" > </td>
-	           <td>
-	           <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" >
+	           
+           <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" >                
 		
 		           <tr> 
 		                <td align="right" >
@@ -205,28 +231,70 @@
 		                 </td>
 		            </tr>
 		            <tr> 
-		                <td width="50%" align="right">Base Imponible <span class="tipoMoneda"></span></td>
+		                <td width="50%" align="right">Base Imponible:</td>
 		                <td align="right">
-		                   <input type="text" id="fIngresoProductoSubTotalR"  class="text inputDisabled textNumero" readonly="true" />
+		                    <span class="tipoMoneda"></span>
+		                   <input type="text" id="fIngresoProductoSubTotalR"  class="text inputDisabled textNumero" readonly="true" size="13" />
 		                 </td>
 		            </tr>
 		            <tr>		                
-		                <td align="right"><!--  input type="checkbox"  checked="checked" onclick="fn_SinIGV()" id="sinIGV" />-->IGV(<span class="IGVCompra"></span>%)  <span class="tipoMoneda"></span> </td>
+		                <td align="right">IGV(<span class="IGVCompra"></span>%): </td>
 		                <td align="right">
-		                 <input type="text" id="fIngresoProductoIGVR"  class="text inputDisabled textNumero" readonly="true"  />
+		                   <span class="tipoMoneda"></span>
+		                 <input type="text" id="fIngresoProductoIGVR"  class="text inputDisabled textNumero" readonly="true"  size="13"  />
 		                 </td>
 		            </tr>
 		
 		            <tr>
 		                
-		                <td align="right">TOTAL <span class="tipoMoneda"></span> </td>
+		                <td align="right">TOTAL FINAL: </td>
 		                <td align="right">
-		                  <input type="text" id="fIngresoProductoTotalR"  class="text inputDisabled textNumero" readonly="true" />
+		                   <span class="tipoMoneda"></span>
+		                  <input type="text" id="fIngresoProductoTotalR"  class="text inputDisabled textNumero" readonly="true" size="13"  />
 		                  <span id="m_fIngresoProductoTotalR" class="importante">*</span>
 		                </td>
-		            </tr>		 
+		            </tr>		           
                </table>
-	           </td>
+           </td>
+           </tr>
+           <tr>
+	           
+           <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" id="detallePago">                
+		
+		            <tr> 
+		                <td align="left" colspan="2">
+		                TIPO CAMBIO: <html:text property="fTipoCambio" styleId="fTipoCambio" styleClass="text  textNumero" size="3" onblur="fn_tipoPago()"  /> 
+		                  
+		                TIPO PAGO:
+		                <input type="radio" id="monedaSoles" onclick="fn_tipoPago()"  class="textN"  name="iMoneda" />S/.
+		                <input type="radio" id="monedaDolares" onclick="fn_tipoPago()"  class="textN" name="iMoneda" />$.
+		                 </td>		              	                
+		                 
+		            </tr>
+		           
+		            <tr>		                
+		                <td align="right">MONTO PAGO:</td>
+		                <td align="right">
+		                 S/.
+		                 <input type="text" id="fMontoPagoSoles"  class="textN  textNumero" size="7" onblur="fn_tipoPago()"/>
+		                 $.
+		                 <input type="text" id="fMontoPagoDolares"  class="textN  textNumero"  size="7" onblur="fn_tipoPago()"/>
+		                 </td>
+		            </tr>
+		            <tr>
+		                
+		                <td align="right">VUELTO:</td>
+		                <td align="right">
+		                  S/.
+		                  <input type="text" id="fMontoVueltoSoles"  class="textN  textNumero" readonly="true" size="7" />
+		                  $.
+		                  <input type="text" id="fMontoVueltoDolares"  class="textN  textNumero" readonly="true" size="7" />
+		                  
+		                </td>
+		            </tr>		           
+               </table>
+           </td>
            </tr>
         </table>
     </td>    
@@ -235,30 +303,29 @@
     <td>
      <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr> 
-               <td width="70%">&nbsp;</td>  
+               <td width="84%">&nbsp;</td>  
                 <td>
                 <table style="height: 100%" cellpadding="0" cellspacing="0" border="0">
 				    <tr>
 				        <td align="left">
-				           <button onclick="insertar('tabla')" class="button"><span class='save' id="btnGuardar">Guardar</span></button>
+				           <button onclick="insertar('tabla')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
 				           
 				        </td>
-				     
-				        <td><button type="button" onclick=" window.close();" class="button"><span class='cancel'>Cancelar</span></button></td>
+				        <td align="left">
+				           <button onclick="imprimir('tabla')"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+				           
+				        </td>
+				        <td><button onclick="cancelar('');" class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
 				    </tr>
 				</table>
               </td>
                
         </table>
     </td>    
-  </tr> 
-<tr height="50px">   
-    <td align="center" colspan="2">
-     <br>
-     <span id="m_mensaje" class="mensaje"></span>
-     <br>
-    </td>
-</tr>
+  </tr>
+
+</table>
+
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iIngresoProductoId" />
 
@@ -279,7 +346,11 @@
 <html:hidden property="tipoMoneda" styleId="tipoMoneda" />
 <html:hidden property="IGVCompra" styleId="IGVCompra" />
 <html:hidden property="IGVPercepcion" styleId="IGVPercepcion" />
-
+<html:hidden property="vTipoPago" styleId="vTipoPago" />
+<html:hidden property="vTipoCompra" styleId="vTipoCompra" />
+<html:hidden property="vIncluyeIGV" styleId="vIncluyeIGV" />
+<html:hidden property="fMontoVuelto" styleId="fMontoVuelto" />
+<html:hidden property="fMontoPago" styleId="fMontoPago" />
 
 
 <%-- hidden field que contiene el mode --%>
@@ -287,6 +358,7 @@
 			
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="iduIngresoproducto" styleId="metodo" />	
+
 </html:form>
 <script>
 
@@ -298,6 +370,9 @@
     document.getElementById('fIngresoProductoTotalR').value =formatCurrency($("#fIngresoProductoTotal").val(),'');
     document.getElementById('fIngresoProductoTotalRealR').value =formatCurrency($("#fIngresoProductoTotalReal").val(),'');
     document.getElementById('fDescuentoR').value =formatCurrency($("#fDescuento").val(),'');
+   // document.getElementById('fDescClienteVentaR').value =formatCurrency($("#fDescClienteVenta").val(),'');
+    document.getElementById('vTipoCompra').value =$("#tipoMoneda").val();
+   
     $("#dIngresoProductoFecha").datepicker(
 	        {
 	            changeMonth: true,
@@ -326,6 +401,14 @@
         document.getElementById('nIngresoProductoNumero').focus();
         document.getElementById('btnGuardar').textContent="Guardar";
         $(".trCodigo").show();
+        if($("#tipoMoneda").val()=="S/."){
+        	$("#monedaSoles").attr("checked",true);
+        	$("#vTipoPago").val('S/.');
+        }
+        if($("#tipoMoneda").val()=="$"){
+        	$("#monedaDolares").attr("checked",true);
+        	$("#vTipoPago").val('$');
+        }
         $("#popupCabecera").text('REGISTROS DE NUEVAS COMPRAS');	
         
       
@@ -334,6 +417,32 @@
         $("#popupCabecera").text('ACTUALIZAR DATOS');	
         fn_PagoCredito();
         $("#fIngresoProductoIGV").val()=='0.0'?$("#sinIGV").attr("checked",false):$("#sinIGV").attr("checked",true);
+        var tipoCambio= parseFloat($("#fTipoCambio").val());
+        $(".tipoMoneda").text($("#vTipoVenta").val());
+	       
+	        if($("#vTipoPago").val()=="S/."){
+	        	$("#monedaSoles").attr("checked",true);
+	        	
+	        	$("#fMontoPagoDolares").val(dosDecimales(parseFloat($("#fMontoPago").val())/tipoCambio));
+	        	$("#fMontoVueltoDolares").val(dosDecimales(parseFloat($("#fMontoVuelto").val())/tipoCambio));
+	        	$("#fMontoPagoSoles").val(dosDecimales(parseFloat($("#fMontoPago").val())));
+	        	$("#fMontoVueltoSoles").val(dosDecimales(parseFloat($("#fMontoVuelto").val())));
+    			
+	        }
+	        if($("#vTipoPago").val()=="$"){
+	        	$("#monedaDolares").attr("checked",true);
+	        	$("#fMontoPagoDolares").val(dosDecimales(parseFloat($("#fMontoPago").val())));
+	        	$("#fMontoVueltoDolares").val(dosDecimales(parseFloat($("#fMontoVuelto").val())));	        
+	        	$("#fMontoPagoSoles").val(dosDecimales(parseFloat($("#fMontoPago").val())*tipoCambio));
+	        	$("#fMontoVueltoSoles").val(dosDecimales(parseFloat($("#fMontoVuelto").val())*tipoCambio));
+    		
+	        }
+	        if($("#vIncluyeIGV").val()=="siIgv"){
+	        	$("#siIgv").attr("checked",true);
+	        }
+	        if($("#vIncluyeIGV").val()=="noIgv"){
+	        	$("#noIgv").attr("checked",true);
+	        }
         if(mode=='F'){
         	$("#popupCabecera").text('BUSCAR DATOS');        	
          	/*$(":input").attr('disabled',true);
@@ -343,6 +452,14 @@
          	$("#btnGuardar").addClass('find');
         	$("#btnGuardar").text('Buscar');
          }
+        if(mode=="U"){// visualizar venta
+        	$(":input").addClass("inputDisabled").attr("disabled",true);
+            $(".imgpopup, .imgDelete, .imgNew").hide();
+            $("#btnImprimir, #btnCancel").removeClass("inputDisabled").attr("disabled",false);
+            $("#detallePago :input").removeClass("inputDisabled").attr("disabled",false);
+            
+            
+        }
     }
 
     function fn_CambioTipoDoc(){
@@ -461,6 +578,8 @@
     function fn_descuento(){    	
     	$("#fIngresoProductoTotal").val(parseFloat($("#fIngresoProductoTotalReal").val())-parseFloat(numeroFloat($("#fDescuentoR").val())));
     	$("#fDescuento").val($("#fDescuentoR").val());
+    	$("#siIgv").attr("checked",true);
+	   	$("#vIncluyeIGV").val('siIgv');
     	fn_calcularGlobal();
     }
     
@@ -471,14 +590,73 @@
     	var totalDescuento = parseFloat($('#fDescuento').val());
     	if($("#noIgv").is(":checked")){  
          	total = parseFloat(total)+parseFloat(total*igvCompra);
+         	$("#vIncluyeIGV").val('noIgv');
          }
          else{
          	total = totalReal-totalDescuento;
+         	$("#vIncluyeIGV").val('siIgv');
          }
     	 document.getElementById('fIngresoProductoTotal').value =(total);
     	 fn_calcularGlobal();
     }
-    	 
+    function fn_tipoPago(){
+	    var fCompraTotalR = parseFloat($("#fIngresoProductoTotal").val());
+	    var tipoCambio=parseFloat($("#fTipoCambio").val());  
+	    var montoPagoS=$("#fMontoPagoSoles").val()==""?0:parseFloat($("#fMontoPagoSoles").val()); 
+	    var montoPagoD=$("#fMontoPagoDolares").val()==""?0:parseFloat($("#fMontoPagoDolares").val()); 
+	   
+	    
+		 if($("#monedaDolares").is(":checked")){// mixto 
+			if(montoPagoD==""){
+				alert("Debe de ingresar monto en dolares");
+			}
+			else{
+    			 
+     			if($("#vTipoCompra").val()=='S/.'){
+        			$("#fMontoVueltoSoles").val(dosDecimales(montoPagoS-fCompraTotalR));
+        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoS-fCompraTotalR)/tipoCambio));
+        			
+        		}
+        		else{
+        			$("#fMontoVueltoDolares").val(dosDecimales(montoPagoD-fCompraTotalR));
+        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD-fCompraTotalR)*tipoCambio));
+        			
+        		}
+     			 $("#fMontoPagoSoles").val(dosDecimales(montoPagoD*tipoCambio));
+    			 $("#fMontoVuelto").val(dosDecimales($("#fMontoVueltoDolares").val()));
+     			 $("#fMontoPago").val(montoPagoD);
+     			 $("#vTipoPago").val("$");
+     		
+			}
+		 }
+		 if($("#monedaSoles").is(":checked")){// mixto    	
+			
+			 if(montoPagoS==""){
+ 				alert("Debe de ingresar monto en Soles");
+ 			}
+ 			else{
+    			
+     			if($("#vTipoCompra").val()=='S/.'){
+        			$("#fMontoVueltoSoles").val(dosDecimales(montoPagoS-fCompraTotalR));
+        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoS-fCompraTotalR)/tipoCambio));
+        			
+        		}
+        		else{
+        			$("#fMontoVueltoDolares").val(dosDecimales(montoPagoD-fCompraTotalR));
+        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD-fCompraTotalR)*tipoCambio));
+        			
+        		}
+     			 $("#fMontoPagoDolares").val(dosDecimales(montoPagoS/tipoCambio));
+    			 $("#fMontoVuelto").val($("#fMontoVueltoSoles").val());
+     			 $("#fMontoPago").val(montoPagoS);
+     			 $("#vTipoPago").val("S/.");
+ 			}
+		 }
+		
+		
+	
+}
+	 
     	 
     
    function fn_listarProducto(){

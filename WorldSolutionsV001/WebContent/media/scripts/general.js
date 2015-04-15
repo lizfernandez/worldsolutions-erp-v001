@@ -740,7 +740,7 @@ newHtml+='</tbody>';
 
 //CARGAMOS EL detalle de la Compra
 function listar_detalleCompraDevolucion(obj, destino, fecha){
-	alert("hola");
+	
 	var datos='',datos1='',datos2='',datos3='';
 	var newHtml='';
 	var newHtmlD='';

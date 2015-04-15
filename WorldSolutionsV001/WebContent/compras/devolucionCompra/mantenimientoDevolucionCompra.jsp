@@ -16,12 +16,13 @@
             <td width="100%">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0"  class="tabla">
             <tr>
-                <td>FECHA DEVOLUCI&oacute;N:</td>
+                <td>R.U.C :</td>
                 <td >
-                	<html:text property="dIngresoProductoDevFecha" styleId="dIngresoProductoDevFecha"  size="11%" styleClass="text"/>
-                	&ensp;&ensp;&ensp;
+                   <html:text property="nProveedorNumeroDocumento" styleId="nProveedorNumeroDocumento"  disabled="true" styleClass="text inputDisabled"/>
+                	
+                	&ensp;&ensp;&ensp;&ensp;&ensp;
                 	FECHA COMPRA:
-                	<html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha"  size="11%" disabled="true" styleClass="text"/>
+                	<html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha"  size="11%" disabled="true" styleClass="text inputDisabled"/>
     		     </td>
               <td>NRO. DOCUMENTO:</td>
                 <td>
@@ -31,47 +32,52 @@
                    </button>          
                 </td>
                   
-                </tr>
+             </tr>
+             
             <tr>
                 <td>PROVEEDOR:</td>
                 <td>
-              		  <html:text property="cProveedorCodigo"  styleId="cProveedorCodigo"  styleClass="textCodigo" />
-	   				  <html:text property="vProveedorRazonSocial"  styleId="vProveedorRazonSocial"  size="32%" styleClass="text"/>
+              		  <html:text property="cProveedorCodigo"  styleId="cProveedorCodigo"  styleClass="textCodigo inputDisabled" />
+	   				  <html:text property="vProveedorRazonSocial"  styleId="vProveedorRazonSocial"  size="32%" styleClass="text inputDisabled"/>
 	                
-                <td>TIPO DOCUMENTO:</td>
+               <td>NRO. NOTA DEBITO:</td>
                 <td>    
-                 <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="text" style="width:185px" disabled="true">       
-                 <html:options collection="listaTipoDoc" property="iTipoDocumentoGestionId" labelProperty="vTipoDocumentoDescripcion"/>
-                </html:select>
-                          
+                   <html:text property="nNroNotaDebito" styleId="nNroNotaDebito" size="20%" styleClass="text" />
+				</td>      
 				
 				</td>
             </tr>
           <tr>
           <td>DIRECCI&Oacute;N :</td>
           <td>
-	          <html:text property="vProveedorDireccion" styleId="vProveedorDireccion" size="50%" styleClass="text"/>      
+	          <html:text property="vProveedorDireccion" styleId="vProveedorDireccion" size="50%" styleClass="text inputDisabled"/>      
 	      </td>
-           <td>FORMA DE PAGO :</td>
+           <td>FECHA DEVOLUCION:</td>
             <td>
-                <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="text" style="width:185px" disabled="true">       
-                 <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
-                </html:select>
-                
+                <html:text property="dIngresoProductoDevFecha" styleId="dIngresoProductoDevFecha"  size="20%" styleClass="text"/>
             </td>
           </tr>
           <tr>
-          <td>R.U.C :</td>
+          <td> TIPO DOCUMENTO:</td>
           <td>
-              <html:text property="nProveedorNumeroDocumento" styleId="nProveedorNumeroDocumento"  disabled="true" styleClass="text"/></td>
-           <td>ESTADO DOCUMENTO:</td>
+              <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="text inputDisabled" style="width:156px" disabled="true">       
+                 <html:options collection="listaTipoDoc" property="iTipoDocumentoGestionId" labelProperty="vTipoDocumentoDescripcion"/>
+                </html:select>
+             &ensp;&ensp;&ensp;   
+             FORMA DE PAGO :
+             <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="text inputDisabled" style="width:110px" disabled="true">       
+                 <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
+                </html:select>
+            </td>
+            <td>ESTADO DOCUMENTO:</td>
            <td>
-                <html:select  property="vEstadoDocumento" styleId="vEstadoDocumento" styleClass="text" style="width:185px">       
+                <html:select  property="vEstadoDocumento" styleId="vEstadoDocumento" styleClass="text " style="width:185px">       
                  <html:options collection="listaEstadoDocumento" property="vEstadoDescripcion" labelProperty="vEstadoDescripcion"/>
                 </html:select>
                 
             </td>
           </tr>
+         
     
         </table></td>
       </tr>

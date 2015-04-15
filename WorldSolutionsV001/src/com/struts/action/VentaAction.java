@@ -281,7 +281,7 @@ public class VentaAction extends BaseAction {
 			sesion.removeAttribute("listaVentaDetalle"); 
 			sesion.removeAttribute("listaVentaDetalleCompra");
 			sesion.removeAttribute("listaVentaDetalleOriginal");
-			ventaform.getVentaDev().setnNroNotaCredito(ventaDao.callSPNro_Documento(7));
+			ventaform.getVentaDev().setnNroNotaCredito(ventaDao.callSPNro_Documento(7,"ventaDevolucion","nNroNotaCredito"));
 			
 		}
      
@@ -619,7 +619,7 @@ public class VentaAction extends BaseAction {
 				
 				/** Instanciamos la Clase VentaForm **/
 			 
-				String nuevoCodigo = ventaDao.callSPNro_Documento(iTipoDocumentoId);
+				String nuevoCodigo = ventaDao.callSPNro_Documento(iTipoDocumentoId,"venta","nVentaNumero");
 				List<String> list = new ArrayList<String>();
 			    list.add(nuevoCodigo);
 			    
@@ -672,8 +672,7 @@ public class VentaAction extends BaseAction {
 			List<Formapago> listaFormapago = genericaDao.listaEntidadGenericaSinCodigo("Formapago");
 			List<Ventadetalle> lista = new ArrayList<Ventadetalle>();	
 			List<Tipodocumentogestion> listaTipoDoc = genericaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
-			ventaform.setTipoMoneda(moneda.getcModenaCodigo());
-			ventaform.setIGVVentas(sesion.getAttribute("IGVVentas").toString());
+			
 					
 			/**
 			 * LLamamos al formulario mantenimientoVenta.jsp para la
@@ -681,6 +680,10 @@ public class VentaAction extends BaseAction {
 			 **/
 			if (mode.equals("I")) {
 				String tipoDocumento = request.getParameter("idTipoDocumento");
+				ventaform.setTipoMoneda(moneda.getcModenaCodigo());
+				ventaform.setIGVVentas(sesion.getAttribute("IGVVentas").toString());
+				
+				
 				ventaform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
 				ventaform.setcPersonalCodigo(usu.getPersonal().getcPersonalCodigo());
 				ventaform.setvPersonalNombres(usu.getPersonal().getvPersonalNombres()+" "+ usu.getPersonal().getvPersonalApellidoPaterno());
@@ -688,7 +691,7 @@ public class VentaAction extends BaseAction {
 				
 				ventaform.setfTipoCambio(tipoCambio);
 				
-				ventaform.getVenta().setnVentaNumero(ventaDao.callSPNro_Documento(Integer.parseInt(tipoDocumento)));
+				ventaform.getVenta().setnVentaNumero(ventaDao.callSPNro_Documento(Integer.parseInt(tipoDocumento),"venta","nVentaNumero"));
 				
 				 /***LISTA DE DETALLE VENTA***/
 				sesion.removeAttribute("listaVentaDetalle");
@@ -698,16 +701,16 @@ public class VentaAction extends BaseAction {
 				 }
 				
 				 
-				 if(tipoDocumento.equals("1"))
+				/* if(tipoDocumento.equals("1"))
 						msn = "showEditFactura";			
 				 if(tipoDocumento.equals("3"))
-					   msn = "showEditBoleta";
+					   msn = "showEditFactura";
 				 if(tipoDocumento.equals("7"))
 					   msn = "showEditNotaDebito";
 				 if(tipoDocumento.equals("4"))
 					   msn = "showEditGuiaRemision";
-				 if(tipoDocumento.equals("5"))
-					   msn = "showEditPedido";
+				 if(tipoDocumento.equals("5"))*/
+					   msn = "showEditFactura";
 		       
 				// msn = "showEdit";
 				
@@ -734,6 +737,8 @@ public class VentaAction extends BaseAction {
 				
 				ventaform.setvClasificacion(venta.getCliente().getClasificacion().getvNombre());				
 				ventaform.setVenta(venta);
+				ventaform.setTipoMoneda(venta.getvTipoVenta());
+				ventaform.setIGVVentas(venta.getvPorcentajeIGV());
 				
 				if(mode.equals("UE")){
 					
@@ -787,7 +792,7 @@ public class VentaAction extends BaseAction {
 					
 				  
 					
-					 if(tipoDocumento.equals("1"))
+					 /*if(tipoDocumento.equals("1"))
 							msn = "showEditFactura";			
 					 if(tipoDocumento.equals("2"))
 						 msn = "showEditBoleta";
@@ -795,8 +800,8 @@ public class VentaAction extends BaseAction {
 						 msn = "showEditNotaDebito";
 					 if(tipoDocumento.equals("4"))
 						 msn = "showEditGuiaRemision";
-					 if(tipoDocumento.equals("5"))
-						 msn = "showEditPedido";
+					 if(tipoDocumento.equals("5"))*/
+						 msn = "showEditFactura";
 				}
 				
 
@@ -891,6 +896,7 @@ public class VentaAction extends BaseAction {
 		      	   obj.setUsuario(usu);
 		      	   obj.setiPeriodoId(iPeriodoId);
 		      	   obj.setSucursal(usu.getSucursal());
+		           obj.setvPorcentajeIGV(sesion.getAttribute("IGVVentas").toString());
 		        
 		      	  
 		      	
@@ -1612,6 +1618,7 @@ public class VentaAction extends BaseAction {
 					obj.setdFechaInserta(Fechas.getDate());
 			   	    obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 			   	    obj.setcEstadoCodigo(Constantes.estadoActivo);
+			     	 obj.setTipoDocumento(Util.listaDocGest().get(2));/* get(2)= 7: NOTA DE CREDITO **/
 			   	  
 		      	   /****Informacion de detalle compra****/
 		      	   if(sesion.getAttribute("listaVentaDetalle")!=null){

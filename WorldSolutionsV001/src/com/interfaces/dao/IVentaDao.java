@@ -13,7 +13,7 @@ public interface IVentaDao {
 	public List<Venta> listaEstadoCuentaPorCliente(int pagInicio, int pagFin, Venta venta, int iClienteId);
 	public List<Ventadevolucion> listaVentaDevolucion(int pagInicio, int pagFin, Venta venta);
 	public List<Ventadetalle>  buscarVentaDetalle(int iVentaId);
-	public String  callSPNro_Documento(int iTipoDocumentoId);
+	
 
 	
 

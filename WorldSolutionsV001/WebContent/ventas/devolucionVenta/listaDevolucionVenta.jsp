@@ -6,7 +6,7 @@
 
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=I',900,700)">
+        <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=I',930,700)">
                 <span class="new">Nuevo</span>
             </button>
         </td>        
@@ -35,10 +35,11 @@
         
           
 	         
-        <th align="center">Operaciones</th>       
+        <th align="center">Ope.</th>       
         <th align="left">Proveedor</th>
         <th align="left">Tipo Documento</th>
 	    <th align="left">Nro. Documento</th>
+	    <th align="left">Nro. NotaCred.</th>
 	    <th align="left">Forma pago</th>
 	    <th align="left">Fecha Emisi&oacute;n</th>
 	    <th align="right">Monto Total</th>
@@ -60,10 +61,11 @@
 			<tr>
 				
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=U&id=<bean:write name="x" property="iVentaDevolucionId" />',900,700)" /></td>
+		                     onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=ED&id=<bean:write name="x" property="iVentaDevolucionId" />',930,700)" /></td>
 				<td><bean:write name="x" property="venta.cliente.vClienteRazonSocial" /></td>
 				<td><bean:write name="x" property="venta.tipoDocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="venta.nVentaNumero" /></td>
+				<td><bean:write name="x" property="nNroNotaCredito" /></td>
 				<td><bean:write name="x" property="venta.formaPago.vFormaPagoDescripcion" /></td>
 				<td><bean:write name="x" property="venta.dVentaFecha"  format="dd/MM/yyyy"/></td>
 				<td align="right"><bean:write name="x" property="venta.fVentaTotal" format="#,##0.00" locale="Localidad" /></td>

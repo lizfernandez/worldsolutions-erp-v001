@@ -43,9 +43,10 @@ public class Util {
 	 public static List<Tipodocumentogestion> listaDocGest(){
 		 List<Tipodocumentogestion> listaDoc = new ArrayList<Tipodocumentogestion>();	
 		 listaDoc.add(new Tipodocumentogestion(1,"FACTURA"));
-		 listaDoc.add(new Tipodocumentogestion(2,"BOLETA"));
-		 listaDoc.add(new Tipodocumentogestion(3,"NOTA"));	
-		 listaDoc.add(new Tipodocumentogestion(5,"GUIA DE REMISION"));	
+		 listaDoc.add(new Tipodocumentogestion(3,"BOLETA"));
+		 listaDoc.add(new Tipodocumentogestion(7,"NOTA CREDITO"));
+		 listaDoc.add(new Tipodocumentogestion(8,"NOTA DEBITO"));
+		 listaDoc.add(new Tipodocumentogestion(9,"GUIA DE REMISION"));	
 	  return listaDoc; 
 	 }
 	 public static List<Tipodocumentogestion> listaDocGestAplicado(){

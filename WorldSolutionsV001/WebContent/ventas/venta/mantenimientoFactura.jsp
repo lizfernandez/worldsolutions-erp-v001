@@ -18,7 +18,7 @@
             <tr>
                 <td width="14%">FECHA:</td>
                 <td colspan="3">
-                	<html:text property="dVentaFecha" styleId="dVentaFecha" styleClass="text textCodigo" readonly="true" tabindex="1"/>
+                	<html:text property="dVentaFecha" styleId="dVentaFecha" styleClass="text textCodigo" readonly="true" />
     				<span id="m_dVentaFecha" class="importante">*</span>
                 </td>
                 
@@ -35,7 +35,7 @@
                 <td colspan="3">
               		  <html:text property="vClienteCodigo"  styleId="vClienteCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />	   				  
 	   				  <html:text property="vClienteRazonSocial"  styleId="vClienteRazonSocial"  styleClass="text textGrande inputDisabled" size="55%"/>	 
-	   				  <button type="button"  class="button" onclick="popupModal('cliente.do?metodo=listaCliente&mode=LP',580,350)" tabindex="1" ><span class='imgpopup'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></button>
+	   				  <button type="button"  class="button" onclick="popupModal('cliente.do?metodo=listaCliente&mode=LP',580,350)" ><span class='imgpopup'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></button>
 	                <span id="m_vClienteRazonSocial" class="importante">*</span>
                 </td>
                 <td>NRO DOCUMENTO:</td>
@@ -76,11 +76,11 @@
           <tr>
            <td width="5%">PUNTO DE LLEGADA :</td>
           <td colspan="3"  width="16%">
-             <html:text property="vVentaPuntoLlegada" styleId="vVentaPuntoLlegada"  tabindex="1" size="60%"  styleClass="textExtraGrande inputDisabled"/>
+             <html:text property="vVentaPuntoLlegada" styleId="vVentaPuntoLlegada"   size="60%"  styleClass="textExtraGrande inputDisabled"/>
           </td>
            
                 <td width="13%">VENDEDOR:</td>
-                <td><html:text property="vPersonalNombres" styleId="vPersonalNombres" styleClass="textExtraGrande" readonly="true" tabindex="1"/></td>
+                <td><html:text property="vPersonalNombres" styleId="vPersonalNombres" styleClass="textExtraGrande" readonly="true" /></td>
           </tr>
         </table></td>
       </tr>
@@ -196,17 +196,6 @@
     </td>
 </tr>
 
-
-
-
-
-
-
-<%-- hidden field que contiene el mode --%>
-<html:hidden property="mode" styleId="mode" />
-			
-<%-- set the parameter for the dispatch action --%>
-<html:hidden property="metodo" value="iduVenta" styleId="metodo" />	
 </table>
 <table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 30%; float: right;">
 <tr style="height: 1px;"> 
@@ -229,7 +218,7 @@
 		                <td align="right">Desc. Producto:</td>
 		                <td align="right">
 		                <span class="tipoMoneda"></span>
-		                   <input type="text" id="fDescuentoR" class="text inputDisabled textNumero" onblur="fn_descuentoProducto()"  size="10"/>	                 
+		                   <input type="text" id="fDescuentoR" class="text  textNumero" onblur="fn_descuentoProducto()"  size="10"/>	                 
 		                 </td>
 		             </tr>
 		             <tr>
@@ -237,7 +226,7 @@
 		                <td align="right">Desc. Cliente:</td>
 		                <td align="right">
 		                <span class="tipoMoneda"></span>
-		                   <input type="text" id="fDescClienteVentaR" class="text inputDisabled textNumero" onblur="fn_descuentoCliente()"  size="10"/>	                 
+		                   <input type="text" id="fDescClienteVentaR" class="text  textNumero" onblur="fn_descuentoCliente()"  size="10"/>	                 
 		                 </td>
 		             </tr>		      
                </table>
@@ -288,7 +277,7 @@
 		
 		            <tr> 
 		                <td align="left" colspan="2">
-		                TIPO CAMBIO: <html:text property="fTipoCambio" styleId="fTipoCambio" styleClass="text inputDisabled textNumero" size="3" onblur="fn_tipoPago()"  /> 
+		                TIPO CAMBIO: <html:text property="fTipoCambio" styleId="fTipoCambio" styleClass="text  textNumero" size="3" onblur="fn_tipoPago()"  /> 
 		                  
 		                TIPO PAGO:
 		                <input type="radio" id="monedaSoles" onclick="fn_tipoPago()"  class="textN"  name="iMoneda" />S/.
@@ -301,9 +290,9 @@
 		                <td align="right">MONTO PAGO:</td>
 		                <td align="right">
 		                 S/.
-		                 <input type="text" id="fMontoPagoSoles"  class="textN inputDisabled textNumero" size="7" onblur="fn_tipoPago()"/>
+		                 <input type="text" id="fMontoPagoSoles"  class="textN  textNumero" size="7" onblur="fn_tipoPago()"/>
 		                 $.
-		                 <input type="text" id="fMontoPagoDolares"  class="textN inputDisabled textNumero"  size="7" onblur="fn_tipoPago()"/>
+		                 <input type="text" id="fMontoPagoDolares"  class="textN  textNumero"  size="7" onblur="fn_tipoPago()"/>
 		                 </td>
 		            </tr>
 		            <tr>
@@ -311,9 +300,9 @@
 		                <td align="right">VUELTO:</td>
 		                <td align="right">
 		                  S/.
-		                  <input type="text" id="fMontoVueltoSoles"  class="textN inputDisabled textNumero" readonly="true" size="7" />
+		                  <input type="text" id="fMontoVueltoSoles"  class="textN  textNumero" readonly="true" size="7" />
 		                  $.
-		                  <input type="text" id="fMontoVueltoDolares"  class="textN inputDisabled textNumero" readonly="true" size="7" />
+		                  <input type="text" id="fMontoVueltoDolares"  class="textN  textNumero" readonly="true" size="7" />
 		                  
 		                </td>
 		            </tr>		           
@@ -349,6 +338,14 @@
   </tr>
 
 </table>
+
+
+
+<%-- hidden field que contiene el mode --%>
+<html:hidden property="mode" styleId="mode" />
+			
+<%-- set the parameter for the dispatch action --%>
+<html:hidden property="metodo" value="iduVenta" styleId="metodo" />	
 
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iVentaId" />
@@ -461,7 +458,7 @@
          	$("#btnGuardar").addClass('find');
         	$("#btnGuardar").text('Buscar');
          }
-        if(mode=="ED"){// visualizar venta
+        if(mode=="U"){// visualizar venta
         	$(":input").addClass("inputDisabled").attr("disabled",true);
             $(".imgpopup, .imgDelete, .imgNew").hide();
             $("#btnImprimir, #btnCancel").removeClass("inputDisabled").attr("disabled",false);
@@ -592,11 +589,7 @@
     				alert("Debe de ingresar monto en dolares");
     			}
     			else{
-	    			 $("#fMontoPagoSoles").val(dosDecimales(montoPagoD*tipoCambio));
-	    			 $("#fMontoVuelto").val(dosDecimales($("#fMontoVueltoDolares").val()));
-	     			 $("#fMontoPago").val(montoPagoD);
-	     			 $("#vTipoPago").val("$");
-	     			 
+	    			 	     			 
 	     			if($("#vTipoVenta").val()=='S/.'){
 	        			$("#fMontoVueltoSoles").val(dosDecimales(montoPagoS-fVentaTotalR));
 	        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoS-fVentaTotalR)/tipoCambio));
@@ -607,6 +600,10 @@
 	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD-fVentaTotalR)*tipoCambio));
 	        			
 	        		}
+	     			 $("#fMontoPagoSoles").val(dosDecimales(montoPagoD*tipoCambio));
+	    			 $("#fMontoVuelto").val(dosDecimales($("#fMontoVueltoDolares").val()));
+	     			 $("#fMontoPago").val(montoPagoD);
+	     			 $("#vTipoPago").val("$");
     			}
     		 }
     		 if($("#monedaSoles").is(":checked")){// mixto    	
@@ -615,11 +612,7 @@
      				alert("Debe de ingresar monto en Soles");
      			}
      			else{
-	    			 $("#fMontoPagoDolares").val(dosDecimales(montoPagoS/tipoCambio));
-	    			 $("#fMontoVuelto").val($("#fMontoVueltoSoles").val());
-	     			 $("#fMontoPago").val(montoPagoS);
-	     			 $("#vTipoPago").val("S/.");
-	     			if($("#vTipoVenta").val()=='S/.'){
+	    			if($("#vTipoVenta").val()=='S/.'){
 	        			$("#fMontoVueltoSoles").val(dosDecimales(montoPagoS-fVentaTotalR));
 	        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoS-fVentaTotalR)/tipoCambio));
 	        			
@@ -629,6 +622,11 @@
 	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD-fVentaTotalR)*tipoCambio));
 	        			
 	        		}
+	    			 $("#fMontoPagoDolares").val(dosDecimales(montoPagoS/tipoCambio));
+	    			 $("#fMontoVuelto").val($("#fMontoVueltoSoles").val());
+	     			 $("#fMontoPago").val(montoPagoS);
+	     			 $("#vTipoPago").val("S/.");
+	     			
      			}
     		 }
     		

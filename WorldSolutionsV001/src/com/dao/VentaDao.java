@@ -367,27 +367,6 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 				return listaIngresoproducto;
 	}
 
-	@Override
-	public String callSPNro_Documento(int iTipoDocumentoId) {
-		Query q;
-
-		String nroDocumento = "";
-
-		try {
-
-			getInstancia().getTransaction().begin();
-			q = getInstancia()
-					.createNativeQuery("{ CALL SP_NRO_DOCUMENTO(?) }")// createNamedQuery("SP_IDU_PERFIL_PERMISOS")
-					.setParameter(1, iTipoDocumentoId);
-
-			nroDocumento = (String) q.getSingleResult();
-			getInstancia().getTransaction().commit();
-			/***** q.executeUpdate(); **/
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		return nroDocumento;
-	}
+	
 	
 }

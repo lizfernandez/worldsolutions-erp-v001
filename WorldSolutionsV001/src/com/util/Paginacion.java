@@ -7,7 +7,7 @@ public class Paginacion {
 	
 	public static int paginado=10;
 	public static int paginaInicial = 1;
-	public static int paginaMax = 1000;
+	public static int paginaMax = 10000000;
 	
 	 public static int pagInicio(int pagina) {
 		 int inicio=(pagina-1)*paginado;
