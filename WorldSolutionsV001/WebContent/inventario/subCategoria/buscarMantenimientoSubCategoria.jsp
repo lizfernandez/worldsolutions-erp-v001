@@ -13,7 +13,7 @@
 <tr>
     <td align="right">Nombre:</td>
     <td>
-       <html:text property="vSubCategoriaDescripcion" styleId="vSubCategoriaDescripcion" onkeyup="return mayuscula('vSubCategoriaDescripcion')" styleClass="text"/>
+       <html:text property="vSubCategoriaDescripcion" styleId="vSubCategoriaDescripcion" onkeyup="return mayuscula('vSubCategoriaDescripcion')" styleClass="text" maxlength="45"/>
        <span id="m_vSubCategoriaDescripcion" class="importante">*</span>
    </td>
 </tr>

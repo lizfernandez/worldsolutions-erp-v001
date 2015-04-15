@@ -14,20 +14,21 @@
 </tr>
 <tr class="trCodigo">
     <td align="right">C&oacute;digo:</td>
-    <td><html:text property="cCategoriaCodigo" styleId="cCategoriaCodigo" onkeyup="return mayuscula('cCategoriaCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="7" styleClass="text" readonly="true" />
+    <td><html:text property="cCategoriaCodigo" styleId="cCategoriaCodigo" onkeyup="return mayuscula('cCategoriaCodigo')" onkeypress="return LetrasNumeros(event)" maxlength="7" styleClass="text" readonly="true"/>
     	<span id="m_cCategoriaCodigo" class="importante">*</span>
     </td>
 </tr>
 <tr>
     <td align="right">Nombre:</td>
     <td>
-       <html:text property="vCategoriaDescripcion" styleId="vCategoriaDescripcion" onkeyup="return mayuscula('vCategoriaDescripcion')" styleClass="text"/>
+       <html:text property="vCategoriaDescripcion" styleId="vCategoriaDescripcion" onkeyup="return mayuscula('vCategoriaDescripcion')" 
+       		styleClass="text" maxlength="45"/>
        <span id="m_vCategoriaDescripcion" class="importante">*</span>
    </td>
 </tr>
 <tr>
     <td align="right">Estado:</td>
-    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo">       
+    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" >       
               <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
          </html:select>
     </td>
@@ -36,8 +37,8 @@
 <tr height="50px">   
     <td align="center" colspan="2">
     <br>    
-     <button onclick="insertar('tab-grupo')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
-     <button onclick="cancelar('');"  class="button" type="button"><span class='cancel'>Cancelar</span></button>
+     <button onclick="insertar('tab-grupo')"  class="button"><span class='save' id="btnGuardar" >Guardar</span></button>
+     <button onclick="cancelar('');"  class="button" type="button" ><span class='cancel'>Cancelar</span></button>
      <br>
      <br>
      <span id="m_mensaje" class="mensaje"></span>
@@ -58,7 +59,7 @@
     var mode = document.getElementById('mode').value;
     
     if(mode=='I') {
-        document.getElementById('cCategoriaCodigo').focus();
+        document.getElementById('iClasificacionId').focus();
         document.getElementById('btnGuardar').textContent="Insertar";
         $(".trCodigo").show();
         $("#popupCabecera").text('INSERTAR DATOS');	

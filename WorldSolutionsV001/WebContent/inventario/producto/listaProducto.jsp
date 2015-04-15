@@ -39,14 +39,14 @@
      <tr>
         <th colspan="4" width="5%">Operaciones</th>
         <th align="left">C&oacute;digo</th>
-        <th width="23%" align="left">Nombre</th>
+        <th width="20%" align="left">Nombre</th>
         <th width="9%" align="left">Foto</th>
         <th align="left">Cantidad</th>
         <th align="left">Capacidad</th>
-        <th align="left">Precio Compra</th>
-        <th align="left">Precio Venta</th>
-        <th align="left">Stock Min</th>
-        <th align="left">Stock Max</th>        
+        <th align="left" width="6%" >Precio Compra</th>
+        <th align="left" width="6%" >Precio Venta</th>
+        <th align="left" width="8%" >Stock Min</th>
+        <th align="left" width="8%" >Stock Max</th>        
         <th align="left">Estado</th>
       </tr>
     </thead>
@@ -83,8 +83,8 @@
 			<bean:write name="x" property="vProductoCapacidad" />
 			<bean:write name="x" property="vUnidadMedidaDescripcionC" />
 	    </td>
-	    <td><bean:write name="x" property="fProductoPrecioCompra" /></td>
-	    <td><bean:write name="x" property="fProductoPrecioVenta" /></td>
+	    <td><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"/></td>
+	    <td><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"/></td>
 	    <td><bean:write name="x" property="iProductoStockMinimo" /></td>
 		<td><bean:write name="x" property="iProductoStockMaximo" /></td>
 		<td><bean:write name="x" property="cEstadoCodigo" /></td>

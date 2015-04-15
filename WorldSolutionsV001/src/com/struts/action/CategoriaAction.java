@@ -1,10 +1,6 @@
 package com.struts.action;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -13,20 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityTransaction;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.jxls.exception.ParsePropertyException;
-import net.sf.jxls.transformer.XLSTransformer;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 import com.dao.CategoriaDao;
 import com.dao.ClasificacionCategoriaDao;
@@ -178,9 +167,14 @@ public class CategoriaAction extends BaseAction {
 		 * @param request
 		 * @param response
 		 * @return ActionForward
+		 * @throws NoSuchFieldException 
+		 * @throws IllegalAccessException 
+		 * @throws ClassNotFoundException 
+		 * @throws SecurityException 
+		 * @throws IllegalArgumentException 
 		 */
 		public ActionForward iduCategoria(ActionMapping mapping, ActionForm form,
-				HttpServletRequest request, HttpServletResponse response) {
+				HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
 			
 			/** Inicializamos las variables **/ 
 			String msn = "";
@@ -192,33 +186,38 @@ public class CategoriaAction extends BaseAction {
 			
 			/** Instanciamos las clase CategoriaForm y CategoriaDao **/
 			CategoriaForm pForm = (CategoriaForm) form;
-			Categoria obj =pForm.getCategoria();
+			Categoria obj;
 	
 			
 			GenericaDao categoriaDao = new GenericaDao();
 			/****************************************/
 			/** seteamos la entidades relacionadas **/
 			/***************************************/
-			 obj.setClasificacionCategoria(categoriaDao.findEndidad(new Clasificacioncategoria(), pForm.getiClasificacionId()));
-			
-	       
-			if (pForm.getMode().equals("I")) {				
-				obj.setdFechaInserta(Fechas.getDate());	
-				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
-				resultado = categoriaDao.insertarUnaEndidad(obj);
+			if (pForm.getMode().equals("I")) {
 				
-			} else if (pForm.getMode().equals("U")) {
-				 obj.setdFechaActualiza(Fechas.getDate());
-				 obj.setiUsuarioActualizaId(usu.getiUsuarioId());
+				obj = pForm.getCategoria();
+				obj.setClasificacionCategoria(categoriaDao.findEndidad(new Clasificacioncategoria(), pForm.getiClasificacionId()));
+				obj.setdFechaInserta(Fechas.getDate());
+				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 				
 				resultado = categoriaDao.actualizarUnaEndidad(obj);
+				
+			} else if (pForm.getMode().equals("U")) {
+
+				obj = categoriaDao.findEndidad(pForm.getCategoria(), pForm.getiCategoriaId());
+				obj = Util.comparar(obj, pForm.getCategoria());
+				
+				obj.setClasificacionCategoria(categoriaDao.findEndidad(new Clasificacioncategoria(), pForm.getiClasificacionId()));
+				obj.setdFechaActualiza(Fechas.getDate());	
+				obj.setiUsuarioActualizaId(usu.getiUsuarioId());
+				resultado = categoriaDao.insertarUnaEndidad(obj);
 					
 			} else if (mode.equals("D")) {
 				EntityTransaction transaccion = null;
 				try {
 					transaccion = categoriaDao.entityTransaction();
 					transaccion.begin();
-					categoriaDao.eliminarUnaEndidad(obj, "iCategoriaId", ids);/**/
+					categoriaDao.eliminarUnaEndidad(pForm.getCategoria(), "iCategoriaId", ids);/**/
 					resultado = categoriaDao.commitEndidad(transaccion);
 				} catch (Exception ex) {
 					ex.printStackTrace();
