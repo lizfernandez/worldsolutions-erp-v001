@@ -448,7 +448,7 @@ function LimpiaCar(num,nom,fname)
 
 function LetrasNumeros(e) {
     tecla = (document.all)?e.keyCode:e.which;
-    if (tecla==8) return true; 
+    if (tecla==8 || tecla==0) return true; 
     patron = /\w/;
     te = String.fromCharCode(tecla);
     return patron.test(te);

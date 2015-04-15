@@ -34,8 +34,8 @@
 
     <thead>
     <tr>
-        <th colspan="3"width="5%" >Operaciones</th>
-        <th width="10%" align="left">Clasificaci&oacute;n</th>
+        <th colspan="3" width="5%" >Operaciones</th>
+        <th width="15%" align="left">Clasificaci&oacute;n</th>
         <th width="10%" align="left">C&oacute;digo</th>
         <th width="15%" align="left">Descripci&oacute;n</th>
         <th width="8%" align="left">Estado</th>

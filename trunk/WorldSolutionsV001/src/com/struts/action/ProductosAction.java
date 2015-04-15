@@ -44,7 +44,6 @@ import com.entities.Producto;
 import com.entities.Subcategoria;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
-import com.entities.vo.ProducciondetalleVo;
 import com.google.gson.Gson;
 import com.struts.form.ProductosForm;
 import com.util.Constantes;
@@ -471,6 +470,7 @@ public class ProductosAction extends BaseAction {
 			FormFile fichero = pForm.getFoto();
 			String nombre = fichero.getFileName();
 			int tamanho = fichero.getFileSize();
+			@SuppressWarnings("deprecation")
 			String filePath = request.getRealPath("/").toString();
 
 			if ((tamanho > 0) && (!nombre.equals(""))) {
@@ -486,8 +486,7 @@ public class ProductosAction extends BaseAction {
 							+ request.getServletPath());
 					if (!ficheroACrear.exists()) {
 						ficheroACrear.createNewFile();
-						FileOutputStream fileOutStream = new FileOutputStream(
-								ficheroACrear);
+						FileOutputStream fileOutStream = new FileOutputStream(ficheroACrear);
 						fileOutStream.write(fichero.getFileData());
 						fileOutStream.flush();
 						fileOutStream.close();
@@ -503,6 +502,7 @@ public class ProductosAction extends BaseAction {
 			transaccion.begin();
 			/** Insertamos Datos del producto **/
 			if (pForm.getMode().equals("I")) {
+				/** Se crea el registro del nuevo producto **/
 				pro.setdFechaInserta(Fechas.getDate());
 				pro.setiUsuarioInsertaId(usu.getiUsuarioId());
 				productoDao.persistEndidad(pro);
@@ -514,8 +514,7 @@ public class ProductosAction extends BaseAction {
 				kardex.setvConcepto(Constantes.conceptoExistencia);
 				kardex.setiCantExistencia(pro.getiProductoStockCantidad());
 				kardex.setfPuExistencia(pro.getfProductoPrecioCompra());
-				kardex.setfTotalExistencia(kardex.getiCantExistencia()
-						* kardex.getfPuExistencia());
+				kardex.setfTotalExistencia(kardex.getiCantExistencia() * kardex.getfPuExistencia());
 				kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
 				kardex.setdFechaInserta(Fechas.getDate());
 				kardex.setcEstadoCodigo(Constantes.estadoActivo);
@@ -531,11 +530,9 @@ public class ProductosAction extends BaseAction {
 				preciosProducto.setcEstadoCodigo(Constantes.estadoActivo);
 				preciosProducto.setdFechaInserta(Fechas.getDate());
 				preciosProducto.setfGanancia(pro.getfProductoGanancia());
-				preciosProducto
-						.setfPrecioCompra(pro.getfProductoPrecioCompra());
+				preciosProducto.setfPrecioCompra(pro.getfProductoPrecioCompra());
 				preciosProducto.setfPrecioVenta(pro.getfProductoPrecioVenta());
-				preciosProducto.setiCantidadStock(pro
-						.getiProductoStockCantidad());
+				preciosProducto.setiCantidadStock(pro.getiProductoStockCantidad());
 				preciosProducto.setProducto(pro);
 				preciosProducto.setfDescuento(pro.getfProductoDescuento());
 				preciosProducto.setiUsuarioInsertaId(usu.getiUsuarioId());
@@ -551,10 +548,9 @@ public class ProductosAction extends BaseAction {
 				Librodiario libroDiario = new Librodiario();
 				libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
 				libroDiario.setCuenta(productoDao.findEndidad(cuenta, 57));
-				libroDiario.setfMonto(kardex.getiCantExistencia()
-						* kardex.getfPuExistencia());
+				libroDiario.setfMonto(kardex.getiCantExistencia() * kardex.getfPuExistencia());
 				libroDiario.setvTipoConcepto(Constantes.debe);
-				libroDiario.setvConceptoGeneral("MERCADERIA / ALmacen ");
+				libroDiario.setvConceptoGeneral("MERCADERIA / Almacen ");
 				libroDiario.setdFechaInserta(Fechas.getDate());
 				libroDiario.setiUsuarioInsertaId(usu.getiUsuarioId());
 				libroDiario.setKardex(kardex);
@@ -569,8 +565,7 @@ public class ProductosAction extends BaseAction {
 				libroDiario = new Librodiario();
 				libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
 				libroDiario.setCuenta(productoDao.findEndidad(cuenta, 212));
-				libroDiario.setfMonto(kardex.getiCantExistencia()
-						* kardex.getfPuExistencia());
+				libroDiario.setfMonto(kardex.getiCantExistencia() * kardex.getfPuExistencia());
 				libroDiario.setvTipoConcepto(Constantes.haber);
 				libroDiario.setvConceptoGeneral("CAPITAL ");
 				libroDiario.setdFechaInserta(Fechas.getDate());
@@ -580,7 +575,7 @@ public class ProductosAction extends BaseAction {
 
 				productoDao.persistEndidad(libroDiario);
 				resultado = productoDao.commitEndidad(transaccion);
-				pro=null;
+				
 				// productoDao.refreshEndidad(pro);
 
 			}
@@ -594,11 +589,9 @@ public class ProductosAction extends BaseAction {
 
 			}
 			/** Insertamos Datos del producto y de insumo **/
-			else if (pForm.getMode().equals("U")
-					|| pForm.getMode().equals("UI")) {
+			else if (pForm.getMode().equals("U") || pForm.getMode().equals("UI")) {
 
-				pro = productoDao.findEndidad(pro, pForm.getProducto()
-						.getiProductoId());
+				pro = productoDao.findEndidad(pro, pForm.getProducto().getiProductoId());
 				pro = Util.comparar(pro, pForm.getProducto());			
 				pro.setdFechaActualiza(Fechas.getDate());
 				pro.setiUsuarioActualizaId(usu.getiUsuarioId());
@@ -608,8 +601,9 @@ public class ProductosAction extends BaseAction {
 				 * Actualizamos o agregamos precios del producto, como tambien
 				 * actualizaremos la cantidad del producto
 				 **/
-				List<Preciosproducto> listaPrecio = (List<Preciosproducto>) sesion
-						.getAttribute("listaPrecioProducto");
+				@SuppressWarnings("unchecked")
+				List<Preciosproducto> listaPrecio = (List<Preciosproducto>) sesion.getAttribute("listaPrecioProducto");
+				
 				if (listaPrecio.size() > 0) {
 					pro.setPreciosproductodetallles(listaPrecio);
 					int cantidadProducto = 0;
@@ -629,26 +623,20 @@ public class ProductosAction extends BaseAction {
 					 **/
 					/***********************************************************************************/
 
-					for (Preciosproducto objpreciosProducto : pro
-							.getPreciosproductodetallles()) {
-						if (objpreciosProducto.getiCantidadStock() > 0
-								&& objpreciosProducto.getcEstadoCodigo()
-										.equals(Constantes.estadoActivo)) {
-							cantidadProducto = cantidadProducto
-									+ objpreciosProducto.getiCantidadStock();
+					for (Preciosproducto objpreciosProducto : pro.getPreciosproductodetallles()) {
+						if (objpreciosProducto.getiCantidadStock() > 0 && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)) {
+							
+							cantidadProducto = cantidadProducto + objpreciosProducto.getiCantidadStock();
 							if (i == 0) {
-								precioCompra = objpreciosProducto
-										.getfPrecioCompra();
-								precioVenta = objpreciosProducto
-										.getfPrecioVenta();
+								precioCompra = objpreciosProducto.getfPrecioCompra();
+								precioVenta = objpreciosProducto.getfPrecioVenta();
 								fGanancia = objpreciosProducto.getfGanancia();
 								fDescuento = objpreciosProducto.getfDescuento();
 							}
 						}
 					}
 					pro.setiProductoStockCantidad(cantidadProducto);
-					pro.setfProductoPrecioVenta(FormatosNumeros
-							.redondedoDecimal(precioVenta));
+					pro.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(precioVenta));
 					pro.setfProductoGanancia(fGanancia);
 					pro.setfProductoPrecioCompra(precioCompra);
 					pro.setfProductoDescuento(fDescuento);
@@ -656,19 +644,14 @@ public class ProductosAction extends BaseAction {
 				}
 				/** Actualizamos los valores de la existencia del Kardex **/
 				/** si no existe ningun tipo de movimiento (Compras o ventas) **/
-				if (pForm.getSizeIngresoproductodetalles() == 0
-						&& pForm.getSizeVentaDetalles() == 0) {
+				if (pForm.getSizeIngresoproductodetalles() == 0 && pForm.getSizeVentaDetalles() == 0) {
+					
 					int iKardexId = 0;
-					List<Kardex> kardex = kardexDao.buscarKardexProducto(pro
-							.getiProductoId());
+					List<Kardex> kardex = kardexDao.buscarKardexProducto(pro.getiProductoId());
 					iKardexId = kardex.get(0).getiKardexId();
-					kardex.get(0).setiCantExistencia(
-							pro.getiProductoStockCantidad());
-					kardex.get(0).setfPuExistencia(
-							pro.getfProductoPrecioCompra());
-					kardex.get(0).setfTotalExistencia(
-							kardex.get(0).getiCantExistencia()
-									* kardex.get(0).getfPuExistencia());
+					kardex.get(0).setiCantExistencia(pro.getiProductoStockCantidad());
+					kardex.get(0).setfPuExistencia(pro.getfProductoPrecioCompra());
+					kardex.get(0).setfTotalExistencia(kardex.get(0).getiCantExistencia() * kardex.get(0).getfPuExistencia());
 					kardex.get(0).setiUsuarioActualizaId(usu.getiUsuarioId());
 					kardex.get(0).setdFechaActualiza(Fechas.getDate());
 
@@ -679,8 +662,7 @@ public class ProductosAction extends BaseAction {
 					 * diario la cuenta de Mercaredia
 					 **/
 
-					List<Librodiario> librodiario = kardexDao
-							.buscarLibroDiarioKardex(iKardexId);
+					List<Librodiario> librodiario = kardexDao.buscarLibroDiarioKardex(iKardexId);
 					for (Librodiario listaLibros : librodiario) {
 						/**
 						 * 20(Mercaderia) y 201(Almacem) id=57; 201: mercaderia/
@@ -692,8 +674,7 @@ public class ProductosAction extends BaseAction {
 						 * 50(Capital) y '212', '5', '50', 'CAPITAL'
 						 **/
 
-						listaLibros.setfMonto(kardex.get(0)
-								.getfTotalExistencia());
+						listaLibros.setfMonto(kardex.get(0).getfTotalExistencia());
 						listaLibros.setiUsuarioActualizaId(usu.getiUsuarioId());
 						listaLibros.setdFechaActualiza(Fechas.getDate());
 
@@ -704,7 +685,7 @@ public class ProductosAction extends BaseAction {
 
 				productoDao.mergeEndidad(pro);
 				resultado = productoDao.commitEndidad(transaccion);
-				productoDao.refreshEndidad(pro);
+				//productoDao.refreshEndidad(pro);
 			} else if (mode.equals("D")) {
 				productoDao.eliminarUnaEndidad(pro, "iProductoId", ids);/**/
 				resultado = productoDao.commitEndidad(transaccion);
@@ -740,6 +721,7 @@ public class ProductosAction extends BaseAction {
 	 * @return ActionForward
 	 * @throws IOException 
 	 */
+		@SuppressWarnings("unchecked")
 		public ActionForward detalleListaPrecios(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response) throws IOException{
       
@@ -1072,6 +1054,7 @@ public class ProductosAction extends BaseAction {
 		 * @throws SecurityException 
 		 * @throws IllegalArgumentException 
 		 */
+		@SuppressWarnings({ "unchecked", "deprecation" })
 		public ActionForward iduProduccion(ActionMapping mapping, ActionForm form,
 				HttpServletRequest request, HttpServletResponse response) throws IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
 			

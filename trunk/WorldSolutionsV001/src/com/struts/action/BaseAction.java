@@ -77,11 +77,11 @@ public abstract class BaseAction  extends DispatchAction {
 		}
 
 		
-		int i = listaEstadoCuenta.size() - 1;
-		if(i>0){
-			listaEstadoCuenta.get(i).setMontosTotales(montosTotales);
-			listaEstadoCuenta.get(i).setPagosTotales(pagosTotales);
-			listaEstadoCuenta.get(i).setSaldosTotales(saldosTotales);
+		int indice = listaEstadoCuenta.size() - 1;
+		if(indice >= 0){
+			listaEstadoCuenta.get(indice).setMontosTotales(montosTotales);
+			listaEstadoCuenta.get(indice).setPagosTotales(pagosTotales);
+			listaEstadoCuenta.get(indice).setSaldosTotales(saldosTotales);
 		}
 		
 
@@ -131,7 +131,7 @@ public abstract class BaseAction  extends DispatchAction {
 		}
 		
 		int iUltimoRegistro = listaEstadoCuenta.size() - 1;
-		if(iUltimoRegistro>0){
+		if(iUltimoRegistro >= 0){
 			listaEstadoCuenta.get(iUltimoRegistro).setMontosTotales(montosTotales);
 			listaEstadoCuenta.get(iUltimoRegistro).setPagosTotales(pagosTotales);
 			listaEstadoCuenta.get(iUltimoRegistro).setSaldosTotales(saldosTotales);
