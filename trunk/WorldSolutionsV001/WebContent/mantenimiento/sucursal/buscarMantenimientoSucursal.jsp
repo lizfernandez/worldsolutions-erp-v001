@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<html:form action="sucursal" styleId="formSucursal">
+<html:form action="empresaSucursal" styleId="formSucursal">
 <tr class="trCodigo">
     <td align="right">C&oacute;digo:</td>
     <td><html:text property="cSucursalCodigo" styleId="cSucursalCodigo" onkeyup="return mayuscula('cSucursalCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text"/>
