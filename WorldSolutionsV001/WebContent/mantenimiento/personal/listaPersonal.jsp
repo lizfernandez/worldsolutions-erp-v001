@@ -90,5 +90,10 @@
 </div> 
 <script>   
 paginacion();
-$("#admin,#personal").addClass("active");
+
+$("#admin").addClass("active");
+$("#personal").children('li').show();
+$("#personas").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#personas").children('a').css("color","#D0D2D7");
+
 </script> 
