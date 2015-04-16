@@ -61,7 +61,7 @@ public class PerfilDao extends GenericaDao implements IPerfilDao {
 	public List<Permiso> listaPermiso(int pagInicio, int pagFin) {
 		Query q ;
 		List<Permiso> listaPermiso = null ;
-		q = getInstancia().createNativeQuery("select * from Permisos p  group by p.iUsuarioId", Permiso.class )//
+		q = getInstancia().createNativeQuery("select * from Permisos p  group by p.iUsuarioId ", Permiso.class )//
 				//createQuery("select p from Permiso p group by p.usuario.iUsuarioId")//where SUBSTRING(p.vCodigoMenu,2,3)='0' group by p.usuario.iUsuarioId// 
 				.setFirstResult(pagInicio)
 				.setMaxResults(pagFin);
@@ -98,6 +98,7 @@ public class PerfilDao extends GenericaDao implements IPerfilDao {
 	            etx.commit();  
 	        } catch (Exception ex) {  
 	        	System.out.println("ex :"+ex);
+	        	em= null;
 	//            Logger.getLogger(StoredProcedureJpaController.class.getName()).log(Level.SEVERE, null, ex);  
 	        }  
 	    

@@ -62,6 +62,7 @@
     <class>com.entities.Ocupacion</class>
     <class>com.entities.Clasificacioncliente</class>
     <class>com.entities.Menuaccion</class>
+    <class>com.entities.Empresa</class>
     	 
 	<!-- transaction-type="RESOURCE_LOCAL"-->
 		<properties>
@@ -71,7 +72,7 @@
 	      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 	      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/macrostruts"/>
 	      <property name="javax.persistence.jdbc.user" value="root"/>
-	      <property name="javax.persistence.jdbc.password" value="qwertY"/>	    
+	      <property name="javax.persistence.jdbc.password" value=""/>	    
 	    </properties>
 	</persistence-unit>
 </persistence>

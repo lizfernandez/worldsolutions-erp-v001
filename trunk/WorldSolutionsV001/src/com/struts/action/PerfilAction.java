@@ -35,6 +35,7 @@ import com.google.gson.Gson;
 import com.struts.form.PerfilForm;
 
 
+import com.util.Constantes;
 import com.util.Fechas;
 import com.util.Paginacion;
 import com.util.Util;
@@ -218,7 +219,9 @@ public class PerfilAction extends DispatchAction {
 		
 		lista = perfilDao.listaFindPermiso(Integer.parseInt(iUsuarioId));
 		for(Permiso per: lista){
-			listaPermiso.add(per.getvCodigoMenu());
+			if(!per.getvCodigoMenu().equals(""))
+			{ listaPermiso.add(per.getvCodigoMenu());
+			}
 		}
 		Gson gson = new Gson();	
 		String jsonOutput = gson.toJson(listaPermiso);
@@ -359,9 +362,32 @@ public class PerfilAction extends DispatchAction {
 			
 		}
 	  else if (mode.equals("UP")) { // actualizamos Permisos.
-		
+		  EntityTransaction transaction;
+		  try {
+			  transaction = objPerfildao.entityTransaction();
+	    	   transaction.begin();
 		  String arr[] = vCodigoPermiso.split("-") ; 
-	       resultado = objPerfildao.callProcedurePermiso(Integer.parseInt(iUsuarioId), vCodigoPermiso, arr.length);	 
+		  objPerfildao.eliminarBDUnaEndidad(new Permiso(), "idpermisos", iUsuarioId);
+		  resultado = objPerfildao.commitEndidad(transaction);
+		  for(int i=0;i<=arr.length;i++){
+		       if(!arr[i].equals("")){
+		    	   Permiso per = new Permiso();
+		    	   per.setcEstado(Constantes.estadoActivo);
+		    	   per.setUsuario(usu);
+		    	   per.setvCodigoMenu(arr[i]);
+		    	   objPerfildao.persistEndidad(per);
+		    	   resultado = objPerfildao.commitEndidad(transaction);
+		       }
+		       
+		  }
+		  }catch (Exception e) {
+		 e.printStackTrace();
+ 		   objPerfildao.limpiarInstancia();
+ 	   } finally {
+ 		   transaction = null;
+ 	   }
+		 
+	     // resultado = objPerfildao.callProcedurePermiso(Integer.parseInt(iUsuarioId), vCodigoPermiso, arr.length);	 
 	  	
 		}
        else if (mode.equals("D")) {  

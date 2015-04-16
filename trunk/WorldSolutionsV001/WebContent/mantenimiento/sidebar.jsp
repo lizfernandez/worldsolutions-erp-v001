@@ -1,12 +1,58 @@
        
-        <div  class="btn_admin" id="sucursal" >
-        <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
-        <a href="sucursal.do?metodo=listaSucursal">MANT. DE SUCURSAL</a>
-       </div>
-        <div  class="btn_admin" id="area" >
+        <div id ="empresaSucursal" class="cont">
+		        <ul id="empresax">
+		        <div onclick="submenu('empresax')">
+			        <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
+			        <strong >EMPRESA SUCURSAL</strong> <br>
+			     </div>
+		        <li id="empresas"><a href="empresaSucursal.do?metodo=listaEmpresa">
+		            <span class="gestion">Mant. Empresas</span></a>
+		        </li>
+		        <li id="sucursal"><a href="empresaSucursal.do?metodo=listaSucursal">
+		            <span class="gestion">Mant. Sucursal</span></a>
+		        </li>
+		        <li id="area"><a href="area.do?metodo=listaArea">
+		            <span class="gestion">Mant. Area</span></a>
+		        </li>
+		       
+		      </ul>   
+         </div>
+       
+         <div id ="cont2" class="cont">
+		        <ul id="personal">
+		        <div onclick="submenu('personal')">
+			        <img src="${pageContext.request.contextPath}/media/imagenes/oca.png" width="20" height="20" />
+			        <strong >PERSONAL</strong> <br>
+			     </div>
+		        <li id="ocupacion"><a href="ocupacion.do?metodo=listaOcupacion">
+		            <span class="gestion">Mant. Ocupacion</span></a>
+		        </li>
+		        <li id="personas"><a href="personal.do?metodo=listaPersonal">
+		            <span class="gestion">Mant. Personas</span></a>
+		        </li>
+		       
+		      </ul>   
+         </div>
+           <div id ="cont2" class="cont">
+		        <ul id="usuarios">
+		        <div onclick="submenu('usuarios')">
+			        <img src="${pageContext.request.contextPath}/media/imagenes/cate.png" width="20" height="20" />
+			        <strong >USUARIOS</strong> <br>
+			     </div>
+		        <li id="perfil"><a href="perfil.do?metodo=listaPerfil">
+		            <span class="gestion">Mant. Perfil</span></a>
+		        </li>
+		        <li id="usuario"><a href="usuario.do?metodo=listaUsuario">
+		            <span class="gestion">Mant. Usuarios</span></a>
+		        </li>
+		       
+		      </ul>   
+         </div>
+         
+        <!-- iv  class="btn_admin" id="area" >
         <img src="${pageContext.request.contextPath}/media/imagenes/sub.png" width="20" height="20" />
         <a href="area.do?metodo=listaArea">MANT. DE AREA</a>
-       </div>
+       </div
        <div class="btn_admin" id="perfil">
            <img src="${pageContext.request.contextPath}/media/imagenes/cate.png" width="20" height="20" />
            <a href="perfil.do?metodo=listaPerfil">MANT. DE PERFIL</a>
@@ -23,10 +69,10 @@
        <div class="btn_admin" id="usuarios">
        <img src="${pageContext.request.contextPath}/media/imagenes/cli.png" width="20" height="20" />
         <a href="usuario.do?metodo=listaUsuario">MANT. DE USUARIOS</a>
-       </div>
+       </div>-->
        <div class="btn_admin" id="permisos">
        <img src="${pageContext.request.contextPath}/media/imagenes/tra.png" width="20" height="20" />
-        <a href="perfil.do?metodo=listaPermisos">MANT. DE PERMISOS</a>
+        <a href="perfil.do?metodo=listaPermisos">PERMISOS</a>
        </div>
        
        <div id ="cont2" class="cont">
@@ -49,4 +95,8 @@
 		        </li>
 		      </ul>   
          </div>
+        <!-- div class="btn_admin" id="opcionesMenu">
+	       <img src="${pageContext.request.contextPath}/media/imagenes/tra.png" width="20" height="20" />
+	        <a href="perfil.do?metodo=listaPermisos">OPCIONES DEL MENU</a>
+       </div> -->
       

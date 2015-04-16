@@ -2,7 +2,6 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.Date;
 
 
@@ -11,74 +10,62 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="sucursal")
-public class Sucursal implements Serializable {
+public class Empresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
-	private int iSucursalId;
-	
-	private String cSucursalCodigo;
-	
-	@Column(nullable=false, length=2)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int iEmpresaId;
+
+	private String cEmpresaCodigo;
+
 	private String cEstadoCodigo;
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
     @Temporal( TemporalType.TIMESTAMP)
-	@Column(nullable=false)
 	private Date dFechaInserta;
 
 	private int iUsuarioActualizaId;
 
-	@Column(nullable=false)
 	private int iUsuarioInsertaId;
 
-	
-	@Column(nullable=false, length=45)
-	private String vSucursalDireccion;
+	private String vEmpresaDireccion;
 
-	@Column(nullable=false, length=45)
-	private String vSucursalNombre;
+	private String vEmpresaNombre;
 
-	@Column(nullable=false, length=45)
-	private String vSucursalTelefono;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iEmpresaId", nullable=false)	
-	private Empresa empresa ;
-	
-	public Sucursal() {
-		
-	}
+	private String vEmpresaRuc;
+
+    public Empresa() {
+    }
+
 	/**
-	 * @return the iSucursalId
+	 * @return the iEmpresaId
 	 */
-	public int getiSucursalId() {
-		return iSucursalId;
+	public int getiEmpresaId() {
+		return iEmpresaId;
 	}
 
 	/**
-	 * @param iSucursalId the iSucursalId to set
+	 * @param iEmpresaId the iEmpresaId to set
 	 */
-	public void setiSucursalId(int iSucursalId) {
-		this.iSucursalId = iSucursalId;
+	public void setiEmpresaId(int iEmpresaId) {
+		this.iEmpresaId = iEmpresaId;
 	}
 
 	/**
-	 * @return the cSucursalCodigo
+	 * @return the cEmpresaCodigo
 	 */
-	public String getcSucursalCodigo() {
-		return cSucursalCodigo;
+	public String getcEmpresaCodigo() {
+		return cEmpresaCodigo;
 	}
 
 	/**
-	 * @param cSucursalCodigo the cSucursalCodigo to set
+	 * @param cEmpresaCodigo the cEmpresaCodigo to set
 	 */
-	public void setcSucursalCodigo(String cSucursalCodigo) {
-		this.cSucursalCodigo = cSucursalCodigo;
+	public void setcEmpresaCodigo(String cEmpresaCodigo) {
+		this.cEmpresaCodigo = cEmpresaCodigo;
 	}
 
 	/**
@@ -152,59 +139,46 @@ public class Sucursal implements Serializable {
 	}
 
 	/**
-	 * @return the vSucursalDireccion
+	 * @return the vEmpresaDireccion
 	 */
-	public String getvSucursalDireccion() {
-		return vSucursalDireccion;
+	public String getvEmpresaDireccion() {
+		return vEmpresaDireccion;
 	}
 
 	/**
-	 * @param vSucursalDireccion the vSucursalDireccion to set
+	 * @param vEmpresaDireccion the vEmpresaDireccion to set
 	 */
-	public void setvSucursalDireccion(String vSucursalDireccion) {
-		this.vSucursalDireccion = vSucursalDireccion;
+	public void setvEmpresaDireccion(String vEmpresaDireccion) {
+		this.vEmpresaDireccion = vEmpresaDireccion;
 	}
 
 	/**
-	 * @return the vSucursalNombre
+	 * @return the vEmpresaNombre
 	 */
-	public String getvSucursalNombre() {
-		return vSucursalNombre;
+	public String getvEmpresaNombre() {
+		return vEmpresaNombre;
 	}
 
 	/**
-	 * @param vSucursalNombre the vSucursalNombre to set
+	 * @param vEmpresaNombre the vEmpresaNombre to set
 	 */
-	public void setvSucursalNombre(String vSucursalNombre) {
-		this.vSucursalNombre = vSucursalNombre;
+	public void setvEmpresaNombre(String vEmpresaNombre) {
+		this.vEmpresaNombre = vEmpresaNombre;
 	}
 
 	/**
-	 * @return the vSucursalTelefono
+	 * @return the vEmpresaRuc
 	 */
-	public String getvSucursalTelefono() {
-		return vSucursalTelefono;
+	public String getvEmpresaRuc() {
+		return vEmpresaRuc;
 	}
 
 	/**
-	 * @param vSucursalTelefono the vSucursalTelefono to set
+	 * @param vEmpresaRuc the vEmpresaRuc to set
 	 */
-	public void setvSucursalTelefono(String vSucursalTelefono) {
-		this.vSucursalTelefono = vSucursalTelefono;
+	public void setvEmpresaRuc(String vEmpresaRuc) {
+		this.vEmpresaRuc = vEmpresaRuc;
 	}
-	/**
-	 * @return the empresa
-	 */
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-	/**
-	 * @param empresa the empresa to set
-	 */
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-	
 
 	
 

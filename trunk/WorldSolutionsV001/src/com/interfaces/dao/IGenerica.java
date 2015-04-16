@@ -21,6 +21,7 @@ public interface IGenerica {
 	public <E> boolean actualizarUnaEndidad(E entidad);
 	public <E> void mergeEndidad(E entidad);
 	public <E> void eliminarUnaEndidad(E entidad, String sEntidadId, String iEntidadId);
+	public <E> void eliminarBDUnaEndidad(E entidad, String sEntidadId, String iEntidadId);
 	public <E> String callSPCalculoCodigo(E entidad);
 	public int  callSPPeriodoActual();
 	public <E> void refreshEndidad(E entidad);
