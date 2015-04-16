@@ -12,8 +12,8 @@ INSERT INTO `menutitulo` (`idmenuTitulo`, `idMenu`, `vMenuTitulo`, `vCodigo`) VA
 (10, 6, 'PLANILLA', '65'),
 (11, 6, 'PLAN CONTABLE', '66'),
 (12, 7, 'OPCIONES', '71'),
-(13, 8, 'EMPRESA SUCURSAL', '81');
-(14, 8, 'PERSONAL', '82');
-(15, 8, 'USUARIOS', '83');
-(16, 8, 'PERMISOS', '84');
+(13, 8, 'EMPRESA SUCURSAL', '81'),
+(14, 8, 'PERSONAL', '82'),
+(15, 8, 'USUARIOS', '83'),
+(16, 8, 'PERMISOS', '84'),
 (17, 8, 'CONFIGURACION', '85');

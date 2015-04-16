@@ -44,7 +44,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`cajachica` (
   `cEstadoCodigo` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `vConceptoGeneral` VARCHAR(500) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iCajaChicaId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 68
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -82,7 +82,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`clasificacioncategoria` (
   `vClasificacionDescripcion` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `cEstadoCodigo` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iClasificacionId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -103,7 +103,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`clasificacioncliente` (
   `dFechaActualiza` DATETIME NULL DEFAULT NULL ,
   `cEstadoCodigo` CHAR(2) NULL DEFAULT NULL ,
   PRIMARY KEY (`iClasificacionClienteId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = latin1;
 
@@ -146,7 +146,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`configuracion` (
   `dFechaInserta` DATETIME NULL DEFAULT NULL ,
   `cEstadoCodigo` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iConfiguracionId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 14
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -163,7 +163,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`cuentas` (
   `vCodigo` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `vDescripcion` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iCuentasId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 341
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -277,7 +277,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`direccioncliente` (
   UNIQUE INDEX `idireccionClienteId` (`idireccionClienteId` ASC) ,
   INDEX `fk_direccionCliente_cliente1` (`iClienteId` ASC) ,
   INDEX `fk_direccionCliente` (`iClienteId` ASC) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 81
 DEFAULT CHARACTER SET = latin1;
 
@@ -299,7 +299,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`ejerciciofiscal` (
   `dFechaActualiza` DATETIME NULL DEFAULT NULL ,
   `cCodigoEstado` CHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iEjercicioFiscalId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -315,7 +315,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`elementocuentas` (
   `vElemento` VARCHAR(15) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `vDescripcion` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iElementoCuentasId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -338,7 +338,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`empresa` (
   `dFechaActualiza` DATETIME NULL DEFAULT NULL ,
   `cEstadoCodigo` CHAR(2) NULL DEFAULT NULL ,
   PRIMARY KEY (`iEmpresaId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = latin1;
 
@@ -412,7 +412,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`formapago` (
   `iFormaPago` INT(11) NOT NULL AUTO_INCREMENT ,
   `vFormaPagoDescripcion` VARCHAR(45) NULL DEFAULT NULL ,
   PRIMARY KEY (`iFormaPago`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = latin1;
 
@@ -431,7 +431,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`impuestos` (
   `dFechaInserta` DATETIME NULL DEFAULT NULL ,
   `cCodigoEstado` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iImpuestosId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci
@@ -625,7 +625,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`ingresoproductodevolucion` (
   `nNroNotaDebito` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `iTipoDocumentoId` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iIngresoProductoDevolucionId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -651,7 +651,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`ingresoproductodevoluciondetalle` (
   `fDescuento` FLOAT NULL DEFAULT NULL ,
   `iSubCta` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iIngresoProductoDevolucionDetalleId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -687,7 +687,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`kardex` (
   `iVentaDevolucionId` INT(11) NULL DEFAULT NULL ,
   `iProduccionId` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iKardexId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 273
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -750,7 +750,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`letraproveedor` (
   `nPlazoLetra` INT(11) NULL DEFAULT NULL ,
   `iIngresoProductoId` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iletraProveedorId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -779,7 +779,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`librodiario` (
   `cCajaBanco` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `iPeriodoId` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iLibroDiarioId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 189
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -797,7 +797,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`libromayor` (
   `fMontoHaber` FLOAT NULL DEFAULT NULL ,
   `iPeriodoId` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iLibroMayorId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -811,7 +811,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`menu` (
   `vMenu` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `vCodigo` VARCHAR(3) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`idMenu`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -828,7 +828,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`menuaccion` (
   `vAccion` VARCHAR(45) NULL DEFAULT NULL ,
   `vCodigo` VARCHAR(4) NULL DEFAULT NULL ,
   PRIMARY KEY (`iMenuAccionId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 258
 DEFAULT CHARACTER SET = latin1;
 
@@ -844,7 +844,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`menuopciones` (
   `vOpciones` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `vCodigo` VARCHAR(4) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`idmenuOpciones`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 56
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -861,7 +861,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`menutitulo` (
   `vMenuTitulo` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `vCodigo` VARCHAR(3) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`idmenuTitulo`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
 
@@ -894,7 +894,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`ocupacion` (
   `dFechaActualiza` DATETIME NULL DEFAULT NULL ,
   `cEstadoCodigo` CHAR(2) NULL DEFAULT NULL ,
   PRIMARY KEY (`iOcupacionId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = latin1;
 
@@ -944,7 +944,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`periodo` (
   `cCodigoEstado` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `iEjercicioFiscalId` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iPeriodoId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -961,7 +961,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`permisos` (
   `vCodigoMenu` VARCHAR(5) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `cEstado` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`idpermisos`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 1314
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -1031,7 +1031,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`planilla` (
   `cEstadoCodigo` CHAR(2) NULL DEFAULT NULL ,
   `iPeriodoId` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iPlanillaId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = latin1;
 
@@ -1046,7 +1046,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`poblacion` (
   `cCodigo` CHAR(6) NOT NULL ,
   `vDescripcion` VARCHAR(50) NOT NULL ,
   PRIMARY KEY (`iPoblacionId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 435
 DEFAULT CHARACTER SET = latin1;
 
@@ -1070,7 +1070,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`preciosproducto` (
   `dFechaActualiza` DATETIME NULL DEFAULT NULL ,
   `cEstadoCodigo` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iPreciosProductoId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 75
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -1094,7 +1094,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`produccion` (
   `fOtrosCostos` FLOAT NULL DEFAULT NULL ,
   `vDescripcion` VARCHAR(150) CHARACTER SET 'utf8' COLLATE 'utf8_spanish2_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iProduccionId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 28
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish2_ci;
@@ -1122,7 +1122,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`producciondetalle` (
   `fDescuento` FLOAT NULL DEFAULT NULL ,
   PRIMARY KEY (`iProduccionDetalleId`) ,
   INDEX `fk_produccion_iProduccionId` (`iProduccionId` ASC) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 43
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish2_ci;
@@ -1267,7 +1267,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`subcategoria` (
   `dFechaActualiza` DATETIME NULL DEFAULT NULL ,
   `cEstadoCodigo` CHAR(2) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   PRIMARY KEY (`iSubCategoriaId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -1378,7 +1378,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`ventadevolucion` (
   `nNroNotaCredito` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NULL DEFAULT NULL ,
   `iTipoDocumentoId` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iVentaDevolucionId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -1404,7 +1404,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`ventadevoluciondetalle` (
   `fDescuento` FLOAT NULL DEFAULT NULL ,
   `iSubCta` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`iVentaDevolucionDetalleId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
@@ -1444,7 +1444,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`visitacliente` (
   `dFechaInserta` DATETIME NULL DEFAULT NULL ,
   `dFechaActualiza` DATETIME NULL DEFAULT NULL ,
   PRIMARY KEY (`iVisitaClienteId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish_ci;
