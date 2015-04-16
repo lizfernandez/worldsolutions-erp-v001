@@ -387,9 +387,6 @@ INSERT INTO `cuentas` (`iCuentasId`, `iElementoCuentasId`, `vCodigo`, `vDescripc
 INSERT INTO `direccioncliente` (`idireccionClienteId`, `iClienteId`, `iPoblacionId`, `vDireccion`, `vReferencia`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `vPrincipal`) VALUES
 (80, 6, '140501', 'AV.PUENTE', NULL, 2, '2015-04-06 21:31:54', 0, NULL, 'AC', '1');
 
-INSERT INTO `ejerciciofiscal` (`iEjercicioFiscalId`, `vCodigoEjercicio`, `vNombreEjercicio`, `dFechaInicio`, `dFechaFin`, `iUsuarioInserta`, `iUsuarioActualiza`, `dFechaInserta`, `dFechaActualiza`, `cCodigoEstado`) VALUES
-(6, '01', 'EJERCICIO 2015', '2015-01-01', '2015-12-31', 0, 0, '2015-01-01 00:00:00', NULL, 'ABIERTO');
-
 INSERT INTO `elementocuentas` (`iElementoCuentasId`, `vElemento`, `vDescripcion`) VALUES
 (1, 'Elemento 1', 'Activo disponible y exigible'),
 (2, 'Elemento 2', 'Activo realizable'),
@@ -407,13 +404,6 @@ INSERT INTO `estado` (`iEstadoId`, `cEstadoCodigo`, `vEstadoDescripcion`) VALUES
 (2, 'IN', 'INACTIVO'),
 (3, 'EL', 'ELIMINADO');
 
-
-INSERT INTO `estadocuentacliente` (`iEstadoCuentaCliente`, `iClienteId`, `fMontoPago`, `iVentaId`, `dFechaPago`, `dFechaInserta`, `iUsuarioInsertaId`, `cEstadoCodigo`) VALUES
-(1, 6, 72.216, 29, '2015-04-10', '2015-04-10 04:32:17', 2, 'AC'),
-(2, 6, 7200, 30, '2015-04-10', '2015-04-10 05:00:38', 2, 'AC'),
-(3, 6, 6120, 31, '2015-04-10', '2015-04-10 05:08:06', 2, 'AC');
-
-
 INSERT INTO `formapago` (`iFormaPago`, `vFormaPagoDescripcion`) VALUES
 (1, 'CONTADO'),
 (2, 'CREDITO '),
@@ -428,34 +418,6 @@ INSERT INTO `impuestos` (`iImpuestosId`, `vNombreImpuesto`, `vAplicacionImpuesto
 (2, 'IGV 18% VENTA', 'VENTAS', '18', 0, '2014-05-08 00:00:00', 'AC'),
 (3, 'PERCEPCION IGV 2%', 'COMPRAS', '2', 0, '2014-05-08 00:00:00', 'AC');
 
-
-INSERT INTO `kardex` (`iKardexId`, `iProductoId`, `iIngresoProductoId`, `iVentaId`, `dFecha`, `vConcepto`, `iCantIngresoProducto`, `fPuIngresoProducto`, `fTotalngresoProducto`, `iCantVenta`, `fPuVenta`, `fTotalVenta`, `iCantExistencia`, `fPuExistencia`, `fTotalExistencia`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `iPeriodoId`, `iVentaDevolucionId`, `iProduccionId`) VALUES
-(260, 41, NULL, NULL, '2015-04-06', 'Existencia Inicial ', 0, 0, 0, 0, 0, 0, 1500, 120, 180000, 2, '2015-04-06 21:41:27', 0, NULL, 'IN', 11, NULL, NULL),
-(261, 41, NULL, 28, '2015-04-06', 'VENTA SEGÚN FACTURA N° 0001-000001', 0, 0, 0, 100, 120, 12000, 1400, 120, 168000, 2, '2015-04-06 21:41:57', 0, NULL, 'IN', 11, NULL, NULL),
-(262, 41, NULL, 29, '2015-04-10', 'VENTA SEGÚN FACTURA N° 0001-000002', 0, 0, 0, 1, 120, 120, 1398, 120, 167760, 2, '2015-04-10 04:32:16', 0, NULL, 'IN', 11, NULL, NULL),
-(263, 41, NULL, 30, '2015-04-10', 'VENTA SEGÚN FACTURA N° 0001-000003', 0, 0, 0, 100, 120, 12000, 1298, 120, 155760, 2, '2015-04-10 05:00:38', 0, NULL, 'IN', 11, NULL, NULL),
-(264, 41, NULL, 31, '2015-04-10', 'VENTA SEGÚN FACTURA N° 0001-000004', 0, 0, 0, 100, 120, 12000, 1198, 120, 143760, 2, '2015-04-10 05:08:06', 0, NULL, 'AC', 11, NULL, NULL),
-(265, 41, NULL, NULL, '2015-04-12', 'DEV. VENTA SEGÚN FACTURA N° 0001-000002', 1, 120, 120, 0, 0, 0, 1399, 120, 167760, 2, '2015-04-12 15:35:41', 0, NULL, 'AC', 0, 7, NULL);
-
-
-INSERT INTO `librodiario` (`iLibroDiarioId`, `iCuentasId`, `fMonto`, `vTipoConcepto`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `vConceptoGeneral`, `iKardexId`, `iIngresoProductoId`, `iVentaId`, `vNumeroAsiento`, `cCajaBanco`, `iPeriodoId`) VALUES
-(143, 57, 180000, 'D', 2, '2015-04-06 21:41:27', 0, NULL, 'AC', 'MERCADERIA / ALmacen ', 260, '0', NULL, NULL, NULL, 11),
-(144, 212, 180000, 'H', 2, '2015-04-06 21:41:27', 0, NULL, 'AC', 'CAPITAL ', 260, '0', NULL, NULL, NULL, 11),
-(145, 311, 61.2, 'H', 2, '2015-04-10 04:32:17', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000002', NULL, NULL, '29', 'ASIENTO N1', '0', 11),
-(146, 168, 11.02, 'H', 2, '2015-04-10 04:32:17', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000002', NULL, NULL, '29', 'ASIENTO N1', '0', 11),
-(147, 8, 72.216, 'D', 2, '2015-04-10 04:32:17', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '29', 'ASIENTO N1', '0', 11),
-(148, 8, 72.216, 'H', 2, '2015-04-10 04:32:17', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '29', 'ASIENTO N1', '0', 11),
-(149, 2, 72.216, 'D', 2, '2015-04-10 04:32:17', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-10 04:32:17 Por la venta de la mercaderia de la FACTURA N°: 0001-000002', NULL, NULL, '29', 'ASIENTO N3', '1', 11),
-(150, 311, 6101.69, 'H', 2, '2015-04-10 05:00:38', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000003', NULL, NULL, '30', 'ASIENTO N1', '0', 11),
-(151, 168, 1098.31, 'H', 2, '2015-04-10 05:00:38', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000003', NULL, NULL, '30', 'ASIENTO N1', '0', 11),
-(152, 8, 7200, 'D', 2, '2015-04-10 05:00:38', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '30', 'ASIENTO N1', '0', 11),
-(153, 8, 7200, 'H', 2, '2015-04-10 05:00:38', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '30', 'ASIENTO N1', '0', 11),
-(154, 2, 7200, 'D', 2, '2015-04-10 05:00:38', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-10 05:00:38 Por la venta de la mercaderia de la FACTURA N°: 0001-000003', NULL, NULL, '30', 'ASIENTO N3', '1', 11),
-(155, 311, 5186.44, 'H', 2, '2015-04-10 05:08:06', NULL, NULL, 'AC', 'VENTA/ Mercaderia / NRO de FACTURA: 0001-000004', NULL, NULL, '31', 'ASIENTO N1', '0', 11),
-(156, 168, 933.56, 'H', 2, '2015-04-10 05:08:06', NULL, NULL, 'AC', 'TRIBUTOS POR PAGAR / Gobierno central / IGV / NRO de FACTURA: 0001-000004', NULL, NULL, '31', 'ASIENTO N1', '0', 11),
-(157, 8, 6120, 'D', 2, '2015-04-10 05:08:06', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '31', 'ASIENTO N1', '0', 11),
-(158, 8, 6120, 'H', 2, '2015-04-10 05:08:06', NULL, NULL, 'AC', 'Clientes / Facturas, boletas y otros comprobantes por pagar', NULL, NULL, '31', 'ASIENTO N1', '0', 11),
-(159, 2, 6120, 'D', 2, '2015-04-10 05:08:06', NULL, NULL, 'AC', 'CAJA Y BANCOS / Caja / 2015-04-10 05:08:06 Por la venta de la mercaderia de la FACTURA N°: 0001-000004', NULL, NULL, '31', 'ASIENTO N3', '1', 11);
 
 INSERT INTO `moneda` (`iMonedaId`, `cModenaCodigo`, `vMonedaDescripcion`, `cEstadoCodigo`) VALUES
 (1, 'S/.', 'SOLES', 'AC'),
@@ -1063,20 +1025,10 @@ INSERT INTO `poblacion` (`iPoblacionId`, `cCodigo`, `vDescripcion`) VALUES
 (434, '030719', '	KAQUIABAMBA	');
 
 
-INSERT INTO `preciosproducto` (`iPreciosProductoId`, `iProductoId`, `iCantidadStock`, `fPrecioCompra`, `fGanancia`, `fPrecioVenta`, `fDescuento`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`) VALUES
-(74, 41, 1399, 120, 20, 144, 50, 2, 0, '2015-04-06 21:41:27', NULL, 'AC');
-
-
-INSERT INTO `producto` (`iProductoId`, `cProductoCodigo`, `vProductoNombre`, `vProductoCapacidad`, `iProductoStockCantidad`, `iProductoStockMaximo`, `iProductoStockMinimo`, `fProductoPrecioVenta`, `fProductoGanancia`, `fProductoPrecioCompra`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `iUnidadMedidadId`, `iCategoriaId`, `iProduccionId`, `iUnidadMedidadIdC`, `iMonedaId`, `vUnidadMedidaDescripcionC`, `iSubCategoriaId`, `vfoto`, `fProductoDescuento`) VALUES
-(41, 'PR00001', 'PRODUCTO 01', '12', 1200, 50, 100, 144, 20, 120, 2, 0, '2015-04-06 21:41:27', NULL, 'AC', 7, 15, NULL, 7, 1, 'CAJA', 2, '', 50);
-
 INSERT INTO `sexo` (`iSexoId`, `cSexoCodigo`, `vSexoDescripcion`, `cEstadoCodigo`) VALUES
 (1, '1', 'FEMENINO', 'AC'),
 (2, '2', 'MASCULINO', 'AC');
 
-
-INSERT INTO `subcategoria` (`iSubCategoriaId`, `iCategoriaId`, `cSubCategoriaCodigo`, `vSubCategoriaDescripcion`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`) VALUES
-(2, 15, 'SU00001', 'CORE', 2, 0, '2015-04-06 21:40:52', NULL, 'AC');
 
 INSERT INTO `sucursal` (`iSucursalId`, `vSucursalNombre`, `vSucursalDireccion`, `vSucursalTelefono`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `cSucursalCodigo`) VALUES
 (2, 'Macroquimica del Peru', 'Av. pachacutec', '5485540', 1, NULL, '2010-12-18 00:00:00', NULL, 'Ac', NULL),
@@ -1118,27 +1070,6 @@ INSERT INTO `usuario` (`iUsuarioId`, `cUsuarioCodigo`, `vUsuarioLogin`, `vUsuari
 (10, NULL, 'SARITAFERNANDEZ', 'sarita2014', 0, 0, NULL, '2015-01-31 00:00:00', 'AC', 4, 14, 3),
 (12, NULL, 'DCARPIO', '123456', 0, 0, '2014-03-13 00:00:00', '2015-02-15 00:00:00', 'AC', 5, 13, 4),
 (23, NULL, 'DGONZALES', '123456', 0, 0, '2015-01-31 00:00:00', NULL, 'AC', 3, 15, 4);
-
-
-INSERT INTO `venta` (`iVentaId`, `nVentaNumero`, `dVentaFecha`, `fVentaTotal`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `iUsuarioId`, `iClienteId`, `idireccionClienteId`, `iTipoDocumentoId`, `iFormaPago`, `cVentaOrdenCompra`, `nVentaRuc`, `vVentaPuntoLlegada`, `vPrincipal`, `fVentaGanancia`, `vEstadoVenta`, `fVentaSubTotal`, `fVentaIGV`, `vEstadoDocumento`, `dFechaTraslado`, `dFechaProximoPago`, `fDescuento`, `fMontoAdelantado`, `fVentaTotalReal`, `iNumeroDias`, `iNumeroLetras`, `IperiodoId`, `iSucursalId`, `fTipoCambio`, `iMonedaId`, `fMontoPago`, `fMontoVuelto`, `vTipoPago`, `fDescClienteVenta`, `vIncluyeIGV`, `vTipoVenta`) VALUES
-(28, '0001-000001', '2015-04-06', 7200, 0, '2015-04-06 21:41:57', 0, NULL, 'AC', 2, 6, 6, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 6101.69, 1098.31, 'CANCELADO', NULL, '2015-04-06', 7200, 0, 14400, 0, '1', '11', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(29, '0001-000002', '2015-04-10', 72.216, 0, '2015-04-10 04:32:16', 0, NULL, 'AC', 2, 6, 6, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 61.2, 11.02, 'DEVOLUCION TOTAL', NULL, '2015-04-10', 72, 0, 144, 0, '1', '11', 3, 3, NULL, 240, -167.78, '$', 10.8, 'noIgv', '$'),
-(30, '0001-000003', '2015-04-10', 7200, 0, '2015-04-10 05:00:38', 0, NULL, 'AC', 2, 6, 6, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 6101.69, 1098.31, 'CANCELADO', NULL, '2015-04-10', 7200, 0, 14400, 0, '1', '11', 3, 2.75, NULL, 20350, 550, '$', 0, 'siIgv', '$'),
-(31, '0001-000004', '2015-04-10', 6120, 0, '2015-04-10 05:08:06', 0, NULL, 'AC', 2, 6, 6, 1, 1, '', NULL, 'AV.PUENTE', '1', '0.00', 'CANCELADO', 5186.44, 933.56, 'CANCELADO', NULL, '2015-04-10', 7200, 0, 14400, 0, '1', '11', 3, 2.75, NULL, 17600, 770, 'S/.', 1080, 'siIgv', '$');
-
-INSERT INTO `ventadetalle` (`iVentaDetalleId`, `fVentaDetallePrecio`, `iVentaDetalleCantidad`, `fVentaDetalleTotal`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `iProductoId`, `iVentaId`, `fDescuento`, `iPersonalId`, `iSubCta`) VALUES
-(28, 144, 100, 7200, 2, '2015-04-06 21:41:57', 0, NULL, 'AC', 41, 28, 50, NULL, 0),
-(29, 144, 1, 72, 2, '2015-04-10 04:32:16', 0, NULL, 'AC', 41, 29, 50, NULL, 0),
-(30, 144, 100, 7200, 2, '2015-04-10 05:00:38', 0, NULL, 'AC', 41, 30, 50, NULL, 0),
-(31, 144, 100, 7200, 2, '2015-04-10 05:08:06', 0, NULL, 'AC', 41, 31, 50, NULL, 0);
-
-
-INSERT INTO `ventadevolucion` (`iVentaDevolucionId`, `iVentaId`, `dVentaDevFecha`, `fVentaDevTotal`, `fVentaDevSubTotal`, `fVentaDevIGV`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `fDescuento`, `iPeriodoId`, `nNroNotaCredito`) VALUES
-(7, 29, '2015-04-12', 72, 61.02, 10.98, 2, '2015-04-12 15:35:41', 0, NULL, 'AC', 0, 0, 'N0001-00001');
-
-
-INSERT INTO `ventadevoluciondetalle` (`iVentaDevolucionDetalleId`, `iVentaDevolucionId`, `iProductoId`, `fVentaDevDetallePrecio`, `iVentaDevDetalleCantidad`, `fVentaDevDetalleTotal`, `iUsuarioInsertaId`, `dFechaInserta`, `iUsuarioActualizaId`, `dFechaActualiza`, `cEstadoCodigo`, `fDescuento`, `iSubCta`) VALUES
-(7, 7, 41, 144, 1, 72, 0, '2015-04-12 15:35:41', 0, NULL, 'AC', 50, 0);
 
 INSERT INTO `via` (`iViaId`, `vAbreviatura`, `vDescripcion`) VALUES
 (1, 'CA.', 'CALLE'),
