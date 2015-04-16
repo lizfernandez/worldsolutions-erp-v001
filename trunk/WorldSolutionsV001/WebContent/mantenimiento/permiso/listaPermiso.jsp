@@ -226,7 +226,7 @@ function CktodoHijos(id,idform,padre1,padre2){
 
 
 function CkPadres(id, padre1, padre2,padre3){
-	alert("id="+id+" padre1="+padre1+" padre2="+padre2);
+	
 	if($("#"+id).is(':checked')) {  
 		  $("#"+padre1).attr('checked', true);
 		  $("#"+padre2).attr('checked', true); 
@@ -261,6 +261,7 @@ function fn_GrabarPermisos() {
     $("#tablaPermisos").find("input:checkbox").each(function(key,val){ 
     	if($("#"+this.id).is(':checked')) { 
     		vCodigoPermiso=vCodigoPermiso+this.id+"-"; 
+    		
     	}
     	
 	   });
@@ -271,10 +272,11 @@ function fn_GrabarPermisos() {
           type: "GET",
           url: "perfil.do?metodo=iduPerfil&mode=UP&iUsuarioId="+iUsuarioId+"&vCodigoPermiso="+vCodigoPermiso.substring(0, vCodigoPermiso.length-1),
           data: "",
-          success: function(obj){             	
+          success: function(obj){   
+        	  alert("OPERACION CON EXITO"); 
           }
       }); 
-      alert("OPERACION CON EXITO"); 
+      
     }
     else{
     	if(iUsuarioId==0)

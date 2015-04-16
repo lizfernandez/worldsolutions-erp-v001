@@ -81,7 +81,12 @@
 </div> 
 <script>   
 paginacion();
-$("#admin,#ocupacion").addClass("active");
+
+$("#admin").addClass("active");
+$("#personal").children('li').show();
+$("#ocupacion").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#ocupacion").children('a').css("color","#D0D2D7");
+
 </script> 
 
  
