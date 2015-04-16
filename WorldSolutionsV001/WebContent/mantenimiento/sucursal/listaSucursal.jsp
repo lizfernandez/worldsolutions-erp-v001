@@ -5,15 +5,15 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <table border="0">
     <tr>
-        <td><button  class="button" onclick="popup('sucursal.do?metodo=mantenimientoSucursal&mode=I',350,350)">
+        <td><button  class="button" onclick="popup('empresaSucursal.do?metodo=mantenimientoSucursal&mode=I',350,350)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
-        <td><button  class="button" onclick="eliminar('tabla','','sucursal.do?metodo=iduSucursal&mode=D')">
+        <td><button  class="button" onclick="eliminar('tabla','','empresaSucursal.do?metodo=iduSucursal&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
         </td>
-        <td><button  class="button" onclick="popup('sucursal.do?metodo=mantenimientoSucursal&mode=F',350,350)">
+        <td><button  class="button" onclick="popup('empresaSucursal.do?metodo=mantenimientoSucursal&mode=F',350,350)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -39,19 +39,19 @@
     </tr>
     </thead>
     <tbody>
-	    <logic:empty name="sucursalForm" property="lista">
+	    <logic:empty name="empresaSucursalForm" property="lista">
 				<tr>
 					<td colspan="8">No hay informaci&oacute;n del sucursal</td>
 				</tr>
 	    </logic:empty>
-	    <logic:notEmpty name="sucursalForm" property="lista">
-	     	<logic:iterate name="sucursalForm" property="lista" id="x">	
+	    <logic:notEmpty name="empresaSucursalForm" property="lista">
+	     	<logic:iterate name="empresaSucursalForm" property="lista" id="x">	
 			<tr>
 				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iSucursalId" />"/></td> 
 				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('sucursal.do?metodo=mantenimientoSucursal&mode=U&id=<bean:write name="x" property="iSucursalId" />',350,350)" /></td>
+		                     onclick="popup('empresaSucursal.do?metodo=mantenimientoSucursal&mode=U&id=<bean:write name="x" property="iSucursalId" />',350,350)" /></td>
 		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iSucursalId" />','sucursal.do?metodo=iduSucursal&mode=D')" /></td>	
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iSucursalId" />','empresaSucursal.do?metodo=iduSucursal&mode=D')" /></td>	
 				<td><bean:write name="x" property="cSucursalCodigo" /></td>
 				<td><bean:write name="x" property="vSucursalNombre" /></td>
 				<td><bean:write name="x" property="cEstadoCodigo" /></td>
@@ -64,14 +64,14 @@
     </tbody>
 </table>
 <div id="paginacion">
-<logic:notEmpty name="sucursalForm" property="paginas">	
-    <bean:size id="listSizes" name="sucursalForm" property="paginas"/>	
+<logic:notEmpty name="empresaSucursalForm" property="paginas">	
+    <bean:size id="listSizes" name="empresaSucursalForm" property="paginas"/>	
     <input type="hidden" id="size" value="<bean:write name="listSizes" />"/>
-	<input type="hidden" id="pagInicio" value="<bean:write name="sucursalForm" property="pagInicio"/>"/>
+	<input type="hidden" id="pagInicio" value="<bean:write name="empresaSucursalForm" property="pagInicio"/>"/>
 	<div class="btnPagInactivo" id="principio">&emsp;</div>
 	<div class="btnPagInactivo" id="back">&emsp;</div>	
 	<div id="pag">	
-		<logic:iterate name="sucursalForm" property="paginas" id="p">				
+		<logic:iterate name="empresaSucursalForm" property="paginas" id="p">				
 			        <div class="btnPagInactivo" id="pg_<bean:write name="p" />" onclick="paginator('<bean:write name="p" />')" ><bean:write name="p" /></div>
 		</logic:iterate>
 	</div>
@@ -81,7 +81,11 @@
 </div> 
 <script>   
 paginacion();
-$("#admin,#sucursal").addClass("active");
+$("#admin").addClass("active");
+$("#empresax").children('li').show();
+$("#sucursal").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#sucursal").children('a').css("color","#D0D2D7");
+
 </script> 
 
  
