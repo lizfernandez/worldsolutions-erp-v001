@@ -81,7 +81,12 @@
 </div> 
 <script>   
 paginacion();
-$("#admin,#area").addClass("active");
+
+$("#admin").addClass("active");
+$("#empresax").children('li').show();
+$("#area").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#area").children('a').css("color","#D0D2D7");
+
 </script> 
 
  

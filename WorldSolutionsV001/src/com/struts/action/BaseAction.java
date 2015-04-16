@@ -1,10 +1,13 @@
 package com.struts.action;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,8 @@ import com.entities.Venta;
 import com.entities.vo.EstadoCuentaVo;
 import com.util.Constantes;
 import com.util.Fechas;
+import com.util.Imprimir;
+import com.util.Util;
 
 
 public abstract class BaseAction  extends DispatchAction {
@@ -189,4 +194,68 @@ public abstract class BaseAction  extends DispatchAction {
 
 	public abstract Map<String, Object> cargarContenidoExportar(ActionForm form, HttpServletRequest request, String plantilla) throws ParseException;
 	
+	@SuppressWarnings("deprecation")
+	public ActionForward imprimir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+			throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
+
+		
+		try {
+
+
+FileWriter file = new FileWriter("COM4:");
+                BufferedWriter buffer = new BufferedWriter(file);
+                PrintWriter ps = new PrintWriter(buffer);
+
+                Imprimir.setFormato(1, ps);
+               /* ps.println("mi razon rozial");
+                ps.println(Direccion);
+                ps.println(DireccionFiscal);
+                ps.println("RUC :" + RUC);
+                Imprimir.Dibuja_Linea(ps);
+                ps.println("Ticket    :" + serie + " - " + numero);
+                ps.println("S/N       :" + maq);
+                ps.println("Fecha     :" + fecha + "  Hora : " + hora);
+                ps.println("Caj   : " + cajero + " Ven : " + vendedor + " Int : " + miinterno);
+                Imprimir.Dibuja_Linea(ps);
+                ps.println("Sr(a)     :" + cliente);
+                Imprimir.Dibuja_Linea(ps);
+                ps.println("Cant     " + "Descripcion" + "             " + "PVP");
+                Imprimir.Dibuja_Linea(ps);
+                
+                */       
+                // aqui recorro mis productos y los imprimo
+
+               /* Imprimir.Dibuja_Linea(ps);
+                ps.println("TOTAL         : S./ " + sumaTotal);
+                ps.println();
+                String ultimo = "              " + Delivery;
+                ultimo += "                   " + correo;
+                ps.println(ultimo);
+                ps.println("  NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES");
+                ps.println("        GRACIAS POR SU COMPRA          ");
+                Imprimir.correr(10, ps);
+                Imprimir.cortar(ps);
+                ps.close();;
+			*/
+		} catch (ParsePropertyException e) {
+			throw e;
+			
+		} catch (IOException e) {
+			throw e;
+			
+		} finally {
+			try {
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
 }

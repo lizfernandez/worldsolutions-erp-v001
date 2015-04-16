@@ -1,21 +1,24 @@
 package com.struts.form;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
+import com.entities.Empresa;
 import com.entities.Sucursal;
 import com.entities.Personal;
 
 
-public class SucursalForm extends ActionForm {
+public class EmpresaSucursalForm extends ActionForm {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private List lista;	
 	Sucursal sucursal = new Sucursal();
+	Empresa empresa = new Empresa();
     private String mode;
     private List paginas;
     private int pagInicio;
@@ -112,7 +115,12 @@ public class SucursalForm extends ActionForm {
 	 * @return the cEstadoCodigo
 	 */
 	public String getcEstadoCodigo() {
-		return sucursal.getcEstadoCodigo();
+		String cEstadoCodigo=empresa.getcEmpresaCodigo();
+		if(cEstadoCodigo==""){
+			cEstadoCodigo= sucursal.getcEstadoCodigo();
+		}
+		return cEstadoCodigo;
+		
 	}
 
 	/**
@@ -120,6 +128,7 @@ public class SucursalForm extends ActionForm {
 	 */
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		sucursal.setcEstadoCodigo(cEstadoCodigo);
+		empresa.setcEstadoCodigo(cEstadoCodigo);
 	}
 
 	
@@ -168,7 +177,103 @@ public class SucursalForm extends ActionForm {
 	public void setvSucursalNombre(String vSucursalNombre) {
 		this.sucursal.setvSucursalNombre(vSucursalNombre);
 	}
+	/**
+	 * @return the empresa
+	 */
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	/**
+	 * @param empresa the empresa to set
+	 */
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+		this.sucursal.setEmpresa(empresa);
+	}
 
+	/**
+	 * @return the iEmpresaId
+	 */
+	public int getiEmpresaId() {
+		int iEmpresaId = getEmpresa().getiEmpresaId();
+		if(iEmpresaId==0){
+			if(sucursal.getEmpresa()!=null){
+				sucursal.setEmpresa(getEmpresa());
+				iEmpresaId= sucursal.getEmpresa().getiEmpresaId();
+			}
+			else{
+				iEmpresaId= 0;
+			}
+		 }
+		return iEmpresaId;
+	}
+
+	/**
+	 * @param iEmpresaId the iEmpresaId to set
+	 */
+	public void setiEmpresaId(int iEmpresaId) {
+		this.getEmpresa().setiEmpresaId(iEmpresaId);
+		this.getSucursal().setEmpresa(getEmpresa());
+	}
+
+	/**
+	 * @return the cEmpresaCodigo
+	 */
+	public String getcEmpresaCodigo() {
+		return getEmpresa().getcEmpresaCodigo();
+	}
+
+	/**
+	 * @param cEmpresaCodigo the cEmpresaCodigo to set
+	 */
+	public void setcEmpresaCodigo(String cEmpresaCodigo) {
+		this.getEmpresa().setcEmpresaCodigo(cEmpresaCodigo);
+	}
+
+
+	
+
+	/**
+	 * @return the vEmpresaDireccion
+	 */
+	public String getvEmpresaDireccion() {
+		return getEmpresa().getvEmpresaDireccion();
+	}
+
+	/**
+	 * @param vEmpresaDireccion the vEmpresaDireccion to set
+	 */
+	public void setvEmpresaDireccion(String vEmpresaDireccion) {
+		this.getEmpresa().setvEmpresaDireccion(vEmpresaDireccion);
+	}
+
+	/**
+	 * @return the vEmpresaNombre
+	 */
+	public String getvEmpresaNombre() {
+		return getEmpresa().getvEmpresaNombre();
+	}
+
+	/**
+	 * @param vEmpresaNombre the vEmpresaNombre to set
+	 */
+	public void setvEmpresaNombre(String vEmpresaNombre) {
+		this.getEmpresa().setvEmpresaNombre(vEmpresaNombre);
+	}
+
+	/**
+	 * @return the vEmpresaRuc
+	 */
+	public String getvEmpresaRuc() {
+		return getEmpresa().getvEmpresaRuc();
+	}
+
+	/**
+	 * @param vEmpresaRuc the vEmpresaRuc to set
+	 */
+	public void setvEmpresaRuc(String vEmpresaRuc) {
+		this.getEmpresa().setvEmpresaRuc(vEmpresaRuc);
+	}
 	
 
 }
