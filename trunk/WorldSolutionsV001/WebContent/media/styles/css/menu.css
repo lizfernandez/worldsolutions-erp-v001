@@ -65,6 +65,8 @@ background-image:url(../../imagenes/overB.png);
 .cont ul {
 	   margin-left: -40px;
     text-transform: uppercase;
+   
+     margin-bottom: 1px;
     
 
 }
@@ -87,11 +89,15 @@ background-image:url(../../imagenes/overB.png);
     color: #C3C5CA;
     line-height: normal;
     list-style: none outside none;
-    padding-left: 31px;
+    padding-left: 48px;
     padding-top: 5px;
     background:  #484F60;
     display: none;
     height: 20px;
+}
+.cont ul li:last-child{
+   border-bottom: 1px solid #191c23 !important;
+  
 }
 .cont ul li a{	
 	color: #93959A

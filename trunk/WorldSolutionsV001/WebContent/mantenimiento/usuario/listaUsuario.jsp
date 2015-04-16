@@ -94,6 +94,11 @@
 </div> 
 <script>   
 paginacion();
-$("#admin,#usuarios").addClass("active");
+
+$("#admin").addClass("active");
+$("#usuarios").children('li').show();
+$("#usuario").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#usuario").children('a').css("color","#D0D2D7");
+
 </script> 
  

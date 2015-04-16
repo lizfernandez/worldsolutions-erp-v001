@@ -8,7 +8,7 @@
       </form-bean>
       <form-bean name="perfilForm" type="com.struts.form.PerfilForm" />
       <form-bean name="areaForm" type="com.struts.form.AreaForm" />
-      <form-bean name="sucursalForm" type="com.struts.form.SucursalForm" />
+      <form-bean name="empresaSucursalForm" type="com.struts.form.EmpresaSucursalForm" />
       <form-bean name="ocupacionForm" type="com.struts.form.OcupacionForm" />
       <form-bean name="personalForm" type="com.struts.form.PersonalForm" />
       <form-bean name="usuarioForm" type="com.struts.form.UsuarioForm" />
@@ -132,17 +132,22 @@
 	           
 	    </action>
 	    <action 
-	    attribute="sucursalForm"  
+	    attribute="empresaSucursalForm"  
 	    input="/mantenimiento/sucursal/listaSucursal.jsp"
-	    name="sucursalForm"
+	    name="empresaSucursalForm"
 	    parameter="metodo"
-	    path="/sucursal" 
+	    path="/empresaSucursal" 
 	    scope="request"
-	    type="com.struts.action.SucursalAction"
+	    type="com.struts.action.EmpresaSucursalAction"
 	    validate="false">
 	                 <forward name="showList" path=".sucursal" />
 	                 <forward name="showEdit" path=".mantenimientoSucursal" />
 	                 <forward name="showFind" path=".buscarMantenimientoSucursal" />
+	                 
+	                 <forward name="showEmpresaList" path=".empresa" />
+	                 <forward name="showEmpresaEdit" path=".mantenimientoEmpresa" />
+	                 <forward name="showEmpresaFind" path=".buscarMantenimientoEmpresa" />
+	                
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />
 	           

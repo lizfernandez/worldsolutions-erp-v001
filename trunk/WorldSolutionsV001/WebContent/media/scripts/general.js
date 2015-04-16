@@ -126,9 +126,10 @@ function menuVertical(){
 
 function submenu(id){
  $(".cont ul").children('li').height("0px").hide();
- 
+ $(".cont ul").height("auto");
+ //$("#"+id).children('li:first-child').css("border-bottom","1px solid yellow ");
  $("#"+id).children('li').show().animate({height: "20px"}, 500);/*.slideDown()*/
-  
+ 
 }
 	
 
