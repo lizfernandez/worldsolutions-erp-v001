@@ -68,6 +68,6 @@ INSERT INTO `menuopciones` (`idmenuOpciones`, `idMenutitulo`, `vOpciones`, `vCod
 
 (51, 16, 'Guardar', '841'),
 
-(52, 17, 'Ejercicios fiscales', '851');
-(53, 17, 'Periodos', '852');
+(52, 17, 'Ejercicios fiscales', '851'),
+(53, 17, 'Periodos', '852'),
 (54, 17, 'Configurcion General', '853');
