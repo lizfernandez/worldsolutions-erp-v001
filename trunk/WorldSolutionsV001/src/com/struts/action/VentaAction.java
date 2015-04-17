@@ -52,6 +52,7 @@ import com.google.gson.Gson;
 import com.struts.form.VentaForm;
 import com.util.Constantes;
 import com.util.Fechas;
+import com.util.Imprimir;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -2000,5 +2001,44 @@ public class VentaAction extends BaseAction {
 			
 			return beans;
 		}
+		
+		@Override
+		public void cargarContenidoImprimir(ActionForm form,
+				HttpServletRequest request, PrintWriter ps, int id) {
+			
+			VentaDao ventaDao = new VentaDao();
+			Venta venta=ventaDao.findEndidadBD(new Venta(), "iVentaId", id);
+			
+			 ps.println("Ticket    :" + venta.getnVentaNumero());             
+             ps.println("Fecha     :" + venta.getdFechaInserta());
+             ps.println("Ven   : " + venta.getUsuario().getPersonal().getvPersonalNombres());
+             Imprimir.Dibuja_Linea(ps);
+        
+			ps.println("Sr(a)     :" + venta.getCliente().getvClienteRazonSocial());
+			ps.println(venta.getTipoDocumento().getvTipoDocumentoDescripcion()+"     :" + venta.getCliente().getnClienteNumeroDocumento());
+			
+            Imprimir.Dibuja_Linea(ps);
+            ps.println("Cant     " + "Descripcion" + "             " + "P.U        ");
+            Imprimir.Dibuja_Linea(ps);
+            
+                   
+            // aqui recorro mis productos y los imprimo
+            for(Ventadetalle ventadetalle: venta.getVentadetalles()){
+            	ps.println(ventadetalle.getiVentaDetalleCantidad()+"  "+ventadetalle.getProducto().getvProductoNombre()+"  "+ventadetalle.getfVentaDetallePrecio());
+            }
+            
+            Imprimir.Dibuja_Linea(ps);
+            //Descuentos
+            ps.println("TOTAL         : "+venta.getvTipoVenta()+" " + venta.getfVentaTotalReal());
+            ps.println("DESCUENTO         : "+venta.getvTipoVenta()+" " + venta.getfDescuento());
+            Imprimir.Dibuja_Linea(ps);
+            ps.println("SUBTOTAL         : "+venta.getvTipoVenta()+" " + venta.getfVentaSubTotal());
+            ps.println("IGV         : "+venta.getvTipoVenta()+" " + venta.getfVentaIGV());
+            ps.println("TOTAL FINAL         : "+venta.getvTipoVenta()+" " + venta.getfVentaTotal());
+            ps.println();
+        
+			
+		}
+		
 		
 	}

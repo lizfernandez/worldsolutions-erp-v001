@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.jxls.exception.ParsePropertyException;
 import net.sf.jxls.transformer.XLSTransformer;
@@ -27,13 +28,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.dao.ContabilidadDao;
+import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
+import com.dao.KardexDao;
 import com.dao.VentaDao;
 import com.entities.Estadocuentacliente;
 import com.entities.Estadocuentaproveedor;
 import com.entities.Ingresoproducto;
+import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.vo.EstadoCuentaVo;
+import com.struts.form.VentaForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.Imprimir;
@@ -194,6 +200,8 @@ public abstract class BaseAction  extends DispatchAction {
 
 	public abstract Map<String, Object> cargarContenidoExportar(ActionForm form, HttpServletRequest request, String plantilla) throws ParseException;
 	
+	public abstract void cargarContenidoImprimir (ActionForm form, HttpServletRequest request,PrintWriter ps, int id);
+	
 	@SuppressWarnings("deprecation")
 	public ActionForward imprimir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
@@ -202,41 +210,33 @@ public abstract class BaseAction  extends DispatchAction {
 		try {
 
 
-FileWriter file = new FileWriter("COM4:");
+                FileWriter file = new FileWriter("USB:");
                 BufferedWriter buffer = new BufferedWriter(file);
                 PrintWriter ps = new PrintWriter(buffer);
+                HttpSession sesion = request.getSession();
+    			
 
+    		
+      			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+    		//	int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
+    			
                 Imprimir.setFormato(1, ps);
-               /* ps.println("mi razon rozial");
-                ps.println(Direccion);
-                ps.println(DireccionFiscal);
-                ps.println("RUC :" + RUC);
+                ps.println(usu.getSucursal().getEmpresa().getvEmpresaNombre());
+                ps.println("RUC: "+usu.getSucursal().getEmpresa().getvEmpresaRuc());
+                ps.println("DIRECCION: "+usu.getSucursal().getEmpresa().getvEmpresaDireccion());
+                ps.println("SUCURSAL:"+usu.getSucursal().getvSucursalNombre());
+                ps.println("SUC. DIREC.:"+usu.getSucursal().getvSucursalDireccion());
                 Imprimir.Dibuja_Linea(ps);
-                ps.println("Ticket    :" + serie + " - " + numero);
-                ps.println("S/N       :" + maq);
-                ps.println("Fecha     :" + fecha + "  Hora : " + hora);
-                ps.println("Caj   : " + cajero + " Ven : " + vendedor + " Int : " + miinterno);
-                Imprimir.Dibuja_Linea(ps);
-                ps.println("Sr(a)     :" + cliente);
-                Imprimir.Dibuja_Linea(ps);
-                ps.println("Cant     " + "Descripcion" + "             " + "PVP");
-                Imprimir.Dibuja_Linea(ps);
+                    int id =Integer.parseInt(request.getParameter("id"));
+                cargarContenidoImprimir(form,  request,ps,id);
                 
-                */       
-                // aqui recorro mis productos y los imprimo
-
-               /* Imprimir.Dibuja_Linea(ps);
-                ps.println("TOTAL         : S./ " + sumaTotal);
-                ps.println();
-                String ultimo = "              " + Delivery;
-                ultimo += "                   " + correo;
-                ps.println(ultimo);
+                
                 ps.println("  NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES");
                 ps.println("        GRACIAS POR SU COMPRA          ");
                 Imprimir.correr(10, ps);
                 Imprimir.cortar(ps);
                 ps.close();;
-			*/
+			
 		} catch (ParsePropertyException e) {
 			throw e;
 			
