@@ -210,7 +210,7 @@ public abstract class BaseAction  extends DispatchAction {
 		try {
 
 
-                FileWriter file = new FileWriter("USB:");
+                FileWriter file = new FileWriter("USB001");
                 BufferedWriter buffer = new BufferedWriter(file);
                 PrintWriter ps = new PrintWriter(buffer);
                 HttpSession sesion = request.getSession();
@@ -221,6 +221,10 @@ public abstract class BaseAction  extends DispatchAction {
     		//	int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
     			
                 Imprimir.setFormato(1, ps);
+                ps.write(0x1B);
+                ps.write(0x70);
+                ps.write(0x30);
+                ps.write(0xDC4);
                 ps.println(usu.getSucursal().getEmpresa().getvEmpresaNombre());
                 ps.println("RUC: "+usu.getSucursal().getEmpresa().getvEmpresaRuc());
                 ps.println("DIRECCION: "+usu.getSucursal().getEmpresa().getvEmpresaDireccion());

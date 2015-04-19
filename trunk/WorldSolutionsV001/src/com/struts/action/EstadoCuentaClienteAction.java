@@ -1,6 +1,7 @@
 package com.struts.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -598,6 +599,9 @@ public class EstadoCuentaClienteAction extends BaseAction {
 
 			return beans;
 		}
-	
+		@Override
+		public void cargarContenidoImprimir(ActionForm form,
+				HttpServletRequest request, PrintWriter ps, int id) {
+		}
 
 }

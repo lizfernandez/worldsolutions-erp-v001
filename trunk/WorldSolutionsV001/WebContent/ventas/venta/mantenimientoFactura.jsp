@@ -325,7 +325,7 @@
 				           
 				        </td>
 				        <td align="left">
-				           <button onclick="imprimir('tabla')"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir" type="button"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
 				        </td>
 				        <td><button onclick="cancelar('');" class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
@@ -348,7 +348,7 @@
 <html:hidden property="metodo" value="iduVenta" styleId="metodo" />	
 
 <%-- hidden field que contiene el id del producto --%>
-<html:hidden property="iVentaId" />
+<html:hidden property="iVentaId" styleId="iVentaId" />
 
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iClienteId" styleId="iClienteId" />
@@ -691,6 +691,31 @@
     	var iclasificacionId = $("#iclasificacionId").val();
     	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LP',690,560);
     	
+    }
+    function fn_imprimir(){
+    	var id= $("#iVentaId").val();
+    
+    	var cad="venta.do?metodo=imprimir&id="+id;
+    	 
+    	 $.ajax({
+             type: "GET",
+             url: cad,
+             data: "",
+             success: function(obj){   
+           	  alert("OPERACION CON EXITO"); 
+             }
+         });
+    	/*
+
+        $.ajax({
+            type: "GET",
+            url: "perfil.do?metodo=iduPerfil",
+            data: "",
+            success: function(obj){   
+          	  alert("OPERACION CON EXITO"); 
+            }
+        }); 
+    	*/
     }
 
 </script>

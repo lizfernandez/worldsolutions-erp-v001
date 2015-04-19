@@ -10,7 +10,7 @@ public interface IPerfilDao {
 	public List<Permiso> listaPermiso(int pagInicio, int pagFin);
 	public List<Permiso> listaFindPermiso(int iUsuarioId);
 	public boolean callProcedurePermiso(int iUsuarioId, String vCodigoPermiso, int cantidad);
-	
+	public   void eliminarPermisos(int iEntidadId);
 /*	public Perfil buscarPerfil(int iPerfilId);
 	public boolean insertarPerfil(Perfil perfil);
 	public boolean actualizarPerfil(Perfil perfil);

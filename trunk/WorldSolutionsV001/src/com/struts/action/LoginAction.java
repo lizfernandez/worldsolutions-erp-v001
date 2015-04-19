@@ -1,4 +1,5 @@
 package com.struts.action;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -336,7 +337,10 @@ public class LoginAction extends BaseAction {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	@Override
+	public void cargarContenidoImprimir(ActionForm form,
+			HttpServletRequest request, PrintWriter ps, int id) {
+	}
 	
 
 }
