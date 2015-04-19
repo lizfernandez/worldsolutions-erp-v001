@@ -28,7 +28,7 @@
 
 <tr>
     <td align="right" width="25%">Nombre:</td>
-    <td><html:text property="vProductoNombre" styleId="vProductoNombre" size="27" onkeyup="return mayuscula('vProductoNombre') " styleClass="text"/>
+    <td><html:text property="vProductoNombre" styleId="vProductoNombre" size="27" onkeyup="return mayuscula('vProductoNombre') " styleClass="text" maxlength="45" />
       <span id="m_vProductoNombre" class="importante">*</span>
     </td> 
 </tr>
