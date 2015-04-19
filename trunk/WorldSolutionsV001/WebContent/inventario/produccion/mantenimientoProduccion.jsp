@@ -174,7 +174,7 @@
              </td>
              <td align="left" colspan="2" >
              <html:text property="vDescripcion" styleId="vDescripcion" size="32" onkeyup="return mayuscula('vDescripcion') " 
-             styleClass="text" /></td>
+             styleClass="text" maxlength="45" /></td>
             
             
          </tr>
