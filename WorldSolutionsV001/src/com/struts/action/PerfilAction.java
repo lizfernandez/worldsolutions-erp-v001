@@ -367,19 +367,21 @@ public class PerfilAction extends DispatchAction {
 			  transaction = objPerfildao.entityTransaction();
 	    	   transaction.begin();
 		  String arr[] = vCodigoPermiso.split("-") ; 
-		  objPerfildao.eliminarBDUnaEndidad(new Permiso(), "idpermisos", iUsuarioId);
-		  resultado = objPerfildao.commitEndidad(transaction);
-		  for(int i=0;i<=arr.length;i++){
+		  objPerfildao.eliminarPermisos(Integer.parseInt(iUsuarioId));
+		   resultado = objPerfildao.commitEndidad(transaction);
+		   for(int i=0;i<arr.length;i++){
 		       if(!arr[i].equals("")){
-		    	   Permiso per = new Permiso();
+		    	   /*Permiso per = new Permiso();
 		    	   per.setcEstado(Constantes.estadoActivo);
 		    	   per.setUsuario(usu);
 		    	   per.setvCodigoMenu(arr[i]);
 		    	   objPerfildao.persistEndidad(per);
-		    	   resultado = objPerfildao.commitEndidad(transaction);
+		    	  */
+		    	   resultado = objPerfildao.callProcedurePermiso(Integer.parseInt(iUsuarioId), arr[i], arr.length);
 		       }
 		       
 		  }
+		
 		  }catch (Exception e) {
 		 e.printStackTrace();
  		   objPerfildao.limpiarInstancia();
@@ -387,7 +389,7 @@ public class PerfilAction extends DispatchAction {
  		   transaction = null;
  	   }
 		 
-	     // resultado = objPerfildao.callProcedurePermiso(Integer.parseInt(iUsuarioId), vCodigoPermiso, arr.length);	 
+	    //  resultado = objPerfildao.callProcedurePermiso(Integer.parseInt(iUsuarioId), vCodigoPermiso, arr.length);	 
 	  	
 		}
        else if (mode.equals("D")) {  

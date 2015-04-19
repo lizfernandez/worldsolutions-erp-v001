@@ -198,15 +198,7 @@ public class GenericaDao  implements IGenerica{
 		q.executeUpdate();
 
 	}
-	@Override
-	public <E> void eliminarBDUnaEndidad(E entidad, String sEntidadId, String iEntidadId) {
-		Query q;
-		q = getInstancia().createQuery("DELETE from " + entidad.getClass().getSimpleName()								
-								+ " where p." + sEntidadId + " IN ("
-								+ iEntidadId + ")");
-		q.executeUpdate();
-
-	}
+	
 
 	@Override
 	public <E> String callSPCalculoCodigo(E entidad) {

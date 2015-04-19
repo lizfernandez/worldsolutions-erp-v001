@@ -23,6 +23,7 @@ import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
 import com.dao.KardexDao;
+import com.dao.VentaDao;
 import com.entities.Estado;
 import com.entities.Estadocuentaproveedor;
 import com.entities.Formapago;
@@ -38,6 +39,7 @@ import com.entities.Producto;
 import com.entities.Proveedor;
 import com.entities.Tipodocumentogestion;
 import com.entities.Usuario;
+import com.entities.Venta;
 import com.entities.Ventadetalle;
 import com.entities.vo.EstadoCuentaVo;
 import com.entities.vo.PagoEstadoCuentaVo;
@@ -46,6 +48,7 @@ import com.struts.form.IngresoProductoForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.FormatosNumeros;
+import com.util.Imprimir;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -1563,6 +1566,43 @@ public class IngresoProductoAction extends BaseAction {
 		}
 		
 		return beans;
+	}
+	@Override
+	public void cargarContenidoImprimir(ActionForm form,
+			HttpServletRequest request, PrintWriter ps, int id) {
+		
+		IngresoProductoDao ingresoProDao = new IngresoProductoDao();
+		Ingresoproducto ingreso=ingresoProDao.findEndidadBD(new Ingresoproducto(), "iIngresoProductoId", id);
+		
+		 ps.println("Ticket    :" + ingreso.getnIngresoProductoNumero());             
+         ps.println("Fecha     :" + ingreso.getdFechaInserta());
+         ps.println("Ven   : " + ingreso.getUsuario().getPersonal().getvPersonalNombres());
+         Imprimir.Dibuja_Linea(ps);
+    
+		ps.println("Sr(a)     :" + ingreso.getProveedor().getvProveedorRazonSocial());
+		ps.println(ingreso.getTipodocumento().getvTipoDocumentoDescripcion()+"     :" + ingreso.getProveedor().getnProveedorNumeroDocumento());
+		
+        Imprimir.Dibuja_Linea(ps);
+        ps.println("Cant     " + "Descripcion" + "             " + "P.U        ");
+        Imprimir.Dibuja_Linea(ps);
+        
+               
+        // aqui recorro mis productos y los imprimo
+        for(Ingresoproductodetalle detalle: ingreso.getIngresoproductodetalles()){
+        	ps.println(detalle.getiIngresoProductoDetalleCantidad()+"  "+detalle.getProducto().getvProductoNombre()+"  "+detalle.getfIngresoProductoDetallePrecio());
+        }
+        
+        Imprimir.Dibuja_Linea(ps);
+        //Descuentos
+        ps.println("TOTAL         : "+ingreso.getvTipoCompra()+" " + ingreso.getfIngresoProductoTotalReal());
+        ps.println("DESCUENTO         : "+ingreso.getvTipoCompra()+" " + ingreso.getfDescuento());
+        Imprimir.Dibuja_Linea(ps);
+        ps.println("SUBTOTAL         : "+ingreso.getvTipoCompra()+" " + ingreso.getfIngresoProductoSubTotal());
+        ps.println("IGV         : "+ingreso.getvTipoCompra()+" " + ingreso.getfIngresoProductoIGV());
+        ps.println("TOTAL FINAL         : "+ingreso.getvTipoCompra()+" " + ingreso.getfIngresoProductoTotal());
+        ps.println();
+    
+		
 	}
 	
 }

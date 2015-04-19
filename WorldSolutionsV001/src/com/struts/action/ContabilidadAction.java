@@ -1691,5 +1691,9 @@ public class ContabilidadAction extends BaseAction {
 
 		return beans;
 	}
+	@Override
+	public void cargarContenidoImprimir(ActionForm form,
+			HttpServletRequest request, PrintWriter ps, int id) {
+	}
 
 }

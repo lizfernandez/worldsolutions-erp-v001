@@ -113,5 +113,11 @@ public class PerfilDao extends GenericaDao implements IPerfilDao {
 		System.out.println("Lista: " + permisos.size());
 		
 	}
-	
+	@Override
+	public  void eliminarPermisos(int iEntidadId) {
+		Query q;
+		q = getInstancia().createNativeQuery("DELETE from  Permisos where iUsuarioId="+iEntidadId);
+		q.executeUpdate();
+
+	}
 }
