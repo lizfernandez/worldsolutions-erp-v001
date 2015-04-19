@@ -221,6 +221,11 @@ public abstract class BaseAction  extends DispatchAction {
     		//	int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
     			
                 Imprimir.setFormato(1, ps);
+                ps.write((char) 27
+			+ (char) 112
+			+ (char) 0
+			+ (char) 10
+			+ (char) 100);
                 ps.write(0x1B);
                 ps.write(0x70);
                 ps.write(0x30);
