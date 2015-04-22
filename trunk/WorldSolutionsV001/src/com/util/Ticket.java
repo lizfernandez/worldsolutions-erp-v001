@@ -1,7 +1,6 @@
 package com.util;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.print.Doc;
 import javax.print.DocFlavor;
@@ -12,7 +11,6 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.DocAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
-import javax.print.attribute.standard.PrinterResolution;
 
 public class Ticket {
 
@@ -42,13 +40,15 @@ public class Ticket {
 			+ "=============================\n"
 			+ "SUBTOTAL: {{subTotal}}\n"
 			+ "IVA: {{tax}}\n"
-			+ "TOTAL: {{total}}\n\n"
+			+ "—Ò Ò——TOTAL: {{total}}\n\n"
 			+
 			// "RECIBIDO: {{recibo}}\n"+
 			// "CAMBIO: {{change}}\n\n"+
 			"=============================\n" + "GRACIAS POR SU COMPRAÖ\n"
 			+ "ESPERAMOS SU VISITA NUEVAMENTE\n" + "\t::{{nameLocal}}::\n"
-			+ "\n" + "\n\n\n ";
+			+ "\n" + "\n\n\n "
+			+ (char) 27+"m"
+			;
 
 	// El constructor que setea los valores a la instancia
 	Ticket(String nameLocal, String expedition, String box, String ticket,
@@ -79,13 +79,13 @@ public class Ticket {
 		// como
 		// lo maneja la impresora(mas bien ticketera :p)
 		byte[] bytes = this.contentTicket.getBytes();
-
+		//InputStream is = new ByteArrayInputStream(bytes);
+		
 		// Especificamos el tipo de dato a imprimir
 		// Tipo: bytes; Subtipo: autodetectado
 		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
 
-		DocAttributeSet das = new HashDocAttributeSet();    
-	    das.add(new PrinterResolution(180,180,PrinterResolution.DPI));
+		DocAttributeSet das = new HashDocAttributeSet();
 
 		Doc doc = new SimpleDoc(bytes, flavor, das);
 		
@@ -111,7 +111,7 @@ public class Ticket {
 		// Imprimimos dentro de un try obligatoriamente
 		try {
 			job.print(doc, null);
-			
+
 		} catch (PrintException ex) {
 			System.out.println(ex);
 		}
@@ -119,7 +119,9 @@ public class Ticket {
 	
 	public static void main(String[] args) throws IOException {
 		Ticket ticket = new Ticket("Locallll 2", "expedicion", "box-3333", "000999", "caissier-1", "19-04-15", "items", "200", "20", "220");
-		ticket.print();
+		//ticket.print();
+		System.out.println(ticket.contentTicket);
+		
 	}
 	
 
