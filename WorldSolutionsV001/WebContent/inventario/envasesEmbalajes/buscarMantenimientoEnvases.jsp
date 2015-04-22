@@ -85,7 +85,7 @@
 <tr height="50px">   
     <td align="center" colspan="2">
     <br>    
-     <button onclick="buscar('tab-grupo')">
+     <button onclick="buscar('tab-grupo')" class="button">
           <span class='save' id="btnGuardar"  class="button">Guardar</span></button>
      <button onclick="cancelar('');" class="button" type="button"><span class='cancel'>Cancelar</span></button>
      <br>

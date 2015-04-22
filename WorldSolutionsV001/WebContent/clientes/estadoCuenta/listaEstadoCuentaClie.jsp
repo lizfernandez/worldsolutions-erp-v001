@@ -3,20 +3,49 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
+         <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("2131")){%>
         <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVenta&mode=IE',520,450)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
+        <% break; }}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("2134")){%>
+	   <td><button  class="button" onclick="eliminar('tabla','','estadoCuentaCliente.do?metodo=iduEstadoCuentaCliente&mode=D')">
+                <span class="delete">Eliminar</span>
+            </button>
+        </td>
+         <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("2133")){%>
+	   
         <td><button  class="button"onclick="popup('venta.do?metodo=mantenimientoVenta&mode=F',585,480)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+         <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("2135")){%>
         <td><button class="button" onclick="fn_exportarExcel('estadoCuentaCliente.do?metodo=exportarExcel&plantilla=cliente-estado-cuenta')">
                 <span class="excel">Exportar</span>
             </button>
         </td>
+        <% break;}}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -55,18 +84,39 @@
 				<tr>
 					<!-- Primera operacion --> 
 					<logic:equal name="x" property="venta.vPrincipal" value="1">
-			            <td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-			                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',900,700)" /></td>
+			            <td align="center">
+			            <%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("2132")){%>
+			            
+			            <img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+			                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',900,700)" />
+			          <% break; }}}%>
+			          </td>
 			          </logic:equal>
 			        <logic:equal name="x" property="venta.vPrincipal" value="0">  
-					<td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-			                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=UE&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',520,430)" /></td>
+					<td align="center">
+					<%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("2132")){%>
+					<img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+			                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=UE&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',520,430)" />
+			         <% break; }}}%>
+			         </td>
 			        </logic:equal>
 			        
 			        <!-- Segunda operacion -->
 			        <logic:notEqual name="x" property="saldoTotal" value="0">
-						<td align="center"><img title="Agregar Pago" src="${pageContext.request.contextPath}/media/imagenes/new.png" 
+						<td align="center">
+						 <% 
+						   for (String per: listapermiso) {
+						   if(per!=null){
+						   if(per.equals("2131")){%>
+						<img title="Agregar Pago" src="${pageContext.request.contextPath}/media/imagenes/new.png" 
 							onclick="popup('estadoCuentaCliente.do?metodo=mantenimientoEstadoCuentaCliente&mode=I&iVentaId=<bean:write name="x" property="venta.iVentaId" />&iClienteId=<bean:write name="x" property="venta.cliente.iClienteId" />&montoTotal=<bean:write name="x" property="venta.fVentaTotal" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',350,220)" />
+				        <% break; }}}%>
 				        </td>
 				    </logic:notEqual>
 			        <logic:equal name="x" property="saldoTotal" value="0">
@@ -76,8 +126,15 @@
 			        <!-- Tercera operacion -->
 			        <logic:equal name="x" property="venta.vPrincipal" value="0">
 			        	<logic:equal name="x" property="pagoTotal" value="0">
-				        	<td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-				            	onclick="eliminar('tabla','<bean:write name="x" property="venta.iVentaId" />','venta.do?metodo=iduVenta&mode=D')"/></td>
+				        	<td align="center">
+				        	<% 
+						   for (String per: listapermiso) {
+						   if(per!=null){
+						   if(per.equals("2134")){%>
+						   <img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+				            	onclick="eliminar('tabla','<bean:write name="x" property="venta.iVentaId" />','venta.do?metodo=iduVenta&mode=D')"/>
+				          <% break; }}}%>
+				          </td>
 				        </logic:equal>
 			            <logic:notEqual name="x" property="pagoTotal" value="0">
 				        	<td align="center"></td>
@@ -125,11 +182,23 @@
 					  <logic:iterate name="x" property="venta.estadocuentaclientes" id="z">
 					  <logic:equal name="z" property="cEstadoCodigo" value="AC">
 					  <tr>
-					        <td align="center"><img title="Editar Pago" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+					        <td align="center">
+						  <% 
+						   for (String per: listapermiso) {
+						   if(per!=null){
+						   if(per.equals("2132")){%>
+	                        <img title="Editar Pago" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 			                     onclick="popupModal('estadoCuentaCliente.do?metodo=mantenimientoEstadoCuentaCliente&mode=U&id=<bean:write name="z" property="iEstadoCuentaCliente" />&montoTotal=<bean:write name="x" property="venta.fVentaTotal" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',350,200)" />
+			                <% break; }}}%>
 			                </td>
-					        <td align="center"><img title="Eliminar Pago" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+					        <td align="center">
+					        <% 
+							   for (String per: listapermiso) {
+							   if(per!=null){
+							   if(per.equals("2134")){%>
+					        <img title="Eliminar Pago" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="z" property="iEstadoCuentaCliente" />','estadoCuentaCliente.do?metodo=iduEstadoCuentaCliente&mode=D')"/>
+		                    <% break; }}}%>
 		                    </td>
 					      
 						   <td align="center"><bean:write name="z" property="dFechaPago" format="dd/MM/yyyy" /></td>

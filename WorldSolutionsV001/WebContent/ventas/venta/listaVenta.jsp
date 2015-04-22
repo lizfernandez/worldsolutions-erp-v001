@@ -1,9 +1,14 @@
-
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
 
@@ -25,22 +30,36 @@
                 <option value="5">PEDIDO</option>
            </select>
         </td-->
+        <% 
+	   for (String per: listapermiso) {
+			if(per!=null){
+	   if(per.equals("5111")){%>
         <td><button  class="button" onclick="fn_nuevoDocumento()">
                 <span class="new">Nuevo</span>
             </button>
         </td>
+         
         <!-- td><button  class="button" onclick="eliminar('tabla','','venta.do?metodo=iduVenta&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
         </td> -->
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("5113")){%>
         <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVenta&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("5115")){%>
         <td><button class="button" onclick="fn_exportarExcel('venta.do?metodo=exportarExcel&plantilla=venta')">
                 <span class="excel">Exportar</span>
             </button>
         </td>
+        <% break;}}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -80,8 +99,16 @@
 	    <logic:iterate name="ventaForm" property="lista" id="x">	
 			<tr>
 				<!-- td align="center"><input type="checkbox" id="<bean:write name="x" property="iVentaId" />"/></td--> 
-				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />&iclasificacionId=1',1130,600)" /></td>
+				<td align="center">
+				
+				<%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("5112")){%>
+				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />&iclasificacionId=1',1130,600)" />
+		        <% break;}}}%>      
+		        </td>
 		 	    <!-- td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iVentaId" />','venta.do?metodo=iduVenta&mode=D')" /></td-->	
 				

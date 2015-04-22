@@ -3,21 +3,41 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
+       <% 
+	   for (String per: listapermiso) {
+			if(per!=null){
+	   if(per.equals("4121")){%>
         <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=I',930,700)">
                 <span class="new">Nuevo</span>
             </button>
-        </td>        
+        </td>    
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("4123")){%>    
         <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
+        </td> 
+          <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("4125")){%>
         <td><button class="button" onclick="fn_exportarExcel('ingresoProducto.do?metodo=exportarExcel&plantilla=compra-devolucion')">
                 <span class="excel">Exportar</span>
             </button>
         </td>
-        </td>        
+        <% break;}}}%>
+               
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -60,8 +80,16 @@
 	    <logic:iterate name="ingresoProductoForm" property="lista" id="x">	
 			<tr>
 				
-				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=U&id=<bean:write name="x" property="iIngresoProductoDevolucionId" />',930,700)" /></td>
+				<td align="center">
+				
+				<%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("4122")){%>
+				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproductoDevolucion&mode=U&id=<bean:write name="x" property="iIngresoProductoDevolucionId" />',930,700)" />
+		        <% break;}}}%> 
+		        </td>
 				<td><bean:write name="x" property="ingresoProducto.proveedor.vProveedorRazonSocial" /></td>
 				<td><bean:write name="x" property="ingresoProducto.tipodocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="ingresoProducto.nIngresoProductoNumero" /></td>

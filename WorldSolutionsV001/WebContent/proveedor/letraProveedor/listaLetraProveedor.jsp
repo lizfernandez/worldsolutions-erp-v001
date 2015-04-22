@@ -1,23 +1,49 @@
-
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%>   
 <table border="0">
     <tr>
+        <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("3131")){%>
         <td><button  class="button" onclick="popup('estadoCuentaProveedor.do?metodo=mantenimientoLetraProveedor&mode=I',530,530)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
-   
+      <% break; }}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("3134")){%>
+        <td><button  class="button" onclick="eliminar('tabla','','estadoCuentaProveedor.do?metodo=iduLetraProveedor&mode=D')">
+                <span class="delete">Eliminar</span>
+            </button>
+        </td>
+         <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("3133")){%>
         <td><button  class="button" onclick="popup('estadoCuentaProveedor.do?metodo=mantenimientoLetraProveedor&mode=F',530,530)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+         <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("3135")){%>
         <td><button class="button" onclick="fn_exportarExcel('estadoCuentaProveedor.do?metodo=exportarExcel&plantilla=proveedor-estado-cuenta-letra')">
                 <span class="excel">Exportar</span>
             </button>
         </td>
+        <% break;}}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -54,11 +80,24 @@
 	    <logic:notEmpty name="estadoCuentaProveedorForm" property="lista">
 	     	<logic:iterate name="estadoCuentaProveedorForm" property="lista" id="x">	
 			<tr>
-		         <td align="center"><img title="Editar Letra" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		         <td align="center">
+		         <%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("3132")){%>
+		         <img title="Editar Letra" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popupModal('estadoCuentaProveedor.do?metodo=mantenimientoLetraProveedor&mode=U&id=<bean:write name="x" property="iletraProveedorId" />',530,530)" />
+		        <% break; }}}%>
 		         </td>
-		           <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iletraProveedorId" />','estadoCuentaProveedor.do?metodo=iduLetraProveedor&mode=D')" /></td>	
+		           <td align="center">
+		         <%
+				     for (String per: listapermiso) {
+		             if(per!=null){
+	                 if(per.equals("3134")){%>  
+		         <img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iletraProveedorId" />','estadoCuentaProveedor.do?metodo=iduLetraProveedor&mode=D')" />
+		         <% break; }}}%>
+		         </td>	
 					         
 		         <td><bean:write name="x" property="dFechaGiro"  format="dd/MM/yyyy"/></td>
 		         <td><bean:write name="x" property="dFechaVencimiento"  format="dd/MM/yyyy"/></td>

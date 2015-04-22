@@ -3,21 +3,40 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
+    <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("5121")){%>
         <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=I',930,700)">
                 <span class="new">Nuevo</span>
             </button>
-        </td>        
+        </td>  
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("5123")){%>      
         <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("5125")){%>
         <td><button class="button" onclick="fn_exportarExcel('venta.do?metodo=exportarExcel&plantilla=venta-devolucion')">
                 <span class="excel">Exportar</span>
             </button>
         </td>    
+        <% break;}}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -60,8 +79,15 @@
 	    <logic:iterate name="ventaForm" property="lista" id="x">	
 			<tr>
 				
-				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=ED&id=<bean:write name="x" property="iVentaDevolucionId" />',930,700)" /></td>
+				<td align="center">
+				<%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("5122")){%>
+				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=ED&id=<bean:write name="x" property="iVentaDevolucionId" />',930,700)" />
+		        <% break;}}}%>             
+		        </td>
 				<td><bean:write name="x" property="venta.cliente.vClienteRazonSocial" /></td>
 				<td><bean:write name="x" property="venta.tipoDocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="venta.nVentaNumero" /></td>
