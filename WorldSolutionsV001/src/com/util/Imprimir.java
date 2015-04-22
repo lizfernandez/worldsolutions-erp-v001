@@ -3,6 +3,8 @@ package com.util;
 import java.io.PrintWriter;
 
 public class Imprimir {
+	
+	
 	public static void Dibuja_Linea(PrintWriter ps) {
 	        try {
 	            ps.println("----------------------------------------");
