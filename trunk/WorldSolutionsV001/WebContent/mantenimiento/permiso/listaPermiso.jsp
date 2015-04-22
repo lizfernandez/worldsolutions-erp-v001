@@ -9,6 +9,10 @@
                 <span class="save">Guardar</span>
             </button>
         </td>
+        <td>
+        <span id="resultado"></span>
+        </td>
+        
         <!-- td><button  class="button" onclick="popup('perfil.do?metodo=mantenimientoPerfil&mode=F',350,180)">
                 <span class="find">Buscar</span>
             </button>
@@ -272,7 +276,18 @@ function fn_GrabarPermisos() {
           type: "GET",
           url: "perfil.do?metodo=iduPerfil&mode=UP&iUsuarioId="+iUsuarioId+"&vCodigoPermiso="+vCodigoPermiso.substring(0, vCodigoPermiso.length-1),
           data: "",
-          success: function(obj){   
+          beforeSend: function () {
+        	 //$("#resultado").html("Procesando, espere por favor...");
+        	 
+        	 $("#CapaModal").html("<div class='loading'> <img src='/WorldSolutionsV001/media/imagenes/loading.gif' /></div>");
+        	 $("#transp").show();
+        	} ,
+          error: function() {
+        	  alert("Al parecer ocurrio un error, intente nuevamente"); 
+           },
+          success: function(obj){ 
+        	  $("#CapaModal").html("");
+        	  $("#transp").hide();
         	  alert("OPERACION CON EXITO"); 
           }
       }); 

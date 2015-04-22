@@ -3,16 +3,32 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
+        <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("6133")){%>
          <td><button  class="button" onclick="popup('venta.do?metodo=mantenimientoVenta&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
-        </td>    
+        </td>  
+         <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("6135")){%>  
         <td><button class="button" onclick="fn_exportarExcel('estadoCuentaCliente.do?metodo=exportarExcel&plantilla=cliente-estado-cuenta')">
                 <span class="excel">Exportar</span>
             </button>
         </td>
+        <% break;}}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -51,12 +67,26 @@
 			<tr>
 				 
 				<logic:equal name="x" property="venta.vPrincipal" value="1">
-		            <td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popupModal('venta.do?metodo=mantenimientoVenta&mode=ED&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',1320,620)" /></td>
+		            <td align="center">
+		            <%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("6132")){%>
+		            <img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popupModal('venta.do?metodo=mantenimientoVenta&mode=ED&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',1320,620)" />
+		            <% break;}}}%>
+		            </td>
 		          </logic:equal>
 		        <logic:equal name="x" property="venta.vPrincipal" value="0">  
-				<td align="center"><img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popupModal('venta.do?metodo=mantenimientoVenta&mode=UE&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',470,380)" /></td>
+				<td align="center">
+				<%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("6132")){%>
+				<img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popupModal('venta.do?metodo=mantenimientoVenta&mode=UE&id=<bean:write name="x" property="venta.iVentaId" />&idTipoDocumento=<bean:write name="x" property="venta.tipoDocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',470,380)" />
+		        <% break;}}}%>
+		        </td>
 		        </logic:equal>
 		        <logic:notEqual name="x" property="saldoTotal" value="0.00">
 			        <td align="center"><img title="Agregar Pago" src="${pageContext.request.contextPath}/media/imagenes/new.png"

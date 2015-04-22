@@ -396,3 +396,25 @@ margin:auto;}
     border: 5px solid yellow;*/
     background-color: blue;
 }
+
+.CapaModal{
+	 z-index:99;
+	/* width:auto;*/
+	 top:100px;
+	 left:40%;
+	 height:auto;
+	 position:absolute;
+	 background:#FFF;
+	 border:1px solid #999;
+	 display:block;
+
+}
+.loading{
+   background: none repeat scroll 0 0 white;
+   
+    margin-left: 45%;
+    margin-top: 15%;
+    position: absolute;
+    
+    z-index: 99;
+}
