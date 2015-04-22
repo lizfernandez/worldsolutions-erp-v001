@@ -29,6 +29,7 @@ import com.entities.Usuario;
 import com.google.gson.Gson;
 import com.struts.form.CategoriaForm;
 import com.util.Fechas;
+import com.util.Impresora;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -505,9 +506,10 @@ public class CategoriaAction extends BaseAction {
 
 		return beans;
 	}
+	
 	@Override
-	public void cargarContenidoImprimir(ActionForm form,
-			HttpServletRequest request, PrintWriter ps, int id) {
+	public void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora) throws IllegalAccessException, IOException {
+		 
 	}
 		
 }

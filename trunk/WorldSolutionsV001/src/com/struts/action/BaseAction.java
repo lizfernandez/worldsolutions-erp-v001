@@ -1,13 +1,10 @@
 package com.struts.action;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import com.dao.ContabilidadDao;
-import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
-import com.dao.KardexDao;
 import com.dao.VentaDao;
 import com.entities.Estadocuentacliente;
 import com.entities.Estadocuentaproveedor;
@@ -39,11 +33,9 @@ import com.entities.Ingresoproducto;
 import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.vo.EstadoCuentaVo;
-import com.struts.form.VentaForm;
 import com.util.Constantes;
 import com.util.Fechas;
-import com.util.Imprimir;
-import com.util.Util;
+import com.util.Impresora;
 
 
 public abstract class BaseAction  extends DispatchAction {
@@ -200,69 +192,42 @@ public abstract class BaseAction  extends DispatchAction {
 
 	public abstract Map<String, Object> cargarContenidoExportar(ActionForm form, HttpServletRequest request, String plantilla) throws ParseException;
 	
-	public abstract void cargarContenidoImprimir (ActionForm form, HttpServletRequest request,PrintWriter ps, int id);
-	
-	@SuppressWarnings("deprecation")
-	public ActionForward imprimir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-			throws ParsePropertyException, InvalidFormatException, IOException, ParseException {
-
+	public abstract void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora) throws IllegalAccessException, IOException;
 		
+	public ActionForward imprimir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, IOException {
+
+		Impresora impresora;
+        HttpSession sesion = request.getSession();
 		try {
 
+			String nombreDispositivo = "BIXOLON SRP-270";
 
-                FileWriter file = new FileWriter("USB001");
-                BufferedWriter buffer = new BufferedWriter(file);
-                PrintWriter ps = new PrintWriter(buffer);
-                HttpSession sesion = request.getSession();
-    			
+			impresora = new Impresora();
+			impresora.seleccionarDispositivo(nombreDispositivo);
 
+  			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+               
+    		impresora.agregarLinea(usu.getSucursal().getEmpresa().getvEmpresaNombre());
+    		impresora.agregarLinea("RUC: "+usu.getSucursal().getEmpresa().getvEmpresaRuc());
+    		impresora.agregarLinea("DIRECCION: "+usu.getSucursal().getEmpresa().getvEmpresaDireccion());
+    		impresora.agregarLinea("SUCURSAL:"+usu.getSucursal().getvSucursalNombre());
+    		impresora.agregarLinea("SUC. DIREC.:"+usu.getSucursal().getvSucursalDireccion());
+    		impresora.agregarSaltoLinea(2);
+    		impresora.agregarSeparacion();
     		
-      			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
-    		//	int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
-    			
-                Imprimir.setFormato(1, ps);
-                ps.write((char) 27
-			+ (char) 112
-			+ (char) 0
-			+ (char) 10
-			+ (char) 100);
-                ps.write(0x1B);
-                ps.write(0x70);
-                ps.write(0x30);
-                ps.write(0xDC4);
-                ps.println(usu.getSucursal().getEmpresa().getvEmpresaNombre());
-                ps.println("RUC: "+usu.getSucursal().getEmpresa().getvEmpresaRuc());
-                ps.println("DIRECCION: "+usu.getSucursal().getEmpresa().getvEmpresaDireccion());
-                ps.println("SUCURSAL:"+usu.getSucursal().getvSucursalNombre());
-                ps.println("SUC. DIREC.:"+usu.getSucursal().getvSucursalDireccion());
-                Imprimir.Dibuja_Linea(ps);
-                    int id =Integer.parseInt(request.getParameter("id"));
-                cargarContenidoImprimir(form,  request,ps,id);
+    		cargarContenidoImprimir(form,  request, impresora);
+            
+    		impresora.agregarSeparacion();
                 
-                
-                ps.println("  NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES");
-                ps.println("        GRACIAS POR SU COMPRA          ");
-                Imprimir.correr(10, ps);
-                Imprimir.cortar(ps);
-                ps.close();;
-			
-		} catch (ParsePropertyException e) {
-			throw e;
-			
-		} catch (IOException e) {
-			throw e;
+    		impresora.agregarLinea("  NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES");
+    		impresora.agregarLinea("        GRACIAS POR SU COMPRA          ");
+            
+    		impresora.cortarImpresion();
+    		//impresora.imprimirTicket();
 			
 		} finally {
-			try {
-			
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			impresora = null;
+			sesion = null;
 		}
 		
 		return null;
