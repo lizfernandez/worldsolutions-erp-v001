@@ -52,7 +52,7 @@ import com.google.gson.Gson;
 import com.struts.form.VentaForm;
 import com.util.Constantes;
 import com.util.Fechas;
-import com.util.Imprimir;
+import com.util.Impresora;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -2003,40 +2003,36 @@ public class VentaAction extends BaseAction {
 		}
 		
 		@Override
-		public void cargarContenidoImprimir(ActionForm form,
-				HttpServletRequest request, PrintWriter ps, int id) {
+		public void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora) throws IllegalAccessException, IOException {
 			
 			VentaDao ventaDao = new VentaDao();
+			int id = Integer.parseInt(request.getParameter("id"));
 			Venta venta=ventaDao.findEndidadBD(new Venta(), "iVentaId", id);
 			
-			 ps.println("Ticket    :" + venta.getnVentaNumero());             
-             ps.println("Fecha     :" + venta.getdFechaInserta());
-             ps.println("Ven   : " + venta.getUsuario().getPersonal().getvPersonalNombres());
-             Imprimir.Dibuja_Linea(ps);
+			impresora.agregarLinea("Ticket    :" + venta.getnVentaNumero());             
+			impresora.agregarLinea("Fecha     :" + venta.getdFechaInserta());
+			impresora.agregarLinea("Vendedor   : " + venta.getUsuario().getPersonal().getvPersonalNombres());
         
-			ps.println("Sr(a)     :" + venta.getCliente().getvClienteRazonSocial());
-			ps.println(venta.getTipoDocumento().getvTipoDocumentoDescripcion()+"     :" + venta.getCliente().getnClienteNumeroDocumento());
-			
-            Imprimir.Dibuja_Linea(ps);
-            ps.println("Cant     " + "Descripcion" + "             " + "P.U        ");
-            Imprimir.Dibuja_Linea(ps);
-            
-                   
+			impresora.agregarLinea("Sr(a)     :" + venta.getCliente().getvClienteRazonSocial());
+			impresora.agregarLinea(venta.getTipoDocumento().getvTipoDocumentoDescripcion()+ " :" + venta.getCliente().getnClienteNumeroDocumento());
+
+			impresora.agregarSaltoLinea(1);
+			impresora.agregarSeparacion();
+			      
             // aqui recorro mis productos y los imprimo
             for(Ventadetalle ventadetalle: venta.getVentadetalles()){
-            	ps.println(ventadetalle.getiVentaDetalleCantidad()+"  "+ventadetalle.getProducto().getvProductoNombre()+"  "+ventadetalle.getfVentaDetallePrecio());
+            	impresora.agregarLinea(ventadetalle.getiVentaDetalleCantidad()+"    "+ventadetalle.getProducto().getvProductoNombre()+"    "+ventadetalle.getfVentaDetallePrecio());
             }
             
-            Imprimir.Dibuja_Linea(ps);
+            impresora.agregarSeparacion();
             //Descuentos
-            ps.println("TOTAL         : "+venta.getvTipoVenta()+" " + venta.getfVentaTotalReal());
-            ps.println("DESCUENTO         : "+venta.getvTipoVenta()+" " + venta.getfDescuento());
-            Imprimir.Dibuja_Linea(ps);
-            ps.println("SUBTOTAL         : "+venta.getvTipoVenta()+" " + venta.getfVentaSubTotal());
-            ps.println("IGV         : "+venta.getvTipoVenta()+" " + venta.getfVentaIGV());
-            ps.println("TOTAL FINAL         : "+venta.getvTipoVenta()+" " + venta.getfVentaTotal());
-            ps.println();
-        
+            impresora.agregarLinea("TOTAL       : "+venta.getvTipoVenta()+" " + venta.getfVentaTotalReal());
+            impresora.agregarLinea("DESCUENTO   : "+venta.getvTipoVenta()+" " + venta.getfDescuento());
+            
+            impresora.agregarLinea("SUBTOTAL    : "+venta.getvTipoVenta()+" " + venta.getfVentaSubTotal());
+            impresora.agregarLinea("IGV         : "+venta.getvTipoVenta()+" " + venta.getfVentaIGV());
+            impresora.agregarLinea("TOTAL FINAL : "+venta.getvTipoVenta()+" " + venta.getfVentaTotal());
+            
 			
 		}
 		

@@ -34,6 +34,7 @@ import com.struts.form.AreaForm;
 import com.struts.form.ClienteForm;
 import com.util.Constantes;
 import com.util.Fechas;
+import com.util.Impresora;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -716,9 +717,10 @@ public class ClienteAction extends BaseAction {
 		
 		return beans;
 	}
+	
 	@Override
-	public void cargarContenidoImprimir(ActionForm form,
-			HttpServletRequest request, PrintWriter ps, int id) {
+	public void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora) throws IllegalAccessException, IOException {
+		 
 	}
 	
 }

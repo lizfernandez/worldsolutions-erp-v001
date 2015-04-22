@@ -35,6 +35,7 @@ import com.struts.form.EstadoCuentaProveedorForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.FormatosNumeros;
+import com.util.Impresora;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -568,7 +569,6 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 		return beans;
 	}
 	@Override
-	public void cargarContenidoImprimir(ActionForm form,
-			HttpServletRequest request, PrintWriter ps, int id) {
+	public void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora) throws IllegalAccessException, IOException {
 	}
 }

@@ -28,6 +28,7 @@ import com.entities.Usuario;
 import com.google.gson.Gson;
 import com.struts.form.ProveedorForm;
 import com.util.Fechas;
+import com.util.Impresora;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -345,6 +346,9 @@ public class ProveedorAction extends BaseAction {
 		}
 		@Override
 		public void cargarContenidoImprimir(ActionForm form,
-				HttpServletRequest request, PrintWriter ps, int id) {
-		}	
+				HttpServletRequest request, Impresora impresora)
+				throws IllegalAccessException, IOException {
+			// TODO Auto-generated method stub
+			
+		}
 }

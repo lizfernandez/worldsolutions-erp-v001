@@ -49,6 +49,7 @@ import com.struts.form.ProductosForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.FormatosNumeros;
+import com.util.Impresora;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -1586,9 +1587,12 @@ public class ProductosAction extends BaseAction {
 			return beans;
 		
 		}
-		@Override
-		public void cargarContenidoImprimir(ActionForm form,
-				HttpServletRequest request, PrintWriter ps, int id) {
-		}
+			@Override
+			public void cargarContenidoImprimir(ActionForm form,
+					HttpServletRequest request, Impresora impresora)
+					throws IllegalAccessException, IOException {
+				// TODO Auto-generated method stub
+				
+			}
 			
 }
