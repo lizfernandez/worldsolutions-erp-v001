@@ -3,16 +3,32 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
+        <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("8531")){%>
         <td><button  class="button" onclick="popup('configuracion.do?metodo=mantenimientoConfiguracion&mode=I',350,200)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
+        <% break; }}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("8533")){%>
         <td><button  class="button" onclick="popup('configuracion.do?metodo=mantenimientoConfiguracion&mode=F',350,200)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <% break; }}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -45,8 +61,15 @@
 	    <logic:notEmpty name="configuracionForm" property="lista">
 	     	<logic:iterate name="configuracionForm" property="lista" id="x">	
 			<tr>
-				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('configuracion.do?metodo=mantenimientoConfiguracion&mode=U&id=<bean:write name="x" property="iConfiguracionId" />',350,200)" /></td>
+				<td align="center">
+				<% 
+			   for (String per: listapermiso) {
+			   if(per!=null){
+			   if(per.equals("8532")){%>
+				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popup('configuracion.do?metodo=mantenimientoConfiguracion&mode=U&id=<bean:write name="x" property="iConfiguracionId" />',350,200)" />
+		        <% break; }}}%>
+		        </td>
 		 	  				<td align="center"><bean:write name="x" property="vConcepto" /></td>
 				<td><bean:write name="x" property="vValor" /></td>
 				<td><bean:write name="x" property="dFechaInserta"  format="dd/MM/yyyy"/></td>
