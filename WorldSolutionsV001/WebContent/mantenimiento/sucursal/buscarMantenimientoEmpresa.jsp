@@ -6,29 +6,29 @@
 <html:form action="empresaSucursal" styleId="formSucursal">
 <tr class="trCodigo">
     <td align="right">C&oacute;digo:</td>
-    <td><html:text property="cSucursalCodigo" styleId="cSucursalCodigo" onkeyup="return mayuscula('cSucursalCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text"/>
-    	<span id="m_cSucursalCodigo" class="importante"></span>
+    <td><html:text property="cEmpresaCodigo" styleId="cEmpresaCodigo" onkeyup="return mayuscula('cEmpresaCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text"/>
+    	<span id="m_cEmpresaCodigo" class="importante"></span>
     </td>
 </tr>
 <tr>
     <td align="right">Nombre:</td>
     <td>
-       <html:text property="vSucursalNombre" styleId="vSucursalNombre" onkeyup="return mayuscula('vSucursalNombre')" styleClass="text"/>
-       <span id="m_vSucursalNombre" class="importante"></span>
+       <html:text property="vEmpresaNombre" styleId="vEmpresaNombre" onkeyup="return mayuscula('vEmpresaNombre')" styleClass="text"/>
+       <span id="m_vEmpresaNombre" class="importante"></span>
    </td>
 </tr>
 <tr>
     <td align="right">Direcci&oacute;n:</td>
     <td>
-       <html:text property="vSucursalDireccion" styleId="vSucursalDireccion" onkeyup="return mayuscula('vSucursalDireccion')" styleClass="text"/>
-       <span id="m_vSucursalDireccion" class="importante">*</span>
+       <html:text property="vEmpresaDireccion" styleId="vEmpresaDireccion" onkeyup="return mayuscula('vEmpresaDireccion')" styleClass="text"/>
+       <span id="m_vEmpresaDireccion" class="importante">*</span>
    </td>
 </tr>
 <tr>
-    <td align="right">Tel&eacute;fono:</td>
+    <td align="right">RUC:</td>
     <td>
-       <html:text property="vSucursalTelefono" styleId="vSucursalTelefono" onkeyup="return mayuscula('vSucursalTelefono')" styleClass="text"/>
-       <span id="m_vSucursalTelefono" class="importante">*</span>
+       <html:text property="vEmpresaRuc" styleId="vEmpresaRuc" onkeyup="return mayuscula('vEmpresaRuc')" styleClass="text"/>
+       <span id="m_vEmpresaRuc" class="importante">*</span>
    </td>
 </tr>
 <tr>
@@ -51,20 +51,20 @@
     </td>
 </tr>
 <%-- hidden field que contiene el id del producto --%>
-<html:hidden property="iSucursalId" />
+<html:hidden property="iEmpresaId" />
 
 <%-- hidden field que contiene el mode --%>
 <html:hidden property="mode" styleId="mode" />
 			
 <%-- set the parameter for the dispatch action --%>
-<html:hidden property="metodo" value="listaSucursal" styleId="metodo" />
+<html:hidden property="metodo" value="listaEmpresa" styleId="metodo" />
 	
 </html:form>
 <script>
     var mode = document.getElementById('mode').value;
     
     if(mode=='I') {
-        document.getElementById('cSucursalCodigo').focus();
+        document.getElementById('cEmpresaCodigo').focus();
         document.getElementById('btnGuardar').textContent="Insertar";
         $(".trCodigo").show();
         $("#popupCabecera").text('INSERTAR DATOS');	
