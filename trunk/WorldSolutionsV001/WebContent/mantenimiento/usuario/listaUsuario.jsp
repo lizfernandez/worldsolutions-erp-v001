@@ -1,22 +1,41 @@
-
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
+       <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("8321")){%>
         <td><button  class="button" onclick="popup('usuario.do?metodo=mantenimientoUsuario&mode=I',400,350)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
+          <% break; }}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("8324")){%>
         <td><button  class="button" onclick="eliminar('tabla','','usuario.do?metodo=iduUsuario&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
         </td>
+          <% break; }}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("8323")){%>
         <td><button  class="button" onclick="popup('usuario.do?metodo=mantenimientoUsuario&mode=F',400,350)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+          <% break; }}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -52,11 +71,25 @@
 	     	<logic:iterate name="usuarioForm" property="lista" id="x">	
 			<tr>
 				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iUsuarioId" />"/></td> 
-				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('usuario.do?metodo=mantenimientoUsuario&mode=U&id=<bean:write name="x" property="iUsuarioId" />',400,350)" /></td>
+				<td align="center">
+				  <%
+			   for (String per: listapermiso) {
+			   if(per!=null){
+			   if(per.equals("8322")){%>
+				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popup('usuario.do?metodo=mantenimientoUsuario&mode=U&id=<bean:write name="x" property="iUsuarioId" />',400,350)" />
+		          <% break; }}}%>
+		        </td>
 		 	    <logic:notEqual name="x" property="perfil.vPerfilDescripcion" value="ADMINISTRADOR">
-		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iUsuarioId" />','usuario.do?metodo=iduUsuario&mode=D')" /></td>
+		 	    <td align="center">
+		 	      <% 
+				   for (String per: listapermiso) {
+				   if(per!=null){
+				   if(per.equals("8324")){%>
+		 	    <img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iUsuarioId" />','usuario.do?metodo=iduUsuario&mode=D')" />
+		          <% break; }}}%>
+		        </td>
 		 	    </logic:notEqual>
 		 	    <logic:equal name="x" property="perfil.vPerfilDescripcion" value="ADMINISTRADOR">
 		 	    <td align="center"></td>

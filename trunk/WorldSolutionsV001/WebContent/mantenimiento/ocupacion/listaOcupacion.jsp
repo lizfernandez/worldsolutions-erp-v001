@@ -1,22 +1,41 @@
-
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
+        <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("8211")){%>
         <td><button  class="button" onclick="popup('ocupacion.do?metodo=mantenimientoOcupacion&mode=I',350,220)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
+        <% break; }}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("8214")){%>
         <td><button  class="button" onclick="eliminar('tabla','','ocupacion.do?metodo=iduOcupacion&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
         </td>
+        <% break; }}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("8213")){%>
         <td><button  class="button" onclick="popup('ocupacion.do?metodo=mantenimientoOcupacion&mode=F',350,220)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <% break; }}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -48,10 +67,24 @@
 	     	<logic:iterate name="ocupacionForm" property="lista" id="x">	
 			<tr>
 				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iOcupacionId" />"/></td> 
-				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('ocupacion.do?metodo=mantenimientoOcupacion&mode=U&id=<bean:write name="x" property="iOcupacionId" />',350,180)" /></td>
-		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iOcupacionId" />','ocupacion.do?metodo=iduOcupacion&mode=D')" /></td>	
+				<td align="center">
+				<% 
+			   for (String per: listapermiso) {
+			   if(per!=null){
+			   if(per.equals("8212")){%>
+				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popup('ocupacion.do?metodo=mantenimientoOcupacion&mode=U&id=<bean:write name="x" property="iOcupacionId" />',350,180)" />
+		        <% break; }}}%>             
+		        </td>
+		 	    <td align="center">
+		 	    <% 
+			   for (String per: listapermiso) {
+			   if(per!=null){
+			   if(per.equals("8214")){%>
+		 	    <img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iOcupacionId" />','ocupacion.do?metodo=iduOcupacion&mode=D')" />
+		        <% break; }}}%>
+		        </td>	
 				<td><bean:write name="x" property="cOcupacionCodigo" /></td>
 				<td><bean:write name="x" property="vOcupacionDescripcion" /></td>
 				<td><bean:write name="x" property="cEstadoCodigo" /></td>

@@ -90,7 +90,7 @@
 .gestion {
     background: url("../../imagenes/collapsed.gif") no-repeat scroll 0 2px rgba(0, 0, 0, 0);
     display: block;
-    text-indent: 25px;
+    text-indent: 15px;
     top: 5px;
 }
 .cancel{
