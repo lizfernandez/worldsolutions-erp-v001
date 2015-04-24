@@ -3,12 +3,24 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
-    <tr>
+    <tr> 
+        <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("841")){%>
         <td><button  class="button" onclick="fn_GrabarPermisos()">
                 <span class="save">Guardar</span>
             </button>
         </td>
+          <% break;}}}%>
         <td>
         <span id="resultado"></span>
         </td>
@@ -84,6 +96,7 @@
 	             <tbody>
 	              	<!--Lista contenido cabecera del sistema -->	
 	             <logic:iterate name="perfilForm" property="lista" id="x" indexId="i">
+	             <logic:equal name="x" property="cEstadoCodigo" value="AC">
 	              <tr>
 	              <th width="" align="left">
 	                 <span id="img_<bean:write name="x" property="idMenu" />" style="width: 2%">
@@ -96,7 +109,8 @@
 			           	<!--Lista Opciones -->		            
 			           <table class="tabladetalle" border="0" style="display: none; width: 47%" id="op<bean:write name="x" property="idMenu" />">	
 							<tbody>
-				           		   <logic:iterate name="x" property="menutitulo" id="d" indexId="i">	           		    
+				           		   <logic:iterate name="x" property="menutitulo" id="d" indexId="i">
+				           		   <logic:equal name="d" property="cEstadoCodigo" value="AC">	           		    
 									<tr>
 				                      <td>
 					                      	<div style="margin-left: 10%"  id="op<bean:write name="x" property="idMenu" />" >
@@ -105,14 +119,16 @@
 							                        onclick="fn_pagosMas('op<bean:write name="d" property="idmenuTitulo" />')" />
 							          			  </span>
 								           		 <input type="checkbox" id="<bean:write name="d" property="vCodigo" />"
-								           		     onclick="Cktodo('<bean:write name="d" property="vCodigo" />','<bean:write name="x" property="idMenu" />')"
+								           		     onclick="CktodoHijos('<bean:write name="d" property="vCodigo" />','opop<bean:write name="d" property="idmenuTitulo" />','<bean:write name="x" property="vCodigo" />','0')"
+								           		     
 								           		      class="ck_<bean:write name="x" property="idMenu" />"/><bean:write name="d" property="vMenuTitulo" />
 		           							</div>
 		           							
 		           							 <div align="right">
 								           		<table class="tabladetalle" border="0" style="display: none " id="opop<bean:write name="d" property="idmenuTitulo" />">	
 													<tbody>
-										           		   <logic:iterate name="d" property="menuopciones" id="m" indexId="i">	           		    
+										           		   <logic:iterate name="d" property="menuopciones" id="m" indexId="i">	
+										           		   <logic:equal name="m" property="cEstadoCodigo" value="AC">           		    
 															<tr>
 										                      <td>
 										                      <div style="margin-left: 10%"  id="op<bean:write name="x" property="idMenu" />" >
@@ -124,7 +140,7 @@
 																</span> 
 																<input type="checkbox" 
 										                        class="ck_<bean:write name="x" property="idMenu"/>" 
-										                        onclick="CktodoHijos('<bean:write name="m" property="vCodigo" />','<bean:write name="m" property="idmenuOpciones" />','<bean:write name="x" property="vCodigo" />','<bean:write name="d" property="vCodigo" />')"
+										                        onclick="CktodoHijos('<bean:write name="m" property="vCodigo" />','opopop<bean:write name="m" property="idmenuOpciones" />','<bean:write name="x" property="vCodigo" />','<bean:write name="d" property="vCodigo" />')"
 								                                 id="<bean:write name="m" property="vCodigo" />"/><bean:write name="m" property="vOpciones" />
 																</div>
 										                       
@@ -133,8 +149,8 @@
 															style="display: none; margin-left: 26%; width:70%;"
 															id="opopop<bean:write name="m" property="idmenuOpciones" />">
 															<tbody>
-																<logic:iterate name="m" property="menuacciones"
-																	id="n" indexId="i">
+																<logic:iterate name="m" property="menuacciones"	id="n" indexId="i">
+																<logic:equal name="n" property="cEstadoCodigo" value="AC">   
 																	<tr>
 																		<td>
 																		 
@@ -144,23 +160,27 @@
 																			id="<bean:write name="n" property="vCodigo" />" />
 																		<bean:write name="n" property="vAccion" /></td>
 																	</tr>
+																	</logic:equal> 
 																</logic:iterate>
 															</tbody>
 														</table>
 																	</td>
-										                      </tr>	                    
+										                      </tr>	
+										                  </logic:equal>                    
 										                 </logic:iterate>
 								                     </tbody>
 											    </table>
 				  							  </div>
 				                      </td>
-				                      </tr>	                    
+				                      </tr>	 
+				                  </logic:equal>                       
 				                 </logic:iterate>
 		                     </tbody>
 				       </table>              
 	             
 	              </th>  
 	              </tr>     
+	           </logic:equal>   
 	          </logic:iterate>
 	             </tbody>
 	        </table>
@@ -214,10 +234,11 @@ function Cktodo(id,codigo){
 	
 }
 function CktodoHijos(id,idform,padre1,padre2){
-	$(document).find('#opopop'+idform+' input:checkbox').each(function(key,val){ 	 
+	$(document).find('#'+idform+' input:checkbox').each(function(key,val){ 	 
 		if($("#"+id).is(':checked')) {  
 			  $("#"+this.id).attr('checked', true); 
 			  $("#"+padre1).attr('checked', true);
+			  if(padre2!="0")
 			  $("#"+padre2).attr('checked', true); 
 			  
 	      } else {  
