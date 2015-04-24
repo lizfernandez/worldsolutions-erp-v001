@@ -24,6 +24,7 @@ public class Impresora {
 	
 	private StringBuilder contenido;
 	private DocPrintJob jobImpresora = null;
+	private int longitudLlinea = 42;
 	
 	public Impresora() {
 		contenido = new StringBuilder();
@@ -58,25 +59,37 @@ public class Impresora {
 		contenido.append((char) 27).append("m");
 	}
 	
-	public void agregarLinea (String... cadenas) throws IllegalAccessException {
+	public void agregarLineaCentrada (String cadena) throws IllegalAccessException {
 		validarDispositivo();
-		if (cadenas != null && cadenas.length > 0) {
-			for (String cadena : cadenas) {
-				contenido.append(cadena);
-			}
+		int espacioCentrar = (longitudLlinea - cadena.trim().length())/2;
+		while (espacioCentrar > 0) {
+			contenido.append(" ");
+			espacioCentrar--;
 		}
+		contenido.append(cadena);
+		contenido.append("\n");
+	}
+	
+	public void agregarLinea (String cadena) throws IllegalAccessException {
+		validarDispositivo();
+		contenido.append(cadena);
 		contenido.append("\n");
 	}
 	
 	public void agregarSeparacion () throws IllegalAccessException {
-		agregarLinea("=============================");
+		int contador = 0;
+		while (contador < longitudLlinea) {
+			contenido.append("-");
+			contador++;
+		}
+		contenido.append("\n");
 	}
 	
 	public void agregarSaltoLinea (int cantidad) throws IllegalAccessException {
 		validarDispositivo();
 		int indice = 0;
 		while (indice < cantidad) {
-			agregarLinea();
+			contenido.append("\n");
 			indice++;
 		}
 	}
@@ -110,9 +123,65 @@ public class Impresora {
 		
 	}
 	
+	public void agregarLineaDerecha(String cadena) throws IllegalAccessException {
+		validarDispositivo();
+		int espacioCentrar = longitudLlinea - cadena.trim().length();
+		while (espacioCentrar > 0) {
+			contenido.append(" ");
+			espacioCentrar--;
+		}
+		contenido.append(cadena);
+		contenido.append("\n");
+	}
+
 	@Override
 	public String toString() {
 		return contenido.toString();
 	}
-	
+
+	public void agregarLinea(String titulo, int espacio, String descripcion) throws IllegalAccessException {
+		validarDispositivo();
+		int espacioTitulo = espacio - titulo.length();
+		
+		contenido.append(titulo);
+		while (espacioTitulo > 0) {
+			contenido.append(" ");
+			espacioTitulo--;
+		}
+		contenido.append(": ").append(descripcion).append("\n");
+	}
+
+	public void agregarLinea(Object[][] camposDetallesLinea) throws IllegalAccessException {
+		StringBuilder lineaDetalle = new StringBuilder();
+		String valor;
+		int posicion;
+		int posicionFinal;
+		int longitudMaxima;
+		int tipo;
+		int longitud = camposDetallesLinea.length;
+		int indice = 0;
+		while (indice < longitud) {
+
+			valor = camposDetallesLinea[indice][0].toString();
+			posicion = Integer.parseInt(camposDetallesLinea[indice][1].toString());
+			tipo = Integer.parseInt(camposDetallesLinea[indice][2].toString());
+			indice++;
+			
+			if (indice < longitud) {
+				posicionFinal = Integer.parseInt(camposDetallesLinea[indice][1].toString());
+			} else {
+				posicionFinal = longitudLlinea;
+			}
+			longitudMaxima = posicionFinal - posicion;
+			if (tipo > 0) {
+				lineaDetalle.append(Util.completarEspacioDerecha(valor, longitudMaxima));
+			} else {
+				lineaDetalle.append(Util.completarEspacioIzquierda(valor, longitudMaxima));
+			}
+			
+		}
+		agregarLinea(lineaDetalle.toString());
+		
+	}
+
 }

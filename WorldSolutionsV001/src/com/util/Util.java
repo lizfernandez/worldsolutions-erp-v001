@@ -233,4 +233,29 @@ public class Util {
 
         return obj;
     }
+	
+	public static String completarEspacioDerecha(String valor, int longitud) {
+		String valorCompletado = valor;
+		if (valor.length() < longitud) {
+			int diferencia = longitud - valor.length();
+			while (diferencia > 0) {
+				valorCompletado = valorCompletado + " ";
+				diferencia--;
+			}
+		}
+		return valorCompletado;
+	}
+	
+	public static String completarEspacioIzquierda(String valor, int longitud) {
+		String valorCompletado = valor;
+		if (valor.length() < longitud) {
+			int diferencia = longitud - valor.length();
+			while (diferencia > 0) {
+				valorCompletado = " " + valorCompletado;
+				diferencia--;
+			}
+		}
+		return valorCompletado;
+	}
+	
 }
