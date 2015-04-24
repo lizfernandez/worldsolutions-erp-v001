@@ -3,6 +3,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%>
 </head>
 <body id="ext-gen3" class=" ext-gecko ext-gecko3" onload="fn_graficas()">
 <html:form action="estadistica" styleId="formProductos">
@@ -20,7 +27,14 @@
                 </td>
               <td>&emsp;Fecha Inicio:<html:text property="fechaInicio" styleId="fechaInicio" styleClass="text"/> </td>
               <td>&emsp;Fecha Fin:<html:text property="fechaFin" styleId="fechaFin" styleClass="text"/> </td>  
-                <td><button onclick="fn_graficas()"><span class='grafica'>Graficar</span></button></td>
+                <td>
+                <% 
+			   for (String per: listapermiso) {
+			   if(per!=null){
+			   if(per.equals("7111")){%>
+                <button onclick="fn_graficas()"><span class='grafica'>Graficar</span></button>
+                <% break;}}}%>
+                </td>
             </tr>            
         </table>
      </fieldset>
