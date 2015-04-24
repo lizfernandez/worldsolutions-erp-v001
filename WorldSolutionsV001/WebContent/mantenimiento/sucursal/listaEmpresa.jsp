@@ -12,27 +12,27 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 %> 
 <table border="0">
     <tr>
-        <% 
+       <% 
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("8121")){%>
-        <td><button  class="button" onclick="popup('empresaSucursal.do?metodo=mantenimientoSucursal&mode=I',350,350)">
+	   if(per.equals("8111")){%>
+        <td><button  class="button" onclick="popup('empresaSucursal.do?metodo=mantenimientoEmpresa&mode=I',350,350)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
         <% break; }}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("8124")){%>
-        <td><button  class="button" onclick="eliminar('tabla','','empresaSucursal.do?metodo=iduSucursal&mode=D')">
+	   if(per.equals("8114")){%>
+        <td><button  class="button" onclick="eliminar('tabla','','empresaSucursal.do?metodo=iduEmpresa&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
         </td>
         <% break; }}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("8123")){%>
-        <td><button  class="button" onclick="popup('empresaSucursal.do?metodo=mantenimientoSucursal&mode=F',350,350)">
+	   if(per.equals("8113")){%>
+        <td><button  class="button" onclick="popup('empresaSucursal.do?metodo=mantenimientoEmpresa&mode=F',350,350)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -40,9 +40,9 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
-    <caption>Lista de Sucursal</caption>
+    <caption>Lista de Empresa</caption>
         <!-- tr>
-            <th width="5%" >Nombre Sucursal:</th>
+            <th width="5%" >Nombre Empresa:</th>
             <td colspan="13"><input type="text" id="txtnombre" value="<?php echo $this->descripcion?>"/><button onclick="busqueda('<?php echo $this->baseUrl($this->currentController.'/index/descripcion/')?>')" class="button">
                     <span class="find">Buscar</span></button></td>
 
@@ -61,33 +61,33 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
     <tbody>
 	    <logic:empty name="empresaSucursalForm" property="lista">
 				<tr>
-					<td colspan="8">No hay informaci&oacute;n del sucursal</td>
+					<td colspan="8">No hay informaci&oacute;n del empresa</td>
 				</tr>
 	    </logic:empty>
 	    <logic:notEmpty name="empresaSucursalForm" property="lista">
 	     	<logic:iterate name="empresaSucursalForm" property="lista" id="x">	
 			<tr>
-				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iSucursalId" />"/></td> 
+				<td align="center"><input type="checkbox" id="<bean:write name="x" property="iEmpresaId" />"/></td> 
 				<td align="center">
-				<% 
-			   for (String per: listapermiso) {
-			   if(per!=null){
-			   if(per.equals("8122")){%>
+				     <% 
+				   for (String per: listapermiso) {
+				   if(per!=null){
+				   if(per.equals("8112")){%>
 				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('empresaSucursal.do?metodo=mantenimientoSucursal&mode=U&id=<bean:write name="x" property="iSucursalId" />',350,350)" />
-		        <% break; }}}%>
+		                     onclick="popup('empresaSucursal.do?metodo=mantenimientoEmpresa&mode=U&id=<bean:write name="x" property="iEmpresaId" />',350,350)" />
+		         <% break; }}}%>
 		        </td>
 		 	    <td align="center">
-		 	    <%
+		 	    <% break; }}}
 			   for (String per: listapermiso) {
 			   if(per!=null){
-			   if(per.equals("8124")){%>
+			   if(per.equals("8114")){%>
 		 	    <img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iSucursalId" />','empresaSucursal.do?metodo=iduSucursal&mode=D')" />
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iEmpresaId" />','empresaSucursal.do?metodo=iduEmpresa&mode=D')" />
 		        <% break; }}}%>
 		        </td>	
-				<td><bean:write name="x" property="cSucursalCodigo" /></td>
-				<td><bean:write name="x" property="vSucursalNombre" /></td>
+				<td><bean:write name="x" property="cEmpresaCodigo" /></td>
+				<td><bean:write name="x" property="vEmpresaNombre" /></td>
 				<td><bean:write name="x" property="cEstadoCodigo" /></td>
 		 
 				
@@ -117,8 +117,8 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 paginacion();
 $("#admin").addClass("active");
 $("#empresax").children('li').show();
-$("#sucursal").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
-$("#sucursal").children('a').css("color","#D0D2D7");
+$("#empresas").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#empresas").children('a').css("color","#D0D2D7");
 
 </script> 
 
