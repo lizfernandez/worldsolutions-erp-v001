@@ -78,7 +78,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		         <% break; }}}%>
 		        </td>
 		 	    <td align="center">
-		 	    <% break; }}}
+		 	    <% 
 			   for (String per: listapermiso) {
 			   if(per!=null){
 			   if(per.equals("8114")){%>
