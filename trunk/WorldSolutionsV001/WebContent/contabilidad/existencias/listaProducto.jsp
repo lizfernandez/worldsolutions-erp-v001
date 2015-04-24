@@ -3,7 +3,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <!-- tr>
         <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=I',430,500)">
@@ -15,22 +21,39 @@
         </td>
     </tr> -->
      <tr>
+         <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("6311")){%>
         <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=I&iclasificacionId=1',700,635)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("6314")){%>
         <td><button  class="button" onclick="eliminar('tabla','','productos.do?metodo=iduProducto&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
         </td>
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("6313")){%>
         <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=1',470,580)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("6315")){%>
         <td><button class="button" onclick="fn_exportarExcel('productos.do?metodo=exportarExcel&plantilla=producto')">
                 <span class="excel">Exportar</span>
             </button>
         </td>
+        <% break;}}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -62,12 +85,28 @@
 	
 	<tr>
 	    <td align="center"><input type="checkbox" id="<bean:write name="x" property="iProductoId" />"/></td> 
-		<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoProducto&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iProductoId" />',700,635)" /></td>
-		<td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iProductoId" />','productos.do?metodo=iduProducto&mode=D')" /></td>	
+		<td align="center">
+		<%
+		for (String per: listapermiso) {
+		if(per!=null){
+		if(per.equals("6312")){%>
+		<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popup('productos.do?metodo=mantenimientoProducto&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iProductoId" />',700,635)" />
+	    
+	   <% break;}}}%> 
+	    </td>
+		<td align="center">
+		<%
+		for (String per: listapermiso) {
+		if(per!=null){
+		if(per.equals("6314")){%>
+		<img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iProductoId" />','productos.do?metodo=iduProducto&mode=D')" />
+        <% break;}}}%> 
+        </td>	
 		
 		<td align="center">
+		
      		<img  src="${pageContext.request.contextPath}/media/imagenes/approve_notes.png"   title="Visualizar Kardex" 
      		onclick="popup('productos.do?metodo=listaKardex&mode=Kardex&id=<bean:write name="x" property="iProductoId" />',900,500)" />
 		</td>

@@ -20,7 +20,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
                 <span class="find">Buscar</span>
             </button>
         </td>
-         <% break;}}}
+        <% break;}}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
 	   if(per.equals("6115")){%>
