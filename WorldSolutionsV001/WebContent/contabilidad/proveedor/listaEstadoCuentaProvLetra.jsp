@@ -15,7 +15,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
        <% 
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("6233")){%>
+	   if(per.equals("6243")){%>
         <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
@@ -23,7 +23,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
         <% break;}}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("6235")){%>
+	   if(per.equals("6245")){%>
         <td><button class="button" onclick="fn_exportarExcel('estadoCuentaProveedor.do?metodo=exportarExcel&plantilla=proveedor-estado-cuenta')">
                 <span class="excel">Exportar</span>
             </button>
@@ -71,7 +71,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		             <%
 					for (String per: listapermiso) {
 					if(per!=null){
-					if(per.equals("6232")){%>
+					if(per.equals("6242")){%>
 		             <img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popupModal('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="ingresoProducto.iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="ingresoProducto.tipodocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',1320,620)" />
 		          <% break;}}}%> 
@@ -82,7 +82,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		           <%
 					for (String per: listapermiso) {
 					if(per!=null){
-					if(per.equals("6232")){%>
+					if(per.equals("6242")){%>
 		           <img title="Ver Documento" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popupModal('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=UE&id=<bean:write name="x" property="ingresoProducto.iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="ingresoProducto.tipodocumento.iTipoDocumentoGestionId" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',470,380)" />
 		           <% break;}}}%> 
@@ -151,7 +151,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 						        <%
 								for (String per: listapermiso) {
 								if(per!=null){
-								if(per.equals("6232")){%>
+								if(per.equals("6242")){%>
 						        <img title="Editar Pago" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 				                     onclick="popupModal('estadoCuentaProveedor.do?metodo=mantenimientoEstadoCuentaProveedor&mode=U&id=<bean:write name="z" property="iEstadoCuentaProveedor" />&montoTotal=<bean:write name="x" property="ingresoProducto.fIngresoProductoTotal" />&pagoTotal=<bean:write name="x" property="pagoTotal" />',350,200)" />
 				                <% break;}}}%> 

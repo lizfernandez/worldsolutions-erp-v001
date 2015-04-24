@@ -31,6 +31,8 @@ public class Menutitulo implements Serializable {
 	private String vMenuTitulo;
 	
 	private String vCodigo;
+	
+	private String cEstadoCodigo;
 
 	public Menutitulo() {
 	}
@@ -110,6 +112,20 @@ public class Menutitulo implements Serializable {
 	 */
 	public void setvCodigo(String vCodigo) {
 		this.vCodigo = vCodigo;
+	}
+
+	/**
+	 * @return the cEstadoCodigo
+	 */
+	public String getcEstadoCodigo() {
+		return cEstadoCodigo;
+	}
+
+	/**
+	 * @param cEstadoCodigo the cEstadoCodigo to set
+	 */
+	public void setcEstadoCodigo(String cEstadoCodigo) {
+		this.cEstadoCodigo = cEstadoCodigo;
 	}
 
 

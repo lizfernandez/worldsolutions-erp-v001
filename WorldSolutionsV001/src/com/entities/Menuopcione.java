@@ -26,6 +26,8 @@ public class Menuopcione implements Serializable {
 	private String vOpciones;
 	
 	private String vCodigo;
+	
+	private String cEstadoCodigo;
 
 	//bi-directional many-to-one association to Venta
   	@OneToMany(mappedBy="menuopcione")
@@ -109,6 +111,20 @@ public class Menuopcione implements Serializable {
 	 */
 	public void setMenuacciones(List<Menuaccion> menuacciones) {
 		this.menuacciones = menuacciones;
+	}
+
+	/**
+	 * @return the cEstadoCodigo
+	 */
+	public String getcEstadoCodigo() {
+		return cEstadoCodigo;
+	}
+
+	/**
+	 * @param cEstadoCodigo the cEstadoCodigo to set
+	 */
+	public void setcEstadoCodigo(String cEstadoCodigo) {
+		this.cEstadoCodigo = cEstadoCodigo;
 	}
 
 	

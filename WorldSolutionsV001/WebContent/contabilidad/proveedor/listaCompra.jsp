@@ -3,17 +3,32 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-
+<%@page import="com.entities.Permiso"%>
+<%@ page language="java"%>
+<%@ page import="java.util.List" session="true"%>
+<% 
+List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoUsuario");
+//if(listapermiso!=null){	
+%> 
 <table border="0">
     <tr>
+         <% 
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("6213")){%>
         <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
         </td>
+        <% break;}}}
+	   for (String per: listapermiso) {
+	   if(per!=null){
+	   if(per.equals("6215")){%>
         <td><button class="button" onclick="fn_exportarExcel('contabilidad.do?metodo=exportarExcel&plantilla=contabilidad-compra')">
                 <span class="excel">Exportar</span>
             </button>
         </td>
+        <% break;}}}%>
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">
@@ -54,8 +69,16 @@
 	    <logic:notEmpty name="contabilidadForm" property="lista">
 	    <logic:iterate name="contabilidadForm" property="lista" id="x">	
 			<tr>
-				<td align="center"><img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="tipodocumento.iTipoDocumentoGestionId" />',1320,620)" /></td>
+				<td align="center">
+				<%
+					for (String per: listapermiso) {
+					if(per!=null){
+					if(per.equals("6212")){%>
+				
+				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
+		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="tipodocumento.iTipoDocumentoGestionId" />',1320,620)" />
+		        <% break;}}}%> 
+		        </td>
 				<td><bean:write name="x" property="proveedor.vProveedorRazonSocial" /></td>
 				<td><bean:write name="x" property="tipodocumento.vTipoDocumentoDescripcion" /></td>
 				<td><bean:write name="x" property="nIngresoProductoNumero" /></td>
