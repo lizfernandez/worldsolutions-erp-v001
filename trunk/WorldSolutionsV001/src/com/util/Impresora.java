@@ -22,19 +22,17 @@ import javax.print.attribute.HashDocAttributeSet;
  */
 public class Impresora {
 	
-	private StringBuilder contenido;
+	private String contenido;
 	private DocPrintJob jobImpresora = null;
-	private int longitudLlinea = 42;
+	private int longitudLinea = 40;
 	
 	public Impresora() {
-		contenido = new StringBuilder();
 		
 		//Codigos para iniciar la impresion y abrir la caja registradora
-		contenido.append((char) 27);
-		contenido.append((char) 112);
-		contenido.append((char) 0);
-		contenido.append((char) 10);
-		contenido.append((char) 100);
+		contenido = ""+ (char) 27 + (char) 112
+				+ (char) 0
+				+ (char) 10
+				+ (char) 100;
 	}
 		
 	public void seleccionarDispositivo(String nombreDispositivo) throws IllegalAccessException{
@@ -55,41 +53,38 @@ public class Impresora {
 	
 	public void cortarImpresion() throws IllegalAccessException {
 		validarDispositivo();
-		agregarSaltoLinea(5);
-		contenido.append((char) 27).append("m");
+		contenido += (char) 27+"m";
 	}
 	
 	public void agregarLineaCentrada (String cadena) throws IllegalAccessException {
 		validarDispositivo();
-		int espacioCentrar = (longitudLlinea - cadena.trim().length())/2;
+		int espacioCentrar = (longitudLinea - cadena.trim().length())/2;
 		while (espacioCentrar > 0) {
-			contenido.append(" ");
+			contenido += " ";
 			espacioCentrar--;
 		}
-		contenido.append(cadena);
-		contenido.append("\n");
+		contenido += cadena + "\n";
 	}
 	
 	public void agregarLinea (String cadena) throws IllegalAccessException {
 		validarDispositivo();
-		contenido.append(cadena);
-		contenido.append("\n");
+		contenido += cadena + "\n";
 	}
 	
 	public void agregarSeparacion () throws IllegalAccessException {
 		int contador = 0;
-		while (contador < longitudLlinea) {
-			contenido.append("-");
+		while (contador < longitudLinea) {
+			contenido += "-";
 			contador++;
 		}
-		contenido.append("\n");
+		contenido += "\n";
 	}
 	
 	public void agregarSaltoLinea (int cantidad) throws IllegalAccessException {
 		validarDispositivo();
 		int indice = 0;
 		while (indice < cantidad) {
-			contenido.append("\n");
+			contenido += "\n";
 			indice++;
 		}
 	}
@@ -102,7 +97,7 @@ public class Impresora {
 	
 	public void imprimirTicket() throws IOException {
 
-		byte[] bytes = this.contenido.toString().getBytes();
+		byte[] bytes = this.contenido.getBytes();
 		
 		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
 		DocAttributeSet das = new HashDocAttributeSet();
@@ -125,36 +120,49 @@ public class Impresora {
 	
 	public void agregarLineaDerecha(String cadena) throws IllegalAccessException {
 		validarDispositivo();
-		int espacioCentrar = longitudLlinea - cadena.trim().length();
-		while (espacioCentrar > 0) {
-			contenido.append(" ");
-			espacioCentrar--;
-		}
-		contenido.append(cadena);
-		contenido.append("\n");
+		
+		contenido += Util.completarEspacioIzquierda(cadena, longitudLinea) + "\n";
 	}
 
 	@Override
 	public String toString() {
-		return contenido.toString();
+		return contenido;
 	}
 
-	public void agregarLinea(String titulo, int espacio, String descripcion) throws IllegalAccessException {
+	public void agregarTituloIzquierda(String titulo, int espacio, String descripcion) throws IllegalAccessException {
 		validarDispositivo();
 		int espacioTitulo = espacio - titulo.length();
-		
-		contenido.append(titulo);
-		while (espacioTitulo > 0) {
-			contenido.append(" ");
-			espacioTitulo--;
+		String linea = Util.completarEspacioDerecha(titulo, espacioTitulo) + ": " + descripcion;
+		if (linea.length() > longitudLinea) {
+			
+			do {
+				contenido += linea.substring(0, longitudLinea) + "\n";
+				if (linea.length() > longitudLinea) {
+					linea = linea.substring(longitudLinea);
+				}
+				
+			} while (linea.length() > longitudLinea);
+			
 		}
-		contenido.append(": ").append(descripcion).append("\n");
+		contenido += linea + "\n";
+		
 	}
 
+
+	public void agregarTituloDerecha(String titulo, int espacio, String descripcion) throws IllegalAccessException {
+		validarDispositivo();
+		String lineaTitulo;
+		int espacioTitulo = espacio - titulo.length();
+		lineaTitulo = Util.completarEspacioDerecha(titulo, espacioTitulo) + ": " + descripcion;
+		
+		contenido += Util.completarEspacioIzquierda(lineaTitulo, longitudLinea) + "\n";
+		
+	}
+	
 	public void agregarLinea(Object[][] camposDetallesLinea) throws IllegalAccessException {
 		StringBuilder lineaDetalle = new StringBuilder();
 		String valor;
-		int posicion;
+		int posicionInicial;
 		int posicionFinal;
 		int longitudMaxima;
 		int tipo;
@@ -163,21 +171,41 @@ public class Impresora {
 		while (indice < longitud) {
 
 			valor = camposDetallesLinea[indice][0].toString();
-			posicion = Integer.parseInt(camposDetallesLinea[indice][1].toString());
+			posicionInicial = Integer.parseInt(camposDetallesLinea[indice][1].toString());
 			tipo = Integer.parseInt(camposDetallesLinea[indice][2].toString());
 			indice++;
 			
 			if (indice < longitud) {
 				posicionFinal = Integer.parseInt(camposDetallesLinea[indice][1].toString());
 			} else {
-				posicionFinal = longitudLlinea;
+				posicionFinal = longitudLinea;
 			}
-			longitudMaxima = posicionFinal - posicion;
+			longitudMaxima = posicionFinal - posicionInicial;
+			
+			if (valor.length() > longitudMaxima) {
+				int espacioRestante = longitudLinea - posicionInicial;
+				
+				if (valor.length() > espacioRestante) {
+					//Se crea el espacio del tap
+					String tabulacion = Util.completarEspacioDerecha("", posicionInicial-3);
+					String linea;
+					System.out.println("Total : " + valor.length() + " Espacio : " + espacioRestante);
+					linea = valor.substring(0, espacioRestante-1);
+					valor = valor.substring(espacioRestante);
+					
+					lineaDetalle.append(linea).append("\r\n");
+					lineaDetalle.append(tabulacion);
+					longitudMaxima+=3;
+					
+				}
+			}
 			if (tipo > 0) {
 				lineaDetalle.append(Util.completarEspacioDerecha(valor, longitudMaxima));
 			} else {
 				lineaDetalle.append(Util.completarEspacioIzquierda(valor, longitudMaxima));
 			}
+			
+			
 			
 		}
 		agregarLinea(lineaDetalle.toString());
