@@ -273,7 +273,7 @@
 				           
 				        </td>
 				        <td align="left">
-				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir" type="button"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
 				        </td>
 				        <td><button onclick="cancelar('');"  class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
