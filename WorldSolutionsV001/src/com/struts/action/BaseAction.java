@@ -206,8 +206,7 @@ public abstract class BaseAction  extends DispatchAction {
 			impresora.seleccionarDispositivo(nombreDispositivo);
 
   			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
-            impresora.agregarSaltoLinea(2);
-    		impresora.agregarLineaCentrada(usu.getSucursal().getEmpresa().getvEmpresaNombre());
+            impresora.agregarLineaCentrada(usu.getSucursal().getEmpresa().getvEmpresaNombre());
     		impresora.agregarLineaCentrada("RUC: "+usu.getSucursal().getEmpresa().getvEmpresaRuc());
     		impresora.agregarLineaCentrada(usu.getSucursal().getEmpresa().getvEmpresaDireccion());
     		impresora.agregarLineaCentrada(usu.getSucursal().getvSucursalNombre());
@@ -217,11 +216,12 @@ public abstract class BaseAction  extends DispatchAction {
     		cargarContenidoImprimir(form,  request, impresora);
             
     		impresora.agregarSeparacion();
-                
+    		impresora.agregarSaltoLinea(1);
     		impresora.agregarLineaCentrada("NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES");
     		impresora.agregarLineaCentrada("GRACIAS POR SU COMPRA");
-            
     		impresora.agregarLineaCentrada("v1.0.0 - USUARIO: " + usu.getvUsuarioLogin() + " - CAJA");
+    		
+    		impresora.agregarSaltoLinea(10);
     		
     		impresora.cortarImpresion();
     		System.out.println(impresora.toString());
