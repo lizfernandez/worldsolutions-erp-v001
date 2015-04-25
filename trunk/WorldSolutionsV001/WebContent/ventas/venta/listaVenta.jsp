@@ -106,7 +106,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 					if(per!=null){
 					if(per.equals("5112")){%>
 				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />&iclasificacionId=1',1130,600)" />
+		                     onclick="popup('venta.do?metodo=mantenimientoVenta&mode=U&id=<bean:write name="x" property="iVentaId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />&iclasificacionId=1',1150,600)" />
 		        <% break;}}}%>      
 		        </td>
 		 	    <!-- td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
@@ -152,7 +152,7 @@ $("#venta,#mantVentas").addClass("active");
 	//tipoDoc== 2;// $("#selTipoDocumento").val();
 	var tipoDoc= 1;//$("#selTipoDocumento").val();
 	var iclasificacionId= 1;/*$("#iclasificacionId").val();*/
-	 popup('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1100,600);
+	 popup('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1150,600);
  }
  </script> 
  

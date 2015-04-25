@@ -70,7 +70,7 @@
 <tr>
     <td align="right" width="23%">Categor&iacute;a:</td>
     <td>
-     <html:select  property="iCategoriaId" styleId="iCategoriaId" styleClass="combo" onchange="listSubCategoria()" tabindex="1" style="width:205px">
+     <html:select  property="iCategoriaId" styleId="iCategoriaId" styleClass="combo" onchange="listSubCategoria()" tabindex="1" style="width:205px" >
            <html:options collection="listaCategoria" property="iCategoriaId" labelProperty="vCategoriaDescripcion"/>
      </html:select>    
     </td>
@@ -286,9 +286,9 @@
 <tr height="50px">   
     <td align="center" colspan="4">
     <br>    
-     <button onclick="insertar('tab-grupo')" class="button">
+     <button onclick="insertar('tab-grupo')" class="button" tabindex="16">
           <span class='save' id="btnGuardar">Guardar</span></button>
-     <button onclick="cancelar('');"  class="button" type="button"><span class='cancel'>Cancelar</span></button>
+     <button onclick="cancelar('');"  class="button" type="button" tabindex="17"><span class='cancel'>Cancelar</span></button>
      <br>
     
      <span id="m_mensaje" class="mensaje"></span>

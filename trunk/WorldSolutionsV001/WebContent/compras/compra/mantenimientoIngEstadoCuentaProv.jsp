@@ -47,7 +47,7 @@
 <tr>
     <td align="right">Fecha Emisi&oacute;n :</td>
     <td>
-       <html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha"   styleClass="text"  size="11" maxlength="11" readonly="true"/>
+       <html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha"   styleClass="text"  size="11" maxlength="11" readonly="true" />
       <span id="m_dIngresoProductoFecha" class="importante">*</span>
     </td>
 </tr>
@@ -62,7 +62,7 @@
     <td align="right">Forma de Pago :</td>
     <td>
          <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo" style="width:152px"
-         >       
+         onchange="fn_PagoCredito()">       
               <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
          </html:select>
         </td>
@@ -98,6 +98,7 @@
 
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="vIngresoProductoPuntoLlegada" styleId="vIngresoProductoPuntoLlegada" />
+<html:hidden property="vEstadoDocumento" styleId="vEstadoDocumento" value="CANCELADO"/>
 
 <%-- hidden field que contiene el mode --%>
 <html:hidden property="mode" styleId="mode"  />
@@ -137,6 +138,10 @@
          }
     }
     
-   
+    function fn_PagoCredito(){
+    	$("#vEstadoDocumento").val("DEUDA");    	
+    	if(i==1){$("#vEstadoDocumento").val("CANCELADO"); }
+  
+    }
 
 </script>

@@ -311,10 +311,10 @@
 				           <button onclick="insertar('tabla')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
 				           
 				        </td>
-				        <td align="left">
+				        <!-- td align="left">
 				           <button onclick="imprimir('tabla')"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
-				        </td>
+				        </td -->
 				        <td><button onclick="cancelar('');" class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
 				    </tr>
 				</table>
