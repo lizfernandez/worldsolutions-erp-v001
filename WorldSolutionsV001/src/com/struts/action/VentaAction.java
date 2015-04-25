@@ -2068,7 +2068,43 @@ public class VentaAction extends BaseAction {
 	            impresora.agregarTituloDerecha("VUELTO", 0,venta.getvTipoPago()+ Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(venta.getfMontoVuelto()),11));
 	            
 			} else if(tipoImpresion.equals("ventaDevolucion")) {
+				Ventadevolucion ventaDev = ventaDao.findEndidadBD(new Ventadevolucion(), "iVentaId", id);
+
+				impresora.agregarLineaCentrada(ventaDev.getTipoDocumento().getvTipoDocumentoDescripcion() + " ELECTRONICO: " + ventaDev.getVenta().getnVentaNumero());
+	    		impresora.agregarLinea("FECHA EMISION: " + Fechas.fechaConFormato("dd/MM/yyyy HH:mm:SS"));
+				impresora.agregarTituloIzquierda("VENDEDOR", 8, ventaDev.getVenta().getUsuario().getPersonal().getvPersonalApellidoPaterno() + " " + ventaDev.getVenta().getUsuario().getPersonal().getvPersonalApellidoMaterno() + ", " + ventaDev.getVenta().getUsuario().getPersonal().getvPersonalNombres());
+				impresora.agregarTituloIzquierda("NOTA CREDITO", 8, ventaDev.getnNroNotaCredito());
+	    		impresora.agregarSeparacion();
+	
+				impresora.agregarTituloIzquierda("CLIENTE SR(A)", 8, ventaDev.getVenta().getCliente().getvClienteRazonSocial());
+				impresora.agregarTituloIzquierda("RUC/DNI", 8, ventaDev.getVenta().getCliente().getnClienteNumeroDocumento().toString());
 				
+				for (Direccioncliente direccioncliente : ventaDev.getVenta().getCliente().getDireccionclientes()) {
+					if ("1".equals(direccioncliente.getvPrincipal())) {
+						impresora.agregarTituloIzquierda("DIRECCION", 8, direccioncliente.getvDireccion());
+					}
+				}
+				
+				impresora.agregarSeparacion();
+				impresora.agregarLinea("CODIGO  DESCRIPCION  CANT P.UNIT IMPORTE");
+				impresora.agregarSeparacion();
+				      
+	            // aqui recorro mis productos y los imprimo
+	            for(Ventadevoluciondetalle ventadetalle: ventaDev.getVentadevoluciondetalles()){
+	            	impresora.agregarLinea(new Object[][]{{ventadetalle.getProducto().getcProductoCodigo(),0,1},
+	            	{ventadetalle.getProducto().getvProductoNombre(),8,1},
+	            	{ventadetalle.getiVentaDevDetalleCantidad(),21,-1},
+	            	{ventadetalle.getfVentaDevDetallePrecio(),25,-1},
+	            	{ventadetalle.getfVentaDevDetalleTotal(),32,-1}});
+	            	
+	            }
+	            
+	            impresora.agregarSeparacion();
+	            //Descuentos
+	            impresora.agregarTituloDerecha("SUBTOTAL", 0,ventaDev.getVenta().getvTipoVenta()+Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(ventaDev.getfVentaDevSubTotal()),11));
+	            impresora.agregarTituloDerecha("IGV", 0,ventaDev.getVenta().getvTipoVenta()+ Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(ventaDev.getfVentaDevIGV()),11));
+	            impresora.agregarTituloDerecha("TOTAL FINAL", 0,ventaDev.getVenta().getvTipoVenta()+Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(ventaDev.getfVentaDevTotal()), 11));
+	            
 			}
 		}
 				
