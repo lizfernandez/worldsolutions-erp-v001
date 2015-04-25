@@ -35,7 +35,7 @@
     <td align="right">Cantidad:</td>
     <td>
     <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad" maxlength="7"  styleClass="text" onkeypress="return Numeros(event)" /> 
-       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo">
+       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" style="width:140px">
           <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
      </html:select>  
       <span id="m_iProductoStockCantidad" class="importante">*</span>
@@ -44,7 +44,7 @@
 <tr>
      <td align="right">Capacidad:</td>
     <td><html:text property="vProductoCapacidad" styleId="vProductoCapacidad" maxlength="7"  styleClass="textN" onkeypress="return LetrasNumeros(event)" /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-       <html:select  property="iUnidadMedidadIdC" styleId="iUnidadMedidadIdC" styleClass="comboCodigo">
+       <html:select  property="iUnidadMedidadIdC" styleId="iUnidadMedidadIdC" styleClass="comboCodigo" style="width:140px">
           <option value="0">::SELECCIONE::</option> 
           <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
      </html:select>  
@@ -54,14 +54,22 @@
 <tr>
     <td align="right">Precio Compra:</td>
     <td>
-	    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" />
-	     <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo">
+	    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" onkeypress="return Numeros(event)"/>
+	     <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo" style="width:140px">
 	          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
 	     </html:select> 
 	     <span id="m_fProductoPrecioCompra" class="importante">*</span>
      </td>
 </tr>
+<tr>
+	<td align="right">Precio Venta:</td>
+	<td><html:text property="fProductoPrecioVenta" 	styleId="fProductoPrecioVenta" styleClass="text" onkeypress="return Numeros(event)" /> 
+		<html:select property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
+		<html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion" />
+		</html:select>
+   </td>
 
+</tr>
 <tr>
     <td align="right">Stock Min:</td>
     <td><html:text property="iProductoStockMinimo" styleId="iProductoStockMinimo" styleClass="text" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
@@ -82,7 +90,7 @@
 <tr height="50px">   
     <td align="center" colspan="2">
     <br>    
-     <button onclick="insertar('tab-grupo')" class="button">
+     <button onclick="insertar('tab-grupo')" class="button" type="submit">
           <span class='save' id="btnGuardar" class="button" >Guardar</span></button>
      <button onclick="cancelar('');"  class="button" type="button"><span class='cancel'>Cancelar</span></button>
      <br>

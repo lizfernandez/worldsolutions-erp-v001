@@ -39,6 +39,7 @@
     </td>
    
 </tr>
+<tr>
 <td align="right">Clasificaci&oacute;n:</td>
     <td>
     <html:select  property="iClasificacionClienteId" styleId="iClasificacionClienteId" styleClass="combo Departamento" style="width:160px" onchange="fn_cambio()" tabindex="5">       
@@ -49,7 +50,7 @@
 <tr>
     <td align="right">% Descuento:</td>
     <td>        
-        <html:text property="fDescuento" styleId="fDescuento" styleClass="textN"  tabindex="6"/>
+        <html:text property="fDescuento" styleId="fDescuento" styleClass="textN"  tabindex="6" onkeypress="return Numeros(event)"/>
      
     </td>
    

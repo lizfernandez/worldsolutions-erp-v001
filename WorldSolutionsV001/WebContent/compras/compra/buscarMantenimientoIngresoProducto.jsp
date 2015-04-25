@@ -47,14 +47,14 @@
 <tr>
     <td align="right">Fecha Emisi&oacute;n :</td>
     <td>
-       <html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha"   styleClass="text"  size="11" maxlength="11"/>
+       <html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha"   styleClass="text"  size="11" maxlength="11" readonly="true"/>
       <span id="m_dIngresoProductoFecha" class="importante">*</span>
     </td>
 </tr>
 <tr>
     <td align="right">Monto :</td>
     <td>
-    <html:text property="fIngresoProductoTotal" styleId="fIngresoProductoTotal"   styleClass="text" onkeypress="return Numeros(event)" size="11" maxlength="11"/>
+    <html:text property="fIngresoProductoTotal" styleId="fIngresoProductoTotal"   styleClass="text textNumero" onkeypress="return Numeros(event)" size="11" maxlength="11"/>
     <span id="m_fIngresoProductoTotal" class="importante">*</span>  
     </td>
 </tr>

@@ -9,6 +9,9 @@
     <td>    
 	    <html:text property="cProveedorCodigo"  styleId="cProveedorCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />
 	    <html:text property="vProveedorRazonSocial"  styleId="vProveedorRazonSocial"  styleClass="text inputDisabled" size="35"/>
+	    <input type="hidden" id="vClasificacion"  class="text textCodigo inputDisabled" readonly="true" />
+        <input type="hidden" id="fDescuentoProveedor"  class="text inputDisabled" readonly="true" size="6" />
+  
 	    <img  onclick="popupModal('proveedor.do?metodo=listaProveedor&mode=LP',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png"/>
 	    <span id="m_cProveedorCodigo" class="importante">*</span>
 	    </td>
@@ -28,7 +31,8 @@
 </tr>
 <tr>
     <td align="right">Tipo Documento :</td>
-    <td> <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo">       
+    <td> <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo" style="width:152px"
+    >       
               <html:options collection="listaTipoDoc" property="iTipoDocumentoGestionId" labelProperty="vTipoDocumentoDescripcion"/>
          </html:select>
      </td>
@@ -43,28 +47,30 @@
 <tr>
     <td align="right">Fecha Emisi&oacute;n :</td>
     <td>
-       <html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha"   styleClass="text"  size="11" maxlength="11"/>
+       <html:text property="dIngresoProductoFecha" styleId="dIngresoProductoFecha"   styleClass="text"  size="11" maxlength="11" readonly="true"/>
       <span id="m_dIngresoProductoFecha" class="importante">*</span>
     </td>
 </tr>
 <tr>
     <td align="right">Monto :</td>
     <td>
-    <html:text property="fIngresoProductoTotal" styleId="fIngresoProductoTotal"   styleClass="text" onkeypress="return Numeros(event)" size="11" maxlength="11"/>
+    <html:text property="fIngresoProductoTotal" styleId="fIngresoProductoTotal"   styleClass="text textNumero" onkeypress="return Numeros(event)" size="11" maxlength="11"/>
     <span id="m_fIngresoProductoTotal" class="importante">*</span>  
     </td>
 </tr>
 <tr>
     <td align="right">Forma de Pago :</td>
     <td>
-         <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo">       
+         <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo" style="width:152px"
+         >       
               <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
          </html:select>
         </td>
 </tr>
 <tr>
     <td align="right">Estado:</td>
-    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo">       
+    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" style="width:152px"
+    >       
               <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
          </html:select>
     </td>

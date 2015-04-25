@@ -64,7 +64,16 @@
 	     <span id="m_fProductoPrecioCompra" class="importante">*</span>
      </td>
 </tr>
+<tr>
+	<td align="right">Precio Venta:</td>
+	<td><html:text property="fProductoPrecioVenta" 	styleId="fProductoPrecioVenta" styleClass="text" onkeypress="return Numeros(event)" />  
+		<html:select property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
+		<html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion" />
+		</html:select>
+		
+   </td>
 
+</tr>
 <tr>
     <td align="right">Stock Min:</td>
     <td><html:text property="iProductoStockMinimo" styleId="iProductoStockMinimo" styleClass="text" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->

@@ -135,7 +135,7 @@
 <html:hidden property="vIngresoProductoPuntoLlegada" styleId="vIngresoProductoPuntoLlegada" />
 
 <%-- hidden field que contiene el mode --%>
-<html:hidden property="mode" styleId="mode"  />
+<html:hidden property="mode" styleId="mode"  value="F"/>
 			
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="listaLetrasProveedor" styleId="metodo" />
@@ -181,12 +181,11 @@
         $("#popupCabecera").text('INSERTAR DATOS');	
     } else {
          document.getElementById('btnGuardar').textContent="Actualizar";
-        $("#popupCabecera").text('ACTUALIZAR DATOS');	
+        $("#popupCabecera").text('ACTUALIZAR DATOS');
+        
         if(mode=='F'){
+        	
         	$("#popupCabecera").text('BUSCAR DATOS');        	
-         	/*$(":input").attr('disabled',true);
-         	$(":hidden").attr('disabled',false);
-         	$(":button").attr('disabled',false);*/
          	$("#btnGuardar").removeClass('save');
          	$("#btnGuardar").addClass('find');
         	$("#btnGuardar").text('Buscar');

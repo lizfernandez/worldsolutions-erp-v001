@@ -14,7 +14,7 @@
 <tr>
     <td align="right">% Descuento:</td>
     <td>
-       <html:text property="fDescuento" styleId="fDescuento" onkeyup="return mayuscula('fDescuento')" styleClass="text"/>
+       <html:text property="fDescuento" styleId="fDescuento" onkeypress="return Numeros(event)" styleClass="text"/>
        <span id="m_fDescuento" class="importante">*</span>
    </td>
 </tr>

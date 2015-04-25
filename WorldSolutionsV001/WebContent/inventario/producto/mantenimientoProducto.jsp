@@ -118,7 +118,7 @@
 		<tr>
 		    <td align="right" width="20%">Cantidad:</td>
 		    <td width="20%">
-		    <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad" maxlength="7"  styleClass="text" tabindex="5" /> 
+		    <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad" maxlength="7"  styleClass="text textNumero" tabindex="5" onkeypress="return Numeros(event)"/> 
 		    <span id="m_iProductoStockCantidad" class="importante">*</span>  
 		    </td>
 		    <td>
@@ -142,7 +142,7 @@
 		<tr>
 		    <td align="right">Precio Compra:</td>
 		    <td>
-			    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" tabindex="9"/>
+			    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text textNumero" tabindex="9" onkeypress="return Numeros(event)"/>
 			    <span id="m_fProductoPrecioCompra" class="importante">*</span>
 			</td>
 		      <td>
@@ -155,7 +155,7 @@
 		<tr>
 		    <td align="right">Ganancia:</td>
 		    <td>
-		       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text" onblur="fn_calcularGanancia('G')" tabindex="11"/>
+		       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text textNumero" onblur="fn_calcularGanancia('G')" tabindex="11" onkeypress="return Numeros(event)"/>
 		       </td>
 		       <td>
 		        <select class="comboCodigo" disabled="disabled" id="porcent" style="width:140px">
@@ -166,7 +166,7 @@
 		<tr>
 		    <td align="right">Precio Venta:</td>
 		    <td>
-		      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text" onblur="fn_calcularGanancia('V')" tabindex="12"/>
+		      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text textNumero" onblur="fn_calcularGanancia('V')" tabindex="12" onkeypress="return Numeros(event)"/>
 		      <span id="m_fProductoPrecioVenta" class="importante">*</span>
 		    </td>
 		    <td>
@@ -178,15 +178,15 @@
 		</tr>
 		<tr>
 		    <td align="right">% Descuento:</td>
-		    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text"  tabindex="13"/></td>   <!-- onkeypress="return Numeros(event)" -->
+		    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text textNumero"  tabindex="13" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
 		</tr>
 		<tr>
 		    <td align="right">Stock Min:</td>
-		    <td colspan="2"><html:text property="iProductoStockMinimo" styleId="iProductoStockMinimo" styleClass="text"  tabindex="13"/></td>   <!-- onkeypress="return Numeros(event)" -->
+		    <td colspan="2"><html:text property="iProductoStockMinimo" styleId="iProductoStockMinimo" styleClass="text textNumero"  tabindex="13" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
 		</tr>
 		<tr>
 		    <td align="right">Stock Max:</td>
-		    <td colspan="2"><html:text property="iProductoStockMaximo" styleId="iProductoStockMaximo" styleClass="text"  tabindex="14"/></td>  <!-- onkeypress="return Numeros(event)" -->
+		    <td colspan="2"><html:text property="iProductoStockMaximo" styleId="iProductoStockMaximo" styleClass="text textNumero"  tabindex="14" onkeypress="return Numeros(event)"/></td>  <!-- onkeypress="return Numeros(event)" -->
 		</tr>
 		<tr>
 		    <td align="right">Estado:</td>

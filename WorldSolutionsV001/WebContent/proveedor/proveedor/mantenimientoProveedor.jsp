@@ -13,7 +13,7 @@
 <tr>
     <td align="right" ><span id="nombres">Raz&oacute;n Social :</span></td>
     <td>        
-        <html:text property="vProveedorRazonSocial" styleId="vProveedorRazonSocial" onkeyup="return mayuscula('vProveedorRazonSocial')" styleClass="text"/>
+        <html:text property="vProveedorRazonSocial" styleId="vProveedorRazonSocial" onkeyup="return mayuscula('vProveedorRazonSocial')" styleClass="text" size="46"/>
        <span id="m_vProveedorRazonSocial" class="importante">*</span>
    </td>
 </tr>
@@ -34,7 +34,7 @@
 <tr>
     <td align="right">Direcci&oacute;n :</td>
     <td>        
-        <html:text property="vProveedorDireccion" styleId="vProveedorDireccion" onkeyup="return mayuscula('vProveedorDireccion')" styleClass="text"/>
+        <html:text property="vProveedorDireccion" styleId="vProveedorDireccion" onkeyup="return mayuscula('vProveedorDireccion')" styleClass="text" size="46"/>
        <span id="m_vProveedorDireccion" class="importante">*</span>
     </td>    
 </tr>
