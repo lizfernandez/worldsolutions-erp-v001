@@ -719,8 +719,14 @@ public class ClienteAction extends BaseAction {
 	}
 	
 	@Override
-	public void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora) throws IllegalAccessException, IOException {
-		 
+	public void cargarContenidoImprimir(ActionForm form,
+			HttpServletRequest request, Impresora impresora,
+			ActionMapping mapping, HttpServletResponse response)
+			throws IllegalAccessException, IOException,
+			IllegalArgumentException, SecurityException,
+			ClassNotFoundException, NoSuchFieldException, ParseException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -693,6 +693,7 @@
     	
     }
     function fn_imprimir(){
+    	insertar('tabla');
     	var id= $("#iVentaId").val();
         var tipoImpresion="venta";
     	var cad="venta.do?metodo=imprimir&id="+id+"&tipoImpresion="+tipoImpresion;
