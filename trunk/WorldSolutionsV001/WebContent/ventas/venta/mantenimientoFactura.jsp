@@ -410,6 +410,7 @@
     if(mode=='I') {
         //document.getElementById('vVentaCodigo').focus();
         document.getElementById('btnGuardar').textContent="Guardar";
+        $("#btnImprimir").hide();
         $(".trCodigo").show();
         if($("#tipoMoneda").val()=="S/."){
         	$("#monedaSoles").attr("checked",true);
@@ -459,7 +460,7 @@
         	$("#btnGuardar").text('Buscar');
          }
         if(mode=="U"){// visualizar venta
-        	$(":input").addClass("inputDisabled").attr("disabled",true);
+        	$(":input").addClass("inputDisabled").attr("disabled",true);        	
             $(".imgpopup, .imgDelete, .imgNew").hide();
             $("#btnImprimir, #btnCancel").removeClass("inputDisabled").attr("disabled",false);
             $("#detallePago :input").removeClass("inputDisabled").attr("disabled",false);
