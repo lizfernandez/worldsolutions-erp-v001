@@ -138,12 +138,12 @@
                      <tr>		                
 		                <td align="right" width="38%">Cantidad Obtenida: </td>
 		                <td align="right">
-		                  <input type="text" id="iCantidadR"  class="text  textNumero" value="1" onblur="fn_recarcular()" />
+		                  <input type="text" id="iCantidadR"  class="text  textNumero" value="1" onblur="fn_recarcular()" onkeypress="return Numeros(event)" />
 		                  <span id="m_iCantidadR" class="importante">*</span>
 		                </td>
 		                <td align="right" >Otros Costos </td>
 		                <td align="right">
-		                 <html:text property="fOtrosCostos" styleId="fOtrosCostos" styleClass="text textNumero"  onblur="fn_recarcular()"/>
+		                 <html:text property="fOtrosCostos" styleId="fOtrosCostos" styleClass="text textNumero"  onblur="fn_recarcular()" onkeypress="return Numeros(event)"/>
 		                  
 		                  
 		                </td>
@@ -151,12 +151,12 @@
    	            <tr>		                
 		                <td align="right">Costo Unidad: </td>
 		                <td align="right">
-		                  <input type="text" id="fCostoUniR"  class="text  textNumero" readonly="true" />
+		                  <input type="text" id="fCostoUniR"  class="text  textNumero" readonly="true" onkeypress="return Numeros(event)"/>
 		                  <span id="fCostoUniR" class="importante">*</span>
 		                </td>
 		                 <td align="right">TOTAL: <span class="tipoMoneda"></span> </td>
 		                <td align="right">
-		                  <input type="text" id="fCostoTotalR"  class="text inputDisabled textNumero" readonly="true" />
+		                  <input type="text" id="fCostoTotalR"  class="text inputDisabled textNumero" readonly="true" onkeypress="return Numeros(event)"/>
 		                  <span id="m_fCostoTotalR" class="importante">*</span>
 		                </td>
 		            </tr>
@@ -174,7 +174,8 @@
              </td>
              <td align="left" colspan="2" >
              <html:text property="vDescripcion" styleId="vDescripcion" size="32" onkeyup="return mayuscula('vDescripcion') " 
-             styleClass="text" maxlength="45" /></td>
+             styleClass="text" maxlength="45" />
+             <span id="m_vDescripcion" class="importante">*</span></td>
             
             
          </tr>
@@ -249,7 +250,7 @@
 								<tr>
 								    <td align="right" width="20%">Cantidad:</td>
 								    <td width="20%">
-								    <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad" maxlength="7"  styleClass="text" tabindex="5" /> 
+								    <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad" maxlength="7"  styleClass="text" tabindex="5" onkeypress="return Numeros(event)"/> 
 								    <span id="m_iProductoStockCantidad" class="importante">*</span>  
 								    </td>
 								    <td>
@@ -273,7 +274,7 @@
 								<tr>
 								    <td align="right">Precio Compra:</td>
 								    <td>
-									    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" tabindex="9"/>
+									    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" tabindex="9" onkeypress="return Numeros(event)"/>
 									    <span id="m_fProductoPrecioCompra" class="importante">*</span>
 									</td>
 								      <td>
@@ -286,7 +287,7 @@
 								<tr>
 								    <td align="right">Ganancia:</td>
 								    <td>
-								       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text" onblur="fn_calcularGanancia('G')" tabindex="11"/>
+								       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text" onblur="fn_calcularGanancia('G')" tabindex="11" onkeypress="return Numeros(event)"/>
 								       </td>
 								       <td>
 								        <select class="comboCodigo" disabled="disabled" id="porcent" style="width:140px">
@@ -297,7 +298,7 @@
 								<tr>
 								    <td align="right">Precio Venta:</td>
 								    <td>
-								      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text" onblur="fn_calcularGanancia('V')" tabindex="12"/>
+								      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text" onblur="fn_calcularGanancia('V')" tabindex="12" onkeypress="return Numeros(event)"/>
 								      <span id="m_fProductoPrecioVenta" class="importante">*</span>
 								    </td>
 								    <td>
@@ -309,7 +310,7 @@
 								</tr>
 								<tr>
 								    <td align="right">% Descuento:</td>
-								    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text"  tabindex="13"/></td>   <!-- onkeypress="return Numeros(event)" -->
+								    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text"  tabindex="13" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
 								</tr>
 								<!-- tr>
 								    <td align="right">Stock Min:</td>
@@ -342,7 +343,7 @@
 <tr height="50px">   
     <td align="center" colspan="4">
     <br>    
-     <button onclick="insertar('tab-grupo')" class="button">
+     <button onclick="insertar('tab-grupo')" class="button" tabindex="16">
           <span class='save' id="btnGuardar">Guardar</span></button>
      <button onclick="cancelar('');"  class="button" type="button"><span class='cancel'>Cancelar</span></button>
      <br>

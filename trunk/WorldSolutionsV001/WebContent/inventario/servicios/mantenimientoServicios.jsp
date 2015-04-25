@@ -101,7 +101,7 @@
 		<tr>
 		    <td align="right">Precio Costo:</td>
 		    <td>
-			    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" tabindex="9"/>
+			    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" tabindex="9" onkeypress="return Numeros(event)"/>
 			    <span id="m_fProductoPrecioCompra" class="importante">*</span>			
 			     <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo" tabindex="10" style="width:140px">
 			          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
@@ -112,7 +112,7 @@
 		<tr>
 		    <td align="right">Ganancia:</td>
 		    <td>
-		       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text" onblur="fn_calcularGanancia('G')" tabindex="11"/>
+		       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text" onblur="fn_calcularGanancia('G')" tabindex="11" onkeypress="return Numeros(event)"/>
 		       <select class="comboCodigo" disabled="disabled" id="porcent" style="width:140px">
 			          <option value=""/> %</option>
 			     </select>
@@ -121,7 +121,7 @@
 		<tr>
 		    <td align="right">Precio Venta:</td>
 		    <td>
-		      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text" onblur="fn_calcularGanancia('V')" tabindex="12"/>
+		      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text" onblur="fn_calcularGanancia('V')" tabindex="12" onkeypress="return Numeros(event)"/>
 		      <span id="m_fProductoPrecioVenta" class="importante">*</span>
 		      <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
 			          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
@@ -131,7 +131,7 @@
 		</tr>
 		<tr>
 		    <td align="right">% Descuento:</td>
-		    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text"  tabindex="13"/></td>   <!-- onkeypress="return Numeros(event)" -->
+		    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text"  tabindex="13" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
 		</tr>
 			<tr>
 		    <td align="right">Estado:</td>

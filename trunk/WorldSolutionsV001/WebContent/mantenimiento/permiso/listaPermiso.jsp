@@ -85,7 +85,10 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	        <table class="tabladetalle" border="0" width="100%" id="tablaPermisos">
 	            <thead>
 		           <tr> 
-			           <th>
+			           <th align="left">
+			           <input type="checkbox" id="ckAll" onclick="CkAll('tablaPermisos')" /> TODO
+			           &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+			           
 			          <span  id="permisoUsuario">PERMISOS DEL SISTEMA</span> 
 			             <input type="text" id="iUsuarioId" class="textInvisible" value=""/> 
 			             <input type="text" id="iPermisoId" class="textInvisible" value=""/> 
@@ -94,6 +97,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		            
 	             </thead>
 	             <tbody>
+	             
 	              	<!--Lista contenido cabecera del sistema -->	
 	             <logic:iterate name="perfilForm" property="lista" id="x" indexId="i">
 	             <logic:equal name="x" property="cEstadoCodigo" value="AC">
@@ -232,7 +236,19 @@ function Cktodo(id,codigo){
     	  $(".ck_"+codigo).attr('checked', false);
       }
 	
+ 
 }
+function CkAll(id){
+	
+	$(document).find('#'+id+' input:checkbox').each(function(key,val){ 	 
+	 if($("#ckAll").is(':checked')) {  
+			  $("#"+this.id).attr('checked', true); 
+	      } else {  
+	    	  $("#"+this.id).attr('checked', false);
+	      }
+	 });
+		
+	}
 function CktodoHijos(id,idform,padre1,padre2){
 	$(document).find('#'+idform+' input:checkbox').each(function(key,val){ 	 
 		if($("#"+id).is(':checked')) {  

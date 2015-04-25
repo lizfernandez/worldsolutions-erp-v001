@@ -30,7 +30,7 @@
 </tr>
 <tr>
     <td align="right">Tipo Documento :</td>
-    <td> <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo"> 
+    <td> <html:select  property="iTipoDocumentoId" styleId="iTipoDocumentoId" styleClass="combo" style="width:152px"> 
               <option value="00">::SELECCIONE::</option>       
               <html:options collection="listaTipoDoc" property="iTipoDocumentoGestionId" labelProperty="vTipoDocumentoDescripcion"/>
          </html:select>
@@ -46,28 +46,28 @@
 <tr>
     <td align="right">Fecha Emisi&oacute;n Inicio:</td>
     <td>
-       <html:text property="dVentaFecha" styleId="dVentaFecha"   styleClass="text"  size="11" maxlength="11"/>
+       <html:text property="dVentaFecha" styleId="dVentaFecha"   styleClass="text"  size="11" maxlength="11" readonly="true"/>
       <span id="m_dVentaFecha" class="importante">*</span>
     </td>
 </tr>
 <tr>
     <td align="right">Fecha Emisi&oacute;n fin:</td>
     <td>
-       <html:text property="dVentaFechaFin" styleId="dVentaFechaFin"   styleClass="text"  size="11" maxlength="11"/>
+       <html:text property="dVentaFechaFin" styleId="dVentaFechaFin"   styleClass="text"  size="11" maxlength="11" readonly="true"/>
       <span id="m_dVentaFechaFin" class="importante">*</span>
     </td>
 </tr>
 <tr>
     <td align="right">Monto :</td>
     <td>
-    <html:text property="fVentaTotal" styleId="fVentaTotal"   styleClass="text" onkeypress="return Numeros(event)" size="11" maxlength="11"/>
+    <html:text property="fVentaTotal" styleId="fVentaTotal"   styleClass="text textNumero" onkeypress="return Numeros(event)" size="11" maxlength="11"/>
     <span id="m_fVentaTotal" class="importante">*</span>  
     </td>
 </tr>
 <tr>
     <td align="right">Forma de Pago :</td>
     <td>
-         <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo">  
+         <html:select  property="iFormaPago" styleId="iFormaPago" styleClass="combo" style="width:152px">  
               <option value="00">::SELECCIONE::</option>      
               <html:options collection="listaFormapago" property="iFormaPago" labelProperty="vFormaPagoDescripcion"/>
          </html:select>
@@ -75,7 +75,7 @@
 </tr>
 <tr>
     <td align="right">Estado:</td>
-    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo">   
+    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" style="width:152px">   
                 
               <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
          </html:select>

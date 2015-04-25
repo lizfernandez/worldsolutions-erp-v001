@@ -19,7 +19,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 			if(per!=null){
 	   if(per.equals("1141")){%>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=I',450,520)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=I',450,550)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -35,7 +35,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 			if(per!=null){
 	   if(per.equals("1143")){%>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=2',450,520)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=2',450,550)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -83,7 +83,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		if(per!=null){
 		if(per.equals("1142")){%>
 		<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=U&id=<bean:write name="x" property="iProductoId" />',450,520)" />
+		                     onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=U&id=<bean:write name="x" property="iProductoId" />',450,550)" />
          <% break; }}}%>
          </td>
 		<td align="center">

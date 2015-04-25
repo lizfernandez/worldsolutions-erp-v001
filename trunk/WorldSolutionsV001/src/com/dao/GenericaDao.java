@@ -116,6 +116,7 @@ public class GenericaDao  implements IGenerica{
 	public boolean commitEndidad(EntityTransaction ext) {
 		boolean resultado = true;
 		try {
+			
 			ext.commit();
 			// ext= null;
 		} catch (Exception re) {
@@ -160,7 +161,7 @@ public class GenericaDao  implements IGenerica{
 	@Override
 	public <E> void refreshEndidad(E entidad) {
 		getInstancia().refresh(entidad);
-		em = null;
+		limpiarInstancia();
 
 	}
 	
@@ -219,6 +220,7 @@ public class GenericaDao  implements IGenerica{
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			limpiarInstancia();
 		} finally {
 			ext = null;
 		}
@@ -242,6 +244,7 @@ public class GenericaDao  implements IGenerica{
 			resultado = commitEndidad(ext);
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			limpiarInstancia();
 		} finally {
 			ext = null;
 		}
@@ -255,7 +258,9 @@ public class GenericaDao  implements IGenerica{
 				ext.rollback();
 			}
 		} catch (Exception e) {
-			System.err.println("Error al ejecutar roolback");
+			System.err.println("Error al ejecutar roolback: " + e);
+			e.printStackTrace();
+			limpiarInstancia();
 		} finally {
 			ext = null;
 		}
@@ -280,6 +285,7 @@ public class GenericaDao  implements IGenerica{
 			/***** q.executeUpdate(); **/
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			limpiarInstancia();
 		}
 
 		return nroDocumento;

@@ -492,7 +492,7 @@
        
     }
     function fn_CambioTipoDoc(key){
-    	var iTipoDocumentoId= $("#iTipoDocumentoId").val()
+    	var iTipoDocumentoId= $("#iTipoDocumentoId").val();
         var cad = "venta.do?metodo=obtenerCodigoVenta&iTipoDocumentoId="+iTipoDocumentoId;        
        $.getJSON(cad, function retorna(obj){
       	 $("#nVentaNumero").val(obj);

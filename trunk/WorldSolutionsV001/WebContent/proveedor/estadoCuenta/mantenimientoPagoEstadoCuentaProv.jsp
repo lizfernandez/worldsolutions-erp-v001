@@ -11,7 +11,7 @@
 </tr>
 <tr>
     <td align="right">Fecha Pago:</td>
-    <td><html:text property="dFechaPago" styleId="dFechaPago"  maxlength="11" styleClass="text"/>
+    <td><html:text property="dFechaPago" styleId="dFechaPago"  maxlength="11" styleClass="text" readonly="true"/>
     	<span id="m_dFechaPago" class="importante">*</span>
     </td>
 </tr>

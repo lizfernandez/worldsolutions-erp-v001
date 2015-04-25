@@ -209,7 +209,6 @@ public class IngresoProductoAction extends BaseAction {
 				
 			}
 			else{
-				
 				 listaIngresoproducto = ingresogenericaDao.listaIngresoproducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getIngresoProducto());
 		    
 				/**Consultamos el total de registros segun criterio**/

@@ -13,7 +13,7 @@
 <tr>
     <td align="right" ><span id="nombres">Raz&oacute;n Social :</span></td>
     <td>        
-        <html:text property="vProveedorRazonSocial" styleId="vProveedorRazonSocial" onkeyup="return mayuscula('vProveedorRazonSocial')" styleClass="text"/>
+        <html:text property="vProveedorRazonSocial" styleId="vProveedorRazonSocial" onkeyup="return mayuscula('vProveedorRazonSocial')" styleClass="text" size="46"/>
        <span id="m_vProveedorRazonSocial" class="importante">*</span>
    </td>
 </tr>
@@ -34,13 +34,14 @@
 <tr>
     <td align="right">Direcci&oacute;n :</td>
     <td>        
-        <html:text property="vProveedorDireccion" styleId="vProveedorDireccion" onkeyup="return mayuscula('vProveedorDireccion')" styleClass="text"/>
+        <html:text property="vProveedorDireccion" styleId="vProveedorDireccion" onkeyup="return mayuscula('vProveedorDireccion')" styleClass="text" size="46"/>
        <span id="m_vProveedorDireccion" class="importante">*</span>
     </td>    
 </tr>
 <tr>
     <td align="right">Departamento:</td>
-     <td> <html:select  property="vDepartamento" styleId="vDepartamento" styleClass="combo Departamento" onchange="fn_cambioPoblacion('DEP')">
+     <td> <html:select  property="vDepartamento" styleId="vDepartamento" styleClass="combo Departamento" onchange="fn_cambioPoblacion('DEP')" style="width:154px"
+     >
               <option value="00">::SELECCIONE::</option>           
               <html:options collection="listaDepartamento" property="cCodigo" labelProperty="vDescripcion"/>
            </html:select>
@@ -49,7 +50,8 @@
 <tr>
 <tr>
     <td align="right">Provincia:</td>
-     <td> <html:select  property="vProvincia" styleId="vProvincia" styleClass="combo Provincia" onchange="fn_cambioPoblacion('PRO')">
+     <td> <html:select  property="vProvincia" styleId="vProvincia" styleClass="combo Provincia" onchange="fn_cambioPoblacion('PRO')" style="width:154px"
+     >
               <option value="00">::SELECCIONE::</option>           
               <html:options collection="listaProvincia" property="cCodigo" labelProperty="vDescripcion"/>
            </html:select>
@@ -58,7 +60,8 @@
 <tr>
 <tr>
     <td align="right">Distrito</td>
-     <td> <html:select  property="iPoblacionId" styleId="iPoblacionId" styleClass="combo Distrito">
+     <td> <html:select  property="iPoblacionId" styleId="iPoblacionId" styleClass="combo Distrito" style="width:154px"
+     >
               <option value="00">::SELECCIONE::</option>           
               <html:options collection="listaDistrito" property="cCodigo" labelProperty="vDescripcion" />
            </html:select>
@@ -66,7 +69,8 @@
     
 <tr>
     <td align="right">Estado:</td>
-    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo">      
+    <td> <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" style="width:154px"
+    >      
               <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
          </html:select>
     </td>

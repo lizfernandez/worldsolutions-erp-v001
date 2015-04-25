@@ -469,21 +469,38 @@ public class EstadoCuentaClienteAction extends BaseAction {
 				transaccion= ingresoProductoDao.entityTransaction();
 				transaccion.begin();
 			
+			
 					
 				
 				if (pForm.getMode().equals("I") || pForm.getMode().equals("U")) {
 					 Date fecha = Fechas.getDate();	
 			            fecha =obj.getVenta().getFormaPago().getiFormaPago()==3?Fechas.fechaDate("30/"+(Fechas.mesFecha(fecha)+1)+"/"+Fechas.anioFecha(fecha)):obj.getdFechaVencimiento();
 			         obj.setdFechaVencimiento(fecha);
+			         
 			         if(pForm.getdFechaPago()!=""){
 			        	 obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPago()));
 			         }
 			         
 			         if(pForm.getMode().equals("I")){
-						 contabilidadDao.callVentaContabilidad(obj.getVenta().getiVentaId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra(),obj.getVenta().getFormaPago().getiFormaPago());
-			        	 resultado = ingresoProductoDao.commitEndidad(transaccion);		         
-						 Venta venta =  ingresoProductoDao.findEndidad(obj.getVenta(), obj.getVenta().getiVentaId());
-					
+			        	 ingresoProductoDao.persistEndidad(obj);
+			        	 obj.setvEstadoLetra(Constantes.estadoDocumentoDeuda);
+			        	 resultado = ingresoProductoDao.commitEndidad(transaccion);
+			              if(resultado==true){
+			            	  int idVentaId=obj.getVenta().getiVentaId();
+			            	  int nNumeroLetra=pForm.getiNumeroLetras();
+			            	  transaccion= ingresoProductoDao.entityTransaction();
+			            	  transaccion.begin();
+			            	  contabilidadDao.callVentaContabilidad(idVentaId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId,nNumeroLetra,pForm.getFormaPago().getiFormaPago()); 
+			            	  resultado = ingresoProductoDao.commitEndidad(transaccion);
+			            	
+			              }
+			              
+						/* contabilidadDao.callVentaContabilidad(obj.getVenta().getiVentaId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra(),obj.getVenta().getFormaPago().getiFormaPago());
+			        	 resultado = ingresoProductoDao.commitEndidad(transaccion);		 */        
+			              transaccion= ingresoProductoDao.entityTransaction();
+		            	  transaccion.begin();
+			              Venta venta =  ingresoProductoDao.findEndidad(obj.getVenta(), obj.getVenta().getiVentaId());
+				    	
 						 venta.setFormaPago(obj.getVenta().getFormaPago());
 						 ingresoProductoDao.mergeEndidad(venta);
 			        	 resultado = ingresoProductoDao.commitEndidad(transaccion);

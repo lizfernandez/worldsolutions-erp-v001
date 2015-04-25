@@ -107,6 +107,9 @@ public class IngresoProductoDao extends GenericaDao implements IIngresoProductoD
 			if(ingresoproducto.getvEstadoDocumento()!=null){
 	        	where+= " and p.vEstadoDocumento LIKE '%"+ingresoproducto.getvEstadoDocumento()+"%'";
 	        }
+			if(ingresoproducto.getTipodocumento()!=null){
+	        	where+= " and p.tipodocumento.iTipoDocumentoGestionId LIKE '%"+ingresoproducto.getTipodocumento().getiTipoDocumentoGestionId()+"%'";
+	        }
 			
 			if(ingresoproducto.getProveedor()!=null  && ingresoproducto.getProveedor().getcProveedorCodigo()!=null){
 	        	where+= " and p.proveedor.cProveedorCodigo LIKE '%"+ingresoproducto.getProveedor().getcProveedorCodigo()+"%'";

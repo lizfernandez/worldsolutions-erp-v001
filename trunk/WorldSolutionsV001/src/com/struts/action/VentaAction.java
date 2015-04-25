@@ -692,8 +692,8 @@ public class VentaAction extends BaseAction {
 				ventaform.setIclasificacionId(Integer.parseInt( request.getParameter("iclasificacionId")));
 				
 				ventaform.setfTipoCambio(tipoCambio);
-				
-				ventaform.getVenta().setnVentaNumero(ventaDao.callSPNro_Documento(Integer.parseInt(tipoDocumento),"venta","nVentaNumero"));
+				//:1 : factura.
+				ventaform.getVenta().setnVentaNumero(ventaDao.callSPNro_Documento(1,"venta","nVentaNumero"));
 				
 				 /***LISTA DE DETALLE VENTA***/
 				sesion.removeAttribute("listaVentaDetalle");
@@ -720,6 +720,8 @@ public class VentaAction extends BaseAction {
 	       else if (mode.equals("IE")) {
 				
 				msn = "showEstadoCuenta";
+				//1:factura:
+				ventaform.getVenta().setnVentaNumero(ventaDao.callSPNro_Documento(1,"venta","nVentaNumero"));
 			}
 	      
 			/**
