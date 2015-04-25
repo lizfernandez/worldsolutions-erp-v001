@@ -192,9 +192,9 @@ public abstract class BaseAction  extends DispatchAction {
 
 	public abstract Map<String, Object> cargarContenidoExportar(ActionForm form, HttpServletRequest request, String plantilla) throws ParseException;
 	
-	public abstract void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora) throws IllegalAccessException, IOException;
-		
-	public ActionForward imprimir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, IOException {
+	public abstract void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora, ActionMapping mapping, HttpServletResponse response) throws IllegalAccessException, IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, NoSuchFieldException, ParseException;
+
+	public ActionForward imprimir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, NoSuchFieldException, ParseException {
 
 		Impresora impresora;
         HttpSession sesion = request.getSession();
@@ -213,7 +213,7 @@ public abstract class BaseAction  extends DispatchAction {
     		impresora.agregarLineaCentrada(usu.getSucursal().getvSucursalDireccion());
     		
     		
-    		cargarContenidoImprimir(form,  request, impresora);
+    		cargarContenidoImprimir(form,  request, impresora, mapping, response);
             
     		impresora.agregarSeparacion();
     		impresora.agregarSaltoLinea(1);

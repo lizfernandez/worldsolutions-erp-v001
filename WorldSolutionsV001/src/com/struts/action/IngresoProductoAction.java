@@ -1566,7 +1566,12 @@ public class IngresoProductoAction extends BaseAction {
 		return beans;
 	}
 	@Override
-	public void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora) throws IllegalAccessException, IOException {
+	public void cargarContenidoImprimir(ActionForm form,
+			HttpServletRequest request, Impresora impresora,
+			ActionMapping mapping, HttpServletResponse response)
+			throws IllegalAccessException, IOException,
+			IllegalArgumentException, SecurityException,
+			ClassNotFoundException, NoSuchFieldException, ParseException {
 		
 		IngresoProductoDao ingresoProDao = new IngresoProductoDao();
 		int id = Integer.parseInt(request.getParameter("id"));

@@ -344,10 +344,14 @@ public class ProveedorAction extends BaseAction {
 			
 			return beans;
 		}
+
 		@Override
 		public void cargarContenidoImprimir(ActionForm form,
-				HttpServletRequest request, Impresora impresora)
-				throws IllegalAccessException, IOException {
+				HttpServletRequest request, Impresora impresora,
+				ActionMapping mapping, HttpServletResponse response)
+				throws IllegalAccessException, IOException,
+				IllegalArgumentException, SecurityException,
+				ClassNotFoundException, NoSuchFieldException, ParseException {
 			// TODO Auto-generated method stub
 			
 		}
