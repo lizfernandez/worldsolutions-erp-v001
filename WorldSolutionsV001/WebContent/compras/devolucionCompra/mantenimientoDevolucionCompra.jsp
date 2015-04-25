@@ -141,7 +141,7 @@
     <td>
      <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr> 
-               <td width="27%">&nbsp;</td>  
+               <td width="11%">&nbsp;</td>  
                 <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" >
 		            <tr> 
@@ -226,7 +226,7 @@
     <td>
      <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr> 
-               <td width="27%">&nbsp;</td>  
+               <td width="11%">&nbsp;</td>  
                 <td>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" >
 		            <tr> 
@@ -265,6 +265,10 @@
 				    <tr>
 				        <td align="left">
 				           <button onclick="insertar('tabla')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
+				           
+				        </td>
+				        <td align="left">
+				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir" type="button"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
 				        </td>
 				        <td><button onclick="cancelar('');" type="button"  class="button"><span class='cancel'>Cancelar</span></button></td>
@@ -425,5 +429,30 @@
     	var iclasificacionId = $("#iclasificacionId").val();
     	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&mode=LPC',750,350);
     }
+   function fn_imprimir(){
+   	var id= $("#iIngresoProductoDevolucionId").val();
+   	var tipoImpresion="ingresoDevolucion";
+   	var cad="ingresoProducto.do?metodo=imprimir&id="+id+"&tipoImpresion="+tipoImpresion;
+   	 
+   	 $.ajax({
+            type: "GET",
+            url: cad,
+            data: "",
+            success: function(obj){   
+          	  alert("OPERACION CON EXITO"); 
+            }
+        });
+   	/*
+
+       $.ajax({
+           type: "GET",
+           url: "perfil.do?metodo=iduPerfil",
+           data: "",
+           success: function(obj){   
+         	  alert("OPERACION CON EXITO"); 
+           }
+       }); 
+   	*/
+   }
 
 </script>

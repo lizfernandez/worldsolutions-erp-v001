@@ -409,7 +409,7 @@
     
     if(mode=='I') {
         //document.getElementById('vVentaCodigo').focus();
-        document.getElementById('btnGuardar').textContent="Insertar";
+        document.getElementById('btnGuardar').textContent="Guardar";
         $(".trCodigo").show();
         if($("#tipoMoneda").val()=="S/."){
         	$("#monedaSoles").attr("checked",true);
@@ -694,8 +694,8 @@
     }
     function fn_imprimir(){
     	var id= $("#iVentaId").val();
-    
-    	var cad="venta.do?metodo=imprimir&id="+id;
+        var tipoImpresion="venta";
+    	var cad="venta.do?metodo=imprimir&id="+id+"&tipoImpresion="+tipoImpresion;
     	 
     	 $.ajax({
              type: "GET",

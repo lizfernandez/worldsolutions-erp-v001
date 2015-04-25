@@ -60,12 +60,12 @@
 <tr>
     <td align="right">Fecha Giro :</td>
     <td>
-       <html:text property="dFechaGiro" styleId="dFechaGiro"   styleClass="text"  size="11" maxlength="11"/>
+       <html:text property="dFechaGiro" styleId="dFechaGiro"   styleClass="text"  size="11" maxlength="11" readonly="true"/>
       <span id="m_dFechaGiro" class="importante">*</span>
       </td>
       <td> Fecha Vencimiento: </td>
       <td>
-      <html:text property="dFechaVencimiento" styleId="dFechaVencimiento"   styleClass="text"  size="11" maxlength="11"/>
+      <html:text property="dFechaVencimiento" styleId="dFechaVencimiento"   styleClass="text"  size="11" maxlength="11" readonly="true"/>
       <span id="m_dFechaVencimiento" class="importante">*</span>
     </td>
 </tr>
@@ -73,28 +73,28 @@
 <tr>
     <td align="right">Plazo(Dias):</td>
     <td>
-       <html:text property="nPlazoLetra" styleId="nPlazoLetra"   styleClass="text textNumero"  size="11" maxlength="11"/>
+       <html:text property="nPlazoLetra" styleId="nPlazoLetra"   styleClass="text textNumero"  size="11" maxlength="11" onkeypress="return Numeros(event)"/>
       <span id="m_nPlazoLetra" class="importante">*</span>
        <td>Max. de Letras:</td>
       <td>      
-	   <html:text property="iNumeroLetras" styleId="iNumeroLetras"   styleClass="text textNumero" size="11" maxlength="11"  onblur="fn_importeLetra()"/>
+	   <html:text property="iNumeroLetras" styleId="iNumeroLetras"   styleClass="text textNumero" size="11" maxlength="11"  onblur="fn_importeLetra()" onkeypress="return Numeros(event)"/>
     </td>
 </tr>
 <tr>
     <td align="right">Importe De letra:</td>
     <td>
-       <html:text property="nImporte" styleId="nImporte"   styleClass="text textNumero"  size="11" maxlength="11"/>
+       <html:text property="nImporte" styleId="nImporte"   styleClass="text textNumero"  size="11" maxlength="11" onkeypress="return Numeros(event)"/>
       <span id="m_nImporte" class="importante">*</span>
       <td> Importe de Interes:</td>
       <td>       
-       <html:text property="fImporteIntereses" styleId="fImporteIntereses"   styleClass="textN textNumero"  size="11" maxlength="11" onblur="fn_importeLetra()"/>
+       <html:text property="fImporteIntereses" styleId="fImporteIntereses"   styleClass="textN textNumero"  size="11" maxlength="11" onblur="fn_importeLetra()" onkeypress="return Numeros(event)"/>
      
     </td>
 </tr>
 <tr>
     <td align="right">Fecha de Pago:</td>
     <td>
-       <html:text property="dFechaPagoLetra" styleId="dFechaPagoLetra"   styleClass="textN"  size="11" maxlength="11"/>      
+       <html:text property="dFechaPagoLetra" styleId="dFechaPagoLetra"   styleClass="textN"  size="11" maxlength="11" readonly="true"/>      
       <td>Aplicar a todos:</td>
       <td>       
        <input type="checkbox" id="aplicarTodo" onclick="fn_aplicarTodos()"/>

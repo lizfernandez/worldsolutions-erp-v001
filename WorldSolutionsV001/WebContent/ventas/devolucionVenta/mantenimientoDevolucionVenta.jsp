@@ -438,5 +438,31 @@
     	var iclasificacionId = $("#iclasificacionId").val();
     	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&mode=LPC',750,350);
     }
+   
+   function fn_imprimir(){
+   	var id= $("#iVentaDevolucionId").val();
+    var tipoImpresion="ventaDevolucion";
+   	var cad="venta.do?metodo=imprimir&id="+id+"&tipoImpresion="+tipoImpresion;
+   	 
+   	 $.ajax({
+            type: "GET",
+            url: cad,
+            data: "",
+            success: function(obj){   
+          	  alert("OPERACION CON EXITO"); 
+            }
+        });
+   	/*
+
+       $.ajax({
+           type: "GET",
+           url: "perfil.do?metodo=iduPerfil",
+           data: "",
+           success: function(obj){   
+         	  alert("OPERACION CON EXITO"); 
+           }
+       }); 
+   	*/
+   }
 
 </script>

@@ -470,13 +470,28 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 			         }
 			         
 			         if(pForm.getMode().equals("I")){
-			        	 int iFormaPagoId= obj.getIngresoProducto().getFormaPago().getiFormaPago();
-						 contabilidadDao.callCompraContabilidad(obj.getIngresoProducto().getiIngresoProductoId(),fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getnPlazoLetra(),pForm.getMode(),iPeriodoId, obj.getnNumeroLetra(), iFormaPagoId);
-			        	 resultado = ingresoProductoDao.commitEndidad(transaccion);		         
-						 Ingresoproducto ingresoProducto =  ingresoProductoDao.findEndidad(obj.getIngresoProducto(), obj.getIngresoProducto().getiIngresoProductoId());
-					
+			        	 
+						 
+						 ingresoProductoDao.persistEndidad(obj);
+						 obj.setvEstadoLetra(Constantes.estadoDocumentoDeuda);
+						 obj.setcEstadoCodigo(Constantes.estadoActivo);
+				         resultado = ingresoProductoDao.commitEndidad(transaccion);
+				         ingresoProductoDao.refreshEndidad(obj);
+				         if(resultado==true){
+				        	 int iIngresoProductoId=obj.getIngresoProducto().getiIngresoProductoId();
+				        	 int iFormaPagoId= obj.getIngresoProducto().getFormaPago().getiFormaPago();
+				        	 transaccion= ingresoProductoDao.entityTransaction();
+				        	 transaccion.begin();
+				        	int nNumeroLetra= obj.getnNumeroUnico();
+				        	 contabilidadDao.callCompraContabilidad(iIngresoProductoId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId, nNumeroLetra,iFormaPagoId);
+				        	 resultado = ingresoProductoDao.commitEndidad(transaccion);
+				         }
+				         Ingresoproducto ingresoProducto =  ingresoProductoDao.findEndidad(obj.getIngresoProducto(), obj.getIngresoProducto().getiIngresoProductoId());
+							
 						 ingresoProducto.setFormaPago(obj.getIngresoProducto().getFormaPago());
 						 ingresoProductoDao.mergeEndidad(ingresoProducto);
+						 transaccion= ingresoProductoDao.entityTransaction();
+			        	 transaccion.begin();
 			        	 resultado = ingresoProductoDao.commitEndidad(transaccion);
 						 ingresoProductoDao.refreshEndidad(ingresoProducto);
 					

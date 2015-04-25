@@ -105,7 +105,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 					if(per!=null){
 					if(per.equals("4112")){%>
 				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="tipodocumento.iTipoDocumentoGestionId" />',1130,500)" />
+		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="iIngresoProductoId" />&idTipoDocumento=<bean:write name="x" property="tipodocumento.iTipoDocumentoGestionId" />',1150,500)" />
 		           <% break;}}}%> 
 		           </td>
 		 	    <!--  td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
@@ -147,7 +147,7 @@ paginacion();
  function fn_nuevoDocumento(){
 	var tipoDoc= 2;//$("#selTipoDocumento").val();
 	var iclasificacionId= 1;//$("#iclasificacionId").val();
-	 popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1090,700);
+	 popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1150,700);
  }
  $("#compra,#mantCompras").addClass("active");
  </script> 
