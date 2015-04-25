@@ -2015,12 +2015,10 @@ public class VentaAction extends BaseAction {
 
 			impresora.agregarLineaCentrada(venta.getTipoDocumento().getvTipoDocumentoDescripcion() + " ELECTRONICO: " + venta.getnVentaNumero());
     		impresora.agregarLinea("FECHA EMISION: " + Fechas.fechaConFormato("dd/MM/yyyy HH:mm:SS"));
-    		
-    		impresora.agregarSeparacion();
-    		         
-			impresora.agregarTituloIzquierda("FECHA VENTA", 8, Fechas.fechaFormato(venta.getdFechaInserta(), "dd/MM/yyyy HH:mm:SS"));
 			impresora.agregarTituloIzquierda("VENDEDOR", 8, venta.getUsuario().getPersonal().getvPersonalApellidoPaterno() + " " + venta.getUsuario().getPersonal().getvPersonalApellidoMaterno() + ", " + venta.getUsuario().getPersonal().getvPersonalNombres());
-        
+			
+    		impresora.agregarSeparacion();
+
 			impresora.agregarTituloIzquierda("CLIENTE SR(A)", 8, venta.getCliente().getvClienteRazonSocial());
 			impresora.agregarTituloIzquierda("RUC/DNI", 8, venta.getCliente().getnClienteNumeroDocumento().toString());
 			
