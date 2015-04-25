@@ -12,7 +12,8 @@
 </tr>
 <tr>
     <td align="right">Empresa:</td>
-   <td> <html:select  property="iEmpresaId" styleId="iEmpresaId" styleClass="combo">       
+   <td> <html:select  property="iEmpresaId" styleId="iEmpresaId" styleClass="combo" style="width:155px"
+   >       
               <html:options collection="listaEmpresa" property="iEmpresaId" labelProperty="vEmpresaNombre"/>
          </html:select>
     </td>
@@ -20,7 +21,7 @@
 <tr>
     <td align="right">Nombre:</td>
     <td>
-       <html:text property="vSucursalNombre" styleId="vSucursalNombre" onkeyup="return mayuscula('vSucursalNombre')" styleClass="text"/>
+       <html:text property="vSucursalNombre" styleId="vSucursalNombre" onkeyup="return mayuscula('vSucursalNombre')" styleClass="text" size="45"/>
        <span id="m_vSucursalNombre" class="importante">*</span>
    </td>
 </tr>
