@@ -273,7 +273,7 @@
 				           
 				        </td>
 				        <td align="left">
-				           <button onclick="imprimir('tabla')"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
 				        </td>
 				        <td><button onclick="cancelar('');"  class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
@@ -438,6 +438,10 @@
     	var iclasificacionId = $("#iclasificacionId").val();
     	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&mode=LPC',750,350);
     }
+   
+   
+
+   
    
    function fn_imprimir(){
    	var id= $("#iVentaDevolucionId").val();

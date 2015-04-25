@@ -2067,6 +2067,8 @@ public class VentaAction extends BaseAction {
 	            impresora.agregarTituloDerecha("PAGO", 0,venta.getvTipoPago()+Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(venta.getfMontoPago()),11));
 	            impresora.agregarTituloDerecha("VUELTO", 0,venta.getvTipoPago()+ Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(venta.getfMontoVuelto()),11));
 	            
+			} else if(tipoImpresion.equals("ventaDevolucion")) {
+				
 			}
 		}
 				
