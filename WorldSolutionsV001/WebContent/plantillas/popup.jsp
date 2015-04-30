@@ -17,6 +17,7 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.ui.datepicker.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/general.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery-ui.min.js"></script>
+         <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/lightbox/javascript/lightbox/jquery.lightbox.js" type="text/javascript"></script>
 
     </head>
     <link href="${pageContext.request.contextPath}/media/styles/css/principal.css" rel="stylesheet" type="text/css"/>
@@ -27,6 +28,7 @@
     <link href="${pageContext.request.contextPath}/media/styles/default/jquery-ui-1.7.1.custom.css" rel="stylesheet" type="text/css"  />
     <link href="${pageContext.request.contextPath}/media/styles/css/formulario.css"rel="stylesheet" type="text/css"  />
     <link href="${pageContext.request.contextPath}/media/styles/css/jquery-ui-multiselect-widget.css"rel="stylesheet" type="text/css"  />
+    <link href="${pageContext.request.contextPath}/media/scripts/lightbox/javascript/lightbox/themes/default/jquery.lightbox.css" rel="stylesheet">
    
     <body>
         <table class="tabla" border="0" width="100%" id="tab-grupo">

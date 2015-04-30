@@ -23,6 +23,8 @@ import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.IngresoProductoDao;
 import com.dao.KardexDao;
+import com.dao.VentaDao;
+import com.entities.Direccioncliente;
 import com.entities.Estado;
 import com.entities.Estadocuentaproveedor;
 import com.entities.Formapago;
@@ -38,16 +40,19 @@ import com.entities.Producto;
 import com.entities.Proveedor;
 import com.entities.Tipodocumentogestion;
 import com.entities.Usuario;
+import com.entities.Venta;
 import com.entities.Ventadetalle;
+import com.entities.Ventadevolucion;
+import com.entities.Ventadevoluciondetalle;
 import com.entities.vo.EstadoCuentaVo;
 import com.entities.vo.PagoEstadoCuentaVo;
 import com.google.gson.Gson;
 import com.struts.form.IngresoProductoForm;
+import com.struts.form.VentaForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.FormatosNumeros;
 import com.util.Impresora;
-import com.util.Imprimir;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -1366,8 +1371,8 @@ public class IngresoProductoAction extends BaseAction {
 					      		  if(preciosProducto.getfPrecioCompra()==ingresoDetalle.getfIngresoProductoDetallePrecio()) {
 					      			            cantidadProducto =    preciosProducto.getiCantidadStock()- ingresoDetalle.getiIngresoProductoDetalleCantidad();
 					      		      			preciosProducto.setiCantidadStock(cantidadProducto);
-					      		      		    preciosProducto.setfPrecioVenta(FormatosNumeros.redondedoDecimal(ingresoDetalle.getProducto().getfProductoPrecioVenta()));
-			      			                    preciosProducto.setfGanancia(ingresoDetalle.getProducto().getfProductoGanancia());		      			               
+					      		      		   // preciosProducto.setfPrecioVenta(FormatosNumeros.redondedoDecimal(ingresoDetalle.getProducto().getfProductoPrecioVenta()));
+			      			                   // preciosProducto.setfGanancia(ingresoDetalle.getProducto().getfProductoGanancia());		      			               
 					      		      			break;		      		  
 					      		  }			      		  
 					      	  }
@@ -1381,9 +1386,9 @@ public class IngresoProductoAction extends BaseAction {
 			      					   cantidadProducto =    producto.getiProductoStockCantidad() - ingresoDetalle.getiIngresoProductoDetalleCantidad();
 			      					   precioProducto = objpreciosProducto.getfPrecioCompra();
 							           producto.setiProductoStockCantidad(cantidadProducto);
-							           producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(objpreciosProducto.getfPrecioVenta()));
-							           producto.setfProductoGanancia(objpreciosProducto.getfGanancia());     		      		
-							           producto.setfProductoPrecioCompra(FormatosNumeros.redondedoDecimal(precioProducto));
+							          // producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(objpreciosProducto.getfPrecioVenta()));
+							          // producto.setfProductoGanancia(objpreciosProducto.getfGanancia());     		      		
+							          // producto.setfProductoPrecioCompra(FormatosNumeros.redondedoDecimal(precioProducto));
 							           break;
 			      				 }
 			      			}
@@ -1426,6 +1431,9 @@ public class IngresoProductoAction extends BaseAction {
 			        	//ingresogenericaDao.refreshEndidad(obj);
 			        	
 			      }// if insercion de la lista detalle activa
+	      	 if(pForm.getvImprimir().equals("SI")){
+	               imprimir(mapping, pForm, request, response);
+	               }
 	      	   }
 			if(pForm.getMode().equals("U")) {
 				obj.setdFechaActualiza(Fechas.getDate());
@@ -1527,6 +1535,9 @@ public class IngresoProductoAction extends BaseAction {
 		         }
 			      	  
 			      	*/
+	        	if(pForm.getvImprimir().equals("SI")){
+		               imprimir(mapping, pForm, request, response);
+		               }
 			}
 			
 		  } catch (Exception ex) {
@@ -1574,37 +1585,47 @@ public class IngresoProductoAction extends BaseAction {
 			ClassNotFoundException, NoSuchFieldException, ParseException {
 		
 		IngresoProductoDao ingresoProDao = new IngresoProductoDao();
-		int id = Integer.parseInt(request.getParameter("id"));
-		Ingresoproducto ingreso=ingresoProDao.findEndidadBD(new Ingresoproducto(), "iIngresoProductoId", id);
+		//int id = Integer.parseInt(request.getParameter("id"));
 		
-		impresora.agregarLinea("Ticket    :" + ingreso.getnIngresoProductoNumero());             
-		impresora.agregarLinea("Fecha     :" + ingreso.getdFechaInserta());
-		impresora.agregarLinea("Ven   : " + ingreso.getUsuario().getPersonal().getvPersonalNombres());
-		impresora.agregarSeparacion();
-    
-		impresora.agregarLinea("Sr(a)     :" + ingreso.getProveedor().getvProveedorRazonSocial());
-		impresora.agregarLinea(ingreso.getTipodocumento().getvTipoDocumentoDescripcion()+"     :" + ingreso.getProveedor().getnProveedorNumeroDocumento());
+		//String tipoImpresion = request.getParameter("tipoImpresion");
+		IngresoProductoForm pForm = (IngresoProductoForm) form;
+		if(pForm.getvTipoImpresion().equals("ingresoDevolucion")) {
 		
-		impresora.agregarSeparacion();
-        impresora.agregarLinea("Cant     " + "Descripcion" + "             " + "P.U        ");
-        impresora.agregarSeparacion();
-        
-               
-        // aqui recorro mis productos y los imprimo
-        for(Ingresoproductodetalle detalle: ingreso.getIngresoproductodetalles()){
-        	impresora.agregarLinea(detalle.getiIngresoProductoDetalleCantidad()+"  "+detalle.getProducto().getvProductoNombre()+"  "+detalle.getfIngresoProductoDetallePrecio());
-        }
-        
-        impresora.agregarSeparacion();
-        //Descuentos
-        impresora.agregarLinea("TOTAL        : "+ingreso.getvTipoCompra()+" " + ingreso.getfIngresoProductoTotalReal());
-        impresora.agregarLinea("DESCUENTO    : "+ingreso.getvTipoCompra()+" " + ingreso.getfDescuento());
-        impresora.agregarSeparacion();
-        impresora.agregarLinea("SUBTOTAL     : "+ingreso.getvTipoCompra()+" " + ingreso.getfIngresoProductoSubTotal());
-        impresora.agregarLinea("IGV          : "+ingreso.getvTipoCompra()+" " + ingreso.getfIngresoProductoIGV());
-        impresora.agregarLinea("TOTAL FINAL  : "+ingreso.getvTipoCompra()+" " + ingreso.getfIngresoProductoTotal());
-        impresora.agregarSaltoLinea(1);
-    
+			Ingresoproductodevolucion ingresoDev = ingresoProDao.findEndidadBD(new Ingresoproductodevolucion(), "iIngresoProductoDevolucionId", pForm.getIngresoProductoDev().getiIngresoProductoDevolucionId());
+			
+			impresora.agregarLineaCentrada(ingresoDev.getTipoDocumento().getvTipoDocumentoDescripcion() + " ELECTRONICO: " + ingresoDev.getIngresoProducto().getnIngresoProductoNumero());
+    		impresora.agregarLinea("FECHA EMISION: " + Fechas.fechaConFormato("dd/MM/yyyy HH:mm:SS"));			
+    		impresora.agregarSeparacion();
+
+			impresora.agregarTituloIzquierda("PROVEEDOR (A)", 8, ingresoDev.getIngresoProducto().getProveedor().getvProveedorRazonSocial());
+			impresora.agregarTituloIzquierda("RUC/DNI", 8, ingresoDev.getIngresoProducto().getProveedor().getnProveedorNumeroDocumento().toString());
+
+			impresora.agregarTituloIzquierda("DIRECCION", 8, ingresoDev.getIngresoProducto().getProveedor().getvProveedorDireccion());
+			
+			
+			impresora.agregarSeparacion();
+			impresora.agregarLinea("CODIGO  DESCRIPCION  CANT P.UNIT IMPORTE");
+			impresora.agregarSeparacion();
+			      
+            // aqui recorro mis productos y los imprimo
+            for(Ingresoproductodevoluciondetalle ingProDevdetalle: ingresoDev.getIngresoproductodevoluciondetalles()){
+            	impresora.agregarLinea(new Object[][]{{ingProDevdetalle.getProducto().getcProductoCodigo(),0,1},
+            	{ingProDevdetalle.getProducto().getvProductoNombre(),8,1},
+            	{ingProDevdetalle.getiIngresoProductoDevDetalleCantidad(),21,-1},
+            	{ingProDevdetalle.getfIngresoProductoDevDetallePrecio() ,25,-1},
+            	{ingProDevdetalle.getfIngresoProductoDevDetalleTotal(),32,-1}});
+            	
+            }
+            
+            impresora.agregarSeparacion();
+            //Descuentos
+            impresora.agregarTituloDerecha("SUBTOTAL", 0,ingresoDev.getIngresoProducto().getvTipoCompra() +Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(ingresoDev.getfIngresoProductoDevSubTotal()),11));
+            impresora.agregarTituloDerecha("IGV", 0,ingresoDev.getIngresoProducto().getvTipoCompra()+ Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(ingresoDev.getfIngresoProductoDevIGV()),11));
+            impresora.agregarTituloDerecha("TOTAL FINAL", 0, ingresoDev.getIngresoProducto().getvTipoCompra()+Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(ingresoDev.getfIngresoProductoDev()), 11));
+            impresora.agregarSeparacion();
+            impresora.agregarTituloIzquierda("NOTA DEBITO", 8, ingresoDev.getnNroNotaDebito()+" POR LA DEVOLUCION DE LA MERCADERIA DE LA "+ingresoDev.getIngresoProducto().getTipodocumento().getvTipoDocumentoDescripcion() +": "+ingresoDev.getIngresoProducto().getnIngresoProductoNumero());
+    	
+		}
 		
 	}
 	

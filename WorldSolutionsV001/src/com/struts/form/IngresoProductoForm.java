@@ -40,6 +40,8 @@ public class IngresoProductoForm extends ActionForm {
 	private String cPersonalCodigo;
 	private String vPersonalNombres;
 	private int iclasificacionId;
+	private String vImprimir;
+	private String vTipoImpresion;
 	/*************************/
 	/**SESIONES DE INPUESTOS**/
 	/*************************/
@@ -842,6 +844,30 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setnNroNotaDebito(String nNroNotaDebito) {
 		this.getIngresoProductoDev().setnNroNotaDebito(nNroNotaDebito);
+	}
+	/**
+	 * @return the vImprimir
+	 */
+	public String getvImprimir() {
+		return vImprimir;
+	}
+	/**
+	 * @param vImprimir the vImprimir to set
+	 */
+	public void setvImprimir(String vImprimir) {
+		this.vImprimir = vImprimir;
+	}
+	/**
+	 * @return the vTipoImpresion
+	 */
+	public String getvTipoImpresion() {
+		return vTipoImpresion;
+	}
+	/**
+	 * @param vTipoImpresion the vTipoImpresion to set
+	 */
+	public void setvTipoImpresion(String vTipoImpresion) {
+		this.vTipoImpresion = vTipoImpresion;
 	}
 
 	

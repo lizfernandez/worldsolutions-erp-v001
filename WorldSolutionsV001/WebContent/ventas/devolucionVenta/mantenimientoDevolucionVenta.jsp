@@ -273,7 +273,7 @@
 				           
 				        </td>
 				        <td align="left">
-				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir" type="button"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
 				        </td>
 				        <td><button onclick="cancelar('');"  class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
@@ -295,7 +295,7 @@
 
 <%-- hidden field que contiene el mode --%>
 <%-- hidden field que contiene el id del producto --%>
-<html:hidden property="iVentaDevolucionId" />
+<html:hidden property="iVentaDevolucionId" styleId="iVentaDevolucionId" />
 
 <html:hidden property="mode" styleId="mode" />
 <html:hidden property="fVentaDevSubTotal" styleId="fVentaDevSubTotal"/>
@@ -304,7 +304,9 @@
 <html:hidden property="tipoMoneda" styleId="tipoMoneda" />
 <html:hidden property="IGVVentas" styleId="IGVVentas" />		
 <%-- set the parameter for the dispatch action --%>
-<html:hidden property="metodo" value="iduVentaDevolucion" styleId="metodo" />	
+<html:hidden property="metodo" value="iduVentaDevolucion" styleId="metodo" />
+<html:hidden property="vImprimir" styleId="vImprimir" value="NO"/>
+<html:hidden property="vTipoImpresion" styleId="vTipoImpresion" value="ventaDevolucion"/>	
 </html:form>
 <script>
     var mode = document.getElementById('mode').value;
@@ -333,6 +335,7 @@
     if(mode=='I') {
         //document.getElementById('vVentaCodigo').focus();
         document.getElementById('btnGuardar').textContent="Insertar";
+      //  $("#btnImprimir").hide();
         $(".trCodigo").show();
         $("#popupCabecera").text('INSERTAR NOTA CREDITO -VENTAS');	
         
@@ -444,7 +447,10 @@
    
    
    function fn_imprimir(){
-   	var id= $("#iVentaDevolucionId").val();
+	   $("#vImprimir").val("SI");
+   	insertar('tabla');
+   	//alert("d");
+   /*	var id= $("#iVentaDevolucionId").val();
     var tipoImpresion="ventaDevolucion";
    	var cad="venta.do?metodo=imprimir&id="+id+"&tipoImpresion="+tipoImpresion;
    	 
@@ -455,7 +461,8 @@
             success: function(obj){   
           	  alert("OPERACION CON EXITO"); 
             }
-        });
+        });*/
+        
    	/*
 
        $.ajax({

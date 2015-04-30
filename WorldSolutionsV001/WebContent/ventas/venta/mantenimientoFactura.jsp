@@ -111,7 +111,12 @@
 	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
 	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockCantidad" />'/>
             </td>
-            <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
+            <logic:notEqual name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
+                <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
+            </logic:notEqual>
+            <logic:equal name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
+                <td><bean:write name="x" property="personal.vPersonalNombres" />&emsp;  <bean:write name="x" property="personal.vPersonalApellidoPaterno" /></td>
+            </logic:equal>
             <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td align="right">
@@ -325,7 +330,7 @@
 				           
 				        </td>
 				        <td align="left">
-				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir" type="button"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+				           <button onclick="fn_imprimir()"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
 				        </td>
 				        <td><button onclick="cancelar('');" class="button" type="button" id="btnCancel"><span class='cancel'>Cancelar</span></button></td>
@@ -352,6 +357,8 @@
 
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iClienteId" styleId="iClienteId" />
+<html:hidden property="vImprimir" styleId="vImprimir" value="NO"/>
+<html:hidden property="vTipoImpresion" styleId="vTipoImpresion" value="venta"/>
 
 
 <%-- hidden field que contiene el id del producto --%>
@@ -410,7 +417,7 @@
     if(mode=='I') {
         //document.getElementById('vVentaCodigo').focus();
         document.getElementById('btnGuardar').textContent="Guardar";
-        $("#btnImprimir").hide();
+       // $("#btnImprimir").hide();
         $(".trCodigo").show();
         if($("#tipoMoneda").val()=="S/."){
         	$("#monedaSoles").attr("checked",true);
@@ -693,8 +700,12 @@
     	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LP',690,560);
     	
     }
+    
     function fn_imprimir(){
-    	
+    	$("#vImprimir").val("SI");
+    	insertar('tabla');
+    	//alert("d");
+    	/*
     	var id= $("#iVentaId").val();
         var tipoImpresion="venta";
     	var cad="venta.do?metodo=imprimir&id="+id+"&tipoImpresion="+tipoImpresion;

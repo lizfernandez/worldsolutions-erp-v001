@@ -41,6 +41,8 @@ public class VentaForm extends ActionForm {
 	private String vPersonalNombres;
 	private String vClasificacion;
 	private int iclasificacionId;
+	private String vImprimir;
+	private String vTipoImpresion;
 	/*************************/
 	/**SESIONES DE INPUESTOS**/
 	/*************************/
@@ -904,6 +906,30 @@ public class VentaForm extends ActionForm {
 	 */
 	public void setnNroNotaCredito(String nNroNotaCredito) {
 		this.ventaDev.setnNroNotaCredito(nNroNotaCredito);
+	}
+	/**
+	 * @return the vImprimir
+	 */
+	public String getvImprimir() {
+		return vImprimir;
+	}
+	/**
+	 * @param vImprimir the vImprimir to set
+	 */
+	public void setvImprimir(String vImprimir) {
+		this.vImprimir = vImprimir;
+	}
+	/**
+	 * @return the vTipoImpresion
+	 */
+	public String getvTipoImpresion() {
+		return vTipoImpresion;
+	}
+	/**
+	 * @param vTipoImpresion the vTipoImpresion to set
+	 */
+	public void setvTipoImpresion(String vTipoImpresion) {
+		this.vTipoImpresion = vTipoImpresion;
 	}
 	
 	

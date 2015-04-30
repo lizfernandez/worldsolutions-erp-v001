@@ -27,6 +27,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import com.dao.IngresoProductoDao;
 import com.dao.VentaDao;
+import com.entities.Configuracion;
 import com.entities.Estadocuentacliente;
 import com.entities.Estadocuentaproveedor;
 import com.entities.Ingresoproducto;
@@ -199,8 +200,8 @@ public abstract class BaseAction  extends DispatchAction {
 		Impresora impresora;
         HttpSession sesion = request.getSession();
 		try {
-
-			String nombreDispositivo = "BIXOLON SRP-270";
+            Configuracion cong = (Configuracion) sesion.getAttribute("nombreImpresora");
+			String nombreDispositivo = (String) cong.getvValor();
 
 			impresora = new Impresora();
 			impresora.seleccionarDispositivo(nombreDispositivo);

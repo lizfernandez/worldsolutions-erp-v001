@@ -69,9 +69,39 @@ $(document).ready(function(){
             halign : 'left'
         }
         ) */
-    }
-    );
+    
 
+    });
+// IMAGE ZOOM ------------------------------------------------------ //
+$(document).ready(function() {
+$('.viewport').mouseenter(function(e) {
+$(this).children('a').children('img').animate({ height: '40', left: '0', top: '0', width: '60'}, 100);
+$(this).children('a').children('span').fadeIn(200);
+}).mouseleave(function(e) {
+$(this).children('a').children('img').animate({ height: '20', left: '-20', top: '-20', width: '30'}, 100);
+$(this).children('a').children('span').fadeOut(200);
+});
+});
+
+/*
+$('.viewport').click(function(e){
+$.lightbox("img/p11.jpg");
+});
+*/
+/**click view**/
+$(document).ready(function() {
+
+						   
+for(var i=1;i<=215;i++){
+	 $( ".view"+i).click(function() {
+								  ver_plantilla(this.id); });
+	}
+	
+});
+function ver_plantilla(id){	
+var img=$("#"+id+" img").attr("src");
+    $.lightbox(img);	
+	}
 function menu(valor,base,url){
     var i=1;
     for(i;i<=10;i++)	{
@@ -595,7 +625,7 @@ function listar_detalleVenta(obj,destino){
 	   else{
 		   newHtml+='<td colspan="2">'; 
 		   empleado:
-			   newHtml+="empleado: "+data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
+			 newHtml+="empleado: "+data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
 		newHtml+='</td>';  
 	   }
 	 

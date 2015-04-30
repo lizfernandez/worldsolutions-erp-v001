@@ -32,6 +32,7 @@ public class Constantes {
 	public static String nro=" N° ";
 	public static String tipoMoneda="TIPO MONEDA";
 	public static String tipoCambio="TIPO CAMBIO";
+	public static String nombreImpresora="NOMBRE DE IMPRESORA";
 	public static String IGVCompra="COMPRA";
 	public static String IGVPercepcion="PERCEPCION";
 	public static String IGVVenta="VENTA";

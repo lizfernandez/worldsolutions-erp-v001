@@ -62,6 +62,7 @@ public class LoginAction extends BaseAction {
 		sesion.removeAttribute("IGVPercepcion");
 		sesion.removeAttribute("IGVVentas");
 		sesion.removeAttribute("iPeriodoId");
+		sesion.removeAttribute("nombreImpresora");
 		
 		
 		
@@ -94,6 +95,7 @@ public class LoginAction extends BaseAction {
 		Impuesto impuestoVenta=configuracionDao.buscarImpuesto(Constantes.IGVVenta);
 		Impuesto impuestoCompras=configuracionDao.buscarImpuesto(Constantes.IGVCompra);
 		Impuesto impuestoPercepciones=configuracionDao.buscarImpuesto(Constantes.IGVPercepcion);
+		Configuracion nombreImpresora = configuracionDao.buscarConfiguracion(Constantes.nombreImpresora);;
 		
 		int iPeriodoId =  genericaDao.callSPPeriodoActual();
 
@@ -110,6 +112,7 @@ public class LoginAction extends BaseAction {
 				sesion.setAttribute("IGVPercepcion",impuestoPercepciones.getvPorcentaje());
 				sesion.setAttribute("IGVVentas", impuestoVenta.getvPorcentaje());
 				sesion.setAttribute("iPeriodoId", iPeriodoId);
+				sesion.setAttribute("nombreImpresora", nombreImpresora);
 				//sesion.setAttribute("listaMenu",  genericaDao.listaEntidadGenericaSinCodigo("Menu"));
 				List<String> listaMisPersmisos = new ArrayList<String>();
 				Usuario usu = (Usuario) sesion.getAttribute("Usuario");	
