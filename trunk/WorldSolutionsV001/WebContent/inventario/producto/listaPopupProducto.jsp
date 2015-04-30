@@ -41,7 +41,8 @@
     <thead>
     <tr >
         <th align="left">C&oacute;digo</th>
-        <th align="left">Nombre</th>        
+        <th align="left">Nombre</th>   
+        <th align="left">Foto</th>      
         <th align="left">Stock</th>
         <th align="left">Unidad Medida</th>
         <th align="left">% Desc</th>
@@ -58,7 +59,7 @@
 				</tr>
 	     </logic:empty>
          <logic:notEmpty name="productosForm" property="produc">
-		 <logic:iterate name="productosForm" property="produc" id="x">	
+		 <logic:iterate name="productosForm" property="produc" id="x" indexId="i">	
 		 
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
 			               '<bean:write name="x" property="iProductoStockCantidad" />',
@@ -72,8 +73,16 @@
 			               '<bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/>')">
 		 		<td><bean:write name="x" property="cProductoCodigo" /></td>
 				<td><bean:write name="x" property="vProductoNombre" /></td>
-				
-			
+				<td>
+			<div class="viewport">
+        			<a href="#" class="view${i}" id="${i}">
+            		<span class="dark-background" style="display: none;"></span>
+            		<logic:notEqual name="x" property="vFoto" value=""> <img  src="${pageContext.request.contextPath}/media/fotos/<bean:write name="x" property="vFoto" />"  style="height: 25px; display: inline; left: -20px; top: -20px; width: 30px;"/></logic:notEqual>
+            		
+            		
+        			</a>
+    			  </div>
+    			  </td>
 				<td>
 				    <bean:write name="x" property="iProductoStockCantidad" />				    
 				</td>

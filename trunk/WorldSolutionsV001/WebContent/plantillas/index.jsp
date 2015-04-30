@@ -29,6 +29,10 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery.js" ></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/jquery-bp.js" ></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/navigation.js" ></script>
+	
+    <script type="text/javascript" src="${pageContext.request.contextPath}/media/scripts/lightbox/javascript/lightbox/jquery.lightbox.js" type="text/javascript"></script>  
+
+	
 	  
  
 </head>
@@ -44,6 +48,8 @@
     <link href="${pageContext.request.contextPath}/media/styles/css/letrasColor.css"rel="stylesheet" type="text/css"  />
     <link href="${pageContext.request.contextPath}/media/styles/css/menu_animate.css"rel="stylesheet" type="text/css"  />
     <link href="${pageContext.request.contextPath}/media/styles/css/jquery-ui-multiselect-widget.css"rel="stylesheet" type="text/css"  />
+    <link href="${pageContext.request.contextPath}/media/scripts/lightbox/javascript/lightbox/themes/default/jquery.lightbox.css" rel="stylesheet">
+    
     
  
     <body>

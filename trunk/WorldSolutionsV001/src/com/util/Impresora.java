@@ -29,10 +29,10 @@ public class Impresora {
 	public Impresora() {
 		
 		//Codigos para iniciar la impresion y abrir la caja registradora
-		contenido = ""+ (char) 27 + (char) 112
+contenido = "";/*+ (char) 27 + (char) 112
 				+ (char) 0
 				+ (char) 10
-				+ (char) 100;
+				+ (char) 100;*/
 	}
 		
 	public void seleccionarDispositivo(String nombreDispositivo) throws IllegalAccessException{
@@ -97,6 +97,11 @@ public class Impresora {
 	
 	public void imprimirTicket() throws IOException {
 
+		//this.contenido = contenido.toUpperCase().replace("Ñ", "N");
+		contenido += ""+ (char) 27 + (char) 112
+				+ (char) 0
+				+ (char) 10
+				+ (char) 100;
 		byte[] bytes = this.contenido.getBytes();
 		
 		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
@@ -126,6 +131,7 @@ public class Impresora {
 
 	@Override
 	public String toString() {
+		this.contenido = contenido.toUpperCase().replace("Ñ", "N");
 		return contenido;
 	}
 

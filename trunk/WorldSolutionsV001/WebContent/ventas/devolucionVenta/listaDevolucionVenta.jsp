@@ -85,7 +85,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 					if(per!=null){
 					if(per.equals("5122")){%>
 				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=ED&id=<bean:write name="x" property="iVentaDevolucionId" />',930,700)" />
+		                     onclick="popup('venta.do?metodo=mantenimientoVentaDevolucion&mode=U&id=<bean:write name="x" property="iVentaDevolucionId" />',930,700)" />
 		        <% break;}}}%>             
 		        </td>
 				<td><bean:write name="x" property="venta.cliente.vClienteRazonSocial" /></td>
