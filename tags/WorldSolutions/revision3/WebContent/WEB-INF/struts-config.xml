@@ -1,0 +1,483 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+   <data-sources />
+   <form-beans >
+      <form-bean name="loginForm" type="com.struts.form.LoginForm" />
+      <form-bean name="productosForm" type="com.struts.form.ProductosForm">
+          <form-property name="foto" type="org.apache.struts.upload.FormFile"/>
+      </form-bean>
+      <form-bean name="perfilForm" type="com.struts.form.PerfilForm" />
+      <form-bean name="areaForm" type="com.struts.form.AreaForm" />
+      <form-bean name="empresaSucursalForm" type="com.struts.form.EmpresaSucursalForm" />
+      <form-bean name="ocupacionForm" type="com.struts.form.OcupacionForm" />
+      <form-bean name="personalForm" type="com.struts.form.PersonalForm" />
+      <form-bean name="usuarioForm" type="com.struts.form.UsuarioForm" />
+      <form-bean name="categoriaForm" type="com.struts.form.CategoriaForm" />
+      <form-bean name="proveedorForm" type="com.struts.form.ProveedorForm" />
+      <form-bean name="estadoCuentaProveedorForm" type="com.struts.form.EstadoCuentaProveedorForm" />
+      <form-bean name="ingresoProductoForm" type="com.struts.form.IngresoProductoForm" />
+      <form-bean name="clienteForm" type="com.struts.form.ClienteForm" />
+      <form-bean name="estadoCuentaClienteForm" type="com.struts.form.EstadoCuentaClienteForm" />
+      <form-bean name="ventaForm" type="com.struts.form.VentaForm" />
+      <form-bean name="configuracionForm" type="com.struts.form.ConfiguracionForm" />
+      <form-bean name="contabilidadForm" type="com.struts.form.ContabilidadForm" />
+      <form-bean name="estadisticaForm" type="com.struts.form.EstadisticaForm" />
+      
+      
+      
+      
+   </form-beans>
+   <global-exceptions />
+   <global-forwards>
+         <forward    name="welcome"    path="/index.do"    redirect="true" />
+         <forward    name="inicio"   path="inicio.do"     redirect="true"/> 
+      </global-forwards>
+
+   <action-mappings>
+        <action path="/index"  forward="/plantillas/index.jsp" unknown="true" />       
+	    <action  path="/inicio" type="com.struts.action.BienvenidoAction">
+	        <forward name="bienvenidoAdmin" path=".bienvenidoAdmin"></forward>
+	        <forward name="bienvenidoUser" path=".bienvenidoUser"></forward>
+	        <forward name="login" path=".login"></forward>
+	    </action>
+    <action 
+	    attribute="loginForm"  
+	    name="loginForm"
+	    parameter="metodo"
+	    path="/login" 
+	    scope="request"
+	    type="com.struts.action.LoginAction"
+	    validate="false">
+	        <forward name="bienvenidoAdmin" path=".bienvenidoAdmin"></forward>
+	        <forward name="bienvenidoUser" path=".bienvenidoUser"></forward>
+	        <forward name="login" path=".login"></forward>
+	        <forward name="restablecer" path=".restablecer"></forward>
+	        
+	    </action>
+   <action 
+	    attribute="productosForm"  
+	    input="/inventario/producto/listaProducto.jsp"
+	    name="productosForm"
+	    parameter="metodo"
+	    path="/productos" 
+	    scope="request"
+	    type="com.struts.action.ProductosAction"
+	    validate="false">
+	                 <forward name="showList" path=".productos" />
+	                 <forward name="showListMateriaPrima" path=".listaMateriaPrima" />
+	                 <forward name="showListSuministros" path=".listaSuministros" />
+	                 <forward name="showListEnvases" path=".listaEnvases" />
+	                 <forward name="showListServicios" path=".listaServicios" />
+	                 <forward name="showListProduccion" path=".listaProduccion" />
+	                 
+	                 <forward name="showListPopupProductoKardex" path=".listPopupProductoKardex" />	
+	                 <forward name="showListPopupProducto" path=".listPopupProducto" />	
+	                 <forward name="showListPopupServicios" path=".listPopupServicios" />	                 
+	                 <forward name="showListPopupProductoCompra" path=".listPopupProductoCompra" />		                                 	                 	                 
+	                 <forward name="showListPopupProductoProduccion" path=".listPopupProductoProduccion" />
+	                 <forward name="showListPopupProductoExitProduccion" path=".listPopupProductoExitProduccion" />
+	                 <forward name="showListPopupProductoProduccionUni" path=".listPopupProductoProduccionUni" />
+	                 <forward name="showListPopupServiciosProduccion" path=".listPopupServiciosProduccion" />
+	                 
+	                 
+	                 <forward name="showEdit" path=".mantenimientoProducto" />
+	                 <forward name="showEditMateriaPrima" path=".mantenimientoMateriaPrima" />
+	                 <forward name="showEditSuministros" path=".mantenimientoSuministros" />
+	                 <forward name="showEditEnvases" path=".mantenimientoEnvases" />
+	                 <forward name="showEditServicios" path=".mantenimientoServicios" />
+	                 <forward name="showEditProduccion" path=".mantenimientoProduccion" />
+	                 
+	                 <forward name="showFind" path=".buscarMantenimientoProducto" />
+	                 <forward name="showFindMateriaPrima" path=".buscarMantenimientoMateriaPrima" />
+	                 <forward name="showFindSuministros" path=".buscarMantenimientoSuministros" />
+	                 <forward name="showFindEnvases" path=".buscarMantenimientoEnvases" />
+	                 <forward name="showFindServicios" path=".buscarMantenimientoServicios" />
+	                 <forward name="showFindSProduccion" path=".buscarMantenimientoProduccion" />	
+	                 	                 	
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+        <action 
+	    attribute="perfilForm"  
+	    input="/mantenimiento/perfil/listaPerfil.jsp"
+	    name="perfilForm"
+	    parameter="metodo"
+	    path="/perfil" 
+	    scope="request"
+	    type="com.struts.action.PerfilAction"
+	    validate="false">
+	                 <forward name="showList" path=".perfil" />
+	                 <forward name="showListPermiso" path=".listaPermiso" />	                 
+	                 <forward name="showEdit" path=".mantenimientoPerfil" />
+	                 <forward name="showFind" path=".buscarMantenimientoPerfil" />	                 
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="areaForm"  
+	    input="/mantenimiento/area/listaArea.jsp"
+	    name="areaForm"
+	    parameter="metodo"
+	    path="/area" 
+	    scope="request"
+	    type="com.struts.action.AreaAction"
+	    validate="false">
+	                 <forward name="showList" path=".area" />
+	                 <forward name="showEdit" path=".mantenimientoArea" />
+	                 <forward name="showFind" path=".buscarMantenimientoArea" />
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="empresaSucursalForm"  
+	    input="/mantenimiento/sucursal/listaSucursal.jsp"
+	    name="empresaSucursalForm"
+	    parameter="metodo"
+	    path="/empresaSucursal" 
+	    scope="request"
+	    type="com.struts.action.EmpresaSucursalAction"
+	    validate="false">
+	                 <forward name="showList" path=".sucursal" />
+	                 <forward name="showEdit" path=".mantenimientoSucursal" />
+	                 <forward name="showFind" path=".buscarMantenimientoSucursal" />
+	                 
+	                 <forward name="showEmpresaList" path=".empresa" />
+	                 <forward name="showEmpresaEdit" path=".mantenimientoEmpresa" />
+	                 <forward name="showEmpresaFind" path=".buscarMantenimientoEmpresa" />
+	                
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	     <action 
+	    attribute="ocupacionForm"  
+	    input="/mantenimiento/ocupacion/listaOcupacion.jsp"
+	    name="ocupacionForm"
+	    parameter="metodo"
+	    path="/ocupacion" 
+	    scope="request"
+	    type="com.struts.action.OcupacionAction"
+	    validate="false">
+	                 <forward name="showList" path=".ocupacion" />
+	                 <forward name="showEdit" path=".mantenimientoOcupacion" />
+	                 <forward name="showFind" path=".buscarMantenimientoOcupacion" />
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="categoriaForm"  
+	    input="/inventario/categoria/listaCategoria.jsp"
+	    name="categoriaForm"
+	    parameter="metodo"
+	    path="/categoria" 
+	    scope="request"
+	    type="com.struts.action.CategoriaAction"
+	    validate="false">
+	                 <forward name="showList" path=".categoria" />
+	                 <forward name="showEdit" path=".mantenimientoCategoria" />
+	                 <forward name="showFind" path=".buscarMantenimientoCategoria" />
+	                 <forward name="showListSubCategoria" path=".subCategoria" />
+	                 <forward name="showEditSubCategoria" path=".mantenimientoSubCategoria" />
+	                 <forward name="showFindSubCategoria" path=".buscarMantenimientoSubCategoria" />
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>	    
+	    <action 
+	    attribute="personalForm"  
+	    input="/mantenimiento/personal/listaPersonaljsp"
+	    name="personalForm"
+	    parameter="metodo"
+	    path="/personal" 
+	    scope="request"
+	    type="com.struts.action.PersonalAction"
+	    validate="false">
+	                 <forward name="showList" path=".personal" />
+	                 <forward name="showListPopup" path=".personalListaPopup" />	                 
+	                 <forward name="showEdit" path=".mantenimientoPersonal" />
+	                 <forward name="showFind" path=".buscarMantenimientoPersonal" />	                 
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="usuarioForm"  
+	    input="/mantenimiento/personal/listaUsuario.jsp"
+	    name="usuarioForm"
+	    parameter="metodo"
+	    path="/usuario" 
+	    scope="request"
+	    type="com.struts.action.UsuarioAction"
+	    validate="false">
+	                 <forward name="showList" path=".usuario" />
+	                 <forward name="showEdit" path=".mantenimientoUsuario" />
+	                 <forward name="showFind" path=".buscarMantenimientoUsuario" />	                 
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	     <action 
+	    attribute="configuracionForm"  
+	    name="configuracionForm"
+	    parameter="metodo"
+	    path="/configuracion" 
+	    scope="request"
+	    type="com.struts.action.ConfiguracionAction"
+	    validate="false">
+	                 <forward name="showList" path=".listaConfiguracion" />	
+	                 <forward name="showEdit" path=".mantenimientoConfiguracion" />	
+	                 <forward name="showFind" path=".buscarMantenimientoConfiguracion" />	
+	                 
+	                 <forward name="showListEjercicioFiscal" path=".listaEjercicioFiscal" />	
+	                 <forward name="showEditEjercicioFiscal" path=".mantenimientoEjercicioFiscal" />	
+	                 <forward name="showFindEjercicioFiscal" path=".buscarMantenimientoEjercicioFiscal" />	
+	                 
+	                 <forward name="showListPeriodo" path=".listaPeriodo" />	
+	                 <forward name="showEditPeriodo" path=".mantenimientoPeriodo" />	
+	                 <forward name="showFindPeriodo" path=".buscarMantenimientoPeriodo" />	
+	                   
+	                 <forward name="showListImpuestos" path=".listaImpuestos" />	
+	                 <forward name="showEditImpuestos" path=".mantenimientoImpuestos" />	
+	                 <forward name="showFindImpuestos" path=".buscarMantenimientoImpuestos" />	
+	                                                  
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="proveedorForm"  
+	    input="/proveedor/proveedor/listaProveedor.jsp"
+	    name="proveedorForm"
+	    parameter="metodo"
+	    path="/proveedor" 
+	    scope="request"
+	    type="com.struts.action.ProveedorAction"
+	    validate="false">
+	                 <forward name="showList" path=".proveedor" />
+	                 <forward name="showListPopup" path=".proveedorListaPopup" />	
+	                 <forward name="showEdit" path=".mantenimientoProveedor" />
+	                 <forward name="showFind" path=".buscarMantenimientoProveedor" />	                 
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="estadoCuentaProveedorForm"  
+	    input="/proveedor/estadoCuenta/listaEstadoCuentaProv.jsp"
+	    name="estadoCuentaProveedorForm"
+	    parameter="metodo"
+	    path="/estadoCuentaProveedor" 
+	    scope="request"
+	    type="com.struts.action.EstadoCuentaProveedorAction"
+	    validate="false">
+	                 <forward name="showList" path=".estadoCuentaProveedor" />	                                 
+	                 <forward name="showEdit" path=".mantenimientoEstadoCuentaProveedor" />
+	                 <forward name="showFindEstadoCuentaProv" path=".buscarMantenimientoEstadoCuentaProv" />
+	                 <forward name="showListLetraProveedor" path=".listLetraProveedor" />
+	                 <forward name="showEditLetraProveedor" path=".mantenimientoLetraProveedor" />
+	                 <forward name="showFindLetraProveedor" path=".buscarMantenimientoLetraProveedor" />
+	                 
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="ingresoProductoForm"  
+	    name="ingresoProductoForm"
+	    parameter="metodo"
+	    path="/ingresoProducto" 
+	    scope="request"
+	    type="com.struts.action.IngresoProductoAction"
+	    validate="false">
+	                 <forward name="showList" path=".ingresoProducto" />
+	                 <forward name="showListPopupCompras" path=".listPopupCompras" />	                 
+	                 <forward name="showListIngresoDevolucion" path=".listaIngresoProductoDevolucion" />	                 
+	                 <forward name="showListEstadoCuentaPorProveedor" path=".listaEstadoCuentaPorProveedor" />
+	                 <forward name="showEditFactura" path=".mantenimientoCompraFactura" />
+	                 <forward name="showEditBoleta" path=".mantenimientoCompraBoleta" />
+	                 <forward name="showEditNotaDebito" path=".mantenimientoCompraNotaDebito" />
+	                 <forward name="showEditGuiaRemision" path=".mantenimientoCompraGuiaRemision" />
+	                 <forward name="showEditPedido" path=".mantenimientoCompraPedido" />
+	                 <forward name="showEditIngresoProductoDevolucion" path=".mantenimientoIngresoProductoDevolucion" />
+	                 <forward name="showFindDevolucionCompra" path=".buscarMantenimientoDevolucionCompra" />
+	                 	                 
+	                 <forward name="showFind" path=".buscarMantenimientoIngresoProducto" />
+	                 <forward name="showEstadoCuenta" path=".mantenimientoEstadoCuenta" />
+	                 <forward name="showFindEstadoCuenta" path=".buscarMantenimientoEstadoCuenta" />	                 		                 
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	     <action 
+	    attribute="clienteForm"  
+	    name="clienteForm"
+	    parameter="metodo"
+	    path="/cliente" 
+	    scope="request"
+	    type="com.struts.action.ClienteAction"
+	    validate="false">
+	                 <forward name="showList" path=".cliente" />
+	                 <forward name="showListPopup" path=".clienteListaPopup" />
+	                 <forward name="showListDireccionPopup" path=".direccionClienteListaPopup" />
+	                 <forward name="showEdit" path=".mantenimientoCliente" />
+	                 <forward name="showFind" path=".buscarMantenimientoCliente" />
+	                 
+	                 <forward name="showListClasifCliente" path=".listaClasificacionCliente" />
+	                 <forward name="showEditClasifCliente" path=".mantenimientoClasificacionCliente" />
+	                 <forward name="showFindClasifCliente" path=".buscarMantenimientoClasifCliente" />
+	                 
+	     	
+	                 
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="estadoCuentaClienteForm"  
+	    name="estadoCuentaClienteForm"
+	    parameter="metodo"
+	    path="/estadoCuentaCliente" 
+	    scope="request"
+	    type="com.struts.action.EstadoCuentaClienteAction"
+	    validate="false">
+	                 <forward name="showList" path=".listaEstadoCuentaPorCliente" />	                 
+	                 <forward name="showEdit" path=".mantenimientoEstadoCuentaClientePago" />
+	                 <forward name="showListLetraCliente" path=".listaLetraCliente" />
+	                 <forward name="showEditLetraCliente" path=".mantenimientoLetraCliente" />
+	                 <forward name="showFindLetraCliente" path=".buscarMantenimientoLetraCliente" />
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="ventaForm"  
+	    name="ventaForm"
+	    parameter="metodo"
+	    path="/venta" 
+	    scope="request"
+	    type="com.struts.action.VentaAction"
+	    validate="false">
+	                 <forward name="showList" path=".venta" />
+	                 <!-- forward name="showListEstadoCuentaPorCliente" path=".listaEstadoCuentaPorCliente" /> -->
+	                 <forward name="showListVentaDevolucion" path=".listaVentaDevolucion" />
+	                 <forward name="showEditVentaDevolucion" path=".mantenimientoVentaDevolucion" />
+	                  <forward name="showFindDevolucionVenta" path=".buscarMantenimientoDevolucionVenta" />
+	                 <forward name="showListPopupVentas" path=".listaPopupVentas" />
+	                 		
+	                                  
+	                 <forward name="showEdit" path=".mantenimientoVenta" />
+	                 <forward name="showEditFactura" path=".mantenimientoVentaFactura" />
+	                 <forward name="showEditBoleta" path=".mantenimientoVentaBoleta" />
+	                 <forward name="showEditNotaDebito" path=".mantenimientoVentaNotaDebito" />
+	                 <forward name="showEditGuiaRemision" path=".mantenimientoVentaGuiaRemision" />
+	                 <forward name="showEditPedido" path=".mantenimientoVentaPedido" />
+	                 <forward name="showFind" path=".buscarMantenimientoVenta" />
+	                 <forward name="showEstadoCuenta" path=".mantenimientoEstadoCuentaCliente" />	
+	                 <forward name="showFindEstadoCuenta" path=".buscarMantenimientoEstadoCuentaCliente" />		
+	                 
+	                                   
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	    <action 
+	    attribute="contabilidadForm"  
+	    name="contabilidadForm"
+	    parameter="metodo"
+	    path="/contabilidad" 
+	    scope="request"
+	    type="com.struts.action.ContabilidadAction"
+	    validate="false">
+	                
+	                 <forward name="showListVentaContabilidad" path=".listaContabilidadVenta" />
+	                 <forward name="showListVentaDevolucionContabilidad" path=".listaContabilidadVentaDevolucion" />                    
+                     <forward name="showListEstadoCuentaCliente" path=".listaEstadoCuentaCliente" />
+                     		
+                     <forward name="showListIngresoProductoContabilidad" path=".listaIngresoProductoContabilidad" />
+                     <forward name="showListIngresoDevolucionContabilidad" path=".listaIngresoProductoDevolucionContabilidad" />
+                     <forward name="showListEstadoCuentaProveedor" path=".listaEstadoCuentaProveedorContabilidad" />
+                    
+                     <forward name="showListMercaderiaContabilidad" path=".listMercaderiaContabilidad" />
+                     <forward name="showListMateriaPrimaContabilidad" path=".listMateriaPrimaContabilidad" />
+                     <forward name="showListSuministrosContabilidad" path=".listSuministrosContabilidad" />
+                     <forward name="showListEnvasesContabilidad" path=".listEnvasesContabilidad" />
+                     
+                     <forward name="showListCajaBancos" path=".listCajaBancos" />
+                     <forward name="showEditCuentas" path=".mantenimientoCuentas" />
+                     <forward name="showListPlanilla" path=".listPlanilla" />
+                     <forward name="showEditPlanilla" path=".mantenimientoPlanilla" />
+                     <forward name="showFindPlanilla" path=".buscarMantenimientoPlanilla" />
+                     
+                     
+                     
+                     
+                     
+                     <forward name="showListCuentas" path=".listCuentas" />
+                     <forward name="showListLibroDiario" path=".listLibroDiario" />
+                     <forward name="showListLibroMayor" path=".listLibroMayor" />
+                     <forward name="showListBalanceGeneral" path=".listBalanceGeneral" />
+                     <forward name="showListEstdadoFinanciero" path=".listEstadoFinanciero" />
+                     
+                     
+                     
+                     
+                     
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+	     <action 
+	    attribute="estadisticaForm"  
+	    name="estadisticaForm"
+	    parameter="metodo"
+	    path="/estadistica" 
+	    scope="request"
+	    type="com.struts.action.EstadisticaAction"
+	    validate="false">
+	    
+	                 <forward name="showEstadisticaGeneral" path=".estadisticaGeneral" />	      
+	                 <forward name="showEstadisticaCompras" path=".estadisticaCompras" />	
+	                 <forward name="showEstadisticaVentas" path=".estadisticaVentas" />	
+	                 <forward name="showEstadisticaClientes" path=".estadisticaClientes" />	
+	                 <forward name="showEstadisticaProveedores" path=".estadisticaProveedores" />	           
+	                 <forward name="msnOk" path=".msnOk" />
+	                 <forward name="msnError" path=".msnError" />
+	           
+	    </action>
+      <!--action
+         attribute="bookEditForm"
+         name="bookEditForm"
+         parameter="do"
+         path="/bookEdit"
+         scope="request"
+         type="com.action.BookEditAction">
+         <forward name="showEdit" path="/jsp/bookEdit.jsp" />
+         <forward
+            name="showList"
+            path="/bookList.do"
+            redirect="true" />
+         <forward name="showAdd" path="/jsp/bookAdd.jsp" />
+      </action>
+         <action
+         attribute="clienteListForm"
+         input="/jsp/clienteList.jsp"
+         name="clienteListForm"
+         parameter="step"
+         path="/clienteList"
+         scope="request"
+         type="com.struts.action.ClienteListAction"
+         validate="false">
+         <forward name="showList" path="/jsp/clienteList.jsp" />
+      </action -->
+   </action-mappings>
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+    <message-resources parameter="com/struts/ApplicationResource"/>     
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in> 
+</struts-config>
