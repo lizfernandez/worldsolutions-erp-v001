@@ -24,6 +24,7 @@ import com.dao.UsuarioDao;
 import com.dao.VentaDao;
 import com.entities.Area;
 import com.entities.Estado;
+import com.entities.Mediopago;
 import com.entities.Ocupacion;
 import com.entities.Personal;
 import com.entities.Usuario;
@@ -273,20 +274,44 @@ public class PersonalAction extends BaseAction {
 			impresora.agregarTituloIzquierda("CAJERO", 10, usuario.getPersonal().getvPersonalApellidoPaterno() + " " + usuario.getPersonal().getvPersonalApellidoMaterno() + " " + usuario.getPersonal().getvPersonalNombres());
 			
 			List<String> listaMedioPago = new ArrayList<String>();
-			listaMedioPago.add("EFECTIVO SOLES");
-			listaMedioPago.add("EFECTIVO DOLARES");
+//			listaMedioPago.add("EFECTIVO SOLES");
+//			listaMedioPago.add("VISA SOLES");
+//			listaMedioPago.add("MASTERCARD SOLES");
 			
 			List<Double> listaTotalPorMedioPago = new ArrayList<Double>();
-			listaTotalPorMedioPago.add(0.0);
-			listaTotalPorMedioPago.add(0.0);
-						
+//			listaTotalPorMedioPago.add(0.0);
+//			listaTotalPorMedioPago.add(0.0);
+//			listaTotalPorMedioPago.add(0.0);
+			
+
+			
+			List<String> listaMedioPagoDol = new ArrayList<String>();
+//			listaMedioPagoDol.add("EFECTIVO DOLARES");
+//			listaMedioPagoDol.add("VISA DOLARES");
+//			listaMedioPagoDol.add("MASTERCARD DOLARES");
+			
+			List<Double> listaTotalPorMedioPagoDol = new ArrayList<Double>();
+//			listaTotalPorMedioPagoDol.add(0.0);
+//			listaTotalPorMedioPagoDol.add(0.0);
+//			listaTotalPorMedioPagoDol.add(0.0);
+				
+			
+			GenericaDao dao = new GenericaDao();
+			List<Mediopago> listaMP = dao.listaEntidadGenericaSinCodigo("Mediopago");
+			
+			for (Mediopago mediopago : listaMP) {
+				listaMedioPago.add(mediopago.getvNombre() + " SOLES");
+				listaTotalPorMedioPago.add(0.0);
+				listaMedioPagoDol.add(mediopago.getvNombre() +" DOLARES");
+				listaTotalPorMedioPagoDol.add(0.0);
+			}
+			
 			List<String> listaHora = new ArrayList<String>();
 			List<Double> listaTotalPorHora = new ArrayList<Double>();
 			
 			if (detalleArqueoVentas != null && detalleArqueoVentas.size() > 0) {
 				
 				double totalMedioPago;
-				double totalHora;
 				int indice = -1;
 				SimpleDateFormat format = new SimpleDateFormat("HH");
 				for (Venta arqueoVenta : detalleArqueoVentas) {
@@ -295,22 +320,42 @@ public class PersonalAction extends BaseAction {
 					System.out.println("TipoPago: " + arqueoVenta.getvTipoPago());
 					System.out.println("VentaTotal: " + arqueoVenta.getfVentaTotal());
 					if ("S/.".equals(arqueoVenta.getvTipoPago())) {
-						indice = 0;
+						
+						if (arqueoVenta.getfMontoPago() > 0) {
+							indice = arqueoVenta.getMedioPago1().getiMedioPagoId() - 1;
+	
+							totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPago();
+							
+							listaTotalPorMedioPago.set(indice, totalMedioPago);
+						}
+	
+						if (arqueoVenta.getfMontoPagoCredito() > 0) {
+							indice = arqueoVenta.getMedioPago2().getiMedioPagoId() - 1;
+	
+							totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPagoCredito();
+							
+							listaTotalPorMedioPago.set(indice, totalMedioPago);
+						}
 						
 					} else if ("$".equals(arqueoVenta.getvTipoPago())) {
-						indice = 1;
-					} else {
-						indice = listaMedioPago.indexOf(arqueoVenta.getvTipoPago());
-						if (indice < 0) {
-							indice = listaMedioPago.size();
-							listaMedioPago.add(arqueoVenta.getvTipoPago());
-							listaTotalPorMedioPago.add(0.0);
+
+						if (arqueoVenta.getfMontoPago() > 0) {
+							indice = arqueoVenta.getMedioPago1().getiMedioPagoId() - 1;
+	
+							totalMedioPago = listaTotalPorMedioPagoDol.get(indice) + arqueoVenta.getfMontoPago();
 							
+							listaTotalPorMedioPagoDol.set(indice, totalMedioPago);
 						}
+	
+						if (arqueoVenta.getfMontoPagoCredito() > 0) {
+							indice = arqueoVenta.getMedioPago2().getiMedioPagoId() - 1;
+	
+							totalMedioPago = listaTotalPorMedioPagoDol.get(indice) + arqueoVenta.getfMontoPagoCredito();
+							
+							listaTotalPorMedioPagoDol.set(indice, totalMedioPago);
+						}
+						
 					}
-					totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfVentaTotal();
-					
-					listaTotalPorMedioPago.set(indice, totalMedioPago);
 					totalVenta += arqueoVenta.getfVentaTotal();
 					
 					String textoHora = format.format(arqueoVenta.getdFechaInserta());
@@ -348,6 +393,19 @@ public class PersonalAction extends BaseAction {
 				for (double montoAcumuladoTipoPago : listaTotalPorMedioPago) {
 					if (montoAcumuladoTipoPago > 0) {
 						medioPago = listaMedioPago.get(indice);
+						impresora.agregarLinea(new Object[][]{
+								{"", 0, 1},
+								{medioPago, 5, 1},
+								{FormatosNumeros.FormatoDecimalMoneda(montoAcumuladoTipoPago), 30, -1}
+							});
+						
+					}
+					indice++;
+				}
+				indice = 0;
+				for (double montoAcumuladoTipoPago : listaTotalPorMedioPagoDol) {
+					if (montoAcumuladoTipoPago > 0) {
+						medioPago = listaMedioPagoDol.get(indice);
 						impresora.agregarLinea(new Object[][]{
 								{"", 0, 1},
 								{medioPago, 5, 1},

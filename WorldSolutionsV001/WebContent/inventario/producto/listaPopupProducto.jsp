@@ -72,9 +72,9 @@
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
 			               '<bean:write name="x" property="iUMBase" />',
 			               '<bean:write name="x" property="iUMPedido" />',
-			               '<bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/>',
-			               '<bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/>',
-			               '<bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/>')">
+			               '<bean:write name="x" property="fProductoPrecioCompra" format="###0.00"  locale="Localidad"/>',
+			               '<bean:write name="x" property="fProductoPrecioVenta" format="###0.00"  locale="Localidad"/>',
+			               '<bean:write name="x" property="fProductoDescuento" format="###0.00"  locale="Localidad"/>')">
 		 		<td><bean:write name="x" property="cProductoCodigo" /></td>
 				<td><bean:write name="x" property="vProductoNombre" /></td>
 				<td>
@@ -93,9 +93,9 @@
 				<td>
 				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
 				</td>
-				<td align="right"><bean:write name="x" property="fProductoDescuento" format="#,##0.00" locale="Localidad" /></td>
-				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/></td>
-				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/></td>
+				<td align="right"><bean:write name="x" property="fProductoDescuento" format="###0.00" locale="Localidad" /></td>
+				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="###0.00"  locale="Localidad"/></td>
+				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="###0.00"  locale="Localidad"/></td>
 						
 	    	</tr>
 	    	<logic:notEmpty name="x" property="preciosproductodetallles">
@@ -121,9 +121,9 @@
 					  							   '<bean:write name="z" property="fPrecioCompra"/>',
 					  							   '<bean:write name="z" property="fDescuento"/>')">				        
 					       <td align="center"><bean:write name="z" property="iCantidadStock"/></td>
-					       <td align="right"><bean:write name="z" property="fPrecioVenta" format="#,##0.00" locale="Localidad" /></td>
-					       <td align="right"><bean:write name="z" property="fPrecioCompra" format="#,##0.00" locale="Localidad" /></td>					       
-						   <td align="right"><bean:write name="z" property="fDescuento" format="#,##0.00" locale="Localidad" /></td>
+					       <td align="right"><bean:write name="z" property="fPrecioVenta" format="###0.00" locale="Localidad" /></td>
+					       <td align="right"><bean:write name="z" property="fPrecioCompra" format="###0.00" locale="Localidad" /></td>					       
+						   <td align="right"><bean:write name="z" property="fDescuento" format="###0.00" locale="Localidad" /></td>
 						   <td align="center"><bean:write name="z" property="dFechaInserta" format="dd/MM/yyyy"  /></td>
 						</tr> 						
 						</logic:equal>  
