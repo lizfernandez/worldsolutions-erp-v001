@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import com.dao.VentaDao;
 import com.entities.Formapago;
 
+import com.entities.Mediopago;
 import com.entities.Venta;
 import com.entities.Ventadetalle;
 
@@ -945,5 +946,74 @@ public class VentaForm extends ActionForm {
 		this.identificador = identificador;
 	}
 	
+	/**
+	 * @return the fMontoPagoCredito
+	 */
+	public float getfMontoPagoCredito() {
+		return venta.getfMontoPagoCredito();
+	}
+
+	/**
+	 * @param fMontoPagoCredito the fMontoPagoCredito to set
+	 */
+	public void setfMontoPagoCredito(float fMontoPagoCredito) {
+		this.venta.setfMontoPagoCredito(fMontoPagoCredito);
+	}
 	
+	/**
+	 * @return the medioPago1
+	 */
+	public Mediopago getMedioPago1() {
+		Mediopago formaPago = getVenta().getMedioPago1();
+		if(formaPago==null){
+			formaPago= new Mediopago();
+			venta.setMedioPago1(formaPago);
+		}
+		return venta.getMedioPago1();
+	}
+	/**
+	 * @return the iFormaPagoId
+	 */
+	public int getiMedioPagoId1() {
+		return getMedioPago1().getiMedioPagoId();
+	}
+
+	/**
+	 * @param iFormaPagoId the iFormaPagoId to set
+	 */
+	public void setiMedioPagoId1(int iFormaPagoId) {	
+		this.venta.setMedioPago1(ventaDao().findEndidad(getMedioPago1(), iFormaPagoId));
+	}
+	
+
+	
+	
+	/**
+	 * @return the medioPago1
+	 */
+	public Mediopago getMedioPago2() {
+		Mediopago formaPago = getVenta().getMedioPago2();
+		if(formaPago==null){
+			formaPago= new Mediopago();
+			venta.setMedioPago2(formaPago);
+		}
+		return venta.getMedioPago2();
+	}
+	/**
+	 * @return the iFormaPagoId
+	 */
+	public int getiMedioPagoId2() {
+		return getMedioPago2().getiMedioPagoId();
+	}
+
+	/**
+	 * @param iFormaPagoId the iFormaPagoId to set
+	 */
+	public void setiMedioPagoId2(int iFormaPagoId) {	
+		this.venta.setMedioPago2(ventaDao().findEndidad(getMedioPago2(), iFormaPagoId));
+	}
+	
+
+	
+
 }

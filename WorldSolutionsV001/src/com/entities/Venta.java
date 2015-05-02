@@ -158,6 +158,16 @@ public class Venta implements Serializable {
 	
 	private String vPorcentajeIGV;
 	
+	private float fMontoPagoCredito;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="iMedioPago1", nullable=false)
+	private Mediopago medioPago1;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="iMedioPago2", nullable=false)
+	private Mediopago medioPago2;
+	
     public Venta() {
     }
 
@@ -790,6 +800,48 @@ public class Venta implements Serializable {
 	 */
 	public void setvPorcentajeIGV(String vPorcentajeIGV) {
 		this.vPorcentajeIGV = vPorcentajeIGV;
+	}
+
+	/**
+	 * @return the fMontoPagoCredito
+	 */
+	public float getfMontoPagoCredito() {
+		return fMontoPagoCredito;
+	}
+
+	/**
+	 * @param fMontoPagoCredito the fMontoPagoCredito to set
+	 */
+	public void setfMontoPagoCredito(float fMontoPagoCredito) {
+		this.fMontoPagoCredito = fMontoPagoCredito;
+	}
+
+	/**
+	 * @return the medioPago1
+	 */
+	public Mediopago getMedioPago1() {
+		return medioPago1;
+	}
+
+	/**
+	 * @param medioPago1 the medioPago1 to set
+	 */
+	public void setMedioPago1(Mediopago medioPago1) {
+		this.medioPago1 = medioPago1;
+	}
+
+	/**
+	 * @return the medioPago2
+	 */
+	public Mediopago getMedioPago2() {
+		return medioPago2;
+	}
+
+	/**
+	 * @param medioPago2 the medioPago2 to set
+	 */
+	public void setMedioPago2(Mediopago medioPago2) {
+		this.medioPago2 = medioPago2;
 	}
 
 	

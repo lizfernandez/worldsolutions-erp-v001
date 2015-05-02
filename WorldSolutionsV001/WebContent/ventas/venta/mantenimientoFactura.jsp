@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="venta" styleId="formVenta" enctype="echarset=utf-8">
-<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 70%; float: left;">
+<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 64%; float: left;">
     <tr style="height: 1px;">
       <td>
       
@@ -202,7 +202,7 @@
 </tr>
 
 </table>
-<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 30%; float: right;">
+<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 36%; float: right;">
 <tr style="height: 1px;"> 
     <td>
      <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -292,12 +292,27 @@
 		            </tr>
 		           
 		            <tr>		                
-		                <td align="right">MONTO PAGO:</td>
+		                <td align="right">MONTO PAGO 
+		                <html:select  property="iMedioPagoId1" styleId="iMedioPagoId1" styleClass="combo" style="width:110px" onchange="fn_PagoCredito()">        
+                 <html:options collection="listamedioPago" property="iMedioPagoId" labelProperty="vNombre"/>
+                </html:select>:</td>
 		                <td align="right">
 		                 S/.
-		                 <input type="text" id="fMontoPagoSoles"  class="textN  textNumero" size="7" onblur="fn_tipoPago()"/>
+		                 <input type="text" id="fMontoPagoSoles"  class="textN  textNumero" size="7" onblur="fn_tipoPago()" value="0"/>
 		                 $.
-		                 <input type="text" id="fMontoPagoDolares"  class="textN  textNumero"  size="7" onblur="fn_tipoPago()"/>
+		                 <input type="text" id="fMontoPagoDolares"  class="textN  textNumero"  size="7" onblur="fn_tipoPago()" value="0"/>
+		                 </td>
+		            </tr>
+		             <tr>		                
+		                <td align="right">MONTO PAGO 
+		                <html:select  property="iMedioPagoId2" styleId="iMedioPagoId2" styleClass="combo" style="width:110px" onchange="fn_PagoCredito()">        
+                 <html:options collection="listamedioPago" property="iMedioPagoId" labelProperty="vNombre"/>
+                </html:select>:</td>
+		                <td align="right">
+		                 S/.
+		                 <input type="text" id="fMontoPagoSolesCredito"  class="textN  textNumero" size="7" onblur="fn_tipoPago()" value="0"/>
+		                 $.
+		                 <input type="text" id="fMontoPagoDolaresCredito"  class="textN  textNumero"  size="7" onblur="fn_tipoPago()" value="0"/>
 		                 </td>
 		            </tr>
 		            <tr>
@@ -305,9 +320,9 @@
 		                <td align="right">VUELTO:</td>
 		                <td align="right">
 		                  S/.
-		                  <input type="text" id="fMontoVueltoSoles"  class="textN  textNumero" readonly="true" size="7" />
+		                  <input type="text" id="fMontoVueltoSoles"  class="textN  textNumero" readonly="true" size="7" value="0"/>
 		                  $.
-		                  <input type="text" id="fMontoVueltoDolares"  class="textN  textNumero" readonly="true" size="7" />
+		                  <input type="text" id="fMontoVueltoDolares"  class="textN  textNumero" readonly="true" size="7"  value="0"/>
 		                  
 		                </td>
 		            </tr>		           
@@ -379,6 +394,8 @@
 <html:hidden property="vIncluyeIGV" styleId="vIncluyeIGV" />
 <html:hidden property="fMontoVuelto" styleId="fMontoVuelto" />
 <html:hidden property="fMontoPago" styleId="fMontoPago" />
+<html:hidden property="fMontoPagoCredito" styleId="fMontoPagoCredito" />
+
 </html:form>
 <script>
     var mode = document.getElementById('mode').value;
@@ -444,6 +461,8 @@
 	        	$("#fMontoPagoDolares").val(dosDecimales(parseFloat($("#fMontoPago").val())/tipoCambio));
 	        	$("#fMontoVueltoDolares").val(dosDecimales(parseFloat($("#fMontoVuelto").val())/tipoCambio));
 	        	$("#fMontoPagoSoles").val(dosDecimales(parseFloat($("#fMontoPago").val())));
+	        	$("#fMontoPagoSolesCredito").val(dosDecimales(parseFloat($("#fMontoPagoCredito").val())));
+	        	$("#fMontoPagoDolaresCredito").val(dosDecimales(parseFloat($("#fMontoPagoCredito").val())/tipoCambio));
 	        	$("#fMontoVueltoSoles").val(dosDecimales(parseFloat($("#fMontoVuelto").val())));
     			
 	        }
@@ -453,6 +472,8 @@
 	        	$("#fMontoVueltoDolares").val(dosDecimales(parseFloat($("#fMontoVuelto").val())));	        
 	        	$("#fMontoPagoSoles").val(dosDecimales(parseFloat($("#fMontoPago").val())*tipoCambio));
 	        	$("#fMontoVueltoSoles").val(dosDecimales(parseFloat($("#fMontoVuelto").val())*tipoCambio));
+	        	$("#fMontoPagoDolaresCredito").val(dosDecimales(parseFloat($("#fMontoPagoCredito").val())));
+	        	$("#fMontoPagoSolesCredito").val(dosDecimales(parseFloat($("#fMontoPagoCredito").val())*tipoCambio));
     		
 	        }
 	        if($("#vIncluyeIGV").val()=="siIgv"){
@@ -542,7 +563,7 @@
         
       
       	document.getElementById(total).innerHTML = precioTotal;   
-    	 $("."+total).text( formatCurrency(precioTotal,''));
+    	 $("."+total).text( (precioTotal));
   
         var cad = "venta.do?metodo=detalleVenta&id="+fila+"&mode=U&iCantidad="+cantidad+"&fPrecioVenta="+precio+"&fDescuento="+fDescuento;
         
@@ -589,51 +610,59 @@
     function fn_tipoPago(){
     	    var fVentaTotalR = parseFloat($("#fVentaTotal").val());
     	    var tipoCambio=parseFloat($("#fTipoCambio").val());  
-    	    var montoPagoS=$("#fMontoPagoSoles").val()==""?0:parseFloat($("#fMontoPagoSoles").val()); 
-    	    var montoPagoD=$("#fMontoPagoDolares").val()==""?0:parseFloat($("#fMontoPagoDolares").val()); 
+    	    var montoPagoS=$("#fMontoPagoSoles").val()==""?0:parseFloat($("#fMontoPagoSoles").val());
+    	    var montoPagoD=$("#fMontoPagoDolares").val()==""?0:parseFloat($("#fMontoPagoDolares").val());
+    	    var montoPagoSCredito=$("#fMontoPagoSolesCredito").val()==""?0:parseFloat($("#fMontoPagoSolesCredito").val());
+    	    var montoPagoDCredito=$("#fMontoPagoDolaresCredito").val()==""?0:parseFloat($("#fMontoPagoDolaresCredito").val());
+    	    
     	   
     	    
     		 if($("#monedaDolares").is(":checked")){// mixto 
-    			if(montoPagoD==""){
+    			if(montoPagoD=="" || montoPagoDCredito==""){
     				alert("Debe de ingresar monto en dolares");
     			}
     			else{
 	    			 	     			 
 	     			if($("#vTipoVenta").val()=='S/.'){
-	        			$("#fMontoVueltoSoles").val(dosDecimales(montoPagoS-fVentaTotalR));
-	        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoS-fVentaTotalR)/tipoCambio));
+	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoS+montoPagoSCredito)-fVentaTotalR));
+	        			$("#fMontoVueltoDolares").val(dosDecimales(((montoPagoS+montoPagoSCredito)-fVentaTotalR)/tipoCambio));
 	        			
 	        		}
 	        		else{
-	        			$("#fMontoVueltoDolares").val(dosDecimales(montoPagoD-fVentaTotalR));
-	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD-fVentaTotalR)*tipoCambio));
+	        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoD+montoPagoDCredito)-fVentaTotalR));
+	        			$("#fMontoVueltoSoles").val(dosDecimales(((montoPagoD+montoPagoDCredito-fVentaTotalR))*tipoCambio));
 	        			
 	        		}
-	     			 $("#fMontoPagoSoles").val(dosDecimales(montoPagoD*tipoCambio));
+	     			 $("#fMontoPagoSoles").val(dosDecimales((montoPagoD-montoPagoDCredito)*tipoCambio));
 	    			 $("#fMontoVuelto").val(dosDecimales($("#fMontoVueltoDolares").val()));
 	     			 $("#fMontoPago").val(montoPagoD);
+	     			 $("#fMontoPagoCredito").val(montoPagoDCredito);
 	     			 $("#vTipoPago").val("$");
     			}
     		 }
     		 if($("#monedaSoles").is(":checked")){// mixto    	
     			
-    			 if(montoPagoS==""){
-     				alert("Debe de ingresar monto en Soles");
+    			 if(montoPagoS=="" ){
+     				alert("Debe de ingresar monto en Soles" +montoPagoSCredito +" montoPagoS=" +montoPagoS);
      			}
      			else{
 	    			if($("#vTipoVenta").val()=='S/.'){
-	        			$("#fMontoVueltoSoles").val(dosDecimales(montoPagoS-fVentaTotalR));
-	        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoS-fVentaTotalR)/tipoCambio));
+	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoS+montoPagoSCredito)-fVentaTotalR));
+	        			$("#fMontoVueltoDolares").val(dosDecimales(((montoPagoS+montoPagoSCredito)-fVentaTotalR)/tipoCambio));
+	        			
 	        			
 	        		}
 	        		else{
-	        			$("#fMontoVueltoDolares").val(dosDecimales(montoPagoD-fVentaTotalR));
-	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD-fVentaTotalR)*tipoCambio));
+	        			$("#fMontoVueltoDolares").val(dosDecimales((montoPagoD+montoPagoDCredito)-fVentaTotalR));
+	        			$("#fMontoVueltoSoles").val(dosDecimales((montoPagoD+montoPagoDCredito-fVentaTotalR)*tipoCambio));
 	        			
 	        		}
-	    			 $("#fMontoPagoDolares").val(dosDecimales(montoPagoS/tipoCambio));
+	    			 $("#fMontoPagoDolares").val(dosDecimales((montoPagoS)/tipoCambio));
+	    			 $("#fMontoPagoDolaresCredito").val(dosDecimales((montoPagoSCredito)/tipoCambio));
+	    			 
 	    			 $("#fMontoVuelto").val($("#fMontoVueltoSoles").val());
 	     			 $("#fMontoPago").val(montoPagoS);
+	     			$("#fMontoPagoCredito").val(montoPagoSCredito);
 	     			 $("#vTipoPago").val("S/.");
 	     			
      			}

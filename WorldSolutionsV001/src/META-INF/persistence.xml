@@ -65,6 +65,7 @@
     <class>com.entities.Empresa</class>
     <class>com.entities.Almacen</class>
     <class>com.entities.Productoalmacen</class>
+    <class>com.entities.Mediopago</class>
     	 
 	<!-- transaction-type="RESOURCE_LOCAL"-->
 		<properties>

@@ -39,6 +39,7 @@ import com.entities.Direccioncliente;
 import com.entities.Estado;
 import com.entities.Formapago;
 import com.entities.Kardex;
+import com.entities.Mediopago;
 import com.entities.Moneda;
 import com.entities.Personal;
 import com.entities.Preciosproducto;
@@ -711,6 +712,7 @@ public class VentaAction extends BaseAction {
 
 			List<Estado> listaEstado = estadoDao.listEstado();
 			List<Formapago> listaFormapago = genericaDao.listaEntidadGenericaSinCodigo("Formapago");
+			List<Mediopago> listamedioPago = genericaDao.listaEntidadGenericaSinCodigo("Mediopago");
 			List<Ventadetalle> lista = new ArrayList<Ventadetalle>();	
 			List<Tipodocumentogestion> listaTipoDoc = genericaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
 			
@@ -888,6 +890,8 @@ public class VentaAction extends BaseAction {
 		
 			sesion.setAttribute("listaEstado", listaEstado);
 			sesion.setAttribute("listaFormapago", listaFormapago);
+			sesion.setAttribute("listamedioPago", listamedioPago);
+			
 			sesion.setAttribute("listaTipoDoc", listaTipoDoc);
 
 			return mapping.findForward(msn);

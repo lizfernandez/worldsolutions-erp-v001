@@ -627,7 +627,7 @@ function listar_detalleVenta(obj,destino,identificador){
 			newHtml+=data['producto'].vProductoNombre;
 		newHtml+='</td>';		
 	    newHtml+="<td align='right'>";
-		  newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+formatCurrency(precio,' ')+"'/>";		  
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+(precio)+"'/>";		  
 	    newHtml+='</td>';
 	    newHtml+="<td align='right'>";
 		  newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+formatCurrency(data.fDescuento,' ')+"'/>";		  
@@ -716,10 +716,10 @@ function listar_detalleCompra(obj,destino){
 			newHtml+=data['producto'].vProductoNombre;
 		newHtml+='</td>';
 		newHtml+="<td align='right'>";
-		 newHtml+="<input type='text' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+formatCurrency(precio,' ')+"'/>";		  
+		 newHtml+="<input type='text' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+(precio)+"'/>";		  
 	    newHtml+='</td>';	
 	    newHtml+="<td align='right'>";
-		 newHtml+="<input type='text' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+formatCurrency(data.fDescuento,' ')+"'/>";		  
+		 newHtml+="<input type='text' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+(data.fDescuento)+"'/>";		  
 	    newHtml+='</td>';
 		newHtml+="<td align='right'>";
 		   newHtml+="<span class='total"+key+"' >"+formatCurrency(data.fIngresoProductoDetalleTotal,' ')+" </span>";
@@ -958,10 +958,10 @@ function listar_detalleProduccion(obj,destino,mode){
 			  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+stock+"'/>";
 		newHtml+='</td>';		
 		newHtml+="<td align='right'>";
-		 newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+formatCurrency(data.fCostoUni,' ')+"'/>";		  
+		 newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+(data.fCostoUni)+"'/>";		  
 	    newHtml+='</td>';	
 	    newHtml+="<td align='right'>";
-		 newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+formatCurrency(data['producto'].fProductoDescuento,' ')+"'/>";		  
+		 newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+(data['producto'].fProductoDescuento)+"'/>";		  
 	    newHtml+='</td>';
 		newHtml+="<td align='right'>";
 		   newHtml+="<span class='total"+key+"' >"+formatCurrency(data.fTotal,' ')+" </span>";
@@ -1117,7 +1117,7 @@ function listar_detalleVentaDevolucion(obj, destino, fecha, direccion){
 		       newHtmlD+=data['producto'].vProductoNombre;
 		    newHtmlD+='</td>';
 		    newHtmlD+="<td align='right'>";
-		       newHtmlD+="<span id='precio"+key+"'>"+formatCurrency(data.fVentaDetallePrecio,' ')+"</span>";
+		       newHtmlD+="<span id='precio"+key+"'>"+(data.fVentaDetallePrecio)+"</span>";
 		    newHtmlD+='</td>';	
 		    newHtmlD+="<td align='right'>";
 		       newHtmlD+="<span id='descuento"+key+"'>"+formatCurrency(data.fDescuento,' ')+"</span>";
