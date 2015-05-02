@@ -2900,7 +2900,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `iProductoId` int(11) NOT NULL AUTO_INCREMENT,
   `cProductoCodigo` char(7) NOT NULL,
   `vProductoNombre` varchar(45) NOT NULL,
-  `vProductoCapacidad` varchar(11) DEFAULT NULL,
+  `iUMPedido` varchar(11) DEFAULT NULL,
   `iProductoStockCantidad` int(11) DEFAULT NULL,
   `iProductoStockMaximo` int(11) DEFAULT NULL,
   `iProductoStockMinimo` int(11) DEFAULT NULL,
@@ -2915,7 +2915,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `iUnidadMedidadId` int(11) DEFAULT NULL,
   `iCategoriaId` int(11) DEFAULT NULL,
   `iProduccionId` int(11) DEFAULT NULL,
-  `iUnidadMedidadIdC` int(11) DEFAULT NULL,
+  `iUMBase` int(11) DEFAULT NULL,
   `iMonedaId` int(11) DEFAULT NULL,
   `vUnidadMedidaDescripcionC` varchar(45) DEFAULT NULL,
   `iSubCategoriaId` int(11) DEFAULT NULL,
@@ -2923,7 +2923,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `fProductoDescuento` float DEFAULT NULL,
   PRIMARY KEY (`iProductoId`),
   KEY `fk_producto_unidadMedida1` (`iUnidadMedidadId`),
-  KEY `fk_producto_unidadMedidaC` (`iUnidadMedidadIdC`),
+  KEY `fk_producto_unidadMedidaC` (`iUMBase`),
   KEY `fk_producto_moneda` (`iMonedaId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
@@ -2931,7 +2931,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
 -- Volcar la base de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`iProductoId`, `cProductoCodigo`, `vProductoNombre`, `vProductoCapacidad`, `iProductoStockCantidad`, `iProductoStockMaximo`, `iProductoStockMinimo`, `fProductoPrecioVenta`, `fProductoGanancia`, `fProductoPrecioCompra`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `iUnidadMedidadId`, `iCategoriaId`, `iProduccionId`, `iUnidadMedidadIdC`, `iMonedaId`, `vUnidadMedidaDescripcionC`, `iSubCategoriaId`, `vfoto`, `fProductoDescuento`) VALUES
+INSERT INTO `producto` (`iProductoId`, `cProductoCodigo`, `vProductoNombre`, `iUMPedido`, `iProductoStockCantidad`, `iProductoStockMaximo`, `iProductoStockMinimo`, `fProductoPrecioVenta`, `fProductoGanancia`, `fProductoPrecioCompra`, `iUsuarioInsertaId`, `iUsuarioActualizaId`, `dFechaInserta`, `dFechaActualiza`, `cEstadoCodigo`, `iUnidadMedidadId`, `iCategoriaId`, `iProduccionId`, `iUMBase`, `iMonedaId`, `vUnidadMedidaDescripcionC`, `iSubCategoriaId`, `vfoto`, `fProductoDescuento`) VALUES
 (42, 'PR00001', 'AA', '515', 4, 0, 0, 5.75, 15, 5, 2, 0, '2015-04-16 23:36:20', NULL, 'AC', 7, 15, NULL, 0, 1, '', 3, '', 0);
 
 -- --------------------------------------------------------

@@ -150,9 +150,17 @@ $("#venta,#mantVentas").addClass("active");
  
  function fn_nuevoDocumento(){
 	//tipoDoc== 2;// $("#selTipoDocumento").val();
+	
 	var tipoDoc= 1;//$("#selTipoDocumento").val();
 	var iclasificacionId= 1;/*$("#iclasificacionId").val();*/
-	 popup('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1150,600);
+	 //popup('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1150,600);
+	
+	var identificador= dosDecimales(parseFloat(Math.random() * 10));	
+	 var win = window.open('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId+"&identificador="+identificador, '_blank'); 
+		win.focus();
+	    if(window.close){
+	        cancelar("popup");
+	    }
  }
  </script> 
  

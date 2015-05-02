@@ -34,17 +34,17 @@
 <tr>
     <td align="right">Cantidad:</td>
     <td>
-    <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad" maxlength="7"  styleClass="text" onkeypress="return Numeros(event)" /> 
+    <html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="text" onkeypress="return Numeros(event)" /> 
        <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo"  style="width:140px">
           <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
      </html:select>  
-      <span id="m_iProductoStockCantidad" class="importante">*</span>
+      <span id="m_iProductoStockTotal" class="importante">*</span>
     </td>
 </tr>
 <tr>
      <td align="right">Capacidad:</td>
-    <td><html:text property="vProductoCapacidad" styleId="vProductoCapacidad" maxlength="7"  styleClass="textN" onkeypress="return LetrasNumeros(event)" /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-       <html:select  property="iUnidadMedidadIdC" styleId="iUnidadMedidadIdC" styleClass="comboCodigo"  style="width:140px">
+    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="textN" onkeypress="return LetrasNumeros(event)" /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+       <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo"  style="width:140px">
           <option value="0">::SELECCIONE::</option> 
           <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
      </html:select>  

@@ -91,7 +91,7 @@
             <td><bean:write name="x" property="vDescripcion" /></td>
             <td>
               <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iCantidad" />"/>
-	          <input type="hidden" class="inputderecha" id="numeroReal${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="producto.iProductoStockCantidad"/>"/>
+	          <input type="hidden" class="inputderecha" id="numeroReal${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="producto.iProductoStockTotal"/>"/>
 	        </td>
             <td align="right">
                 <input type="text" class="inputderecha" id="precio${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fCostoUni" format="#,##0.00" locale="Localidad" />"/>                
@@ -250,8 +250,8 @@
 								<tr>
 								    <td align="right" width="20%">Cantidad:</td>
 								    <td width="20%">
-								    <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad" maxlength="7"  styleClass="text" tabindex="5" onkeypress="return Numeros(event)"/> 
-								    <span id="m_iProductoStockCantidad" class="importante">*</span>  
+								    <html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="text" tabindex="5" onkeypress="return Numeros(event)"/> 
+								    <span id="m_iProductoStockTotal" class="importante">*</span>  
 								    </td>
 								    <td>
 								      <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px">
@@ -261,10 +261,10 @@
 								</tr>
 								<tr>
 								     <td align="right">Capacidad:</td>
-								    <td><html:text property="vProductoCapacidad" styleId="vProductoCapacidad" maxlength="7"  styleClass="textN"  tabindex="7"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+								    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="textN"  tabindex="7"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
 								    </td>
 								    <td>  
-								       <html:select  property="iUnidadMedidadIdC" styleId="iUnidadMedidadIdC" styleClass="comboCodigo" tabindex="8" style="width:140px">
+								       <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo" tabindex="8" style="width:140px">
 								          <option value="0">::SELECCIONE::</option> 
 								          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 								     </html:select>  
@@ -594,7 +594,7 @@ function fn_recarcular(){
 function fn_RegProductos(tipo){
 	$("#tr_RegProductos").show();
 	$("#td_RegProductoNuevo").show();
-	$("#iProductoStockCantidad").val($("#iCantidad").val());
+	$("#iProductoStockTotal").val($("#iCantidad").val());
 	$("#fProductoPrecioCompra").val($("#fCostoUni").val());
 	
 

@@ -48,6 +48,7 @@ public class VentaForm extends ActionForm {
 	/*************************/
 	private String tipoMoneda;
 	private String IGVVentas;
+	private String identificador;
 	
 	
    
@@ -930,6 +931,18 @@ public class VentaForm extends ActionForm {
 	 */
 	public void setvTipoImpresion(String vTipoImpresion) {
 		this.vTipoImpresion = vTipoImpresion;
+	}
+	/**
+	 * @return the identificador
+	 */
+	public String getIdentificador() {
+		return identificador;
+	}
+	/**
+	 * @param identificador the identificador to set
+	 */
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
 	}
 	
 	

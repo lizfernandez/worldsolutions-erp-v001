@@ -29,6 +29,7 @@ import com.dao.GenericaDao;
 import com.dao.KardexDao;
 import com.dao.ProductoDao;
 import com.dao.UnidadMedidaDao;
+import com.entities.Almacen;
 import com.entities.Categoria;
 import com.entities.Clasificacioncategoria;
 import com.entities.Cuenta;
@@ -41,6 +42,7 @@ import com.entities.Preciosproducto;
 import com.entities.Produccion;
 import com.entities.Producciondetalle;
 import com.entities.Producto;
+import com.entities.Productoalmacen;
 import com.entities.Subcategoria;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
@@ -71,6 +73,9 @@ public class ProductosAction extends BaseAction {
 	// --------------------------------------------------------- Methods
 
 	
+	
+
+
 	/**
 	 * Method execute
 	 * 
@@ -176,7 +181,16 @@ public class ProductosAction extends BaseAction {
 		
         /**Obtenemos el total del paginas***/
 		List<Long> paginas = Paginacion.listPaginas((long)(listaPerfilTotal.size()));
-		
+		for(Producto pro:listaProductos){
+			    if(pro.getUmBase()==null)
+				pro.setUmBase(new Unidadmedida());
+				
+				if(pro.getUmBase()==null)
+				pro.setUmPedido(new Unidadmedida());
+				if(pro.getUmBase()==null)
+				pro.setUmSalida(new Unidadmedida());
+			
+		}
 		
 		 
 		 /** Seteamos las clase ProductoForm **/
@@ -311,6 +325,9 @@ public class ProductosAction extends BaseAction {
 		List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
 		List<Estado> listaEstado = estadoDao.listEstado();
 		List<Moneda> listaMoneda = genericoDao.listaEntidadGenerica(moneda);
+		List<Almacen> listalmAlmacen = genericoDao.listaEntidadGenerica(new Almacen());
+		List<Productoalmacen> listaProduAlma= new ArrayList<Productoalmacen>();
+		
 		List<Preciosproducto> listaPrecio = new ArrayList<Preciosproducto>();
 		List<Subcategoria> listaSubCategoria = new ArrayList<Subcategoria>();
 		 if(listaCategoria.size()>0){
@@ -349,6 +366,15 @@ public class ProductosAction extends BaseAction {
 		if(mode.equals("I")){
 			/** Obtenemos le codigo correlativo del producto **/
 			productoForm.getProducto().setcProductoCodigo(genericoDao.callSPCalculoCodigo(productoForm.getProducto()));
+			
+			for(Almacen alm:listalmAlmacen){
+				Productoalmacen pro = new Productoalmacen();
+				pro.setAlmacen(alm);
+				listaProduAlma.add(pro);
+				productoForm.setProducAlmacen(listaProduAlma);
+				
+			}
+			
 		
 		/**LLamamos al formulario mantenimientoProducto.jsp para mostrar los datos del UPDATE **/
 		/** Seteamos el PerfilForm la clase Perfil **/
@@ -375,6 +401,7 @@ public class ProductosAction extends BaseAction {
 					 preciosproducto.setfPrecioVenta(precioPro.getfPrecioVenta());
 					 preciosproducto.setdFechaInserta(precioPro.getdFechaInserta());
 					 preciosproducto.setcEstadoCodigo(precioPro.getcEstadoCodigo());
+					 
 					
 					listaPrecio.add(preciosproducto);
 					
@@ -382,8 +409,30 @@ public class ProductosAction extends BaseAction {
 				}
 				
 		    }
+			if(pro.getProductoAlmacendetallles()!=null){
+				if(pro.getProductoAlmacendetallles().size()>0){
+				 for(Productoalmacen precioPro: pro.getProductoAlmacendetallles()){
+					 Productoalmacen productoAlmacen = new Productoalmacen();	
+					
+					 productoAlmacen.setiProductoAlmStockTotal(precioPro.getiProductoAlmStockTotal());
+						productoAlmacen.setAlmacen(precioPro.getAlmacen());
+						productoAlmacen.setiUMBaseAlm(precioPro.getiUMBaseAlm());
+						productoAlmacen.setUnidadBaseAlm(precioPro.getUnidadBaseAlm());
+						productoAlmacen.setUnidadMedidaAlm(precioPro.getUnidadMedidaAlm());
+						productoAlmacen.setcEstadoCodigo(Constantes.estadoActivo);
+						productoAlmacen.setiProductoAlamcenId(precioPro.getiProductoAlamcenId());
+						listaProduAlma.add(productoAlmacen);
+					
+				 }
+				}
+				
+		    }
 		productoForm.setProduc(listaPrecio);
-		sesion.setAttribute("listaPrecioProducto",new ArrayList<Preciosproducto>());
+		productoForm.setProducAlmacen(listaProduAlma);
+		//pro.setProductoAlmacendetallles(listaProduAlma);
+		sesion.setAttribute("listaPrecioProducto",listaPrecio);
+		
+		
 			
 			
 		}
@@ -415,6 +464,7 @@ public class ProductosAction extends BaseAction {
 		
 		productoForm.setMode(mode);
 		productoForm.setIclasificacionId(iclasificacionId);
+	//	productoForm.setProducAlmacen(listaProduAlma);
 
 		/** Colocamos en session las listas **/
 		sesion.setAttribute("listaUnidadMedida", listaUnidadMedida);
@@ -422,6 +472,7 @@ public class ProductosAction extends BaseAction {
 		sesion.setAttribute("listaSubCategoria", listaSubCategoria);		
 		sesion.setAttribute("listaMoneda", listaMoneda);		
 		sesion.setAttribute("listaEstado", listaEstado);
+		sesion.setAttribute("listaProductoAlmacen",listaProduAlma);
 
 		return mapping.findForward(msn);
 	}
@@ -513,7 +564,7 @@ public class ProductosAction extends BaseAction {
 				kardex.setProducto(pro);
 				kardex.setdFecha(Fechas.getDate());
 				kardex.setvConcepto(Constantes.conceptoExistencia);
-				kardex.setiCantExistencia(pro.getiProductoStockCantidad());
+				kardex.setiCantExistencia(pro.getiProductoStockTotal());
 				kardex.setfPuExistencia(pro.getfProductoPrecioCompra());
 				kardex.setfTotalExistencia(kardex.getiCantExistencia() * kardex.getfPuExistencia());
 				kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
@@ -523,7 +574,7 @@ public class ProductosAction extends BaseAction {
 				// listaKardexs.add(kardex);
 				// pro.setKardexs(listaKardexs);
 				productoDao.persistEndidad(kardex);
-
+               
 				/******************************************/
 				/** Insertamos detalle de lista de precios **/
 				/******************************************/
@@ -533,12 +584,13 @@ public class ProductosAction extends BaseAction {
 				preciosProducto.setfGanancia(pro.getfProductoGanancia());
 				preciosProducto.setfPrecioCompra(pro.getfProductoPrecioCompra());
 				preciosProducto.setfPrecioVenta(pro.getfProductoPrecioVenta());
-				preciosProducto.setiCantidadStock(pro.getiProductoStockCantidad());
+				preciosProducto.setiCantidadStock(pro.getiProductoStockTotal());
 				preciosProducto.setProducto(pro);
 				preciosProducto.setfDescuento(pro.getfProductoDescuento());
 				preciosProducto.setiUsuarioInsertaId(usu.getiUsuarioId());
 				listaPrecios.add(preciosProducto);
 				pro.setPreciosproductodetallles(listaPrecios);
+				
 				// resultado = productoDao.insertarEndidad(preciosProducto);
 
 				/**
@@ -575,10 +627,30 @@ public class ProductosAction extends BaseAction {
 				libroDiario.setiPeriodoId(iPeriodoId);
 
 				productoDao.persistEndidad(libroDiario);
-				resultado = productoDao.commitEndidad(transaccion);
+				
 				
 				// productoDao.refreshEndidad(pro);
-
+				/****/
+				/**insertamos almacen producto**/
+                 List<Productoalmacen> listaProductoAlm =  (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
+                 int CantidadStocktotal=0;
+                 int CantidadBase=0;
+				if (listaProductoAlm.size() > 0) {
+					
+					for (Productoalmacen proAlma :listaProductoAlm) {
+						
+						CantidadStocktotal= CantidadStocktotal+proAlma.getiProductoAlmStockTotal();
+						CantidadBase=CantidadBase+proAlma.getiUMBaseAlm();
+						proAlma.setProducto(pro);
+						proAlma.setiUsuarioInsertaId(usu.getiUsuarioId());
+						proAlma.setdFechaInserta(Fechas.getDate());
+						pro.setProductoAlmacendetallles(listaProductoAlm);
+						//productoDao.persistEndidad(proAlma);	
+						}
+					}
+					pro.setiProductoStockTotal(CantidadStocktotal);
+				
+			resultado = productoDao.commitEndidad(transaccion);
 			}
 			/** Insertamos Datos del producto como Insumos **/
 			if (pForm.getMode().equals("II")) {
@@ -597,7 +669,25 @@ public class ProductosAction extends BaseAction {
 				pro.setdFechaActualiza(Fechas.getDate());
 				pro.setiUsuarioActualizaId(usu.getiUsuarioId());
 			
-
+				  List<Productoalmacen> listaProductoAlm = (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
+					int CantidadStockTotal=0;
+					int CantidadStockBase=0;
+					if (listaProductoAlm.size() > 0) {
+						
+						for (Productoalmacen proAlma :listaProductoAlm) {
+							
+							CantidadStockTotal= CantidadStockTotal+proAlma.getiProductoAlmStockTotal();
+							CantidadStockBase=CantidadStockBase+proAlma.getiUMBaseAlm();
+							proAlma.setProducto(pro);
+							proAlma.setiUsuarioInsertaId(usu.getiUsuarioId());
+							proAlma.setdFechaInserta(Fechas.getDate());
+							
+							//pro.setProductoAlmacendetallles(listaProductoAlm);
+							productoDao.mergeEndidad(proAlma);	
+							}
+						}
+					pro.setiProductoStockTotal(CantidadStockTotal);
+					pro.setiUMBase(CantidadStockBase);
 				/**
 				 * Actualizamos o agregamos precios del producto, como tambien
 				 * actualizaremos la cantidad del producto
@@ -627,7 +717,7 @@ public class ProductosAction extends BaseAction {
 					for (Preciosproducto objpreciosProducto : pro.getPreciosproductodetallles()) {
 						if (objpreciosProducto.getiCantidadStock() > 0 && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)) {
 							
-							cantidadProducto = cantidadProducto + objpreciosProducto.getiCantidadStock();
+							cantidadProducto = pro.getiProductoStockTotal();
 							if (i == 0) {
 								precioCompra = objpreciosProducto.getfPrecioCompra();
 								precioVenta = objpreciosProducto.getfPrecioVenta();
@@ -636,13 +726,16 @@ public class ProductosAction extends BaseAction {
 							}
 						}
 					}
-					pro.setiProductoStockCantidad(cantidadProducto);
+					pro.setiProductoStockTotal(cantidadProducto);
 					pro.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(precioVenta));
 					pro.setfProductoGanancia(fGanancia);
 					pro.setfProductoPrecioCompra(precioCompra);
 					pro.setfProductoDescuento(fDescuento);
-
+               
 				}
+              
+				    
+					
 				/** Actualizamos los valores de la existencia del Kardex **/
 				/** si no existe ningun tipo de movimiento (Compras o ventas) **/
 				if (pForm.getSizeIngresoproductodetalles() == 0 && pForm.getSizeVentaDetalles() == 0) {
@@ -650,7 +743,7 @@ public class ProductosAction extends BaseAction {
 					int iKardexId = 0;
 					List<Kardex> kardex = kardexDao.buscarKardexProducto(pro.getiProductoId());
 					iKardexId = kardex.get(0).getiKardexId();
-					kardex.get(0).setiCantExistencia(pro.getiProductoStockCantidad());
+					kardex.get(0).setiCantExistencia(pro.getiProductoStockTotal());
 					kardex.get(0).setfPuExistencia(pro.getfProductoPrecioCompra());
 					kardex.get(0).setfTotalExistencia(kardex.get(0).getiCantExistencia() * kardex.get(0).getfPuExistencia());
 					kardex.get(0).setiUsuarioActualizaId(usu.getiUsuarioId());
@@ -691,6 +784,8 @@ public class ProductosAction extends BaseAction {
 				productoDao.eliminarUnaEndidad(pro, "iProductoId", ids);/**/
 				resultado = productoDao.commitEndidad(transaccion);
 			}
+			sesion.removeAttribute("listaProductoAlmacen");
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			productoDao.limpiarInstancia();
@@ -807,6 +902,116 @@ public class ProductosAction extends BaseAction {
 			return null;
 			
 		}
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
+		 * @throws IOException 
+		 */
+			@SuppressWarnings("unchecked")
+			public ActionForward detalleProductoAlmacen(ActionMapping mapping, ActionForm form,
+						HttpServletRequest request, HttpServletResponse response) throws IOException{
+	      
+				response.setContentType("text/json");	
+				HttpSession sesion = request.getSession();
+				
+				Gson gson = new Gson();			
+				GenericaDao genericaDao = new GenericaDao();
+				
+				ProductosForm productoForm = (ProductosForm) form;
+				int iProductoId = Integer.parseInt(request.getParameter("iProductoId"));
+				int i = Integer.parseInt(request.getParameter("i"));
+				int iAlmacenId = Integer.parseInt(request.getParameter("iAlmacenId"));
+				int iProductoAlmacenId = Integer.parseInt(request.getParameter("iProductoAlmacenId"));	
+				int iProductoAlmStockTotal = Integer.parseInt(request.getParameter("iProductoAlmStockTotal"));
+				int iUnidadMedidaAlmId = Integer.parseInt(request.getParameter("iUnidadMedidaAlmId"));
+				int iUMBaseAlm = Integer.parseInt(request.getParameter("iUMBaseAlm"));
+				int iUMBaseAlmId = Integer.parseInt(request.getParameter("iUMBaseAlmId"));
+				
+				
+				
+				
+				String mode = request.getParameter("mode");
+				
+				/** Instanciamos la Clase VentaForm **/
+			
+
+				
+				List<Productoalmacen> lista = (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
+				
+				
+				Producto producto = new Producto();		
+				ProductoDao productodao= new ProductoDao();
+				Unidadmedida unidad = new Unidadmedida();
+				
+				Productoalmacen productoAlmacen  = new Productoalmacen();
+				
+				if(mode.equals("I")){
+					//Producto productoBean = genericaDao.findEndidad(producto, iProductoId);
+					//lista = productoBean.getProductoAlmacendetallles();
+					if(lista==null){
+					lista = new ArrayList<Productoalmacen>();
+					producto.setiProductoId(iProductoId);
+					/**valores por defecto**/
+				
+					productoAlmacen.setiProductoAlmStockTotal(iProductoAlmStockTotal);
+					productoAlmacen.setAlmacen(productodao.findEndidad(new Almacen(), iAlmacenId));
+					productoAlmacen.setiUMBaseAlm(iUMBaseAlm);
+					productoAlmacen.setUnidadBaseAlm(productodao.findEndidad(unidad, iUMBaseAlmId));
+					productoAlmacen.setUnidadMedidaAlm(productodao.findEndidad(unidad, iUnidadMedidaAlmId));
+					productoAlmacen.setdFechaInserta(Fechas.getDate());
+					productoAlmacen.setcEstadoCodigo(Constantes.estadoActivo);
+					lista.add(productoAlmacen);
+					}else{
+						lista.get(i).setiProductoAlmStockTotal(iProductoAlmStockTotal);
+						lista.get(i).setAlmacen(productodao.findEndidad(new Almacen(), iAlmacenId));
+						lista.get(i).setiUMBaseAlm(iUMBaseAlm);
+						lista.get(i).setUnidadBaseAlm(productodao.findEndidad(unidad, iUMBaseAlmId));
+						lista.get(i).setUnidadMedidaAlm(productodao.findEndidad(unidad, iUnidadMedidaAlmId));
+						lista.get(i).setdFechaInserta(Fechas.getDate());
+					}
+					//productoForm.setProducAlmacen(lista);
+				sesion.setAttribute("listaProductoAlmacen", lista);
+				}
+			
+				 if(mode.equals("U")){
+					 //  lista = producto.getPreciosproductodetallles();
+					  
+							   lista.get(i).setiProductoAlmStockTotal(iProductoAlmStockTotal);
+							   lista.get(i).setiUMBaseAlm(iUMBaseAlm);
+							   
+							   lista.get(i).setUnidadBaseAlm(productodao.findEndidad(unidad, iUMBaseAlmId));
+							   lista.get(i).setUnidadMedidaAlm(productodao.findEndidad(unidad, iUnidadMedidaAlmId));
+							   lista.get(i).setiProductoAlamcenId(iProductoAlmacenId);
+							   lista.get(i).setdFechaInserta(Fechas.getDate());
+							//   productoForm.setProducAlmacen(lista);
+							   
+							   sesion.setAttribute("listaProductoAlmacen", lista);				   
+				}
+		     
+				String jsonOutput = gson.toJson(lista);
+				
+				
+				//response.getWriter().write(json);
+				
+				PrintWriter pw;
+				pw = response.getWriter();
+			
+				pw.write(jsonOutput);
+			
+				System.out.println( jsonOutput.toString() );
+				
+				pw.flush();
+				pw.close();
+					
+				
+				return null;
+				
+			}
 		
 		/**
 		 * Method execute
@@ -962,7 +1167,7 @@ public class ProductosAction extends BaseAction {
 					pro.setfProductoDescuento(produce.getProducto().getfProductoDescuento());
 					pro.setfProductoPrecioCompra(produce.getProducto().getfProductoPrecioCompra());
 					pro.setiProductoId(produce.getProducto().getiProductoId());
-					pro.setiProductoStockCantidad(produce.getProducto().getiProductoStockCantidad());
+					pro.setiProductoStockTotal(produce.getProducto().getiProductoStockTotal());
 					pro.setMoneda(produce.getProducto().getMoneda());
 					pro.setUnidadMedida(produce.getProducto().getUnidadMedida());
 					pro.setvProductoNombre(produce.getProducto().getvProductoNombre());
@@ -1151,8 +1356,8 @@ public class ProductosAction extends BaseAction {
 					int cantidad;
 					Producto material= new Producto();
 					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId()) ;
-					    cantidad= material.getiProductoStockCantidad()-prodeta.getiCantidad();
-					    material.setiProductoStockCantidad(cantidad); 
+					    cantidad= material.getiProductoStockTotal()-prodeta.getiCantidad();
+					    material.setiProductoStockTotal(cantidad); 
 					    productoDao.mergeEndidad(material);
 					}
 					
@@ -1173,7 +1378,7 @@ public class ProductosAction extends BaseAction {
 				kardex.setProducto(pro);
 				kardex.setdFecha(Fechas.getDate());
 				kardex.setvConcepto(Constantes.conceptoProduccion);
-				kardex.setiCantExistencia(pro.getiProductoStockCantidad());
+				kardex.setiCantExistencia(pro.getiProductoStockTotal());
 				kardex.setfPuExistencia(pro.getfProductoPrecioCompra());
 				kardex.setfTotalExistencia(kardex.getiCantExistencia()*kardex.getfPuExistencia());
 				kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
@@ -1195,7 +1400,7 @@ public class ProductosAction extends BaseAction {
 				preciosProducto.setfGanancia(pro.getfProductoGanancia());
 				preciosProducto.setfPrecioCompra(pro.getfProductoPrecioCompra());
 				preciosProducto.setfPrecioVenta(pro.getfProductoPrecioVenta());
-				preciosProducto.setiCantidadStock(pro.getiProductoStockCantidad());
+				preciosProducto.setiCantidadStock(pro.getiProductoStockTotal());
 				preciosProducto.setProducto(pro);
 				preciosProducto.setfDescuento(pro.getfProductoDescuento());
 				preciosProducto.setiUsuarioInsertaId(usu.getiUsuarioId());
@@ -1282,18 +1487,18 @@ public class ProductosAction extends BaseAction {
 					    if(prodeta.getiProduccionDetalleId()>0){
 					    	/// exite producto  en el detalle original y se cambia la cantidad
 					    	proDeOriginal= productoDao.findEndidadBD(proDeOriginal,"iProduccionDetalleId", prodeta.getiProduccionDetalleId());
-					    	cantidad= proDeOriginal.getiCantidad()-prodeta.getiCantidad()+material.getiProductoStockCantidad();
+					    	cantidad= proDeOriginal.getiCantidad()-prodeta.getiCantidad()+material.getiProductoStockTotal();
 					    }
 					    else{
 					    	// cuando se agrega nueva materia prima
-					    	cantidad= material.getiProductoStockCantidad()-prodeta.getiCantidad();
+					    	cantidad= material.getiProductoStockTotal()-prodeta.getiCantidad();
 					    }
-					    material.setiProductoStockCantidad(cantidad); 
+					    material.setiProductoStockTotal(cantidad); 
 					  
 					}
 					
 					if(prodeta.getiProduccionDetalleId()>0 && prodeta.getcEstadoCodigo().equals(Constantes.estadoInactivo)){
-						cantidad= material.getiProductoStockCantidad()+prodeta.getiCantidad();
+						cantidad= material.getiProductoStockTotal()+prodeta.getiCantidad();
 					}
 					/// actualizamos cantidad
 					  productoDao.mergeEndidad(material);						
@@ -1330,7 +1535,7 @@ public class ProductosAction extends BaseAction {
 		      					 }
 		      				 }
 		      			}
-		      			pro.setiProductoStockCantidad(cantidadProducto);
+		      			pro.setiProductoStockTotal(cantidadProducto);
 		      			pro.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(precioVenta));
 		      			pro.setfProductoGanancia(fGanancia);     		      		
 		      			pro.setfProductoPrecioCompra(precioCompra);
@@ -1343,7 +1548,7 @@ public class ProductosAction extends BaseAction {
 					int iKardexId=0;
 					List<Kardex> kardex = kardexDao.buscarKardexProducto(pro.getiProductoId());
 					iKardexId=kardex.get(0).getiKardexId();
-					kardex.get(0).setiCantExistencia(pro.getiProductoStockCantidad());
+					kardex.get(0).setiCantExistencia(pro.getiProductoStockTotal());
 					kardex.get(0).setfPuExistencia(pro.getfProductoPrecioCompra());
 				    kardex.get(0).setfTotalExistencia(kardex.get(0).getiCantExistencia()*kardex.get(0).getfPuExistencia());
 					kardex.get(0).setiUsuarioActualizaId(usu.getiUsuarioId());
@@ -1470,10 +1675,10 @@ public class ProductosAction extends BaseAction {
 					productoBean.setcProductoCodigo(producto.getcProductoCodigo());
 					productoBean.setvProductoNombre(producto.getvProductoNombre());
 					productoBean.setUnidadMedida(producto.getUnidadMedida());
-					productoBean.setvProductoCapacidad(producto.getvProductoCapacidad());
+					//productoBean.setiUMPedido(producto.getiUMPedido());
 					productoBean.setfProductoGanancia(fGanancia);
 					productoBean.setfProductoPrecioVenta(fPrecioVenta);
-					productoBean.setiProductoStockCantidad(producto.getiProductoStockCantidad());
+					productoBean.setiProductoStockTotal(producto.getiProductoStockTotal());
 					producciondetalle.setvDescripcion(productoBean.getvProductoNombre());
 					
 					if(iPersonalId>0){

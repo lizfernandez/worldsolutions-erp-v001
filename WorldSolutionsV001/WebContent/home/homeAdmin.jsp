@@ -44,7 +44,7 @@
 	    <td><bean:write name="x" property="cProductoCodigo" /></td>
 		<td><bean:write name="x" property="vProductoNombre" /></td>
 		<td>
-		    <bean:write name="x" property="iProductoStockCantidad" />
+		    <bean:write name="x" property="iProductoStockTotal" />
 		    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
 		</td>
 		
@@ -115,7 +115,7 @@
 	    <td><bean:write name="x" property="cProductoCodigo" /></td>
 		<td><bean:write name="x" property="vProductoNombre" /></td>
 		<td>
-		    <bean:write name="x" property="iProductoStockCantidad" />
+		    <bean:write name="x" property="iProductoStockTotal" />
 		    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
 		</td>
 		

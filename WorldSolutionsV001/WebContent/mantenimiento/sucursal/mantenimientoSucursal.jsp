@@ -28,7 +28,7 @@
 <tr>
     <td align="right">Direcci&oacute;n:</td>
     <td>
-       <html:text property="vSucursalDireccion" styleId="vSucursalDireccion" onkeyup="return mayuscula('vSucursalDireccion')" styleClass="text"/>
+       <html:text property="vSucursalDireccion" styleId="vSucursalDireccion" onkeyup="return mayuscula('vSucursalDireccion')" styleClass="text" size="45"/>
        <span id="m_vSucursalDireccion" class="importante">*</span>
    </td>
 </tr>

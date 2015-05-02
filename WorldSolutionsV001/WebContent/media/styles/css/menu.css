@@ -280,6 +280,22 @@ background-image:url(../../imagenes/overB.png);
     text-transform: uppercase;
 
 }
+.btn_adminz{
+	height: 35px;
+    width: 175px;
+}
+.btn_adminz:hover{
+	height: 35px;
+    width: 175px;
+    background-color:#4D576E;	
+	color:#ffffff;
+	 cursor: pointer;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    height: 15px;
+    padding: 12px 12px 12px 28px;
+    text-transform: uppercase;
+}
 .btn_admin:hover{
 	background-color:#4D576E;	
 	color:#ffffff;

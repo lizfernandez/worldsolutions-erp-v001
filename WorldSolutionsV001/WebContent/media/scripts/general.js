@@ -118,7 +118,7 @@ function menu(valor,base,url){
     }
 }
 function subMenuOpciones(id){
-	for(var i=1;i<=2;i++){
+	for(var i=1;i<=3;i++){
 		if(i==id){
 			$("#tabla"+i).show();
 			$("#span"+i).removeClass("btnOpciones").addClass("btnOpcionesActivo");	
@@ -577,7 +577,7 @@ function numeroFloat(num){
 	
 }
 //CARGAMOS EL detalle de la venta
-function listar_detalleVenta(obj,destino){
+function listar_detalleVenta(obj,destino,identificador){
 	var precio =0;		
 	var newHtml='';
 	newHtml+='<tbody>';
@@ -586,14 +586,14 @@ function listar_detalleVenta(obj,destino){
    newHtml+='<th>CODIGO</th>';
    newHtml+='<th>CANTIDAD</th>';
    newHtml+='<th>UNID.</th>';
-   newHtml+='<th>CAPACIDAD</th>';
+   
    newHtml+='<th  width="25%">DESCRIPCION</th>';
    newHtml+='<th>P.U.</th>';
    newHtml+='<th>% DESC.</th>';
    newHtml+='<th>TOTAL</th>';
    newHtml+='</tr>';
 	$.each(obj,function(key,data){
-		if(data.cEstadoCodigo=="AC"){
+		if(data.cEstadoCodigo=="AC" && data.vIdentificadorSession==identificador){
 			if(data.fVentaDetallePrecio!=0)
 				precio = data.fVentaDetallePrecio;
 			else
@@ -606,21 +606,14 @@ function listar_detalleVenta(obj,destino){
 		newHtml+='</td>';
 		newHtml+="<td '>";
 		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iVentaDetalleCantidad+"'/>";
-		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockCantidad+"'/>";
+		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockTotal+"'/>";
 		  newHtml+='</td>';
 	   if(data['producto']['unidadMedida']!=null){
 	    newHtml+='<td>'; 
 	   
             newHtml+=data['producto']['unidadMedida'].vUnidadMedidaDescripcion;
         newHtml+='</td>';
-		newHtml+='<td>';
-		   if(data['producto'].vUnidadMedidaDescripcionC!=null)
-			newHtml+=data['producto'].vProductoCapacidad+" "+data['producto'].vUnidadMedidaDescripcionC;
-		   else if(data['producto'].vProductoCapacidad!=null)
-			   newHtml+=data['producto'].vProductoCapacidad+"&nbsp;";
-		   else
-			   newHtml+=data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
-		newHtml+='</td>';
+		
 	   }
 	   else{
 		   newHtml+='<td colspan="2">'; 
@@ -634,13 +627,13 @@ function listar_detalleVenta(obj,destino){
 			newHtml+=data['producto'].vProductoNombre;
 		newHtml+='</td>';		
 	    newHtml+="<td align='right'>";
-		  newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+formatCurrency(precio,' ')+"'/>";		  
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+formatCurrency(precio,' ')+"'/>";		  
 	    newHtml+='</td>';
 	    newHtml+="<td align='right'>";
-		  newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockCantidad+"')\" value='"+formatCurrency(data.fDescuento,' ')+"'/>";		  
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+formatCurrency(data.fDescuento,' ')+"'/>";		  
 	    newHtml+='</td>';
 	    newHtml+="<td align='right'>";
-		   newHtml+="<span class='total"+key+"' >"+formatCurrency(data.fVentaDetalleTotal,' ')+" </span>";
+		   newHtml+="<span class='total"+key+"' >"+(data.fVentaDetalleTotal)+" </span>";
 		   newHtml+="<span id='total"+key+"' class='totales' >"+data.fVentaDetalleTotal+" </span>";
 		newHtml+='</td>';
 		
@@ -656,7 +649,7 @@ function listar_detalleVenta(obj,destino){
 	 newHtml+='<td>&nbsp;</td>';
 	 newHtml+='<td>&nbsp;</td>';
 	 newHtml+='<td>&nbsp;</td>';
-	 newHtml+='<td>&nbsp;</td>';
+	 
 	 newHtml+='</tr>';
 newHtml+='</tbody>';
 	//$('.combo.Distrito').html(newHtml);
@@ -715,9 +708,9 @@ function listar_detalleCompra(obj,destino){
 	    newHtml+='</td>';
 		newHtml+='<td>';
 		   if(data['producto'].vUnidadMedidaDescripcionC!=null)
-			newHtml+=data['producto'].vProductoCapacidad+" "+data['producto'].vUnidadMedidaDescripcionC;
+			newHtml+=data['producto'].iUMPedido+" "+data['producto'].vUnidadMedidaDescripcionC;
 		   else
-			   newHtml+=data['producto'].vProductoCapacidad+"&nbsp;";
+			   newHtml+=data['producto'].iUMPedido+"&nbsp;";
 		newHtml+='</td>';
 		newHtml+='<td>';
 			newHtml+=data['producto'].vProductoNombre;
@@ -826,9 +819,9 @@ function listar_detalleCompraDevolucion(obj, destino, fecha){
 		    newHtmlD+='</td>';
 		    newHtmlD+='<td>';
 			   if(data['producto'].vUnidadMedidaDescripcionC!=null)
-				   newHtmlD+=data['producto'].vProductoCapacidad+" "+data['producto'].vUnidadMedidaDescripcionC;
+				   newHtmlD+=data['producto'].iUMPedido+" "+data['producto'].vUnidadMedidaDescripcionC;
 			   else
-				   newHtmlD+=data['producto'].vProductoCapacidad+"&nbsp;";
+				   newHtmlD+=data['producto'].iUMPedido+"&nbsp;";
 		    newHtmlD+='</td>';
 		    newHtmlD+='<td>';
 		       newHtmlD+=data['producto'].vProductoNombre;
@@ -956,11 +949,11 @@ function listar_detalleProduccion(obj,destino,mode){
 			  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iCantidad+"'/>";
 			  var stock;
 			  if(mode='U'){
-				  stock=parseInt(data.iCantidad)+parseInt(data['producto'].iProductoStockCantidad);
+				  stock=parseInt(data.iCantidad)+parseInt(data['producto'].iProductoStockTotal);
 				  
 			  }
 			  else{
-				  stock=parseInt(data['producto'].iProductoStockCantidad); 
+				  stock=parseInt(data['producto'].iProductoStockTotal); 
 			  }
 			  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+stock+"'/>";
 		newHtml+='</td>';		
@@ -1116,9 +1109,9 @@ function listar_detalleVentaDevolucion(obj, destino, fecha, direccion){
 		    newHtmlD+='</td>';
 		    newHtmlD+='<td>';
 			   if(data['producto'].vUnidadMedidaDescripcionC!=null)
-				   newHtmlD+=data['producto'].vProductoCapacidad+" "+data['producto'].vUnidadMedidaDescripcionC;
+				   newHtmlD+=data['producto'].iUMPedido+" "+data['producto'].vUnidadMedidaDescripcionC;
 			   else
-				   newHtmlD+=data['producto'].vProductoCapacidad+"&nbsp;";
+				   newHtmlD+=data['producto'].iUMPedido+"&nbsp;";
 		    newHtmlD+='</td>';
 		    newHtmlD+='<td>';
 		       newHtmlD+=data['producto'].vProductoNombre;

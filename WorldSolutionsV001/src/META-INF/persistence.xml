@@ -63,6 +63,8 @@
     <class>com.entities.Clasificacioncliente</class>
     <class>com.entities.Menuaccion</class>
     <class>com.entities.Empresa</class>
+    <class>com.entities.Almacen</class>
+    <class>com.entities.Productoalmacen</class>
     	 
 	<!-- transaction-type="RESOURCE_LOCAL"-->
 		<properties>

@@ -93,7 +93,7 @@
         <th>C&Oacute;DIGO</th>
         <th width="12%">CANTIDAD</th>
         <th>UNID.</th>
-        <th width="12%">CAPACIDAD</th>
+        
         <th>DESCRIPCI&Oacute;N</th>
         <!--th>C.Compra</th>
         <th>Ganancia(%)</th-->
@@ -109,7 +109,7 @@
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
             <td>	           
 	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
-	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockCantidad" />'/>
+	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockTotal" />'/>
             </td>
             <logic:notEqual name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
                 <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
@@ -117,7 +117,7 @@
             <logic:equal name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
                 <td><bean:write name="x" property="personal.vPersonalNombres" />&emsp;  <bean:write name="x" property="personal.vPersonalApellidoPaterno" /></td>
             </logic:equal>
-            <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
+            
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td align="right">
                 <input type="text" class="inputderecha" id="precio${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fVentaDetallePrecio" format="#,##0.00" locale="Localidad" />"/>                
@@ -146,7 +146,7 @@
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        
       </tr> 
       <tr>
         <td colspan="7" id="iProductos"> <span id="m_iProductos" class="importante">Ingrese Productos</span></td>
@@ -354,6 +354,7 @@
 
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iVentaId" styleId="iVentaId" />
+<html:hidden property="identificador" styleId="identificador" />
 
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iClienteId" styleId="iClienteId" />
@@ -697,7 +698,9 @@
     }
     function fn_listarProducto(){
     	var iclasificacionId = $("#iclasificacionId").val();
-    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LP',690,560);
+    	var identificador = $("#identificador").val();
+    //	(Math.random() * 10.0);
+    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LP&identificador='+identificador,690,560);
     	
     }
     

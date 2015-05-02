@@ -60,9 +60,9 @@ public class Ventadetalle implements Serializable {
     //bi-directional many-to-one association to Venta
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="iPersonalId", nullable=false)	
-    private Personal personal;
-    
+    private Personal personal;    
     private int iSubCta;
+     private String vIdentificadorSession;
     
     public Ventadetalle() {
     }
@@ -261,6 +261,20 @@ public class Ventadetalle implements Serializable {
 	 */
 	public void setiSubCta(int iSubCta) {
 		this.iSubCta = iSubCta;
+	}
+
+	/**
+	 * @return the vIdentificadorSession
+	 */
+	public String getvIdentificadorSession() {
+		return vIdentificadorSession;
+	}
+
+	/**
+	 * @param vIdentificadorSession the vIdentificadorSession to set
+	 */
+	public void setvIdentificadorSession(String vIdentificadorSession) {
+		this.vIdentificadorSession = vIdentificadorSession;
 	}
 
 	

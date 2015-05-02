@@ -64,15 +64,15 @@
 			               '<bean:write name="x" property="cProductoCodigo" />',
 			               '<bean:write name="x" property="vProductoNombre" />',
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
-			               '<bean:write name="x" property="iUnidadMedidadIdC" />',
-			               '<bean:write name="x" property="vProductoCapacidad" />',
+			               '<bean:write name="x" property="iUMBase" />',
+			               '<bean:write name="x" property="iUMPedido" />',
 			               '<bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoGanancia" format="#,##0.00"  locale="Localidad"/>' )">
 		 		<td><bean:write name="x" property="cProductoCodigo" /></td>
 				<td><bean:write name="x" property="vProductoNombre" /></td>
 				<td>
-				    <bean:write name="x" property="iProductoStockCantidad" />				    
+				    <bean:write name="x" property="iProductoStockTotal" />				    
 				</td>
 				<td>				    
 				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
@@ -97,7 +97,7 @@
 					</thead>
 					<tbody>
 					  <logic:iterate name="x" property="preciosproductodetallles" id="z">
-					  <logic:notEqual name="x" property="iProductoStockCantidad" value="0">
+					  <logic:notEqual name="x" property="iProductoStockTotal" value="0">
 					  <logic:equal name="z" property="cEstadoCodigo" value="AC">
 					  <tr>				        
 					       <td align="center"><bean:write name="z" property="iCantidadStock"/></td>					       
@@ -158,15 +158,15 @@
 	  <tr>
 	        <td>Cantidad:</td>
 	        <td>
-			   <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>
+			   <html:text property="iProductoStockTotal" styleId="iProductoStockTotal"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>
 			   <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px" disabled="true">
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select>
 			</td>
 			<td>Capacidad:</td>
 	        <td>
-	           <html:text property="vProductoCapacidad" styleId="vProductoCapacidad"   styleClass="text" size="5" disabled="true" />
-			   <html:select  property="iUnidadMedidadIdC" styleId="iUnidadMedidadIdC" styleClass="comboCodigo" tabindex="8" style="width:140px" disabled="true">
+	           <html:text property="iUMPedido" styleId="iUMPedido"   styleClass="text" size="5" disabled="true" />
+			   <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo" tabindex="8" style="width:140px" disabled="true">
 		          <option value="0">::SELECCIONE::</option> 
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select>  
@@ -215,25 +215,25 @@
 paginacion();
 //$("#iclasificacionId option[value=5]").attr('disabled', true);
 //$("#iclasificacionId option[value=5]").attr('disabled','disabled');
-function fn_cargarProducto(iProductoId,xcProductoCodigo,vNombreProducto,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fGanancia){   
+function fn_cargarProducto(iProductoId,xcProductoCodigo,vNombreProducto,iUnidadMedidadId,iUMBase,iUMPedido,fProductoPrecioCompra,fProductoPrecioVenta,fGanancia){   
     $("#iProductoId").val(iProductoId);
 	$("#vxProductoNombre").val(vNombreProducto);
 	$("#xcProductoCodigo").val(xcProductoCodigo);
 	
 	$("#iUnidadMedidadId").val(iUnidadMedidadId);
-	$("#iUnidadMedidadIdC").val(iUnidadMedidadIdC);
-	$("#vProductoCapacidad").val(vProductoCapacidad);	
+	$("#iUMBase").val(iUMBase);
+	$("#iUMPedido").val(iUMPedido);	
 	$("#fProductoPrecioCompra").val(fProductoPrecioCompra);
 	$("#fProductoPrecioVenta").val(fProductoPrecioVenta);
 	$("#fGanancia").val(fGanancia);
 	$("#fProductoPrecioCompraFinal").val(dosDecimales(fProductoPrecioCompra));		
-	$("#fTotal").val(dosDecimales(($("#iProductoStockCantidad").val()*$("#fProductoPrecioCompra").val()),''));   
+	$("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioCompra").val()),''));   
 	$("#detalleListaPrecio").html($("#tr_"+iProductoId).html());
    
 }
 function fn_CalcularTotal(){ 
 	
-	var iCantidad =parseFloat($("#iProductoStockCantidad").val());		
+	var iCantidad =parseFloat($("#iProductoStockTotal").val());		
 	var fPrecioCompra=$("#fProductoPrecioCompra").val();	
 	var fDescuento =parseFloat(($("#fDescuento").val()/100));
 	var fGanancia = parseFloat(($("#fGanancia").val()/100));
@@ -257,7 +257,7 @@ function fn_agregarProducto(){
 	 window.opener.document.getElementById("vProductoNombre").value=vxProductoNombre;
 	 window.opener.document.getElementById("cProductoCodigo").value=xcProductoCodigo;
 	 window.opener.document.getElementById("iProductoId").value=id;
-	 window.opener.document.getElementById("iUnidadMedidadIdC").value=$("#iUnidadMedidadIdC").val();
+	 window.opener.document.getElementById("iUMBase").value=$("#iUMBase").val();
 	 
 	
 

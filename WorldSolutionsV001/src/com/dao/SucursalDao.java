@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
+import com.entities.Almacen;
 import com.entities.Empresa;
 import com.entities.Sucursal;
 import com.interfaces.dao.ISucursalDao;
@@ -92,6 +93,41 @@ public class SucursalDao extends GenericaDao  implements ISucursalDao{
 			
 	        return listaSucursal;
 		
+	}
+
+	@Override
+	public List<Almacen> listaAlmacen(int pagInicio, int pagFin, Almacen almacen) {
+		// TODO Auto-generated method stub
+		Query q ;
+		List<Almacen> listaAlmacen= null ;
+		String where="";
+    	
+		if(almacen!=null){
+			if(almacen.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }
+			if(almacen.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+almacen.getcEstadoCodigo()+"%'";
+	        }
+	        if(almacen.getcAlmacenCodigo()!=null){
+	        	where+=" and  p.cSucursalCodigo LIKE '%"+almacen.getcAlmacenCodigo()+"%'";
+	        }
+	        if(almacen.getvAlmacenNombre()!=null){
+	        	where+=" and  p.vSucursalNombre LIKE '%"+almacen.getvAlmacenNombre()+"%'";
+	        }
+	        System.out.println(" where ="+ where);
+	    	    q = getInstancia().createQuery("select p from Almacen p " + where);/**/
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	    	    listaAlmacen = q.setFirstResult(pagInicio)
+							  .setMaxResults(pagFin)
+							  .getResultList(); 
+
+			
+		}// lista con busqueda
+		    
+ 			
+		
+        return listaAlmacen;
 	}
 
 	

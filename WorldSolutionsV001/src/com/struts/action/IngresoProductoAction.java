@@ -515,7 +515,7 @@ public class IngresoProductoAction extends BaseAction {
 				productoBean.setcProductoCodigo(producto.getcProductoCodigo());
 				productoBean.setvProductoNombre(producto.getvProductoNombre());
 				productoBean.setUnidadMedida(producto.getUnidadMedida());
-				productoBean.setvProductoCapacidad(producto.getvProductoCapacidad());
+				productoBean.setiUMBase(producto.getiUMBase());
 				productoBean.setfProductoGanancia(fGanancia);
 				productoBean.setfProductoPrecioVenta(fPrecioVenta);
 				
@@ -599,7 +599,7 @@ public class IngresoProductoAction extends BaseAction {
 					productoVo.setcProductoCodigo(e.getProducto().getcProductoCodigo());
 					productoVo.setvProductoNombre(e.getProducto().getvProductoNombre());
 					productoVo.setUnidadMedida(e.getProducto().getUnidadMedida());
-					productoVo.setvProductoCapacidad(e.getProducto().getvProductoCapacidad());
+					productoVo.setiUMBase(e.getProducto().getiUMBase());
 					
 					
 					ingresoProductoDet.setProducto(productoVo);
@@ -930,9 +930,9 @@ public class IngresoProductoAction extends BaseAction {
 			      			  /***********************************************************************************/
 			      			for(Preciosproducto objpreciosProducto:producto.getPreciosproductodetallles()){
 			      				 if(objpreciosProducto.getiCantidadStock()>0 && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-			      					   cantidadProducto =   producto.getiProductoStockCantidad() + ingresoDetalle.getiIngresoProductoDetalleCantidad();
+			      					   cantidadProducto =   producto.getiProductoStockTotal() + ingresoDetalle.getiIngresoProductoDetalleCantidad();
 					      			   precioProducto = objpreciosProducto.getfPrecioCompra();
-							           producto.setiProductoStockCantidad(cantidadProducto);
+							           producto.setiProductoStockTotal(cantidadProducto);
 							           producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(objpreciosProducto.getfPrecioVenta()));
 							           producto.setfProductoGanancia(objpreciosProducto.getfGanancia());     		      		
 							           producto.setfProductoPrecioCompra(FormatosNumeros.redondedoDecimal(precioProducto));
@@ -1074,9 +1074,9 @@ public class IngresoProductoAction extends BaseAction {
 							      		   /***********************************************************************************/
 							      			for(Preciosproducto objpreciosProducto:producto.getPreciosproductodetallles()){
 							      				 if(objpreciosProducto.getiCantidadStock()>0  && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)){
-							      					 cantidadProducto =   producto.getiProductoStockCantidad() + ingresoDetalle.getiIngresoProductoDetalleCantidad();
+							      					 cantidadProducto =   producto.getiProductoStockTotal() + ingresoDetalle.getiIngresoProductoDetalleCantidad();
 									      			   precioProducto = objpreciosProducto.getfPrecioCompra();
-											           producto.setiProductoStockCantidad(cantidadProducto);
+											           producto.setiProductoStockTotal(cantidadProducto);
 											           producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(objpreciosProducto.getfPrecioVenta()));
 											           producto.setfProductoGanancia(objpreciosProducto.getfGanancia());     		      		
 											           producto.setfProductoPrecioCompra(FormatosNumeros.redondedoDecimal(precioProducto));
@@ -1155,9 +1155,9 @@ public class IngresoProductoAction extends BaseAction {
 						      		   /***********************************************************************************/
 						      			for(Preciosproducto objpreciosProducto:producto.getPreciosproductodetallles()){
 						      				 if(objpreciosProducto.getiCantidadStock()>0  && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)){					      					  
-						      					   cantidadProducto =    producto.getiProductoStockCantidad() + cantidadProductoActual;
+						      					   cantidadProducto =    producto.getiProductoStockTotal() + cantidadProductoActual;
 						      					   precioProducto = objpreciosProducto.getfPrecioCompra();
-										           producto.setiProductoStockCantidad(cantidadProducto);
+										           producto.setiProductoStockTotal(cantidadProducto);
 										           producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(objpreciosProducto.getfPrecioVenta()));
 										           producto.setfProductoGanancia(objpreciosProducto.getfGanancia());     		      		
 										           producto.setfProductoPrecioCompra(FormatosNumeros.redondedoDecimal(precioProducto));
@@ -1186,9 +1186,9 @@ public class IngresoProductoAction extends BaseAction {
 						      		   /***********************************************************************************/
 						      			for(Preciosproducto objpreciosProducto:producto.getPreciosproductodetallles()){
 						      				 if(objpreciosProducto.getiCantidadStock()>0  && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)){					      					   
-						      					   cantidadProducto =    producto.getiProductoStockCantidad() - ingresoDetalle.getiIngresoProductoDetalleCantidad();
+						      					   cantidadProducto =    producto.getiProductoStockTotal() - ingresoDetalle.getiIngresoProductoDetalleCantidad();
 						      					   precioProducto = objpreciosProducto.getfPrecioCompra();
-										           producto.setiProductoStockCantidad(cantidadProducto);
+										           producto.setiProductoStockTotal(cantidadProducto);
 										           producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(objpreciosProducto.getfPrecioVenta()));
 										           producto.setfProductoGanancia(objpreciosProducto.getfGanancia());     		      		
 										           producto.setfProductoPrecioCompra(FormatosNumeros.redondedoDecimal(precioProducto));
@@ -1383,9 +1383,9 @@ public class IngresoProductoAction extends BaseAction {
 			      		   /***********************************************************************************/
 			      			for(Preciosproducto objpreciosProducto:producto.getPreciosproductodetallles()){
 			      				 if(objpreciosProducto.getiCantidadStock()>0  && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)){					      					  
-			      					   cantidadProducto =    producto.getiProductoStockCantidad() - ingresoDetalle.getiIngresoProductoDetalleCantidad();
+			      					   cantidadProducto =    producto.getiProductoStockTotal() - ingresoDetalle.getiIngresoProductoDetalleCantidad();
 			      					   precioProducto = objpreciosProducto.getfPrecioCompra();
-							           producto.setiProductoStockCantidad(cantidadProducto);
+							           producto.setiProductoStockTotal(cantidadProducto);
 							          // producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(objpreciosProducto.getfPrecioVenta()));
 							          // producto.setfProductoGanancia(objpreciosProducto.getfGanancia());     		      		
 							          // producto.setfProductoPrecioCompra(FormatosNumeros.redondedoDecimal(precioProducto));
@@ -1482,9 +1482,9 @@ public class IngresoProductoAction extends BaseAction {
 					      		   /***********************************************************************************/
 					      			for(Preciosproducto objpreciosProducto:producto.getPreciosproductodetallles()){
 					      				 if(objpreciosProducto.getiCantidadStock()>0 && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)){					      					  
-					      					   cantidadProducto =    producto.getiProductoStockCantidad() + ingresoDetalle.getiIngresoProductoDetalleCantidad();
+					      					   cantidadProducto =    producto.getiProductoStockTotal() + ingresoDetalle.getiIngresoProductoDetalleCantidad();
 					      					   precioProducto = objpreciosProducto.getfPrecioCompra();
-									           producto.setiProductoStockCantidad(cantidadProducto);
+									           producto.setiProductoStockTotal(cantidadProducto);
 									           producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(objpreciosProducto.getfPrecioVenta()));
 									           producto.setfProductoGanancia(objpreciosProducto.getfGanancia());     		      		
 									           producto.setfProductoPrecioCompra(FormatosNumeros.redondedoDecimal(precioProducto));
@@ -1516,7 +1516,7 @@ public class IngresoProductoAction extends BaseAction {
 			      			objIngresoProducto.getKardex().get(i).setiCantIngresoProducto(ingresoDetalle.getiIngresoProductoDetalleCantidad());
 			      			objIngresoProducto.getKardex().get(i).setfPuIngresoProducto(ingresoDetalle.getfIngresoProductoDetallePrecio());
 			      			objIngresoProducto.getKardex().get(i).setfTotalngresoProducto(ingresoDetalle.getfIngresoProductoDetalleTotal());
-			      			objIngresoProducto.getKardex().get(i).setiCantExistencia(producto.getiProductoStockCantidad());
+			      			objIngresoProducto.getKardex().get(i).setiCantExistencia(producto.getiProductoStockTotal());
 			      			objIngresoProducto.getKardex().get(i).setfPuExistencia(producto.getfProductoPrecioCompra());
 			      			objIngresoProducto.getKardex().get(i).setfTotalExistencia(objIngresoProducto.getKardex().get(i).getiCantExistencia()*objIngresoProducto.getKardex().get(i).getfPuExistencia());
 								

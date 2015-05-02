@@ -147,6 +147,10 @@
 	                 <forward name="showEmpresaList" path=".empresa" />
 	                 <forward name="showEmpresaEdit" path=".mantenimientoEmpresa" />
 	                 <forward name="showEmpresaFind" path=".buscarMantenimientoEmpresa" />
+	                 
+	                 <forward name="showAlmacenList" path=".almacen" />
+	                 <forward name="showAlmacenEdit" path=".mantenimientoAlmacen" />
+	                 <forward name="showAlmacenFind" path=".buscarMantenimientoAlmacen" />
 	                
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />
