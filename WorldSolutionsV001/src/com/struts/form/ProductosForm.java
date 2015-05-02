@@ -56,6 +56,7 @@ public class ProductosForm extends ActionForm {
     private int iPersonalId;
     private String cPersonalCodigo;
     private String vPersonalNombres;
+    private int iSucursalId;
     
     /**
 	 * @return the paginas
@@ -819,6 +820,41 @@ public class ProductosForm extends ActionForm {
 	public void setiUMBaseAlmId(int iUnidadMedidadId) {
 		this.productoAlmacen.setUnidadBaseAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+	}
+
+	/**
+	 * @return the productoAlmacen
+	 */
+	public Productoalmacen getProductoAlmacen() {
+		return productoAlmacen;
+	}
+
+	/**
+	 * @param productoAlmacen the productoAlmacen to set
+	 */
+	public void setProductoAlmacen(Productoalmacen productoAlmacen) {
+		this.productoAlmacen = productoAlmacen;
+	}
+
+	/**
+	 * @return the iSucursalId
+	 */
+	public int getiSucursalId() {
+		return iSucursalId;
+	}
+
+	/**
+	 * @param iSucursalId the iSucursalId to set
+	 */
+	public void setiSucursalId(int iSucursalId) {
+		this.iSucursalId = iSucursalId;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

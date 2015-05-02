@@ -5,8 +5,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="productos" styleId="formPersonal">
     <tr>
-    	<td> <html:select  property="iclasificacionId" styleId="iclasificacionId" styleClass="combo" style="width:150px" onchange="fn_recargar()">       
-              <html:options collection="listaClasificacioncategoria" property="iClasificacionId" labelProperty="vClasificacionDescripcion"/>
+    	<td> <html:select  property="iSucursalId" styleId="iSucursalId" styleClass="combo" style="width:150px" onchange="fn_recargar()">       
+              <html:options collection="listaSucursal" property="iSucursalId" labelProperty="vSucursalNombre"/>
            </html:select>
         </td>
         <td> <html:select  property="iclasificacionId" styleId="iclasificacionId" styleClass="combo" style="width:150px" onchange="fn_recargar()">       

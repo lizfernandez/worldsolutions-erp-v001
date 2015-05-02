@@ -1187,9 +1187,8 @@ public class VentaAction extends BaseAction {
 					
 					Venta obj1 = ventaDao.findEndidad(pForm.getVenta(),pForm.getVenta().getiVentaId()); 
 					obj1= Util.comparar(obj1, pForm.getVenta());//pForm.getVenta();
-					if(pForm.getvImprimir().equals("SI")){
-			               imprimir(mapping, pForm, request, response);
-			               }
+					
+					
 				/*
 					  if(pForm.getMode().equals("U")){
 						  int i= 0;
@@ -1555,6 +1554,11 @@ public class VentaAction extends BaseAction {
 		              }
 					
 					ventaDao.refreshEndidad(obj1);*/
+					ventaDao.mergeEndidad(obj1);
+					resultado = ventaDao.commitEndidad(entityTransaction);
+					if(pForm.getvImprimir().equals("SI")){
+			               imprimir(mapping, pForm, request, response);
+			               }
 					
 				} /// fin actualizacion.
 				else if (mode.equals("D")) {

@@ -489,7 +489,7 @@
         	$("#btnGuardar").text('Buscar');
          }
         if(mode=="U"){// visualizar venta
-        	$(":input").addClass("inputDisabled").attr("disabled",true);        	
+        	$(":input:text").addClass("inputDisabled").attr("disabled",true);        	
             $(".imgpopup, .imgDelete, .imgNew").hide();
             $("#btnImprimir, #btnCancel").removeClass("inputDisabled").attr("disabled",false);
             $("#detallePago :input").removeClass("inputDisabled").attr("disabled",false);
@@ -618,7 +618,7 @@
     	   
     	    
     		 if($("#monedaDolares").is(":checked")){// mixto 
-    			if(montoPagoD=="" ){
+    			if(montoPagoD==""){
     				alert("Debe de ingresar monto en dolares");
     			}
     			else{
@@ -633,7 +633,8 @@
 	        			$("#fMontoVueltoSoles").val(dosDecimales(((montoPagoD+montoPagoDCredito-fVentaTotalR))*tipoCambio));
 	        			
 	        		}
-	     			 $("#fMontoPagoSoles").val(dosDecimales((montoPagoD-montoPagoDCredito)*tipoCambio));
+	     			 $("#fMontoPagoSoles").val(dosDecimales((montoPagoD)*tipoCambio));
+	     			 $("#fMontoPagoSolesCredito").val(dosDecimales((montoPagoDCredito)*tipoCambio));
 	    			 $("#fMontoVuelto").val(dosDecimales($("#fMontoVueltoDolares").val()));
 	     			 $("#fMontoPago").val(montoPagoD);
 	     			 $("#fMontoPagoCredito").val(montoPagoDCredito);
