@@ -28,9 +28,17 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		            <span class="gestion">Mant. Sucursal</span></a>
 		        </li>
 		         <% break; }}}
+		         
 		         for (String per: listapermiso) {
 		   	     if(per!=null){
 		         if(per.equals("813")){ %>
+		        <li id="almacen"><a href="empresaSucursal.do?metodo=listaAlmacen">
+		            <span class="gestion">Mant. Almacen</span></a>
+		        </li>
+		         <% break; }}}
+		         for (String per: listapermiso) {
+		   	     if(per!=null){
+		         if(per.equals("814")){ %>
 		        <li id="area"><a href="area.do?metodo=listaArea">
 		            <span class="gestion">Mant. Area</span></a>
 		        </li>

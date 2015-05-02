@@ -153,13 +153,13 @@
          <tr id="fila${i}">
           <td><img src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" /></td>
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
-            <td onclick="fn_ingresarCantidad('${i}','<bean:write name="x" property="producto.iProductoStockCantidad" />')">
+            <td onclick="fn_ingresarCantidad('${i}','<bean:write name="x" property="producto.iProductoStockTotal" />')">
 	            <span id="cantidad${i}">
 	               <bean:write name="x" property="iIngresoProductoDetalleCantidad" />
 	           </span>
             </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
-            <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
+            <td><bean:write name="x" property="producto.iUMPedido" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td id="precio${i}" align="right"><bean:write name="x" property="producto.fProductoPrecioIngresoProducto" format="#,##0.00" locale="Localidad" /></td>
             <td align="right">  

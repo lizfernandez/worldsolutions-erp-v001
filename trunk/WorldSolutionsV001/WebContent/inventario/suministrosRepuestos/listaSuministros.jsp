@@ -98,11 +98,11 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		<td><bean:write name="x" property="cProductoCodigo" /></td>
 		<td><bean:write name="x" property="vProductoNombre" /></td>
 		<td>
-		    <bean:write name="x" property="iProductoStockCantidad" />
+		    <bean:write name="x" property="iProductoStockTotal" />
 		    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
 		</td>
 		<td>
-			<bean:write name="x" property="vProductoCapacidad" />
+			<bean:write name="x" property="iUMPedido" />
 			<bean:write name="x" property="vUnidadMedidaDescripcionC" />
 	    </td>
 	    <td><bean:write name="x" property="fProductoPrecioCompra" /></td>

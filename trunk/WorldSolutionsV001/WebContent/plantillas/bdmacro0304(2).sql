@@ -2397,7 +2397,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `iProductoId` int(11) NOT NULL AUTO_INCREMENT,
   `cProductoCodigo` char(7) NOT NULL,
   `vProductoNombre` varchar(45) NOT NULL,
-  `vProductoCapacidad` varchar(11) DEFAULT NULL,
+  `iUMPedido` varchar(11) DEFAULT NULL,
   `iProductoStockCantidad` int(11) DEFAULT NULL,
   `iProductoStockMaximo` int(11) DEFAULT NULL,
   `iProductoStockMinimo` int(11) DEFAULT NULL,
@@ -2412,7 +2412,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `iUnidadMedidadId` int(11) DEFAULT NULL,
   `iCategoriaId` int(11) DEFAULT NULL,
   `iProduccionId` int(11) DEFAULT NULL,
-  `iUnidadMedidadIdC` int(11) DEFAULT NULL,
+  `iUMBase` int(11) DEFAULT NULL,
   `iMonedaId` int(11) DEFAULT NULL,
   `vUnidadMedidaDescripcionC` varchar(45) DEFAULT NULL,
   `iSubCategoriaId` int(11) DEFAULT NULL,
@@ -2420,7 +2420,7 @@ CREATE TABLE IF NOT EXISTS `producto` (
   `fProductoDescuento` float DEFAULT NULL,
   PRIMARY KEY (`iProductoId`),
   KEY `fk_producto_unidadMedida1` (`iUnidadMedidadId`),
-  KEY `fk_producto_unidadMedidaC` (`iUnidadMedidadIdC`),
+  KEY `fk_producto_unidadMedidaC` (`iUMBase`),
   KEY `fk_producto_moneda` (`iMonedaId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
 

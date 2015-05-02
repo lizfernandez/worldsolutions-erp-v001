@@ -185,6 +185,17 @@
     <put name="body" value="/mantenimiento/empresa/buscarMantenimientoEmpresa.jsp"></put>   
 </definition>
 
+<definition name=".almacen" extends=".plantilla">
+    <put name="body" value="/mantenimiento/almacen/listaAlmacen.jsp"></put>   
+    <put name="menuVertical" value="/mantenimiento/sidebar.jsp"></put>  
+</definition>
+<definition name=".mantenimientoAlmacen" extends=".popup">
+    <put name="body" value="/mantenimiento/almacen/mantenimientoAlmacen.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientoAlmacen" extends=".popup">
+    <put name="body" value="/mantenimiento/almacen/buscarMantenimientoAlmacen.jsp"></put>   
+</definition>
+
 <definition name=".ocupacion" extends=".plantilla">
     <put name="body" value="/mantenimiento/ocupacion/listaOcupacion.jsp"></put>   
     <put name="menuVertical" value="/mantenimiento/sidebar.jsp"></put>  

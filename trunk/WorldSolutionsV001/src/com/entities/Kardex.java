@@ -71,6 +71,8 @@ public class Kardex implements Serializable {
 	@JoinColumn(name="iProduccionId", nullable=false)	
 	private Produccion produccion;
 	
+	private int iAlmacenId;
+	
 	private int iPeriodoId;
 	
 	private String vConcepto;
@@ -409,6 +411,20 @@ public class Kardex implements Serializable {
 	 */
 	public void setProduccion(Produccion produccion) {
 		this.produccion = produccion;
+	}
+
+	/**
+	 * @return the iAlmacenId
+	 */
+	public int getiAlmacenId() {
+		return iAlmacenId;
+	}
+
+	/**
+	 * @param iAlmacenId the iAlmacenId to set
+	 */
+	public void setiAlmacenId(int iAlmacenId) {
+		this.iAlmacenId = iAlmacenId;
 	}
 
 }

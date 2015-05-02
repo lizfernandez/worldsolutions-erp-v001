@@ -112,7 +112,7 @@
 	  <tr>
 	        <td>Cantidad:</td>
 	        <td>
-			   <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>			   
+			   <html:text property="iProductoStockTotal" styleId="iProductoStockTotal"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>			   
 			&ensp;&ensp;&ensp;&ensp;
 			 Personal:
 			 <%-- hidden field que contiene el id del producto --%>
@@ -180,7 +180,7 @@ paginacion();
 		var fDescuento =parseFloat(($("#fDescuento").val()/100));		
 		
 		$("#fProductoPrecioVentaFinal").val(dosDecimales(fProductoPrecioCompra)-parseFloat(fProductoPrecioCompra)*fDescuento);		
-		$("#fTotal").val(dosDecimales(($("#iProductoStockCantidad").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
+		$("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
 		$("#detalleListaPrecio").html($("#tr_"+iProductoId).html());
 	   
 	}
@@ -189,13 +189,13 @@ paginacion();
 	   $("#fPrecioCompra").val(fPrecioCompra);
 	   $("#fDescuento").val(fDescuento);
 	   $("#fProductoPrecioVentaFinal").val(dosDecimales(fPrecioVenta-parseFloat((fPrecioVenta)*fDescuento/100)));	
-	  	$("#fTotal").val(dosDecimales(($("#iProductoStockCantidad").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
+	  	$("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
 		
 	   
    }
 	function fn_CalcularTotal(){ 
 	
-		var iCantidad =parseFloat($("#iProductoStockCantidad").val());
+		var iCantidad =parseFloat($("#iProductoStockTotal").val());
 				
 		var fPrecioVenta=$("#fProductoPrecioVenta").val();
 		var fDescuento =parseFloat(($("#fDescuento").val()/100));		
@@ -207,7 +207,7 @@ paginacion();
 		 
 		var id=$("#iProductoId").val();
 		if(id!=''){
-		var iCantidad=$("#iProductoStockCantidad").val();		
+		var iCantidad=$("#iProductoStockTotal").val();		
 		var fDescuento=$("#fDescuento").val();			
 		var fPrecioVenta =$("#fProductoPrecioVenta").val();
 		var fPrecioCompra =$("#fPrecioCompra").val();

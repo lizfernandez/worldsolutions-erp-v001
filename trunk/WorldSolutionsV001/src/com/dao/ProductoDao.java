@@ -50,18 +50,13 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 			if(producto.getvProductoNombre()!=null){
 	        	where+=" and  p.vProductoNombre LIKE '%"+producto.getvProductoNombre()+"%'";
 	        }
-	        if(producto.getiProductoStockCantidad()>0){
-	        	where+=" and  p.iProductoStockCantidad LIKE '%"+producto.getiProductoStockCantidad()+"%'";
+	        if(producto.getiProductoStockTotal()>0){
+	        	where+=" and  p.iProductoStockTotal LIKE '%"+producto.getiProductoStockTotal()+"%'";
 	        }
 	        if(producto.getUnidadMedida()!=null && producto.getUnidadMedida().getiUnidadMedidaId()>0){
 	        	where+=" and  p.unidadMedida.iUnidadMedidaId LIKE '%"+producto.getUnidadMedida().getiUnidadMedidaId()+"%'";
 	        }
-	        if(producto.getvProductoCapacidad()!=null){
-	        	where+=" and  p.vProductoCapacidad LIKE '%"+producto.getvProductoCapacidad()+"%'";
-	        }
-	        if(producto.getiUnidadMedidadIdC()>0){
-	        	where+=" and  p.iUnidadMedidadIdC LIKE '%"+producto.getiUnidadMedidadIdC()+"%'";
-	        }
+	        
 	        if(producto.getfProductoPrecioCompra()>0){
 	        	where+=" and  p.fProductoPrecioCompra LIKE '%"+producto.getfProductoPrecioCompra()+"%'";
 	        }
@@ -136,7 +131,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 		List<Producto> listaProducto = null ;
 		String where=""; 
 		
-		 q = getInstancia().createQuery("select p from Producto p where p.iProductoStockCantidad<p.iProductoStockMinimo and p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'" + where );/**/
+		 q = getInstancia().createQuery("select p from Producto p where p.iProductoStockTotal<p.iProductoStockMinimo and p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'" + where );/**/
 	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaProducto = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)
@@ -151,7 +146,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 		List<Producto> listaProducto = null ;
 		String where=""; 
 		
-		 q = getInstancia().createQuery("select p from Producto p where p.iProductoStockCantidad>p.iProductoStockMaximo and p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'" + where );/**/
+		 q = getInstancia().createQuery("select p from Producto p where p.iProductoStockTotal>p.iProductoStockMaximo and p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'" + where );/**/
 	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaProducto = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)

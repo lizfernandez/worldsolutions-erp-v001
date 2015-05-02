@@ -350,7 +350,7 @@ public class VentaAction extends BaseAction {
 								productoBean.setcProductoCodigo(e.getProducto().getcProductoCodigo());
 								productoBean.setvProductoNombre(e.getProducto().getvProductoNombre());
 								productoBean.setUnidadMedida(e.getProducto().getUnidadMedida());
-								productoBean.setvProductoCapacidad(e.getProducto().getvProductoCapacidad());				
+								productoBean.setiUMBase(e.getProducto().getiUMBase());				
 								productoBean.setfProductoPrecioVenta(e.getProducto().getfProductoPrecioVenta());
 								productoBean.setfProductoPrecioCompra(e.getProducto().getfProductoPrecioCompra());
 								
@@ -385,7 +385,7 @@ public class VentaAction extends BaseAction {
 							productoBean.setcProductoCodigo(eobj.getProducto().getcProductoCodigo());
 							productoBean.setvProductoNombre(eobj.getProducto().getvProductoNombre());
 							productoBean.setUnidadMedida(eobj.getProducto().getUnidadMedida());
-							productoBean.setvProductoCapacidad(eobj.getProducto().getvProductoCapacidad());				
+							productoBean.setiUMBase(eobj.getProducto().getiUMBase());				
 							productoBean.setfProductoPrecioVenta(eobj.getProducto().getfProductoPrecioVenta());
 							productoBean.setfProductoPrecioCompra(eobj.getProducto().getfProductoPrecioCompra());
 							
@@ -461,15 +461,24 @@ public class VentaAction extends BaseAction {
 			VentaDao ventaDao = new VentaDao();
 			int iProductoId = Integer.parseInt(request.getParameter("id"));			
 			String mode = request.getParameter("mode");
-			
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 			/** Instanciamos la Clase VentaForm **/
 		
 			
-			List<Ventadetalle>	lista = (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle");
+		   List<Ventadetalle>	lista = (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle");
+		   
+		   String identificador = request.getParameter("identificador");
+		
 			Producto productoBean = new Producto();
 			Ventadetalle ventadetalle  = new Ventadetalle();
-			
+			/** Iniciamos instacia de transacion **/
+	       //  
+	         
+	         try {
+		         
 			if(mode.equals("I")){
+				// lista = new ArrayList<Ventadetalle>();
 				int iCantidad = Integer.parseInt(request.getParameter("iCantidad"));						
 				float fDescuento = Float.parseFloat(request.getParameter("fDescuento"));				
 				float fPrecioVenta = Float.parseFloat(request.getParameter("fPrecioVenta"));
@@ -484,9 +493,9 @@ public class VentaAction extends BaseAction {
 				productoBean.setvProductoNombre(producto.getvProductoNombre());
 				
 				productoBean.setUnidadMedida(producto.getUnidadMedida());
-				productoBean.setvProductoCapacidad(producto.getvProductoCapacidad());				
+				productoBean.setiUMBase(producto.getiUMBase());				
 				productoBean.setfProductoPrecioVenta(producto.getfProductoPrecioVenta());
-				productoBean.setiProductoStockCantidad(producto.getiProductoStockCantidad());
+				productoBean.setiProductoStockTotal(producto.getiProductoStockTotal());
 				productoBean.setfProductoPrecioCompra(fPrecioCompra);
 				
 				ventadetalle.setProducto(productoBean);
@@ -494,7 +503,13 @@ public class VentaAction extends BaseAction {
 				ventadetalle.setiVentaDetalleCantidad(iCantidad);
 				ventadetalle.setfVentaDetalleTotal(fTotal);
 				ventadetalle.setfDescuento(fDescuento);
+				ventadetalle.setdFechaInserta(Fechas.getDate());
+				ventadetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
 				ventadetalle.setcEstadoCodigo(Constantes.estadoActivo);
+				ventadetalle.setvIdentificadorSession(identificador);
+				/*Venta venta=new Venta();
+				venta.setiVentaId((int) (Math.random() * 10.0));
+				ventadetalle.setVenta(venta);*/
 				if(iPersonalId>0){
 					Personal personalBean= new Personal();
 					Personal personal= new Personal();
@@ -508,6 +523,8 @@ public class VentaAction extends BaseAction {
 				
 				lista.add(ventadetalle);
 				sesion.setAttribute("listaVentaDetalle", lista);
+				//ventaDao.persistEndidad(ventadetalle);	             
+	            //ventaDao.commitEndidad(entityTransaction);
 			}
 			if(mode.equals("D")){
 				 if(lista.get(iProductoId).getcEstadoCodigo().equals(Constantes.estadoActivo))
@@ -516,6 +533,8 @@ public class VentaAction extends BaseAction {
 					 lista.get(iProductoId).setcEstadoCodigo(Constantes.estadoActivo);
 				   
 				   sesion.setAttribute("listaVentaDetalle", lista);
+				   // ventaDao.mergeEndidad(lista.get(iProductoId));	             
+		           // ventaDao.commitEndidad(entityTransaction);
 			}
 			if(mode.equals("U")){
 					int iCantidad = Integer.parseInt(request.getParameter("iCantidad"));						
@@ -528,7 +547,8 @@ public class VentaAction extends BaseAction {
 				   lista.get(iProductoId).setiVentaDetalleCantidad(iCantidad);
 				   lista.get(iProductoId).setfDescuento(fDescuento);
 
-				   sesion.setAttribute("listaVentaDetalle", lista);
+				 //  sesion.setAttribute("listaVentaDetalle", lista);
+				 
 			}
 			/***consultamos el detalle de la compra para hacer la devolucion de la compra
 			 * ID= Insercion de devolucion de compras**/
@@ -573,7 +593,7 @@ public class VentaAction extends BaseAction {
 					productoBean.setcProductoCodigo(e.getProducto().getcProductoCodigo());
 					productoBean.setvProductoNombre(e.getProducto().getvProductoNombre());
 					productoBean.setUnidadMedida(e.getProducto().getUnidadMedida());
-					productoBean.setvProductoCapacidad(e.getProducto().getvProductoCapacidad());				
+					productoBean.setiUMBase(e.getProducto().getiUMBase());				
 					productoBean.setfProductoPrecioVenta(e.getProducto().getfProductoPrecioVenta());
 					productoBean.setfProductoPrecioCompra(e.getProducto().getfProductoPrecioCompra());
 					
@@ -585,7 +605,10 @@ public class VentaAction extends BaseAction {
 			//	sesion.setAttribute("listaVentaDetalleDevol", lista);
 				
 			}
-			
+	         } catch (Exception ex) {
+	        	 ex.printStackTrace();
+	        	 ventaDao.limpiarInstancia();
+	         } 
 	     
 			String jsonOutput = gson.toJson(lista);
 			
@@ -748,6 +771,7 @@ public class VentaAction extends BaseAction {
 				ventaform.setTipoMoneda(venta.getvTipoVenta());
 				ventaform.setIGVVentas(venta.getvPorcentajeIGV());
 				
+				
 				if(mode.equals("UE")){
 					
 					/***INGRESO DE VENTAS MEDIANTE EL ESTADO DE CUENTA DEL CLIENTE***/		
@@ -773,6 +797,16 @@ public class VentaAction extends BaseAction {
 							productoBean.setiProductoId(obj.getProducto().getiProductoId());
 							productoBean.setcProductoCodigo(obj.getProducto().getcProductoCodigo());
 							productoBean.setvProductoNombre(obj.getProducto().getvProductoNombre());
+							
+							    if(obj.getProducto().getUmBase()==null)
+							    	productoBean.setUmBase(new Unidadmedida());
+								
+								if(obj.getProducto().getUmBase()==null)
+									productoBean.setUmPedido(new Unidadmedida());
+								if(obj.getProducto().getUmBase()==null)
+									productoBean.setUmSalida(new Unidadmedida());
+							
+					
 							if(obj.getProducto().getUnidadMedida()!=null){
 							productoBean.setUnidadMedida(obj.getProducto().getUnidadMedida());
 							}else{
@@ -780,9 +814,9 @@ public class VentaAction extends BaseAction {
 								personal.setvPersonalNombres(obj.getPersonal().getvPersonalNombres());
 								personal.setvPersonalApellidoPaterno(obj.getPersonal().getvPersonalApellidoPaterno());
 							}
-							productoBean.setvProductoCapacidad(obj.getProducto().getvProductoCapacidad());				
+							productoBean.setiUMBase(obj.getProducto().getiUMBase());				
 							productoBean.setfProductoPrecioVenta(obj.getProducto().getfProductoPrecioVenta());
-							productoBean.setiProductoStockCantidad(obj.getProducto().getiProductoStockCantidad());
+							productoBean.setiProductoStockTotal(obj.getProducto().getiProductoStockTotal());
 							productoBean.setfProductoPrecioCompra(obj.getProducto().getfProductoPrecioCompra());
 							
 							ventaDetalle.setProducto(productoBean);
@@ -923,7 +957,7 @@ public class VentaAction extends BaseAction {
 		    	   if(sesion.getAttribute("listaVentaDetalle")!=null){
 			      	   for(Ventadetalle ventaDetalle:(List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle")){
 			      		       
-			      		   if(ventaDetalle.getcEstadoCodigo().equals(Constantes.estadoActivo)){
+			      		   if(ventaDetalle.getcEstadoCodigo().equals(Constantes.estadoActivo) && ventaDetalle.getvIdentificadorSession().equals(pForm.getIdentificador()) ){
 			      			   ventaDetalle.setVenta(obj);      			   
 					      	   ventaDetalle.setdFechaInserta(Fechas.getDate());
 					      	   ventaDetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
@@ -989,7 +1023,7 @@ public class VentaAction extends BaseAction {
 													/*** Actualizamos la cantidad restante en el stock **/
 													preciosProducto.setiCantidadStock(iCantidad);			 		              		
 						 		              		/** Actualizamos el producto */ 
-							      					producto.setiProductoStockCantidad(producto.getiProductoStockCantidad()-ventaDetalle.getiVentaDetalleCantidad());
+							      					producto.setiProductoStockTotal(producto.getiProductoStockTotal()-ventaDetalle.getiVentaDetalleCantidad());
 							      					producto.setfProductoDescuento(preciosProducto.getfDescuento());
 													producto.setfProductoGanancia(preciosProducto.getfGanancia());
 													producto.setfProductoPrecioVenta(preciosProducto.getfPrecioVenta());
@@ -1071,7 +1105,7 @@ public class VentaAction extends BaseAction {
 														/*** Actualizamos la cantidad restante en el stock **/
 														objpreciosProducto.setiCantidadStock(iCantidad);			 		              		
 							 		              		/** Actualizamos el producto */ 
-														producto.setiProductoStockCantidad(producto.getiProductoStockCantidad()-ventaDetalle.getiVentaDetalleCantidad());
+														producto.setiProductoStockTotal(producto.getiProductoStockTotal()-ventaDetalle.getiVentaDetalleCantidad());
 														producto.setfProductoDescuento(objpreciosProducto.getfDescuento());
 														producto.setfProductoGanancia(objpreciosProducto.getfGanancia());
 														producto.setfProductoPrecioVenta(objpreciosProducto.getfPrecioVenta());
@@ -1218,7 +1252,7 @@ public class VentaAction extends BaseAction {
 															*//*** Actualizamos la cantidad restante en el stock **//*
 															preciosProducto.setiCantidadStock(iCantidad);			 		              		
 								 		              		*//** Actualizamos el producto *//* 
-									      					producto.setiProductoStockCantidad(producto.getiProductoStockCantidad()-ventaDetalle.getiVentaDetalleCantidad());
+									      					producto.setiProductoStockTotal(producto.getiProductoStockTotal()-ventaDetalle.getiVentaDetalleCantidad());
 									      					producto.setfProductoDescuento(preciosProducto.getfDescuento());
 															producto.setfProductoGanancia(preciosProducto.getfGanancia());
 															producto.setfProductoPrecioVenta(preciosProducto.getfPrecioVenta());
@@ -1300,7 +1334,7 @@ public class VentaAction extends BaseAction {
 																*//*** Actualizamos la cantidad restante en el stock **//*
 																objpreciosProducto.setiCantidadStock(iCantidad);			 		              		
 									 		              		*//** Actualizamos el producto *//* 
-																producto.setiProductoStockCantidad(producto.getiProductoStockCantidad()-ventaDetalle.getiVentaDetalleCantidad());
+																producto.setiProductoStockTotal(producto.getiProductoStockTotal()-ventaDetalle.getiVentaDetalleCantidad());
 																producto.setfProductoDescuento(objpreciosProducto.getfDescuento());
 																producto.setfProductoGanancia(objpreciosProducto.getfGanancia());
 																producto.setfProductoPrecioVenta(objpreciosProducto.getfPrecioVenta());
@@ -1335,12 +1369,12 @@ public class VentaAction extends BaseAction {
 									  if(ventaDetalle.getiVentaDetalleCantidad()!=obj1.getVentadetalles().get(i).getiVentaDetalleCantidad()){
 										  
 									   cantidadProductoActual =   ventaDetalle.getiVentaDetalleCantidad()-obj1.getVentadetalles().get(i).getiVentaDetalleCantidad();
-									   cantidadProducto =    obj1.getVentadetalles().get(i).getProducto().getiProductoStockCantidad() - cantidadProductoActual;
+									   cantidadProducto =    obj1.getVentadetalles().get(i).getProducto().getiProductoStockTotal() - cantidadProductoActual;
 									  
 							           
 						           		*//**************************//*
 			 		              		*//** reducimos el stock a 0*//*		 		              		
-			 		              		producto.setiProductoStockCantidad(cantidadProducto) ;
+			 		              		producto.setiProductoStockTotal(cantidadProducto) ;
 						 		              	    
 						 		              		*//***Agregamos al Kardex el movimiento de los productos***//*
 						 		              		if(cantidadProductoActual<0){
@@ -1462,7 +1496,7 @@ public class VentaAction extends BaseAction {
 									      		  if(preciosProducto.getfPrecioCompra()==obj1.getVentadetalles().get(i).getProducto().getfProductoPrecioCompra()) {
 									      			            cantidadProducto =    preciosProducto.getiCantidadStock() + ventaDetalle.getiVentaDetalleCantidad();
 									      		      			preciosProducto.setiCantidadStock(cantidadProducto);
-									      		      		    producto.setiProductoStockCantidad(producto.getiProductoStockCantidad()+ ventaDetalle.getiVentaDetalleCantidad());    			               
+									      		      		    producto.setiProductoStockTotal(producto.getiProductoStockTotal()+ ventaDetalle.getiVentaDetalleCantidad());    			               
 									      		      		    ventaDao.mergeEndidad(preciosProducto);		
 									      		      		    break;
 									      		      		
@@ -1680,7 +1714,7 @@ public class VentaAction extends BaseAction {
 						           int asignado=0;
 						           
 						           cantidadProductoActual = ingresoDetalle.getiVentaDetalleCantidad();					           
-								   producto.setiProductoStockCantidad(producto.getiProductoStockCantidad()+ingresoDetalle.getiVentaDetalleCantidad());
+								   producto.setiProductoStockTotal(producto.getiProductoStockTotal()+ingresoDetalle.getiVentaDetalleCantidad());
 								    
 								   Collections.sort(objVenta.getKardexs(), new Comparator<Kardex>(){
 			 				              public int compare(Kardex p1, Kardex p2) {
@@ -1802,12 +1836,12 @@ public class VentaAction extends BaseAction {
 										  if(ventaDetalle.getiVentaDetalleCantidad()!=objVenta.getVentadetalles().get(i).getiVentaDetalleCantidad()){
 											  
 										   cantidadProductoActual =   ventaDetalle.getiVentaDetalleCantidad()-objVenta.getVentadetalles().get(i).getiVentaDetalleCantidad();
-										   cantidadProducto =    objVenta.getVentadetalles().get(i).getProducto().getiProductoStockCantidad() - cantidadProductoActual;
+										   cantidadProducto =    objVenta.getVentadetalles().get(i).getProducto().getiProductoStockTotal() - cantidadProductoActual;
 										  
 								           
 							           		/**************************/
 				 		              		/** reducimos el stock a 0*/		 		              		
-				 		              		producto.setiProductoStockCantidad(cantidadProducto) ;
+				 		              		producto.setiProductoStockTotal(cantidadProducto) ;
 							 		              	    
 							 		              		int cantKardex;
 														/***Agregamos al Kardex el movimiento de los productos***/

@@ -49,6 +49,10 @@ public class Producto implements Serializable {
 
 	@Column(nullable=false)
 	private float fProductoGanancia;
+	
+
+	@Column(nullable=false)
+	private float fProductoGastosAdm;
 
 	@Column(nullable=false)
 	private float fProductoPrecioCompra;
@@ -63,11 +67,11 @@ public class Producto implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="iSubCategoriaId")	
 	private Subcategoria subcategoria;
-
-	
-
-	@Column(nullable=false)
-	private int iProductoStockCantidad;
+	private int iProductoStockTotal;
+	 //bi-directional many-to-one association to Unidadmedida
+    @ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="iUnidadMedidaId", nullable=false)
+	private Unidadmedida unidadMedida;
 
 	@Column(nullable=false)
 	private int iProductoStockMaximo;
@@ -80,8 +84,6 @@ public class Producto implements Serializable {
 	@Column(nullable=false)
 	private int iUsuarioInsertaId;
 
-	@Column(nullable=false, length=11)
-	private String vProductoCapacidad;
 
 	@Column(nullable=false, length=45)
 	private String vProductoNombre;
@@ -96,17 +98,7 @@ public class Producto implements Serializable {
 	@OneToMany(mappedBy="producto", fetch=FetchType.LAZY,cascade = CascadeType.REFRESH)
 	private List<Ingresoproductodetalle> ingresoproductodetalles;
 
-	//bi-directional many-to-one association to Unidadmedida
-    @ManyToOne
-	@JoinColumn(name="iUnidadMedidadId", nullable=false)
-	private Unidadmedida unidadMedida;
-    
-  //bi-directional many-to-one association to Unidadmedida
-    
-	private int iUnidadMedidadIdC;
 	
-	private String vUnidadMedidaDescripcionC;
-    
    
 
 	//bi-directional many-to-one association to Moneda
@@ -134,11 +126,36 @@ public class Producto implements Serializable {
 	@OneToMany(mappedBy="producto", fetch=FetchType.EAGER,cascade = CascadeType.ALL)
 	private List<Preciosproducto> preciosproductodetallles;
 	
+	//bi-directional many-to-one association to listaPrecios
+	@OneToMany(mappedBy="producto", fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+	private List<Productoalmacen> productoAlmacendetallles;
+	
+	
 	//bi-directional many-to-one association to Ingresoproducto
 	@OneToMany(mappedBy="producto")
 	private List<Ingresoproductodetalle> ingresoproductodetalle;
 	
-	
+	private int iUMBase;
+
+	//bi-directional many-to-one association to Unidadmedida
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="iUMBaseId", nullable=false)
+	private Unidadmedida umBase;
+
+	private int iUMPedido;
+
+	//bi-directional many-to-one association to Unidadmedida
+    @ManyToOne
+	@JoinColumn(name="iUMPedidoId", nullable=false)
+	private Unidadmedida umPedido;
+
+	private String vUMSalida;
+
+	//bi-directional many-to-one association to Unidadmedida
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="iUMSalidaId", nullable=false)
+	private Unidadmedida umSalida;
+
 
     public Producto() {
     }
@@ -234,42 +251,6 @@ public class Producto implements Serializable {
 	}
 
 
-	 /**
-      * @return the vUnidadMedidaDescripcionC
-	  */
-	public String getvUnidadMedidaDescripcionC() {
-		/*UnidadMedidaDao dao = new UnidadMedidaDao();
-		String vUnidadMedidaDescripcion ="nn";
-		if(this.iUnidadMedidadIdC>0){
-			Unidadmedida unidadmedida = dao.buscarUnidadMedida(this.iUnidadMedidadIdC);
-			vUnidadMedidaDescripcion =unidadmedida.getvUnidadMedidaDescripcion();
-		}
-		*/
-		return vUnidadMedidaDescripcionC;
-	}
-
-	/**
-	 * @param vUnidadMedidaDescripcionC the vUnidadMedidaDescripcionC to set
-	 */
-	public void setvUnidadMedidaDescripcionC(String vUnidadMedidaDescripcionC) {
-		this.vUnidadMedidaDescripcionC = vUnidadMedidaDescripcionC;
-	}
-
-	
-
-	/**
-	 * @return the iProductoStockCantidad
-	 */
-	public int getiProductoStockCantidad() {
-		return iProductoStockCantidad;
-	}
-
-	/**
-	 * @param iProductoStockCantidad the iProductoStockCantidad to set
-	 */
-	public void setiProductoStockCantidad(int iProductoStockCantidad) {
-		this.iProductoStockCantidad = iProductoStockCantidad;
-	}
 	
 	
 
@@ -321,33 +302,9 @@ public class Producto implements Serializable {
 
 	
 
-	/**
-	 * @return the iProductoCapacidad
-	 */
-	public String getvProductoCapacidad() {
-		return vProductoCapacidad;
-	}
+	
 
-	/**
-	 * @param iProductoCapacidad the iProductoCapacidad to set
-	 */
-	public void setvProductoCapacidad(String vProductoCapacidad) {
-		this.vProductoCapacidad = vProductoCapacidad;
-	}
-
-	/**
-	 * @return the unidadMedidaC
-	 */
-	public int getiUnidadMedidadIdC() {
-		return iUnidadMedidadIdC;
-	}
-
-	/**
-	 * @param unidadMedidaC the unidadMedidaC to set
-	 */
-	public void setiUnidadMedidadIdC(int iUnidadMedidadIdC) {
-		this.iUnidadMedidadIdC = iUnidadMedidadIdC;
-	}
+	
 
 	public String getvProductoNombre() {
 		return vProductoNombre;
@@ -367,19 +324,7 @@ public class Producto implements Serializable {
 	}
 
 	
-	/**
-	 * @return the unidadMedida
-	 */
-	public Unidadmedida getUnidadMedida() {
-		return unidadMedida;
-	}
-
-	/**
-	 * @param unidadMedida the unidadMedida to set
-	 */
-	public void setUnidadMedida(Unidadmedida unidadMedida) {
-		this.unidadMedida = unidadMedida;
-	}
+	
 
 	/*public List<Salidaproducto> getSalidaproductos() {
 		return salidaproductos;
@@ -496,6 +441,147 @@ public class Producto implements Serializable {
 	 */
 	public void setProduccion(Produccion produccion) {
 		this.produccion = produccion;
+	}
+
+	/**
+	 * @return the productoAlmacendetallles
+	 */
+	public List<Productoalmacen> getProductoAlmacendetallles() {
+		return productoAlmacendetallles;
+	}
+
+	/**
+	 * @param productoAlmacendetallles the productoAlmacendetallles to set
+	 */
+	public void setProductoAlmacendetallles(
+			List<Productoalmacen> productoAlmacendetallles) {
+		this.productoAlmacendetallles = productoAlmacendetallles;
+	}
+
+	/**
+	 * @return the fProductoGastosAdm
+	 */
+	public float getfProductoGastosAdm() {
+		return fProductoGastosAdm;
+	}
+
+	/**
+	 * @param fProductoGastosAdm the fProductoGastosAdm to set
+	 */
+	public void setfProductoGastosAdm(float fProductoGastosAdm) {
+		this.fProductoGastosAdm = fProductoGastosAdm;
+	}
+
+	/**
+	 * @return the iProductoStockTotal
+	 */
+	public int getiProductoStockTotal() {
+		return iProductoStockTotal;
+	}
+
+	/**
+	 * @param iProductoStockTotal the iProductoStockTotal to set
+	 */
+	public void setiProductoStockTotal(int iProductoStockTotal) {
+		this.iProductoStockTotal = iProductoStockTotal;
+	}
+
+	/**
+	 * @return the unidadMedida
+	 */
+	public Unidadmedida getUnidadMedida() {
+		return unidadMedida;
+	}
+
+	/**
+	 * @param unidadMedida the unidadMedida to set
+	 */
+	public void setUnidadMedida(Unidadmedida unidadMedida) {
+		this.unidadMedida = unidadMedida;
+	}
+
+	/**
+	 * @return the iUMBase
+	 */
+	public int getiUMBase() {
+		return iUMBase;
+	}
+
+	/**
+	 * @param iUMBase the iUMBase to set
+	 */
+	public void setiUMBase(int iUMBase) {
+		this.iUMBase = iUMBase;
+	}
+
+	/**
+	 * @return the umBase
+	 */
+	public Unidadmedida getUmBase() {
+		return umBase;
+	}
+
+	/**
+	 * @param umBase the umBase to set
+	 */
+	public void setUmBase(Unidadmedida umBase) {
+		this.umBase = umBase;
+	}
+
+	/**
+	 * @return the iUMPedido
+	 */
+	public int getiUMPedido() {
+		return iUMPedido;
+	}
+
+	/**
+	 * @param iUMPedido the iUMPedido to set
+	 */
+	public void setiUMPedido(int iUMPedido) {
+		this.iUMPedido = iUMPedido;
+	}
+
+	/**
+	 * @return the umPedido
+	 */
+	public Unidadmedida getUmPedido() {
+		return umPedido;
+	}
+
+	/**
+	 * @param umPedido the umPedido to set
+	 */
+	public void setUmPedido(Unidadmedida umPedido) {
+		this.umPedido = umPedido;
+	}
+
+	/**
+	 * @return the vUMSalida
+	 */
+	public String getvUMSalida() {
+		return vUMSalida;
+	}
+
+	/**
+	 * @param vUMSalida the vUMSalida to set
+	 */
+	public void setvUMSalida(String vUMSalida) {
+		this.vUMSalida = vUMSalida;
+	}
+
+	/**
+	 * @return the umSalida
+	 */
+	public Unidadmedida getUmSalida() {
+		return umSalida;
+	}
+
+	/**
+	 * @param umSalida the umSalida to set
+	 */
+	public void setUmSalida(Unidadmedida umSalida) {
+		this.umSalida = umSalida;
 	}
 
 	

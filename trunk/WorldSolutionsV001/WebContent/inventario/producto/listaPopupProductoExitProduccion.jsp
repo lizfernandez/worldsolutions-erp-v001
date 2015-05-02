@@ -63,10 +63,10 @@
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
 			               '<bean:write name="x" property="cProductoCodigo" />',
 			               '<bean:write name="x" property="vProductoNombre" />',
-			               '<bean:write name="x" property="iProductoStockCantidad" />',
+			               '<bean:write name="x" property="iProductoStockTotal" />',
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',
-			               '<bean:write name="x" property="vProductoCapacidad" />',			               
-			               '<bean:write name="x" property="iUnidadMedidadIdC" />',			               
+			               '<bean:write name="x" property="iUMPedido" />',			               
+			               '<bean:write name="x" property="iUMBase" />',			               
 			               '<bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="moneda.iMonedaId" />',
@@ -79,7 +79,7 @@
 				
 			
 				<td>
-				    <bean:write name="x" property="iProductoStockCantidad" />				    
+				    <bean:write name="x" property="iProductoStockTotal" />				    
 				</td>
 				<td>
 				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
@@ -106,7 +106,7 @@
 					</thead>
 					<tbody>
 					  <logic:iterate name="x" property="preciosproductodetallles" id="z">
-					  <logic:notEqual name="x" property="iProductoStockCantidad" value="0">
+					  <logic:notEqual name="x" property="iProductoStockTotal" value="0">
 					  <logic:equal name="z" property="cEstadoCodigo" value="AC">
 					  <tr onclick="fn_cargarPrecio('<bean:write name="z" property="fPrecioVenta" />',
 					  							   '<bean:write name="z" property="fPrecioCompra"/>',
@@ -159,17 +159,17 @@ $("#iclasificacionId option[value=4]").attr('disabled', true).hide();
 $("#iclasificacionId option[value=5]").attr('disabled', true).hide();
 
  function fn_cargarProducto(iProductoId,cProductoCodigo,vProductoNombre,
-		 iProductoStockCantidad,iUnidadMedidaId,vProductoCapacidad,iUnidadMedidadIdC,
+		 iProductoStockTotal,iUnidadMedidaId,iUMPedido,iUMBase,
 		 fProductoPrecioCompra,fProductoPrecioVenta,iMonedaId,fProductoGanancia,fProductoDescuento){   
 	 
 	 retornarProducto(
 				'iProductoId',iProductoId,
 				'cProductoCodigo',cProductoCodigo,
 				'vProductoNombre',vProductoNombre,
-				'iProductoStockCantidad',iProductoStockCantidad,
+				'iProductoStockTotal',iProductoStockTotal,
 				'iUnidadMedidadId',iUnidadMedidaId,
-				'vProductoCapacidad',vProductoCapacidad,
-				'iUnidadMedidadIdC',iUnidadMedidadIdC,
+				'iUMPedido',iUMPedido,
+				'iUMBase',iUMBase,
 				'fProductoPrecioCompra',fProductoPrecioCompra,
 				'fProductoPrecioVenta',fProductoPrecioVenta,
 				'iMonedaId',iMonedaId,

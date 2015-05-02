@@ -526,7 +526,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`producto` (
   `iProductoId` INT(11) NOT NULL AUTO_INCREMENT ,
   `cProductoCodigo` CHAR(7) NOT NULL ,
   `vProductoNombre` VARCHAR(45) NOT NULL ,
-  `vProductoCapacidad` VARCHAR(11) NULL DEFAULT NULL ,
+  `iUMPedido` VARCHAR(11) NULL DEFAULT NULL ,
   `iProductoStockCantidad` INT(11) NULL DEFAULT NULL ,
   `iProductoStockMaximo` INT(11) NULL DEFAULT NULL ,
   `iProductoStockMinimo` INT(11) NULL DEFAULT NULL ,
@@ -541,7 +541,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`producto` (
   `iUnidadMedidadId` INT(11) NULL DEFAULT NULL ,
   `iCategoriaId` INT(11) NULL DEFAULT NULL ,
   `iProduccionId` INT(11) NULL DEFAULT NULL ,
-  `iUnidadMedidadIdC` INT(11) NULL DEFAULT NULL ,
+  `iUMBase` INT(11) NULL DEFAULT NULL ,
   `iMonedaId` INT(11) NULL DEFAULT NULL ,
   `vUnidadMedidaDescripcionC` VARCHAR(45) NULL DEFAULT NULL ,
   `iSubCategoriaId` INT(11) NULL DEFAULT NULL ,
@@ -549,7 +549,7 @@ CREATE  TABLE IF NOT EXISTS `macrostruts`.`producto` (
   `fProductoDescuento` FLOAT NULL DEFAULT NULL ,
   PRIMARY KEY (`iProductoId`) ,
   INDEX `fk_producto_unidadMedida1` (`iUnidadMedidadId` ASC) ,
-  INDEX `fk_producto_unidadMedidaC` (`iUnidadMedidadIdC` ASC) ,
+  INDEX `fk_producto_unidadMedidaC` (`iUMBase` ASC) ,
   INDEX `fk_producto_moneda` (`iMonedaId` ASC) ,
   CONSTRAINT `fk_producto_moneda`
     FOREIGN KEY (`iMonedaId` )

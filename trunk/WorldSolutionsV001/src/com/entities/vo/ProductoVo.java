@@ -21,18 +21,18 @@ public class ProductoVo implements Serializable {
 	private CategoriaVo categoria;
 	private SubcategoriaVo subcategoria;
 	private int iProduccionId;
-	private int iProductoStockCantidad;
+	private int iProductoStockTotal;
 	private int iProductoStockMaximo;
 	private int iProductoStockMinimo;
 	private int iUsuarioActualizaId;
 	private int iUsuarioInsertaId;
-	private String vProductoCapacidad;
+	private String iUMPedido;
 	private String vProductoNombre;
 	private float fProductoDescuento;
 	private String vFoto;
 	private List<IngresoproductodetalleVo> ingresoproductodetalles;
 	private UnidadmedidaVo unidadMedida;
-	private int iUnidadMedidadIdC;
+	private int iUMBase;
 	private String vUnidadMedidaDescripcionC;
 	private MonedaVo moneda;
 	private List<VentadetalleVo> ventadetalles;
@@ -145,8 +145,8 @@ public class ProductoVo implements Serializable {
 	public String getvUnidadMedidaDescripcionC() {
 		/*UnidadMedidaDao dao = new UnidadMedidaDao();
 		String vUnidadMedidaDescripcion ="nn";
-		if(this.iUnidadMedidadIdC>0){
-			Unidadmedida unidadmedida = dao.buscarUnidadMedida(this.iUnidadMedidadIdC);
+		if(this.iUMBase>0){
+			Unidadmedida unidadmedida = dao.buscarUnidadMedida(this.iUMBase);
 			vUnidadMedidaDescripcion =unidadmedida.getvUnidadMedidaDescripcion();
 		}
 		*/
@@ -163,17 +163,17 @@ public class ProductoVo implements Serializable {
 	
 
 	/**
-	 * @return the iProductoStockCantidad
+	 * @return the iProductoStockTotal
 	 */
-	public int getiProductoStockCantidad() {
-		return iProductoStockCantidad;
+	public int getiProductoStockTotal() {
+		return iProductoStockTotal;
 	}
 
 	/**
-	 * @param iProductoStockCantidad the iProductoStockCantidad to set
+	 * @param iProductoStockTotal the iProductoStockTotal to set
 	 */
-	public void setiProductoStockCantidad(int iProductoStockCantidad) {
-		this.iProductoStockCantidad = iProductoStockCantidad;
+	public void setiProductoStockTotal(int iProductoStockTotal) {
+		this.iProductoStockTotal = iProductoStockTotal;
 	}
 	
 	
@@ -229,29 +229,29 @@ public class ProductoVo implements Serializable {
 	/**
 	 * @return the iProductoCapacidad
 	 */
-	public String getvProductoCapacidad() {
-		return vProductoCapacidad;
+	public String getiUMPedido() {
+		return iUMPedido;
 	}
 
 	/**
 	 * @param iProductoCapacidad the iProductoCapacidad to set
 	 */
-	public void setvProductoCapacidad(String vProductoCapacidad) {
-		this.vProductoCapacidad = vProductoCapacidad;
+	public void setiUMPedido(String iUMPedido) {
+		this.iUMPedido = iUMPedido;
 	}
 
 	/**
 	 * @return the unidadMedidaC
 	 */
-	public int getiUnidadMedidadIdC() {
-		return iUnidadMedidadIdC;
+	public int getiUMBase() {
+		return iUMBase;
 	}
 
 	/**
 	 * @param unidadMedidaC the unidadMedidaC to set
 	 */
-	public void setiUnidadMedidadIdC(int iUnidadMedidadIdC) {
-		this.iUnidadMedidadIdC = iUnidadMedidadIdC;
+	public void setiUMBase(int iUMBase) {
+		this.iUMBase = iUMBase;
 	}
 
 	public String getvProductoNombre() {

@@ -821,12 +821,12 @@ public class ContabilidadForm extends ActionForm {
 
 	
 
-	public int getiProductoStockCantidad() {
-		return producto.getiProductoStockCantidad();
+	public int getiProductoStockTotal() {
+		return producto.getiProductoStockTotal();
 	}
 
-	public void setiProductoStockCantidad(int iProductoStockCantidad) {
-		this.producto.setiProductoStockCantidad(iProductoStockCantidad);
+	public void setiProductoStockTotal(int iProductoStockTotal) {
+		this.producto.setiProductoStockTotal(iProductoStockTotal);
 	}
 
 	public int getiProductoStockMaximo() {
@@ -844,14 +844,14 @@ public class ContabilidadForm extends ActionForm {
 	public void setiProductoStockMinimo(int iProductoStockMinimo) {
 		this.producto.setiProductoStockMinimo(iProductoStockMinimo);
 	}
-public String getvProductoCapacidad() {
+/*public String getiUMPedido() {
 		
-		return producto.getvProductoCapacidad();
+		return producto.getiUMPedido();
 	}
 
-	public void setvProductoCapacidad(String vProductoCapacidad) {
-		this.producto.setvProductoCapacidad(vProductoCapacidad);
-	}
+	public void setiUMPedido(String iUMPedido) {
+		this.producto.setiUMPedido(iUMPedido);
+	}*/
 
 	public String getvProductoNombre() {
 		return producto.getvProductoNombre();
@@ -881,14 +881,14 @@ public String getvProductoCapacidad() {
 		this.producto.setUnidadMedida(unidadMedida);
 	}
 
-	/** Unidad de medida de Capacidad***/
-	public int getiUnidadMedidadIdC() {
+	/** Unidad de medida de Capacidad***//*
+	public int getiUMBase() {
 		
-		return producto.getiUnidadMedidadIdC();
+		return producto.getiUMBase();
 		
 	}
-	public void setiUnidadMedidadIdC(int iUnidadMedidadId) {
-		this.producto.setiUnidadMedidadIdC(iUnidadMedidadId);
+	public void setiUMBase(int iUnidadMedidadId) {
+		this.producto.setiUMBase(iUnidadMedidadId);
 	}
 	
 	public String getvUnidadMedidaDescripcionC() {
@@ -896,13 +896,13 @@ public String getvProductoCapacidad() {
 		return producto.getvUnidadMedidaDescripcionC();
 	}
 
-	/**
+	*//**
 	 * @param vUnidadMedidaDescripcionC the vUnidadMedidaDescripcionC to set
-	 */
+	 *//*
 	public void setvUnidadMedidaDescripcionC(String vUnidadMedidaDescripcionC) {
 		this.producto.setvUnidadMedidaDescripcionC(vUnidadMedidaDescripcionC);
 	}
-	
+	*/
 	/***Moneda iMonedaId ***/
 	public int getiMonedaId() {
 		Moneda moneda = producto.getMoneda();

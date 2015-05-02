@@ -62,12 +62,12 @@
 		 <logic:iterate name="productosForm" property="produc" id="x" indexId="i">	
 		 
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
-			               '<bean:write name="x" property="iProductoStockCantidad" />',
+			               '<bean:write name="x" property="iProductoStockTotal" />',
 			               '<bean:write name="x" property="vProductoNombre" />',
 			               '<bean:write name="x" property="fProductoDescuento" />',
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
-			               '<bean:write name="x" property="iUnidadMedidadIdC" />',
-			               '<bean:write name="x" property="vProductoCapacidad" />',
+			               '<bean:write name="x" property="iUMBase" />',
+			               '<bean:write name="x" property="iUMPedido" />',
 			               '<bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/>')">
@@ -84,7 +84,7 @@
     			  </div>
     			  </td>
 				<td>
-				    <bean:write name="x" property="iProductoStockCantidad" />				    
+				    <bean:write name="x" property="iProductoStockTotal" />				    
 				</td>
 				<td>
 				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
@@ -111,7 +111,7 @@
 					</thead>
 					<tbody>
 					  <logic:iterate name="x" property="preciosproductodetallles" id="z">
-					  <logic:notEqual name="x" property="iProductoStockCantidad" value="0">
+					  <logic:notEqual name="x" property="iProductoStockTotal" value="0">
 					  <logic:equal name="z" property="cEstadoCodigo" value="AC">
 					  <tr onclick="fn_cargarPrecio('<bean:write name="z" property="fPrecioVenta" />',
 					  							   '<bean:write name="z" property="fPrecioCompra"/>',
@@ -170,15 +170,15 @@
 	  <tr>
 	        <td>Cantidad:</td>
 	        <td>
-			   <html:text property="iProductoStockCantidad" styleId="iProductoStockCantidad"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>
+			   <html:text property="iProductoStockTotal" styleId="iProductoStockTotal"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>
 			   <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px" disabled="true">
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select>
 			</td>
 			<td>Capacidad:</td>
 	        <td>
-	           <html:text property="vProductoCapacidad" styleId="vProductoCapacidad"   styleClass="text" size="5" disabled="true" />
-			   <html:select  property="iUnidadMedidadIdC" styleId="iUnidadMedidadIdC" styleClass="comboCodigo" tabindex="8" style="width:140px" disabled="true">
+	           <html:text property="iUMPedido" styleId="iUMPedido"   styleClass="text" size="5" disabled="true" />
+			   <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo" tabindex="8" style="width:140px" disabled="true">
 		          <option value="0">::SELECCIONE::</option> 
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select>  
@@ -227,20 +227,20 @@
 </div>   
 <script>   
 paginacion(); 
- function fn_cargarProducto(iProductoId,iStock,vNombreProducto,fProductoDescuento,iUnidadMedidadId,iUnidadMedidadIdC,vProductoCapacidad,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
+ function fn_cargarProducto(iProductoId,iStock,vNombreProducto,fProductoDescuento,iUnidadMedidadId,iUMBase,iUMPedido,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
 	    $("#iProductoId").val(iProductoId);
 	    $("#iStock").val(iStock);
 		$("#vxProductoNombre").val(vNombreProducto);
 		$("#iUnidadMedidadId").val(iUnidadMedidadId);
-		$("#iUnidadMedidadIdC").val(iUnidadMedidadIdC);
-		$("#vProductoCapacidad").val(vProductoCapacidad);
+		$("#iUMBase").val(iUMBase);
+		$("#iUMPedido").val(iUMPedido);
 		$("#fProductoPrecioVenta").val(fProductoPrecioVenta);
 		$("#fProductoDescuento").val(fProductoDescuento);
 		$("#fPrecioCompra").val(fProductoPrecioCompra);
 		$("#fDescuento").val(fProductoDescuento);
 		var fDescuento =parseFloat(($("#fDescuento").val()/100));		
 		$("#fProductoPrecioVentaFinal").val(dosDecimales(fProductoPrecioVenta)-parseFloat(fProductoPrecioVenta)*fDescuento);		
-		$("#fTotal").val(dosDecimales(($("#iProductoStockCantidad").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
+		$("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
 		$("#detalleListaPrecio").html($("#tr_"+iProductoId).html());
 	   
 	}
@@ -249,16 +249,16 @@ paginacion();
 	   $("#fPrecioCompra").val(fPrecioCompra);
 	   $("#fDescuento").val(fDescuento);
 	   $("#fProductoPrecioVentaFinal").val(dosDecimales(fPrecioVenta-parseFloat((fPrecioVenta)*fDescuento/100)));	
-	  	$("#fTotal").val(dosDecimales(($("#iProductoStockCantidad").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
+	  	$("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
 		
 	   
    }
 	function fn_CalcularTotal(){ 
 		var iStock = parseFloat($("#iStock").val());
-		var iCantidad =parseFloat($("#iProductoStockCantidad").val());
+		var iCantidad =parseFloat($("#iProductoStockTotal").val());
 		if(iCantidad>iStock){
 			alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+iStock);
-			$("#iProductoStockCantidad").val(iStock);
+			$("#iProductoStockTotal").val(iStock);
 			iCantidad=iStock;
 		}		
 		var fPrecioVenta=$("#fProductoPrecioVenta").val();
@@ -270,7 +270,7 @@ paginacion();
 	function fn_agregarProducto(){
 		var id=$("#iProductoId").val();
 		if(id!=''){
-		var iCantidad=$("#iProductoStockCantidad").val();		
+		var iCantidad=$("#iProductoStockTotal").val();		
 		var fDescuento=$("#fDescuento").val();			
 		var fPrecioVenta =$("#fProductoPrecioVenta").val();
 		var fPrecioCompra =$("#fPrecioCompra").val();
@@ -278,10 +278,10 @@ paginacion();
 		var iPersonalId=0;
 	    var cad = "venta.do?metodo=detalleVenta&id="+id+"&iCantidad="+iCantidad+
 	    		  "&fDescuento="+fDescuento+"&fPrecioVenta="+fPrecioVenta+"&fPrecioCompra="+fPrecioCompra+
-	    		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId;
+	    		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId+"&identificador="+$_GET("identificador");
 	         $.getJSON(cad, function retorna(obj){
 	        	// alert("obje"+obj.cProductoCodigo);
-	        	 listar_detalleVenta(obj,'padre');
+	        	 listar_detalleVenta(obj,'padre',$_GET("identificador"));
 	        	 });
 		}
 		else{

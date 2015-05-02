@@ -104,7 +104,7 @@
               <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iIngresoProductoDetalleCantidad" />"/>
 	        </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
-            <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
+            <td><bean:write name="x" property="producto.iUMPedido" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td align="right">
                 <input type="text" class="inputderecha" id="precio${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fIngresoProductoDetallePrecio" format="#,##0.00" locale="Localidad" />"/>                

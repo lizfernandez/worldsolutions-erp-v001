@@ -113,7 +113,7 @@
 	           </span>
             </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
-            <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /> &ensp; </td>
+            <td><bean:write name="x" property="producto.iUMPedido" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /> &ensp; </td>
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td  onclick="fn_ingresarPrecio('${i}')" align="right">
                 <span id="precio${i}">
@@ -200,7 +200,7 @@
 	           </span>
             </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
-            <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /> &ensp; </td>
+            <td><bean:write name="x" property="producto.iUMPedido" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /> &ensp; </td>
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td  onclick="fn_ingresarPrecio('${i}')" align="right">
                 <span id="precio${i}">

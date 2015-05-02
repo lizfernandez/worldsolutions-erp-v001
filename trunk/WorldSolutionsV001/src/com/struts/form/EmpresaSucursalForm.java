@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
+import com.entities.Almacen;
 import com.entities.Empresa;
 import com.entities.Sucursal;
 import com.entities.Personal;
@@ -19,6 +20,7 @@ public class EmpresaSucursalForm extends ActionForm {
 	private List lista;	
 	Sucursal sucursal = new Sucursal();
 	Empresa empresa = new Empresa();
+	Almacen almacen = new Almacen();
     private String mode;
     private List paginas;
     private int pagInicio;
@@ -44,7 +46,9 @@ public class EmpresaSucursalForm extends ActionForm {
 	 * @param sucursal the sucursal to set
 	 */
 	public void setSucursal(Sucursal sucursal) {
+		
 		this.sucursal = sucursal;
+		
 	}
 	/**
 	 * @return the mode
@@ -87,7 +91,15 @@ public class EmpresaSucursalForm extends ActionForm {
 	 * @return the iSucursalId
 	 */
 	public int getiSucursalId() {
-		return sucursal.getiSucursalId();
+		int iSucursalId= sucursal.getiSucursalId();
+		if(iSucursalId==0){
+			iSucursalId= getSucursal().getiSucursalId();
+			if(iSucursalId==0 && almacen.getSucursal()!=null){
+				iSucursalId= almacen.getSucursal().getiSucursalId();
+			}
+		}
+		
+		return iSucursalId;
 	}
 
 	/**
@@ -95,6 +107,8 @@ public class EmpresaSucursalForm extends ActionForm {
 	 */
 	public void setiSucursalId(int iSucursalId) {
 		sucursal.setiSucursalId(iSucursalId);
+		getSucursal().setiSucursalId(iSucursalId);
+		almacen.setSucursal(getSucursal());
 	}
 
 	/**
@@ -118,6 +132,9 @@ public class EmpresaSucursalForm extends ActionForm {
 		String cEstadoCodigo=empresa.getcEmpresaCodigo();
 		if(cEstadoCodigo==""){
 			cEstadoCodigo= sucursal.getcEstadoCodigo();
+			if(cEstadoCodigo==""){
+				cEstadoCodigo= almacen.getcEstadoCodigo();
+			}
 		}
 		return cEstadoCodigo;
 		
@@ -129,6 +146,7 @@ public class EmpresaSucursalForm extends ActionForm {
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		sucursal.setcEstadoCodigo(cEstadoCodigo);
 		empresa.setcEstadoCodigo(cEstadoCodigo);
+		almacen.setcEstadoCodigo(cEstadoCodigo);
 	}
 
 	
@@ -274,6 +292,88 @@ public class EmpresaSucursalForm extends ActionForm {
 	public void setvEmpresaRuc(String vEmpresaRuc) {
 		this.getEmpresa().setvEmpresaRuc(vEmpresaRuc);
 	}
-	
+	/**
+	 * @return the almacen
+	 */
+	public Almacen getAlmacen() {
+		return almacen;
+	}
+	/**
+	 * @param almacen the almacen to set
+	 */
+	public void setAlmacen(Almacen almacen) {
+		this.almacen = almacen;
+	}
+
+	/**
+	 * @return the iAlmacenId
+	 */
+	public int getiAlmacenId() {
+		return almacen.getiAlmacenId();
+	}
+
+	/**
+	 * @param iAlmacenId the iAlmacenId to set
+	 */
+	public void setiAlmacenId(int iAlmacenId) {
+		this.almacen.setiAlmacenId(iAlmacenId);
+	}
+
+	/**
+	 * @return the cAlmacenCodigo
+	 */
+	public String getcAlmacenCodigo() {
+		return almacen.getcAlmacenCodigo();
+	}
+
+	/**
+	 * @param cAlmacenCodigo the cAlmacenCodigo to set
+	 */
+	public void setcAlmacenCodigo(String cAlmacenCodigo) {
+		this.almacen.setcAlmacenCodigo(cAlmacenCodigo);
+	}
+
+	/**
+	 * @return the vAlmacenDireccion
+	 */
+	public String getvAlmacenDireccion() {
+		return almacen.getvAlmacenDireccion();
+	}
+
+	/**
+	 * @param vAlmacenDireccion the vAlmacenDireccion to set
+	 */
+	public void setvAlmacenDireccion(String vAlmacenDireccion) {
+		this.almacen.setvAlmacenDireccion(vAlmacenDireccion);
+	}
+
+	/**
+	 * @return the vAlmacenNombre
+	 */
+	public String getvAlmacenNombre() {
+		return almacen.getvAlmacenNombre();
+	}
+
+	/**
+	 * @param vAlmacenNombre the vAlmacenNombre to set
+	 */
+	public void setvAlmacenNombre(String vAlmacenNombre) {
+		this.almacen.setvAlmacenNombre(vAlmacenNombre);
+	}
+
+	/**
+	 * @return the vAlmacenTelefono
+	 */
+	public String getvAlmacenTelefono() {
+		return almacen.getvAlmacenTelefono();
+	}
+
+	/**
+	 * @param vAlmacenTelefono the vAlmacenTelefono to set
+	 */
+	public void setvAlmacenTelefono(String vAlmacenTelefono) {
+		this.almacen.setvAlmacenTelefono(vAlmacenTelefono);
+	}
+
 
 }

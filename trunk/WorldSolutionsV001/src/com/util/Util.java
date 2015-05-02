@@ -1,6 +1,7 @@
 package com.util;
 
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -257,5 +258,18 @@ public class Util {
 		}
 		return valorCompletado;
 	}
+	public static String UTF8(String valor){
+		 String out = null;
+	       
+	      try {
+			      out = new String(valor.getBytes("UTF-8"), "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+		
+	}
+
 	
 }

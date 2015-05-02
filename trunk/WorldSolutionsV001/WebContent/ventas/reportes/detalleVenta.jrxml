@@ -10,7 +10,7 @@
 	<field name="producto.vProductoNombre" class="java.lang.String"/>
 	<field name="producto.unidadMedida.vUnidadMedidaDescripcion" class="java.lang.String"/>
 	<field name="producto.vUnidadMedidaDescripcionC" class="java.lang.String"/>
-	<field name="producto.vProductoCapacidad" class="java.lang.String"/>
+	<field name="producto.iUMPedido" class="java.lang.String"/>
 	<field name="producto.fProductoPrecioVenta" class="java.lang.Float"/>
 	<field name="fVentaDetalleTotal" class="java.lang.Float"/>
 	<variable name="rowTotal" class="java.lang.Float" resetType="None">
@@ -144,7 +144,7 @@
 			<textField>
 				<reportElement uuid="603b3bbd-cdb5-4081-a36e-d6080bb6abd3" x="329" y="1" width="110" height="23"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{producto.vProductoCapacidad}+" "+$F{producto.vUnidadMedidaDescripcionC}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{producto.iUMPedido}+" "+$F{producto.vUnidadMedidaDescripcionC}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="b8ee4f7e-4780-40b2-93e4-4253349c5b48" x="0" y="1" width="117" height="23"/>

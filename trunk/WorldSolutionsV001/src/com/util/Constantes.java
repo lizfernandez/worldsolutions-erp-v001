@@ -7,6 +7,7 @@ public class Constantes {
 	public static String CAMPO_SERAILIZABLE = "serialVersionUID";
 	public static String estadoInactivo ="IN";
 	public static String estadoActivo ="AC";
+	public static String estadoPendienteActivo ="PA";
 	public static String estadoDocumentoCancelado ="CANCELADO";
 	public static String estadoDocumentoDeuda ="DEUDA";
 	public static String estadoDocumentoDevuelto ="DEVOLUCION";

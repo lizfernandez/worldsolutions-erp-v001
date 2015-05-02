@@ -273,13 +273,13 @@
     	var mival = $("#iMonedaId option:selected").val();
     	$(".comboCodigo.change option[value="+mival+"]").attr("selected",true); 
    })
-   $("#iUnidadMedidadIdC").change(function () {
-    	var mival = $("#iUnidadMedidadIdC option:selected").text();
-    	if($("#iUnidadMedidadIdC option:selected").val()!="0")
+   $("#iUMBase").change(function () {
+    	var mival = $("#iUMBase option:selected").text();
+    	if($("#iUMBase option:selected").val()!="0")
     	  $("#vUnidadMedidaDescripcionC").val(mival);
     })
   
-  // alert($("#iUnidadMedidadIdC").text()+"  "+$("#iUnidadMedidadIdC").val())
+  // alert($("#iUMBase").text()+"  "+$("#iUMBase").val())
     var mode = document.getElementById('mode').value;	
     if(mode=='I') {
         document.getElementById('cProductoCodigo').focus();

@@ -66,9 +66,9 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
         <th colspan="4" width="5%">Operaciones</th>
         <th align="left">C&oacute;digo</th>
         <th width="20%" align="left">Nombre</th>
+        <th align="left">Descripci&oacute;n</th>
         <th width="9%" align="left">Foto</th>
-        <th align="left">Cantidad</th>
-        <th align="left">Capacidad</th>
+        <th align="left">Stock Total</th>        
         <th align="left" width="6%" >Precio Compra</th>
         <th align="left" width="6%" >Precio Venta</th>
         <th align="left" width="8%" >Stock Min</th>
@@ -113,15 +113,22 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		</td>
 	    <td><bean:write name="x" property="cProductoCodigo" /></td>
 		<td><bean:write name="x" property="vProductoNombre" /></td>
+		<td><bean:write name="x" property="iUMBase" />  <bean:write name="x" property="umBase.vUnidadMedidaDescripcion" /> 
+		 <logic:notEqual name="x" property="umPedido"  value="null">
+		  de 
+		  <bean:write name="x" property="iUMPedido" />  <bean:write name="x" property="umPedido.vUnidadMedidaDescripcion" /> 
+		 </logic:notEqual>
+		 <logic:notEqual name="x" property="umSalida" value="">
+		  de
+		  <bean:write name="x" property="vUMSalida" />  <bean:write name="x" property="umSalida.vUnidadMedidaDescripcion" /> 
+		 </logic:notEqual>
+		</td>
 		<td><logic:notEqual name="x" property="vFoto" value=""> <img  src="${pageContext.request.contextPath}/media/fotos/<bean:write name="x" property="vFoto" />"  width="23%" height="20%" /></logic:notEqual></td>
 		<td>
-		    <bean:write name="x" property="iProductoStockCantidad" />
-		    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
+		    <bean:write name="x" property="iProductoStockTotal" />
+		    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" /> 
 		</td>
-		<td>
-			<bean:write name="x" property="vProductoCapacidad" />
-			<bean:write name="x" property="vUnidadMedidaDescripcionC" />
-	    </td>
+		
 	    <td><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"/></td>
 	    <td><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"/></td>
 	    <td><bean:write name="x" property="iProductoStockMinimo" /></td>

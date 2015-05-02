@@ -15,10 +15,12 @@ import com.dao.GenericaDao;
 import com.dao.ProductoDao;
 import com.entities.Categoria;
 
+import com.entities.Almacen;
 import com.entities.Moneda;
 import com.entities.Produccion;
 import com.entities.Producciondetalle;
 import com.entities.Producto;
+import com.entities.Productoalmacen;
 
 import com.entities.Subcategoria;
 import com.entities.Unidadmedida;
@@ -37,8 +39,10 @@ public class ProductosForm extends ActionForm {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List produc;	
+	private List produc;
+	private List producAlmacen;
 	Producto producto = new Producto();
+	Productoalmacen productoAlmacen = new Productoalmacen();
 	Produccion produccion = new Produccion();
     private String mode;
     private List paginas; 
@@ -193,23 +197,7 @@ public class ProductosForm extends ActionForm {
 	public void setiCategoriaId(int iCategoriaId) {		
 		this.producto.setCategoria(getProductoDao().findEndidad(getCategoria(), iCategoriaId));
 	}
-	
-/*
-	public int getiProduccionId() {
-		return producto.getiProduccionId();
-	}
 
-	public void setiProduccionId(int iProduccionId) {
-		this.producto.setiProduccionId(iProduccionId);
-	}
-*/
-	public int getiProductoStockCantidad() {
-		return producto.getiProductoStockCantidad();
-	}
-
-	public void setiProductoStockCantidad(int iProductoStockCantidad) {
-		this.producto.setiProductoStockCantidad(iProductoStockCantidad);
-	}
 
 	public int getiProductoStockMaximo() {
 		return producto.getiProductoStockMaximo();
@@ -227,30 +215,7 @@ public class ProductosForm extends ActionForm {
 		this.producto.setiProductoStockMinimo(iProductoStockMinimo);
 	}
 
-	public int getiUsuarioActualizaId() {
-		return producto.getiUsuarioActualizaId();
-	}
-
-	public void setiUsuarioActualizaId(int iUsuarioActualizaId) {
-		this.producto.setiUsuarioActualizaId(iUsuarioActualizaId);
-	}
-
-	public int getiUsuarioInsertaId() {
-		return producto.getiUsuarioInsertaId();
-	}
-
-	public void setiUsuarioInsertaId(int iUsuarioInsertaId) {
-		this.producto.setiUsuarioInsertaId(iUsuarioInsertaId);
-	}
-
-	public String getvProductoCapacidad() {
-		
-		return producto.getvProductoCapacidad();
-	}
-
-	public void setvProductoCapacidad(String vProductoCapacidad) {
-		this.producto.setvProductoCapacidad(vProductoCapacidad);
-	}
+	
 
 	public String getvProductoNombre() {
 		return producto.getvProductoNombre();
@@ -261,43 +226,11 @@ public class ProductosForm extends ActionForm {
 		
 	}
 
-	public Unidadmedida getUnidadmedida(){
-		Unidadmedida unidadmedida =producto.getUnidadMedida();
-		if(unidadmedida==null){
-			unidadmedida= new Unidadmedida();
-			producto.setUnidadMedida(unidadmedida);
-		}
-		return producto.getUnidadMedida();
-	}
-	public int getiUnidadMedidadId() {
-			return getUnidadmedida().getiUnidadMedidaId();
-		
-	}
-	public void setiUnidadMedidadId(int iUnidadMedidadId) {
-		this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
-	}
 
-	/** Unidad de medida de Capacidad***/
-	public int getiUnidadMedidadIdC() {
-		
-		return producto.getiUnidadMedidadIdC();
-		
-	}
-	public void setiUnidadMedidadIdC(int iUnidadMedidadId) {
-		this.producto.setiUnidadMedidadIdC(iUnidadMedidadId);
-	}
+
 	
-	public String getvUnidadMedidaDescripcionC() {
-		
-		return producto.getvUnidadMedidaDescripcionC();
-	}
 
-	/**
-	 * @param vUnidadMedidaDescripcionC the vUnidadMedidaDescripcionC to set
-	 */
-	public void setvUnidadMedidaDescripcionC(String vUnidadMedidaDescripcionC) {
-		this.producto.setvUnidadMedidaDescripcionC(vUnidadMedidaDescripcionC);
-	}
+	
 	
 	/***Moneda iMonedaId ***/
 	public Moneda getMoneda(){
@@ -593,6 +526,299 @@ public class ProductosForm extends ActionForm {
 	public void setvDescripcion(String vDescripcion) {
 		this.produccion.setvDescripcion(vDescripcion);
 	}
+	/**
+	 * @return the fProductoGastosAdm
+	 */
+	public float getfProductoGastosAdm() {
+		return producto.getfProductoGastosAdm();
+	}
 
+	/**
+	 * @param fProductoGastosAdm the fProductoGastosAdm to set
+	 */
+	public void setfProductoGastosAdm(float fProductoGastosAdm) {
+		this.producto.setfProductoGastosAdm(fProductoGastosAdm);
+	}
+
+	/**
+	 * @return the iProductoStockTotal
+	 */
+	public int getiProductoStockTotal() {
+		return producto.getiProductoStockTotal();
+	}
+
+	/**
+	 * @param iProductoStockTotal the iProductoStockTotal to set
+	 */
+	public void setiProductoStockTotal(int iProductoStockTotal) {
+		this.producto.setiProductoStockTotal(iProductoStockTotal);
+	}
+
+	public Unidadmedida getUnidadmedida(){
+		Unidadmedida unidadmedida =producto.getUnidadMedida();
+		if(unidadmedida==null){
+			unidadmedida= new Unidadmedida();
+			producto.setUnidadMedida(unidadmedida);
+		}
+		return producto.getUnidadMedida();
+	}
+	public int getiUnidadMedidadId() {
+			return getUnidadmedida().getiUnidadMedidaId();
+		
+	}
+	public void setiUnidadMedidadId(int iUnidadMedidadId) {
+		this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+	}
+	/**
+	 * @return the iUMBase
+	 */
+	public int getiUMBase() {
+		return producto.getiUMBase();
+	}
+
+	/**
+	 * @param iUMBase the iUMBase to set
+	 */
+	public void setiUMBase(int iUMBase) {
+		this.producto.setiUMBase(iUMBase);
+	}
+
+	/**
+	 * @return the umBase
+	 */
+	public Unidadmedida getUmBase() {
+		Unidadmedida unidadmedida =producto.getUmBase();
+		if(unidadmedida==null){
+			unidadmedida= new Unidadmedida();
+			producto.setUmBase(unidadmedida);
+		}		
+		return producto.getUmBase();
+	}
+
+	/**
+	 * @param umBase the umBase to set
+	 */
+	/*public void setUmBase(Unidadmedida umBase) {
+		this.producto.setUmBase(umBase);
+	}*/
+	public int getiUMBaseId() {
+		return getUmBase().getiUnidadMedidaId();
+	
+	}
+	public void setiUMBaseId(int iUnidadMedidadId) {
+		this.producto.setUmBase(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+	}
+
+	/**
+	 * @return the iUMPedido
+	 */
+	public int getiUMPedido() {
+		return producto.getiUMPedido();
+	}
+
+	/**
+	 * @param iUMPedido the iUMPedido to set
+	 */
+	public void setiUMPedido(int iUMPedido) {
+		this.producto.setiUMPedido(iUMPedido);
+	}
+
+	/**
+	 * @return the umPedido
+	 */
+	public Unidadmedida getUmPedido() {
+		Unidadmedida unidadmedida =producto.getUmPedido();
+		if(unidadmedida==null){
+			unidadmedida= new Unidadmedida();
+			producto.setUmPedido(unidadmedida);
+		}
+		return producto.getUmPedido();
+	}
+
+	/**
+	 * @param umPedido the umPedido to set
+	 */
+	/*public void setUmPedido(Unidadmedida umPedido) {
+		this.producto.setUmPedido(umPedido);
+	}*/
+	public int getiUMPedidoId() {
+		return getUmPedido().getiUnidadMedidaId();
+	
+	}
+	public void setiUMPedidoId(int iUnidadMedidadId) {
+		this.producto.setUmPedido(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		//his.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+	}
+	/**
+	 * @return the vUMSalida
+	 */
+	public String getvUMSalida() {
+		return producto.getvUMSalida();
+	}
+
+	/**
+	 * @param vUMSalida the vUMSalida to set
+	 */
+	public void setvUMSalida(String vUMSalida) {
+		this.producto.setvUMSalida(vUMSalida);
+	}
+
+	/**
+	 * @return the umSalida
+	 */
+	public Unidadmedida getUmSalida() {
+		Unidadmedida unidadmedida =producto.getUmSalida();
+		if(unidadmedida==null){
+			unidadmedida= new Unidadmedida();
+			producto.setUmSalida(unidadmedida);
+		}
+		return producto.getUmSalida();
+	}
+
+	/**
+	 * @param umSalida the umSalida to set
+	 */
+	public void setUmSalida(Unidadmedida umSalida) {
+		this.setUmSalida(umSalida);
+	}
+	public int getiUMSalidaId() {
+		return getUmSalida().getiUnidadMedidaId();
+	
+	}
+	public void setiUMSalidaId(int iUnidadMedidadId) {
+		this.producto.setUmSalida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+	}
+
+	/**
+	 * @return the producAlmacen
+	 */
+	public List getProducAlmacen() {
+		return producAlmacen;
+	}
+
+	/**
+	 * @param producAlmacen the producAlmacen to set
+	 */
+	public void setProducAlmacen(List producAlmacen) {
+		this.producAlmacen = producAlmacen;
+	
+	}
+	/**PRODUCTO ALMACEN */
+	/**
+	 * @return the iProductoAlamcenId
+	 */
+	public int getiProductoAlamcenId() {
+		return productoAlmacen.getiProductoAlamcenId();
+	}
+
+	/**
+	 * @param iProductoAlamcenId the iProductoAlamcenId to set
+	 */
+	public void setiProductoAlamcenId(int iProductoAlamcenId) {
+		this.productoAlmacen.setiProductoAlamcenId(iProductoAlamcenId);
+	}	
+
+	/**
+	 * @return the almacen
+	 */
+	/**
+	 * @return the umPedido
+	 */
+
+	public Almacen getAlmacen() {
+		Almacen almacen =productoAlmacen.getAlmacen();
+		if(almacen==null){
+			almacen= new Almacen();
+			productoAlmacen.setAlmacen(almacen);
+		}
+		return productoAlmacen.getAlmacen();
+	}
+
+	/**
+	 * @return the iAlmacenId
+	 */
+	public int getiAlmacenId() {		
+		return getAlmacen().getiAlmacenId();
+	}
+
+	/**
+	 * @param iAlmacenId the iAlmacenId to set
+	 */
+	public void setiAlmacenId(int iAlmacenId) {
+		this.productoAlmacen.setAlmacen(getProductoDao().findEndidad(getAlmacen(),iAlmacenId));
+	}
+
+	/**
+	 * @return the iProductoAlmStockTotal
+	 */
+	public int getiProductoAlmStockTotal() {
+		return productoAlmacen.getiProductoAlmStockTotal();
+	}
+
+	/**
+	 * @param iProductoAlmStockTotal the iProductoAlmStockTotal to set
+	 */
+	public void setiProductoAlmStockTotal(int iProductoAlmStockTotal) {
+		this.productoAlmacen.setiProductoAlmStockTotal(iProductoAlmStockTotal);
+	}
+
+
+
+	/**
+	 * @return the unidadMedidaAlm
+	 */
+	public Unidadmedida getUnidadMedidaAlm() {
+		Unidadmedida unidad =productoAlmacen.getUnidadMedidaAlm();
+		if(unidad==null){
+			unidad= new Unidadmedida();
+			productoAlmacen.setUnidadMedidaAlm(unidad);
+		}
+		return productoAlmacen.getUnidadMedidaAlm();
+	}
+	public int getiUnidadMedidaAlmId() {
+		return getUnidadMedidaAlm().getiUnidadMedidaId();
+	
+	}
+	public void setiUnidadMedidaAlmId(int iUnidadMedidadId) {
+		this.productoAlmacen.setUnidadMedidaAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+	}
+	
+
+	/**
+	 * @return the iUMBaseAlm
+	 */
+	public int getiUMBaseAlm() {
+		return productoAlmacen.getiUMBaseAlm();
+	}
+
+	/**
+	 * @param iUMBaseAlm the iUMBaseAlm to set
+	 */
+	public void setiUMBaseAlm(int iUMBaseAlm) {
+		this.productoAlmacen.setiUMBaseAlm(iUMBaseAlm);
+	}
+
+	/**
+	 * @return the iUMBaseAlmId
+	 */
+	public Unidadmedida unidadBaseAlm() {
+		Unidadmedida unidad =productoAlmacen.getUnidadBaseAlm();
+		if(unidad==null){
+			unidad= new Unidadmedida();
+			productoAlmacen.setUnidadBaseAlm(unidad);
+		}
+		return productoAlmacen.getUnidadBaseAlm();
+	}
+	public int getiUMBaseAlmId() {
+		return unidadBaseAlm().getiUnidadMedidaId();
+	
+	}
+	public void setiUMBaseAlmId(int iUnidadMedidadId) {
+		this.productoAlmacen.setUnidadBaseAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+	}
 	
 }
