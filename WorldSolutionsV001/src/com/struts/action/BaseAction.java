@@ -199,6 +199,7 @@ public abstract class BaseAction  extends DispatchAction {
 
 		Impresora impresora;
         HttpSession sesion = request.getSession();
+        boolean omitirPieBoleta = "true".equals(request.getParameter("omitirPieBoleta"));
 		try {
             Configuracion cong = (Configuracion) sesion.getAttribute("nombreImpresora");
 			String nombreDispositivo = (String) cong.getvValor();
@@ -215,12 +216,14 @@ public abstract class BaseAction  extends DispatchAction {
     		
     		
     		cargarContenidoImprimir(form,  request, impresora, mapping, response);
-            
-    		impresora.agregarSeparacion();
-    		impresora.agregarSaltoLinea(1);
-    		impresora.agregarLineaCentrada("NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES");
-    		impresora.agregarLineaCentrada("GRACIAS POR SU COMPRA");
-    		impresora.agregarLineaCentrada("v1.0.0 - USUARIO: " + usu.getvUsuarioLogin() + " - CAJA");
+	        
+    		if (!omitirPieBoleta) {
+	    		impresora.agregarSeparacion();
+	    		impresora.agregarSaltoLinea(1);
+	    		impresora.agregarLineaCentrada("NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES");
+	    		impresora.agregarLineaCentrada("GRACIAS POR SU COMPRA");
+	    		impresora.agregarLineaCentrada("v1.0.0 - USUARIO: " + usu.getvUsuarioLogin() + " - CAJA");
+    		}
     		
     		impresora.agregarSaltoLinea(10);
     		

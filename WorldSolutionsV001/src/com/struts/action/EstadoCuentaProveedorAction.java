@@ -81,7 +81,12 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 			List<Ingresoproducto> listaIngresoproductoTotal = new ArrayList<Ingresoproducto>();
 			List<Long> paginas = new ArrayList<Long>();
 		
-			 
+
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		 	if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+		 		objform.getIngresoProducto().setSucursal(usu.getSucursal());
+		 	}
 		
 		  	List<EstadoCuentaVo> listaEstadoCuenta = listaEstadoCuentaPorProveedor(objform.getIngresoproducto(), ingresoproductoDao, Paginacion.pagInicio(pagInicio), Paginacion.pagFin());
 				/**Consultamos el total de registros segun criterio**/

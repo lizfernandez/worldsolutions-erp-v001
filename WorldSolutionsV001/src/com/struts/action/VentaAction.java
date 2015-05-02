@@ -104,7 +104,13 @@ public class VentaAction extends BaseAction {
 
 			/** Instanciamos las clase Daos **/			
 			VentaDao ventaDao = new VentaDao();			
-			
+
+	        HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		 	if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+		 		objform.getVenta().setSucursal(usu.getSucursal());
+		 	}
+		 	
 			/**Lista de personal en Modal Popup***/
 			if(mode!=null){
 				
@@ -150,8 +156,7 @@ public class VentaAction extends BaseAction {
 			}// if mode != null
 			
 			else{
-				
-				
+
 				
 				listaVenta = ventaDao.listaVenta(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getVenta());
 		    
@@ -212,6 +217,13 @@ public class VentaAction extends BaseAction {
 
 		/** Instanciamos las clase Daos **/
 		VentaDao ventaDao = new VentaDao();
+
+        HttpSession sesion = request.getSession();
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+	 	if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+	 		ventaform.getVenta().setSucursal(usu.getSucursal());
+	 	}
+		
 		listaVentaDevolucion = ventaDao.listaVentaDevolucion(Paginacion.pagInicio(pagina),
 						Paginacion.pagFin(), ventaform.getVenta());
 

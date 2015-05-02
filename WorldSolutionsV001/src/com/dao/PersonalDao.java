@@ -14,7 +14,7 @@ import com.entities.Personal;
 import com.interfaces.dao.IPersonalDao;
 import com.util.Constantes;
 
-public class PersonalDao implements IPersonalDao {
+public class PersonalDao extends GenericaDao implements IPersonalDao {
 	private static final String PERSISTENCE_UNIT_NAME = "Stuct12";
 	private static EntityManagerFactory factory;
 	
@@ -79,17 +79,8 @@ public class PersonalDao implements IPersonalDao {
     			
         return listapersonal;
 	}
-/*
-	@Override
-	public Personal buscarPersonal(int iPersonalId) {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();     
-                 
-		Personal obj = (Personal)em.find(Personal.class, iPersonalId);			     
 	
-        return obj;
-	}
-
+	/*
 	@Override
 	public boolean insertarPersonal(Personal personal) {
 		// TODO Auto-generated method stub

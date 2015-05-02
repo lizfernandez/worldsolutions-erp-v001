@@ -83,7 +83,12 @@ public class EstadoCuentaClienteAction extends BaseAction {
 
 			List<Venta> listaVentaTotal = new ArrayList<Venta>();
 			VentaDao ventaDao = new VentaDao();
-		
+
+	        HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		 	if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+		 		objform.getVenta().setSucursal(usu.getSucursal());
+		 	}
 			 
 			 /**Seteamos los valores en las listas**/
 				List<EstadoCuentaVo> listaEstadoCuenta = listarEstadoCuentaCliente(objform.getVenta(), ventaDao, Paginacion.pagInicio(pagina),Paginacion.pagFin());

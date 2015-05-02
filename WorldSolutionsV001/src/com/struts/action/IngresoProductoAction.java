@@ -106,7 +106,10 @@ public class IngresoProductoAction extends BaseAction {
 			/** Instanciamos las clase Daos **/
 			GenericaDao generica = new GenericaDao();
 			IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
-			
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		 	if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+		 		objform.getIngresoProducto().setSucursal(usu.getSucursal());
+		 	}
 			
 			/**Lista de personal en Modal Popup***/
 			if(mode!=null && mode.equals("LEP")){
@@ -270,7 +273,12 @@ public class IngresoProductoAction extends BaseAction {
 
 		/** Instanciamos la Clase IngresoproductoForm **/
 		IngresoProductoForm objform = (IngresoProductoForm) form;
-
+		
+		HttpSession sesion = request.getSession();
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+	 	if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+	 		objform.getIngresoProducto().setSucursal(usu.getSucursal());
+	 	}
 		/** Instanciamos las clase Daos **/
 		IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
 		listaIngresoproducto = ingresogenericaDao.listaIngresoproductoDevolucion(Paginacion.pagInicio(pagina),

@@ -21,6 +21,7 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 	private static final String PERSISTENCE_UNIT_NAME = "Stuct12";
 	private static EntityManagerFactory factory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Venta> listaVenta(int pagInicio, int pagFin, Venta venta) {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -59,7 +60,17 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 	        }
 			if(venta.getdVentaFecha()!=null && venta.getdFechaActualiza()!=null){
 	        	where+= " and p.dVentaFecha BETWEEN '"+Fechas.fechaYYMMDD(venta.getdVentaFecha())+"' and '"+Fechas.fechaYYMMDD(venta.getdFechaActualiza())+"'";
+	        } else if(venta.getdVentaFecha() != null) {
+	        	where+= " and p.dVentaFecha = '"+Fechas.fechaYYMMDD(venta.getdVentaFecha())+"'";
 	        }
+			if (venta.getUsuario() != null) {
+				where+= " and p.usuario.iUsuarioId = '"+venta.getUsuario().getiUsuarioId()+"'";
+			}
+			
+			if (venta.getSucursal() != null) {
+				where+= " and p.sucursal.iSucursalId = '"+venta.getSucursal().getiSucursalId() +"'";
+			}
+			
 			
 	          System.out.println(" where ="+ where);
 	    	    q = em.createQuery("select p from Venta p " + where +" order by p.dVentaFecha desc");/**/
@@ -129,7 +140,10 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 			if(venta.getdVentaFecha()!=null && venta.getdFechaActualiza()!=null){
 	        	where+= " and p.dVentaFecha BETWEEN '"+Fechas.fechaYYMMDD(venta.getdVentaFecha())+"' and '"+Fechas.fechaYYMMDD(venta.getdFechaActualiza())+"'";
 	        }
-			
+
+			if (venta.getSucursal() != null) {
+				where+= " and p.sucursal.iSucursalId = '"+venta.getSucursal().getiSucursalId() +"'";
+			}
 	          System.out.println(" where ingreso Producto Estado Cuenta ="+ where);
 	    	    q = em.createQuery("select p from Venta p " +
 	    	    				   " JOIN FETCH p.cliente " + where);/**/
@@ -273,7 +287,10 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 			if(venta.getdVentaFecha()!=null && venta.getdFechaActualiza()!=null){
 	        	where+= " and p.venta.dVentaFecha BETWEEN '"+Fechas.fechaYYMMDD(venta.getdVentaFecha())+"' and '"+Fechas.fechaYYMMDD(venta.getdFechaActualiza())+"'";
 	        }
-			
+
+			if (venta.getSucursal() != null) {
+				where+= " and p.sucursal.iSucursalId = '"+venta.getSucursal().getiSucursalId() +"'";
+			}
 	          System.out.println(" where ="+ where);
 	    	    q = em.createQuery("select p from Ventadevolucion p " + where +" order by p.dVentaDevFecha desc");/**/
 	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);

@@ -19,7 +19,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 			if(per!=null){
 	   if(per.equals("1141")){%>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=I',450,550)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=I',610,600)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -35,7 +35,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 			if(per!=null){
 	   if(per.equals("1143")){%>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=2',450,550)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=2',900,600)">
                 <span class="find">Buscar</span>
             </button>
         </td>

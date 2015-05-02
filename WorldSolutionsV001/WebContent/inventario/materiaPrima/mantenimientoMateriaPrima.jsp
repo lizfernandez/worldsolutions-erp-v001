@@ -31,26 +31,48 @@
       <span id="m_vProductoNombre" class="importante">*</span>
     </td> 
 </tr>
-<tr>
-    <td align="right">Cantidad:</td>
-    <td>
-    <html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="text" onkeypress="return Numeros(event)" /> 
-       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" style="width:140px">
-          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-     </html:select>  
-      <span id="m_iProductoStockTotal" class="importante">*</span>
-    </td>
-</tr>
-<tr>
-     <td align="right">Capacidad:</td>
-    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="textN" onkeypress="return LetrasNumeros(event)" /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-       <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo" style="width:140px">
-          <option value="0">::SELECCIONE::</option> 
-          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-     </html:select>  
-    </td>
-</tr>
 
+		<tr>
+		    <td align="right" width="20%">UM Base:</td>
+		    <td width="20%">
+		    <html:text property="iUMBase" styleId="iUMBase" maxlength="7"  styleClass="text textNumero" tabindex="5" onkeypress="return Numeros(event)"/> 
+		    <span id="m_iUMBase" class="importante">*</span>  
+
+		      <html:select  property="iUMBaseId" styleId="iUMBaseId" styleClass="comboCodigo" tabindex="6" style="width:140px" >
+		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     </html:select> 
+		    </td>
+		</tr>
+		<tr>
+		     <td align="right">UM Pedido:</td>
+		    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="textN textNumero"  tabindex="7" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+ 
+		       <html:select  property="iUMPedidoId" styleId="iUMPedidoId" styleClass="comboCodigo" tabindex="8" style="width:140px">
+		          <option value="0">::SELECCIONE::</option> 
+		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     </html:select>  
+		    </td>
+		</tr>
+		<tr>
+		     <td align="right">UM Salida:</td>
+		    <td><html:text property="vUMSalida" styleId="vUMSalida" maxlength="7"  styleClass="textN textNumero"  tabindex="9" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+ 
+		       <html:select  property="iUMSalidaId" styleId="iUMSalidaId" styleClass="comboCodigo" tabindex="10" style="width:140px">
+		          <option value="0">::SELECCIONE::</option> 
+		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     </html:select>  
+		    </td>
+		</tr>
+	   <tr>
+		     <td align="right">Stock Total:</td>
+		    <td><html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="textN textNumero"  tabindex="11" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+ 
+		       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo unidadFinal" tabindex="12" style="width:140px" >
+		          <option value="0">::SELECCIONE::</option> 
+		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     </html:select>  
+		    </td>
+		</tr>
 <tr>
     <td align="right">Precio Compra:</td>
     <td>
@@ -109,10 +131,6 @@
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="iduProducto" styleId="metodo"/>
 
-
-<html:hidden property="iUsuarioActualizaId" />
-<%-- hidden field que contiene el iUsuarioInsertaId del producto --%>
-<html:hidden property="iUsuarioInsertaId" />
 
 </html:form>
 <script>
