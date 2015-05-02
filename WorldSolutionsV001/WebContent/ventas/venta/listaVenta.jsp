@@ -155,7 +155,8 @@ $("#venta,#mantVentas").addClass("active");
 	var iclasificacionId= 1;/*$("#iclasificacionId").val();*/
 	 //popup('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId,1150,600);
 	
-	var identificador= dosDecimales(parseFloat(Math.random() * 10));	
+	var identificador= (parseFloat(Math.random() * 10));
+	alert(identificador);
 	 var win = window.open('venta.do?metodo=mantenimientoVenta&mode=I&idTipoDocumento='+tipoDoc+"&iclasificacionId="+iclasificacionId+"&identificador="+identificador, '_blank'); 
 		win.focus();
 	    if(window.close){
