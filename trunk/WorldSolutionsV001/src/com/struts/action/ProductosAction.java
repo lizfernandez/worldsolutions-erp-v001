@@ -44,6 +44,7 @@ import com.entities.Producciondetalle;
 import com.entities.Producto;
 import com.entities.Productoalmacen;
 import com.entities.Subcategoria;
+import com.entities.Sucursal;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
 import com.google.gson.Gson;
@@ -149,10 +150,13 @@ public class ProductosAction extends BaseAction {
 			 //Aqui se debera cambiar el método para solo cargar las categorias de los productos que son validos para vender.
 			 List<Clasificacioncategoria> listaSubcategoria = productoDao.listaEntidadGenerica(new Clasificacioncategoria());		 
 			 List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
-			 
+			 List<Sucursal> listaSucursal = unidadMedidaDao.listaEntidadGenerica(new Sucursal());
+			 Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			 sesion.setAttribute("listaClasificacioncategoria",listaSubcategoria);
 			 sesion.setAttribute("listaUnidadMedida",listaUnidadMedida);
+			 sesion.setAttribute("listaSucursal",listaSucursal);
 			 productosForm.setIclasificacionId(iclasificacionId);
+			 productosForm.setiSucursalId(usu.getSucursal().getiSucursalId());
 			 if(mode.equals("LP")){
 				 /**Lista de productos de ventas***/
 			    msn ="showListPopupProducto";}			 
