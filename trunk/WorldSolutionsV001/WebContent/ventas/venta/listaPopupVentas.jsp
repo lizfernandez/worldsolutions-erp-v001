@@ -72,7 +72,7 @@
 				<td><bean:write name="x" property="nVentaNumero" /></td>
 				<td><bean:write name="x" property="formaPago.vFormaPagoDescripcion" /></td>
 				<td><bean:write name="x" property="dVentaFecha"  format="dd/MM/yyyy"/></td>
-				<td align="right"><bean:write name="x" property="fVentaTotal" format="#,##0.00" locale="Localidad" /></td>				
+				<td align="right"><bean:write name="x" property="fVentaTotal" locale="Localidad" /></td>				
 				<td><bean:write name="x" property="vEstadoDocumento" /></td>
 		   </tr>
 		  </logic:iterate>

@@ -1,8 +1,11 @@
 package com.struts.action;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletRequest;
@@ -12,26 +15,27 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
-
 
 import com.dao.AreaDao;
-import com.dao.PersonalDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
+import com.dao.PersonalDao;
+import com.dao.UsuarioDao;
+import com.dao.VentaDao;
 import com.entities.Area;
-
+import com.entities.Estado;
 import com.entities.Ocupacion;
 import com.entities.Personal;
-import com.entities.Estado;
 import com.entities.Usuario;
-
+import com.entities.Venta;
 import com.struts.form.PersonalForm;
 import com.util.Fechas;
+import com.util.FormatosNumeros;
+import com.util.Impresora;
 import com.util.Paginacion;
 import com.util.Util;
 
-public class PersonalAction extends DispatchAction {
+public class PersonalAction extends BaseAction {
 	 // --------------------------------------------------------- Instance
 	// Variables
 	// --------------------------------------------------------- Methods
@@ -237,4 +241,148 @@ public class PersonalAction extends DispatchAction {
 				
 				return mapping.findForward(msn);
 	}
+	
+	@Override
+	public Map<String, Object> cargarContenidoExportar(ActionForm form,
+			HttpServletRequest request, String plantilla) throws ParseException {
+		return null;
+	}
+	
+	@Override
+	public void cargarContenidoImprimir(ActionForm form, HttpServletRequest request, Impresora impresora,
+			ActionMapping mapping, HttpServletResponse response) throws IllegalAccessException, IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, NoSuchFieldException, ParseException {
+		
+		int iPersonalId = Integer.parseInt(request.getParameter("id"));
+		String tipoImpresion = request.getParameter("tipoImpresion");
+		
+		if ("arqueoIndividual".equals(tipoImpresion)) {
+			UsuarioDao usuarioDao = new UsuarioDao();
+			VentaDao ventaDao = new VentaDao();
+			
+			Usuario usuario = usuarioDao.findEndidadBD(new Usuario(), "personal.iPersonalId", iPersonalId);
+			Venta venta = new Venta();
+			venta.setUsuario(usuario);
+			venta.setdVentaFecha(Fechas.getDate());
+			List<Venta> detalleArqueoVentas = ventaDao.listaVenta(0, 1000, venta);
+			int contadorVentas = 0;
+			double totalVenta = 0;
+			
+			impresora.agregarLineaCentrada("* ARQUEO INDIVIDUAL *");
+			impresora.agregarSaltoLinea(1);
+			impresora.agregarTituloIzquierda("FECHA Y HORA", 10, Fechas.fechaFormato(venta.getdVentaFecha(), "dd-MM-yyyy HH:mm:ss"));
+			impresora.agregarTituloIzquierda("CAJERO", 10, usuario.getPersonal().getvPersonalApellidoPaterno() + " " + usuario.getPersonal().getvPersonalApellidoMaterno() + " " + usuario.getPersonal().getvPersonalNombres());
+			
+			List<String> listaMedioPago = new ArrayList<String>();
+			listaMedioPago.add("EFECTIVO SOLES");
+			listaMedioPago.add("EFECTIVO DOLARES");
+			
+			List<Double> listaTotalPorMedioPago = new ArrayList<Double>();
+			listaTotalPorMedioPago.add(0.0);
+			listaTotalPorMedioPago.add(0.0);
+						
+			List<String> listaHora = new ArrayList<String>();
+			List<Double> listaTotalPorHora = new ArrayList<Double>();
+			
+			if (detalleArqueoVentas != null && detalleArqueoVentas.size() > 0) {
+				
+				double totalMedioPago;
+				double totalHora;
+				int indice = -1;
+				SimpleDateFormat format = new SimpleDateFormat("HH");
+				for (Venta arqueoVenta : detalleArqueoVentas) {
+					contadorVentas++;
+					
+					System.out.println("TipoPago: " + arqueoVenta.getvTipoPago());
+					System.out.println("VentaTotal: " + arqueoVenta.getfVentaTotal());
+					if ("S/.".equals(arqueoVenta.getvTipoPago())) {
+						indice = 0;
+						
+					} else if ("$".equals(arqueoVenta.getvTipoPago())) {
+						indice = 1;
+					} else {
+						indice = listaMedioPago.indexOf(arqueoVenta.getvTipoPago());
+						if (indice < 0) {
+							indice = listaMedioPago.size();
+							listaMedioPago.add(arqueoVenta.getvTipoPago());
+							listaTotalPorMedioPago.add(0.0);
+							
+						}
+					}
+					totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfVentaTotal();
+					
+					listaTotalPorMedioPago.set(indice, totalMedioPago);
+					totalVenta += arqueoVenta.getfVentaTotal();
+					
+					String textoHora = format.format(arqueoVenta.getdFechaInserta());
+					indice = listaHora.indexOf(textoHora);
+					if (indice < 0) {
+						indice = listaTotalPorHora.size();
+						listaHora.add(textoHora);
+						listaTotalPorHora.add(0.0);
+						
+					}
+					totalMedioPago = listaTotalPorHora.get(indice) + arqueoVenta.getfVentaTotal();
+					
+					listaTotalPorHora.set(indice, totalMedioPago);
+					
+					
+				}
+				
+				impresora.agregarSeparacion();
+				impresora.agregarLinea(new Object[][]{
+					{"ARQUEO POR MOVIMIENTO", 0, 1},
+					{FormatosNumeros.FormatoDecimalMoneda(totalVenta), 30, -1}
+				});
+				
+				impresora.agregarSeparacion();
+				
+				impresora.agregarLinea(new Object[][]{
+					{"VENTAS", 0, 1},
+					{" ---> (" + contadorVentas +")", 15, 1},
+					{FormatosNumeros.FormatoDecimalMoneda(totalVenta), 30, -1}
+				});
+				impresora.agregarSaltoLinea(1);
+				impresora.agregarLineaDerecha("--------- VENTA DETALLADA ---------");
+				indice = 0;
+				String medioPago;
+				for (double montoAcumuladoTipoPago : listaTotalPorMedioPago) {
+					if (montoAcumuladoTipoPago > 0) {
+						medioPago = listaMedioPago.get(indice);
+						impresora.agregarLinea(new Object[][]{
+								{"", 0, 1},
+								{medioPago, 5, 1},
+								{FormatosNumeros.FormatoDecimalMoneda(montoAcumuladoTipoPago), 30, -1}
+							});
+						
+					}
+					indice++;
+				}
+				
+				impresora.agregarSaltoLinea(1);
+				impresora.agregarSeparacion();
+				impresora.agregarLinea(new Object[][]{
+					{"ARQUEO POR HORA", 0, 1},
+					{FormatosNumeros.FormatoDecimalMoneda(totalVenta), 30, -1}
+				});
+				
+				impresora.agregarSeparacion();
+				indice = 0;
+				String textoHora;
+				for (double montoAcumuladoHora : listaTotalPorHora) {
+					if (montoAcumuladoHora > 0) {
+						textoHora = listaHora.get(indice);
+						impresora.agregarLinea(new Object[][]{
+								{textoHora + ":00", 0, 1},
+								{FormatosNumeros.FormatoDecimalMoneda(montoAcumuladoHora), 30, -1}
+							});
+						
+					}
+					indice++;
+				}
+			}
+			
+		}
+		
+	}
 }
+

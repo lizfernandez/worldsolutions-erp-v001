@@ -12,8 +12,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.tomcat.util.buf.UTF8Decoder;
-
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.SucursalDao;

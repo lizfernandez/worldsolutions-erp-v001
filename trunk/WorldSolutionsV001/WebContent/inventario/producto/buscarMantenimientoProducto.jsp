@@ -32,26 +32,6 @@
       <span id="m_vProductoNombre" class="importante">*</span>
     </td> 
 </tr>
-<tr>
-    <td align="right">Cantidad:</td>
-    <td>
-    <html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="text" onkeypress="return Numeros(event)" /> 
-       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo">
-          <option value="00">::SELECCIONE::</option> 
-          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-     </html:select>  
-      <span id="m_iProductoStockTotal" class="importante">*</span>
-    </td>
-</tr>
-<tr>
-     <td align="right">Capacidad:</td>
-    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="text" onkeypress="return LetrasNumeros(event)" /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-       <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo">
-          <option value="0">::SELECCIONE::</option> 
-          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-     </html:select>  
-    </td>
-</tr>
 
 <tr>
     <td align="right">Precio Compra:</td>
@@ -64,15 +44,7 @@
 	     <span id="m_fProductoPrecioCompra" class="importante">*</span>
      </td>
 </tr>
-<tr>
-    <td align="right">Ganancia:</td>
-    <td>
-       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text" onblur="fn_calcularGanancia('G')"/>
-       <select class="comboCodigo" disabled="disabled" id="porcent" >
-	          <option value=""/> %</option>
-	     </select>
-    </td>
-</tr>
+
 <tr>
     <td align="right">Precio Venta:</td>
     <td>
@@ -126,9 +98,6 @@
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="listaProducto" styleId="metodo"/>
 
-<html:hidden property="iUsuarioActualizaId" />
-<%-- hidden field que contiene el iUsuarioInsertaId del producto --%>
-<html:hidden property="iUsuarioInsertaId" />
 
 </html:form>
 <script>

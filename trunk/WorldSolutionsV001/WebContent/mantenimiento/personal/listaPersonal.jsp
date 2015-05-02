@@ -50,7 +50,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
         -->
     <thead>
     <tr >
-        <th colspan="3">Operaciones</th>
+        <th colspan="4">Operaciones</th>
         <th align="left">C&oacute;digo</th>
         <th align="left">Nombres</th>
         <th align="left">Ap. Paterno</th>
@@ -77,6 +77,9 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		                     onclick="popup('personal.do?metodo=mantenimientoPersonal&mode=U&id=<bean:write name="x" property="iPersonalId" />',350,500)" /></td>
 		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iPersonalId" />','personal.do?metodo=iduPersonal&mode=D')" /></td>
+		 		<td align="center"><img  src="${pageContext.request.contextPath}/media/imagenes/approve_notes.png"   title="Imprimi Arqueo" 
+     						onclick="fn_imprimir('<bean:write name="x" property="iPersonalId" />')" />
+				</td>
 		 		<td><bean:write name="x" property="cPersonalCodigo" /></td>
 				<td><bean:write name="x" property="vPersonalNombres" /></td>
 				<td><bean:write name="x" property="vPersonalApellidoPaterno" /></td>
@@ -115,5 +118,20 @@ $("#admin").addClass("active");
 $("#personal").children('li').show();
 $("#personas").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
 $("#personas").children('a').css("color","#D0D2D7");
+
+
+function fn_imprimir(id){
+	var cad="personal.do?metodo=imprimir&id="+id+"&tipoImpresion=arqueoIndividual&omitirPieBoleta=true";
+	 
+	 $.ajax({
+         type: "GET",
+         url: cad,
+         data: "",
+         success: function(obj){   
+       	  alert("OPERACION CON EXITO"); 
+         }
+     });
+	 
+}
 
 </script> 

@@ -1744,55 +1744,64 @@ public class ProductosAction extends BaseAction {
 			public Map<String, Object> cargarContenidoExportar(ActionForm form,
 					HttpServletRequest request, String plantilla) throws ParseException {
 
-			ProductosForm objform = (ProductosForm) form;
-			Producto obj = objform.getProducto();
-			
-			ProductoDao productoDao = new ProductoDao();
-			KardexDao kardexDao = new KardexDao();  
-			
-			Map<String, Object> beans = new HashMap<String, Object>();
-			List<Producto> productos = null;
-			List<Kardex> listaKardex = null;
-			if (!"producto-kardex".equals(plantilla)) {
-				int  iclasificacionId = Integer.parseInt(request.getParameter("iclasificacionId"));
-				productos = productoDao.listaProducto(0, 1000, obj, iclasificacionId);
-			} else {
-				int iProductoId = Integer.parseInt(request.getParameter("id"));
-				String cInsumo = "";
-				obj.setiProductoId(iProductoId);
-				if (objform.getdFechaInicio() != null && objform.getdFechaFin() != null) {
-					obj.setdFechaInserta(Fechas.fechaDate(objform.getdFechaInicio()));
-					obj.setdFechaActualiza(Fechas.fechaDate(objform.getdFechaFin()));
-				}
-				listaKardex =  kardexDao.listaKardex(0,1000, obj,cInsumo);
-				obj = productoDao.findEndidad(obj,iProductoId);
-			}
-			
-			if ("producto".equals(plantilla)) {
-				beans.put("productos", productos);
-			
-			} else if ("materia-prima".equals(plantilla)) {
-				beans.put("matPrimas", productos);
-			
-			} else if ("suministros".equals(plantilla)) {
-				beans.put("suministros", productos);
-			
-			} else if ("envases".equals(plantilla)) {
-				beans.put("envases", productos);
-				
-			} else if ("producto-kardex".equals(plantilla)) {
-				beans.put("listakardex", listaKardex);
-				beans.put("producto", obj);
-				
-			} else if ("servicio".equals(plantilla)) {
-				beans.put("servicios", productos);
-				
-			}
-			
-			return beans;
-		
-		}
+				ProductosForm objform = (ProductosForm) form;
+				Producto obj = objform.getProducto();
 
+				ProductoDao productoDao = new ProductoDao();
+				KardexDao kardexDao = new KardexDao();
+
+				Map<String, Object> beans = new HashMap<String, Object>();
+				List<Producto> productos = null;
+				List<Kardex> listaKardex = null;
+				List<Produccion> listaProducccion = null;
+				if ("producto-kardex".equals(plantilla)) {
+
+					int iProductoId = Integer.parseInt(request.getParameter("id"));
+					String cInsumo = "";
+					obj.setiProductoId(iProductoId);
+					if (objform.getdFechaInicio() != null
+							&& objform.getdFechaFin() != null) {
+						obj.setdFechaInserta(Fechas.fechaDate(objform.getdFechaInicio()));
+						obj.setdFechaActualiza(Fechas.fechaDate(objform.getdFechaFin()));
+					}
+					listaKardex = kardexDao.listaKardex(0, 1000, obj, cInsumo);
+					obj = productoDao.findEndidad(obj, iProductoId);
+					
+				} else if ("produccion".equals(plantilla)) {
+					listaProducccion =  productoDao.listaProduccion(0,100, objform.getProduccion());
+				} else {
+					int iclasificacionId = Integer.parseInt(request.getParameter("iclasificacionId"));
+					productos = productoDao.listaProducto(0, 1000, obj, iclasificacionId);
+					
+				}
+
+				if ("producto".equals(plantilla)) {
+					beans.put("productos", productos);
+
+				} else if ("materia-prima".equals(plantilla)) {
+					beans.put("matPrimas", productos);
+
+				} else if ("suministros".equals(plantilla)) {
+					beans.put("suministros", productos);
+
+				} else if ("envases".equals(plantilla)) {
+					beans.put("envases", productos);
+
+				} else if ("producto-kardex".equals(plantilla)) {
+					beans.put("listakardex", listaKardex);
+					beans.put("producto", obj);
+
+				} else if ("servicio".equals(plantilla)) {
+					beans.put("servicios", productos);
+
+				} else if ("produccion".equals(plantilla)) {
+					beans.put("productosInternos", listaProducccion);
+				}
+
+				return beans;
+
+			}
+			
 			@Override
 			public void cargarContenidoImprimir(ActionForm form,
 					HttpServletRequest request, Impresora impresora,
