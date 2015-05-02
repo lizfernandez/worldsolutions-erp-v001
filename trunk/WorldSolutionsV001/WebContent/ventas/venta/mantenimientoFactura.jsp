@@ -618,7 +618,7 @@
     	   
     	    
     		 if($("#monedaDolares").is(":checked")){// mixto 
-    			if(montoPagoD=="" || montoPagoDCredito==""){
+    			if(montoPagoD=="" ){
     				alert("Debe de ingresar monto en dolares");
     			}
     			else{
