@@ -725,6 +725,7 @@ public class VentaAction extends BaseAction {
 				String tipoDocumento = request.getParameter("idTipoDocumento");
 				ventaform.setTipoMoneda(moneda.getcModenaCodigo());
 				ventaform.setIGVVentas(sesion.getAttribute("IGVVentas").toString());
+				ventaform.setiSucursalId(usu.getSucursal().getiSucursalId());
 				
 				
 				ventaform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
@@ -963,6 +964,7 @@ public class VentaAction extends BaseAction {
 		      	   obj.setiPeriodoId(iPeriodoId);
 		      	   obj.setSucursal(usu.getSucursal());
 		           obj.setvPorcentajeIGV(sesion.getAttribute("IGVVentas").toString());
+		           obj.setnVentaNumero(ventaDao.callSPNro_Documento(obj.getTipoDocumento().getiTipoDocumentoGestionId(),"venta","nVentaNumero"));
 		        
 		      	  
 		      	

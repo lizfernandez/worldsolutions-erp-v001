@@ -6,7 +6,7 @@
 <html:form action="productos" styleId="formProductos">
 <tr> <td colspan="2" ><span class="titulosTd"  id="po">Clasificaci&oacute;n:</span></td></tr>
 <tr>
-    <td align="right">Categor&iacute;a:</td>
+    <td align="right" width="5%">Categor&iacute;a:</td>
     <td>
      <html:select  property="iCategoriaId" styleId="iCategoriaId" styleClass="combo">
            <html:options collection="listaCategoria" property="iCategoriaId" labelProperty="vCategoriaDescripcion"/>

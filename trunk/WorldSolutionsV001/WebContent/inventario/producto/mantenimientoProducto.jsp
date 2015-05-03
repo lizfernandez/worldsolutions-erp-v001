@@ -476,7 +476,7 @@
 	   	$(".comboCodigo.iUMBaseAlmId option[value="+mival3+"]").attr("selected",true); 
         document.getElementById('btnGuardar').textContent="Actualizar";
         $("#popupCabecera").text('ACTUALIZAR DATOS');
-        $("#span2").hide();
+        //$("#span2").hide();
         if(mode=='F'){
         	$("#popupCabecera").text('BUSCAR DATOS');        	
          	/*$(":input").attr('disabled',true);

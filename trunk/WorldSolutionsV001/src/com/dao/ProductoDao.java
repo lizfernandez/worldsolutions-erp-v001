@@ -19,7 +19,7 @@ import com.util.Constantes;
 
 public  class ProductoDao  extends GenericaDao implements IProductoDao {
 	
-	public List<Producto> listaProducto(int pagInicio, int pagFin, Producto producto, int iclasificacionId) {
+	public List<Producto> listaProducto(int pagInicio, int pagFin, Producto producto, int iclasificacionId, int iSucursal) {
 	  
 		Query q ;
 		List<Producto> listaProducto = null ;
@@ -39,32 +39,35 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 	        	where+= " and p.iProductoId = '"+producto.getiProductoId()+"'";
 	        }
 			if(producto.getCategoria()!=null && producto.getCategoria().getiCategoriaId()>0){
-	        	where+= " and p.categoria.iCategoriaId LIKE '%"+producto.getCategoria().getiCategoriaId()+"%'";
+	        	where+= " and p.producto.categoria.iCategoriaId LIKE '%"+producto.getCategoria().getiCategoriaId()+"%'";
 	        }
 			if(iclasificacionId>0){
-	        	where+= " and p.categoria.clasificacionCategoria.iClasificacionId LIKE '%"+iclasificacionId+"%'";
+	        	where+= " and p.producto.categoria.clasificacionCategoria.iClasificacionId LIKE '%"+iclasificacionId+"%'";
+	        }
+			if(iSucursal>0){
+	        	where+= " and p.almacen.sucursal.iSucursalId LIKE '%"+iSucursal+"%'";
 	        }
 			if(producto.getcProductoCodigo()!=null){
-	        	where+=" and  p.cProductoCodigo LIKE '%"+producto.getcProductoCodigo()+"%'";
+	        	where+=" and  p.producto.cProductoCodigo LIKE '%"+producto.getcProductoCodigo()+"%'";
 	        }
 			if(producto.getvProductoNombre()!=null){
-	        	where+=" and  p.vProductoNombre LIKE '%"+producto.getvProductoNombre()+"%'";
+	        	where+=" and  p.producto.vProductoNombre LIKE '%"+producto.getvProductoNombre()+"%'";
 	        }
 	        if(producto.getiProductoStockTotal()>0){
-	        	where+=" and  p.iProductoStockTotal LIKE '%"+producto.getiProductoStockTotal()+"%'";
+	        	where+=" and  p.producto.iProductoStockTotal LIKE '%"+producto.getiProductoStockTotal()+"%'";
 	        }
 	        if(producto.getUnidadMedida()!=null && producto.getUnidadMedida().getiUnidadMedidaId()>0){
-	        	where+=" and  p.unidadMedida.iUnidadMedidaId LIKE '%"+producto.getUnidadMedida().getiUnidadMedidaId()+"%'";
+	        	where+=" and  p.producto.unidadMedida.iUnidadMedidaId LIKE '%"+producto.getUnidadMedida().getiUnidadMedidaId()+"%'";
 	        }
 	        
 	        if(producto.getfProductoPrecioCompra()>0){
-	        	where+=" and  p.fProductoPrecioCompra LIKE '%"+producto.getfProductoPrecioCompra()+"%'";
+	        	where+=" and  p.producto.fProductoPrecioCompra LIKE '%"+producto.getfProductoPrecioCompra()+"%'";
 	        }
 	        if(producto.getfProductoPrecioVenta()>0){
-	        	where+=" and  p.fProductoPrecioVenta LIKE '%"+producto.getfProductoPrecioVenta()+"%'";
+	        	where+=" and  p.producto.fProductoPrecioVenta LIKE '%"+producto.getfProductoPrecioVenta()+"%'";
 	        }
 	        System.out.println(" where ="+where);
-	        q = getInstancia().createQuery("select p from Producto p " + where +" order by p.vProductoNombre asc");/**/
+	        q = getInstancia().createQuery("select p.producto from Productoalmacen p   " + where +" order by p.producto.vProductoNombre asc");/**/
 	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaProducto = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)

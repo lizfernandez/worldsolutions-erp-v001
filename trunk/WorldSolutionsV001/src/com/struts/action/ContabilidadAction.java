@@ -466,10 +466,10 @@ public class ContabilidadAction extends BaseAction {
 	       } 
 			
 			/**Seteamos los valores en las listas**/
-			List<Producto> listaProductos =  productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(),iclasificacionId);
+			List<Producto> listaProductos =  productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(),iclasificacionId,0);
 			
 			/**Consultamos el total de registros segun criterio**/
-			List<Producto> listaPerfilTotal = productoDao.listaProducto(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(), productosForm.getProducto(),iclasificacionId);
+			List<Producto> listaPerfilTotal = productoDao.listaProducto(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(), productosForm.getProducto(),iclasificacionId,0);
 			
 	        /**Obtenemos el total del paginas***/
 			List<Long> paginas = Paginacion.listPaginas((long)(listaPerfilTotal.size()));

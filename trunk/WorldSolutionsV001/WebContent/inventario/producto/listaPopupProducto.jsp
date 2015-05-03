@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="productos" styleId="formPersonal">
     <tr>
-    	<td> <html:select  property="iSucursalId" styleId="iSucursalId" styleClass="combo" style="width:150px" onchange="fn_recargar()">       
+    	<td> <html:select  property="iSucursalId" styleId="iSucursalId" styleClass="combo" style="width:150px">       
               <html:options collection="listaSucursal" property="iSucursalId" labelProperty="vSucursalNombre"/>
            </html:select>
         </td>

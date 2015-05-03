@@ -48,6 +48,27 @@ $(window).resize(function() {
 });
 
 $(document).ready(function(){
+	 var windowWidth = $(window).width();
+	 var menuVerticalWidth=$(".menuVertical").width();
+	 var cssDisplay=$(".menuVertical").css("display");
+	 var windowWidthpor="";
+	 if(cssDisplay=="none"){
+		 windowWidthpor=windowWidth-8;
+		 //alert("nola");
+	 }
+	 else{
+		 windowWidthpor=windowWidth-menuVerticalWidth-12;
+		// alert("nola ai");
+	 }
+    
+ //  alert(windowWidth+" "+ menuVerticalWidth+"  "+ cssDisplay);
+    // alert("windowWidth? "+windowWidth+" windowWidthpor="+windowWidthpor +"(windowWidth-windowWidthpor)/10 =" +((windowWidth-windowWidthpor)/10));
+     
+  //   if(windowWidthpor<844)windowWidthpor=844;
+     $("#listado").css({ width: windowWidthpor });
+     
+	
+	
 	$(".btn_admin").click(function() {
 		location.href = $("#"+this.id+" a").attr('href');
 	});
