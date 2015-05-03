@@ -395,6 +395,8 @@
 <html:hidden property="fMontoVuelto" styleId="fMontoVuelto" />
 <html:hidden property="fMontoPago" styleId="fMontoPago" />
 <html:hidden property="fMontoPagoCredito" styleId="fMontoPagoCredito" />
+<html:hidden property="iSucursalId" styleId="iSucursalId" />
+
 
 </html:form>
 <script>
@@ -729,8 +731,9 @@
     function fn_listarProducto(){
     	var iclasificacionId = $("#iclasificacionId").val();
     	var identificador = $("#identificador").val();
+    	var iSucursalId = $("#iSucursalId").val();
     //	(Math.random() * 10.0);
-    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LP&identificador='+identificador,690,560);
+    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LP&identificador='+identificador+"&iSucursalId="+iSucursalId,750,560);
     	
     }
     

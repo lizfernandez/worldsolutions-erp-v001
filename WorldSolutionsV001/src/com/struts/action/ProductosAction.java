@@ -98,6 +98,7 @@ public class ProductosAction extends BaseAction {
 		/***Inicializamos variables***/
 		String mode = request.getParameter("mode");
 		int  iclasificacionId = Integer.parseInt(request.getParameter("iclasificacionId"));
+		String  iSucursalId = request.getParameter("iSucursalId");
 		
 		int pagina = Paginacion.paginaInicial;
 		int pagInicio = Paginacion.paginaInicial;
@@ -152,11 +153,18 @@ public class ProductosAction extends BaseAction {
 			 List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
 			 List<Sucursal> listaSucursal = unidadMedidaDao.listaEntidadGenerica(new Sucursal());
 			 Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+			 
 			 sesion.setAttribute("listaClasificacioncategoria",listaSubcategoria);
 			 sesion.setAttribute("listaUnidadMedida",listaUnidadMedida);
 			 sesion.setAttribute("listaSucursal",listaSucursal);
 			 productosForm.setIclasificacionId(iclasificacionId);
-			 productosForm.setiSucursalId(usu.getSucursal().getiSucursalId());
+			 if(iSucursalId==null){
+				 productosForm.setiSucursalId(usu.getSucursal().getiSucursalId()); 
+			 }
+			 else{
+				 productosForm.setiSucursalId(Integer.parseInt(iSucursalId));
+			 }
+			
 			 if(mode.equals("LP")){
 				 /**Lista de productos de ventas***/
 			    msn ="showListPopupProducto";}			 
@@ -178,10 +186,10 @@ public class ProductosAction extends BaseAction {
 		
 	
 		/**Seteamos los valores en las listas**/
-		List<Producto> listaProductos =  productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(),iclasificacionId);
+		List<Producto> listaProductos =  productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(),iclasificacionId,productosForm.getiSucursalId());
 		
 		/**Consultamos el total de registros segun criterio**/
-		List<Producto> listaPerfilTotal = productoDao.listaProducto(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(), productosForm.getProducto(),iclasificacionId);
+		List<Producto> listaPerfilTotal = productoDao.listaProducto(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(), productosForm.getProducto(),iclasificacionId,productosForm.getiSucursalId());
 		
         /**Obtenemos el total del paginas***/
 		List<Long> paginas = Paginacion.listPaginas((long)(listaPerfilTotal.size()));
@@ -1775,7 +1783,7 @@ public class ProductosAction extends BaseAction {
 					listaProducccion =  productoDao.listaProduccion(0,100, objform.getProduccion());
 				} else {
 					int iclasificacionId = Integer.parseInt(request.getParameter("iclasificacionId"));
-					productos = productoDao.listaProducto(0, 1000, obj, iclasificacionId);
+					productos = productoDao.listaProducto(0, 1000, obj, iclasificacionId,0);
 					
 				}
 

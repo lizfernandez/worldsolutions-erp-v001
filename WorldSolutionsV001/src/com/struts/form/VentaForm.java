@@ -49,9 +49,8 @@ public class VentaForm extends ActionForm {
 	/*************************/
 	private String tipoMoneda;
 	private String IGVVentas;
-	private String identificador;
-	
-	
+	private String identificador;	
+	private int iSucursalId;
    
 	
     /**
@@ -1014,6 +1013,18 @@ public class VentaForm extends ActionForm {
 	}
 	
 
-	
+	/**
+	 * @return the iSucursalId
+	 */
+	public int getiSucursalId() {
+		return iSucursalId;
+	}
+
+	/**
+	 * @param iSucursalId the iSucursalId to set
+	 */
+	public void setiSucursalId(int iSucursalId) {
+		this.iSucursalId = iSucursalId;
+	}
 
 }
