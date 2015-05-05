@@ -124,6 +124,7 @@ if(listapermiso!=null){
 	 
 	</div>
 	<%} //if %>
+	
 	<!-- div class="container">
 		<div class="content">
 			<div id="content-title"></div>
