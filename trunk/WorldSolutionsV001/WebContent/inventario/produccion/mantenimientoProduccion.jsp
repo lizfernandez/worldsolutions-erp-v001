@@ -248,28 +248,50 @@
 							 <table class="tabla" id="tabla1">	  
 								
 								<tr>
-								    <td align="right" width="20%">Cantidad:</td>
-								    <td width="20%">
-								    <html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="text" tabindex="5" onkeypress="return Numeros(event)"/> 
-								    <span id="m_iProductoStockTotal" class="importante">*</span>  
-								    </td>
-								    <td>
-								      <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px">
-								          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-								     </html:select> 
-								    </td>
-								</tr>
-								<tr>
-								     <td align="right">Capacidad:</td>
-								    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="textN"  tabindex="7"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-								    </td>
-								    <td>  
-								       <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo" tabindex="8" style="width:140px">
-								          <option value="0">::SELECCIONE::</option> 
-								          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-								     </html:select>  
-								    </td>
-								</tr>
+		    <td align="right" width="20%">UM Base:</td>
+		    <td width="20%">
+		    <html:text property="iUMBase" styleId="iUMBase" maxlength="7"  styleClass="text textNumero" tabindex="5" onkeypress="return Numeros(event)"/> 
+		    <span id="m_iUMBase" class="importante">*</span>  
+		    </td>
+		    <td colspan="2">
+		      <html:select  property="iUMBaseId" styleId="iUMBaseId" styleClass="comboCodigo" tabindex="6" style="width:140px" >
+		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     </html:select> 
+		    </td>
+		</tr>
+		<tr>
+		     <td align="right">UM Pedido:</td>
+		    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="textN textNumero"  tabindex="7" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+		    </td>
+		    <td colspan="2">  
+		       <html:select  property="iUMPedidoId" styleId="iUMPedidoId" styleClass="comboCodigo" tabindex="8" style="width:140px">
+		          <option value="0">::SELECCIONE::</option> 
+		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     </html:select>  
+		    </td>
+		</tr>
+		<tr>
+		     <td align="right">UM Salida:</td>
+		    <td><html:text property="vUMSalida" styleId="vUMSalida" maxlength="7"  styleClass="textN textNumero"  tabindex="9" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+		    </td>
+		    <td colspan="2">  
+		       <html:select  property="iUMSalidaId" styleId="iUMSalidaId" styleClass="comboCodigo" tabindex="10" style="width:140px">
+		          <option value="0">::SELECCIONE::</option> 
+		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     </html:select>  
+		    </td>
+		</tr>
+	   <tr>
+		     <td align="right">Stock Total:</td>
+		    <td><html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="textN textNumero"  tabindex="11" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+		    </td>
+		    <td colspan="2">  
+		       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo unidadFinal" tabindex="12" style="width:140px" >
+		          <option value="0">::SELECCIONE::</option> 
+		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     </html:select>  
+		    </td>
+		</tr>
 								
 								<tr>
 								    <td align="right">Precio Compra:</td>
@@ -358,10 +380,6 @@
 
 <html:hidden property="iProduccionId" styleId="iProduccionId"/>
 
-<%-- hidden field que contiene el id del producto --%>
-<html:hidden property="vUnidadMedidaDescripcionC"  styleId="vUnidadMedidaDescripcionC"/>
-
-
 <%-- hidden field que contiene el mode --%>
 <html:hidden property="mode" styleId="mode" />
 <%-- hidden field que contiene el mode --%>
@@ -387,6 +405,26 @@
     	var mival = $("#iMonedaId option:selected").val();
     	$(".comboCodigo.change option[value="+mival+"]").attr("selected",true); 
    });
+    $("#iUMBaseId").change(function () {
+       	var mival = $("#iUMBaseId option:selected").val();
+       	$(".comboCodigo.unidadFinal option[value="+mival+"]").attr("selected",true);      
+       	var iUMBase=parseInt(($("#iUMBase").val()==null)?0:$("#iUMBase").val());
+       	$("#iProductoStockTotal").val(iUMBase);
+        });
+       $("#iUMPedidoId").change(function () {
+    	   	var mival = $("#iUMPedidoId option:selected").val();
+    	   	$(".comboCodigo.unidadFinal option[value="+mival+"]").attr("selected",true);     		 
+    	   	var iUMBase=parseInt(($("#iUMBase").val()==null)?1:$("#iUMBase").val()) * parseInt(($("#iUMPedido").val()==null)?1:$("#iUMPedido").val());
+    	   	$("input[name*='iUMPedido']").val($("#iUMPedido").val());
+    	   	
+    	   	$("#iProductoStockTotal").val(iUMBase);
+    	});
+       $("#iUMSalidaId").change(function () {
+    	   	var mival = $("#iUMSalidaId option:selected").val();
+    	   	$(".comboCodigo.unidadFinal option[value="+mival+"]").attr("selected",true);    	   	
+    		var iUMBase=parseFloat(($("#iUMBase").val()==null)?1:$("#iUMBase").val()) * parseFloat(($("#iUMPedido").val()==null)?1:$("#iUMPedido").val())*parseFloat(($("#vUMSalida").val()==null)?1:$("#vUMSalida").val());    		
+    		$("#iProductoStockTotal").val(iUMBase);
+       });
     if(mode=='I') {
         
         document.getElementById('btnGuardar').textContent="Insertar";

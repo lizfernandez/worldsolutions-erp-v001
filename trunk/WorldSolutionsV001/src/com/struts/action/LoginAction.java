@@ -1,6 +1,5 @@
 package com.struts.action;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,87 +69,95 @@ public class LoginAction extends BaseAction {
 		LoginForm objform = (LoginForm) form;
 		List<Usuario> usuario = new ArrayList<Usuario>();
 		List<Permiso> listapermiso = new ArrayList<Permiso>();
-		int pagina = Paginacion.paginaInicial;
-		int pagInicio = Paginacion.paginaInicial;
-		if(request.getParameter("pagina")!= null){
-			 pagina = Integer.parseInt(request.getParameter("pagina"));
-		}
+		
 	/** Instanciamos la Clase ProductoForm **/
-		
-	
-		
-		ProductoDao productoDao = new ProductoDao();		
-		
+			
 		UsuarioDao usuarioDao = new UsuarioDao();
 		PerfilDao perfilDao = new PerfilDao();
 	    GenericaDao genericaDao = new GenericaDao();
 		List<EstadisticaVo> listaAnio = new ArrayList<EstadisticaVo>();
 		int j=0;
 		usuario= usuarioDao.login(objform.getvUsuarioLogin(), objform.getvUsuarioPassword(),"");
-		listapermiso = perfilDao.listaFindPermiso(usuario.get(0).getiUsuarioId());
-		
-		ConfiguracionDao configuracionDao = new ConfiguracionDao();
-		Configuracion confi = configuracionDao.buscarConfiguracion(Constantes.tipoMoneda);
-		Configuracion tipoCambio = configuracionDao.buscarConfiguracion(Constantes.tipoCambio);
-		Impuesto impuestoVenta=configuracionDao.buscarImpuesto(Constantes.IGVVenta);
-		Impuesto impuestoCompras=configuracionDao.buscarImpuesto(Constantes.IGVCompra);
-		Impuesto impuestoPercepciones=configuracionDao.buscarImpuesto(Constantes.IGVPercepcion);
-		Configuracion nombreImpresora = configuracionDao.buscarConfiguracion(Constantes.nombreImpresora);;
-		
-		int iPeriodoId =  genericaDao.callSPPeriodoActual();
+
+		if (usuario != null && usuario.size() > 0) {
+
+			listapermiso = perfilDao.listaFindPermiso(usuario.get(0)
+					.getiUsuarioId());
+
+			if (listapermiso != null && listapermiso.size() > 0) {
+				
+
+				ConfiguracionDao configuracionDao = new ConfiguracionDao();
+				Configuracion confi = configuracionDao
+						.buscarConfiguracion(Constantes.tipoMoneda);
+				Configuracion tipoCambio = configuracionDao
+						.buscarConfiguracion(Constantes.tipoCambio);
+				Impuesto impuestoVenta = configuracionDao
+						.buscarImpuesto(Constantes.IGVVenta);
+				Impuesto impuestoCompras = configuracionDao
+						.buscarImpuesto(Constantes.IGVCompra);
+				Impuesto impuestoPercepciones = configuracionDao
+						.buscarImpuesto(Constantes.IGVPercepcion);
+				Configuracion nombreImpresora = configuracionDao
+						.buscarConfiguracion(Constantes.nombreImpresora);
+				
+				int iPeriodoId = genericaDao.callSPPeriodoActual();
 
 				
-		if(usuario.size()>0 && listapermiso.size()>0){				
-			    
-				sesion.setAttribute("Usuario", usuario.get(0));			
-				sesion.setAttribute("Fecha",Fechas.fechaDDMMYY((Fechas.getDate())));
+				sesion.setAttribute("Usuario", usuario.get(0));
+				sesion.setAttribute("Fecha",
+						Fechas.fechaDDMMYY((Fechas.getDate())));
 				sesion.setAttribute("id", sesion.getId());
-					
-				sesion.setAttribute("Moneda", configuracionDao.buscarMoneda(confi.getvValor()));
+
+				sesion.setAttribute("Moneda",
+						configuracionDao.buscarMoneda(confi.getvValor()));
 				sesion.setAttribute("TipoCambio", tipoCambio.getvValor());
-				sesion.setAttribute("IGVCompras",impuestoCompras.getvPorcentaje());
-				sesion.setAttribute("IGVPercepcion",impuestoPercepciones.getvPorcentaje());
+				sesion.setAttribute("IGVCompras",
+						impuestoCompras.getvPorcentaje());
+				sesion.setAttribute("IGVPercepcion",
+						impuestoPercepciones.getvPorcentaje());
 				sesion.setAttribute("IGVVentas", impuestoVenta.getvPorcentaje());
 				sesion.setAttribute("iPeriodoId", iPeriodoId);
 				sesion.setAttribute("nombreImpresora", nombreImpresora);
-				//sesion.setAttribute("listaMenu",  genericaDao.listaEntidadGenericaSinCodigo("Menu"));
+				// sesion.setAttribute("listaMenu",
+				// genericaDao.listaEntidadGenericaSinCodigo("Menu"));
 				List<String> listaMisPersmisos = new ArrayList<String>();
-				Usuario usu = (Usuario) sesion.getAttribute("Usuario");	
-				for(Permiso lista:listapermiso){
+				for (Permiso lista : listapermiso) {
 					listaMisPersmisos.add(lista.getvCodigoMenu());
-					
+
 				}
-				
+
 				sesion.setAttribute("listaMisPermisoUsuario", listaMisPersmisos);
-								
-				/***determinamos la lista de años para visualizar las estadisticas del modulo estadistica**/
-				for(int i=-2;i<=0;i++){
-				    EstadisticaVo e = new EstadisticaVo();
+
+				/***
+				 * determinamos la lista de años para visualizar las
+				 * estadisticas del modulo estadistica
+				 **/
+				for (int i = -2; i <= 0; i++) {
+					EstadisticaVo e = new EstadisticaVo();
 					e.setAnio(Fechas.anioActual(j));
 					listaAnio.add(e);
 					j--;
-				}				
-				sesion.setAttribute("listaAnio", listaAnio);				
-				/***Seteamos la localidad para dar formato a los numeros 2,000.00****/
-				sesion.setAttribute("Localidad",new Locale("en", "US"));
-				
-				return home(mapping, objform, request, response);
-					
-				
-			}	
-			else{
-				if(listapermiso.size()==0){
-					objform.setMensaje("No se le han asignado permisos, Consulte con su Administrador ");
-					
-						
-				}else{
-					 objform.setMensaje("Usuario o Clave son incorrectos");
-					 
 				}
-				    objform.setMode("m_mensaje");				
-			        msn="login";
+				sesion.setAttribute("listaAnio", listaAnio);
+				/***
+				 * Seteamos la localidad para dar formato a los numeros 2,000.00
+				 ****/
+				sesion.setAttribute("Localidad", new Locale("en", "US"));
+
+				return home(mapping, objform, request, response);
+
+			} else {
+				objform.setMensaje("No se le han asignado permisos, Consulte con su Administrador ");
+
 			}
-				
+		} else {
+			objform.setMensaje("Usuario o Clave son incorrectos");
+
+		}
+		objform.setMode("m_mensaje");
+		msn = "login";
+
 		return mapping.findForward(msn);
 	}
 	/** 
