@@ -585,5 +585,8 @@
 <put name="menuVertical" value="/estadistica/sidebar.jsp"></put>  
 </definition>
 
+<definition name=".verArqueo" extends=".popup">
+	<put name="body" value="/ventas/venta/verArqueoVendedor.jsp"></put>  
+</definition>
 
 </tiles-definitions>

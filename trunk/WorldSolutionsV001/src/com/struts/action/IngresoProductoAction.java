@@ -1612,16 +1612,17 @@ public class IngresoProductoAction extends BaseAction {
 			
 			
 			impresora.agregarSeparacion();
-			impresora.agregarLinea("CODIGO  DESCRIPCION  CANT P.UNIT IMPORTE");
+			impresora.agregarLinea("CODIGO   DESCRIPCION");
+			impresora.agregarLinea("    	 CANT P.UNIT IMPORTE");
 			impresora.agregarSeparacion();
 			      
             // aqui recorro mis productos y los imprimo
             for(Ingresoproductodevoluciondetalle ingProDevdetalle: ingresoDev.getIngresoproductodevoluciondetalles()){
-            	impresora.agregarLinea(new Object[][]{{ingProDevdetalle.getProducto().getcProductoCodigo(),0,1},
-            	{ingProDevdetalle.getProducto().getvProductoNombre(),8,1},
-            	{ingProDevdetalle.getiIngresoProductoDevDetalleCantidad(),21,-1},
-            	{ingProDevdetalle.getfIngresoProductoDevDetallePrecio() ,25,-1},
-            	{ingProDevdetalle.getfIngresoProductoDevDetalleTotal(),32,-1}});
+            	impresora.agregarDetalleProducto(ingProDevdetalle.getProducto().getcProductoCodigo(),
+            			ingProDevdetalle.getProducto().getvProductoNombre(),
+            			ingProDevdetalle.getiIngresoProductoDevDetalleCantidad(),
+            			ingProDevdetalle.getfIngresoProductoDevDetallePrecio(),
+            			ingProDevdetalle.getfIngresoProductoDevDetalleTotal());
             	
             }
             
