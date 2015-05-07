@@ -44,6 +44,7 @@ public class VentaForm extends ActionForm {
 	private int iclasificacionId;
 	private String vImprimir;
 	private String vTipoImpresion;
+	private String vTextoImpresion;
 	/*************************/
 	/**SESIONES DE INPUESTOS**/
 	/*************************/
@@ -1025,6 +1026,14 @@ public class VentaForm extends ActionForm {
 	 */
 	public void setiSucursalId(int iSucursalId) {
 		this.iSucursalId = iSucursalId;
+	}
+	
+	public String getvTextoImpresion() {
+		return vTextoImpresion;
+	}
+	
+	public void setvTextoImpresion(String vTextoImpresion) {
+		this.vTextoImpresion = vTextoImpresion;
 	}
 
 }

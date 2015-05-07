@@ -1119,141 +1119,169 @@ public class ProductosAction extends BaseAction {
 			UnidadMedidaDao unidadMedidaDao = new UnidadMedidaDao();
 			EstadoDao estadoDao = new EstadoDao();
 			GenericaDao genericoDao = new GenericaDao();
-			
+			boolean errorCarga = false;
 			
 			/** llamado de los metodos de la clase dao **/
-			List<Categoria> listaCategoria = categoriaDao.listaEntidadGenerica(new Categoria());	
-			List<Subcategoria> listaSubCategoria = categoriaDao.listaSubcategoria(listaCategoria.get(0).getiCategoriaId());
-			List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
-			List<Estado> listaEstado = estadoDao.listEstado();
-			List<Moneda> listaMoneda = genericoDao.listaEntidadGenerica(moneda);
-			List<Preciosproducto> listaPrecio = new ArrayList<Preciosproducto>();
-			List<Producciondetalle> listaProduccion = new ArrayList<Producciondetalle>();
-			
-			
-			msn = "showEditProduccion";
-				
-			
-			if(mode.equals("I")){
-				/** Obtenemos le codigo correlativo del producto **/
-				productoForm.getProducto().setcProductoCodigo(genericoDao.callSPCalculoCodigo(productoForm.getProducto()));
-				/***LISTA DE DETALLE VENTA***/
-				sesion.removeAttribute("listaProduccionDetalle");
-				if(sesion.getAttribute("listaProduccionDetalle")==null){				
-					 sesion.setAttribute("listaProduccionDetalle", listaProduccion);
-                 }
-			
-			/**LLamamos al formulario mantenimientoProducto.jsp para mostrar los datos del UPDATE **/
-			/** Seteamos el PerfilForm la clase Perfil **/
-			} else if(mode.equals("U") || mode.equals("D")){
-		    	
-				int id = Integer.parseInt(request.getParameter("id"));
-				Produccion produccion = genericoDao.findEndidad(productoForm.getProduccion(),id);
-				productoForm.setProduccion(produccion);
-				
-				
-				for(Producciondetalle produce:produccion.getProduccionDetalle()){
-					Producto pro = new Producto();
-					Personal pers = new Personal();
-					Produccion produc= new Produccion();
-					Producciondetalle prodetalle= new Producciondetalle();
-					prodetalle.setiProduccionDetalleId(produce.getiProduccionDetalleId());
-					prodetalle.setvDescripcion(produce.getvDescripcion());
-					prodetalle.setcEstadoCodigo(produce.getcEstadoCodigo());
-					prodetalle.setfCostoUni(produce.getfCostoUni());
-					prodetalle.setfDescuento(produce.getfDescuento());
-					prodetalle.setfTotal(produce.getfTotal());
-					prodetalle.setiCantidad(produce.getiCantidad());
-					
-					produc.setcEstadoCodigo(produce.getProduccion().getcEstadoCodigo());
-					produc.setfCostoTotal(produce.getProduccion().getfCostoTotal());
-					produc.setfCostoUni(produce.getProduccion().getfCostoUni());
-					produc.setfOtrosCostos(produce.getProduccion().getfOtrosCostos());
-					produc.setiCantidad(produce.getProduccion().getiCantidad());
-					produc.setiProduccionId(produce.getProduccion().getiProduccionId());
-					
-					prodetalle.setProduccion(produc);
-					
-					pro.setCategoria(produce.getProducto().getCategoria());
-					pro.setcProductoCodigo(produce.getProducto().getcProductoCodigo());
-					pro.setfProductoDescuento(produce.getProducto().getfProductoDescuento());
-					pro.setfProductoPrecioCompra(produce.getProducto().getfProductoPrecioCompra());
-					pro.setiProductoId(produce.getProducto().getiProductoId());
-					pro.setiProductoStockTotal(produce.getProducto().getiProductoStockTotal());
-					pro.setMoneda(produce.getProducto().getMoneda());
-					pro.setUnidadMedida(produce.getProducto().getUnidadMedida());
-					pro.setvProductoNombre(produce.getProducto().getvProductoNombre());
-					
-					prodetalle.setProducto(pro);
-					if(produce.getPersonal()!=null){
-						pers.setcPersonalCodigo(produce.getPersonal().getcPersonalCodigo());
-						pers.setiPersonalId(produce.getPersonal().getiPersonalId());
-						pers.setvPersonalNombres(produce.getPersonal().getvPersonalNombres());
-						pers.setvPersonalApellidoPaterno(produce.getPersonal().getvPersonalApellidoPaterno());
-						pers.setvPersonalApellidoMaterno(produce.getPersonal().getvPersonalApellidoMaterno());
-						prodetalle.setPersonal(pers);
-					}
-					
-					
-					
-					listaProduccion.add(prodetalle);
-				}
-				
-				sesion.setAttribute("listaProduccionDetalle", listaProduccion);
-				
-				
-				
-				
-				Producto pro = genericoDao.findEndidad(productoForm.getProducto(),produccion.getProducto().get(0).getiProductoId());
-				productoForm.setProducto(pro);
-				productoForm.setSizeIngresoproductodetalles(productoForm.getProducto().getIngresoproductodetalles().size());
-				productoForm.setSizeVentaDetalles(productoForm.getProducto().getVentadetalles().size());
-				
-				
-				listaSubCategoria = categoriaDao.listaSubcategoria(pro.getCategoria().getiCategoriaId());
-				
-				
-				if(pro.getPreciosproductodetallles()!=null){
-					if(pro.getPreciosproductodetallles().size()>0){
-					 for(Preciosproducto precioPro: pro.getPreciosproductodetallles()){
-						 Preciosproducto preciosproducto = new Preciosproducto();	
-						 preciosproducto.setiCantidadStock(precioPro.getiCantidadStock());
-						 preciosproducto.setfPrecioCompra(precioPro.getfPrecioCompra());
-						 preciosproducto.setfGanancia(precioPro.getfGanancia());
-						 preciosproducto.setfDescuento(precioPro.getfDescuento());
-						 preciosproducto.setfPrecioVenta(precioPro.getfPrecioVenta());
-						 preciosproducto.setdFechaInserta(precioPro.getdFechaInserta());
-						 preciosproducto.setcEstadoCodigo(precioPro.getcEstadoCodigo());
-						
-						listaPrecio.add(preciosproducto);
-						
-					 }
-					}
-					
-			    }
-			productoForm.setProduc(listaPrecio);
-			sesion.setAttribute("listaPrecioProducto",new ArrayList<Preciosproducto>());
-				
-				
+			List<Categoria> listaCategoria = categoriaDao.listaEntidadGenerica(new Categoria());
+			if (listaCategoria.size() == 0) {
+				errorCarga = true;
 			}
-			/**LLamamos al formulario buscarMantenimientoProducto.jsp para realizar la busqueda **/
-			else if(mode.equals("F")){
-				 msn ="showFindProduccion";
-	                    
-		       
-		        
-			}		
 			
-			productoForm.setMode(mode);
-		
+			List<Subcategoria> listaSubCategoria = categoriaDao.listaSubcategoria(listaCategoria.get(0).getiCategoriaId());
 
-			/** Colocamos en session las listas **/
-			sesion.setAttribute("listaUnidadMedida", listaUnidadMedida);
-			sesion.setAttribute("listaCategoria", listaCategoria);
-			sesion.setAttribute("listaSubCategoria", listaSubCategoria);		
-			sesion.setAttribute("listaMoneda", listaMoneda);		
-			sesion.setAttribute("listaEstado", listaEstado);
+			if (listaSubCategoria.size() == 0) {
+				errorCarga = true;
+			}
+			
+			List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
 
+			if (listaUnidadMedida.size() == 0) {
+				errorCarga = true;
+			}
+			
+			List<Estado> listaEstado = estadoDao.listEstado();
+
+			if (listaEstado.size() == 0) {
+				errorCarga = true;
+			}
+			
+			List<Moneda> listaMoneda = genericoDao.listaEntidadGenerica(moneda);
+
+			if (listaMoneda.size() == 0) {
+				errorCarga = true;
+			}
+			
+			if (errorCarga) {
+				msn = "msnError";
+				
+			} else {
+				msn = "showEditProduccion";
+				
+				List<Preciosproducto> listaPrecio = new ArrayList<Preciosproducto>();
+				List<Producciondetalle> listaProduccion = new ArrayList<Producciondetalle>();
+				
+				if(mode.equals("I")){
+					/** Obtenemos le codigo correlativo del producto **/
+					productoForm.getProducto().setcProductoCodigo(genericoDao.callSPCalculoCodigo(productoForm.getProducto()));
+					/***LISTA DE DETALLE VENTA***/
+					sesion.removeAttribute("listaProduccionDetalle");
+					if(sesion.getAttribute("listaProduccionDetalle")==null){				
+						 sesion.setAttribute("listaProduccionDetalle", listaProduccion);
+	                 }
+				
+				/**LLamamos al formulario mantenimientoProducto.jsp para mostrar los datos del UPDATE **/
+				/** Seteamos el PerfilForm la clase Perfil **/
+				} else if(mode.equals("U") || mode.equals("D")){
+			    	
+					int id = Integer.parseInt(request.getParameter("id"));
+					Produccion produccion = genericoDao.findEndidad(productoForm.getProduccion(),id);
+					productoForm.setProduccion(produccion);
+					
+					
+					for(Producciondetalle produce:produccion.getProduccionDetalle()){
+						Producto pro = new Producto();
+						Personal pers = new Personal();
+						Produccion produc= new Produccion();
+						Producciondetalle prodetalle= new Producciondetalle();
+						prodetalle.setiProduccionDetalleId(produce.getiProduccionDetalleId());
+						prodetalle.setvDescripcion(produce.getvDescripcion());
+						prodetalle.setcEstadoCodigo(produce.getcEstadoCodigo());
+						prodetalle.setfCostoUni(produce.getfCostoUni());
+						prodetalle.setfDescuento(produce.getfDescuento());
+						prodetalle.setfTotal(produce.getfTotal());
+						prodetalle.setiCantidad(produce.getiCantidad());
+						
+						produc.setcEstadoCodigo(produce.getProduccion().getcEstadoCodigo());
+						produc.setfCostoTotal(produce.getProduccion().getfCostoTotal());
+						produc.setfCostoUni(produce.getProduccion().getfCostoUni());
+						produc.setfOtrosCostos(produce.getProduccion().getfOtrosCostos());
+						produc.setiCantidad(produce.getProduccion().getiCantidad());
+						produc.setiProduccionId(produce.getProduccion().getiProduccionId());
+						
+						prodetalle.setProduccion(produc);
+						
+						pro.setCategoria(produce.getProducto().getCategoria());
+						pro.setcProductoCodigo(produce.getProducto().getcProductoCodigo());
+						pro.setfProductoDescuento(produce.getProducto().getfProductoDescuento());
+						pro.setfProductoPrecioCompra(produce.getProducto().getfProductoPrecioCompra());
+						pro.setiProductoId(produce.getProducto().getiProductoId());
+						pro.setiProductoStockTotal(produce.getProducto().getiProductoStockTotal());
+						pro.setMoneda(produce.getProducto().getMoneda());
+						pro.setUnidadMedida(produce.getProducto().getUnidadMedida());
+						pro.setvProductoNombre(produce.getProducto().getvProductoNombre());
+						
+						prodetalle.setProducto(pro);
+						if(produce.getPersonal()!=null){
+							pers.setcPersonalCodigo(produce.getPersonal().getcPersonalCodigo());
+							pers.setiPersonalId(produce.getPersonal().getiPersonalId());
+							pers.setvPersonalNombres(produce.getPersonal().getvPersonalNombres());
+							pers.setvPersonalApellidoPaterno(produce.getPersonal().getvPersonalApellidoPaterno());
+							pers.setvPersonalApellidoMaterno(produce.getPersonal().getvPersonalApellidoMaterno());
+							prodetalle.setPersonal(pers);
+						}
+						
+						
+						
+						listaProduccion.add(prodetalle);
+					}
+					
+					sesion.setAttribute("listaProduccionDetalle", listaProduccion);
+					
+					
+					
+					
+					Producto pro = genericoDao.findEndidad(productoForm.getProducto(),produccion.getProducto().get(0).getiProductoId());
+					productoForm.setProducto(pro);
+					productoForm.setSizeIngresoproductodetalles(productoForm.getProducto().getIngresoproductodetalles().size());
+					productoForm.setSizeVentaDetalles(productoForm.getProducto().getVentadetalles().size());
+					
+					
+					listaSubCategoria = categoriaDao.listaSubcategoria(pro.getCategoria().getiCategoriaId());
+					
+					
+					if(pro.getPreciosproductodetallles()!=null){
+						if(pro.getPreciosproductodetallles().size()>0){
+						 for(Preciosproducto precioPro: pro.getPreciosproductodetallles()){
+							 Preciosproducto preciosproducto = new Preciosproducto();	
+							 preciosproducto.setiCantidadStock(precioPro.getiCantidadStock());
+							 preciosproducto.setfPrecioCompra(precioPro.getfPrecioCompra());
+							 preciosproducto.setfGanancia(precioPro.getfGanancia());
+							 preciosproducto.setfDescuento(precioPro.getfDescuento());
+							 preciosproducto.setfPrecioVenta(precioPro.getfPrecioVenta());
+							 preciosproducto.setdFechaInserta(precioPro.getdFechaInserta());
+							 preciosproducto.setcEstadoCodigo(precioPro.getcEstadoCodigo());
+							
+							listaPrecio.add(preciosproducto);
+							
+						 }
+						}
+						
+				    }
+				productoForm.setProduc(listaPrecio);
+				sesion.setAttribute("listaPrecioProducto",new ArrayList<Preciosproducto>());
+					
+					
+				}
+				/**LLamamos al formulario buscarMantenimientoProducto.jsp para realizar la busqueda **/
+				else if(mode.equals("F")){
+					 msn ="showFindProduccion";
+		                    
+			       
+			        
+				}		
+				
+				productoForm.setMode(mode);
+			
+	
+				/** Colocamos en session las listas **/
+				sesion.setAttribute("listaUnidadMedida", listaUnidadMedida);
+				sesion.setAttribute("listaCategoria", listaCategoria);
+				sesion.setAttribute("listaSubCategoria", listaSubCategoria);		
+				sesion.setAttribute("listaMoneda", listaMoneda);		
+				sesion.setAttribute("listaEstado", listaEstado);
+
+			}
+			
 			return mapping.findForward(msn);
 		}
 

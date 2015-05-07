@@ -382,6 +382,7 @@
 	                 <forward name="showFind" path=".buscarMantenimientoVenta" />
 	                 <forward name="showEstadoCuenta" path=".mantenimientoEstadoCuentaCliente" />	
 	                 <forward name="showFindEstadoCuenta" path=".buscarMantenimientoEstadoCuentaCliente" />		
+	                 <forward name="showArqueo" path=".verArqueo" />		
 	                 
 	                                   
 	                 <forward name="msnOk" path=".msnOk" />

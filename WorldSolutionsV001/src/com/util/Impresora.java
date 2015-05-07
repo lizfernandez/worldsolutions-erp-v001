@@ -51,13 +51,11 @@ contenido = "";/*+ (char) 27 + (char) 112
 		
 	}
 	
-	public void cortarImpresion() throws IllegalAccessException {
-		validarDispositivo();
+	public void cortarImpresion() {
 		contenido += (char) 27+"m";
 	}
 	
-	public void agregarLineaCentrada (String cadena) throws IllegalAccessException {
-		validarDispositivo();
+	public void agregarLineaCentrada (String cadena){
 		int espacioCentrar = (longitudLinea - cadena.trim().length())/2;
 		while (espacioCentrar > 0) {
 			contenido += " ";
@@ -66,12 +64,11 @@ contenido = "";/*+ (char) 27 + (char) 112
 		contenido += cadena + "\n";
 	}
 	
-	public void agregarLinea (String cadena) throws IllegalAccessException {
-		validarDispositivo();
+	public void agregarLinea (String cadena) {
 		contenido += cadena + "\n";
 	}
 	
-	public void agregarSeparacion () throws IllegalAccessException {
+	public void agregarSeparacion () {
 		int contador = 0;
 		while (contador < longitudLinea) {
 			contenido += "-";
@@ -80,18 +77,11 @@ contenido = "";/*+ (char) 27 + (char) 112
 		contenido += "\n";
 	}
 	
-	public void agregarSaltoLinea (int cantidad) throws IllegalAccessException {
-		validarDispositivo();
+	public void agregarSaltoLinea (int cantidad) {
 		int indice = 0;
 		while (indice < cantidad) {
 			contenido += "\n";
 			indice++;
-		}
-	}
-	
-	private void validarDispositivo() throws IllegalAccessException {
-		if (jobImpresora == null) {
-			throw new IllegalAccessException("No se ha selecionado o no existe dispositivo de impresion");
 		}
 	}
 	
@@ -123,9 +113,7 @@ contenido = "";/*+ (char) 27 + (char) 112
 		
 	}
 	
-	public void agregarLineaDerecha(String cadena) throws IllegalAccessException {
-		validarDispositivo();
-		
+	public void agregarLineaDerecha(String cadena) {
 		contenido += Util.completarEspacioIzquierda(cadena, longitudLinea) + "\n";
 	}
 
@@ -135,8 +123,7 @@ contenido = "";/*+ (char) 27 + (char) 112
 		return contenido;
 	}
 
-	public void agregarTituloIzquierda(String titulo, int espacio, String descripcion) throws IllegalAccessException {
-		validarDispositivo();
+	public void agregarTituloIzquierda(String titulo, int espacio, String descripcion) {
 		int espacioTitulo = espacio - titulo.length();
 		String linea = Util.completarEspacioDerecha(titulo, espacioTitulo) + ": " + descripcion;
 		if (linea.length() > longitudLinea) {
@@ -155,8 +142,7 @@ contenido = "";/*+ (char) 27 + (char) 112
 	}
 
 
-	public void agregarTituloDerecha(String titulo, int espacio, String descripcion) throws IllegalAccessException {
-		validarDispositivo();
+	public void agregarTituloDerecha(String titulo, int espacio, String descripcion) {
 		String lineaTitulo;
 		int espacioTitulo = espacio - titulo.length();
 		lineaTitulo = Util.completarEspacioDerecha(titulo, espacioTitulo) + ": " + descripcion;
@@ -165,7 +151,7 @@ contenido = "";/*+ (char) 27 + (char) 112
 		
 	}
 	
-	public void agregarLinea(Object[][] camposDetallesLinea) throws IllegalAccessException {
+	public void agregarLinea(Object[][] camposDetallesLinea) {
 		StringBuilder lineaDetalle = new StringBuilder();
 		String valor;
 		int posicionInicial;
@@ -195,7 +181,7 @@ contenido = "";/*+ (char) 27 + (char) 112
 					//Se crea el espacio del tap
 					String tabulacion = Util.completarEspacioDerecha("", posicionInicial-3);
 					String linea;
-					System.out.println("Total : " + valor.length() + " Espacio : " + espacioRestante);
+					
 					linea = valor.substring(0, espacioRestante-1);
 					valor = valor.substring(espacioRestante);
 					
@@ -215,6 +201,23 @@ contenido = "";/*+ (char) 27 + (char) 112
 			
 		}
 		agregarLinea(lineaDetalle.toString());
+		
+	}
+
+	public void agregarDetalleProducto(String cProductoCodigo, String vProductoNombre, int iVentaDetalleCantidad, float fVentaDetallePrecio, float fVentaDetalleTotal) throws IllegalAccessException {
+		
+		Object[][] detalleLinea = new Object[][] {
+				{ cProductoCodigo, 0, 1 },
+				{ vProductoNombre, 9, 1 } };
+		agregarLinea(detalleLinea);
+		
+		detalleLinea = new Object[][] {
+				{ "", 0, 1},
+				{ iVentaDetalleCantidad, 9, -1 },
+				{ fVentaDetallePrecio, 20, -1 },
+				{ fVentaDetalleTotal, 35, -1 } };
+		agregarLinea(detalleLinea);
+		
 		
 	}
 
