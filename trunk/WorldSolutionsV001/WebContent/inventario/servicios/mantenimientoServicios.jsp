@@ -244,8 +244,6 @@
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iProductoId" styleId="iProductoId"/>
 
-<%-- hidden field que contiene el id del producto --%>
-<html:hidden property="vUnidadMedidaDescripcionC"  styleId="vUnidadMedidaDescripcionC"/>
 
 
 <%-- hidden field que contiene el mode --%>
@@ -256,12 +254,10 @@
 
 
 
-<html:hidden property="iUsuarioActualizaId" />
+
 <html:hidden property="vFoto" />
 <%-- hidden field que contiene el iUsuarioInsertaId del producto --%>
-<html:hidden property="iUsuarioInsertaId" />
-<html:hidden property="sizeIngresoproductodetalles" />
-<html:hidden property="sizeVentaDetalles" />
+
 
 
 </html:form>

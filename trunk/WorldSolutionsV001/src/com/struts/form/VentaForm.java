@@ -24,7 +24,7 @@ import com.util.Fechas;
 
 
 
-public class VentaForm extends ActionForm {
+public class VentaForm extends  ActionForm {
 	/**
 	 * 
 	 */

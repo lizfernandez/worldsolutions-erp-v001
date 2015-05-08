@@ -128,7 +128,11 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 </div> 
 <script>   
 paginacion();
-$("#inventario, #categoria").addClass("active");
+
+$("#inventario").addClass("active");
+$("#categorias").children('li').show();
+$("#categoria").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#categoria").children('a').css("color","#D0D2D7");
 
 </script> 
 

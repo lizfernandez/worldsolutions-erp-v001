@@ -60,7 +60,7 @@ public class Producto implements Serializable {
 	@Column(nullable=false)
 	private float fProductoPrecioVenta;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iCategoriaId", nullable=false)	
 	private Categoria categoria;
 	

@@ -66,6 +66,10 @@
     <class>com.entities.Almacen</class>
     <class>com.entities.Productoalmacen</class>
     <class>com.entities.Mediopago</class>
+    <class>com.entities.Distalmacen</class>
+    <class>com.entities.Distalmacendetalle</class>
+    <class>com.entities.Ordencompra</class>
+    <class>com.entities.Ordencompradetalle</class>
     	 
 	<!-- transaction-type="RESOURCE_LOCAL"-->
 		<properties>
@@ -75,7 +79,8 @@
 	      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 	      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/macrostruts"/>
 	      <property name="javax.persistence.jdbc.user" value="root"/>
-	      <property name="javax.persistence.jdbc.password" value="qwertY"/>	    
+	      <property name="javax.persistence.jdbc.password" value=""/>	
+	      <!-- property name="eclipselink.logging.level" value="FINE"/-->    
 	    </properties>
 	</persistence-unit>
 </persistence>

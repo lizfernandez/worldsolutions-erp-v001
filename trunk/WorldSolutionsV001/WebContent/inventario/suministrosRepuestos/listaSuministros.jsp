@@ -17,7 +17,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
       <% 
 	   for (String per: listapermiso) {
 			if(per!=null){
-	   if(per.equals("1151")){%>
+	   if(per.equals("1231")){%>
         <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=3&mode=I',450,550)">
                 <span class="new">Nuevo</span>
             </button>
@@ -25,7 +25,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
         <% break; }}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("1154")){%>
+	   if(per.equals("1234")){%>
         <td><button  class="button" onclick="eliminar('tabla','','productos.do?metodo=iduProducto&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
@@ -33,7 +33,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
         <% break;}}}
 	   for (String per: listapermiso) {
 			if(per!=null){
-	   if(per.equals("1153")){%>
+	   if(per.equals("1233")){%>
         <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=3',450,550)">
                 <span class="find">Buscar</span>
             </button>
@@ -41,7 +41,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
          <% break;}}}
 	   for (String per: listapermiso) {
 			if(per!=null){
-	   if(per.equals("1155")){%>
+	   if(per.equals("1235")){%>
         <td><button class="button" onclick="fn_exportarExcel('productos.do?metodo=exportarExcel&plantilla=suministros')">
                 <span class="excel">Exportar</span>
             </button>
@@ -80,7 +80,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		<%
 				for (String per: listapermiso) {
 		if(per!=null){
-		if(per.equals("1152")){%>
+		if(per.equals("1232")){%>
 		<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=3&mode=U&id=<bean:write name="x" property="iProductoId" />',450,550)" />  
 		 <% break; }}}%>
@@ -89,7 +89,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		<%
 				for (String per: listapermiso) {
 		if(per!=null){
-		if(per.equals("1154")){%>
+		if(per.equals("1234")){%>
 		<img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iProductoId" />','productos.do?metodo=iduProducto&mode=D')" />
 		<%break; }}}%>
@@ -138,6 +138,11 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 </div> 
 <script>   
 paginacion();
-$("#inventario, #suministros").addClass("active");
+
+$("#inventario").addClass("active");
+$("#productos").children('li').show();
+$("#suministros").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#suministros").children('a').css("color","#D0D2D7");
+
 </script> 
  

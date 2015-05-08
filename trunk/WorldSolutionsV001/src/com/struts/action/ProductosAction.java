@@ -158,8 +158,14 @@ public class ProductosAction extends BaseAction {
 			 sesion.setAttribute("listaUnidadMedida",listaUnidadMedida);
 			 sesion.setAttribute("listaSucursal",listaSucursal);
 			 productosForm.setIclasificacionId(iclasificacionId);
+			 
 			 if(iSucursalId==null){
+				 if(usu.getPerfil().getvPerfilDescripcion().equals(Constantes.usuAdministrador)){
+					 productosForm.setiSucursalId(0);  
+				 }
+				 else{
 				 productosForm.setiSucursalId(usu.getSucursal().getiSucursalId()); 
+				 }
 			 }
 			 else{
 				 productosForm.setiSucursalId(Integer.parseInt(iSucursalId));
@@ -178,6 +184,9 @@ public class ProductosAction extends BaseAction {
 			 if(mode.equals("LPP")){
 				 /**Lista de productos para generar la produccion***/
 				 msn ="showListPopupProductoProduccion";}
+			 if(mode.equals("LPSP")){
+				 /**Lista de productos para generar la produccion***/
+				 msn ="showListPopupServiciosProduccion";}
 			 if(mode.equals("LPPU")){
 				 /**Lista de productos existenta***/
 				 msn ="showListPopupProductoExitProduccion";}
@@ -647,22 +656,24 @@ public class ProductosAction extends BaseAction {
                  List<Productoalmacen> listaProductoAlm =  (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
                  int CantidadStocktotal=0;
                  int CantidadBase=0;
-				if (listaProductoAlm.size() > 0) {
-					
-					for (Productoalmacen proAlma :listaProductoAlm) {
-						
-						CantidadStocktotal= CantidadStocktotal+proAlma.getiProductoAlmStockTotal();
-						CantidadBase=CantidadBase+proAlma.getiUMBaseAlm();
-						proAlma.setProducto(pro);
-						proAlma.setiUsuarioInsertaId(usu.getiUsuarioId());
-						proAlma.setdFechaInserta(Fechas.getDate());
-						pro.setProductoAlmacendetallles(listaProductoAlm);
-						//productoDao.persistEndidad(proAlma);	
+				if (listaProductoAlm!=null ) {
+					if(listaProductoAlm.size() > 0){
+						for (Productoalmacen proAlma :listaProductoAlm) {
+							
+							CantidadStocktotal= CantidadStocktotal+proAlma.getiProductoAlmStockTotal();
+							CantidadBase=CantidadBase+proAlma.getiUMBaseAlm();
+							proAlma.setProducto(pro);
+							proAlma.setiUsuarioInsertaId(usu.getiUsuarioId());
+							proAlma.setdFechaInserta(Fechas.getDate());
+							pro.setProductoAlmacendetallles(listaProductoAlm);
+							//productoDao.persistEndidad(proAlma);	
+							}
 						}
+
+					pro.setiProductoStockTotal(CantidadStocktotal);				
+			      resultado = productoDao.commitEndidad(transaccion);
 					}
-					pro.setiProductoStockTotal(CantidadStocktotal);
-				
-			resultado = productoDao.commitEndidad(transaccion);
+					
 			}
 			/** Insertamos Datos del producto como Insumos **/
 			if (pForm.getMode().equals("II")) {
