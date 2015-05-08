@@ -27,7 +27,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
      <% 
 	   for (String per: listapermiso) {
 			if(per!=null){
-	   if(per.equals("1181")){%>
+	   if(per.equals("1341")){%>
         <td><button  class="button" onclick="nuevo()">
                 <span class="new">Nuevo</span>
             </button>
@@ -35,7 +35,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
         <% break; }}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("1184")){%>
+	   if(per.equals("1344")){%>
         <td><button  class="button" onclick="eliminar('tabla','','productos.do?metodo=iduProduccion&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
@@ -43,7 +43,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
          <% break;}}}
 	   for (String per: listapermiso) {
 			if(per!=null){
-	   if(per.equals("1183")){%>
+	   if(per.equals("1343")){%>
         <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProduccion&mode=F&iclasificacionId=1',470,580)">
                 <span class="find">Buscar</span>
             </button>
@@ -51,7 +51,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
          <% break;}}}
 	   for (String per: listapermiso) {
 			if(per!=null){
-	   if(per.equals("1185")){%>
+	   if(per.equals("1345")){%>
         <td><button class="button" onclick="fn_exportarExcel('productos.do?metodo=exportarExcel&plantilla=produccion')">
                 <span class="excel">Exportar</span>
             </button>
@@ -89,7 +89,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		<%
 		for (String per: listapermiso) {
 		if(per!=null){
-		if(per.equals("1182")){%>
+		if(per.equals("1342")){%>
 		<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
 		                     onclick="popup('productos.do?metodo=mantenimientoProduccion&mode=U&id=<bean:write name="x" property="iProduccionId" />',700,635)" />
 	     <% break; }}}%>
@@ -98,7 +98,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		<%
 	    for (String per: listapermiso) {
 		if(per!=null){
-		if(per.equals("1184")){%>
+		if(per.equals("1344")){%>
 		<img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iProduccionId" />','productos.do?metodo=iduProduccion&mode=D')" />
 		 <% break; }}}%>   

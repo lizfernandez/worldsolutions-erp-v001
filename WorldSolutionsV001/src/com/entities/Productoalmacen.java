@@ -30,7 +30,7 @@ public class Productoalmacen implements Serializable {
 	private Almacen almacen;
 
 	private int iProductoAlmStockTotal;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iProductoId")
 	private Producto producto;
 

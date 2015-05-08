@@ -29,14 +29,14 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 
 		if(producto!=null){
 			if(producto.getcEstadoCodigo()==null){
-	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        	where+= " where p.producto.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
 	        }			
 			if(producto.getcEstadoCodigo()!=null){
-	        	where+= " where p.cEstadoCodigo LIKE '%"+producto.getcEstadoCodigo()+"%'";
+	        	where+= " where p.producto.cEstadoCodigo LIKE '%"+producto.getcEstadoCodigo()+"%'";
 	        }
 			
 			if(producto.getiProductoId()>0){
-	        	where+= " and p.iProductoId = '"+producto.getiProductoId()+"'";
+	        	where+= " and p.producto.iProductoId = '"+producto.getiProductoId()+"'";
 	        }
 			if(producto.getCategoria()!=null && producto.getCategoria().getiCategoriaId()>0){
 	        	where+= " and p.producto.categoria.iCategoriaId LIKE '%"+producto.getCategoria().getiCategoriaId()+"%'";
@@ -67,7 +67,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 	        	where+=" and  p.producto.fProductoPrecioVenta LIKE '%"+producto.getfProductoPrecioVenta()+"%'";
 	        }
 	        System.out.println(" where ="+where);
-	        q = getInstancia().createQuery("select p.producto from Productoalmacen p   " + where +" order by p.producto.vProductoNombre asc");/**/
+	        q = getInstancia().createQuery("select  DISTINCT  p.producto from Productoalmacen p   " + where +" order by p.producto.vProductoNombre asc");/**/
 	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaProducto = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)
