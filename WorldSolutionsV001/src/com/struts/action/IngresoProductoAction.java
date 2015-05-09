@@ -1613,8 +1613,7 @@ public class IngresoProductoAction extends BaseAction {
 			
 			
 			impresora.agregarSeparacion();
-			impresora.agregarLinea("CODIGO   DESCRIPCION");
-			impresora.agregarLinea("    	 CANT P.UNIT IMPORTE");
+			impresora.agregarCabeceraDetalleProducto("CODIGO", "DESCRIPCION", "CANT", "P.UNIT", "IMPORTE");
 			impresora.agregarSeparacion();
 			      
             // aqui recorro mis productos y los imprimo
