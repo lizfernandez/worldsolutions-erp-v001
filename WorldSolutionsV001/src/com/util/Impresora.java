@@ -31,7 +31,7 @@ public class Impresora {
 	public Impresora() {
 		
 		//Codigos para iniciar la impresion y abrir la caja registradora
-contenido = "";/*+ (char) 27 + (char) 112
+		contenido = "";/*+ (char) 27 + (char) 112
 				+ (char) 0
 				+ (char) 10
 				+ (char) 100;*/
@@ -44,6 +44,7 @@ contenido = "";/*+ (char) 27 + (char) 112
 			for (int i = 0; i < services.length; i++) {
 				if (services[i].getName().equals(nombreDispositivo)) {
 					jobImpresora = services[i].createPrintJob();
+					break;
 				}
 			}
 		}
@@ -75,10 +76,19 @@ contenido = "";/*+ (char) 27 + (char) 112
 		
 	}
 	
-	public void asignarDispositivo(String impresoraID) throws IllegalAccessException{
-		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
-
+	public void asignarDispositivo(String idImpresora) throws IllegalAccessException{
 		
+		List<ImpresoraVO> list = listarImpresoras();
+		for (ImpresoraVO impresoraVO : list) {
+			if (impresoraVO.getImpresoraID().equals(idImpresora)) {
+				jobImpresora = impresoraVO.getJobImpresora();
+				break;
+			}
+		}
+
+		if (jobImpresora == null) {
+			throw new IllegalAccessException("No se encontro el dipositivo [ " + idImpresora + " ]");
+		}
 		
 	}
 	
@@ -117,7 +127,6 @@ contenido = "";/*+ (char) 27 + (char) 112
 	}
 	
 	public void imprimirTicket() throws IOException {
-
 		//this.contenido = contenido.toUpperCase().replace("Ñ", "N");
 		contenido += ""+ (char) 27 + (char) 112
 				+ (char) 0
