@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.apache.struts.action.ActionForm;
 
+import com.dao.PersonalDao;
+import com.dao.ProductoDao;
 import com.entities.Area;
 import com.entities.Ocupacion;
 import com.entities.Personal;
@@ -21,7 +23,10 @@ public class PersonalForm extends ActionForm {
     private List paginas;
     private int pagInicio;
     
-    
+    public PersonalDao getPersonalDao(){
+    	PersonalDao produtodao= new PersonalDao();
+		return produtodao;
+	}
 	/**
 	 * @return the lista
 	 */
@@ -241,9 +246,9 @@ public class PersonalForm extends ActionForm {
 	 * @param tipodocumento the tipodocumento to set
 	 */
 	public void setiTipoDocumentoId(int iTipoDocumentoId) {
-		Tipodocumento tipo= getTipodocumento();
-		tipo.setiTipoDocumentoId(iTipoDocumentoId);
-		this.personal.setTipodocumento(tipo);
+	//	Tipodocumento tipo= getTipodocumento();
+		//tipo.setiTipoDocumentoId(iTipoDocumentoId);
+		this.personal.setTipodocumento(getPersonalDao().findEndidad(getTipodocumento(), iTipoDocumentoId));
 		
 	}
 
