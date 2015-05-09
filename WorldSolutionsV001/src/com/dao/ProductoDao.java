@@ -31,45 +31,46 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 
 		if(producto!=null){
 			if(producto.getcEstadoCodigo()==null){
-	        	where+= " where p.producto.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
 	        }			
 			if(producto.getcEstadoCodigo()!=null){
-	        	where+= " where p.producto.cEstadoCodigo LIKE '%"+producto.getcEstadoCodigo()+"%'";
+	        	where+= " where p.cEstadoCodigo LIKE '%"+producto.getcEstadoCodigo()+"%'";
 	        }
 			
 			if(producto.getiProductoId()>0){
-	        	where+= " and p.producto.iProductoId = '"+producto.getiProductoId()+"'";
+	        	where+= " and p.iProductoId = '"+producto.getiProductoId()+"'";
 	        }
 			if(producto.getCategoria()!=null && producto.getCategoria().getiCategoriaId()>0){
-	        	where+= " and p.producto.categoria.iCategoriaId LIKE '%"+producto.getCategoria().getiCategoriaId()+"%'";
+	        	where+= " and p.categoria.iCategoriaId LIKE '%"+producto.getCategoria().getiCategoriaId()+"%'";
 	        }
 			if(iclasificacionId>0){
-	        	where+= " and p.producto.categoria.clasificacionCategoria.iClasificacionId LIKE '%"+iclasificacionId+"%'";
+	        	where+= " and p.categoria.clasificacionCategoria.iClasificacionId LIKE '%"+iclasificacionId+"%'";
 	        }
-			if(iSucursal>0){
-	        	where+= " and p.almacen.sucursal.iSucursalId LIKE '%"+iSucursal+"%'";
+			/*if(iSucursal>0){
+	        	where+= " and p.sucursal.iSucursalId LIKE '%"+iSucursal+"%'";
 	        }
+	        */
 			if(producto.getcProductoCodigo()!=null){
-	        	where+=" and  p.producto.cProductoCodigo LIKE '%"+producto.getcProductoCodigo()+"%'";
+	        	where+=" and  p.cProductoCodigo LIKE '%"+producto.getcProductoCodigo()+"%'";
 	        }
 			if(producto.getvProductoNombre()!=null){
-	        	where+=" and  p.producto.vProductoNombre LIKE '%"+producto.getvProductoNombre()+"%'";
+	        	where+=" and  p.vProductoNombre LIKE '%"+producto.getvProductoNombre()+"%'";
 	        }
 	        if(producto.getiProductoStockTotal()>0){
-	        	where+=" and  p.producto.iProductoStockTotal LIKE '%"+producto.getiProductoStockTotal()+"%'";
+	        	where+=" and  p.iProductoStockTotal LIKE '%"+producto.getiProductoStockTotal()+"%'";
 	        }
 	        if(producto.getUnidadMedida()!=null && producto.getUnidadMedida().getiUnidadMedidaId()>0){
-	        	where+=" and  p.producto.unidadMedida.iUnidadMedidaId LIKE '%"+producto.getUnidadMedida().getiUnidadMedidaId()+"%'";
+	        	where+=" and  p.unidadMedida.iUnidadMedidaId LIKE '%"+producto.getUnidadMedida().getiUnidadMedidaId()+"%'";
 	        }
 	        
 	        if(producto.getfProductoPrecioCompra()>0){
-	        	where+=" and  p.producto.fProductoPrecioCompra LIKE '%"+producto.getfProductoPrecioCompra()+"%'";
+	        	where+=" and  p.fProductoPrecioCompra LIKE '%"+producto.getfProductoPrecioCompra()+"%'";
 	        }
 	        if(producto.getfProductoPrecioVenta()>0){
-	        	where+=" and  p.producto.fProductoPrecioVenta LIKE '%"+producto.getfProductoPrecioVenta()+"%'";
+	        	where+=" and  p.fProductoPrecioVenta LIKE '%"+producto.getfProductoPrecioVenta()+"%'";
 	        }
 	        System.out.println(" where ="+where);
-	        q = getInstancia().createQuery("select  DISTINCT  p.producto from Productoalmacen p   " + where +" order by p.producto.vProductoNombre asc");/**/
+	        q = getInstancia().createQuery("select  DISTINCT  p from Producto p   " + where +" order by p.vProductoNombre asc");/**/
 	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaProducto = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)

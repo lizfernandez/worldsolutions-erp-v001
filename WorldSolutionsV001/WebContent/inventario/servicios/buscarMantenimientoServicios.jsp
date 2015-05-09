@@ -98,9 +98,7 @@
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="listaProducto" styleId="metodo"/>
 
-<html:hidden property="iUsuarioActualizaId" />
-<%-- hidden field que contiene el iUsuarioInsertaId del producto --%>
-<html:hidden property="iUsuarioInsertaId" />
+
 
 </html:form>
 <script>
