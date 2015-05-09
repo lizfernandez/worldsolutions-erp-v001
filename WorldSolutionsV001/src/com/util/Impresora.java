@@ -7,7 +7,6 @@ import java.util.List;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
-import javax.print.MultiDocPrintService;
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
@@ -65,8 +64,8 @@ public class Impresora {
 		//PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
 		//MultiDocPrintService[] services = PrintServiceLookup.lookupMultiDocPrintServices(null, null);
 		AttributeSet aset = new HashAttributeSet();
-		 aset.add(new PrinterName("Microsoft XPS Document Writer", null));
-		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
+		aset.add(new PrinterName("\\V2\bixolon srp-270", null));
+		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, aset);
 		if (services.length > 0) {
 			for (int i = 0; i < services.length; i++) {
 				DocPrintJob printJob = services[i].createPrintJob();
