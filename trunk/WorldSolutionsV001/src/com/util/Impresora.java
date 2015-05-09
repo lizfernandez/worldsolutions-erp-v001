@@ -1,6 +1,8 @@
 package com.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.print.Doc;
 import javax.print.DocFlavor;
@@ -48,6 +50,35 @@ contenido = "";/*+ (char) 27 + (char) 112
 		if (jobImpresora == null) {
 			throw new IllegalAccessException("No se encontro el dipositivo [ " + nombreDispositivo + " ]");
 		}
+		
+	}
+	
+	public static List<ImpresoraVO> listarImpresoras() {
+		
+		List<ImpresoraVO> list = new ArrayList<ImpresoraVO>();
+		ImpresoraVO impresoraVO;
+		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
+
+		if (services.length > 0) {
+			for (int i = 0; i < services.length; i++) {
+				impresoraVO = new ImpresoraVO();
+				impresoraVO.setImpresoraID(services[i].getName());
+				impresoraVO.setImpresoraNombre(services[i].toString());
+				impresoraVO.setJobImpresora(services[i].createPrintJob());
+				
+				list.add(impresoraVO);
+				
+			}
+		}
+		
+		return list;
+		
+	}
+	
+	public void asignarDispositivo(String impresoraID) throws IllegalAccessException{
+		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
+
+		
 		
 	}
 	
