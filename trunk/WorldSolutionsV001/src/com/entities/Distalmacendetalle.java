@@ -42,7 +42,9 @@ public class Distalmacendetalle implements Serializable {
 	private int iUsuarioActualizaId;
 
 	private int iUsuarioInsertaId;
+	
 
+private float fPrecioUnitario;
     public Distalmacendetalle() {
     }
 
@@ -199,6 +201,22 @@ public class Distalmacendetalle implements Serializable {
 	public void setiUsuarioInsertaId(int iUsuarioInsertaId) {
 		this.iUsuarioInsertaId = iUsuarioInsertaId;
 	}
+
+	/**
+	 * @return the fPrecioUnitario
+	 */
+	public float getfPrecioUnitario() {
+		return fPrecioUnitario;
+	}
+
+	/**
+	 * @param fPrecioUnitario the fPrecioUnitario to set
+	 */
+	public void setfPrecioUnitario(float fPrecioUnitario) {
+		this.fPrecioUnitario = fPrecioUnitario;
+	}
+
+	
 
 	
 

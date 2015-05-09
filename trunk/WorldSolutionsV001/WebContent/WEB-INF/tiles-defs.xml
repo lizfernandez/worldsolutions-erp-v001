@@ -73,6 +73,14 @@
     <put name="body" value="/inventario/produccion/listaProduccion.jsp"></put>   
     <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
 </definition>
+<definition name=".listaDistAlmacen" extends=".plantilla">
+    <put name="body" value="/inventario/distribucionAlmacen/listaDistribucionProducto.jsp"></put>   
+    <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
+</definition>
+<definition name=".listaOrdenCompra" extends=".plantilla">
+    <put name="body" value="/inventario/ordenCompra/listaOrdenCompra.jsp"></put>   
+    <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
+</definition>
 
 <definition name=".listPopupProductoKardex" extends=".popup">
     <put name="body" value="/inventario/producto/listaPopupProductoKardex.jsp"></put>   
@@ -99,6 +107,11 @@
 <definition name=".listPopupServiciosProduccion" extends=".popup">
     <put name="body" value="/inventario/producto/listaPopupServiciosProduccion.jsp"></put>   
 </definition>
+<definition name=".listPopupProductoAlmacen" extends=".popup">
+    <put name="body" value="/inventario/producto/listaPopupProductoAlmacen.jsp"></put>   
+</definition>
+
+
 
 <definition name=".mantenimientoProducto" extends=".popup">
     <put name="body" value="/inventario/producto/mantenimientoProducto.jsp"></put>   
@@ -118,6 +131,13 @@
 <definition name=".mantenimientoProduccion" extends=".popup">
     <put name="body" value="/inventario/produccion/mantenimientoProduccion.jsp"></put>   
 </definition>
+<definition name=".mantenimientoDistAlmacen" extends=".popup">
+    <put name="body" value="/inventario/distribucionAlmacen/mantenimientoDistribucionProducto.jsp"></put>   
+</definition>
+<definition name=".mantenimientoOrdenCompra" extends=".popup">
+    <put name="body" value="/inventario/ordenCompra/mantenimientoOrdenCompra.jsp"></put>   
+</definition>
+
 <definition name=".buscarMantenimientoProducto" extends=".popup">
     <put name="body" value="/inventario/producto/buscarMantenimientoProducto.jsp"></put>   
 </definition>
@@ -135,6 +155,12 @@
 </definition>
 <definition name=".buscarMantenimientoProduccion" extends=".popup">
     <put name="body" value="/inventario/produccion/buscarMantenimientoProduccion.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientoDistAlmacen" extends=".popup">
+    <put name="body" value="/inventario/distribucionAlmacen/buscarMantenimientoDistAlmacen.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientoOrdenCompra" extends=".popup">
+    <put name="body" value="/inventario/ordenCompra/buscarMantenimientoOrdenCompra.jsp"></put>   
 </definition>
 
 <definition name=".perfil" extends=".plantilla">

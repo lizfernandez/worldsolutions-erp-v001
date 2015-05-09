@@ -343,6 +343,7 @@ public class IngresoProductoAction extends BaseAction {
         ingresoproductoform.setTipoMoneda(moneda.getcModenaCodigo());
 		ingresoproductoform.setIGVCompra(sesion.getAttribute("IGVCompras").toString());
 		ingresoproductoform.setIGVPercepcion(sesion.getAttribute("IGVPercepcion").toString());
+	
 		
     //    List<Tipodocumentogestion> listaDocumentoGestion = Util.listaDocGest();
  		/**
@@ -355,7 +356,7 @@ public class IngresoProductoAction extends BaseAction {
 			sesion.removeAttribute("listaIngresoProductoDetalle"); 
 			sesion.removeAttribute("listaIngresoProductoDetalleCompra");
 			sesion.removeAttribute("listaIngresoProductoDetalleOriginal");
-			ingresoproductoform.getIngresoProductoDev().setnNroNotaDebito(ingresogenericaDao.callSPNro_Documento(8,"Ingresoproductodevolucion","nNroNotaDebito"));
+			ingresoproductoform.getIngresoProductoDev().setnNroNotaDebito(ingresogenericaDao.callSPNro_Documento(8,"Ingresoproductodevolucion","nNroNotaDebito",usu.getSucursal().getiSucursalId()));
 		}
      
 		/**

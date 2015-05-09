@@ -60,7 +60,7 @@
 	     </logic:empty>
          <logic:notEmpty name="personalForm" property="lista">
 		 <logic:iterate name="personalForm" property="lista" id="x">	
-			<tr onclick="retornar('iPersonalId','<bean:write name="x" property="iPersonalId" />','cPersonalCodigo','<bean:write name="x" property="cPersonalCodigo" />','vPersonalNombres','<bean:write name="x" property="vPersonalNombres" />  <bean:write name="x" property="vPersonalApellidoPaterno" />','fSueldo','<bean:write name="x" property="fSueldo" />','vOcupacionDescripcion','<bean:write name="x" property="ocupacion.vOcupacionDescripcion" />')">
+			<tr onclick="retornar($_GET('iPersonalId') ,'<bean:write name="x" property="iPersonalId" />',$_GET('codigo'),'<bean:write name="x" property="cPersonalCodigo" />',$_GET('nombre'),'<bean:write name="x" property="vPersonalNombres" />  <bean:write name="x" property="vPersonalApellidoPaterno" />','fSueldo','<bean:write name="x" property="fSueldo" />','vOcupacionDescripcion','<bean:write name="x" property="ocupacion.vOcupacionDescripcion" />')">
 		 		<td><bean:write name="x" property="cPersonalCodigo" /></td>
 				<td><bean:write name="x" property="vPersonalNombres" /></td>
 				<td><bean:write name="x" property="vPersonalApellidoPaterno" /></td>

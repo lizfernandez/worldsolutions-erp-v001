@@ -301,6 +301,7 @@ public class VentaAction extends BaseAction {
 		Moneda moneda = (Moneda) sesion.getAttribute("Moneda");
 		ventaform.setTipoMoneda(moneda.getcModenaCodigo());
 		ventaform.setIGVVentas(sesion.getAttribute("IGVVentas").toString());
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		// List<Tipodocumentogestion> listaDocumentoGestion =
 		// Util.listaDocGest();
 		/**
@@ -315,7 +316,7 @@ public class VentaAction extends BaseAction {
 			sesion.removeAttribute("listaVentaDetalleOriginal");
 			ventaform.getVentaDev().setnNroNotaCredito(
 					ventaDao.callSPNro_Documento(7, "ventaDevolucion",
-							"nNroNotaCredito"));
+							"nNroNotaCredito",usu.getSucursal().getiSucursalId()));
 
 		}
 
@@ -748,13 +749,14 @@ public class VentaAction extends BaseAction {
 		Gson gson = new Gson();
 		GenericaDao productoDao = new GenericaDao();
 		VentaDao ventaDao = new VentaDao();
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		int iTipoDocumentoId = Integer.parseInt(request
 				.getParameter("iTipoDocumentoId"));
 
 		/** Instanciamos la Clase VentaForm **/
 
 		String nuevoCodigo = ventaDao.callSPNro_Documento(iTipoDocumentoId,
-				"venta", "nVentaNumero");
+				"venta", "nVentaNumero",usu.getSucursal().getiSucursalId());
 		List<String> list = new ArrayList<String>();
 		list.add(nuevoCodigo);
 
@@ -836,7 +838,7 @@ public class VentaAction extends BaseAction {
 			ventaform.setfTipoCambio(tipoCambio);
 			// :1 : factura.
 			ventaform.getVenta().setnVentaNumero(
-					ventaDao.callSPNro_Documento(1, "venta", "nVentaNumero"));
+					ventaDao.callSPNro_Documento(1, "venta", "nVentaNumero",usu.getSucursal().getiSucursalId()));
 
 			/*** LISTA DE DETALLE VENTA ***/
 			sesion.removeAttribute("listaVentaDetalle");
@@ -861,7 +863,7 @@ public class VentaAction extends BaseAction {
 			msn = "showEstadoCuenta";
 			// 1:factura:
 			ventaform.getVenta().setnVentaNumero(
-					ventaDao.callSPNro_Documento(1, "venta", "nVentaNumero"));
+					ventaDao.callSPNro_Documento(1, "venta", "nVentaNumero",usu.getSucursal().getiSucursalId()));
 		}
 
 		/**
@@ -1065,7 +1067,7 @@ public class VentaAction extends BaseAction {
 		try {
 			String nVentaNumero = null;
 			if (pForm.getMode().equals("I") || pForm.getMode().equals("IE")) {
-				nVentaNumero = ventaDao.callSPNro_Documento(obj.getTipoDocumento().getiTipoDocumentoGestionId(), "venta", "nVentaNumero");
+				nVentaNumero = ventaDao.callSPNro_Documento(obj.getTipoDocumento().getiTipoDocumentoGestionId(), "venta", "nVentaNumero",usu.getSucursal().getiSucursalId());
 			}
 			
 			entityTransaction = ventaDao.entityTransaction();
@@ -2857,7 +2859,7 @@ public class VentaAction extends BaseAction {
 					if (arqueoVenta.getfMontoPagoCredito() > 0) {
 						indice = arqueoVenta.getMedioPago2().getiMedioPagoId() - 1;
 
-						totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPagoCredito() - arqueoVenta.getfMontoVuelto();
+						totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPagoCredito();
 						
 						listaTotalPorMedioPago.set(indice, totalMedioPago);
 					}

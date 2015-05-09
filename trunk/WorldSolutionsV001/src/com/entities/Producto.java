@@ -149,7 +149,7 @@ public class Producto implements Serializable {
 	@JoinColumn(name="iUMPedidoId", nullable=false)
 	private Unidadmedida umPedido;
 
-	private String vUMSalida;
+	private int vUMSalida;
 
 	//bi-directional many-to-one association to Unidadmedida
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -157,6 +157,7 @@ public class Producto implements Serializable {
 	private Unidadmedida umSalida;
 
 
+	
     public Producto() {
     }
 
@@ -559,14 +560,14 @@ public class Producto implements Serializable {
 	/**
 	 * @return the vUMSalida
 	 */
-	public String getvUMSalida() {
+	public int getvUMSalida() {
 		return vUMSalida;
 	}
 
 	/**
 	 * @param vUMSalida the vUMSalida to set
 	 */
-	public void setvUMSalida(String vUMSalida) {
+	public void setvUMSalida(int vUMSalida) {
 		this.vUMSalida = vUMSalida;
 	}
 

@@ -15,7 +15,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 %>  
 <table border="0">
     <!-- tr>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=I',430,500)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoDistAlmacen&mode=I',430,500)">
                 <span class="new">Agregar Producto al Inventarios</span></button>
         <select id="selTipo" name="selTipo">
                 <option value="1">DISTRIBUCION</option>
@@ -27,7 +27,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
          <% 
 	   for (String per: listapermiso) {
 			if(per!=null){
-	   if(per.equals("1211")){%>
+	   if(per.equals("1311")){%>
         <td><button  class="button" onclick="nuevo()">
                 <span class="new">Nuevo</span>
             </button>
@@ -35,23 +35,23 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
         <% break; }}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("1214")){%>
-        <td><button  class="button" onclick="eliminar('tabla','','productos.do?metodo=iduProducto&mode=D')">
+	   if(per.equals("1314")){%>
+        <td><button  class="button" onclick="eliminar('tabla','','productos.do?metodo=iduDistAlmacen&mode=D')">
                 <span class="delete">Eliminar</span>
             </button>
         </td>
          <% break;}}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("1213")){%>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&mode=F&iclasificacionId=1',470,580)">
+	   if(per.equals("1313")){%>
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoDistAlmacen&mode=F&iclasificacionId=1',470,580)">
                 <span class="find">Buscar</span>
             </button>
         </td>
         <% break;}}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
-	   if(per.equals("1215")){%>
+	   if(per.equals("1315")){%>
         <td><button class="button" onclick="fn_exportarExcel('productos.do?metodo=exportarExcel&plantilla=producto')">
                 <span class="excel">Exportar</span>
             </button>
@@ -93,18 +93,18 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		<%
 		for (String per: listapermiso) {
 		if(per!=null){
-		if(per.equals("1212")){%>
+		if(per.equals("1312")){%>
 		<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoProducto&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iProductoId" />',600,660)" />
+		                     onclick="popup('productos.do?metodo=mantenimientoDistAlmacen&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iProductoId" />',600,660)" />
          <% break; }}}%>
         </td>
 		<td align="center">
 		<%
 		for (String per: listapermiso) {
 		if(per!=null){
-		if(per.equals("1214")){%>
+		if(per.equals("1314")){%>
 		<img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
-		                     onclick="eliminar('tabla','<bean:write name="x" property="iProductoId" />','productos.do?metodo=iduProducto&mode=D')" />
+		                     onclick="eliminar('tabla','<bean:write name="x" property="iProductoId" />','productos.do?metodo=iduDistAlmacen&mode=D')" />
 		<%break; }}}%>
 		</td>	
 		<td align="center">
@@ -114,7 +114,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	    <td><bean:write name="x" property="cProductoCodigo" /></td>
 		<td><bean:write name="x" property="vProductoNombre" /></td>
 		<td><bean:write name="x" property="iUMBase" />  <bean:write name="x" property="umBase.vUnidadMedidaDescripcion" /> 
-		 <logic:notEqual name="x" property="umPedido"  value="">
+		 <logic:notEqual name="x" property="umPedido"  value="null">
 		  de 
 		  <bean:write name="x" property="iUMPedido" />  <bean:write name="x" property="umPedido.vUnidadMedidaDescripcion" /> 
 		 </logic:notEqual>
@@ -166,10 +166,10 @@ paginacion();
 
 $("#inventario").addClass("active");
 $("#productos").children('li').show();
-$("#producto").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
-$("#producto").children('a').css("color","#D0D2D7");
+$("#distAlmacen").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
+$("#distAlmacen").children('a').css("color","#D0D2D7");
 
 function nuevo(){
-	popup('productos.do?metodo=mantenimientoProducto&mode=I&iclasificacionId=1',700,635);
+	popup('productos.do?metodo=mantenimientoDistAlmacen&mode=I',700,635);
 }
 </script> 

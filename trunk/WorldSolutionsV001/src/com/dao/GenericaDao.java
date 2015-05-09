@@ -266,7 +266,7 @@ public class GenericaDao  implements IGenerica{
 		}
 	}
 	@Override
-	public String callSPNro_Documento(int iTipoDocumentoId,String tabla, String campoTablaNumeroDoc) {
+	public String callSPNro_Documento(int iTipoDocumentoId,String tabla, String campoTablaNumeroDoc, int iSucursalId) {
 		Query q;
 
 		String nroDocumento = "";
@@ -275,10 +275,11 @@ public class GenericaDao  implements IGenerica{
 
 			getInstancia().getTransaction().begin();
 			q = getInstancia()
-					.createNativeQuery("{ CALL SP_NRO_DOCUMENTO(?,?,?) }")// createNamedQuery("SP_IDU_PERFIL_PERMISOS")
+					.createNativeQuery("{ CALL SP_NRO_DOCUMENTO(?,?,?,?) }")// createNamedQuery("SP_IDU_PERFIL_PERMISOS")
 					.setParameter(1, iTipoDocumentoId)
 					.setParameter(2, tabla)
-					.setParameter(3, campoTablaNumeroDoc);
+					.setParameter(3, campoTablaNumeroDoc)
+			        .setParameter(4, iSucursalId);
 
 			nroDocumento = (String) q.getSingleResult();
 			getInstancia().getTransaction().commit();

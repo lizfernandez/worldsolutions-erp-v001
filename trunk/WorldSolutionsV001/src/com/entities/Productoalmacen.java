@@ -39,6 +39,9 @@ public class Productoalmacen implements Serializable {
 	private Unidadmedida unidadMedidaAlm;
 
 	private int iUMBaseAlm;
+	
+
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="iUMBaseAlmId")
 	private Unidadmedida unidadBaseAlm;
@@ -222,6 +225,7 @@ public class Productoalmacen implements Serializable {
 		this.iUsuarioInsertaId = iUsuarioInsertaId;
 	}
 
+	
 	
 
 }
