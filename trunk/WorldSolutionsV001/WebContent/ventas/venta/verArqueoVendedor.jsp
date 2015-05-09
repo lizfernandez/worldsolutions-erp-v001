@@ -12,7 +12,11 @@
 </tr>
 
 <tr>
-	<td align="right">
+     <td align="center">				        
+				          <html:select  property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:100px" onchange="fn_PagoCredito()">        
+                            <html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraID"/>
+                        </html:select>
+	
 		<button onclick="fn_imprimir()" type="submit" class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
 	</td>
@@ -25,7 +29,7 @@
 </html:form>
 <script>
 	$("#popupCabecera").text('VISUALIZAR ARQUEO');
-	
+	$("#impresoraID option[value='BIXOLON SRP-270']").attr("selected",true); 
 
 	function fn_imprimir(id){
 		var cad="venta.do?metodo=imprimir&omitirPieBoleta=true";

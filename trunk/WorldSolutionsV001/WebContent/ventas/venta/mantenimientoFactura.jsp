@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <html:form action="venta" styleId="formVenta" enctype="echarset=utf-8">
-<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 64%; float: left;">
+<table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 63%; float: left;">
     <tr style="height: 1px;">
       <td>
       
@@ -293,7 +293,7 @@
 		           
 		            <tr>		                
 		                <td align="right">MONTO PAGO 
-		                <html:select  property="iMedioPagoId1" styleId="iMedioPagoId1" styleClass="combo" style="width:110px" onchange="fn_PagoCredito()">        
+		                <html:select  property="iMedioPagoId1" styleId="iMedioPagoId1" styleClass="combo" style="width:100px" onchange="fn_PagoCredito()">        
                  <html:options collection="listamedioPago" property="iMedioPagoId" labelProperty="vNombre"/>
                 </html:select>:</td>
 		                <td align="right">
@@ -305,7 +305,7 @@
 		            </tr>
 		             <tr>		                
 		                <td align="right">MONTO PAGO 
-		                <html:select  property="iMedioPagoId2" styleId="iMedioPagoId2" styleClass="combo" style="width:110px" onchange="fn_PagoCredito()">        
+		                <html:select  property="iMedioPagoId2" styleId="iMedioPagoId2" styleClass="combo" style="width:100px" onchange="fn_PagoCredito()">        
                  <html:options collection="listamedioPago" property="iMedioPagoId" labelProperty="vNombre"/>
                 </html:select>:</td>
 		                <td align="right">
@@ -341,7 +341,7 @@
                 <table style="height: 100%" cellpadding="0" cellspacing="0" border="0" class="detallePago">
 				    <tr>
 				        <td align="left">				        
-				          <html:select  property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:160px" onchange="fn_PagoCredito()">        
+				          <html:select  property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:100px" onchange="fn_PagoCredito()">        
                             <html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraID"/>
                         </html:select>
 				        </td>
