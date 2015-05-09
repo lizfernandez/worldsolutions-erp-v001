@@ -2626,6 +2626,9 @@ public class VentaAction extends BaseAction {
 		// String tipoImpresion = request.getParameter("tipoImpresion");
 		VentaForm ventaForm = (VentaForm) form;
 		Venta venta = null;
+		
+		impresora.asignarDispositivo(ventaForm.getImpresoraID());
+		
 		if (ventaForm.getvTipoImpresion().equals("venta")) {
 			/*
 			 * if (id == 0) {

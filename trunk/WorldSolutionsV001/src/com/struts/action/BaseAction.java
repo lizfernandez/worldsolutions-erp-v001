@@ -201,11 +201,7 @@ public abstract class BaseAction  extends DispatchAction {
         HttpSession sesion = request.getSession();
         boolean omitirPieBoleta = "true".equals(request.getParameter("omitirPieBoleta"));
 		try {
-            Configuracion cong = (Configuracion) sesion.getAttribute("nombreImpresora");
-			String nombreDispositivo = (String) cong.getvValor();
-
 			impresora = new Impresora();
-			impresora.seleccionarDispositivo(nombreDispositivo);
 
   			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
             impresora.agregarLineaCentrada(usu.getSucursal().getEmpresa().getvEmpresaNombre());
