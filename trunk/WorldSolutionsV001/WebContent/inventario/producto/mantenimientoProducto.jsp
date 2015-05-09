@@ -157,7 +157,7 @@
 		    </td>
 		    <td colspan="2">  
 		       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="text comboCodigo unidadFinal" tabindex="12" style="width:140px" >
-		          <option value="0">::SELECCIONE::</option> 
+		         
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>		          
 		     </html:select>  
 		      
