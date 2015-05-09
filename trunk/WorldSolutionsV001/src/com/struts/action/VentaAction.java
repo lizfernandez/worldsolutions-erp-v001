@@ -2661,28 +2661,37 @@ public class VentaAction extends BaseAction {
 			}
 
 			impresora.agregarSeparacion();
-			impresora.agregarCabeceraDetalleProducto("CODIGO", "DESCRIPCION", "CANT", "P.UNIT", "IMPORTE");
+			impresora.agregarCabeceraDetalleProducto("CODIGO", "DESCRIPCION", "CANT", "P.UNIT", "DSCTO", "IMPORTE");
 			impresora.agregarSeparacion();
-
+			float totalVenta = 0;
 			// aqui recorro mis productos y los imprimo
 			for (Ventadetalle ventadetalle : venta.getVentadetalles()) {
 				impresora.agregarDetalleProducto(ventadetalle.getProducto().getcProductoCodigo(),
 													ventadetalle.getProducto().getvProductoNombre(),
 													ventadetalle.getiVentaDetalleCantidad(),
 													ventadetalle.getfVentaDetallePrecio(), 
+													ventadetalle.getfDescuento(),
 													ventadetalle.getfVentaDetalleTotal());
-
+				
+				totalVenta += ventadetalle.getfVentaDetalleTotal();
+				
 			}
 
 			impresora.agregarSeparacion();
 			// Descuentos
-			impresora.agregarTituloDerecha("TOTAL", 0, venta.getvTipoVenta() + 
+			impresora.agregarTituloDerecha("VALOR VENTA", 0, venta.getvTipoVenta() + 
+					Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(totalVenta), 11));
+			
+			impresora.agregarSeparacion();
+			impresora.agregarTituloDerecha("TOTAL REAL", 0, venta.getvTipoVenta() + 
 					Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(venta.getfVentaTotalReal()), 11));
 			impresora.agregarTituloDerecha("DESCUENTO", 0, venta.getvTipoVenta()+ 
 					Util.completarEspacioIzquierda("-"+ FormatosNumeros.FormatoDecimalMoneda(venta.getfDescuento()), 11));
 			impresora.agregarTituloDerecha("DSCTO CLIENTE", 0, venta.getvTipoVenta() + 
 					Util.completarEspacioIzquierda("-" + FormatosNumeros.FormatoDecimalMoneda(venta.getfDescClienteVenta()), 11));
 
+			impresora.agregarSeparacion();
+			
 			impresora.agregarTituloDerecha("SUBTOTAL", 0, venta.getvTipoVenta() + 
 					Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(venta.getfVentaSubTotal()), 11));
 			impresora.agregarTituloDerecha("IGV", 0, venta.getvTipoVenta() + 
@@ -2692,11 +2701,21 @@ public class VentaAction extends BaseAction {
 
 			impresora.agregarSeparacion();
 
-			impresora.agregarTituloDerecha("PAGO", 0, venta.getvTipoPago() + 
+			impresora.agregarTituloDerecha(venta.getMedioPago1().getvNombre(), 0, venta.getvTipoPago() + 
 					Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(venta.getfMontoPago()), 11));
+			
+			if (venta.getfMontoPagoCredito() > 0) {
+				
+				impresora.agregarTituloDerecha(venta.getMedioPago2().getvNombre() , 0, venta.getvTipoPago() + 
+						Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(venta.getfMontoPagoCredito()), 11));
+				
+				
+			}
 			impresora.agregarTituloDerecha("VUELTO", 0, venta.getvTipoPago() + 
 					Util.completarEspacioIzquierda(FormatosNumeros.FormatoDecimalMoneda(venta.getfMontoVuelto()), 11));
 
+			
+			
 		} else if (ventaForm.getvTipoImpresion().equals("ventaDevolucion")) {
 			
 			Ventadevolucion ventaDev = ventaDao.findEndidadBD(
@@ -2733,7 +2752,7 @@ public class VentaAction extends BaseAction {
 			}
 
 			impresora.agregarSeparacion();
-			impresora.agregarCabeceraDetalleProducto("CODIGO", "DESCRIPCION", "CANT", "P.UNIT", "IMPORTE");
+			impresora.agregarCabeceraDetalleProducto("CODIGO", "DESCRIPCION", "CANT", "P.UNIT", "DSCTO", "IMPORTE");
 			impresora.agregarSeparacion();
 
 			// aqui recorro mis productos y los imprimo
@@ -2743,6 +2762,7 @@ public class VentaAction extends BaseAction {
 												ventadetalle.getProducto().getvProductoNombre(), 
 												ventadetalle.getiVentaDevDetalleCantidad(),
 												ventadetalle.getfVentaDevDetallePrecio(), 
+												ventadetalle.getfDescuento(), 
 												ventadetalle.getfVentaDevDetalleTotal());
 
 			}

@@ -252,7 +252,8 @@ public class Impresora {
 		
 	}
 
-	public void agregarDetalleProducto(String cProductoCodigo, String vProductoNombre, int iVentaDetalleCantidad, float fVentaDetallePrecio, float fVentaDetalleTotal) throws IllegalAccessException {
+	public void agregarDetalleProducto(String cProductoCodigo, String vProductoNombre, int iVentaDetalleCantidad, 
+			float fVentaDetallePrecio, float fDescuento, float fVentaDetalleTotal) throws IllegalAccessException {
 		
 		Object[][] detalleLinea = new Object[][] {
 				{ cProductoCodigo, 0, 1 },
@@ -261,16 +262,16 @@ public class Impresora {
 		
 		detalleLinea = new Object[][] {
 				{ "", 0, 1},
-				{ iVentaDetalleCantidad, 3, -1 },
-				{ fVentaDetallePrecio, 15, -1 },
-				{ fVentaDetalleTotal, 25, -1 } };
+				{ iVentaDetalleCantidad, 10, 1},
+				{ fVentaDetallePrecio, 20, -1 },
+				{ fVentaDetalleTotal, 30, -1 } };
 		agregarLinea(detalleLinea);
 		
 		
 	}
 
 	public void agregarCabeceraDetalleProducto(String tituloCodigo, String tituloDescripcion,
-			String tituloCantidad, String tituloPrecioUnitario, String tituloImporte) {
+			String tituloCantidad, String tituloPrecioUnitario, String tituloDescuentoProducto, String tituloImporte) {
 		
 		Object[][] detalleLinea = new Object[][] {
 				{ tituloCodigo, 0, 1 },
@@ -278,10 +279,10 @@ public class Impresora {
 		agregarLinea(detalleLinea);
 		
 		detalleLinea = new Object[][] {
-				{ "", 0, 1},
-				{ tituloCantidad, 3, -1 },
-				{ tituloPrecioUnitario, 15, -1 },
-				{ tituloImporte, 25, -1 } };
+				{ "", 0, -1 },
+				{ tituloCantidad, 10, -1 },
+				{ tituloPrecioUnitario, 20, -1 },
+				{ tituloImporte, 30, -1 } };
 		agregarLinea(detalleLinea);
 	}
 
