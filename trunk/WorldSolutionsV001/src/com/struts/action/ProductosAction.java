@@ -807,7 +807,11 @@ public class ProductosAction extends BaseAction {
 							proAlma.setProducto(pro);
 							
 							proAlma.setiUsuarioInsertaId(usu.getiUsuarioId());
-							proAlma.setiUMBaseAlm(pro.getiUMBase());
+							if(pro.getUmBase()!=null){
+								proAlma.setUnidadBaseAlm(pro.getUmBase());
+								proAlma.setUnidadMedidaAlm(pro.getUnidadMedida());
+							}
+							
 							
 							proAlma.setdFechaInserta(Fechas.getDate());
 							pro.setProductoAlmacendetallles(listaProductoAlm);
@@ -849,8 +853,12 @@ public class ProductosAction extends BaseAction {
 							proAlma.setProducto(pro);
 							proAlma.setiUsuarioInsertaId(usu.getiUsuarioId());
 							proAlma.setdFechaInserta(Fechas.getDate());
-							proAlma.setUnidadBaseAlm(pro.getUmBase());
-							proAlma.setUnidadMedidaAlm(pro.getUnidadMedida());
+							
+							if(pro.getUmBase()!=null){
+								proAlma.setUnidadBaseAlm(pro.getUmBase());
+								proAlma.setUnidadMedidaAlm(pro.getUnidadMedida());
+							}
+							
 							
 							//pro.setProductoAlmacendetallles(listaProductoAlm);
 							productoDao.mergeEndidad(proAlma);	
@@ -912,7 +920,7 @@ public class ProductosAction extends BaseAction {
 				if (pForm.getSizeIngresoproductodetalles() == 0 && pForm.getSizeVentaDetalles() == 0) {
 					
 					int iKardexId = 0;
-					List<Kardex> kardex = kardexDao.buscarKardexProducto(pro.getiProductoId());
+					List<Kardex> kardex = pro.getKardexs();
 					iKardexId = kardex.get(0).getiKardexId();
 					kardex.get(0).setiCantExistencia(pro.getiProductoStockTotal());
 					kardex.get(0).setfPuExistencia(pro.getfProductoPrecioCompra());
@@ -927,7 +935,7 @@ public class ProductosAction extends BaseAction {
 					 * diario la cuenta de Mercaredia
 					 **/
 
-					List<Librodiario> librodiario = kardexDao.buscarLibroDiarioKardex(iKardexId);
+					List<Librodiario> librodiario = kardex.get(0).getLibroDiarios();
 					for (Librodiario listaLibros : librodiario) {
 						/**
 						 * 20(Mercaderia) y 201(Almacem) id=57; 201: mercaderia/
@@ -947,7 +955,13 @@ public class ProductosAction extends BaseAction {
 					}
 
 				}
-
+               if(pro.getUmPedido().getiUnidadMedidaId()==0){
+            	   pro.setUmPedido(null);
+               }
+               if(pro.getUmSalida().getiUnidadMedidaId()==0){
+            	   pro.setUmSalida(null);
+               }
+            	   
 				productoDao.mergeEndidad(pro);
 				resultado = productoDao.commitEndidad(transaccion);
 				//productoDao.refreshEndidad(pro);
