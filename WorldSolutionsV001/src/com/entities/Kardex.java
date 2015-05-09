@@ -2,6 +2,7 @@ package com.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -76,6 +77,9 @@ public class Kardex implements Serializable {
 	private int iPeriodoId;
 	
 	private String vConcepto;
+	//bi-directional many-to-one association to Ingresoproductodetalle
+	@OneToMany(mappedBy="kardex" , fetch=FetchType.LAZY)
+	private List<Librodiario> libroDiarios;
 
     public Kardex() {
     }
@@ -426,5 +430,21 @@ public class Kardex implements Serializable {
 	public void setiAlmacenId(int iAlmacenId) {
 		this.iAlmacenId = iAlmacenId;
 	}
+
+	/**
+	 * @return the libroDiarios
+	 */
+	public List<Librodiario> getLibroDiarios() {
+		return libroDiarios;
+	}
+
+	/**
+	 * @param libroDiarios the libroDiarios to set
+	 */
+	public void setLibroDiarios(List<Librodiario> libroDiarios) {
+		this.libroDiarios = libroDiarios;
+	}
+	
+	
 
 }
