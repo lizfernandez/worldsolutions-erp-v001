@@ -35,6 +35,7 @@ import com.struts.form.LoginForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.Impresora;
+import com.util.ImpresoraVO;
 import com.util.Paginacion;
 
 public class LoginAction extends BaseAction {
@@ -62,6 +63,7 @@ public class LoginAction extends BaseAction {
 		sesion.removeAttribute("IGVVentas");
 		sesion.removeAttribute("iPeriodoId");
 		sesion.removeAttribute("nombreImpresora");
+		
 		
 		
 		

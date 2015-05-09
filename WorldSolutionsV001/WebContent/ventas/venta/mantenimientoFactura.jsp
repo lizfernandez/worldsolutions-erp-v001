@@ -338,8 +338,13 @@
             <tr> 
                <td width="84%">&nbsp;</td>  
                 <td>
-                <table style="height: 100%" cellpadding="0" cellspacing="0" border="0">
+                <table style="height: 100%" cellpadding="0" cellspacing="0" border="0" class="detallePago">
 				    <tr>
+				        <td align="left">				        
+				          <html:select  property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:160px" onchange="fn_PagoCredito()">        
+                            <html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraNombre"/>
+                        </html:select>
+				        </td>
 				        <td align="left">
 				           <button onclick="insertar('tabla')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
 				           
@@ -352,7 +357,7 @@
 				    </tr>
 				</table>
               </td>
-               
+              </tr> 
         </table>
     </td>    
   </tr>

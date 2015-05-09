@@ -58,6 +58,7 @@ import com.util.Constantes;
 import com.util.Fechas;
 import com.util.FormatosNumeros;
 import com.util.Impresora;
+import com.util.ImpresoraVO;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -811,6 +812,7 @@ public class VentaAction extends BaseAction {
 		List<Ventadetalle> lista = new ArrayList<Ventadetalle>();
 		List<Tipodocumentogestion> listaTipoDoc = genericaDao
 				.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
+		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
 
 		/**
 		 * LLamamos al formulario mantenimientoVenta.jsp para la insercion de
@@ -1002,6 +1004,7 @@ public class VentaAction extends BaseAction {
 		sesion.setAttribute("listaEstado", listaEstado);
 		sesion.setAttribute("listaFormapago", listaFormapago);
 		sesion.setAttribute("listamedioPago", listamedioPago);
+		sesion.setAttribute("listaImpresora", listaImpresora);
 
 		sesion.setAttribute("listaTipoDoc", listaTipoDoc);
 
