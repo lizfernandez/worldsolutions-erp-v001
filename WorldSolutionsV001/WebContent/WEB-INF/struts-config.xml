@@ -74,6 +74,7 @@
 	                 
 	                 <forward name="showListPopupProductoKardex" path=".listPopupProductoKardex" />	
 	                 <forward name="showListPopupProducto" path=".listPopupProducto" />	
+	                 <forward name="showListPopupProductoAdm" path=".listPopupProductoAdm" />
 	                 <forward name="showListPopupServicios" path=".listPopupServicios" />	                 
 	                 <forward name="showListPopupProductoCompra" path=".listPopupProductoCompra" />		                                 	                 	                 
 	                 <forward name="showListPopupProductoProduccion" path=".listPopupProductoProduccion" />
