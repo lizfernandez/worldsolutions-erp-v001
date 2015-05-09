@@ -31,9 +31,9 @@ public class Ordencompra implements Serializable {
 
 	private float fDescuento;
 
-	private float fIngresoProductoIGV;
+	private float fOrdenCompraIGV;
 
-	private float fIngresoProductoSubTotal;
+	private float fOrdenCompraSubTotal;
 
 	private float fTipoCambio;
 
@@ -154,31 +154,31 @@ public class Ordencompra implements Serializable {
 	}
 
 	/**
-	 * @return the fIngresoProductoIGV
+	 * @return the fOrdenCompraIGV
 	 */
-	public float getfIngresoProductoIGV() {
-		return fIngresoProductoIGV;
+	public float getfOrdenCompraIGV() {
+		return fOrdenCompraIGV;
 	}
 
 	/**
-	 * @param fIngresoProductoIGV the fIngresoProductoIGV to set
+	 * @param fOrdenCompraIGV the fOrdenCompraIGV to set
 	 */
-	public void setfIngresoProductoIGV(float fIngresoProductoIGV) {
-		this.fIngresoProductoIGV = fIngresoProductoIGV;
+	public void setfOrdenCompraIGV(float fOrdenCompraIGV) {
+		this.fOrdenCompraIGV = fOrdenCompraIGV;
 	}
 
 	/**
-	 * @return the fIngresoProductoSubTotal
+	 * @return the fOrdenCompraSubTotal
 	 */
-	public float getfIngresoProductoSubTotal() {
-		return fIngresoProductoSubTotal;
+	public float getfOrdenCompraSubTotal() {
+		return fOrdenCompraSubTotal;
 	}
 
 	/**
-	 * @param fIngresoProductoSubTotal the fIngresoProductoSubTotal to set
+	 * @param fOrdenCompraSubTotal the fOrdenCompraSubTotal to set
 	 */
-	public void setfIngresoProductoSubTotal(float fIngresoProductoSubTotal) {
-		this.fIngresoProductoSubTotal = fIngresoProductoSubTotal;
+	public void setfOrdenCompraSubTotal(float fOrdenCompraSubTotal) {
+		this.fOrdenCompraSubTotal = fOrdenCompraSubTotal;
 	}
 
 	/**

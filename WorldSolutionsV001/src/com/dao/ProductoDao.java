@@ -8,6 +8,8 @@ import javax.persistence.Query;
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
+import com.entities.Distalmacen;
+import com.entities.Ordencompra;
 import com.entities.Produccion;
 import com.entities.Producciondetalle;
 import com.entities.Producto;
@@ -156,6 +158,89 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 						  .getResultList(); 
 		
 		return listaProducto;
+	}
+
+	@Override
+	public List<Distalmacen> listaDistAlmacen(int pagInicio, int pagFin,
+			Distalmacen producto) {
+		Query q ;
+		List<Distalmacen> listaProducto = null ;
+		String where=""; 
+	
+		
+
+		if(producto!=null){
+			if(producto.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }			
+			if(producto.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+producto.getcEstadoCodigo()+"%'";
+	        }
+			
+			if(producto.getiDistAlmacenId()>0){
+	        	where+= " and p.iDistAlmacenId = '"+producto.getiDistAlmacenId()+"'";
+	        }
+			if(producto.getPeriodo()!=null && producto.getPeriodo().getiPeriodoId()>0){
+	        	where+= " and p.periodo.iPeriodoId LIKE '%"+producto.getPeriodo().getiPeriodoId()+"%'";
+	        }
+			if(producto.getUsuarioRecepcion()!=null && producto.getUsuarioRecepcion().getiUsuarioId()>0){
+	        	where+= " and p.usuarioRecepcion.iUsuarioId LIKE '%"+producto.getUsuarioRecepcion().getiUsuarioId()+"%'";
+	        }
+			
+	        System.out.println(" where ="+where);
+	        q = getInstancia().createQuery("select  DISTINCT  p from Distalmacen p   " + where +" order by p.dFechaIngreso asc");/**/
+	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	        listaProducto = q.setFirstResult(pagInicio)
+						  .setMaxResults(pagFin)
+						  .getResultList(); 
+		
+			}
+		
+        return listaProducto;
+	}
+
+	@Override
+	public List<Ordencompra> listaOrdenCompra(int pagInicio, int pagFin,
+			Ordencompra producto) {
+		Query q ;
+		List<Ordencompra> listaProducto = null ;
+		String where=""; 
+	
+		
+
+		if(producto!=null){
+			if(producto.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }			
+			if(producto.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+producto.getcEstadoCodigo()+"%'";
+	        }
+			
+			if(producto.getiOrdenCompraId()>0){
+	        	where+= " and p.iOrdenCompraId = '"+producto.getiOrdenCompraId()+"'";
+	        }
+			if(producto.getPeriodo()!=null && producto.getPeriodo().getiPeriodoId()>0){
+	        	where+= " and p.periodo.iPeriodoId LIKE '%"+producto.getPeriodo().getiPeriodoId()+"%'";
+	        }
+			if(producto.getvNroOrden()!=null ){
+	        	where+= " and p.vNroOrden LIKE '%"+producto.getvNroOrden()+"%'";
+	        }
+			if(producto.getdFechaPedido()!=null ){
+	        	where+= " and p.dFechaPedido LIKE '%"+producto.getdFechaPedido()+"%'";
+	        }
+			if(producto.getProveedor()!=null && producto.getProveedor().getiProveedorId()>0){
+	        	where+= " and p.proveedor.iProveedorId LIKE '%"+ producto.getProveedor().getiProveedorId()+"%'";
+	        }
+	        System.out.println(" where ="+where);
+	        q = getInstancia().createQuery("select  DISTINCT  p from Ordencompra p   " + where +" order by p.dFechaPedido asc");/**/
+	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	        listaProducto = q.setFirstResult(pagInicio)
+						  .setMaxResults(pagFin)
+						  .getResultList(); 
+		
+			}
+		
+        return listaProducto;
 	}
 	
 	

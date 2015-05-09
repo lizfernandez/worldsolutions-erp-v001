@@ -5,6 +5,7 @@ package com.struts.form;
 
 
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import org.apache.struts.action.ActionForm;
@@ -16,14 +17,22 @@ import com.dao.ProductoDao;
 import com.entities.Categoria;
 
 import com.entities.Almacen;
+import com.entities.Distalmacen;
 import com.entities.Moneda;
+import com.entities.Ordencompra;
+import com.entities.Periodo;
 import com.entities.Produccion;
 import com.entities.Producciondetalle;
 import com.entities.Producto;
 import com.entities.Productoalmacen;
+import com.entities.Proveedor;
+import com.entities.Sucursal;
+import com.entities.Tipodocumentogestion;
+import com.entities.Usuario;
 
 import com.entities.Subcategoria;
 import com.entities.Unidadmedida;
+import com.util.Fechas;
 
 
 /** 
@@ -41,6 +50,8 @@ public class ProductosForm extends ActionForm {
 	private static final long serialVersionUID = 1L;
 	private List produc;
 	private List producAlmacen;
+	private Distalmacen distAlmacen = new Distalmacen();
+	private Ordencompra  ordenCompra = new Ordencompra() ;
 	Producto producto = new Producto();
 	Productoalmacen productoAlmacen = new Productoalmacen();
 	Produccion produccion = new Produccion();
@@ -137,7 +148,10 @@ public class ProductosForm extends ActionForm {
 	public String getcEstadoCodigo() {
 		String cEstadoCodigo=producto.getcEstadoCodigo();
 		if(cEstadoCodigo==""){
-			cEstadoCodigo= produccion.getcEstadoCodigo();
+			cEstadoCodigo= produccion.getcEstadoCodigo();			
+			if(cEstadoCodigo==""){
+				cEstadoCodigo= distAlmacen.getcEstadoCodigo();
+			}
 		}
 		
 		return cEstadoCodigo;
@@ -146,6 +160,7 @@ public class ProductosForm extends ActionForm {
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.producto.setcEstadoCodigo(cEstadoCodigo);
 		this.produccion.setcEstadoCodigo(cEstadoCodigo);
+		this.distAlmacen.setcEstadoCodigo(cEstadoCodigo);
 	}
 
 
@@ -247,6 +262,7 @@ public class ProductosForm extends ActionForm {
 	}
 	public void setiMonedaId(int iMonedaId) {		
 		this.producto.setMoneda(getProductoDao().findEndidad(getMoneda(), iMonedaId));
+		this.ordenCompra.setMoneda(getProductoDao().findEndidad(getMoneda(), iMonedaId));
 	}	
 	/**
 	 * @return the sizeIngresoproductodetalles
@@ -607,7 +623,10 @@ public class ProductosForm extends ActionForm {
 	
 	}
 	public void setiUMBaseId(int iUnidadMedidadId) {
-		this.producto.setUmBase(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		if(iUnidadMedidadId>0){
+		this.producto.setUmBase(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
+		}
+		
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 
@@ -648,21 +667,27 @@ public class ProductosForm extends ActionForm {
 	
 	}
 	public void setiUMPedidoId(int iUnidadMedidadId) {
-		this.producto.setUmPedido(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		if(iUnidadMedidadId>0){
+		this.producto.setUmPedido(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
+		}
+		
 		//his.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 	/**
 	 * @return the vUMSalida
 	 */
-	public String getvUMSalida() {
+	public int getvUMSalida() {
 		return producto.getvUMSalida();
 	}
 
 	/**
 	 * @param vUMSalida the vUMSalida to set
 	 */
-	public void setvUMSalida(String vUMSalida) {
-		this.producto.setvUMSalida(vUMSalida);
+	public void setvUMSalida(int vUMSalida) {
+		if(vUMSalida>0){
+		this.producto.setvUMSalida(vUMSalida);	
+		}
+		
 	}
 
 	/**
@@ -688,7 +713,10 @@ public class ProductosForm extends ActionForm {
 	
 	}
 	public void setiUMSalidaId(int iUnidadMedidadId) {
-		this.producto.setUmSalida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		if(iUnidadMedidadId>0){
+		this.producto.setUmSalida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
+		}
+		
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 
@@ -783,7 +811,10 @@ public class ProductosForm extends ActionForm {
 	
 	}
 	public void setiUnidadMedidaAlmId(int iUnidadMedidadId) {
-		this.productoAlmacen.setUnidadMedidaAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		if(iUnidadMedidadId>0){
+			this.productoAlmacen.setUnidadMedidaAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		}
+		
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 	
@@ -818,7 +849,9 @@ public class ProductosForm extends ActionForm {
 	
 	}
 	public void setiUMBaseAlmId(int iUnidadMedidadId) {
+		if(iUnidadMedidadId>0){
 		this.productoAlmacen.setUnidadBaseAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		}
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 
@@ -848,6 +881,7 @@ public class ProductosForm extends ActionForm {
 	 */
 	public void setiSucursalId(int iSucursalId) {
 		this.iSucursalId = iSucursalId;
+		
 	}
 
 	/**
@@ -856,5 +890,469 @@ public class ProductosForm extends ActionForm {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	/*****************************************/
+	/**Distribucion de productos a almacenes**/
+	/*****************************************/
 	
+	/**
+	 * @return the distAlmacen
+	 */
+	public Distalmacen getDistAlmacen() {
+		return distAlmacen;
+	}
+
+	/**
+	 * @param distAlmacen the distAlmacen to set
+	 */
+	public void setDistAlmacen(Distalmacen distAlmacen) {
+		this.distAlmacen = distAlmacen;
+	}
+	/**
+	 * @return the iDistAlmacenId
+	 */
+	public int getiDistAlmacenId() {
+		return distAlmacen.getiDistAlmacenId();
+	}
+
+	
+
+	/**
+	 * @param iDistAlmacenId the iDistAlmacenId to set
+	 */
+	public void setiDistAlmacenId(int iDistAlmacenId) {
+		this.distAlmacen.setiDistAlmacenId(iDistAlmacenId);
+	}
+
+
+	
+
+	/**
+	 * @return the dFechaIngreso
+	 */
+	public String getdFechaIngreso() {
+		String fecha = Fechas.fechaDDMMYY(distAlmacen.getdFechaIngreso());
+		if(fecha==""){
+			fecha=Fechas.fechaDDMMYY(Fechas.getDate());
+		}
+		return fecha;
+	}
+
+	/**
+	 * @param dFechaIngreso the dFechaIngreso to set
+	 * @throws ParseException 
+	 */
+	public void setdFechaIngreso(String dFechaIngreso) throws ParseException {
+		this.distAlmacen.setdFechaIngreso(Fechas.fechaDate(dFechaIngreso));
+	}
+
+	
+	/**
+	 * @return the dFechaSalida
+	 */
+	public String getdFechaSalida() {
+		String dFechaSalida =Fechas.fechaDDMMYY(distAlmacen.getdFechaSalida());
+		if(dFechaSalida==""){
+			dFechaSalida=Fechas.fechaDDMMYY(Fechas.getDate());
+		}
+		return dFechaSalida;
+	}
+
+	/**
+	 * @param dFechaSalida the dFechaSalida to set
+	 * @throws ParseException 
+	 */
+	public void setdFechaSalida(String dFechaSalida) throws ParseException {
+		this.distAlmacen.setdFechaSalida(Fechas.fechaDate(dFechaSalida));
+	}
+
+	/**
+	 * @return the fTotal
+	 */
+	public float getfTotal() {
+		return distAlmacen.getfTotal();
+	}
+
+	/**
+	 * @param fTotal the fTotal to set
+	 */
+	public void setfTotal(float fTotal) {
+		this.distAlmacen.setfTotal(fTotal);
+	}
+
+	/**
+	 * @return the almacenEntrada
+	 */
+	public Almacen getAlmacenEntrada() {
+		Almacen almacen= distAlmacen.getAlmacenEntrada();
+		if(almacen==null){
+			almacen = new Almacen();
+		}
+		return almacen;
+	}
+	/**
+	 * @return the almacenEntrada
+	 */
+	public int getiAlmacenEntradaId() {
+		return getAlmacenEntrada().getiAlmacenId();
+	}
+	
+	
+	/**
+	 * @param almacenEntrada the almacenEntrada to set
+	 */
+	public void setiAlmacenEntradaId(int almacenEntrada) {
+		this.distAlmacen.setAlmacenEntrada(getProductoDao().findEndidad(getAlmacenEntrada(),almacenEntrada)) ;
+	}
+
+	/**
+	 * @return the almacenSalida
+	 */
+	public Almacen getAlmacenSalida() {
+		Almacen almacenSalida= distAlmacen.getAlmacenSalida();
+		if(almacenSalida==null){
+			almacenSalida = new Almacen();
+		}
+		
+		return almacenSalida;
+	}
+
+	
+
+	/**
+	 * @return the almacenEntrada
+	 */
+	public int getiAlmacenSalidaId() {
+		return getAlmacenSalida().getiAlmacenId();
+	}
+	
+	
+	/**
+	 * @param almacenEntrada the almacenEntrada to set
+	 */
+	public void setiAlmacenSalidaId(int almacenEntrada) {
+		this.distAlmacen.setAlmacenSalida(getProductoDao().findEndidad(getAlmacenSalida(),almacenEntrada)) ;
+	}
+	
+	/**
+	 * @return the usuatioEntrega
+	 */
+	public Usuario getUsuatioEntrega() {
+		Usuario usuatioEntrega= distAlmacen.getUsuatioEntrega();
+		if(usuatioEntrega==null){
+			usuatioEntrega=  new Usuario();
+		}
+		return usuatioEntrega;
+	}
+
+
+
+	/**
+	 * @return the iUsuarioInsertaId
+	 */
+	public int getiUsuarioEntregaId() {
+		return getUsuatioEntrega().getiUsuarioId();
+	}
+
+	/**
+	 * @param iUsuarioInsertaId the iUsuarioInsertaId to set
+	 */
+	public void setiUsuarioEntregaId(int iUsuarioInsertaId) {
+		this.distAlmacen.setUsuatioEntrega(getProductoDao().findEndidad(getUsuatioEntrega(),iUsuarioInsertaId));
+	}
+
+	/**
+	 * @return the usuarioRecepcion
+	 */
+	public Usuario getUsuarioRecepcion() {
+		Usuario usuarioRecepcion= distAlmacen.getUsuarioRecepcion();
+		if(usuarioRecepcion==null){
+			usuarioRecepcion=  new Usuario();
+		}
+		return usuarioRecepcion;
+	}
+	/**
+	 * @return the iUsuarioInsertaId
+	 */
+	public int getiUsuarioRecepcionId() {
+		return getUsuarioRecepcion().getiUsuarioId();
+	}
+
+	/**
+	 * @param iUsuarioInsertaId the iUsuarioInsertaId to set
+	 */
+	public void setiUsuarioRecepcionId(int iUsuarioInsertaId) {
+		this.distAlmacen.setUsuarioRecepcion(getProductoDao().findEndidad(getUsuarioRecepcion(),iUsuarioInsertaId));
+	}
+
+	/**
+	 * @return the vNroIngreso
+	 */
+	public String getvNroIngreso() {
+		return distAlmacen.getvNroIngreso();
+	}
+
+	/**
+	 * @param vNroIngreso the vNroIngreso to set
+	 */
+	public void setvNroIngreso(String vNroIngreso) {
+		this.distAlmacen.setvNroIngreso(vNroIngreso);
+	}
+
+	/**
+	 * @return the vNroSalida
+	 */
+	public String getvNroSalida() {
+		return distAlmacen.getvNroSalida();
+	}
+
+	/**
+	 * @param vNroSalida the vNroSalida to set
+	 */
+	public void setvNroSalida(String vNroSalida) {
+		this.distAlmacen.setvNroSalida(vNroSalida);
+	}
+
+	/**
+	 * @return the vObservacion
+	 */
+	public String getvObservacion() {
+		return distAlmacen.getvObservacion();
+	}
+
+	/**
+	 * @param vObservacion the vObservacion to set
+	 */
+	public void setvObservacion(String vObservacion) {
+		this.distAlmacen.setvObservacion(vObservacion);
+	}
+
+	/**
+	 * @return the vPuntoLlegada
+	 */
+	public String getvPuntoLlegada() {
+		return distAlmacen.getvPuntoLlegada();
+	}
+
+	/**
+	 * @param vPuntoLlegada the vPuntoLlegada to set
+	 */
+	public void setvPuntoLlegada(String vPuntoLlegada) {
+		this.distAlmacen.setvPuntoLlegada(vPuntoLlegada) ;
+	}
+
+	/**
+	 * @return the vPuntoSalida
+	 */
+	public String getvPuntoSalida() {
+		return distAlmacen.getvPuntoSalida();
+	}
+
+	/**
+	 * @param vPuntoSalida the vPuntoSalida to set
+	 */
+	public void setvPuntoSalida(String vPuntoSalida) {
+		this.distAlmacen.setvPuntoSalida(vPuntoSalida);
+	}
+
+	/**********************/
+	/**ORDENES DE COMPRAS**/
+	/**********************/
+
+	/**
+	 * @return the ordenCompra
+	 */
+	public Ordencompra getOrdenCompra() {
+		return ordenCompra;
+	}
+
+	/**
+	 * @param ordenCompra the ordenCompra to set
+	 */
+	public void setOrdenCompra(Ordencompra ordenCompra) {
+		this.ordenCompra = ordenCompra;
+	}
+	/**
+	 * @return the iOrdenCompraId
+	 */
+	public int getiOrdenCompraId() {
+		return ordenCompra.getiOrdenCompraId();
+	}
+
+
+	/**
+	 * @param iOrdenCompraId the iOrdenCompraId to set
+	 */
+	public void setiOrdenCompraId(int iOrdenCompraId) {
+		this.ordenCompra.setiOrdenCompraId(iOrdenCompraId);
+	}
+
+	/**
+	 * @return the dFechaPedido
+	 */
+	public String getdFechaPedido() {
+		String dFechaPedido = Fechas.fechaDDMMYY(ordenCompra.getdFechaPedido());
+		return dFechaPedido;
+	}
+
+	/**
+	 * @param dFechaPedido the dFechaPedido to set
+	 * @throws ParseException 
+	 */
+	public void setdFechaPedido(String dFechaPedido) throws ParseException {
+		this.ordenCompra.setdFechaPedido(Fechas.fechaDate(dFechaPedido));
+	}
+
+	/**
+	 * @return the fDescuento
+	 */
+	public float getfDescuento() {
+		return ordenCompra.getfDescuento();
+	}
+
+	/**
+	 * @param fDescuento the fDescuento to set
+	 */
+	public void setfDescuento(float fDescuento) {
+		this.ordenCompra.setfDescuento(fDescuento);
+	}
+
+	/**
+	 * @return the fOrdenCompraIGV
+	 */
+	public float getfOrdenCompraIGV() {
+		return ordenCompra.getfOrdenCompraIGV();
+	}
+
+	/**
+	 * @param fOrdenCompraIGV the fOrdenCompraIGV to set
+	 */
+	public void setfOrdenCompraIGV(float fOrdenCompraIGV) {
+		this.ordenCompra.setfOrdenCompraIGV(fOrdenCompraIGV);
+	}
+
+	/**
+	 * @return the fOrdenCompraSubTotal
+	 */
+	public float getfOrdenCompraSubTotal() {
+		return ordenCompra.getfOrdenCompraSubTotal();
+	}
+
+	/**
+	 * @param fOrdenCompraSubTotal the fOrdenCompraSubTotal to set
+	 */
+	public void setfOrdenCompraSubTotal(float fOrdenCompraSubTotal) {
+		this.ordenCompra.setfOrdenCompraSubTotal(fOrdenCompraSubTotal);
+	}
+
+	/**
+	 * @return the fTipoCambio
+	 */
+	public float getfTipoCambio() {
+		return ordenCompra.getfTipoCambio();
+	}
+
+	/**
+	 * @param fTipoCambio the fTipoCambio to set
+	 */
+	public void setfTipoCambio(float fTipoCambio) {
+		this.ordenCompra.setfTipoCambio(fTipoCambio);
+	}
+
+	/**
+	 * @return the fTotal
+	 */
+	public float getfOrdenCompraTotal() {
+		return ordenCompra.getfTotal();
+	}
+
+	/**
+	 * @param fTotal the fTotal to set
+	 */
+	public void setfOrdenCompraTotal(float fTotal) {
+		this.ordenCompra.setfTotal(fTotal);
+	}
+
+	
+
+	/**
+	 * @return the proveedor
+	 */
+	public Proveedor getProveedor() {
+		Proveedor proveedor = ordenCompra.getProveedor();
+		if(proveedor==null){
+			proveedor = new Proveedor();
+		}
+		return proveedor;
+	}
+	/**
+	 * @return the almacenEntrada
+	 */
+	public int getiProveedorId() {
+		return getProveedor().getiProveedorId();
+	}
+	
+	
+	/**
+	 * @param almacenEntrada the almacenEntrada to set
+	 */
+	public void setiProveedorId(int iProveedorId) {
+		this.ordenCompra.setProveedor(getProductoDao().findEndidad(getProveedor(),iProveedorId)) ;
+	}
+	
+
+	/**
+	 * @return the sucursal
+	 */
+	public Sucursal getSucursal() {
+		Sucursal sucursal = ordenCompra.getSucursal();
+		if(sucursal==null){
+			sucursal= new Sucursal();
+		}
+		return sucursal;
+	}
+
+	/**
+	 * @return the almacenEntrada
+	 */
+	public int getiSucursalOrdenId() {
+		return getSucursal().getiSucursalId();
+	}
+	
+	
+	/**
+	 * @param almacenEntrada the almacenEntrada to set
+	 */
+	public void setiSucursalOrdenId(int iProveedorId) {
+		this.ordenCompra.setSucursal(getProductoDao().findEndidad(getSucursal(),iProveedorId)) ;
+	}
+
+
+	/**
+	 * @return the vEstadoDocumento
+	 */
+	public String getvEstadoDocumento() {
+		return ordenCompra.getvEstadoDocumento();
+	}
+
+	/**
+	 * @param vEstadoDocumento the vEstadoDocumento to set
+	 */
+	public void setvEstadoDocumento(String vEstadoDocumento) {
+		this.ordenCompra.setvEstadoDocumento(vEstadoDocumento);
+	}
+
+	/**
+	 * @return the vNroOrden
+	 */
+	public String getvNroOrden() {
+		return ordenCompra.getvNroOrden();
+	}
+
+	/**
+	 * @param vNroOrden the vNroOrden to set
+	 */
+	public void setvNroOrden(String vNroOrden) {
+		this.ordenCompra.setvNroOrden(vNroOrden);
+	}
+
 }

@@ -29,7 +29,10 @@
 	 </tr> 
 
 <%-- hidden field que contiene el mode --%>
-<html:text property="mode" styleId="mode"  styleClass="textInvisible"/>			
+<html:text property="mode" styleId="mode"  styleClass="textInvisible"/>
+<input type="text" id="tipo"  class="textInvisible"/>
+<input type="text" id="identificador"  class="textInvisible"/>		
+			
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="listaProducto" styleId="metodo"  />
 </html:form>
@@ -231,6 +234,8 @@
 </div>   
 <script>   
 paginacion(); 
+$("#tipo").val($_GET('tipo'));
+$("#identificador").val($_GET('identificador'));
  function fn_cargarProducto(iProductoId,iStock,vNombreProducto,fProductoDescuento,iUnidadMedidadId,iUMBase,iUMPedido,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
 	    $("#iProductoId").val(iProductoId);
 	    $("#iStock").val(iStock);

@@ -119,7 +119,7 @@
              <html:hidden property="iPersonalId" styleId="iPersonalId" />			 
 			 <html:text property="cPersonalCodigo"  styleId="cPersonalCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />
 	         <html:text property="vPersonalNombres"  styleId="vPersonalNombres"  styleClass="text inputDisabled" size="35"/>
-	         <img  onclick="popupModal('personal.do?metodo=listaPersonal&mode=LP',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png"/>
+	         <img  onclick="popupModal('personal.do?metodo=listaPersonal&mode=LP&iPersonalId=iPersonalId&codigo=cPersonalCodigo&nombre=vPersonalNombres',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png"/>
 	  		 <input type="hidden" id="vOcupacionDescripcion"/>
 	         <input type="hidden" id="fSueldo"/>	   
 			</td>

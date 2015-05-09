@@ -69,6 +69,8 @@
 	                 <forward name="showListEnvases" path=".listaEnvases" />
 	                 <forward name="showListServicios" path=".listaServicios" />
 	                 <forward name="showListProduccion" path=".listaProduccion" />
+	                 <forward name="showListDistAlmacen" path=".listaDistAlmacen" />
+	                 <forward name="showListOrdenCompra" path=".listaOrdenCompra" />
 	                 
 	                 <forward name="showListPopupProductoKardex" path=".listPopupProductoKardex" />	
 	                 <forward name="showListPopupProducto" path=".listPopupProducto" />	
@@ -78,6 +80,8 @@
 	                 <forward name="showListPopupProductoExitProduccion" path=".listPopupProductoExitProduccion" />
 	                 <forward name="showListPopupProductoProduccionUni" path=".listPopupProductoProduccionUni" />
 	                 <forward name="showListPopupServiciosProduccion" path=".listPopupServiciosProduccion" />
+	                  <forward name="showListPopupProductoAlmacen" path=".listPopupProductoAlmacen" />
+	                 
 	                 
 	                 
 	                 <forward name="showEdit" path=".mantenimientoProducto" />
@@ -86,13 +90,20 @@
 	                 <forward name="showEditEnvases" path=".mantenimientoEnvases" />
 	                 <forward name="showEditServicios" path=".mantenimientoServicios" />
 	                 <forward name="showEditProduccion" path=".mantenimientoProduccion" />
+	                 <forward name="showEditDistAlmacen" path=".mantenimientoDistAlmacen" />
+	                 <forward name="showEditOrdenCompra" path=".mantenimientoOrdenCompra" />
 	                 
 	                 <forward name="showFind" path=".buscarMantenimientoProducto" />
 	                 <forward name="showFindMateriaPrima" path=".buscarMantenimientoMateriaPrima" />
 	                 <forward name="showFindSuministros" path=".buscarMantenimientoSuministros" />
 	                 <forward name="showFindEnvases" path=".buscarMantenimientoEnvases" />
 	                 <forward name="showFindServicios" path=".buscarMantenimientoServicios" />
-	                 <forward name="showFindSProduccion" path=".buscarMantenimientoProduccion" />	
+	                 <forward name="showFindSProduccion" path=".buscarMantenimientoProduccion" />
+	                 <forward name="showFindDistAlmacen" path=".buscarMantenimientoDistAlmacen" />
+	                 <forward name="showFindOrdenCompra" path=".buscarMantenimientoOrdenCompra" />		
+	                 
+	                 
+	                 
 	                 	                 	
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />

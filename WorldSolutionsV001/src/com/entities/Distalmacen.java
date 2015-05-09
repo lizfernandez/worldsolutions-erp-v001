@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -65,7 +66,15 @@ public class Distalmacen implements Serializable {
 	private String vPuntoLlegada;
 
 	private String vPuntoSalida;
-
+	
+	//bi-directional many-to-one association to Ingresoproductodetalle
+	@OneToMany(mappedBy="distAlmacen" ,cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Distalmacendetalle> distAlmacendetalles;
+	
+	private int iTipoDocumentoId;
+	
+	private int iSucursalId;
+	
     public Distalmacen() {
     }
 
@@ -333,6 +342,48 @@ public class Distalmacen implements Serializable {
 	 */
 	public void setvPuntoSalida(String vPuntoSalida) {
 		this.vPuntoSalida = vPuntoSalida;
+	}
+
+	/**
+	 * @return the distAlmacendetalles
+	 */
+	public List<Distalmacendetalle> getDistAlmacendetalles() {
+		return distAlmacendetalles;
+	}
+
+	/**
+	 * @param distAlmacendetalles the distAlmacendetalles to set
+	 */
+	public void setDistAlmacendetalles(List<Distalmacendetalle> distAlmacendetalles) {
+		this.distAlmacendetalles = distAlmacendetalles;
+	}
+
+	/**
+	 * @return the iTipoDocumentoId
+	 */
+	public int getiTipoDocumentoId() {
+		return iTipoDocumentoId;
+	}
+
+	/**
+	 * @param iTipoDocumentoId the iTipoDocumentoId to set
+	 */
+	public void setiTipoDocumentoId(int iTipoDocumentoId) {
+		this.iTipoDocumentoId = iTipoDocumentoId;
+	}
+
+	/**
+	 * @return the iSucursalId
+	 */
+	public int getiSucursalId() {
+		return iSucursalId;
+	}
+
+	/**
+	 * @param iSucursalId the iSucursalId to set
+	 */
+	public void setiSucursalId(int iSucursalId) {
+		this.iSucursalId = iSucursalId;
 	}
 
 	

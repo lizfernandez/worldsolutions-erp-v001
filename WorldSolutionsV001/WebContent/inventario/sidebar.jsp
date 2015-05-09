@@ -77,17 +77,17 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 	   if(per!=null){
 	   if(per.equals("131")){%> 
-       <div class="btn_admin" id="emvase">
+       <div class="btn_admin" id="distAlmacen">
         <img src="${pageContext.request.contextPath}/media/imagenes/tra.png" width="20" height="20" />
-         <a href="productos.do?metodo=listaProducto&iclasificacionId=4">DISTRIBUCION ALMACEN</a>
+         <a href="productos.do?metodo=listaDistAlmacen">DISTRIBUCION ALMACEN</a>
        </div>
          <% break;}}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
 	   if(per.equals("132")){%> 
-       <div class="btn_admin" id="emvase">
+       <div class="btn_admin" id="ordenCompra">
         <img src="${pageContext.request.contextPath}/media/imagenes/cate.png" width="20" height="20" />
-         <a href="productos.do?metodo=listaProducto&iclasificacionId=4">ORDEN DE COMPRA</a>
+         <a href="productos.do?metodo=listaOrdenCompra">ORDEN DE COMPRA</a>
        </div>
       
         <% break;}}}

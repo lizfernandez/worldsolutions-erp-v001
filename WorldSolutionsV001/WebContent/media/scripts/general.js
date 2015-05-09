@@ -428,7 +428,7 @@ function busqueda(url, flag){
 
 
 function retornar(txtid,id,txtcod,cod,txtnom,nom,txtsueldo,sueldo,txtocup,ocup){
-
+	
    window.opener.document.getElementById(txtid).value=id;/**/
    window.opener.document.getElementById(txtcod).value=cod;
    window.opener.document.getElementById(txtnom).value=nom;
@@ -614,7 +614,101 @@ function listar_detalleVenta(obj,destino,identificador){
    newHtml+='<th>TOTAL</th>';
    newHtml+='</tr>';
 	$.each(obj,function(key,data){
+		
 		if(data.cEstadoCodigo=="AC" && data.vIdentificadorSession==identificador){
+			if(data.fVentaDetallePrecio!=0)
+				precio = data.fVentaDetallePrecio;
+			else
+				precio = data['producto'].fProductoPrecioVenta;
+			//fn_calcularVentasPadre(data.fVentaDetalleTotal,data['producto'].fProductoPrecioVenta, data.iVentaDetalleCantidad)
+		newHtml+='<tr>';
+		newHtml+="<td><img src='/WorldSolutionsV001/media/imagenes/delete.png' onclick=\"fn_eliminar('"+key+"')\"  /></td>";
+		newHtml+='<td>';
+			newHtml+=data['producto'].cProductoCodigo;
+		newHtml+='</td>';
+		newHtml+="<td '>";
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iVentaDetalleCantidad+"'/>";
+		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockTotal+"'/>";
+		  newHtml+='</td>';
+	   if(data['producto']['unidadMedida']!=null){
+	    newHtml+='<td>'; 
+	   
+            newHtml+=data['producto']['unidadMedida'].vUnidadMedidaDescripcion;
+        newHtml+='</td>';
+		
+	   }
+	   else{
+		   newHtml+='<td colspan="2">'; 
+		   empleado:
+			 newHtml+="empleado: "+data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
+		newHtml+='</td>';  
+	   }
+	 
+		
+		newHtml+='<td>';
+			newHtml+=data['producto'].vProductoNombre;
+		newHtml+='</td>';		
+	    newHtml+="<td align='right'>";
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+(precio)+"'/>";		  
+	    newHtml+='</td>';
+	    newHtml+="<td align='right'>";
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+formatCurrency(data.fDescuento,' ')+"'/>";		  
+	    newHtml+='</td>';
+	    newHtml+="<td align='right'>";
+		   newHtml+="<span class='total"+key+"' >"+(data.fVentaDetalleTotal)+" </span>";
+		   newHtml+="<span id='total"+key+"' class='totales' >"+data.fVentaDetalleTotal+" </span>";
+		newHtml+='</td>';
+		
+		newHtml+='</tr>';
+		}// if
+	});
+	 newHtml+='<tr>';
+	 newHtml+="<td><img src='/WorldSolutionsV001/media/imagenes/new.png' onclick=\"fn_listarProducto()\"/></td>";
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+=' <td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 newHtml+='<td>&nbsp;</td>';
+	 
+	 newHtml+='</tr>';
+newHtml+='</tbody>';
+	//$('.combo.Distrito').html(newHtml);
+
+	 if(destino=="padre"){
+		 window.opener.document.getElementById("detalle").innerHTML=newHtml;
+		 opener.window.fn_calcularTotales(); 
+		 window.close();
+	 }
+		
+	 if(destino=="hijo"){
+		 document.getElementById("detalle").innerHTML=newHtml;
+		 window.fn_calcularTotales(); 
+	 }
+		 
+	
+	
+//	$('#detalleVenta',window.opener.document).innerHTML=newHtml;
+	
+};
+function listar_detalleAlmacen(obj,destino,identificador){
+	var precio =0;		
+	var newHtml='';
+	newHtml+='<tbody>';
+   newHtml+='<tr>';
+   newHtml+='<th>&nbsp;</th>';
+   newHtml+='<th>CODIGO</th>';
+   newHtml+='<th>CANTIDAD</th>';
+   newHtml+='<th>UNID.</th>';
+   
+   newHtml+='<th  width="25%">DESCRIPCION</th>';
+   newHtml+='<th>P.U.</th>';
+   newHtml+='<th>% DESC.</th>';
+   newHtml+='<th>TOTAL</th>';
+   newHtml+='</tr>';
+	$.each(obj,function(key,data){
+		if(data.cEstadoCodigo=="AC"){
 			if(data.fVentaDetallePrecio!=0)
 				precio = data.fVentaDetallePrecio;
 			else

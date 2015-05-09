@@ -28,7 +28,7 @@ public class Ordencompradetalle implements Serializable {
 
 	private float fDescuento;
 
-	private float fPrecio;
+	private float fPrecioUnitario;
 
 	private float fTotal;
 
@@ -118,18 +118,20 @@ public class Ordencompradetalle implements Serializable {
 		this.fDescuento = fDescuento;
 	}
 
+	
+
 	/**
-	 * @return the fPrecio
+	 * @return the fPrecioUnitario
 	 */
-	public float getfPrecio() {
-		return fPrecio;
+	public float getfPrecioUnitario() {
+		return fPrecioUnitario;
 	}
 
 	/**
-	 * @param fPrecio the fPrecio to set
+	 * @param fPrecioUnitario the fPrecioUnitario to set
 	 */
-	public void setfPrecio(float fPrecio) {
-		this.fPrecio = fPrecio;
+	public void setfPrecioUnitario(float fPrecioUnitario) {
+		this.fPrecioUnitario = fPrecioUnitario;
 	}
 
 	/**
