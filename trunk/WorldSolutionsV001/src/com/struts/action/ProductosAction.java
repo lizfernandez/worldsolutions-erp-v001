@@ -180,8 +180,13 @@ public class ProductosAction extends BaseAction {
 			 }
 			
 			 if(mode.equals("LP")){
-				 /**Lista de productos de ventas***/
-			    msn ="showListPopupProducto";}			 
+				if (usu.getPerfil().getvPerfilDescripcion().equals(Constantes.usuAdministrador)) {
+					/** Lista de productos de ventas ***/
+					msn = "showListPopupProductoAdm";
+				} else {
+					msn = "showListPopupProducto";
+				}
+			 } 
 			 
 			 if(mode.equals("LPS")){
 				 /**Lista de productos de para servicios***/

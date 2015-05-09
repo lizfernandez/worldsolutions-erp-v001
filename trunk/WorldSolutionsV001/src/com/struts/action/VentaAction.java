@@ -532,8 +532,7 @@ public class VentaAction extends BaseAction {
 		int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 		/** Instanciamos la Clase VentaForm **/
 
-		List<Ventadetalle> lista = (List<Ventadetalle>) sesion
-				.getAttribute("listaVentaDetalle");
+		List<Ventadetalle> lista = (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle");
 
 		String identificador = request.getParameter("identificador");
 
@@ -606,7 +605,7 @@ public class VentaAction extends BaseAction {
 			}
 			if (mode.equals("D")) {
 				if (lista.get(iProductoId).getcEstadoCodigo()
-						.equals(Constantes.estadoActivo))
+						.equals(Constantes.estadoActivo) && lista.get(iProductoId).getvIdentificadorSession().equals(identificador))
 					lista.get(iProductoId).setcEstadoCodigo(
 							Constantes.estadoInactivo);
 				else
@@ -614,8 +613,6 @@ public class VentaAction extends BaseAction {
 							Constantes.estadoActivo);
 
 				sesion.setAttribute("listaVentaDetalle", lista);
-				// ventaDao.mergeEndidad(lista.get(iProductoId));
-				// ventaDao.commitEndidad(entityTransaction);
 			}
 			if (mode.equals("U")) {
 				int iCantidad = Integer.parseInt(request

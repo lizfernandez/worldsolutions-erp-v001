@@ -54,7 +54,7 @@
         <th align="left">Unidad Medida</th>
         <th align="left">% Desc</th>
         <th align="right">P.Venta</th>
-        <th align="right">P.Compra</th>
+<!--         <th align="right">P.Compra</th> -->
         
             
       </tr>
@@ -98,7 +98,7 @@
 				</td>
 				<td align="right"><bean:write name="x" property="fProductoDescuento" format="###0.00" locale="Localidad" /></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="###0.00"  locale="Localidad"/></td>
-				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="###0.00"  locale="Localidad"/></td>
+<%-- 				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="###0.00"  locale="Localidad"/></td> --%>
 						
 	    	</tr>
 	    	<logic:notEmpty name="x" property="preciosproductodetallles">
@@ -111,9 +111,9 @@
 						<tr>
 						<th  align="center">Cantidad</th>
 						<th  align="center">Precio Venta</th>
-						<th  align="center">Precio Compra</th>
+<!-- 						<th  align="center">Precio Compra</th> -->
 						<th align="right">% Descuento</th>
-						<th align="right">Fecha Compra</th>
+<!-- 						<th align="right">Fecha Compra</th> -->
 						</tr>
 					</thead>
 					<tbody>
@@ -125,9 +125,9 @@
 					  							   '<bean:write name="z" property="fDescuento"/>')">				        
 					       <td align="center"><bean:write name="z" property="iCantidadStock"/></td>
 					       <td align="right"><bean:write name="z" property="fPrecioVenta" format="###0.00" locale="Localidad" /></td>
-					       <td align="right"><bean:write name="z" property="fPrecioCompra" format="###0.00" locale="Localidad" /></td>					       
+<%-- 					       <td align="right"><bean:write name="z" property="fPrecioCompra" format="###0.00" locale="Localidad" /></td>					        --%>
 						   <td align="right"><bean:write name="z" property="fDescuento" format="###0.00" locale="Localidad" /></td>
-						   <td align="center"><bean:write name="z" property="dFechaInserta" format="dd/MM/yyyy"  /></td>
+<%-- 						   <td align="center"><bean:write name="z" property="dFechaInserta" format="dd/MM/yyyy"  /></td> --%>
 						</tr> 						
 						</logic:equal>  
 						</logic:notEqual>

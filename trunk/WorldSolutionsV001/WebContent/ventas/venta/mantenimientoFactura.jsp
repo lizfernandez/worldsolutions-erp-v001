@@ -516,10 +516,12 @@
   
     }
     function fn_eliminar(key){
-         var cad = "venta.do?metodo=detalleVenta&id="+key+"&mode=D";        
+    	
+    	var identificador = $("#identificador").val();
+    	var cad = "venta.do?metodo=detalleVenta&id="+key+"&mode=D&identificador="+identificador;        
         $.getJSON(cad, function retorna(obj){
        	// alert("obje"+obj.cProductoCodigo);
-       	 listar_detalleVenta(obj,'hijo');
+       	 listar_detalleVenta(obj,'hijo', identificador);
        	 });
        
         fn_calcularTotales();
@@ -567,9 +569,10 @@
         
       
       	document.getElementById(total).innerHTML = precioTotal;   
-    	 $("."+total).text( (precioTotal));
-  
-        var cad = "venta.do?metodo=detalleVenta&id="+fila+"&mode=U&iCantidad="+cantidad+"&fPrecioVenta="+precio+"&fDescuento="+fDescuento;
+    	$("."+total).text( (precioTotal));
+
+    	var identificador = $("#identificador").val();
+        var cad = "venta.do?metodo=detalleVenta&id="+fila+"&mode=U&iCantidad="+cantidad+"&fPrecioVenta="+precio+"&fDescuento="+fDescuento+"&identificador="+identificador;
         
         $.getJSON(cad, function retorna(obj){
        	      // 	 listar_detalleIngresoProducto(obj,'hijo');

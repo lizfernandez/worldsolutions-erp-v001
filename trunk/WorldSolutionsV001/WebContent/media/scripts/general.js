@@ -1333,14 +1333,15 @@ function fn_recargar(){
 	var metodo = url.split("&");	
 	var mode ="";	
 	var tipo=$_GET("tipo");
+	var identificador=$_GET("identificador");
 	
 	if(tipo=='ventas'){
 		if(iclasificacionId=="5"){ ///  el id=5 es de servicio
 			//redireccionamos al padre los valores, sin hacer doble recarga por el return false;
-			mode="&tipo=ventas&mode=LPS";		
+			mode="&tipo=ventas&mode=LPS&identificador="+identificador;		
 		}
 		else{
-			mode="&tipo=ventas&mode=LP";	
+			mode="&tipo=ventas&mode=LP&identificador="+identificador;	
 		}
 	}
 	if(tipo=='compras'){	
