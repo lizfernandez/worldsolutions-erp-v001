@@ -818,7 +818,16 @@ public class ProductosAction extends BaseAction {
 							//productoDao.persistEndidad(proAlma);	
 							}
 						}
-
+					if(pro.getUmPedido()!=null){
+						if(pro.getUmPedido().getiUnidadMedidaId()==0){
+		            	   pro.setUmPedido(null);
+		               }
+					}
+		               if(pro.getUmSalida()!=null){
+		            	   if(pro.getUmSalida().getiUnidadMedidaId()==0){
+		            	   pro.setUmSalida(null);
+		               }
+		               }
 					pro.setiProductoStockTotal(CantidadStocktotal);				
 			      resultado = productoDao.commitEndidad(transaccion);
 					}
@@ -955,12 +964,16 @@ public class ProductosAction extends BaseAction {
 					}
 
 				}
-               if(pro.getUmPedido().getiUnidadMedidaId()==0){
-            	   pro.setUmPedido(null);
-               }
-               if(pro.getUmSalida().getiUnidadMedidaId()==0){
-            	   pro.setUmSalida(null);
-               }
+				if(pro.getUmPedido()!=null){
+					if(pro.getUmPedido().getiUnidadMedidaId()==0){
+	            	   pro.setUmPedido(null);
+	               }
+				}
+	               if(pro.getUmSalida()!=null){
+	            	   if(pro.getUmSalida().getiUnidadMedidaId()==0){
+	            	   pro.setUmSalida(null);
+	               }
+	               }
             	   
 				productoDao.mergeEndidad(pro);
 				resultado = productoDao.commitEndidad(transaccion);

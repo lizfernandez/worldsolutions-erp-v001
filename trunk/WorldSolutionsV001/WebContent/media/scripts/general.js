@@ -34,7 +34,7 @@ $(window).resize(function() {
 		 //alert("nola");
 	 }
 	 else{
-		 windowWidthpor=windowWidth-menuVerticalWidth-12;
+		 windowWidthpor=windowWidth-menuVerticalWidth-17;
 		// alert("nola ai");
 	 }
     
