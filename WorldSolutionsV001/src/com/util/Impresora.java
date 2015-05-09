@@ -7,12 +7,16 @@ import java.util.List;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
+import javax.print.MultiDocPrintService;
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+import javax.print.attribute.AttributeSet;
 import javax.print.attribute.DocAttributeSet;
+import javax.print.attribute.HashAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
+import javax.print.attribute.standard.PrinterName;
 
 
 
@@ -58,16 +62,21 @@ public class Impresora {
 		
 		List<ImpresoraVO> list = new ArrayList<ImpresoraVO>();
 		ImpresoraVO impresoraVO;
-		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
-
+		//PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
+		//MultiDocPrintService[] services = PrintServiceLookup.lookupMultiDocPrintServices(null, null);
+		AttributeSet aset = new HashAttributeSet();
+		 aset.add(new PrinterName("Microsoft XPS Document Writer", null));
+		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
 		if (services.length > 0) {
 			for (int i = 0; i < services.length; i++) {
+				DocPrintJob printJob = services[i].createPrintJob();
 				impresoraVO = new ImpresoraVO();
 				impresoraVO.setImpresoraID(services[i].getName());
 				impresoraVO.setImpresoraNombre(services[i].toString());
 				impresoraVO.setJobImpresora(services[i].createPrintJob());
 				
 				list.add(impresoraVO);
+				System.out.println(printJob.getPrintService());
 				
 			}
 		}
