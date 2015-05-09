@@ -112,8 +112,8 @@
 <tr>
 	 <td colspan="4">
 	 <span id ="span1" class="btnOpcionesActivo"  onclick="subMenuOpciones('1')">Datos B&aacute;sicos:</span>
-	 <span id ="span3" class="btnOpciones" onclick="subMenuOpciones('3')">Almacen</span>
-	 <span id ="span2" class="btnOpciones" onclick="subMenuOpciones('2')">Lista Precios</span>
+		 <!-- span id ="span3" class="btnOpciones" onclick="subMenuOpciones('3')">Almacen</span>
+	 <span id ="span2" class="btnOpciones" onclick="subMenuOpciones('2')">Lista Precios</span-->
 	 <table class="tabla" id="tabla1">	  
 		
 		<tr>

@@ -795,7 +795,7 @@ public class ProductosAction extends BaseAction {
 				// productoDao.refreshEndidad(pro);
 				/****/
 				/**insertamos almacen producto**/
-                 List<Productoalmacen> listaProductoAlm =  (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
+                 /*List<Productoalmacen> listaProductoAlm =  (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
                  int CantidadStocktotal=0;
                  int CantidadBase=0;
 				if (listaProductoAlm!=null ) {
@@ -817,7 +817,7 @@ public class ProductosAction extends BaseAction {
 							pro.setProductoAlmacendetallles(listaProductoAlm);
 							//productoDao.persistEndidad(proAlma);	
 							}
-						}
+						}*/
 					if(pro.getUmPedido()!=null){
 						if(pro.getUmPedido().getiUnidadMedidaId()==0){
 		            	   pro.setUmPedido(null);
@@ -828,9 +828,9 @@ public class ProductosAction extends BaseAction {
 		            	   pro.setUmSalida(null);
 		               }
 		               }
-					pro.setiProductoStockTotal(CantidadStocktotal);				
+				//	pro.setiProductoStockTotal(CantidadStocktotal);				
 			      resultado = productoDao.commitEndidad(transaccion);
-					}
+					
 					
 			}
 			/** Insertamos Datos del producto como Insumos **/
@@ -850,7 +850,7 @@ public class ProductosAction extends BaseAction {
 				pro.setdFechaActualiza(Fechas.getDate());
 				pro.setiUsuarioActualizaId(usu.getiUsuarioId());
 			
-				  List<Productoalmacen> listaProductoAlm = (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
+				/*  List<Productoalmacen> listaProductoAlm = (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
 					int CantidadStockTotal=0;
 					int CantidadStockBase=0;
 					if (listaProductoAlm.size() > 0) {
@@ -874,7 +874,7 @@ public class ProductosAction extends BaseAction {
 							}
 						pro.setiProductoStockTotal(CantidadStockTotal);
 						pro.setiUMBase(CantidadStockBase);
-						}
+						}*/
 					
 				/**
 				 * Actualizamos o agregamos precios del producto, como tambien
@@ -1812,6 +1812,16 @@ public class ProductosAction extends BaseAction {
 				pro.setProduccion(produBean);			
 				pro.setdFechaInserta(Fechas.getDate());
 				pro.setiUsuarioInsertaId(usu.getiUsuarioId());
+				if(pro.getUmPedido()!=null){
+					if(pro.getUmPedido().getiUnidadMedidaId()==0){
+	            	   pro.setUmPedido(null);
+	               }
+				}
+	               if(pro.getUmSalida()!=null){
+	            	   if(pro.getUmSalida().getiUnidadMedidaId()==0){
+	            	   pro.setUmSalida(null);
+	               }
+	               }
 				productoDao.persistEndidad(pro);
 				
 				/***********************************/
@@ -1900,7 +1910,7 @@ public class ProductosAction extends BaseAction {
 				libroDiario.setiPeriodoId(iPeriodoId);
 				productoDao.persistEndidad(libroDiario);
 				
-						
+				
 				 productoDao.persistEndidad(libroDiario);
 				 resultado = productoDao.commitEndidad(transaccion);
 				// productoDao.refreshEndidad(pro);
@@ -2053,7 +2063,16 @@ public class ProductosAction extends BaseAction {
 					
 				
 				}
-				
+				if(pro.getUmPedido()!=null){
+					if(pro.getUmPedido().getiUnidadMedidaId()==0){
+	            	   pro.setUmPedido(null);
+	               }
+				}
+	               if(pro.getUmSalida()!=null){
+	            	   if(pro.getUmSalida().getiUnidadMedidaId()==0){
+	            	   pro.setUmSalida(null);
+	               }
+	               }
 				 productoDao.mergeEndidad(pro);
 				 resultado = productoDao.commitEndidad(transaccion);
 				 productoDao.refreshEndidad(pro);

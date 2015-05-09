@@ -287,7 +287,7 @@
 		    </td>
 		    <td colspan="2">  
 		       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo unidadFinal" tabindex="12" style="width:140px" >
-		          <option value="0">::SELECCIONE::</option> 
+		           
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select>  
 		    </td>
@@ -296,7 +296,7 @@
 								<tr>
 								    <td align="right">Precio Compra:</td>
 								    <td>
-									    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" tabindex="9" onkeypress="return Numeros(event)"/>
+									    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text textNumero" tabindex="9" onkeypress="return Numeros(event)"/>
 									    <span id="m_fProductoPrecioCompra" class="importante">*</span>
 									</td>
 								      <td>
@@ -309,7 +309,7 @@
 								<tr>
 								    <td align="right">Ganancia:</td>
 								    <td>
-								       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text" onblur="fn_calcularGanancia('G')" tabindex="11" onkeypress="return Numeros(event)"/>
+								       <html:text property="fProductoGanancia"  styleId="fProductoGanancia" styleClass="text textNumero" onblur="fn_calcularGanancia('G')" tabindex="11" onkeypress="return Numeros(event)"/>
 								       </td>
 								       <td>
 								        <select class="comboCodigo" disabled="disabled" id="porcent" style="width:140px">
@@ -320,7 +320,7 @@
 								<tr>
 								    <td align="right">Precio Venta:</td>
 								    <td>
-								      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text" onblur="fn_calcularGanancia('V')" tabindex="12" onkeypress="return Numeros(event)"/>
+								      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text textNumero" onblur="fn_calcularGanancia('V')" tabindex="12" onkeypress="return Numeros(event)"/>
 								      <span id="m_fProductoPrecioVenta" class="importante">*</span>
 								    </td>
 								    <td>
@@ -332,7 +332,7 @@
 								</tr>
 								<tr>
 								    <td align="right">% Descuento:</td>
-								    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text"  tabindex="13" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
+								    <td colspan="2"><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="textN textNumero"  tabindex="13" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
 								</tr>
 								<!-- tr>
 								    <td align="right">Stock Min:</td>

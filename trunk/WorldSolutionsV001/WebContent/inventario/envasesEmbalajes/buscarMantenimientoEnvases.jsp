@@ -32,31 +32,11 @@
       <span id="m_vProductoNombre" class="importante">*</span>
     </td> 
 </tr>
-<tr>
-    <td align="right">Cantidad:</td>
-    <td>
-    <html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="text" onkeypress="return Numeros(event)" /> 
-       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo">
-          <option value="00">::SELECCIONE::</option> 
-          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-     </html:select>  
-      <span id="m_iProductoStockTotal" class="importante">*</span>
-    </td>
-</tr>
-<tr>
-     <td align="right">Capacidad:</td>
-    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="text" onkeypress="return LetrasNumeros(event)" /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-       <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo">
-          <option value="0">::SELECCIONE::</option> 
-          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-     </html:select>  
-    </td>
-</tr>
 
 <tr>
     <td align="right">Precio Compra:</td>
     <td>
-	    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text" />
+	    <html:text property="fProductoPrecioCompra" styleId="fProductoPrecioCompra" styleClass="text"/>
 	     <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo">
 	          <option value="00">::SELECCIONE::</option> 
 	          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
@@ -64,15 +44,17 @@
 	     <span id="m_fProductoPrecioCompra" class="importante">*</span>
      </td>
 </tr>
-<tr>
-	<td align="right">Precio Venta:</td>
-	<td><html:text property="fProductoPrecioVenta" 	styleId="fProductoPrecioVenta" styleClass="text" onkeypress="return Numeros(event)" />  
-		<html:select property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
-		<html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion" />
-		</html:select>
-		
-   </td>
 
+<tr>
+    <td align="right">Precio Venta:</td>
+    <td>
+      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text" onblur="fn_calcularGanancia('V')"/>
+       <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change">
+              <option value="00">::SELECCIONE::</option> 
+	          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
+	     </html:select>
+	     <span id="m_fProductoPrecioVenta" class="importante">*</span>
+      </td>
 </tr>
 <tr>
     <td align="right">Stock Min:</td>
@@ -94,9 +76,8 @@
 <tr height="50px">   
     <td align="center" colspan="2">
     <br>    
-     <button onclick="buscar('tab-grupo')" class="button">
-          <span class='save' id="btnGuardar"  class="button">Guardar</span></button>
-     <button onclick="cancelar('');" class="button" type="button"><span class='cancel'>Cancelar</span></button>
+     <button onclick="buscar('tab-grupo')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
+     <button onclick="cancelar('');"  class="button" type="button"><span class='cancel'>Cancelar</span></button>
      <br>
      <br>
      <span id="m_mensaje" class="mensaje"></span>
@@ -108,17 +89,15 @@
 <html:hidden property="iProductoId" />
 
 <%-- hidden field que contiene el mode --%>
-<html:text property="mode" styleId="mode" styleClass="textInvisible" />
+<html:hidden property="mode" styleId="mode" />
+
 <%-- hidden field que contiene el iclasificacionId --%>
 <html:text property="iclasificacionId" styleId="iclasificacionId" styleClass="textInvisible" />
+
 			
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="listaProducto" styleId="metodo"/>
 
-
-<html:hidden property="iUsuarioActualizaId" />
-<%-- hidden field que contiene el iUsuarioInsertaId del producto --%>
-<html:hidden property="iUsuarioInsertaId" />
 
 </html:form>
 <script>
