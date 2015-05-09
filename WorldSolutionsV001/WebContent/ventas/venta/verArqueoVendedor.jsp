@@ -13,11 +13,14 @@
 
 <tr>
 	<td align="right">
-		<button onclick="fn_imprimir()" class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+		<button onclick="fn_imprimir()" type="submit" class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
 				           
 	</td>
 </tr>
 <html:hidden property="vTipoImpresion" styleId="vTipoImpresion" value="arqueoIndividual"/>
+
+<%-- set the parameter for the dispatch action --%>
+<html:hidden property="metodo" value="imprimir" styleId="metodo" />
 
 </html:form>
 <script>
@@ -25,7 +28,7 @@
 	
 
 	function fn_imprimir(id){
-		var cad="venta.do?metodo=imprimir";
+		var cad="venta.do?metodo=imprimir&omitirPieBoleta=true";
 		 
 		 $.ajax({
 	         type: "GET",
@@ -35,6 +38,7 @@
 	       	  alert("OPERACION CON EXITO"); 
 	         }
 	     });
+		 window.close();
 		 
 	}
 	

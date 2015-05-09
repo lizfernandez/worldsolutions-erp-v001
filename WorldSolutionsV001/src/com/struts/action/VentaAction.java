@@ -34,7 +34,6 @@ import com.dao.ContabilidadDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.KardexDao;
-import com.dao.UsuarioDao;
 import com.dao.VentaDao;
 import com.entities.Cliente;
 import com.entities.Direccioncliente;
@@ -110,6 +109,7 @@ public class VentaAction extends BaseAction {
 
 		HttpSession sesion = request.getSession();
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		
 		if (!Constantes.usuAdministrador.equals(usu.getPerfil()
 				.getvPerfilDescripcion())) {
 			objform.getVenta().setSucursal(usu.getSucursal());
@@ -2849,7 +2849,7 @@ public class VentaAction extends BaseAction {
 					if (arqueoVenta.getfMontoPago() > 0) {
 						indice = arqueoVenta.getMedioPago1().getiMedioPagoId() - 1;
 
-						totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPago();
+						totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPago() - arqueoVenta.getfMontoVuelto();
 						
 						listaTotalPorMedioPago.set(indice, totalMedioPago);
 					}
@@ -2857,17 +2857,18 @@ public class VentaAction extends BaseAction {
 					if (arqueoVenta.getfMontoPagoCredito() > 0) {
 						indice = arqueoVenta.getMedioPago2().getiMedioPagoId() - 1;
 
-						totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPagoCredito();
+						totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPagoCredito() - arqueoVenta.getfMontoVuelto();
 						
 						listaTotalPorMedioPago.set(indice, totalMedioPago);
 					}
 					
-				} else if ("$".equals(arqueoVenta.getvTipoPago())) {
-
+				}
+					
+				if ("$".equals(arqueoVenta.getvTipoPago())) {
 					if (arqueoVenta.getfMontoPago() > 0) {
 						indice = arqueoVenta.getMedioPago1().getiMedioPagoId() - 1;
 
-						totalMedioPago = listaTotalPorMedioPagoDol.get(indice) + arqueoVenta.getfMontoPago();
+						totalMedioPago = listaTotalPorMedioPagoDol.get(indice) + arqueoVenta.getfMontoPago() - arqueoVenta.getfMontoVuelto();
 						
 						listaTotalPorMedioPagoDol.set(indice, totalMedioPago);
 					}
@@ -2875,14 +2876,14 @@ public class VentaAction extends BaseAction {
 					if (arqueoVenta.getfMontoPagoCredito() > 0) {
 						indice = arqueoVenta.getMedioPago2().getiMedioPagoId() - 1;
 
-						totalMedioPago = listaTotalPorMedioPagoDol.get(indice) + arqueoVenta.getfMontoPagoCredito();
+						totalMedioPago = listaTotalPorMedioPagoDol.get(indice) + arqueoVenta.getfMontoPagoCredito() - arqueoVenta.getfMontoVuelto();
 						
 						listaTotalPorMedioPagoDol.set(indice, totalMedioPago);
 					}
 					
 				}
-				totalVenta += arqueoVenta.getfVentaTotal();
-				
+
+
 				String textoHora = format.format(arqueoVenta.getdFechaInserta());
 				indice = listaHora.indexOf(textoHora);
 				if (indice < 0) {
@@ -2891,10 +2892,11 @@ public class VentaAction extends BaseAction {
 					listaTotalPorHora.add(0.0);
 					
 				}
+				
+				totalVenta += arqueoVenta.getfVentaTotal();
 				totalMedioPago = listaTotalPorHora.get(indice) + arqueoVenta.getfVentaTotal();
 				
 				listaTotalPorHora.set(indice, totalMedioPago);
-				
 				
 			}
 			
@@ -2962,6 +2964,9 @@ public class VentaAction extends BaseAction {
 				}
 				indice++;
 			}
+			
+			
+			
 		}
 		
 	}
