@@ -307,6 +307,11 @@
                 <td>
                 <table style="height: 100%" cellpadding="0" cellspacing="0" border="0">
 				    <tr>
+				       <td align="left">				        
+				          <html:select  property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:100px" onchange="fn_PagoCredito()">        
+                            <html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraID"/>
+                        </html:select>
+				        </td>
 				        <td align="left">
 				           <button onclick="insertar('tabla')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
 				           
@@ -372,6 +377,7 @@
     document.getElementById('fDescuentoR').value =formatCurrency($("#fDescuento").val(),'');
    // document.getElementById('fDescClienteVentaR').value =formatCurrency($("#fDescClienteVenta").val(),'');
     document.getElementById('vTipoCompra').value =$("#tipoMoneda").val();
+    $("#impresoraID option[value='BIXOLON SRP-270']").attr("selected",true); 
    
     $("#dIngresoProductoFecha").datepicker(
 	        {

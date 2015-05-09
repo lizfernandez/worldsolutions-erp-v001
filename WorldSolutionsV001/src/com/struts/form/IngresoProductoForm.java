@@ -48,6 +48,7 @@ public class IngresoProductoForm extends ActionForm {
 	private String tipoMoneda;
 	private String IGVCompra;
 	private String IGVPercepcion;
+	private String impresoraID;
     /**
 	 * @return the lista
 	 */
@@ -868,6 +869,18 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setvTipoImpresion(String vTipoImpresion) {
 		this.vTipoImpresion = vTipoImpresion;
+	}
+	/**
+	 * @return the impresoraID
+	 */
+	public String getImpresoraID() {
+		return impresoraID;
+	}
+	/**
+	 * @param impresoraID the impresoraID to set
+	 */
+	public void setImpresoraID(String impresoraID) {
+		this.impresoraID = impresoraID;
 	}
 
 	

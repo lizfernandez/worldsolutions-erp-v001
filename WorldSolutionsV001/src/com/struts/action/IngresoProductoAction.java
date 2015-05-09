@@ -53,6 +53,7 @@ import com.util.Constantes;
 import com.util.Fechas;
 import com.util.FormatosNumeros;
 import com.util.Impresora;
+import com.util.ImpresoraVO;
 import com.util.Paginacion;
 import com.util.Util;
 
@@ -322,6 +323,7 @@ public class IngresoProductoAction extends BaseAction {
 
 		/** Instantacia al IngresoproductoForm **/
 		IngresoProductoForm ingresoproductoform = (IngresoProductoForm) form;
+		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
 
 		/** Instantacia a la capa Dao **/
 		EstadoDao estadoDao = new EstadoDao();
@@ -473,7 +475,7 @@ public class IngresoProductoAction extends BaseAction {
 		sesion.setAttribute("listaFormapago", listaFormapago);
 		sesion.setAttribute("listaTipoDoc", listaTipoDoc);
 		sesion.setAttribute("listaEstadoDocumento", listaEstadoDocumento);
-		
+		sesion.setAttribute("listaImpresora", listaImpresora);
 
 
 		return mapping.findForward(msn);
@@ -655,6 +657,7 @@ public class IngresoProductoAction extends BaseAction {
 
 		HttpSession sesion = request.getSession();
 		String mode = request.getParameter("mode");
+		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
 		String msn = "";
 
 		/** Instantacia al IngresoproductoForm **/
@@ -824,6 +827,7 @@ public class IngresoProductoAction extends BaseAction {
 		sesion.setAttribute("listaFormapago", listaFormapago);
 		sesion.setAttribute("listaTipoDoc", listaTipoDoc);
 		sesion.setAttribute("listaPeriodo", listaPeriodo);
+		sesion.setAttribute("listaImpresora", listaImpresora);
 
 
 		return mapping.findForward(msn);

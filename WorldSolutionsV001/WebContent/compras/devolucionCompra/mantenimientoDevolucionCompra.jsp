@@ -263,6 +263,11 @@
                 <td>
                 <table style="height: 100%" cellpadding="0" cellspacing="0" border="0">
 				    <tr>
+				        <td align="left">				        
+				          <html:select  property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:100px" onchange="fn_PagoCredito()">        
+                            <html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraID"/>
+                        </html:select>
+				        </td>
 				        <td align="left">
 				           <button onclick="insertar('tabla')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
 				           
@@ -311,7 +316,7 @@
     document.getElementById('fIngresoProductoDevIGVr').value = $("#fIngresoProductoDevIGV").val();
     document.getElementById('fIngresoProductoDevr').value = $("#fIngresoProductoDev").val();
     document.getElementById('fIngresoProductoTotalr').value = $("#fIngresoProductoTotal").val();
-    
+    $("#impresoraID option[value='BIXOLON SRP-270']").attr("selected",true); 
     $(document).find(".text.inputDisabled.textNumero").each(function(key,val){                        
    	 $("#"+this.id).val(formatCurrency($("#"+this.id).val(),''));   
 });

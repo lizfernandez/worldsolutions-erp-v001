@@ -303,6 +303,7 @@ public class VentaAction extends BaseAction {
 		ventaform.setTipoMoneda(moneda.getcModenaCodigo());
 		ventaform.setIGVVentas(sesion.getAttribute("IGVVentas").toString());
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
 		// List<Tipodocumentogestion> listaDocumentoGestion =
 		// Util.listaDocGest();
 		/**
@@ -503,6 +504,7 @@ public class VentaAction extends BaseAction {
 		sesion.setAttribute("listaFormapago", listaFormapago);
 		sesion.setAttribute("listaTipoDoc", listaTipoDoc);
 		sesion.setAttribute("listaEstadoDocumento", listaEstadoDocumento);
+		sesion.setAttribute("listaImpresora", listaImpresora);
 
 		return mapping.findForward(msn);
 	}
@@ -2796,12 +2798,13 @@ public class VentaAction extends BaseAction {
 	public ActionForward verArqueoVendedor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		VentaForm ventaForm = (VentaForm) form;
 		String msn = "showArqueo";
+		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
 		Impresora impresora = new Impresora();
 		
 		generarArqueo(request, impresora);
-		
+		HttpSession sesion = request.getSession();
 		ventaForm.setvTextoImpresion(impresora.toString());
-		
+		sesion.setAttribute("listaImpresora", listaImpresora);
 		return mapping.findForward(msn);
 	}
 	
