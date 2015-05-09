@@ -1617,7 +1617,7 @@ public class IngresoProductoAction extends BaseAction {
 			
 			
 			impresora.agregarSeparacion();
-			impresora.agregarCabeceraDetalleProducto("CODIGO", "DESCRIPCION", "CANT", "P.UNIT", "IMPORTE");
+			impresora.agregarCabeceraDetalleProducto("CODIGO", "DESCRIPCION", "CANT", "P.UNIT", "DSCTO", "IMPORTE");
 			impresora.agregarSeparacion();
 			      
             // aqui recorro mis productos y los imprimo
@@ -1626,6 +1626,7 @@ public class IngresoProductoAction extends BaseAction {
             			ingProDevdetalle.getProducto().getvProductoNombre(),
             			ingProDevdetalle.getiIngresoProductoDevDetalleCantidad(),
             			ingProDevdetalle.getfIngresoProductoDevDetallePrecio(),
+            			ingProDevdetalle.getfDescuento(),
             			ingProDevdetalle.getfIngresoProductoDevDetalleTotal());
             	
             }
