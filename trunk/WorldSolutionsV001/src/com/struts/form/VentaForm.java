@@ -53,7 +53,7 @@ public class VentaForm extends  ActionForm {
 	private String identificador;	
 	private int iSucursalId;
 	
-	private int impresoraID;
+	private String impresoraID;
    
 	
     /**
@@ -1040,13 +1040,13 @@ public class VentaForm extends  ActionForm {
 	/**
 	 * @return the impresoraID
 	 */
-	public int getImpresoraID() {
+	public String getImpresoraID() {
 		return impresoraID;
 	}
 	/**
 	 * @param impresoraID the impresoraID to set
 	 */
-	public void setImpresoraID(int impresoraID) {
+	public void setImpresoraID(String impresoraID) {
 		this.impresoraID = impresoraID;
 	}
 

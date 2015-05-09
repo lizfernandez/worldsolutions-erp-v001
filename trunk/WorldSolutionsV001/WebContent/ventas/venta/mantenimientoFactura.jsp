@@ -281,7 +281,7 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="cabecera" id="detallePago">                
 		
 		            <tr> 
-		                <td align="left" colspan="2">
+		                <td align="center" colspan="2">
 		                TIPO CAMBIO: <html:text property="fTipoCambio" styleId="fTipoCambio" styleClass="text  textNumero" size="3" onblur="fn_tipoPago()"  /> 
 		                  
 		                TIPO PAGO:
@@ -342,7 +342,7 @@
 				    <tr>
 				        <td align="left">				        
 				          <html:select  property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:160px" onchange="fn_PagoCredito()">        
-                            <html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraNombre"/>
+                            <html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraID"/>
                         </html:select>
 				        </td>
 				        <td align="left">
@@ -414,7 +414,7 @@
     document.getElementById('fDescuentoR').value =formatCurrency($("#fDescuento").val(),'');
     document.getElementById('fDescClienteVentaR').value =formatCurrency($("#fDescClienteVenta").val(),'');
     document.getElementById('vTipoVenta').value =$("#tipoMoneda").val();
-    
+    $("#impresoraID option[value='BIXOLON SRP-270']").attr("selected",true); 
     
     $("#dIngresoProductoFecha").datepicker(
 	        {
