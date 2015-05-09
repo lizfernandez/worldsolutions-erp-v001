@@ -119,7 +119,6 @@ contenido = "";/*+ (char) 27 + (char) 112
 
 	@Override
 	public String toString() {
-		this.contenido = contenido.toUpperCase().replace("Ñ", "N");
 		return contenido;
 	}
 
@@ -213,12 +212,28 @@ contenido = "";/*+ (char) 27 + (char) 112
 		
 		detalleLinea = new Object[][] {
 				{ "", 0, 1},
-				{ iVentaDetalleCantidad, 9, -1 },
-				{ fVentaDetallePrecio, 20, -1 },
-				{ fVentaDetalleTotal, 35, -1 } };
+				{ iVentaDetalleCantidad, 3, -1 },
+				{ fVentaDetallePrecio, 15, -1 },
+				{ fVentaDetalleTotal, 25, -1 } };
 		agregarLinea(detalleLinea);
 		
 		
+	}
+
+	public void agregarCabeceraDetalleProducto(String tituloCodigo, String tituloDescripcion,
+			String tituloCantidad, String tituloPrecioUnitario, String tituloImporte) {
+		
+		Object[][] detalleLinea = new Object[][] {
+				{ tituloCodigo, 0, 1 },
+				{ tituloDescripcion, 9, 1 } };
+		agregarLinea(detalleLinea);
+		
+		detalleLinea = new Object[][] {
+				{ "", 0, 1},
+				{ tituloCantidad, 3, -1 },
+				{ tituloPrecioUnitario, 15, -1 },
+				{ tituloImporte, 25, -1 } };
+		agregarLinea(detalleLinea);
 	}
 
 }
