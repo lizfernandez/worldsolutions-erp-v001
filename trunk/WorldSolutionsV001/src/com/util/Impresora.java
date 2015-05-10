@@ -11,13 +11,8 @@ import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
-import javax.print.attribute.AttributeSet;
 import javax.print.attribute.DocAttributeSet;
-import javax.print.attribute.HashAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
-import javax.print.attribute.standard.PrinterName;
-
-
 
 /**
  * clase modificada con el fin de imprimir el ticket de una venta.
@@ -63,6 +58,7 @@ public class Impresora {
 		ImpresoraVO impresoraVO;
 		//PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
 		//MultiDocPrintService[] services = PrintServiceLookup.lookupMultiDocPrintServices(null, null);
+		
 		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
 		if (services.length > 0) {
 			for (int i = 0; i < services.length; i++) {
@@ -77,12 +73,14 @@ public class Impresora {
 				
 			}
 		}
-		
+
 		return list;
 		
 	}
 	
 	public void asignarDispositivo(String idImpresora) throws IllegalAccessException{
+	
+//		seleccionarDispositivo(idImpresora);
 		
 		List<ImpresoraVO> list = listarImpresoras();
 		for (ImpresoraVO impresoraVO : list) {
