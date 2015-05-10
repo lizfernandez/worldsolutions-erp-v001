@@ -63,9 +63,7 @@ public class Impresora {
 		ImpresoraVO impresoraVO;
 		//PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
 		//MultiDocPrintService[] services = PrintServiceLookup.lookupMultiDocPrintServices(null, null);
-		AttributeSet aset = new HashAttributeSet();
-		aset.add(new PrinterName("\\V2\bixolon srp-270", null));
-		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, aset);
+		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
 		if (services.length > 0) {
 			for (int i = 0; i < services.length; i++) {
 				DocPrintJob printJob = services[i].createPrintJob();
