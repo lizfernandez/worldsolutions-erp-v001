@@ -532,7 +532,7 @@ public class VentaAction extends BaseAction {
 		int iProductoId = Integer.parseInt(request.getParameter("id"));
 		String mode = request.getParameter("mode");
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
-		int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
+		//int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 		/** Instanciamos la Clase VentaForm **/
 
 		List<Ventadetalle> lista = (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle");
@@ -599,6 +599,7 @@ public class VentaAction extends BaseAction {
 							.getvPersonalApellidoPaterno());
 
 					ventadetalle.setPersonal(personalBean);
+					ventadetalle.setvIdentificadorSession(identificador);
 				}
 
 				lista.add(ventadetalle);
@@ -814,7 +815,7 @@ public class VentaAction extends BaseAction {
 		List<Ventadetalle> lista = new ArrayList<Ventadetalle>();
 		List<Tipodocumentogestion> listaTipoDoc = genericaDao
 				.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
-		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
+		
 
 		/**
 		 * LLamamos al formulario mantenimientoVenta.jsp para la insercion de
@@ -1006,7 +1007,7 @@ public class VentaAction extends BaseAction {
 		sesion.setAttribute("listaEstado", listaEstado);
 		sesion.setAttribute("listaFormapago", listaFormapago);
 		sesion.setAttribute("listamedioPago", listamedioPago);
-		sesion.setAttribute("listaImpresora", listaImpresora);
+		//sesion.setAttribute("listaImpresora", listaImpresora);
 
 		sesion.setAttribute("listaTipoDoc", listaTipoDoc);
 
@@ -2628,9 +2629,9 @@ public class VentaAction extends BaseAction {
 		// String tipoImpresion = request.getParameter("tipoImpresion");
 		VentaForm ventaForm = (VentaForm) form;
 		Venta venta = null;
-//		
-//		impresora.asignarDispositivo(ventaForm.getImpresoraID());
-//		
+		
+		impresora.asignarDispositivo(ventaForm.getImpresoraID());
+		
 		if (ventaForm.getvTipoImpresion().equals("venta")) {
 			/*
 			 * if (id == 0) {

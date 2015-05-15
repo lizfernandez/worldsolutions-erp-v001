@@ -7,15 +7,18 @@ import java.util.List;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
+
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.ServiceUI;
 import javax.print.SimpleDoc;
+
 import javax.print.attribute.DocAttributeSet;
+
 import javax.print.attribute.HashDocAttributeSet;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
+
+
 
 /**
  * clase modificada con el fin de imprimir el ticket de una venta.
@@ -61,11 +64,9 @@ public class Impresora {
 		ImpresoraVO impresoraVO;
 		//PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null); // nos da el array de los servicios de impresion
 		//MultiDocPrintService[] services = PrintServiceLookup.lookupMultiDocPrintServices(null, null);
-		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-		//PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
-		PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-        PrintService services[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
-        
+		//AttributeSet aset = new HashAttributeSet();
+		// aset.add(new PrinterName("Microsoft XPS Document Writer", null));
+		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
 		if (services.length > 0) {
 			for (int i = 0; i < services.length; i++) {
 				DocPrintJob printJob = services[i].createPrintJob();
@@ -79,14 +80,12 @@ public class Impresora {
 				
 			}
 		}
-
+		
 		return list;
 		
 	}
 	
 	public void asignarDispositivo(String idImpresora) throws IllegalAccessException{
-	
-//		seleccionarDispositivo(idImpresora);
 		
 		List<ImpresoraVO> list = listarImpresoras();
 		for (ImpresoraVO impresoraVO : list) {
@@ -285,23 +284,6 @@ public class Impresora {
 				{ tituloPrecioUnitario, 20, -1 },
 				{ tituloImporte, 30, -1 } };
 		agregarLinea(detalleLinea);
-	}
-
-	public boolean seleccionarDispositivo() throws IllegalAccessException {
-		DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-		//PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
-		PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-        PrintService services[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
-        PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
-        PrintService service = ServiceUI.printDialog(null, 700, 200, services, defaultService, flavor, pras);
-        
-        if (service != null) {
-        	jobImpresora = service.createPrintJob();
-        } else {
-        	return false;
-        }
-        return true;
-		
 	}
 
 }
