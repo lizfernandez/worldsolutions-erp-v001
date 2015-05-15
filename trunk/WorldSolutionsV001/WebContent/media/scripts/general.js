@@ -638,7 +638,7 @@ function listar_detalleVenta(obj,destino,identificador){
 		
 	   }
 	   else{
-		   newHtml+='<td colspan="2">'; 
+		   newHtml+='<td>'; 
 		   empleado:
 			 newHtml+="empleado: "+data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
 		newHtml+='</td>';  
