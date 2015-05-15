@@ -54,7 +54,7 @@ public class VentaForm extends  ActionForm {
 	private int iSucursalId;
 	
 	private String impresoraID;
-   
+    private String imprimirTicket;
 	
     /**
 	 * @return the lista
@@ -1048,6 +1048,18 @@ public class VentaForm extends  ActionForm {
 	 */
 	public void setImpresoraID(String impresoraID) {
 		this.impresoraID = impresoraID;
+	}
+	/**
+	 * @return the imprimirTicket
+	 */
+	public String getImprimirTicket() {
+		return imprimirTicket;
+	}
+	/**
+	 * @param imprimirTicket the imprimirTicket to set
+	 */
+	public void setImprimirTicket(String imprimirTicket) {
+		this.imprimirTicket = imprimirTicket;
 	}
 
 }

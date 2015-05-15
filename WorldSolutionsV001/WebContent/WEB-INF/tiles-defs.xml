@@ -40,6 +40,10 @@
 <put name="body" value="/plantillas/msn-Error.jsp"></put>
 </definition>
 
+<definition name=".msnImprimirTicket" extends=".popup">
+<put name="body" value="/plantillas/msn-ImprimirTicket.jsp"></put>
+</definition>
+
 <definition name=".bienvenidoAdmin" extends=".plantilla">
     <put name="body" value="/home/homeAdmin.jsp"></put>   
     <put name="menuVertical" value="/plantillas/simple.jsp"></put>  

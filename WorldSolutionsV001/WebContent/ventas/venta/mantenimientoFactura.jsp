@@ -1,34 +1,9 @@
+
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@page import="com.util.ImpresoraVO"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="javax.print.DocPrintJob"%>
-<%@page import="javax.print.PrintService"%>
-<%@page import="javax.print.PrintServiceLookup"%>
 
-<%@ page import="java.util.List" session="true"%>
-<% 
-HttpSession sesion = request.getSession();
-PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
-List<ImpresoraVO> listaImpresora = new ArrayList<ImpresoraVO>();
-ImpresoraVO impresoraVO;
-if (services.length > 0) {
-	for (int i = 0; i < services.length; i++) {
-		DocPrintJob printJob = services[i].createPrintJob();
-		impresoraVO = new ImpresoraVO();
-		impresoraVO.setImpresoraID(services[i].getName());
-		impresoraVO.setImpresoraNombre(services[i].toString());
-		impresoraVO.setJobImpresora(services[i].createPrintJob());
-		
-		listaImpresora.add(impresoraVO);
-		System.out.println(printJob.getPrintService());
-		
-	}
-}
-sesion.setAttribute("listaImpresora", listaImpresora);
-%>
 
 <html:form action="venta" styleId="formVenta" enctype="echarset=utf-8">
 <table border="1" cellpadding="0" cellspacing="0" class="tabla" id="tabla" style="width: 63%; float: left;">
@@ -367,11 +342,7 @@ sesion.setAttribute("listaImpresora", listaImpresora);
                 <td>
                 <table style="height: 100%" cellpadding="0" cellspacing="0" border="0" class="detallePago">
 				    <tr>
-				        <td align="left">				        
-				          <html:select  property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:100px" onchange="fn_PagoCredito()">        
-                            <html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraID"/>
-                        </html:select>
-				        </td>
+				      
 				        <td align="left">
 				           <button onclick="insertar('tabla')"  class="button"><span class='save' id="btnGuardar">Guardar</span></button>
 				           

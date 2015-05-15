@@ -108,6 +108,8 @@
 	                 	                 	
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />
+	                 
+	                 
 	           
 	    </action>
         <action 
@@ -396,7 +398,7 @@
 	                 <forward name="showFindEstadoCuenta" path=".buscarMantenimientoEstadoCuentaCliente" />		
 	                 <forward name="showArqueo" path=".verArqueo" />		
 	                 
-	                                   
+	                 <forward name="msnImprimirTicket" path=".msnImprimirTicket" />         
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />
 	           

@@ -11,12 +11,12 @@ import javax.print.DocPrintJob;
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
-import javax.print.ServiceUI;
 import javax.print.SimpleDoc;
 
 import javax.print.attribute.DocAttributeSet;
 
 import javax.print.attribute.HashDocAttributeSet;
+
 
 
 
@@ -284,6 +284,14 @@ public class Impresora {
 				{ tituloPrecioUnitario, 20, -1 },
 				{ tituloImporte, 30, -1 } };
 		agregarLinea(detalleLinea);
+	}
+
+	public void abriCaja() {
+		contenido += ""+ (char) 27 + (char) 112
+				+ (char) 0
+				+ (char) 10
+				+ (char) 100;
+		
 	}
 
 }

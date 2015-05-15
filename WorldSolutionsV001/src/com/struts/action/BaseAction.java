@@ -194,7 +194,7 @@ public abstract class BaseAction  extends DispatchAction {
 	
 	public abstract void cargarContenidoImprimir (ActionForm form, HttpServletRequest request, Impresora impresora, ActionMapping mapping, HttpServletResponse response) throws IllegalAccessException, IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, NoSuchFieldException, ParseException;
 
-	public ActionForward imprimir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, NoSuchFieldException, ParseException {
+	public String imprimir(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, NoSuchFieldException, ParseException {
 
 		Impresora impresora;
         HttpSession sesion = request.getSession();
@@ -202,9 +202,9 @@ public abstract class BaseAction  extends DispatchAction {
 		try {
 			impresora = new Impresora();
 
-			boolean impresoraSeleccionada = impresora.seleccionarDispositivo();
+			//boolean impresoraSeleccionada = impresora.seleccionarDispositivo();
 			
-			if (impresoraSeleccionada) {
+			//if (impresoraSeleccionada) {
 	  			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 	            impresora.agregarLineaCentrada(usu.getSucursal().getEmpresa().getvEmpresaNombre());
 	    		impresora.agregarLineaCentrada("RUC: "+usu.getSucursal().getEmpresa().getvEmpresaRuc());
@@ -227,14 +227,15 @@ public abstract class BaseAction  extends DispatchAction {
 	    		
 	    		impresora.cortarImpresion();
 	    		//System.out.println(impresora.toString());
-	    		impresora.imprimirTicket();
-			}
+	    		impresora.abriCaja();
+	    		return impresora.toString();
+			//}
 			
 		} finally {
 			impresora = null;
 			sesion = null;
 		}
 		
-		return null;
+		
 	}
 }
