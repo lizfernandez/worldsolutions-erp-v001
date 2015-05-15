@@ -1028,12 +1028,13 @@ public class VentaAction extends BaseAction {
 	 * @throws SecurityException
 	 * @throws IllegalArgumentException
 	 * @throws ParseException
+	 * @throws IOException 
 	 */
 	public ActionForward iduVenta(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IllegalArgumentException, SecurityException,
 			ClassNotFoundException, IllegalAccessException,
-			NoSuchFieldException, ParseException {
+			NoSuchFieldException, ParseException, IOException {
 
 		/** Inicializamos las variables **/
 		String msn = "";
@@ -1848,10 +1849,8 @@ public class VentaAction extends BaseAction {
 				 * ventaDao.refreshEndidad(obj1);
 				 */
 				ventaDao.mergeEndidad(obj1);
-				resultado = ventaDao.commitEndidad(entityTransaction);
-				if (pForm.getvImprimir().equals("SI")) {
-					imprimir(mapping, pForm, request, response);
-				}
+				ventaDao.commitEndidad(entityTransaction);
+				
 
 			} // / fin actualizacion.
 			else if (mode.equals("D")) {
@@ -1867,14 +1866,22 @@ public class VentaAction extends BaseAction {
 		} finally {
 			entityTransaction = null;
 		}
+		if (pForm.getvImprimir().equals("SI")) {
+			String ticket = imprimir(mapping, pForm, request, response);
+			pForm.setImprimirTicket(ticket);
+			msn = "msnImprimirTicket";
+			
+		//	resultado = "";
+		}else{
+			if (resultado == true) {
+				msn = "msnOk";
 
-		if (resultado == true) {
-			msn = "msnOk";
+			} else {
+				msn = "msnError";
 
-		} else {
-			msn = "msnError";
-
+			}
 		}
+		
 		/** llamamos a listar Venta **/
 		// listaVenta(mapping, pForm, request, response);
 
@@ -2630,7 +2637,7 @@ public class VentaAction extends BaseAction {
 		VentaForm ventaForm = (VentaForm) form;
 		Venta venta = null;
 		
-		impresora.asignarDispositivo(ventaForm.getImpresoraID());
+	//	impresora.asignarDispositivo(ventaForm.getImpresoraID());
 		
 		if (ventaForm.getvTipoImpresion().equals("venta")) {
 			/*
