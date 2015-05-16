@@ -692,7 +692,7 @@ newHtml+='</tbody>';
 //	$('#detalleVenta',window.opener.document).innerHTML=newHtml;
 	
 };
-function listar_detalleAlmacen(obj,destino,identificador){
+function listar_detalleAlmacen(obj,destino){
 	var precio =0;		
 	var newHtml='';
 	newHtml+='<tbody>';
@@ -709,8 +709,9 @@ function listar_detalleAlmacen(obj,destino,identificador){
    newHtml+='</tr>';
 	$.each(obj,function(key,data){
 		if(data.cEstadoCodigo=="AC"){
-			if(data.fVentaDetallePrecio!=0)
-				precio = data.fVentaDetallePrecio;
+			
+			if(data.fPrecioUnitario!=0)
+				precio = data.fPrecioUnitario;
 			else
 				precio = data['producto'].fProductoPrecioVenta;
 			//fn_calcularVentasPadre(data.fVentaDetalleTotal,data['producto'].fProductoPrecioVenta, data.iVentaDetalleCantidad)
@@ -720,36 +721,29 @@ function listar_detalleAlmacen(obj,destino,identificador){
 			newHtml+=data['producto'].cProductoCodigo;
 		newHtml+='</td>';
 		newHtml+="<td '>";
-		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iVentaDetalleCantidad+"'/>";
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iCantidad+"'/>";
 		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockTotal+"'/>";
 		  newHtml+='</td>';
-	   if(data['producto']['unidadMedida']!=null){
+	
 	    newHtml+='<td>'; 
 	   
             newHtml+=data['producto']['unidadMedida'].vUnidadMedidaDescripcion;
         newHtml+='</td>';
 		
-	   }
-	   else{
-		   newHtml+='<td colspan="2">'; 
-		   empleado:
-			 newHtml+="empleado: "+data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
-		newHtml+='</td>';  
-	   }
-	 
+	  
 		
 		newHtml+='<td>';
 			newHtml+=data['producto'].vProductoNombre;
 		newHtml+='</td>';		
 	    newHtml+="<td align='right'>";
-		  newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+(precio)+"'/>";		  
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+(precio)+"' disabled='true'/>";		  
 	    newHtml+='</td>';
 	    newHtml+="<td align='right'>";
-		  newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+formatCurrency(data.fDescuento,' ')+"'/>";		  
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+(data['producto'].fProductoDescuento)+"' disabled='true'/>";		  
 	    newHtml+='</td>';
 	    newHtml+="<td align='right'>";
-		   newHtml+="<span class='total"+key+"' >"+(data.fVentaDetalleTotal)+" </span>";
-		   newHtml+="<span id='total"+key+"' class='totales' >"+data.fVentaDetalleTotal+" </span>";
+		   newHtml+="<span class='total"+key+"' >"+(data.fTotal)+" </span>";
+		   newHtml+="<span id='total"+key+"' class='totales' >"+data.fTotal+" </span>";
 		newHtml+='</td>';
 		
 		newHtml+='</tr>';

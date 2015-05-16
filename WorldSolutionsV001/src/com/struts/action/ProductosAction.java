@@ -3047,9 +3047,9 @@ public class ProductosAction extends BaseAction {
 				Producto productoBean = new Producto();
 				List<Distalmacendetalle> listaAlmacen = (List<Distalmacendetalle>) sesion
 								.getAttribute("listaDistAlmacenDetalle");		
-				List<Ordencompradetalle> listaOrdenCompra = (List<Ordencompradetalle>) sesion
+				/*List<Ordencompradetalle> listaOrdenCompra = (List<Ordencompradetalle>) sesion
 								.getAttribute("listaOrdenCompraDetalle");
-					
+				*/	
 						
 						
 					
@@ -3087,6 +3087,7 @@ public class ProductosAction extends BaseAction {
 						productoBean.setiProductoStockTotal(producto
 								.getiProductoStockTotal());
 						productoBean.setfProductoPrecioCompra(fPrecioCompra);
+						productoBean.setfProductoDescuento(fDescuento);
 
 						almacenDetalle.setProducto(productoBean);
 						almacenDetalle.setfTotal(fTotal);
@@ -3096,6 +3097,7 @@ public class ProductosAction extends BaseAction {
 						almacenDetalle.setdFechaInserta(Fechas.getDate());
 						almacenDetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
 						almacenDetalle.setcEstadoCodigo(Constantes.estadoActivo);
+						
 						
 						ordeCompraDetalle.setProducto(productoBean);
 						ordeCompraDetalle.setfTotal(fTotal);
@@ -3108,7 +3110,7 @@ public class ProductosAction extends BaseAction {
 						
 
 						listaAlmacen.add(almacenDetalle);
-						listaOrdenCompra.add(ordeCompraDetalle);
+					/*	listaOrdenCompra.add(ordeCompraDetalle);*/
 						sesion.setAttribute("listaDistAlmacenDetalle", listaAlmacen);
 						// ventaDao.persistEndidad(ventadetalle);
 						// ventaDao.commitEndidad(entityTransaction);

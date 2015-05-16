@@ -141,7 +141,7 @@
     <put name="body" value="/inventario/produccion/mantenimientoProduccion.jsp"></put>   
 </definition>
 <definition name=".mantenimientoDistAlmacen" extends=".popup">
-    <put name="body" value="/inventario/distribucionAlmacen/mantenimientoDistribucionProducto.jsp"></put>   
+    <put name="body" value="/inventario/distribucionAlmacen/mantenimientoDistProducto.jsp"></put>   
 </definition>
 <definition name=".mantenimientoOrdenCompra" extends=".popup">
     <put name="body" value="/inventario/ordenCompra/mantenimientoOrdenCompra.jsp"></put>   

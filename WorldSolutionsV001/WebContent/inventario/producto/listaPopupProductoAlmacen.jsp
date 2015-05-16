@@ -280,7 +280,7 @@ paginacion();
 		var fPrecioCompra =$("#fPrecioCompra").val();
 		var fTotal = $("#fTotal").val();
 		var iPersonalId=0;
-	    var cad = "producto.do?metodo=detalleAlmacen&id="+id+"&iCantidad="+iCantidad+
+	    var cad = "productos.do?metodo=detalleAlmacen&id="+id+"&iCantidad="+iCantidad+
 	    		  "&fDescuento="+fDescuento+"&fPrecioVenta="+fPrecioVenta+"&fPrecioCompra="+fPrecioCompra+
 	    		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId;
 	         $.getJSON(cad, function retorna(obj){
