@@ -189,7 +189,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 	        }
 			
 	        System.out.println(" where ="+where);
-	        q = getInstancia().createQuery("select  DISTINCT  p from Distalmacen p   " + where +" order by p.dFechaIngreso asc");/**/
+	        q = getInstancia().createQuery("select  p from Distalmacen p   " + where +" order by p.dFechaIngreso asc");/**/
 	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	        listaProducto = q.setFirstResult(pagInicio)
 						  .setMaxResults(pagFin)
