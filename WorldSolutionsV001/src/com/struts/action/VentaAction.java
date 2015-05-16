@@ -815,7 +815,7 @@ public class VentaAction extends BaseAction {
 		List<Ventadetalle> lista = new ArrayList<Ventadetalle>();
 		List<Tipodocumentogestion> listaTipoDoc = genericaDao
 				.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
-		
+		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
 
 		/**
 		 * LLamamos al formulario mantenimientoVenta.jsp para la insercion de
@@ -1007,7 +1007,7 @@ public class VentaAction extends BaseAction {
 		sesion.setAttribute("listaEstado", listaEstado);
 		sesion.setAttribute("listaFormapago", listaFormapago);
 		sesion.setAttribute("listamedioPago", listamedioPago);
-		//sesion.setAttribute("listaImpresora", listaImpresora);
+		sesion.setAttribute("listaImpresora", listaImpresora);
 
 		sesion.setAttribute("listaTipoDoc", listaTipoDoc);
 
@@ -1849,7 +1849,7 @@ public class VentaAction extends BaseAction {
 				 * ventaDao.refreshEndidad(obj1);
 				 */
 				ventaDao.mergeEndidad(obj1);
-				ventaDao.commitEndidad(entityTransaction);
+				resultado = ventaDao.commitEndidad(entityTransaction);
 				
 
 			} // / fin actualizacion.
@@ -1867,20 +1867,21 @@ public class VentaAction extends BaseAction {
 			entityTransaction = null;
 		}
 		if (pForm.getvImprimir().equals("SI")) {
-			String ticket = imprimir(mapping, pForm, request, response);
-			pForm.setImprimirTicket(ticket);
-			msn = "msnImprimirTicket";
+			imprimir(mapping, pForm, request, response);
+//			pForm.setImprimirTicket(ticket);
+//			msn = "msnImprimirTicket";
 			
 		//	resultado = "";
-		}else{
-			if (resultado == true) {
-				msn = "msnOk";
-
-			} else {
-				msn = "msnError";
-
-			}
 		}
+		
+		if (resultado == true) {
+			msn = "msnOk";
+
+		} else {
+			msn = "msnError";
+
+		}
+	
 		
 		/** llamamos a listar Venta **/
 		// listaVenta(mapping, pForm, request, response);
@@ -2637,7 +2638,7 @@ public class VentaAction extends BaseAction {
 		VentaForm ventaForm = (VentaForm) form;
 		Venta venta = null;
 		
-	//	impresora.asignarDispositivo(ventaForm.getImpresoraID());
+	 	impresora.asignarDispositivo(ventaForm.getImpresoraID());
 		
 		if (ventaForm.getvTipoImpresion().equals("venta")) {
 			/*
