@@ -1,9 +1,8 @@
-
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<html:form action="productos" styleId="formProductos" enctype="multipart/form-data">
+<html:form action="productos" styleId="formProductos" >
 <tr>
 	 <td colspan="4">
 	 <span id ="span1" class="btnOpcionesActivo"  onclick="subMenuOpciones('1')">Salida</span>
@@ -44,8 +43,8 @@
 		    <td align="right">Personal de Entreda:</td>
 		    <td colspan="3">
 		    <input type="text" id="cPersonalCodigo" maxlength="5" class="textCodigo inputDisabled" />
-	        <input type="text" id="vPersonalNombres"   class="text inputDisabled"/>
-	    <span id="m_cPersonalCodigo" class="importante">*</span>
+	        <input type="text" id="vPersonalNombres"   class="text inputDisabled" size="47/>
+	    <span id="m_cPersonalCodigo" class="importante"></span>
 	    <input type="hidden" id="vOcupacionDescripcion"/>
 	    <input type="hidden" id="fSueldo"/>
 		       <html:hidden property="iUsuarioEntregaId"  styleId="iUsuarioEntregaId" styleClass="text " />
@@ -56,7 +55,7 @@
 		    <td align="right">Rersonal de Recepcion:</td>
 		    <td colspan="3">
 		     <input type="text" id="cPersonalCodigoRecepcion" maxlength="5" class="textCodigo inputDisabled" />
-	        <input type="text" id="vPersonalNombresRecepcion"   class="text inputDisabled"/>
+	        <input type="text" id="vPersonalNombresRecepcion"   class="text inputDisabled" size="47"/>
 	        <html:hidden property="iUsuarioRecepcionId"  styleId="iUsuarioRecepcionId" styleClass="text " />
 		    
 		        <button type="button"  class="button" onclick="popupModal('personal.do?metodo=listaPersonal&mode=LP&iPersonalId=iUsuarioRecepcionId&codigo=cPersonalCodigoRecepcion&nombre=vPersonalNombresRecepcion',580,250)" ><span class='imgpopup'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></button>
@@ -66,20 +65,20 @@
 		<tr>
 		    <td align="right">Punto de Salida:</td>
 		    <td colspan="3">
-		       <html:text property="vPuntoSalida"  styleId="vPuntoSalida" styleClass="text " tabindex="7"  onkeyup="return mayuscula('vPuntoSalida')" size="72"/>
+		       <html:text property="vPuntoSalida"  styleId="vPuntoSalida" styleClass="textN " tabindex="7"  onkeyup="return mayuscula('vPuntoSalida')" size="72"/>
 		    </td>
 		</tr>
 		<tr>
 		    <td align="right">Punto de Llegada:</td>
 		    <td colspan="3">
-		       <html:text property="vPuntoLlegada"  styleId="vPuntoLlegada" styleClass="text " tabindex="8" onkeyup="return mayuscula('vPuntoLlegada')" size="72"/>
+		       <html:text property="vPuntoLlegada"  styleId="vPuntoLlegada" styleClass="textN " tabindex="8" onkeyup="return mayuscula('vPuntoLlegada')" size="72"/>
 		    </td>
 		    
 		</tr>
 		<tr>
 		    <td align="right">Observacion:</td>
 		    <td colspan="3">
-		       <html:text property="vObservacion"  styleId="vObservacion" styleClass="text " tabindex="9" size="72"  onkeyup="return mayuscula('vObservacion')"/>
+		       <html:text property="vObservacion"  styleId="vObservacion" styleClass="textN " tabindex="9" size="72"  onkeyup="return mayuscula('vObservacion')"/>
 		    </td>		
 		    
 		</tr>
@@ -98,8 +97,8 @@
         <th align="right">% DESC.</th>
         <th align="right">TOTAL</th>
       </tr>
-      <logic:notEmpty name="listaVentaDetalle" >      
-      <logic:iterate id="x" name="listaVentaDetalle" indexId="i">
+      <logic:notEmpty name="listaDistAlmacenDetalle" >      
+      <logic:iterate id="x" name="listaDistAlmacenDetalle" indexId="i">
        <logic:equal  name="x"  property="cEstadoCodigo" value="AC">
          <tr id="fila${i}">
           <td><img  src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" class="imgDelete" /></td>
@@ -112,7 +111,7 @@
                 <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
             </logic:notEqual>
             <logic:equal name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
-                <td><bean:write name="x" property="personal.vPersonalNombres" />&emsp;  <bean:write name="x" property="personal.vPersonalApellidoPaterno" /></td>
+                <td><bean:write name="x" property="personal.vPersonalNombres" />&emsp;  <bean:write name="x" property="personal.vPersonalApellidoPaterno"  /></td>
             </logic:equal>
             
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
@@ -151,7 +150,13 @@
       </tr>     
     </table></td>
   </tr>
-		
+		<tr> 
+         <td align="right" colspan="3">TOTAL:</td>
+         <td align="right">
+         <span class="tipoMoneda"></span>
+            <html:text property="fTotal" styleId="fTotal" maxlength="15"  styleClass="text inputderecha " readonly="true"  /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+</td>
+</tr>
 	 </table> 
 	 <table class="tabla" id="tabla3" style="display: none">
 	      
@@ -220,12 +225,7 @@
 			 
 	</tr>
 	</logic:iterate>
-			
-			 </logic:notEmpty>
-			 
-				  
-				
-		  
+	</logic:notEmpty>		  
 	 </table>
 	 <table class="tabla" id="tabla2" style="display: none">
 	      
@@ -317,6 +317,7 @@
     <br>    
      <button onclick="insertar('tab-grupo')" class="button" tabindex="22">
           <span class='save' id="btnGuardar">Guardar</span></button>
+      <button onclick="fn_imprimir()"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
      <button onclick="cancelar('');"  class="button" type="button" tabindex="23"><span class='cancel'>Cancelar</span></button>
      <br>
     
@@ -326,27 +327,17 @@
 </tr>
 
 <%-- hidden field que contiene el id del producto --%>
-<html:hidden property="iProductoId" styleId="iProductoId"/>
-
-<%-- hidden field que contiene el id del producto --%>
-
-
+<html:hidden property="iDistAlmacenId" styleId="iDistAlmacenId"/>
 
 <%-- hidden field que contiene el mode --%>
-<html:hidden property="mode" styleId="mode" />
-
-			
+<html:hidden property="mode" styleId="mode" />	
+		
 <%-- set the parameter for the dispatch action --%>
-<html:hidden property="metodo" value="iduProducto" styleId="metodo"/>
+<html:hidden property="metodo" value="iduDistAlmacen" styleId="metodo"/>
 
 
 
 
-<html:hidden property="vFoto" />
-<%-- hidden field que contiene el iUsuarioInsertaId del producto --%>
-
-<html:hidden property="sizeIngresoproductodetalles" />
-<html:hidden property="sizeVentaDetalles" />
 
 
 </html:form>
@@ -384,5 +375,95 @@
     	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LPA',750,560);
     	
     }
+function fn_eliminar(key){
+    	
+    	
+    	var cad = "productos.do?metodo=detalleAlmacen&id="+key+"&mode=D";        
+        $.getJSON(cad, function retorna(obj){
+       	// alert("obje"+obj.cProductoCodigo);
+       	 
+       	listar_detalleAlmacen(obj,'hijo');
+       	 });
+       
+        fn_calcularTotales();
+       
+    }
+    
+function fn_calcularTotal(fila) {    
+	var cantidad = parseFloat($.trim($("#numero"+fila).val()));
+	   var cantidadReal = parseFloat($.trim($("#numeroReal"+fila).val()));
+	 if(cantidadReal<cantidad){
+		 alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+cantidadReal);
+			$("#numero"+fila).val(cantidadReal);
+			
+		 }
+	   cantidad = parseFloat($.trim($("#numero"+fila).val()));
+	
+    var total = 'total'+fila;
+    var precio =  parseFloat($.trim($("#precio"+fila).val()));        
+    var fDescuento = parseFloat($.trim($("#descuento"+fila).val()));   	
+	var precioReal = (precio)-(precio*(fDescuento/100));
+    var precioTotal = parseFloat(cantidad*precioReal);
+
+    	
+    
+  
+  	document.getElementById(total).innerHTML = precioTotal;   
+	$("."+total).text( (precioTotal));
+
+	var identificador = $("#identificador").val();
+    var cad = "venta.do?metodo=detalleVenta&id="+fila+"&mode=U&iCantidad="+cantidad+"&fPrecioVenta="+precio+"&fDescuento="+fDescuento+"&identificador="+identificador;
+    
+    $.getJSON(cad, function retorna(obj){
+   	      // 	 listar_detalleIngresoProducto(obj,'hijo');
+    	
+     });
+   
+	
+    fn_calcularTotales();
+   
+}
+function fn_descuentoProducto(){    	
+	$("#fVentaTotal").val(parseFloat($("#fVentaTotalReal").val())-parseFloat(numeroFloat($("#fDescuentoR").val()))-parseFloat(numeroFloat($("#fDescClienteVenta").val())));
+	$("#fDescuento").val($("#fDescuentoR").val());
+   	 $("#siIgv").attr("checked",true);
+   	 $("#vIncluyeIGV").val('siIgv');
+   	fn_calcularGlobal();
+}
+function fn_descuentoCliente(){    	
+	$("#fVentaTotal").val(parseFloat($("#fVentaTotalReal").val())-parseFloat(numeroFloat($("#fDescuento").val()))-parseFloat(numeroFloat($("#fDescClienteVentaR").val())));
+	$("#fDescClienteVenta").val($("#fDescClienteVentaR").val());
+	 $("#siIgv").attr("checked",true);
+	fn_calcularGlobal();
+}
+function fn_calcularTotales(){
+ 	var sumaTotalReal=parseFloat(0.0);
+	var sumaTotal=parseFloat(0.0);
+	var sumaDescuento=parseFloat(0.0);    	
+	 for(var key=0;key<=50;key++){
+        /*****************************************/
+        /** Obtenemos el total y total descuento**/
+        /*****************************************/
+        var precio= $.trim($("#precio"+key).val())==""?0:parseFloat($.trim($("#precio"+key).val()));
+   	 var cantidad =$.trim($("#numero"+key).val())==""?0: parseFloat($.trim($("#numero"+key).val()));
+   	 var descuento = $.trim($("#descuento"+key).val())==""?0:parseFloat($.trim($("#descuento"+key).val()));
+   	 var total = $.trim($("#total"+key).text())==""?0:parseFloat($.trim($("#total"+key).text()));
+   	 
+   	 sumaTotal =sumaTotal+parseFloat(total); 
+        sumaTotalReal = sumaTotalReal+(precio*cantidad);
+        sumaDescuento = sumaDescuento+(precio*(descuento/100))* cantidad;
+ 
+   }
+	 document.getElementById('fTotal').value=dosDecimales(sumaTotalReal-sumaDescuento);        
+	
+		 
+   fn_calcularGlobal();
+}
+function fn_calcularGlobal(){
+	
+  
+   
+   
+}
    // redimenciona();
 </script>

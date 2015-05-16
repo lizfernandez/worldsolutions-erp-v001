@@ -163,12 +163,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 </div> 
 <script>   
 paginacion();
-
-$("#inventario").addClass("active");
-$("#productos").children('li').show();
-$("#distAlmacen").css("background-image","linear-gradient(#21A8E7, #0D5DA2)");
-$("#distAlmacen").children('a').css("color","#D0D2D7");
-
+$("#inventario, #distAlmacen").addClass("active");
 function nuevo(){
 	popup('productos.do?metodo=mantenimientoDistAlmacen&mode=I',700,635);
 }
