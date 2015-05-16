@@ -823,7 +823,12 @@ public class ProductosAction extends BaseAction {
 							//productoDao.persistEndidad(proAlma);	
 							}
 						}*/
-					if(pro.getUmPedido()!=null){
+				if(pro.getUmBase()!=null){
+					if(pro.getUmBase().getiUnidadMedidaId()==0){
+	            	   pro.setUmBase(null);
+	               }
+				}	
+				if(pro.getUmPedido()!=null){
 						if(pro.getUmPedido().getiUnidadMedidaId()==0){
 		            	   pro.setUmPedido(null);
 		               }
@@ -968,6 +973,11 @@ public class ProductosAction extends BaseAction {
 						productoDao.mergeEndidad(listaLibros);
 					}
 
+				}
+				if(pro.getUmBase()!=null){
+					if(pro.getUmBase().getiUnidadMedidaId()==0){
+	            	   pro.setUmBase(null);
+	               }
 				}
 				if(pro.getUmPedido()!=null){
 					if(pro.getUmPedido().getiUnidadMedidaId()==0){
@@ -2175,6 +2185,7 @@ public class ProductosAction extends BaseAction {
 				/** Registro de produccion detalle**/
 				/***********************************/
 				listaDistDetalle = (List<Distalmacendetalle>) sesion.getAttribute("listaDistAlmacenDetalle");	
+				
 				for(Distalmacendetalle prodeta:listaDistDetalle){
 					if(prodeta.getcEstadoCodigo().equals(Constantes.estadoActivo)){
 				
@@ -2182,33 +2193,26 @@ public class ProductosAction extends BaseAction {
 					productoDao.persistEndidad(prodeta);
 					
 					/*****************************************/
-					/** Reducimos el stock de los materiales**/
+					/** sumamos  el stock de los materiales**/
 					/*****************************************/
 					int cantidad;
-					Producto material= new Producto();
+					Productoalmacen material= new Productoalmacen();
 					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId()) ;
-					    cantidad= material.getiProductoStockTotal()-prodeta.getiCantidad();
-					    material.setiProductoStockTotal(cantidad); 
-					    productoDao.mergeEndidad(material);
+					    if(material!=null){
+					    	cantidad= material.getiProductoAlmStockTotal()+prodeta.getiCantidad();
+						    material.setiProductoAlmStockTotal(cantidad); 
+						    productoDao.mergeEndidad(material);	
+					    }
+					    
 					}
 					
 				}
-				
-				
-					
-				/***********************************/
-				/** Registro de producto**/
-				/***********************************/			
-				pro.setProduccion(produBean);			
-				pro.setdFechaInserta(Fechas.getDate());
-				pro.setiUsuarioInsertaId(usu.getiUsuarioId());
-				productoDao.persistEndidad(pro);
 				
 				/**Insertamos la existencia de un producto en el Kardex**/
 				Kardex  kardex = new Kardex();
 				kardex.setProducto(pro);
 				kardex.setdFecha(Fechas.getDate());
-				kardex.setvConcepto(Constantes.conceptoProduccion);
+				kardex.setvConcepto(Constantes.conceptoDistribucion);
 				kardex.setiCantExistencia(pro.getiProductoStockTotal());
 				kardex.setfPuExistencia(pro.getfProductoPrecioCompra());
 				kardex.setfTotalExistencia(kardex.getiCantExistencia()*kardex.getfPuExistencia());
@@ -2222,25 +2226,7 @@ public class ProductosAction extends BaseAction {
 				
 				
 				 
-				/******************************************/
-				/**Insertamos detalle de lista de precios**/
-				/******************************************/
-				Preciosproducto preciosProducto = new Preciosproducto();
-				preciosProducto.setcEstadoCodigo(Constantes.estadoActivo);
-				preciosProducto.setdFechaInserta(Fechas.getDate());
-				preciosProducto.setfGanancia(pro.getfProductoGanancia());
-				preciosProducto.setfPrecioCompra(pro.getfProductoPrecioCompra());
-				preciosProducto.setfPrecioVenta(pro.getfProductoPrecioVenta());
-				preciosProducto.setiCantidadStock(pro.getiProductoStockTotal());
-				preciosProducto.setProducto(pro);
-				preciosProducto.setfDescuento(pro.getfProductoDescuento());
-				preciosProducto.setiUsuarioInsertaId(usu.getiUsuarioId());
-				listaPrecios.add(preciosProducto);
-				pro.setPreciosproductodetallles(listaPrecios);
-				//resultado = productoDao.insertarEndidad(preciosProducto);
-				
-				
-				/**Insertamos en el libro Dirio la cuenta de Mercaredia 
+					/**Insertamos en el libro Dirio la cuenta de Mercaredia 
 				 * 20(Mercaderia) y
 				 * 201(Almacem)
 				 * id=57; 201: mercaderia/ Almacen**/			
@@ -2278,33 +2264,25 @@ public class ProductosAction extends BaseAction {
 				/******************************************/
 				/**Insertamos la gestion de la produccion**/
 				/******************************************/
-				Produccion produccion= new Produccion();
-				produccion =  productoDao.findEndidad(produccion,produBean.getiProduccionId());
-				produccion= Util.comparar(produccion, produBean);
-				produccion.setdFechaActualiza(Fechas.getDate());
-				produccion.setiUsuarioActualiza(usu.getiUsuarioId());
+				Distalmacen distAlmacen= new Distalmacen();
+				distAlmacen =  productoDao.findEndidad(distAlmacen,DistBean.getiDistAlmacenId());
+				distAlmacen= Util.comparar(distAlmacen, DistBean);
+				distAlmacen.setdFechaActualiza(Fechas.getDate());
+				distAlmacen.setiUsuarioActualizaId(usu.getiUsuarioId());
 				
-				productoDao.mergeEndidad(produccion);
+				productoDao.mergeEndidad(distAlmacen);
 				
-				/***********************************/
-				/** Registro de producto**/
-				/***********************************/		
-				 pro =  productoDao.findEndidad(pro,pForm.getProducto().getiProductoId());
-				 pro= Util.comparar(pro, pForm.getProducto());				
-				 pro.setdFechaActualiza(Fechas.getDate());
-				 pro.setiUsuarioActualizaId(usu.getiUsuarioId());
-				 
-				 productoDao.mergeEndidad(pro);
 				
 				/***********************************/
 				/** Registro de produccion detalle**/
 				/***********************************/
-				listaProduccion = (List<Producciondetalle>) sesion.getAttribute("listaProduccionDetalle");
-			    Producciondetalle proDeOriginal= new Producciondetalle();
+				 
+				listaDistDetalle = (List<Distalmacendetalle>) sesion.getAttribute("listaDistAlmacenDetalle");
+				Distalmacendetalle proDeOriginal= new Distalmacendetalle();
 			    Producto material= new Producto();
 			    int cantidad;
 			    
-				for(Producciondetalle prodeta:listaProduccion){
+				for(Distalmacendetalle prodeta:listaDistDetalle){
 					if(prodeta.getcEstadoCodigo().equals(Constantes.estadoActivo)){
 				
 				
@@ -2315,9 +2293,9 @@ public class ProductosAction extends BaseAction {
 					    
 					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId()) ;					    
 					   
-					    if(prodeta.getiProduccionDetalleId()>0){
+					    if(prodeta.getiDistAlmacenDetId()>0){
 					    	/// exite producto  en el detalle original y se cambia la cantidad
-					    	proDeOriginal= productoDao.findEndidadBD(proDeOriginal,"iProduccionDetalleId", prodeta.getiProduccionDetalleId());
+					    	proDeOriginal= productoDao.findEndidadBD(proDeOriginal,"iProduccionDetalleId", prodeta.getiDistAlmacenDetId());
 					    	cantidad= proDeOriginal.getiCantidad()-prodeta.getiCantidad()+material.getiProductoStockTotal();
 					    }
 					    else{
@@ -2328,51 +2306,19 @@ public class ProductosAction extends BaseAction {
 					  
 					}
 					
-					if(prodeta.getiProduccionDetalleId()>0 && prodeta.getcEstadoCodigo().equals(Constantes.estadoInactivo)){
+					if(prodeta.getiDistAlmacenDetId()>0 && prodeta.getcEstadoCodigo().equals(Constantes.estadoInactivo)){
 						cantidad= material.getiProductoStockTotal()+prodeta.getiCantidad();
 					}
 					/// actualizamos cantidad
 					  productoDao.mergeEndidad(material);						
-						prodeta.setProduccion(produccion);
+						prodeta.setDistAlmacen(distAlmacen);
 						productoDao.mergeEndidad(prodeta);
 				}
 			
 			   
 				
 				
-				/**Actualizamos o agregamos precios del producto, como tambien actualizaremos la cantidad del producto**/
-				List<Preciosproducto> listaPrecio = (List<Preciosproducto>) sesion.getAttribute("listaPrecioProducto");			
-				if(listaPrecio.size()>0){
-					pro.setPreciosproductodetallles(listaPrecio);
-					int cantidadProducto = 0;
-					float precioVenta = (float) 0.0;
-					float precioCompra = (float) 0.0;
-					float fGanancia = (float) 0.0;
-					float fDescuento = (float) 0.0;
-					int i=0;
-					   /***********************************************************************************/
-		      		   /***Actualizamos la cantidad del producto en stock, el precio de compra y venta*****/	 
-		      		   /*** Segun metodologia FIFO- Primero en entrar, Primero en Salir                  **/
-		      		   /***********************************************************************************/
-					  
-		      			for(Preciosproducto objpreciosProducto:pro.getPreciosproductodetallles()){
-		      				 if(objpreciosProducto.getiCantidadStock()>0 && objpreciosProducto.getcEstadoCodigo().equals(Constantes.estadoActivo)){					      					  
-		      					 cantidadProducto =    cantidadProducto + objpreciosProducto.getiCantidadStock();
-		      					 if(i==0){
-		      					 precioCompra = objpreciosProducto.getfPrecioCompra();
-		      					 precioVenta = objpreciosProducto.getfPrecioVenta();
-		      					 fGanancia = objpreciosProducto.getfGanancia();
-		      					 fDescuento= objpreciosProducto.getfDescuento();
-		      					 }
-		      				 }
-		      			}
-		      			pro.setiProductoStockTotal(cantidadProducto);
-		      			pro.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(precioVenta));
-		      			pro.setfProductoGanancia(fGanancia);     		      		
-		      			pro.setfProductoPrecioCompra(precioCompra);
-		      			pro.setfProductoDescuento(fDescuento);
 				
-				}
 				/**Actualizamos los valores de la existencia del Kardex **/
 				/**si no existe ningun tipo de movimiento (Compras o ventas)**/
 				if(pForm.getSizeIngresoproductodetalles()==0 && pForm.getSizeVentaDetalles()==0){
