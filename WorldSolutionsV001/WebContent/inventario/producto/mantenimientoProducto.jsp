@@ -112,7 +112,7 @@
 <tr>
 	 <td colspan="4">
 	 <span id ="span1" class="btnOpcionesActivo"  onclick="subMenuOpciones('1')">Datos B&aacute;sicos:</span>
-	 <!-- span id ="span3" class="btnOpciones" onclick="subMenuOpciones('3')">Almacen</span-->
+	 <span id ="span3" class="btnOpciones" onclick="subMenuOpciones('3')">Almacen</span>
 	 <span id ="span2" class="btnOpciones" onclick="subMenuOpciones('2')">Lista Precios</span>
 	 <table class="tabla" id="tabla1">	  
 		
@@ -467,6 +467,7 @@
         $(".trCodigo").show();
         $("#popupCabecera").text('INSERTAR DATOS');	
         $("#span2").hide();
+        $("#span3").hide();
     } else {
         $(".trCodigo").show();
         document.getElementById('vProductoNombre').focus();
@@ -478,6 +479,7 @@
 	   	$(".comboCodigo.iUMBaseAlmId option[value="+mival3+"]").attr("selected",true); 
         document.getElementById('btnGuardar').textContent="Actualizar";
         $("#popupCabecera").text('ACTUALIZAR DATOS');
+        $("#span3").show();
         //$("#span2").hide();
         if(mode=='F'){
         	$("#popupCabecera").text('BUSCAR DATOS');        	
