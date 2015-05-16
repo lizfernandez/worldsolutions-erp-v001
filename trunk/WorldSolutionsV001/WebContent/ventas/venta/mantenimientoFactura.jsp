@@ -108,11 +108,15 @@
        <logic:equal  name="x"  property="cEstadoCodigo" value="AC">
          <tr id="fila${i}">
           <td><img  src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" class="imgDelete" /></td>
+         
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
+         
             <td>	           
 	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
 	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockTotal" />'/>
+	           <input type='hidden' size='10' class='inputderecha' id='categoriaProducto${i}'  value='<bean:write name="x" property="producto.categoria.clasificacionCategoria.vClasificacionDescripcion" />'/>
             </td>
+         
             <logic:notEqual name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
                 <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
             </logic:notEqual>
@@ -558,10 +562,17 @@
         }
     }
 
-    function fn_calcularTotal(fila) {    
+    function fn_calcularTotal(fila) {
     	var cantidad = parseFloat($.trim($("#numero"+fila).val()));
-   	   var cantidadReal = parseFloat($.trim($("#numeroReal"+fila).val()));
-   	 if(cantidadReal<cantidad){
+   	   	var cantidadReal = parseFloat($.trim($("#numeroReal"+fila).val()));
+   	   	var categoriaProdducto = $.trim($("#categoriaProducto"+fila).val());
+   	   	var servicio = 'SERVICIOS';
+   	   	//Considerar que si es un servivio la cantidad es 1 no se ejecuta la validacion
+   	   if (categoriaProdducto == servicio) {
+   			cantidad = 1;   
+   	   }
+   	   
+   	 if(cantidadReal<cantidad && categoriaProdducto != servicio){
    		 alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+cantidadReal);
    			$("#numero"+fila).val(cantidadReal);
    			

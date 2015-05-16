@@ -629,6 +629,7 @@ function listar_detalleVenta(obj,destino,identificador){
 		newHtml+="<td '>";
 		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iVentaDetalleCantidad+"'/>";
 		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockTotal+"'/>";
+		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='categoriaProducto"+key+"'  value='"+data['producto']['categoria']['clasificacionCategoria'].vClasificacionDescripcion + "'/>";
 		  newHtml+='</td>';
 	   if(data['producto']['unidadMedida']!=null){
 	    newHtml+='<td>'; 

@@ -574,7 +574,22 @@ public class VentaAction extends BaseAction {
 				productoBean.setiProductoStockTotal(producto
 						.getiProductoStockTotal());
 				productoBean.setfProductoPrecioCompra(fPrecioCompra);
-
+				productoBean.setCategoria(producto.getCategoria());
+				if (productoBean.getUmBase() != null) {
+					if (productoBean.getUmBase().getiUnidadMedidaId() == 0) {
+						productoBean.setUmBase(null);
+					}
+				}
+				if (productoBean.getUmPedido() != null) {
+					if (productoBean.getUmPedido().getiUnidadMedidaId() == 0) {
+						productoBean.setUmPedido(null);
+					}
+				}
+				if (productoBean.getUmSalida() != null) {
+					if (productoBean.getUmSalida().getiUnidadMedidaId() == 0) {
+						productoBean.setUmSalida(null);
+					}
+				}
 				ventadetalle.setProducto(productoBean);
 				ventadetalle.setfVentaDetallePrecio(fPrecioVenta);
 				ventadetalle.setiVentaDetalleCantidad(iCantidad);
@@ -619,6 +634,21 @@ public class VentaAction extends BaseAction {
 				sesion.setAttribute("listaVentaDetalle", lista);
 			}
 			if (mode.equals("U")) {
+				if (productoBean.getUmBase() != null) {
+					if (productoBean.getUmBase().getiUnidadMedidaId() == 0) {
+						productoBean.setUmBase(null);
+					}
+				}
+				if (productoBean.getUmPedido() != null) {
+					if (productoBean.getUmPedido().getiUnidadMedidaId() == 0) {
+						productoBean.setUmPedido(null);
+					}
+				}
+				if (productoBean.getUmSalida() != null) {
+					if (productoBean.getUmSalida().getiUnidadMedidaId() == 0) {
+						productoBean.setUmSalida(null);
+					}
+				}
 				int iCantidad = Integer.parseInt(request
 						.getParameter("iCantidad"));
 				float fDescuento = Float.parseFloat(request
@@ -946,6 +976,8 @@ public class VentaAction extends BaseAction {
 						productoBean.setfProductoPrecioCompra(obj.getProducto()
 								.getfProductoPrecioCompra());
 
+						productoBean.setCategoria(obj.getProducto().getCategoria());
+						
 						ventaDetalle.setProducto(productoBean);
 						ventaDetalle.setPersonal(personal);
 
@@ -1102,7 +1134,7 @@ public class VentaAction extends BaseAction {
 						if (ventaDetalle.getcEstadoCodigo().equals(
 								Constantes.estadoActivo)
 								&& ventaDetalle.getvIdentificadorSession()
-										.equals(pForm.getIdentificador())) {
+								.equals(pForm.getIdentificador())) {
 							ventaDetalle.setVenta(obj);
 							ventaDetalle.setdFechaInserta(Fechas.getDate());
 							ventaDetalle.setiUsuarioInsertaId(usu
@@ -1347,6 +1379,7 @@ public class VentaAction extends BaseAction {
 													.getfPrecioVenta());
 											producto.setfProductoPrecioCompra(objpreciosProducto
 													.getfPrecioCompra());
+											
 
 										}// else
 
@@ -1358,15 +1391,10 @@ public class VentaAction extends BaseAction {
 								}// / if
 								i++;
 							}// for
-							for (Kardex objKar : kardexDao
-									.buscarKardexProducto(producto
-											.getiProductoId())) {
-								objKar.setcEstadoCodigo(Constantes.estadoInactivo);
-								ventaDao.mergeEndidad(objKar);
-							}
+
 
 							producto.setKardexs(listaKadex);
-							ventaDao.persistEndidad(producto);
+							ventaDao.mergeEndidad(producto);
 							/***
 							 * Agregamos las actualizaciones en la lista
 							 * ventadetalles
@@ -1406,7 +1434,7 @@ public class VentaAction extends BaseAction {
 
 				}
 
-				ventaDao.refreshEndidad(obj);
+				//ventaDao.refreshEndidad(obj);
 				if (pForm.getvImprimir().equals("SI")) {
 					imprimir(mapping, pForm, request, response);
 				}

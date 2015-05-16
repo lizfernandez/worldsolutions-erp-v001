@@ -87,6 +87,14 @@
 	<div class="btnPagInactivo" id="Final" >&emsp; </div>
 </logic:notEmpty>		  
 </div> 
+<input type="text" class="textInvisible" id="iPersonalId" />
+<input type="text" class="textInvisible" id="codigo" />
+<input type="text" class="textInvisible" id="nombre" />
+
+
 <script>   
 paginacion();
+$("#iPersonalId").val($_GET('iPersonalId'));
+$("#codigo").val($_GET('codigo'));
+$("#nombre").val($_GET('nombre'));
 </script> 
