@@ -460,10 +460,10 @@ function fn_calcularTotales(){
    fn_calcularGlobal();
 }
 function fn_calcularGlobal(){
-	
-  
-   
-   
+}
+function fn_imprimir(){
+	window.print();
+	insertar('tabla');
 }
    // redimenciona();
 </script>

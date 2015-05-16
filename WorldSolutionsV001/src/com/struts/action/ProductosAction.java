@@ -2142,12 +2142,12 @@ public class ProductosAction extends BaseAction {
 			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 			ProductosForm pForm = (ProductosForm) form;
 			Producto pro = pForm.getProducto();
-			Produccion produBean = pForm.getProduccion();
+			Distalmacen DistBean = pForm.getDistAlmacen();
 			
 			GenericaDao productoDao = new GenericaDao();	
 			KardexDao kardexDao = new KardexDao();
 			List<Preciosproducto> listaPrecios = new ArrayList<Preciosproducto>();
-			List<Producciondetalle> listaProduccion= new ArrayList<Producciondetalle>();
+			List<Distalmacendetalle> listaDistDetalle= new ArrayList<Distalmacendetalle>();
 			List<Kardex> listaKadex = new ArrayList<Kardex>();
 			EntityTransaction transaccion = null;
 			
@@ -2165,26 +2165,20 @@ public class ProductosAction extends BaseAction {
 				/******************************************/
 				/**Insertamos la gestion de la produccion**/
 				/******************************************/
-				produBean.setdFechaInserta(Fechas.getDate());
-				produBean.setiUsuarioInsertaId(usu.getiUsuarioId());
-				productoDao.persistEndidad(produBean);
+				DistBean.setdFechaInserta(Fechas.getDate());
+				DistBean.setiUsuarioInsertaId(usu.getiUsuarioId());
+				productoDao.persistEndidad(DistBean);
 				
-				/***********************************/
-				/** Registro de producto**/
-				/***********************************/			
-				pro.setProduccion(produBean);			
-				pro.setdFechaInserta(Fechas.getDate());
-				pro.setiUsuarioInsertaId(usu.getiUsuarioId());
-				productoDao.persistEndidad(pro);
+				
 				
 				/***********************************/
 				/** Registro de produccion detalle**/
 				/***********************************/
-				listaProduccion = (List<Producciondetalle>) sesion.getAttribute("listaProduccionDetalle");	
-				for(Producciondetalle prodeta:listaProduccion){
+				listaDistDetalle = (List<Distalmacendetalle>) sesion.getAttribute("listaDistAlmacenDetalle");	
+				for(Distalmacendetalle prodeta:listaDistDetalle){
 					if(prodeta.getcEstadoCodigo().equals(Constantes.estadoActivo)){
 				
-					prodeta.setProduccion(produBean);
+					prodeta.setDistAlmacen(DistBean);
 					productoDao.persistEndidad(prodeta);
 					
 					/*****************************************/
