@@ -122,10 +122,11 @@ public class GenericaDao  implements IGenerica{
 		} catch (Exception re) {
 			resultado = false;
 //			if (ext.isActive()) {
-				revertirCambios(ext);
+				//revertirCambios(ext);
 				// resultado = false;
 //			} // or could attempt to fix error and retry
 			re.printStackTrace();
+			limpiarInstancia();
 		} finally {
 			ext = null;
 			// em=null;
@@ -273,7 +274,7 @@ public class GenericaDao  implements IGenerica{
 
 		try {
 
-			getInstancia().getTransaction().begin();
+//			getInstancia().getTransaction().begin();
 			q = getInstancia()
 					.createNativeQuery("{ CALL SP_NRO_DOCUMENTO(?,?,?,?) }")// createNamedQuery("SP_IDU_PERFIL_PERMISOS")
 					.setParameter(1, iTipoDocumentoId)
@@ -282,7 +283,7 @@ public class GenericaDao  implements IGenerica{
 			        .setParameter(4, iSucursalId);
 
 			nroDocumento = (String) q.getSingleResult();
-			getInstancia().getTransaction().commit();
+//			getInstancia().getTransaction().commit();
 			/***** q.executeUpdate(); **/
 		} catch (Exception ex) {
 			ex.printStackTrace();

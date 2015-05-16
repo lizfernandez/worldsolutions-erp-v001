@@ -41,6 +41,7 @@
     <thead>
     <tr >
         <th align="left">C&oacute;digo</th>
+        <th align="left">Categoria</th>
         <th align="left">Nombre</th> 
         <th align="left">% Desc</th> 
         <th align="right">P.Venta</th>
@@ -65,8 +66,8 @@
 			               '<bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/>')">
 		 		<td><bean:write name="x" property="cProductoCodigo" /></td>
+			<td><bean:write name="x" property="categoria.vCategoriaDescripcion" /></td>
 				<td><bean:write name="x" property="vProductoNombre" /></td>
-			
 			<td align="right"><bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/></td>
@@ -213,13 +214,14 @@ paginacion();
 		var fPrecioCompra =$("#fPrecioCompra").val();
 		var fTotal = $("#fTotal").val();
 		var iPersonalId = $("#iPersonalId").val();
+		var identificador = $_GET("identificador");
 
 	    var cad = "venta.do?metodo=detalleVenta&id="+id+"&iCantidad="+iCantidad+
 	 		  "&fDescuento="+fDescuento+"&fPrecioVenta="+fPrecioVenta+"&fPrecioCompra="+fPrecioCompra+
-	 		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId;
+	 		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId+"&identificador="+identificador;
 	       $.getJSON(cad, function retorna(obj){
 	      	// alert("obje"+obj.cProductoCodigo);
-	      	 listar_detalleVenta(obj,'padre');
+	      	 listar_detalleVenta(obj,'padre',identificador);
 	      	 });
 		
 		}
