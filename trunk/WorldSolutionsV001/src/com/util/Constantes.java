@@ -17,6 +17,7 @@ public class Constantes {
 	public static String conceptoCompra="COMPRA SEGÚN ";	
 	public static String conceptoVenta="VENTA SEGÚN ";
 	public static String conceptoProduccion="CONCEPTOS PRODUCCION";
+	public static String conceptoDistribucion="CONCEPTOS DIST ALMACEN";
 	public static String conceptoz="XSaldo ";
 	public static String conceptoDevCompra="DEV. COMPRA SEGÚN ";
 	public static String conceptoDevVenta="DEV. VENTA SEGÚN ";
