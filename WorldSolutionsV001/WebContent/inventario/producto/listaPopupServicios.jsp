@@ -207,13 +207,15 @@ paginacion();
 	function fn_agregarProducto(){
 		 
 		var id=$("#iProductoId").val();
-		if(id!=''){
+		var iPersonalId = $("#iPersonalId").val();
+	
+		if(id!="0" && iPersonalId!="0"){
 		var iCantidad=$("#iProductoStockTotal").val();		
 		var fDescuento=$("#fDescuento").val();			
 		var fPrecioVenta =$("#fProductoPrecioVenta").val();
 		var fPrecioCompra =$("#fPrecioCompra").val();
 		var fTotal = $("#fTotal").val();
-		var iPersonalId = $("#iPersonalId").val();
+		
 		var identificador = $_GET("identificador");
 
 	    var cad = "venta.do?metodo=detalleVenta&id="+id+"&iCantidad="+iCantidad+
