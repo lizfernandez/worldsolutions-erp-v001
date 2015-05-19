@@ -51,5 +51,6 @@ public class Constantes {
 	public static String formaPagoCredito = "CREDITO";
 	public static String proMax="proMasVend";
 	public static String proMes="proMenVend";
+	public static String categoriaServicios="SERVICIOS";
 	
 }

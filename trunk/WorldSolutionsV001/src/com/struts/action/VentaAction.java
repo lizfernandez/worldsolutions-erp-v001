@@ -575,21 +575,7 @@ public class VentaAction extends BaseAction {
 						.getiProductoStockTotal());
 				productoBean.setfProductoPrecioCompra(fPrecioCompra);
 				productoBean.setCategoria(producto.getCategoria());
-				if (productoBean.getUmBase() != null) {
-					if (productoBean.getUmBase().getiUnidadMedidaId() == 0) {
-						productoBean.setUmBase(null);
-					}
-				}
-				if (productoBean.getUmPedido() != null) {
-					if (productoBean.getUmPedido().getiUnidadMedidaId() == 0) {
-						productoBean.setUmPedido(null);
-					}
-				}
-				if (productoBean.getUmSalida() != null) {
-					if (productoBean.getUmSalida().getiUnidadMedidaId() == 0) {
-						productoBean.setUmSalida(null);
-					}
-				}
+
 				ventadetalle.setProducto(productoBean);
 				ventadetalle.setfVentaDetallePrecio(fPrecioVenta);
 				ventadetalle.setiVentaDetalleCantidad(iCantidad);
@@ -615,6 +601,7 @@ public class VentaAction extends BaseAction {
 
 					ventadetalle.setPersonal(personalBean);
 					ventadetalle.setvIdentificadorSession(identificador);
+					productoBean.setUnidadMedida(null);
 				}
 
 				lista.add(ventadetalle);
@@ -634,21 +621,6 @@ public class VentaAction extends BaseAction {
 				sesion.setAttribute("listaVentaDetalle", lista);
 			}
 			if (mode.equals("U")) {
-				if (productoBean.getUmBase() != null) {
-					if (productoBean.getUmBase().getiUnidadMedidaId() == 0) {
-						productoBean.setUmBase(null);
-					}
-				}
-				if (productoBean.getUmPedido() != null) {
-					if (productoBean.getUmPedido().getiUnidadMedidaId() == 0) {
-						productoBean.setUmPedido(null);
-					}
-				}
-				if (productoBean.getUmSalida() != null) {
-					if (productoBean.getUmSalida().getiUnidadMedidaId() == 0) {
-						productoBean.setUmSalida(null);
-					}
-				}
 				int iCantidad = Integer.parseInt(request
 						.getParameter("iCantidad"));
 				float fDescuento = Float.parseFloat(request
@@ -975,9 +947,8 @@ public class VentaAction extends BaseAction {
 								.getiProductoStockTotal());
 						productoBean.setfProductoPrecioCompra(obj.getProducto()
 								.getfProductoPrecioCompra());
-
 						productoBean.setCategoria(obj.getProducto().getCategoria());
-						
+
 						ventaDetalle.setProducto(productoBean);
 						ventaDetalle.setPersonal(personal);
 
@@ -1128,277 +1099,257 @@ public class VentaAction extends BaseAction {
 				// Ventadetalle ventaDetalle = new Ventadetalle();
 
 				if (sesion.getAttribute("listaVentaDetalle") != null) {
-					for (Ventadetalle ventaDetalle : (List<Ventadetalle>) sesion
-							.getAttribute("listaVentaDetalle")) {
+					List<Ventadetalle> listaVentaDetalle = (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle");
+					
+					for (Ventadetalle ventaDetalle : listaVentaDetalle) {
 
-						if (ventaDetalle.getcEstadoCodigo().equals(
-								Constantes.estadoActivo)
-								&& ventaDetalle.getvIdentificadorSession()
-								.equals(pForm.getIdentificador())) {
+						if (ventaDetalle.getcEstadoCodigo().equals(Constantes.estadoActivo)
+								&& ventaDetalle.getvIdentificadorSession().equals(pForm.getIdentificador())) {
+							
 							ventaDetalle.setVenta(obj);
 							ventaDetalle.setdFechaInserta(Fechas.getDate());
-							ventaDetalle.setiUsuarioInsertaId(usu
-									.getiUsuarioId());
+							ventaDetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
 
-							Producto producto = ventaDao.findEndidad(
-									ventaDetalle.getProducto(), ventaDetalle
-											.getProducto().getiProductoId());
-
-							/*******************************************/
-							/** Insertamos detalle de lista de precios **/
-							/** Si cantidad ingresada es menor q la **/
-							/** cantidad el precio de la lista **/
-							/*******************************************/
-							int iCantidad = 0;
-							int cantAsignado = 0;
-							int asignado = 0;
-							for (Preciosproducto preciosProducto : producto
-									.getPreciosproductodetallles()) {
-								if (preciosProducto.getfPrecioCompra() == ventaDetalle
-										.getProducto()
-										.getfProductoPrecioCompra()) {
-									iCantidad = preciosProducto
-											.getiCantidadStock()
-											- ventaDetalle
-													.getiVentaDetalleCantidad();
-
-									Kardex kardex = new Kardex();
-									kardex.setProducto(producto);
-									kardex.setVenta(obj);
-									kardex.setdFecha(Fechas.getDate());
-									kardex.setvConcepto(Constantes.conceptoVenta
-											+ ventaDao
-													.findEndidad(
-															pForm.getTipoDocumento(),
-															pForm.getiTipoDocumentoId())
-													.getvTipoDocumentoDescripcion()
-											+ Constantes.nro
-											+ obj.getnVentaNumero());
-									kardex.setiCantExistencia(preciosProducto
-											.getiCantidadStock());
-									kardex.setfPuExistencia(preciosProducto
-											.getfPrecioCompra());
-									kardex.setfTotalExistencia(kardex
-											.getiCantExistencia()
-											* kardex.getfPuExistencia());
-									kardex.setiPeriodoId(iPeriodoId);
-									kardex.setdFechaInserta(Fechas.getDate());
-									kardex.setcEstadoCodigo(Constantes.estadoActivo);
-
-									if (preciosProducto.getiCantidadStock() > 0) {
-										if (iCantidad < 0) {
-											/***
-											 * Agregamos al Kardex el movimiento
-											 * de los productos
-											 ***/
-											kardex.setiCantVenta(preciosProducto
-													.getiCantidadStock());
-											kardex.setfPuVenta(preciosProducto
-													.getfPrecioCompra());
-											kardex.setfTotalVenta(kardex
-													.getiCantVenta()
-													* kardex.getfPuVenta());
-											kardex.setiCantExistencia(0);
-											kardex.setfPuExistencia(ventaDetalle
-													.getProducto()
-													.getfProductoPrecioCompra());
-											kardex.setfTotalExistencia(0);
-											kardex.setcEstadoCodigo(Constantes.estadoInactivo);
-
-											/**************************/
-											/** reducimos el stock a 0 */
-											preciosProducto
-													.setiCantidadStock(0);
-
-										}// if
-										else {
-											kardex.setiCantVenta(preciosProducto
-													.getiCantidadStock()
-													- iCantidad);
-											kardex.setfPuVenta(preciosProducto
-													.getfPrecioCompra());
-											kardex.setfTotalVenta(kardex
-													.getiCantVenta()
-													* kardex.getfPuVenta());
-											kardex.setiCantExistencia(iCantidad);
-											kardex.setfPuExistencia(preciosProducto
-													.getfPrecioCompra());
-											kardex.setfTotalExistencia(kardex
-													.getiCantExistencia()
-													* kardex.getfPuExistencia());
-											kardex.setiUsuarioInsertaId(usu
-													.getiUsuarioId());
-
-											/*** Agregamos en la lista kardex ****/
-											// listaKardex.add(kardex);
-
-											/***
-											 * Actualizamos la cantidad restante
-											 * en el stock
+							Producto producto = ventaDao.findEndidad(ventaDetalle.getProducto(), ventaDetalle.getProducto().getiProductoId());
+							
+							if (!ventaDetalle.getProducto().getCategoria().getClasificacionCategoria().getvClasificacionDescripcion().equals(Constantes.categoriaServicios)) {
+								
+								/*******************************************/
+								/** Insertamos detalle de lista de precios **/
+								/** Si cantidad ingresada es menor q la **/
+								/** cantidad el precio de la lista **/
+								/*******************************************/
+								int iCantidad = 0;
+								int cantAsignado = 0;
+								int asignado = 0;
+								for (Preciosproducto preciosProducto : producto.getPreciosproductodetallles()) {
+									if (preciosProducto.getfPrecioCompra() == ventaDetalle.getProducto().getfProductoPrecioCompra()) {
+										iCantidad = preciosProducto.getiCantidadStock() - ventaDetalle.getiVentaDetalleCantidad();
+	
+										Kardex kardex = new Kardex();
+										kardex.setProducto(producto);
+										kardex.setVenta(obj);
+										kardex.setdFecha(Fechas.getDate());
+										kardex.setvConcepto(Constantes.conceptoVenta + ventaDao.findEndidad(pForm.getTipoDocumento(), pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()
+												+ Constantes.nro + obj.getnVentaNumero());
+										kardex.setiCantExistencia(preciosProducto
+												.getiCantidadStock());
+										kardex.setfPuExistencia(preciosProducto
+												.getfPrecioCompra());
+										kardex.setfTotalExistencia(kardex
+												.getiCantExistencia()
+												* kardex.getfPuExistencia());
+										kardex.setiPeriodoId(iPeriodoId);
+										kardex.setdFechaInserta(Fechas.getDate());
+										kardex.setcEstadoCodigo(Constantes.estadoActivo);
+	
+										if (preciosProducto.getiCantidadStock() > 0) {
+											if (iCantidad < 0) {
+												/***
+												 * Agregamos al Kardex el movimiento
+												 * de los productos
+												 ***/
+												kardex.setiCantVenta(preciosProducto
+														.getiCantidadStock());
+												kardex.setfPuVenta(preciosProducto
+														.getfPrecioCompra());
+												kardex.setfTotalVenta(kardex
+														.getiCantVenta()
+														* kardex.getfPuVenta());
+												kardex.setiCantExistencia(0);
+												kardex.setfPuExistencia(ventaDetalle
+														.getProducto()
+														.getfProductoPrecioCompra());
+												kardex.setfTotalExistencia(0);
+												kardex.setcEstadoCodigo(Constantes.estadoInactivo);
+	
+												/**************************/
+												/** reducimos el stock a 0 */
+												preciosProducto
+														.setiCantidadStock(0);
+	
+											}// if
+											else {
+												kardex.setiCantVenta(preciosProducto
+														.getiCantidadStock()
+														- iCantidad);
+												kardex.setfPuVenta(preciosProducto
+														.getfPrecioCompra());
+												kardex.setfTotalVenta(kardex
+														.getiCantVenta()
+														* kardex.getfPuVenta());
+												kardex.setiCantExistencia(iCantidad);
+												kardex.setfPuExistencia(preciosProducto
+														.getfPrecioCompra());
+												kardex.setfTotalExistencia(kardex
+														.getiCantExistencia()
+														* kardex.getfPuExistencia());
+												kardex.setiUsuarioInsertaId(usu
+														.getiUsuarioId());
+	
+												/*** Agregamos en la lista kardex ****/
+												// listaKardex.add(kardex);
+	
+												/***
+												 * Actualizamos la cantidad restante
+												 * en el stock
+												 **/
+												preciosProducto
+														.setiCantidadStock(iCantidad);
+												/** Actualizamos el producto */
+												producto.setiProductoStockTotal(producto
+														.getiProductoStockTotal()
+														- ventaDetalle
+																.getiVentaDetalleCantidad());
+												producto.setfProductoDescuento(preciosProducto
+														.getfDescuento());
+												producto.setfProductoGanancia(preciosProducto
+														.getfGanancia());
+												producto.setfProductoPrecioVenta(preciosProducto
+														.getfPrecioVenta());
+												producto.setfProductoPrecioCompra(preciosProducto
+														.getfPrecioCompra());
+												asignado = 1;
+	
+											}// else
+											cantAsignado = preciosProducto
+													.getiCantidadStock();
+										}// fin if
+											// ventaDao.persistEndidad(kardex);
+											// producto.getKardexs().add(kardex);
+										listaKadex.add(kardex);
+	
+									}// if
+								}// for
+	
+								/***********************************************************************************/
+								/***
+								 * Actualizamos la cantidad del producto en stock,
+								 * el precio de compra y venta
+								 *****/
+								/***
+								 * Segun metodologia FIFO- Primero en entrar,
+								 * Primero en Salir
+								 **/
+								/***
+								 * Si la cantidad ingresada es manor que el stock de
+								 * la lista de precios /
+								 ***********************************************************************************/
+								int i = 0;
+								for (Preciosproducto objpreciosProducto : producto.getPreciosproductodetallles()) {
+									if (objpreciosProducto.getiCantidadStock() > 0
+											&& objpreciosProducto
+													.getiCantidadStock() != cantAsignado) {
+										/***
+										 * Agregamos al Kardex el movimiento de los
+										 * productos
+										 ***/
+										Kardex kardex = new Kardex();
+										kardex.setProducto(producto);
+										kardex.setVenta(obj);
+										kardex.setvConcepto(Constantes.conceptoz + i);
+										kardex.setdFecha(Fechas.getDate());
+										kardex.setiCantExistencia(objpreciosProducto.getiCantidadStock());
+										kardex.setfPuExistencia(objpreciosProducto.getfPrecioCompra());
+										kardex.setfTotalExistencia(kardex.getiCantExistencia() * kardex.getfPuExistencia());
+										kardex.setiPeriodoId(iPeriodoId);
+										kardex.setdFechaInserta(Fechas.getDate());
+										kardex.setcEstadoCodigo(Constantes.estadoActivo);
+	
+										if (asignado == 0) {
+											/**
+											 * Reducimos la cantidad en la lista de
+											 * precios en orden asc.
 											 **/
-											preciosProducto
-													.setiCantidadStock(iCantidad);
-											/** Actualizamos el producto */
-											producto.setiProductoStockTotal(producto
-													.getiProductoStockTotal()
-													- ventaDetalle
-															.getiVentaDetalleCantidad());
-											producto.setfProductoDescuento(preciosProducto
-													.getfDescuento());
-											producto.setfProductoGanancia(preciosProducto
-													.getfGanancia());
-											producto.setfProductoPrecioVenta(preciosProducto
-													.getfPrecioVenta());
-											producto.setfProductoPrecioCompra(preciosProducto
-													.getfPrecioCompra());
-											asignado = 1;
-
-										}// else
-										cantAsignado = preciosProducto
-												.getiCantidadStock();
-									}// fin if
-										// ventaDao.persistEndidad(kardex);
-										// producto.getKardexs().add(kardex);
-									listaKadex.add(kardex);
-
-								}// if
-							}// for
-
-							/***********************************************************************************/
-							/***
-							 * Actualizamos la cantidad del producto en stock,
-							 * el precio de compra y venta
-							 *****/
-							/***
-							 * Segun metodologia FIFO- Primero en entrar,
-							 * Primero en Salir
-							 **/
-							/***
-							 * Si la cantidad ingresada es manor que el stock de
-							 * la lista de precios /
-							 ***********************************************************************************/
-							int i = 0;
-							for (Preciosproducto objpreciosProducto : producto
-									.getPreciosproductodetallles()) {
-								if (objpreciosProducto.getiCantidadStock() > 0
-										&& objpreciosProducto
-												.getiCantidadStock() != cantAsignado) {
-									/***
-									 * Agregamos al Kardex el movimiento de los
-									 * productos
-									 ***/
-									Kardex kardex = new Kardex();
-									kardex.setProducto(producto);
-									kardex.setVenta(obj);
-									kardex.setvConcepto(Constantes.conceptoz
-											+ i);
-									kardex.setdFecha(Fechas.getDate());
-									kardex.setiCantExistencia(objpreciosProducto
-											.getiCantidadStock());
-									kardex.setfPuExistencia(objpreciosProducto
-											.getfPrecioCompra());
-									kardex.setfTotalExistencia(kardex
-											.getiCantExistencia()
-											* kardex.getfPuExistencia());
-									kardex.setiPeriodoId(iPeriodoId);
-									kardex.setdFechaInserta(Fechas.getDate());
-									kardex.setcEstadoCodigo(Constantes.estadoActivo);
-
-									if (asignado == 0) {
-										/**
-										 * Reducimos la cantidad en la lista de
-										 * precios en orden asc.
-										 **/
-										iCantidad = objpreciosProducto
-												.getiCantidadStock()
-												+ iCantidad;
-
-										if (iCantidad <= 0) {
-
-											kardex.setiCantVenta(objpreciosProducto
-													.getiCantidadStock());
-											kardex.setfPuVenta(objpreciosProducto
-													.getfPrecioCompra());
-											kardex.setfTotalVenta(kardex
-													.getiCantVenta()
-													* kardex.getfPuVenta());
-											kardex.setiCantExistencia(0);
-											kardex.setfPuExistencia(objpreciosProducto
-													.getfPrecioCompra());
-											kardex.setfTotalExistencia(0);
-											kardex.setiUsuarioInsertaId(usu
-													.getiUsuarioId());
-											kardex.setcEstadoCodigo(Constantes.estadoInactivo);
-
-											/*** Agregamos en la lista kardex ****/
-											// listaKardex.add(kardex);
-
-											/**************************/
-											/** reducimos el stock a 0 */
-											objpreciosProducto
-													.setiCantidadStock(0);
-
-										} else {
-											kardex.setiCantVenta(objpreciosProducto
-													.getiCantidadStock()
-													- iCantidad);
-											kardex.setfPuVenta(objpreciosProducto
-													.getfPrecioCompra());
-											kardex.setfTotalVenta(kardex
-													.getiCantVenta()
-													* kardex.getfPuVenta());
-											kardex.setiCantExistencia(iCantidad);
-											kardex.setfPuExistencia(objpreciosProducto
-													.getfPrecioCompra());
-											kardex.setfTotalExistencia(kardex
-													.getiCantExistencia()
-													* kardex.getfPuExistencia());
-											kardex.setiUsuarioInsertaId(usu
-													.getiUsuarioId());
-
-											asignado = 1;
-											/*** Agregamos en la lista kardex ****/
-											// listaKardex.add(kardex);
-
-											/***
-											 * Actualizamos la cantidad restante
-											 * en el stock
-											 **/
-											objpreciosProducto
-													.setiCantidadStock(iCantidad);
-											/** Actualizamos el producto */
-											producto.setiProductoStockTotal(producto
-													.getiProductoStockTotal()
-													- ventaDetalle
-															.getiVentaDetalleCantidad());
-											producto.setfProductoDescuento(objpreciosProducto
-													.getfDescuento());
-											producto.setfProductoGanancia(objpreciosProducto
-													.getfGanancia());
-											producto.setfProductoPrecioVenta(objpreciosProducto
-													.getfPrecioVenta());
-											producto.setfProductoPrecioCompra(objpreciosProducto
-													.getfPrecioCompra());
-											
-
-										}// else
-
-									}// if cantidad manor a cero
-										// ventaDao.persistEndidad(kardex); //
-										// ventaDao.p//ersistEndgetKardexs().add(kardex)
-									listaKadex.add(kardex);
-
-								}// / if
-								i++;
-							}// for
-
-
-							producto.setKardexs(listaKadex);
-							ventaDao.mergeEndidad(producto);
+											iCantidad = objpreciosProducto.getiCantidadStock() + iCantidad;
+	
+											if (iCantidad <= 0) {
+	
+												kardex.setiCantVenta(objpreciosProducto.getiCantidadStock());
+												kardex.setfPuVenta(objpreciosProducto.getfPrecioCompra());
+												kardex.setfTotalVenta(kardex.getiCantVenta() * kardex.getfPuVenta());
+												kardex.setiCantExistencia(0);
+												kardex.setfPuExistencia(objpreciosProducto.getfPrecioCompra());
+												kardex.setfTotalExistencia(0);
+												kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
+												kardex.setcEstadoCodigo(Constantes.estadoInactivo);
+	
+												/*** Agregamos en la lista kardex ****/
+												// listaKardex.add(kardex);
+	
+												/**************************/
+												/** reducimos el stock a 0 */
+												objpreciosProducto
+														.setiCantidadStock(0);
+	
+											} else {
+												kardex.setiCantVenta(objpreciosProducto
+														.getiCantidadStock()
+														- iCantidad);
+												kardex.setfPuVenta(objpreciosProducto
+														.getfPrecioCompra());
+												kardex.setfTotalVenta(kardex
+														.getiCantVenta()
+														* kardex.getfPuVenta());
+												kardex.setiCantExistencia(iCantidad);
+												kardex.setfPuExistencia(objpreciosProducto
+														.getfPrecioCompra());
+												kardex.setfTotalExistencia(kardex
+														.getiCantExistencia()
+														* kardex.getfPuExistencia());
+												kardex.setiUsuarioInsertaId(usu
+														.getiUsuarioId());
+	
+												asignado = 1;
+												/*** Agregamos en la lista kardex ****/
+												// listaKardex.add(kardex);
+	
+												/***
+												 * Actualizamos la cantidad restante
+												 * en el stock
+												 **/
+												objpreciosProducto
+														.setiCantidadStock(iCantidad);
+												/** Actualizamos el producto */
+												producto.setiProductoStockTotal(producto
+														.getiProductoStockTotal()
+														- ventaDetalle
+																.getiVentaDetalleCantidad());
+												producto.setfProductoDescuento(objpreciosProducto
+														.getfDescuento());
+												producto.setfProductoGanancia(objpreciosProducto
+														.getfGanancia());
+												producto.setfProductoPrecioVenta(objpreciosProducto
+														.getfPrecioVenta());
+												producto.setfProductoPrecioCompra(objpreciosProducto
+														.getfPrecioCompra());
+	
+											}// else
+	
+										}// if cantidad manor a cero
+											// ventaDao.persistEndidad(kardex); //
+											// ventaDao.p//ersistEndgetKardexs().add(kardex)
+										listaKadex.add(kardex);
+	
+									}// / if
+									i++;
+								}// for
+								for (Kardex objKar : kardexDao
+										.buscarKardexProducto(producto
+												.getiProductoId())) {
+									objKar.setcEstadoCodigo(Constantes.estadoInactivo);
+									ventaDao.mergeEndidad(objKar);
+								}
+	
+								producto.setKardexs(listaKadex);
+								ventaDao.persistEndidad(producto);
+								
+							}
 							/***
 							 * Agregamos las actualizaciones en la lista
 							 * ventadetalles
 							 ****/
+							ventaDetalle.setProducto(producto);
 							ventadetalles.add(ventaDetalle);
 
 						}// if
@@ -1434,7 +1385,7 @@ public class VentaAction extends BaseAction {
 
 				}
 
-				//ventaDao.refreshEndidad(obj);
+				ventaDao.refreshEndidad(obj);
 				if (pForm.getvImprimir().equals("SI")) {
 					imprimir(mapping, pForm, request, response);
 				}
@@ -2109,11 +2060,8 @@ public class VentaAction extends BaseAction {
 							int i = 0;
 							int asignado = 0;
 
-							cantidadProductoActual = ingresoDetalle
-									.getiVentaDetalleCantidad();
-							producto.setiProductoStockTotal(producto
-									.getiProductoStockTotal()
-									+ ingresoDetalle.getiVentaDetalleCantidad());
+							cantidadProductoActual = ingresoDetalle.getiVentaDetalleCantidad();
+							producto.setiProductoStockTotal(producto.getiProductoStockTotal() + ingresoDetalle.getiVentaDetalleCantidad());
 
 							Collections.sort(objVenta.getKardexs(),
 									new Comparator<Kardex>() {
@@ -2121,8 +2069,7 @@ public class VentaAction extends BaseAction {
 											// return new
 											// Integer(p1.getiKardexId()).compareTo(new
 											// Integer(p2.getiKardexId()));
-											return p1.getvConcepto().compareTo(
-													p2.getvConcepto());
+											return p1.getvConcepto().compareTo(p2.getvConcepto());
 										}
 									});
 							for (Kardex objKardex : objVenta.getKardexs()) {
@@ -2133,91 +2080,48 @@ public class VentaAction extends BaseAction {
 								kardex.setVentadevolucion(obj);
 								kardex.setdFecha(Fechas.getDate());
 								kardex.setvConcepto(Constantes.conceptoz + i);
-								kardex.setiCantExistencia(objKardex
-										.getiCantExistencia());
-								kardex.setfPuExistencia(objKardex
-										.getfPuExistencia());
-								kardex.setfTotalExistencia(kardex
-										.getiCantExistencia()
-										* kardex.getfPuExistencia());
+								kardex.setiCantExistencia(objKardex .getiCantExistencia());
+								kardex.setfPuExistencia(objKardex.getfPuExistencia());
+								kardex.setfTotalExistencia(kardex.getiCantExistencia() * kardex.getfPuExistencia());
 								kardex.setdFechaInserta(Fechas.getDate());
 								kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
 								kardex.setcEstadoCodigo(Constantes.estadoActivo);
 								if (i == 0)
-									kardex.setvConcepto(Constantes.conceptoDevVenta
-											+ ventaDao
-													.findEndidad(
-															pForm.getTipoDocumento(),
-															pForm.getiTipoDocumentoId())
-													.getvTipoDocumentoDescripcion()
-											+ Constantes.nro
-											+ objVenta.getnVentaNumero());
+									kardex.setvConcepto(Constantes.conceptoDevVenta + ventaDao
+													.findEndidad(pForm.getTipoDocumento(), pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()
+											+ Constantes.nro + objVenta.getnVentaNumero());
 								iCantidad = cantidadProductoActual;
-								cantidadProductoActual = objKardex
-										.getiCantVenta()
-										- cantidadProductoActual;
-								if (asignado == 0
-										&& objKardex.getiCantVenta() > 0) {
+								cantidadProductoActual = objKardex.getiCantVenta() - cantidadProductoActual;
+								if (asignado == 0 && objKardex.getiCantVenta() > 0) {
 									if (cantidadProductoActual <= 0) {
 
-										for (Preciosproducto objpreciosProducto : producto
-												.getPreciosproductodetallles()) {
-											if (objKardex.getfPuExistencia() == objpreciosProducto
-													.getfPrecioCompra()) {
-												objpreciosProducto
-														.setiCantidadStock(objKardex
-																.getiCantExistencia()
-																+ objKardex
-																		.getiCantVenta());
+										for (Preciosproducto objpreciosProducto : producto.getPreciosproductodetallles()) {
+											if (objKardex.getfPuExistencia() == objpreciosProducto.getfPrecioCompra()) {
+												objpreciosProducto.setiCantidadStock(objKardex.getiCantExistencia() + objKardex.getiCantVenta());
 												ventaDao.mergeEndidad(objpreciosProducto);
 											}
 										}
-										kardex.setiCantExistencia(objKardex
-												.getiCantExistencia()
-												+ objKardex.getiCantVenta());
-										kardex.setfPuExistencia(objKardex
-												.getfPuExistencia());
-										kardex.setfTotalExistencia(objKardex
-												.getfPuExistencia()
-												* objKardex
-														.getiCantExistencia());
-										kardex.setiCantIngresoProducto(objKardex
-												.getiCantVenta());
-										kardex.setfPuIngresoProducto(objKardex
-												.getfPuExistencia());
-										kardex.setfTotalngresoProducto(kardex
-												.getiCantIngresoProducto()
-												* kardex.getfPuIngresoProducto());
-										cantidadProductoActual = cantidadProductoActual
-												* -1;
+										kardex.setiCantExistencia(objKardex.getiCantExistencia() + objKardex.getiCantVenta());
+										kardex.setfPuExistencia(objKardex.getfPuExistencia());
+										kardex.setfTotalExistencia(objKardex.getfPuExistencia() * objKardex .getiCantExistencia());
+										kardex.setiCantIngresoProducto(objKardex.getiCantVenta());
+										kardex.setfPuIngresoProducto(objKardex.getfPuExistencia());
+										kardex.setfTotalngresoProducto(kardex.getiCantIngresoProducto() * kardex.getfPuIngresoProducto());
+										cantidadProductoActual = cantidadProductoActual * -1;
 
 									} else {
-										for (Preciosproducto objpreciosProducto : producto
-												.getPreciosproductodetallles()) {
-											if (objKardex.getfPuExistencia() == objpreciosProducto
-													.getfPrecioCompra()) {
-												objpreciosProducto
-														.setiCantidadStock(objKardex
-																.getiCantExistencia()
-																+ iCantidad);
+										for (Preciosproducto objpreciosProducto : producto.getPreciosproductodetallles()) {
+											if (objKardex.getfPuExistencia() == objpreciosProducto.getfPrecioCompra()) {
+												objpreciosProducto.setiCantidadStock(objKardex.getiCantExistencia() + iCantidad);
 												ventaDao.mergeEndidad(objpreciosProducto);
 											}
 										}
-										kardex.setiCantExistencia(objKardex
-												.getiCantExistencia()
-												+ iCantidad);
-										kardex.setfPuExistencia(objKardex
-												.getfPuExistencia());
-										kardex.setfTotalExistencia(objKardex
-												.getfPuExistencia()
-												* objKardex
-														.getiCantExistencia());
+										kardex.setiCantExistencia(objKardex.getiCantExistencia() + iCantidad);
+										kardex.setfPuExistencia(objKardex.getfPuExistencia());
+										kardex.setfTotalExistencia(objKardex.getfPuExistencia() * objKardex.getiCantExistencia());
 										kardex.setiCantIngresoProducto(iCantidad);
-										kardex.setfPuIngresoProducto(objKardex
-												.getfPuExistencia());
-										kardex.setfTotalngresoProducto(kardex
-												.getiCantIngresoProducto()
-												* kardex.getfPuIngresoProducto());
+										kardex.setfPuIngresoProducto(objKardex.getfPuExistencia());
+										kardex.setfTotalngresoProducto(kardex.getiCantIngresoProducto() * kardex.getfPuIngresoProducto());
 										asignado = 1;
 
 									}// if asignado
@@ -2243,15 +2147,12 @@ public class VentaAction extends BaseAction {
 
 				if (resultado == true) {
 					int iVentaDevolucionId = obj.getiVentaDevolucionId();
-					ventaDao.entityTransaction().begin();
-					contabilidadDao.callDevVentaContabilidad(
-							iVentaDevolucionId, usu.getiUsuarioId(), pForm
-									.getMode(), obj.getVenta()
-									.getvEstadoDocumento(), iPeriodoId);
-					resultado = ventaDao.commitEndidad(ventaDao
-							.entityTransaction());
+					entityTransaction = ventaDao.entityTransaction();
+					entityTransaction.begin();
+					contabilidadDao.callDevVentaContabilidad(iVentaDevolucionId, usu.getiUsuarioId(), pForm.getMode(), obj.getVenta().getvEstadoDocumento(), iPeriodoId);
+					resultado = ventaDao.commitEndidad(entityTransaction);
 				}
-				ventaDao.refreshEndidad(obj);
+				//ventaDao.refreshEndidad(obj);
 				// ventaDao.refreshEndidad(objVenta);
 				if (pForm.getvImprimir().equals("SI")) {
 					imprimir(mapping, pForm, request, response);

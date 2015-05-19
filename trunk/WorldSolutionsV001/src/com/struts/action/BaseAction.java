@@ -226,9 +226,9 @@ public abstract class BaseAction  extends DispatchAction {
 	    		impresora.agregarSaltoLinea(10);
 	    		
 	    		impresora.cortarImpresion();
-	    		System.out.println(impresora.toString());
+	    		//System.out.println(impresora.toString());
 	    		//impresora.abriCaja();
-	    		//impresora.imprimirTicket();
+	    		impresora.imprimirTicket();
 	    		
 	    		return null;
 			//}

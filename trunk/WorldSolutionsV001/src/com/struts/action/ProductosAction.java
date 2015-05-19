@@ -2197,75 +2197,60 @@ public class ProductosAction extends BaseAction {
 					/*****************************************/
 					int cantidad;
 					Productoalmacen material= new Productoalmacen();
-					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId());
-					   
+					    material= productoDao.findEndidad(material, prodeta.getProducto().getiProductoId()) ;
 					    if(material!=null){
 					    	cantidad= material.getiProductoAlmStockTotal()+prodeta.getiCantidad();
 						    material.setiProductoAlmStockTotal(cantidad); 
-						   	
+						    productoDao.mergeEndidad(material);	
 					    }
-					    else{
-					    	material= new Productoalmacen();
-					    	material.setiProductoAlmStockTotal(prodeta.getiCantidad()); 
-					    }
-				
-					    material.setProducto(prodeta.getProducto());
-					    material.setdFechaInserta(Fechas.getDate());
-					    material.setiUsuarioInsertaId(usu.getiUsuarioId());
-					    material.setAlmacen(DistBean.getAlmacenEntrada());
-					    material.setcEstadoCodigo(Constantes.estadoActivo);
-					   
-					productoDao.mergeEndidad(material);
-					
-
-					/**Insertamos la existencia de un producto en el Kardex**/
-					Kardex  kardex = new Kardex();
-					kardex.setProducto(prodeta.getProducto());
-					kardex.setdFecha(Fechas.getDate());
-					kardex.setvConcepto(Constantes.conceptoDistribucion);
-					kardex.setiCantExistencia(prodeta.getProducto().getiProductoStockTotal());
-					kardex.setfPuExistencia(prodeta.getProducto().getfProductoPrecioCompra());
-					kardex.setfTotalExistencia(kardex.getiCantExistencia()*kardex.getfPuExistencia());
-					kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
-					kardex.setdFechaInserta(Fechas.getDate());
-					kardex.setcEstadoCodigo(Constantes.estadoActivo);
-					kardex.setiPeriodoId(iPeriodoId);
-					//listaKardexs.add(kardex);
-					//pro.setKardexs(listaKardexs);
-					productoDao.persistEndidad(kardex);
-					
-					
-					 
-						/**Insertamos en el libro Dirio la cuenta de Mercaredia 
-					 * 20(Mercaderia) y
-					 * 201(Almacem)
-					 * id=57; 201: mercaderia/ Almacen**/			
-					Cuenta cuenta =  new Cuenta();			
-					Librodiario libroDiario = new Librodiario();
-					libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
-					libroDiario.setCuenta(productoDao.findEndidad(cuenta, 57));
-					libroDiario.setfMonto(kardex.getiCantExistencia()*kardex.getfPuExistencia());
-					libroDiario.setvTipoConcepto(Constantes.debe);
-					libroDiario.setvConceptoGeneral("MERCADERIA / ALmacen ");
-					libroDiario.setdFechaInserta(Fechas.getDate());
-					libroDiario.setiUsuarioInsertaId(usu.getiUsuarioId());
-					libroDiario.setKardex(kardex);
-					libroDiario.setiPeriodoId(iPeriodoId);
-					productoDao.persistEndidad(libroDiario);
-					
-							
-					 productoDao.persistEndidad(libroDiario);
-					 resultado = productoDao.commitEndidad(transaccion);
+					    
 					}
-					
 					
 				}
 				
+				/**Insertamos la existencia de un producto en el Kardex**/
+				Kardex  kardex = new Kardex();
+				kardex.setProducto(pro);
+				kardex.setdFecha(Fechas.getDate());
+				kardex.setvConcepto(Constantes.conceptoDistribucion);
+				kardex.setiCantExistencia(pro.getiProductoStockTotal());
+				kardex.setfPuExistencia(pro.getfProductoPrecioCompra());
+				kardex.setfTotalExistencia(kardex.getiCantExistencia()*kardex.getfPuExistencia());
+				kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
+				kardex.setdFechaInserta(Fechas.getDate());
+				kardex.setcEstadoCodigo(Constantes.estadoActivo);
+				kardex.setiPeriodoId(iPeriodoId);
+				//listaKardexs.add(kardex);
+				//pro.setKardexs(listaKardexs);
+				productoDao.persistEndidad(kardex);
+				
+				
+				 
+					/**Insertamos en el libro Dirio la cuenta de Mercaredia 
+				 * 20(Mercaderia) y
+				 * 201(Almacem)
+				 * id=57; 201: mercaderia/ Almacen**/			
+				Cuenta cuenta =  new Cuenta();			
+				Librodiario libroDiario = new Librodiario();
+				libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
+				libroDiario.setCuenta(productoDao.findEndidad(cuenta, 57));
+				libroDiario.setfMonto(kardex.getiCantExistencia()*kardex.getfPuExistencia());
+				libroDiario.setvTipoConcepto(Constantes.debe);
+				libroDiario.setvConceptoGeneral("MERCADERIA / ALmacen ");
+				libroDiario.setdFechaInserta(Fechas.getDate());
+				libroDiario.setiUsuarioInsertaId(usu.getiUsuarioId());
+				libroDiario.setKardex(kardex);
+				libroDiario.setiPeriodoId(iPeriodoId);
+				productoDao.persistEndidad(libroDiario);
+				
+						
+				 productoDao.persistEndidad(libroDiario);
+				 resultado = productoDao.commitEndidad(transaccion);
 				// productoDao.refreshEndidad(pro);
 				
 			} 
 		    /**Insertamos Datos del producto como Insumos **/
-			else if (pForm.getMode().equals("II")) {			
+			if (pForm.getMode().equals("II")) {			
 				pro.setdFechaInserta(Fechas.getDate());
 				pro.setiUsuarioInsertaId(usu.getiUsuarioId());			
 				productoDao.persistEndidad(pro);
@@ -2838,21 +2823,7 @@ public class ProductosAction extends BaseAction {
 					productoBean.setfProductoPrecioVenta(fPrecioVenta);
 					productoBean.setiProductoStockTotal(producto.getiProductoStockTotal());
 					producciondetalle.setvDescripcion(productoBean.getvProductoNombre());
-					if(productoBean.getUmBase()!=null){
-						if(productoBean.getUmBase().getiUnidadMedidaId()==0){
-							productoBean.setUmBase(null);
-		               }
-					}	
-					if(productoBean.getUmPedido()!=null){
-							if(productoBean.getUmPedido().getiUnidadMedidaId()==0){
-								productoBean.setUmPedido(null);
-			               }
-						}
-			               if(productoBean.getUmSalida()!=null){
-			            	   if(productoBean.getUmSalida().getiUnidadMedidaId()==0){
-			            		   productoBean.setUmSalida(null);
-			               }
-			               }
+					
 					if(iPersonalId>0){
 						Personal personalBean= new Personal();
 						Personal personal= new Personal();
@@ -3057,21 +3028,7 @@ public class ProductosAction extends BaseAction {
 								.getiProductoStockTotal());
 						productoBean.setfProductoPrecioCompra(fPrecioCompra);
 						productoBean.setfProductoDescuento(fDescuento);
-						if(productoBean.getUmBase()!=null){
-							if(productoBean.getUmBase().getiUnidadMedidaId()==0){
-								productoBean.setUmBase(null);
-			               }
-						}	
-						if(productoBean.getUmPedido()!=null){
-								if(productoBean.getUmPedido().getiUnidadMedidaId()==0){
-									productoBean.setUmPedido(null);
-				               }
-							}
-				               if(productoBean.getUmSalida()!=null){
-				            	   if(productoBean.getUmSalida().getiUnidadMedidaId()==0){
-				            		   productoBean.setUmSalida(null);
-				               }
-				               }
+
 						almacenDetalle.setProducto(productoBean);
 						almacenDetalle.setfTotal(fTotal);
 						almacenDetalle.setfPrecioUnitario(fPrecioVenta);
