@@ -278,7 +278,7 @@ $("#identificador").val($_GET('identificador'));
 	
 	function fn_agregarProducto(){
 		var id=$("#iProductoId").val();
-		if(id!=''){
+		if(id!="0"){
 		var iCantidad=$("#iProductoStockTotal").val();		
 		var fDescuento=$("#fDescuento").val();			
 		var fPrecioVenta =$("#fProductoPrecioVenta").val();
