@@ -584,7 +584,13 @@ public class ProductosForm extends ActionForm {
 		
 	}
 	public void setiUnidadMedidadId(int iUnidadMedidadId) {
-		this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		if(iUnidadMedidadId>0){
+		this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
+		}
+		else{
+			this.producto.setUnidadMedida(null);
+		}
+		
 	}
 	/**
 	 * @return the iUMBase
@@ -626,7 +632,9 @@ public class ProductosForm extends ActionForm {
 		if(iUnidadMedidadId>0){
 		this.producto.setUmBase(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
 		}
-		
+		else{
+			this.producto.setUmBase(null);
+		}
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 
@@ -640,8 +648,9 @@ public class ProductosForm extends ActionForm {
 	/**
 	 * @param iUMPedido the iUMPedido to set
 	 */
-	public void setiUMPedido(int iUMPedido) {
-		this.producto.setiUMPedido(iUMPedido);
+	public void setiUMPedido(int iUMPedido) {	
+			this.producto.setiUMPedido(iUMPedido);		
+		
 	}
 
 	/**
@@ -670,7 +679,9 @@ public class ProductosForm extends ActionForm {
 		if(iUnidadMedidadId>0){
 		this.producto.setUmPedido(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
 		}
-		
+		else{
+			this.producto.setUmPedido(null);	
+		}
 		//his.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 	/**
@@ -716,7 +727,9 @@ public class ProductosForm extends ActionForm {
 		if(iUnidadMedidadId>0){
 		this.producto.setUmSalida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
 		}
-		
+		else{
+			this.producto.setUmSalida(null);	
+		}
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 
@@ -814,7 +827,9 @@ public class ProductosForm extends ActionForm {
 		if(iUnidadMedidadId>0){
 			this.productoAlmacen.setUnidadMedidaAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 		}
-		
+		else{
+			this.productoAlmacen.setUnidadMedidaAlm(null);
+		}
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
 	
@@ -851,6 +866,9 @@ public class ProductosForm extends ActionForm {
 	public void setiUMBaseAlmId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
 		this.productoAlmacen.setUnidadBaseAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		}
+		else{
+			this.productoAlmacen.setUnidadBaseAlm(null);	
 		}
 		//this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
 	}
