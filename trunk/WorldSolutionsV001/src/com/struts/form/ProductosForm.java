@@ -688,7 +688,7 @@ public class ProductosForm extends ActionForm {
 	 * @return the vUMSalida
 	 */
 	public int getvUMSalida() {
-		return producto.getvUMSalida();
+		return producto.getiUMSalida();
 	}
 
 	/**
@@ -696,7 +696,7 @@ public class ProductosForm extends ActionForm {
 	 */
 	public void setvUMSalida(int vUMSalida) {
 		if(vUMSalida>0){
-		this.producto.setvUMSalida(vUMSalida);	
+		this.producto.setiUMSalida(vUMSalida);	
 		}
 		
 	}

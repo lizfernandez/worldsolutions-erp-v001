@@ -45,7 +45,7 @@ public class Ventadetalle implements Serializable {
 	private int iVentaDetalleCantidad;
 
 	//bi-directional many-to-one association to Producto
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="iProductoId", nullable=false)
 	private Producto producto;
 

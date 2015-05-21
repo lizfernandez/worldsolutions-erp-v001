@@ -1111,7 +1111,7 @@ public class VentaAction extends BaseAction {
 							ventaDetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
 
 							Producto producto = ventaDao.findEndidad(ventaDetalle.getProducto(), ventaDetalle.getProducto().getiProductoId());
-							
+							ventaDetalle.setProducto(producto);
 							if (!ventaDetalle.getProducto().getCategoria().getClasificacionCategoria().getvClasificacionDescripcion().equals(Constantes.categoriaServicios)) {
 								
 								/*******************************************/
@@ -1340,16 +1340,15 @@ public class VentaAction extends BaseAction {
 									objKar.setcEstadoCodigo(Constantes.estadoInactivo);
 									ventaDao.mergeEndidad(objKar);
 								}
-	
 								producto.setKardexs(listaKadex);
-								ventaDao.persistEndidad(producto);
+								ventaDao.mergeEndidad(producto);
 								
 							}
 							/***
 							 * Agregamos las actualizaciones en la lista
 							 * ventadetalles
 							 ****/
-							ventaDetalle.setProducto(producto);
+						
 							ventadetalles.add(ventaDetalle);
 
 						}// if
