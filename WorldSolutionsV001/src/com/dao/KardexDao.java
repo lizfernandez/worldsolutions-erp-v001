@@ -67,10 +67,11 @@ public class KardexDao extends GenericaDao implements IKardexDao {
 	public List<Kardex> buscarKardexProducto(int iProductoId) {
 		// TODO Auto-generated method stub
 		Query q = getInstancia().createQuery("Select p from Kardex p where p.producto.iProductoId ='"+iProductoId+"' and p.cEstadoCodigo = :EstadoCodigo order by p.dFechaInserta,p.vConcepto asc");
-		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		
 		List<Kardex> kardex = (List<Kardex>) q.setParameter("EstadoCodigo", Constantes.estadoActivo).getResultList(); //find(Kardex.class, iProductoId);		     
 		
         return kardex;
+      //q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 	}
 	@Override
 	public List<Librodiario> buscarLibroDiarioKardex(int iKardexId) {

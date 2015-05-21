@@ -577,7 +577,7 @@ public class ProductosAction extends BaseAction {
 				}
 				
 		    }
-			if(pro.getProductoAlmacendetallles()!=null){
+			/*if(pro.getProductoAlmacendetallles()!=null){
 				if(pro.getProductoAlmacendetallles().size()>0){
 				 for(Productoalmacen precioPro: pro.getProductoAlmacendetallles()){
 					 Productoalmacen productoAlmacen = new Productoalmacen();	
@@ -594,7 +594,7 @@ public class ProductosAction extends BaseAction {
 				 }
 				}
 				
-		    }
+		    }*/
 		productoForm.setProduc(listaPrecio);
 		productoForm.setProducAlmacen(listaProduAlma);
 		//pro.setProductoAlmacendetallles(listaProduAlma);
@@ -797,32 +797,7 @@ public class ProductosAction extends BaseAction {
 				productoDao.persistEndidad(libroDiario);
 				
 				
-				// productoDao.refreshEndidad(pro);
-				/****/
-				/**insertamos almacen producto**/
-                 /*List<Productoalmacen> listaProductoAlm =  (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
-                 int CantidadStocktotal=0;
-                 int CantidadBase=0;
-				if (listaProductoAlm!=null ) {
-					if(listaProductoAlm.size() > 0){
-						for (Productoalmacen proAlma :listaProductoAlm) {
-							
-							CantidadStocktotal= CantidadStocktotal+proAlma.getiProductoAlmStockTotal();
-							CantidadBase=CantidadBase+proAlma.getiUMBaseAlm();
-							proAlma.setProducto(pro);
-							
-							proAlma.setiUsuarioInsertaId(usu.getiUsuarioId());
-							if(pro.getUmBase()!=null){
-								proAlma.setUnidadBaseAlm(pro.getUmBase());
-								proAlma.setUnidadMedidaAlm(pro.getUnidadMedida());
-							}
-							
-							
-							proAlma.setdFechaInserta(Fechas.getDate());
-							pro.setProductoAlmacendetallles(listaProductoAlm);
-							//productoDao.persistEndidad(proAlma);	
-							}
-						}*/
+				
 				if(pro.getUmBase()!=null){
 					if(pro.getUmBase().getiUnidadMedidaId()==0){
 	            	   pro.setUmBase(null);
@@ -860,31 +835,7 @@ public class ProductosAction extends BaseAction {
 				pro.setdFechaActualiza(Fechas.getDate());
 				pro.setiUsuarioActualizaId(usu.getiUsuarioId());
 			
-				/*  List<Productoalmacen> listaProductoAlm = (List<Productoalmacen>) sesion.getAttribute("listaProductoAlmacen");
-					int CantidadStockTotal=0;
-					int CantidadStockBase=0;
-					if (listaProductoAlm.size() > 0) {
-						
-						for (Productoalmacen proAlma :listaProductoAlm) {
-							
-							CantidadStockTotal= CantidadStockTotal+proAlma.getiProductoAlmStockTotal();
-							CantidadStockBase=CantidadStockBase+proAlma.getiUMBaseAlm();
-							proAlma.setProducto(pro);
-							proAlma.setiUsuarioInsertaId(usu.getiUsuarioId());
-							proAlma.setdFechaInserta(Fechas.getDate());
-							
-							if(pro.getUmBase()!=null){
-								proAlma.setUnidadBaseAlm(pro.getUmBase());
-								proAlma.setUnidadMedidaAlm(pro.getUnidadMedida());
-							}
-							
-							
-							//pro.setProductoAlmacendetallles(listaProductoAlm);
-							productoDao.mergeEndidad(proAlma);	
-							}
-						pro.setiProductoStockTotal(CantidadStockTotal);
-						pro.setiUMBase(CantidadStockBase);
-						}*/
+				
 					
 				/**
 				 * Actualizamos o agregamos precios del producto, como tambien

@@ -119,17 +119,17 @@ public class Producto implements Serializable {
 	private List<Ventadetalle> ventadetalles;
 	
 	//bi-directional many-to-one association to kardex
-	@OneToMany(mappedBy="producto", fetch=FetchType.EAGER, cascade= CascadeType.ALL )
+	@OneToMany(mappedBy="producto", fetch=FetchType.LAZY, cascade= CascadeType.ALL )
 	private List<Kardex> kardexs;
 	
 	//bi-directional many-to-one association to listaPrecios
-	@OneToMany(mappedBy="producto", fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="producto", fetch=FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Preciosproducto> preciosproductodetallles;
 	
 	//bi-directional many-to-one association to listaPrecios
-	@OneToMany(mappedBy="producto", fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+	/*@OneToMany(mappedBy="producto", fetch=FetchType.LAZY)
 	private List<Productoalmacen> productoAlmacendetallles;
-	
+	*/
 	
 	//bi-directional many-to-one association to Ingresoproducto
 	@OneToMany(mappedBy="producto")
@@ -145,11 +145,11 @@ public class Producto implements Serializable {
 	private int iUMPedido;
 
 	//bi-directional many-to-one association to Unidadmedida
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="iUMPedidoId", nullable=false)
 	private Unidadmedida umPedido;
 
-	private int vUMSalida;
+	private int iUMSalida;
 
 	//bi-directional many-to-one association to Unidadmedida
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -447,17 +447,17 @@ public class Producto implements Serializable {
 	/**
 	 * @return the productoAlmacendetallles
 	 */
-	public List<Productoalmacen> getProductoAlmacendetallles() {
+	/*public List<Productoalmacen> getProductoAlmacendetallles() {
 		return productoAlmacendetallles;
 	}
 
-	/**
+	*//**
 	 * @param productoAlmacendetallles the productoAlmacendetallles to set
-	 */
+	 *//*
 	public void setProductoAlmacendetallles(
 			List<Productoalmacen> productoAlmacendetallles) {
 		this.productoAlmacendetallles = productoAlmacendetallles;
-	}
+	}*/
 
 	/**
 	 * @return the fProductoGastosAdm
@@ -557,18 +557,20 @@ public class Producto implements Serializable {
 		this.umPedido = umPedido;
 	}
 
+	
+
 	/**
-	 * @return the vUMSalida
+	 * @return the iUMSalida
 	 */
-	public int getvUMSalida() {
-		return vUMSalida;
+	public int getiUMSalida() {
+		return iUMSalida;
 	}
 
 	/**
-	 * @param vUMSalida the vUMSalida to set
+	 * @param iUMSalida the iUMSalida to set
 	 */
-	public void setvUMSalida(int vUMSalida) {
-		this.vUMSalida = vUMSalida;
+	public void setiUMSalida(int iUMSalida) {
+		this.iUMSalida = iUMSalida;
 	}
 
 	/**

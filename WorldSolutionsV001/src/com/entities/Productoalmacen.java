@@ -30,12 +30,12 @@ public class Productoalmacen implements Serializable {
 	private Almacen almacen;
 
 	private int iProductoAlmStockTotal;
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="iProductoId")
 	private Producto producto;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iUMAlmacenId")
+	@JoinColumn(name="iUMAlmacenId", nullable=false)
 	private Unidadmedida unidadMedidaAlm;
 
 	private int iUMBaseAlm;
@@ -43,7 +43,7 @@ public class Productoalmacen implements Serializable {
 
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iUMBaseAlmId")
+	@JoinColumn(name="iUMBaseAlmId", nullable=false)
 	private Unidadmedida unidadBaseAlm;
 
 	private int iUsuarioActualizaId;
