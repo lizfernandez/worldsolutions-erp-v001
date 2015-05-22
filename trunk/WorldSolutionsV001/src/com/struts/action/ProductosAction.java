@@ -644,7 +644,45 @@ public class ProductosAction extends BaseAction {
 
 		return mapping.findForward(msn);
 	}
+	
+	public ActionForward cargarFoto(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
 
+		ProductosForm pForm = (ProductosForm) form;
+		Producto pro = pForm.getProducto();
+		
+		/*** Instanciamos transacion ***/
+		
+		/**Cargamos Foto **/
+		if (pForm.getFoto() != null) {
+			FormFile fichero = pForm.getFoto();
+			String nombre = fichero.getFileName();
+			int tamanho = fichero.getFileSize();
+			@SuppressWarnings("deprecation")
+			String filePath = request.getRealPath("/").toString();
+
+			if ((tamanho > 0) && (!nombre.equals(""))) {
+				pro.setvFoto(pro.getcProductoCodigo() + ".jpg");
+				if (!nombre.equals("")) {
+
+					File ficheroACrear = new File(filePath + File.separator + "media" + File.separator + "fotos" + File.separator + pro.getvFoto());
+					
+					if (!ficheroACrear.exists()) {
+						ficheroACrear.createNewFile();
+						FileOutputStream fileOutStream = new FileOutputStream(ficheroACrear);
+						fileOutStream.write(fichero.getFileData());
+						fileOutStream.flush();
+						fileOutStream.close();
+
+					}
+
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * Method execute
 	 * 
