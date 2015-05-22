@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -69,8 +70,8 @@ public class Producto implements Serializable {
 	private Subcategoria subcategoria;
 	private int iProductoStockTotal;
 	 //bi-directional many-to-one association to Unidadmedida
-    @ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iUnidadMedidaId", nullable=false)
+	@OneToOne(fetch=FetchType.LAZY, optional=false, cascade=CascadeType.PERSIST)
+	@JoinColumn(name="iUnidadMedidaId", nullable=true)
 	private Unidadmedida unidadMedida;
 
 	@Column(nullable=false)
@@ -138,22 +139,22 @@ public class Producto implements Serializable {
 	private int iUMBase;
 
 	//bi-directional many-to-one association to Unidadmedida
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iUMBaseId", nullable=false)
+	@OneToOne(fetch=FetchType.LAZY, optional=false, cascade=CascadeType.PERSIST)
+	@JoinColumn(name="iUMBaseId", nullable=true)
 	private Unidadmedida umBase;
 
 	private int iUMPedido;
 
 	//bi-directional many-to-one association to Unidadmedida
-    @ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iUMPedidoId", nullable=false)
+	@OneToOne(fetch=FetchType.LAZY, optional=false , cascade=CascadeType.PERSIST)
+	@JoinColumn(name="iUMPedidoId", nullable=true)
 	private Unidadmedida umPedido;
 
 	private int iUMSalida;
 
 	//bi-directional many-to-one association to Unidadmedida
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iUMSalidaId", nullable=false)
+	@OneToOne(fetch=FetchType.LAZY, optional=false , cascade=CascadeType.PERSIST)
+	@JoinColumn(name="iUMSalidaId", nullable=true)
 	private Unidadmedida umSalida;
 
 

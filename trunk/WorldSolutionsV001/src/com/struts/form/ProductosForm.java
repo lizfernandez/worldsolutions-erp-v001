@@ -248,21 +248,19 @@ public class ProductosForm extends ActionForm {
 
 	
 	
-	/***Moneda iMonedaId ***/
-	public Moneda getMoneda(){
-		Moneda moneda = producto.getMoneda();
-		if(moneda==null){
-			 moneda = new Moneda();
-			 producto.setMoneda(moneda);
-		}
-		return producto.getMoneda();
-	}
+	
 	public int getiMonedaId() {		
-			return getMoneda().getiMonedaId();		
+		Moneda moneda = producto.getMoneda();
+		int iMonedaId=0; 
+		if(moneda!=null){
+			iMonedaId= moneda.getiMonedaId(); 
+		}
+		return iMonedaId;
+				
 	}
 	public void setiMonedaId(int iMonedaId) {		
-		this.producto.setMoneda(getProductoDao().findEndidad(getMoneda(), iMonedaId));
-		this.ordenCompra.setMoneda(getProductoDao().findEndidad(getMoneda(), iMonedaId));
+		this.producto.setMoneda(getProductoDao().findEndidad(new Moneda(), iMonedaId));
+		this.ordenCompra.setMoneda(getProductoDao().findEndidad(new Moneda(), iMonedaId));
 	}	
 	/**
 	 * @return the sizeIngresoproductodetalles
@@ -571,21 +569,19 @@ public class ProductosForm extends ActionForm {
 		this.producto.setiProductoStockTotal(iProductoStockTotal);
 	}
 
-	public Unidadmedida getUnidadmedida(){
-		Unidadmedida unidadmedida =producto.getUnidadMedida();
-		if(unidadmedida==null){
-			unidadmedida= new Unidadmedida();
-			producto.setUnidadMedida(unidadmedida);
-		}
-		return producto.getUnidadMedida();
-	}
+	
 	public int getiUnidadMedidadId() {
-			return getUnidadmedida().getiUnidadMedidaId();
+		Unidadmedida unidadmedida =producto.getUnidadMedida();
+		int iUnidadMedidadId=0;
+		if(unidadmedida!=null){
+			iUnidadMedidadId=unidadmedida.getiUnidadMedidaId();
+		}
+			return iUnidadMedidadId;
 		
 	}
 	public void setiUnidadMedidadId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.producto.setUnidadMedida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
+		this.producto.setUnidadMedida(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));	
 		}
 		else{
 			this.producto.setUnidadMedida(null);
@@ -606,17 +602,7 @@ public class ProductosForm extends ActionForm {
 		this.producto.setiUMBase(iUMBase);
 	}
 
-	/**
-	 * @return the umBase
-	 */
-	public Unidadmedida getUmBase() {
-		Unidadmedida unidadmedida =producto.getUmBase();
-		if(unidadmedida==null){
-			unidadmedida= new Unidadmedida();
-			producto.setUmBase(unidadmedida);
-		}		
-		return producto.getUmBase();
-	}
+	
 
 	/**
 	 * @param umBase the umBase to set
@@ -625,12 +611,18 @@ public class ProductosForm extends ActionForm {
 		this.producto.setUmBase(umBase);
 	}*/
 	public int getiUMBaseId() {
-		return getUmBase().getiUnidadMedidaId();
+		Unidadmedida unidadmedida =producto.getUmBase();
+		int iUnidadMedidadId=0;
+		if(unidadmedida!=null){
+			iUnidadMedidadId=unidadmedida.getiUnidadMedidaId();
+		}
+			return iUnidadMedidadId;
+		
 	
 	}
 	public void setiUMBaseId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.producto.setUmBase(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
+		this.producto.setUmBase(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));	
 		}
 		else{
 			this.producto.setUmBase(null);
@@ -656,14 +648,7 @@ public class ProductosForm extends ActionForm {
 	/**
 	 * @return the umPedido
 	 */
-	public Unidadmedida getUmPedido() {
-		Unidadmedida unidadmedida =producto.getUmPedido();
-		if(unidadmedida==null){
-			unidadmedida= new Unidadmedida();
-			producto.setUmPedido(unidadmedida);
-		}
-		return producto.getUmPedido();
-	}
+	
 
 	/**
 	 * @param umPedido the umPedido to set
@@ -672,12 +657,17 @@ public class ProductosForm extends ActionForm {
 		this.producto.setUmPedido(umPedido);
 	}*/
 	public int getiUMPedidoId() {
-		return getUmPedido().getiUnidadMedidaId();
+		Unidadmedida unidadmedida =producto.getUmPedido();
+		int iUnidadMedidadId=0;
+		if(unidadmedida!=null){
+			iUnidadMedidadId=unidadmedida.getiUnidadMedidaId();
+		}
+			return iUnidadMedidadId;
 	
 	}
 	public void setiUMPedidoId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.producto.setUmPedido(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
+		this.producto.setUmPedido(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));	
 		}
 		else{
 			this.producto.setUmPedido(null);	
@@ -701,31 +691,25 @@ public class ProductosForm extends ActionForm {
 		
 	}
 
-	/**
-	 * @return the umSalida
-	 */
-	public Unidadmedida getUmSalida() {
-		Unidadmedida unidadmedida =producto.getUmSalida();
-		if(unidadmedida==null){
-			unidadmedida= new Unidadmedida();
-			producto.setUmSalida(unidadmedida);
-		}
-		return producto.getUmSalida();
-	}
+
 
 	/**
 	 * @param umSalida the umSalida to set
 	 */
-	public void setUmSalida(Unidadmedida umSalida) {
-		this.setUmSalida(umSalida);
-	}
+
 	public int getiUMSalidaId() {
-		return getUmSalida().getiUnidadMedidaId();
+		Unidadmedida unidadmedida =producto.getUmSalida();
+		int iUnidadMedidadId=0;
+		if(unidadmedida!=null){
+			iUnidadMedidadId=unidadmedida.getiUnidadMedidaId();
+		}
+			return iUnidadMedidadId;
+		
 	
 	}
 	public void setiUMSalidaId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.producto.setUmSalida(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));	
+		this.producto.setUmSalida(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));	
 		}
 		else{
 			this.producto.setUmSalida(null);	
@@ -811,21 +795,19 @@ public class ProductosForm extends ActionForm {
 	/**
 	 * @return the unidadMedidaAlm
 	 */
-	public Unidadmedida getUnidadMedidaAlm() {
-		Unidadmedida unidad =productoAlmacen.getUnidadMedidaAlm();
-		if(unidad==null){
-			unidad= new Unidadmedida();
-			productoAlmacen.setUnidadMedidaAlm(unidad);
-		}
-		return productoAlmacen.getUnidadMedidaAlm();
-	}
+
 	public int getiUnidadMedidaAlmId() {
-		return getUnidadMedidaAlm().getiUnidadMedidaId();
+		Unidadmedida unidadmedida =productoAlmacen.getUnidadMedidaAlm();
+		int iUnidadMedidadId=0;
+		if(unidadmedida!=null){
+			iUnidadMedidadId=unidadmedida.getiUnidadMedidaId();
+		}
+			return iUnidadMedidadId;
 	
 	}
 	public void setiUnidadMedidaAlmId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-			this.productoAlmacen.setUnidadMedidaAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+			this.productoAlmacen.setUnidadMedidaAlm(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));
 		}
 		else{
 			this.productoAlmacen.setUnidadMedidaAlm(null);
@@ -848,24 +830,19 @@ public class ProductosForm extends ActionForm {
 		this.productoAlmacen.setiUMBaseAlm(iUMBaseAlm);
 	}
 
-	/**
-	 * @return the iUMBaseAlmId
-	 */
-	public Unidadmedida unidadBaseAlm() {
-		Unidadmedida unidad =productoAlmacen.getUnidadBaseAlm();
-		if(unidad==null){
-			unidad= new Unidadmedida();
-			productoAlmacen.setUnidadBaseAlm(unidad);
-		}
-		return productoAlmacen.getUnidadBaseAlm();
-	}
 	public int getiUMBaseAlmId() {
-		return unidadBaseAlm().getiUnidadMedidaId();
+		Unidadmedida unidadmedida =productoAlmacen.getUnidadBaseAlm();
+		int iUnidadMedidadId=0;
+		if(unidadmedida!=null){
+			iUnidadMedidadId=unidadmedida.getiUnidadMedidaId();
+		}
+			return iUnidadMedidadId;
+		
 	
 	}
 	public void setiUMBaseAlmId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.productoAlmacen.setUnidadBaseAlm(getProductoDao().findEndidad(getUnidadmedida(), iUnidadMedidadId));
+		this.productoAlmacen.setUnidadBaseAlm(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));
 		}
 		else{
 			this.productoAlmacen.setUnidadBaseAlm(null);	
