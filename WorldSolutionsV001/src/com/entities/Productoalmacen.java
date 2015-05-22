@@ -34,7 +34,7 @@ public class Productoalmacen implements Serializable {
 	@JoinColumn(name="iProductoId")
 	private Producto producto;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="iUMAlmacenId", nullable=false)
 	private Unidadmedida unidadMedidaAlm;
 
@@ -42,7 +42,7 @@ public class Productoalmacen implements Serializable {
 	
 
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="iUMBaseAlmId", nullable=false)
 	private Unidadmedida unidadBaseAlm;
 

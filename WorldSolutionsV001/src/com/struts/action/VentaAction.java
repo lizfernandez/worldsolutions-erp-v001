@@ -566,9 +566,14 @@ public class VentaAction extends BaseAction {
 				productoBean.setiProductoId(producto.getiProductoId());
 				productoBean.setcProductoCodigo(producto.getcProductoCodigo());
 				productoBean.setvProductoNombre(producto.getvProductoNombre());
-
+               if(producto.getUnidadMedida()!=null)
 				productoBean.setUnidadMedida(producto.getUnidadMedida());
+               if(producto.getUmBase()!=null)
 				productoBean.setiUMBase(producto.getiUMBase());
+               if(producto.getUmPedido()!=null)
+   				productoBean.setiUMPedido(producto.getiUMPedido());
+               if(producto.getUmSalida()!=null)
+   				productoBean.setiUMBase(producto.getiUMSalida());
 				productoBean.setfProductoPrecioVenta(producto
 						.getfProductoPrecioVenta());
 				productoBean.setiProductoStockTotal(producto
@@ -1384,7 +1389,7 @@ public class VentaAction extends BaseAction {
 
 				}
 
-				ventaDao.refreshEndidad(obj);
+				//ventaDao.refreshEndidad(obj);
 				if (pForm.getvImprimir().equals("SI")) {
 					imprimir(mapping, pForm, request, response);
 				}

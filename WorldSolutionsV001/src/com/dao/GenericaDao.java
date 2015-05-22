@@ -129,6 +129,7 @@ public class GenericaDao  implements IGenerica{
 			limpiarInstancia();
 		} finally {
 			ext = null;
+			//limpiarInstancia();
 			// em=null;
 		}
 		return resultado;
@@ -210,14 +211,14 @@ public class GenericaDao  implements IGenerica{
 		String codigoGenerado = "";
 		EntityTransaction ext;
 		try {
-			ext = entityTransaction();
+			/*ext = entityTransaction();
 			ext.begin();
-
+*/
 			q = getInstancia().createNativeQuery("{ CALL SP_CALCULO_CODIGO(?) }") // createNamedQuery("SP_IDU_PERFIL_PERMISOS")
 					.setParameter(1, entidad.getClass().getSimpleName());
 			// q.executeUpdate();// SOBRA, el getSingleResult lo hace por el
 			codigoGenerado = (String) q.getSingleResult();
-			resultado = commitEndidad(ext);
+		 // resultado = commitEndidad(ext);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -236,13 +237,13 @@ public class GenericaDao  implements IGenerica{
 		int iPeriodoId = 0;
 		EntityTransaction ext;
 		try {
-			ext = entityTransaction();
+			/*ext = entityTransaction();
 			ext.begin();
-
+*/
 			q = em.createNativeQuery("{ CALL SP_PERIODO_ACTUAL() }");
 			// q.executeUpdate();// SOBRA, el getSingleResult lo hace por el
 			iPeriodoId = (Integer) q.getSingleResult();
-			resultado = commitEndidad(ext);
+			//resultado = commitEndidad(ext);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			limpiarInstancia();

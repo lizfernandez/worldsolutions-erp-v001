@@ -16,7 +16,7 @@ public class UnidadMedidaDao extends GenericaDao implements IUnidadMedidaDao {
 
 		Query q = getInstancia().createQuery("select u from Unidadmedida u order by u.vUnidadMedidaDescripcion asc");
 		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
-		@SuppressWarnings("unchecked")
+		
 		List<Unidadmedida> listaUnidadMedida = q.getResultList();
 
 		return listaUnidadMedida;
