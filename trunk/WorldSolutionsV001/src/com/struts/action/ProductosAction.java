@@ -33,7 +33,6 @@ import com.dao.VentaDao;
 import com.entities.Almacen;
 import com.entities.Categoria;
 import com.entities.Clasificacioncategoria;
-import com.entities.Cliente;
 import com.entities.Cuenta;
 import com.entities.Distalmacen;
 import com.entities.Distalmacendetalle;
@@ -53,8 +52,6 @@ import com.entities.Subcategoria;
 import com.entities.Sucursal;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
-import com.entities.Venta;
-import com.entities.Ventadetalle;
 import com.google.gson.Gson;
 import com.struts.form.ProductosForm;
 import com.util.Constantes;
@@ -557,6 +554,13 @@ public class ProductosAction extends BaseAction {
 			
 			listaSubCategoria = categoriaDao.listaSubcategoria(productoForm.getProducto().getCategoria().getiCategoriaId());
 			
+			for(Almacen alm:listalmAlmacen){
+				Productoalmacen prodAlm = new Productoalmacen();
+				prodAlm.setAlmacen(alm);
+				listaProduAlma.add(prodAlm);
+				productoForm.setProducAlmacen(listaProduAlma);
+				
+			}
 			
 			if(pro.getPreciosproductodetallles()!=null){
 				if(pro.getPreciosproductodetallles().size()>0){
@@ -599,9 +603,6 @@ public class ProductosAction extends BaseAction {
 		productoForm.setProducAlmacen(listaProduAlma);
 		//pro.setProductoAlmacendetallles(listaProduAlma);
 		sesion.setAttribute("listaPrecioProducto",listaPrecio);
-		
-		
-			
 			
 		}
 		/**LLamamos al formulario buscarMantenimientoProducto.jsp para realizar la busqueda **/
@@ -643,44 +644,6 @@ public class ProductosAction extends BaseAction {
 		sesion.setAttribute("listaProductoAlmacen",listaProduAlma);
 
 		return mapping.findForward(msn);
-	}
-	
-	public ActionForward cargarFoto(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-
-		ProductosForm pForm = (ProductosForm) form;
-		Producto pro = pForm.getProducto();
-		
-		/*** Instanciamos transacion ***/
-		
-		/**Cargamos Foto **/
-		if (pForm.getFoto() != null) {
-			FormFile fichero = pForm.getFoto();
-			String nombre = fichero.getFileName();
-			int tamanho = fichero.getFileSize();
-			@SuppressWarnings("deprecation")
-			String filePath = request.getRealPath("/").toString();
-
-			if ((tamanho > 0) && (!nombre.equals(""))) {
-				pro.setvFoto(pro.getcProductoCodigo() + ".jpg");
-				if (!nombre.equals("")) {
-
-					File ficheroACrear = new File(filePath + File.separator + "media" + File.separator + "fotos" + File.separator + pro.getvFoto());
-					
-					if (!ficheroACrear.exists()) {
-						ficheroACrear.createNewFile();
-						FileOutputStream fileOutStream = new FileOutputStream(ficheroACrear);
-						fileOutStream.write(fichero.getFileData());
-						fileOutStream.flush();
-						fileOutStream.close();
-
-					}
-
-				}
-			}
-		}
-		
-		return null;
 	}
 	
 	/**
