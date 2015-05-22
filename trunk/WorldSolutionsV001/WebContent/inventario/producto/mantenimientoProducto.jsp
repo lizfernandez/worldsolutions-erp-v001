@@ -105,7 +105,7 @@
       <span id="m_vProductoNombre" class="importante">*</span>
     </td>
     <td colspan="2"> 
-      <html:file property="foto" styleId="foto" style="width:273px"></html:file>
+      <html:file property="foto" styleId="foto" style="width:273px" />
       
     </td>
 </tr>
@@ -119,21 +119,21 @@
 		<tr>
 		    <td align="right" width="20%">UM Base:</td>
 		    <td width="20%">
-		    <html:text property="iUMBase" styleId="iUMBase" maxlength="7"  styleClass="text textNumero" tabindex="5" onkeypress="return Numeros(event)"/> 
+		    <html:text property="iUMBase" styleId="iUMBase" maxlength="7"  styleClass="text textNumero" tabindex="5" onkeypress="return Numeros(event)" onchange="calcularStockTotal()"/> 
 		     <span id="m_iUMBase" class="importante">*</span>   
 		    </td>
 		    <td colspan="2">
-		      <html:select  property="iUMBaseId" styleId="iUMBaseId" styleClass="comboCodigo" tabindex="6" style="width:140px" >
+		      <html:select  property="iUMBaseId" styleId="iUMBaseId" styleClass="comboCodigo" tabindex="6" style="width:140px" onchange="calcularStockTotal()">
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select> 
 		    </td>
 		</tr>
 		<tr>
 		     <td align="right">UM Pedido:</td>
-		    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="textN textNumero"  tabindex="7" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+		    <td><html:text property="iUMPedido" styleId="iUMPedido" maxlength="7"  styleClass="textN textNumero"  tabindex="7" onkeypress="return Numeros(event)" onchange="calcularStockTotal()"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
 		    </td>
 		    <td colspan="2">  
-		       <html:select  property="iUMPedidoId" styleId="iUMPedidoId" styleClass="comboCodigo" tabindex="8" style="width:140px">
+		       <html:select  property="iUMPedidoId" styleId="iUMPedidoId" styleClass="comboCodigo" tabindex="8" style="width:140px" onchange="calcularStockTotal()">
 		          <option value="0">::SELECCIONE::</option> 
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select>  
@@ -141,10 +141,10 @@
 		</tr>
 		<tr>
 		     <td align="right">UM Salida:</td>
-		    <td><html:text property="vUMSalida" styleId="vUMSalida" maxlength="7"  styleClass="textN textNumero"  tabindex="9" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+		    <td><html:text property="iUMSalida" styleId="iUMSalida" maxlength="7" styleClass="textN textNumero"  tabindex="9" onkeypress="return Numeros(event)" onchange="calcularStockTotal()"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
 		    </td>
 		    <td colspan="2">  
-		       <html:select  property="iUMSalidaId" styleId="iUMSalidaId" styleClass="comboCodigo" tabindex="10" style="width:140px">
+		       <html:select property="iUMSalidaId" styleId="iUMSalidaId" styleClass="comboCodigo" tabindex="10" style="width:140px" onchange="calcularStockTotal()">
 		          <option value="0">::SELECCIONE::</option> 
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select>  
@@ -156,8 +156,7 @@
 		     <span id="m_iUnidadMedidadId" class="importante">*</span> 
 		    </td>
 		    <td colspan="2">  
-		       <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="text comboCodigo unidadFinal" tabindex="12" style="width:140px" >
-		         
+		       <html:select property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="text comboCodigo unidadFinal" tabindex="12" style="width:140px" >
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>		          
 		     </html:select>  
 		      
@@ -170,7 +169,7 @@
 			    <span id="m_fProductoPrecioCompra" class="importante">*</span>
 			</td>
 		      <td colspan="2">
-			     <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo" tabindex="14" style="width:140px">
+			     <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" tabindex="14" style="width:140px">
 			          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
 			     </html:select> 
 			     
@@ -206,11 +205,11 @@
 		      <span id="m_fProductoPrecioVenta" class="importante">*</span>
 		    </td>
 		    <td colspan="2">
-		    <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
+		 	   <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
 			          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
 			     </html:select>
 			     
-		      </td>
+		     </td>
 		</tr>
 		<tr>
 		    <td align="right">% Descuento:</td>
@@ -232,79 +231,47 @@
 		
 	 </table> 
 	 <table class="tabla" id="tabla3" style="display: none">
-	      
-          <thead>
-          <logic:empty name="productosForm" property="producAlmacen">
-				<tr>
-					<td colspan="12">No hay informaci&oacute;n del Precio producto</td>
-				</tr>
-			</logic:empty>
-			<logic:notEmpty name="productosForm" property="producAlmacen">		
-			   
-	        <logic:iterate name="productosForm" property="producAlmacen" id="x" indexId="i">
-		       <tr id="tr_01">
-			<td align="right" width="20%">Sucursal:</td>
-			<td colspan="4"><bean:write name="x" property="almacen.sucursal.vSucursalNombre"/></td>
-			<td align="right" width="20%">Almacen:</td>
-			<td  colspan="9"><bean:write name="x" property="almacen.vAlmacenNombre"/>
-			<input type="hidden" id="iAlmacenId${i}" value="<bean:write name="x" property="almacen.iAlmacenId"/>">
-			<input type="hidden" id="iProductoAlmacenId${i}" value="<bean:write name="x" property="iProductoAlamcenId"/>">
-			</td>
-			</tr>
-			<tr>
-		    <td align="right" width="20%">UM Base:</td>
-		    <td width="20%">
-		    <input type="text" id="iUMBaseAlm${i}" maxlength="7"  value="<bean:write name="x" property="iUMBaseAlm"/>"
-		    styleClass="text textNumero" onkeypress="return Numeros(event)" size="10" onblur="fn_totalProducto(${i})"/> 
-		    <span id="m_iUMBase" class="importante">*</span>  
-		    </td>
-		    <td colspan="2">
-		      <html:select  property="iUMBaseAlmId" styleId="iUMBaseAlmId" styleClass="comboCodigo iUMBaseAlmId" tabindex="6" style="width:140px" >
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select> 
-		    </td>
-		 
-		     <!-- td align="right">UM Pedido:</td>
-		    <td><input type="text" name="iUMPedidox" maxlength="7"  styleClass="textN textNumero iUMPedidox"  onkeypress="return Numeros(event)" size="10"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-		    <!-- /td>
-		    <td colspan="2">  
-		       <html:select  property="iUMPedidoId" styleId="iUMPedidoIdx" styleClass="comboCodigo iUMPedidoIdx"  style="width:140px">
-		          <option value="0">::SELECCIONE::</option> 
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select>  
-		    </td>
-		
-		     <td align="right">UM Salida:</td>
-		    <td><input type="text" name="vUMSalidax" maxlength="7"  styleClass="textN textNumero vUMSalidax"  onkeypress="return Numeros(event)" size="10"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-		    <!-- /td>
-		    <td colspan="2">  
-		       <html:select  property="iUMSalidaId" styleId="iUMSalidaIdx" styleClass="comboCodigo iUMSalidaIdx" style="width:140px">
-		          <option value="0">::SELECCIONE::</option> 
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select>  
-		    </td-->
-	
-		     <td align="right">Stock Total:</td>
-		    <td><input type="text" id="iProductoAlmStockTotal${i}" maxlength="7"  styleClass="textN textNumero" value="<bean:write name="x" property="iProductoAlmStockTotal"/>"  onkeypress="return Numeros(event)" size="10"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-		    </td>
-		    <td colspan="2">  
-		       <html:select  property="iUnidadMedidaAlmId" styleId="iUnidadMedidaAlmId" styleClass="comboCodigo unidadFinal"  style="width:140px" >
-		          <option value="0">::SELECCIONE::</option> 
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select>  
-		    </td>
-		    
-			 
-			 
-	</tr>
-	</logic:iterate>
-			
-			 </logic:notEmpty>
-			 
-				  
-				
-		  
-	 </table>
+
+				<thead>
+					<logic:empty name="productosForm" property="producAlmacen">
+						<tr>
+							<td colspan="12">No hay informaci&oacute;n de los Almacenes</td>
+						</tr>
+					</logic:empty>
+					<logic:notEmpty name="productosForm" property="producAlmacen">
+
+						<logic:iterate name="productosForm" property="producAlmacen" id="x" indexId="i">
+							<tr id="tr_01">
+								<td align="right" width="20%">Sucursal:</td>
+								<td colspan="4"><bean:write name="x" property="almacen.sucursal.vSucursalNombre" /></td>
+								<td align="right" width="20%">Almacen:</td>
+								<td colspan="9"><bean:write name="x" property="almacen.vAlmacenNombre" /> <input type="hidden" id="iAlmacenId${i}" value="<bean:write name="x" property="almacen.iAlmacenId"/>">
+									<input type="hidden" id="iProductoAlmacenId${i}" value="<bean:write name="x" property="iProductoAlamcenId"/>">
+								</td>
+							</tr>
+							<tr>
+								<td align="right" width="20%">UM Base:</td>
+								<td width="20%"><input type="text" id="iUMBaseAlm${i}" maxlength="7" 
+										value="<bean:write name="x" property="iUMBaseAlm"/>" styleClass="text textNumero" onkeypress="return Numeros(event)" size="10" onblur="fn_totalProducto(${i})" /> <span id="m_iUMBase" class="importante">*</span></td>
+								<td colspan="2"><html:select property="iUMBaseAlmId" styleId="iUMBaseAlmId" styleClass="comboCodigo iUMBaseAlmId" tabindex="6" style="width:140px">
+										<html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion" />
+									</html:select></td>
+
+								<td align="right">Stock Total:</td>
+								<td><input type="text" id="iProductoAlmStockTotal${i}" maxlength="7" styleClass="textN textNumero" value="<bean:write name="x" property="iProductoAlmStockTotal"/>" 
+										onkeypress="return Numeros(event)" size="10" /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+								</td>
+								<td colspan="2"><html:select property="iUnidadMedidaAlmId" styleId="iUnidadMedidaAlmId" styleClass="comboCodigo unidadFinal" style="width:140px">
+										<option value="0">::SELECCIONE::</option>
+										<html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion" />
+									</html:select>
+								</td>
+
+							</tr>
+						</logic:iterate>
+
+					</logic:notEmpty>
+			</table>
 	 <table class="tabla" id="tabla2" style="display: none">
 	      
           <thead>
@@ -432,35 +399,14 @@
    
     
    $(".comboCodigo.change").attr("disabled",true);
+   
    $("#iMonedaId").change(function () {
     	var mival = $("#iMonedaId option:selected").val();
     	$(".comboCodigo.change option[value="+mival+"]").attr("selected",true); 
    });
-   $("#iUMBaseId").change(function () {
-   	var mival = $("#iUMBaseId option:selected").val();
-   	$(".comboCodigo.unidadFinal option[value="+mival+"]").attr("selected",true);
-   	$(".comboCodigo.iUMBaseAlmId option[value="+mival+"]").attr("selected",true); 
-   	var iUMBase=parseInt(($("#iUMBase").val()==null)?0:$("#iUMBase").val());
-   	$("#iProductoStockTotal").val(iUMBase);
-    });
-   $("#iUMPedidoId").change(function () {
-	   	var mival = $("#iUMPedidoId option:selected").val();
-	   	$(".comboCodigo.unidadFinal option[value="+mival+"]").attr("selected",true); 
-		$(".comboCodigo.iUMPedidoIdx option[value="+mival+"]").attr("selected",true); 
-	   	var iUMBase=parseInt(($("#iUMBase").val()==null)?1:$("#iUMBase").val()) * parseInt(($("#iUMPedido").val()==null)?1:$("#iUMPedido").val());
-	   	$("input[name*='iUMPedido']").val($("#iUMPedido").val());
-	   	
-	   	$("#iProductoStockTotal").val(iUMBase);
-	});
-   $("#iUMSalidaId").change(function () {
-	   	var mival = $("#iUMSalidaId option:selected").val();
-	   	$(".comboCodigo.unidadFinal option[value="+mival+"]").attr("selected",true); 
-	   	$(".comboCodigo.iUMSalidaIdx option[value="+mival+"]").attr("selected",true);
-		var iUMBase=parseFloat(($("#iUMBase").val()==null)?1:$("#iUMBase").val()) * parseFloat(($("#iUMPedido").val()==null)?1:$("#iUMPedido").val())*parseFloat(($("#vUMSalida").val()==null)?1:$("#vUMSalida").val());
-		$("input[name*='vUMSalidax']").val($("#vUMSalida").val());
-		$("#iProductoStockTotal").val(iUMBase);
-   });
-     var mode = document.getElementById('mode').value;	
+   
+   
+    var mode = document.getElementById('mode').value;	
     if(mode=='I') {
         document.getElementById('cProductoCodigo').focus();
         document.getElementById('btnGuardar').textContent="Insertar";
@@ -468,6 +414,7 @@
         $("#popupCabecera").text('INSERTAR DATOS');	
         $("#span2").hide();
         $("#span3").hide();
+    
     } else {
         $(".trCodigo").show();
         document.getElementById('vProductoNombre').focus();
@@ -491,6 +438,42 @@
         	$("#btnGuardar").text('Buscar');
          }
     }
+    
+    function calcularStockTotal() {
+    	var valUnidBase = $("#iUMBaseId option:selected").val();
+    	var valUnidPed = $("#iUMPedidoId option:selected").val();
+    	var valUnidSal = $("#iUMSalidaId option:selected").val();
+    	var cantBase = $("#iUMBase").val();
+    	var cantPedido = $("#iUMPedido").val();
+    	var cantSalida = $("#iUMSalida").val();
+    	
+    	var stockTotal = parseFloat(cantBase==0?1:cantBase) * parseFloat(cantPedido==0?1:cantPedido) * parseFloat(cantSalida==0?1:cantSalida);
+    	
+    	if (valUnidSal > 0) {
+    		$(".comboCodigo.unidadFinal option[value="+valUnidSal+"]").attr("selected",true);
+    		
+    	} else if (valUnidPed > 0) {
+    		$(".comboCodigo.unidadFinal option[value="+valUnidPed+"]").attr("selected",true);
+    		
+    	} else if (valUnidBase > 0) {
+    		$(".comboCodigo.unidadFinal option[value="+valUnidBase+"]").attr("selected",true);
+    		
+    	}
+    	
+    	$("#iProductoStockTotal").val(stockTotal);
+    }
+    
+//     function cargarFoto() {
+//     	var cad = "producto.do?metodo=cargarFoto";
+// 	   	 $.ajax({
+// 	         type: "GET",
+// 	         url: cad,
+// 	         data: "",
+	         
+// 	     });
+	    	
+// 	}
+    
  function listSubCategoria(){
 	 var iCategoriaId = $("#iCategoriaId").val();
 	 var cad = "categoria.do?metodo=cambioCategoria&id="+iCategoriaId;  	
@@ -564,8 +547,8 @@
  }
  function fn_totalProducto(i){
 	 
-	 var iUMBase=parseFloat(($("#iUMBaseAlm"+i).val()=="")?1:$("#iUMBaseAlm"+i).val()) * parseFloat(($("#iUMPedido").val()=="0")?1:$("#iUMPedido").val())*parseFloat(($("#vUMSalida").val()=="0")?1:$("#vUMSalida").val());
-	//alert($("#iUMBaseAlm"+i).val()+" "+$("#iUMPedido").val()+" "+$("#vUMSalida").val());	
+	 var iUMBase=parseFloat(($("#iUMBaseAlm"+i).val()=="")?1:$("#iUMBaseAlm"+i).val()) * parseFloat(($("#iUMPedido").val()=="0")?1:$("#iUMPedido").val())*parseFloat(($("#iUMSalida").val()=="0")?1:$("#iUMSalida").val());
+	//alert($("#iUMBaseAlm"+i).val()+" "+$("#iUMPedido").val()+" "+$("#iUMSalida").val());	
 	 $("#iProductoAlmStockTotal"+i).val(iUMBase);
 	 var iAlmacenId = $("#iAlmacenId"+i).val();
 	 var iProductoId = $("#iProductoId").val();

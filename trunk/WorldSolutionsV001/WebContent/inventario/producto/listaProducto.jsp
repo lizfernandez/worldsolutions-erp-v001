@@ -120,7 +120,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		 </logic:notEqual>
 		 <logic:notEqual name="x" property="umSalida" value="">
 		  de
-		  <bean:write name="x" property="vUMSalida" />  <bean:write name="x" property="umSalida.vUnidadMedidaDescripcion" /> 
+		  <bean:write name="x" property="iUMSalida" />  <bean:write name="x" property="umSalida.vUnidadMedidaDescripcion" /> 
 		 </logic:notEqual>
 		</td>
 		<td><logic:notEqual name="x" property="vFoto" value=""> <img  src="${pageContext.request.contextPath}/media/fotos/<bean:write name="x" property="vFoto" />"  width="23%" height="20%" /></logic:notEqual></td>

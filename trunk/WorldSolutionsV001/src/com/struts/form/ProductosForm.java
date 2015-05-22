@@ -687,16 +687,16 @@ public class ProductosForm extends ActionForm {
 	/**
 	 * @return the vUMSalida
 	 */
-	public int getvUMSalida() {
+	public int getiUMSalida() {
 		return producto.getiUMSalida();
 	}
 
 	/**
 	 * @param vUMSalida the vUMSalida to set
 	 */
-	public void setvUMSalida(int vUMSalida) {
-		if(vUMSalida>0){
-		this.producto.setiUMSalida(vUMSalida);	
+	public void setiUMSalida(int iUMSalida) {
+		if(iUMSalida>0){
+		this.producto.setiUMSalida(iUMSalida);	
 		}
 		
 	}
