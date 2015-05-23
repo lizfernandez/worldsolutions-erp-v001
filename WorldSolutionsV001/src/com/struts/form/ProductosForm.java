@@ -211,7 +211,7 @@ public class ProductosForm extends ActionForm {
 	}
    
 	public void setiCategoriaId(int iCategoriaId) {		
-		this.producto.setCategoria(getProductoDao().findEndidad(getCategoria(), iCategoriaId));
+		this.producto.setCategoria(getProductoDao().findEndidad(Categoria.class, iCategoriaId));
 	}
 
 
@@ -259,8 +259,8 @@ public class ProductosForm extends ActionForm {
 				
 	}
 	public void setiMonedaId(int iMonedaId) {		
-		this.producto.setMoneda(getProductoDao().findEndidad(new Moneda(), iMonedaId));
-		this.ordenCompra.setMoneda(getProductoDao().findEndidad(new Moneda(), iMonedaId));
+		this.producto.setMoneda(getProductoDao().findEndidad(Moneda.class, iMonedaId));
+		this.ordenCompra.setMoneda(getProductoDao().findEndidad(Moneda.class, iMonedaId));
 	}	
 	/**
 	 * @return the sizeIngresoproductodetalles
@@ -354,7 +354,7 @@ public class ProductosForm extends ActionForm {
 	 * @param iSubCategoriaId the iSubCategoriaId to set
 	 */
 	public void setiSubCategoriaId(int iSubCategoriaId) {
-		this.producto.setSubcategoria(getProductoDao().findEndidad(getSubcategoria(),iSubCategoriaId));
+		this.producto.setSubcategoria(getProductoDao().findEndidad(Subcategoria.class,iSubCategoriaId));
 	}
 
 	/**
@@ -581,7 +581,7 @@ public class ProductosForm extends ActionForm {
 	}
 	public void setiUnidadMedidadId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.producto.setUnidadMedida(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));	
+		this.producto.setUnidadMedida(getProductoDao().findEndidad(Unidadmedida.class, iUnidadMedidadId));	
 		}
 		else{
 			this.producto.setUnidadMedida(null);
@@ -622,7 +622,7 @@ public class ProductosForm extends ActionForm {
 	}
 	public void setiUMBaseId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.producto.setUmBase(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));	
+		this.producto.setUmBase(getProductoDao().findEndidad(Unidadmedida.class, iUnidadMedidadId));	
 		}
 		else{
 			this.producto.setUmBase(null);
@@ -667,7 +667,7 @@ public class ProductosForm extends ActionForm {
 	}
 	public void setiUMPedidoId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.producto.setUmPedido(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));	
+		this.producto.setUmPedido(getProductoDao().findEndidad(Unidadmedida.class, iUnidadMedidadId));	
 		}
 		else{
 			this.producto.setUmPedido(null);	
@@ -709,7 +709,7 @@ public class ProductosForm extends ActionForm {
 	}
 	public void setiUMSalidaId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.producto.setUmSalida(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));	
+		this.producto.setUmSalida(getProductoDao().findEndidad(Unidadmedida.class, iUnidadMedidadId));	
 		}
 		else{
 			this.producto.setUmSalida(null);	
@@ -773,7 +773,7 @@ public class ProductosForm extends ActionForm {
 	 * @param iAlmacenId the iAlmacenId to set
 	 */
 	public void setiAlmacenId(int iAlmacenId) {
-		this.productoAlmacen.setAlmacen(getProductoDao().findEndidad(getAlmacen(),iAlmacenId));
+		this.productoAlmacen.setAlmacen(getProductoDao().findEndidad(Almacen.class,iAlmacenId));
 	}
 
 	/**
@@ -807,7 +807,7 @@ public class ProductosForm extends ActionForm {
 	}
 	public void setiUnidadMedidaAlmId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-			this.productoAlmacen.setUnidadMedidaAlm(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));
+			this.productoAlmacen.setUnidadMedidaAlm(getProductoDao().findEndidad(Unidadmedida.class, iUnidadMedidadId));
 		}
 		else{
 			this.productoAlmacen.setUnidadMedidaAlm(null);
@@ -842,7 +842,7 @@ public class ProductosForm extends ActionForm {
 	}
 	public void setiUMBaseAlmId(int iUnidadMedidadId) {
 		if(iUnidadMedidadId>0){
-		this.productoAlmacen.setUnidadBaseAlm(getProductoDao().findEndidad(new Unidadmedida(), iUnidadMedidadId));
+		this.productoAlmacen.setUnidadBaseAlm(getProductoDao().findEndidad(Unidadmedida.class, iUnidadMedidadId));
 		}
 		else{
 			this.productoAlmacen.setUnidadBaseAlm(null);	
@@ -996,7 +996,7 @@ public class ProductosForm extends ActionForm {
 	 * @param almacenEntrada the almacenEntrada to set
 	 */
 	public void setiAlmacenEntradaId(int almacenEntrada) {
-		this.distAlmacen.setAlmacenEntrada(getProductoDao().findEndidad(getAlmacenEntrada(),almacenEntrada)) ;
+		this.distAlmacen.setAlmacenEntrada(getProductoDao().findEndidad(Almacen.class,almacenEntrada)) ;
 	}
 
 	/**
@@ -1025,7 +1025,7 @@ public class ProductosForm extends ActionForm {
 	 * @param almacenEntrada the almacenEntrada to set
 	 */
 	public void setiAlmacenSalidaId(int almacenEntrada) {
-		this.distAlmacen.setAlmacenSalida(getProductoDao().findEndidad(getAlmacenSalida(),almacenEntrada)) ;
+		this.distAlmacen.setAlmacenSalida(getProductoDao().findEndidad(Almacen.class,almacenEntrada)) ;
 	}
 	
 	/**
@@ -1052,7 +1052,7 @@ public class ProductosForm extends ActionForm {
 	 * @param iUsuarioInsertaId the iUsuarioInsertaId to set
 	 */
 	public void setiUsuarioEntregaId(int iUsuarioInsertaId) {
-		this.distAlmacen.setUsuatioEntrega(getProductoDao().findEndidad(getUsuatioEntrega(),iUsuarioInsertaId));
+		this.distAlmacen.setUsuatioEntrega(getProductoDao().findEndidad(Usuario.class,iUsuarioInsertaId));
 	}
 
 	/**
@@ -1076,7 +1076,7 @@ public class ProductosForm extends ActionForm {
 	 * @param iUsuarioInsertaId the iUsuarioInsertaId to set
 	 */
 	public void setiUsuarioRecepcionId(int iUsuarioInsertaId) {
-		this.distAlmacen.setUsuarioRecepcion(getProductoDao().findEndidad(getUsuarioRecepcion(),iUsuarioInsertaId));
+		this.distAlmacen.setUsuarioRecepcion(getProductoDao().findEndidad(Usuario.class,iUsuarioInsertaId));
 	}
 
 	/**
@@ -1291,7 +1291,7 @@ public class ProductosForm extends ActionForm {
 	 * @param almacenEntrada the almacenEntrada to set
 	 */
 	public void setiProveedorId(int iProveedorId) {
-		this.ordenCompra.setProveedor(getProductoDao().findEndidad(getProveedor(),iProveedorId)) ;
+		this.ordenCompra.setProveedor(getProductoDao().findEndidad(Proveedor.class,iProveedorId)) ;
 	}
 	
 
@@ -1318,7 +1318,7 @@ public class ProductosForm extends ActionForm {
 	 * @param almacenEntrada the almacenEntrada to set
 	 */
 	public void setiSucursalOrdenId(int iProveedorId) {
-		this.ordenCompra.setSucursal(getProductoDao().findEndidad(getSucursal(),iProveedorId)) ;
+		this.ordenCompra.setSucursal(getProductoDao().findEndidad(Sucursal.class,iProveedorId)) ;
 	}
 
 

@@ -2,6 +2,9 @@ package com.entities.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.entities.Estadocuentacliente;
+
 import java.util.Date;
 
 
@@ -45,6 +48,19 @@ public class EstadocuentaclienteVo implements Serializable {
 	}
 
 */
+
+	public EstadocuentaclienteVo(Estadocuentacliente estadocuentacliente) {
+		this.iEstadoCuentaCliente = estadocuentacliente.getiEstadoCuentaCliente();
+		this.cEstadoCodigo = estadocuentacliente.getcEstadoCodigo();
+		this.dFechaInserta = estadocuentacliente.getdFechaInserta();
+		this.dFechaPago = estadocuentacliente.getdFechaPago();
+		this.fMontoPago = estadocuentacliente.getfMontoPago();
+		this.iUsuarioInsertaId = estadocuentacliente.getiUsuarioInsertaId();
+		this.venta = new VentaVo(estadocuentacliente.getVenta());
+		this.cliente = new ClienteVo(estadocuentacliente.getCliente());
+	
+	}
+
 
 	/**
 	 * @return the iEstadoCuentaCliente

@@ -10,16 +10,17 @@ import java.util.List;
 import org.apache.struts.action.ActionForm;
 
 import com.dao.VentaDao;
-import com.entities.Formapago;
-
-import com.entities.Mediopago;
-import com.entities.Venta;
-import com.entities.Ventadetalle;
-
 import com.entities.Cliente;
-
+import com.entities.Formapago;
+import com.entities.Mediopago;
 import com.entities.Tipodocumentogestion;
 import com.entities.Ventadevolucion;
+import com.entities.vo.ClienteVo;
+import com.entities.vo.FormapagoVo;
+import com.entities.vo.MediopagoVo;
+import com.entities.vo.TipodocumentogestionVo;
+import com.entities.vo.VentaVo;
+import com.entities.vo.VentadetalleVo;
 import com.util.Fechas;
 
 
@@ -30,7 +31,7 @@ public class VentaForm extends  ActionForm {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List lista;	
-	Venta venta = new Venta();
+	VentaVo venta = new VentaVo();
 	Ventadevolucion ventaDev = new Ventadevolucion();
     private String mode;
     private String metodo;
@@ -81,13 +82,13 @@ public class VentaForm extends  ActionForm {
 	/**
 	 * @return the venta
 	 */
-	public Venta getVenta() {
+	public VentaVo getVenta() {
 		return venta;
 	}
 	/**
 	 * @param venta the venta to set
 	 */
-	public void setVenta(Venta venta) {
+	public void setVenta(VentaVo venta) {
 		this.venta = venta;
 	}
 	/**
@@ -278,7 +279,7 @@ public class VentaForm extends  ActionForm {
 	 * @param iClienteId the iClienteId to set
 	 */
 	public void setiClienteId(int iClienteId) {
-		this.venta.setCliente(ventaDao().findEndidad(getCliente(), iClienteId));
+		this.venta.setCliente(new ClienteVo(ventaDao().findEndidad(Cliente.class, iClienteId)));
 		
 	}
 	
@@ -286,11 +287,11 @@ public class VentaForm extends  ActionForm {
 	/**
 	 * @return the cliente
 	 */
-	public Cliente getCliente() {
-		Cliente cliente = venta.getCliente();
-		if(cliente==null){
-			cliente = new Cliente();
-			venta.setCliente(cliente);			
+	public ClienteVo getCliente() {
+		ClienteVo vo = venta.getCliente();
+		if (vo == null) {
+			vo = new ClienteVo();
+			venta.setCliente(vo);
 		}
 		return venta.getCliente();
 	}
@@ -298,7 +299,7 @@ public class VentaForm extends  ActionForm {
 	/**
 	 * @param cliente the cliente to set
 	 */
-	public void setCliente(Cliente cliente) {
+	public void setCliente(ClienteVo cliente) {
 		this.venta.setCliente(cliente);
 	}
 	
@@ -307,14 +308,14 @@ public class VentaForm extends  ActionForm {
 	 * @return the cClienteCodigo
 	 */
 	public String getvClienteCodigo() {
-				return  getCliente().getvClienteCodigo();
+		return  getCliente().getvClienteCodigo();
 	}
 
 	/**
 	 * @param cClienteCodigo the cClienteCodigo to set
 	 */
 	public void setvClienteCodigo(String vClienteCodigo) {
-		Cliente cliente =getCliente();
+		ClienteVo cliente =getCliente();
 		cliente.setvClienteCodigo(vClienteCodigo);
 		this.venta.setCliente(cliente);
 	}
@@ -330,7 +331,7 @@ public class VentaForm extends  ActionForm {
 	 * @param nClienteNumeroDocumento the nClienteNumeroDocumento to set
 	 */
 	public void setnClienteNumeroDocumento(BigDecimal nClienteNumeroDocumento) {
-		Cliente cliente = getCliente();		
+		ClienteVo cliente = getCliente();		
 		cliente.setnClienteNumeroDocumento(nClienteNumeroDocumento);
 		this.venta.setCliente(cliente);
 	}
@@ -360,7 +361,7 @@ public class VentaForm extends  ActionForm {
 	 * @param vClienteRazonSocial the vClienteRazonSocial to set
 	 */
 	public void setvClienteRazonSocial(String vClienteRazonSocial) {
-		Cliente cliente = getCliente();		
+		ClienteVo cliente = getCliente();		
 		cliente.setvClienteRazonSocial(vClienteRazonSocial);
 		this.venta.setCliente(cliente);
 	}
@@ -397,20 +398,20 @@ public class VentaForm extends  ActionForm {
 	 * @param tipodocumento the tipodocumento to set
 	 */
 	public void setiTipoDocumentoId(int iTipoDocumentoGestionId) {			
-		this.venta.setTipoDocumento(ventaDao().findEndidad(getTipoDocumento(), iTipoDocumentoGestionId));
+		this.venta.setTipoDocumento(new TipodocumentogestionVo(ventaDao().findEndidad(Tipodocumentogestion.class, iTipoDocumentoGestionId)));
 	}
 
 	/**
 	 * @return the ingresoproductodetalles
 	 */
-	public List<Ventadetalle> getVentadetalles() {
+	public List<VentadetalleVo> getVentadetalles() {
 		return venta.getVentadetalles();
 	}
 
 	/**
 	 * @param ingresoproductodetalles the ingresoproductodetalles to set
 	 */
-	public void setVentadetalles(List<Ventadetalle> ingresoproductodetalles) {
+	public void setVentadetalles(List<VentadetalleVo> ingresoproductodetalles) {
 		this.venta.setVentadetalles(ingresoproductodetalles);
 	}
 	/**
@@ -438,17 +439,17 @@ public class VentaForm extends  ActionForm {
 	 * @param iFormaPagoId the iFormaPagoId to set
 	 */
 	public void setiFormaPago(int iFormaPagoId) {	
-		this.venta.setFormaPago(ventaDao().findEndidad(getFormaPago(), iFormaPagoId));
+		this.venta.setFormaPago(new FormapagoVo(ventaDao().findEndidad(Formapago.class, iFormaPagoId)));
 	}
 	
 
 	/**
 	 * @return the formaPago
 	 */
-	public Formapago getFormaPago(){
-		Formapago formaPago = venta.getFormaPago();
+	public FormapagoVo getFormaPago(){
+		FormapagoVo formaPago = venta.getFormaPago();
 		if(formaPago==null){
-			formaPago= new Formapago();
+			formaPago= new FormapagoVo();
 			venta.setFormaPago(formaPago);
 		}
 		return venta.getFormaPago();
@@ -456,18 +457,18 @@ public class VentaForm extends  ActionForm {
 	/**
 	 * @param formaPago the formaPago to set
 	 */
-	public void setFormaPago(Formapago formaPago) {
+	public void setFormaPago(FormapagoVo formaPago) {
 		this.venta.setFormaPago(formaPago);
 	}
 
 	/**
 	 * @return the tipoDocumento
 	 */
-	public Tipodocumentogestion getTipoDocumento() {
-		Tipodocumentogestion Tipodocumentogestion = venta.getTipoDocumento();
-		if(Tipodocumentogestion==null){
-			Tipodocumentogestion = new Tipodocumentogestion();
-			venta.setTipoDocumento(Tipodocumentogestion);
+	public TipodocumentogestionVo getTipoDocumento() {
+		TipodocumentogestionVo tipodocumentogestion = venta.getTipoDocumento();
+		if(tipodocumentogestion ==null){
+			tipodocumentogestion = new TipodocumentogestionVo();
+			venta.setTipoDocumento(tipodocumentogestion);
 		} 
 		return venta.getTipoDocumento();
 	}
@@ -475,7 +476,7 @@ public class VentaForm extends  ActionForm {
 	/**
 	 * @param tipoDocumento the tipoDocumento to set
 	 */
-	public void setTipoDocumento(Tipodocumentogestion tipoDocumento) {
+	public void setTipoDocumento(TipodocumentogestionVo tipoDocumento) {
 		this.venta.setTipoDocumento(tipoDocumento);
 	}
 	
@@ -965,10 +966,10 @@ public class VentaForm extends  ActionForm {
 	/**
 	 * @return the medioPago1
 	 */
-	public Mediopago getMedioPago1() {
-		Mediopago formaPago = getVenta().getMedioPago1();
+	public MediopagoVo getMedioPago1() {
+		MediopagoVo formaPago = getVenta().getMedioPago1();
 		if(formaPago==null){
-			formaPago= new Mediopago();
+			formaPago= new MediopagoVo();
 			venta.setMedioPago1(formaPago);
 		}
 		return venta.getMedioPago1();
@@ -984,7 +985,7 @@ public class VentaForm extends  ActionForm {
 	 * @param iFormaPagoId the iFormaPagoId to set
 	 */
 	public void setiMedioPagoId1(int iFormaPagoId) {	
-		this.venta.setMedioPago1(ventaDao().findEndidad(getMedioPago1(), iFormaPagoId));
+		this.venta.setMedioPago1(new MediopagoVo(ventaDao().findEndidad(Mediopago.class, iFormaPagoId)));
 	}
 	
 
@@ -993,10 +994,10 @@ public class VentaForm extends  ActionForm {
 	/**
 	 * @return the medioPago1
 	 */
-	public Mediopago getMedioPago2() {
-		Mediopago formaPago = getVenta().getMedioPago2();
+	public MediopagoVo getMedioPago2() {
+		MediopagoVo formaPago = getVenta().getMedioPago2();
 		if(formaPago==null){
-			formaPago= new Mediopago();
+			formaPago= new MediopagoVo();
 			venta.setMedioPago2(formaPago);
 		}
 		return venta.getMedioPago2();
@@ -1012,7 +1013,7 @@ public class VentaForm extends  ActionForm {
 	 * @param iFormaPagoId the iFormaPagoId to set
 	 */
 	public void setiMedioPagoId2(int iFormaPagoId) {	
-		this.venta.setMedioPago2(ventaDao().findEndidad(getMedioPago2(), iFormaPagoId));
+		this.venta.setMedioPago2(new MediopagoVo( ventaDao().findEndidad(Mediopago.class, iFormaPagoId)));
 	}
 	
 

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import com.entities.Periodo;
 public interface IGenerica {
 	
 	public EntityManager getInstancia();
@@ -14,8 +13,11 @@ public interface IGenerica {
 	public <G> List<G> listaEntidadGenerica(G entidad);
 	public <G> List<G> listaEntidadGenericaSinCodigo(String entidad);
 	public <G> List<G> listaEntidadPaginada(String sentencia, int pagInicio, int pagFin);
-	public <E> E findEndidad(E entidad, int iEntidadId);
-	public <E> E findEndidadBD(E entidad, String siEntidadId , int iEntidadId);
+//	public <E> E findEndidad(E entidad, int iEntidadId);
+//	public <E> E findEndidadBD(E entidad, String siEntidadId , int iEntidadId);
+	public <E> E findEndidad(Class<E> entidad, int iEntidadId);
+	public <E> E findEndidadBD(Class<E> entidad, String siEntidadId , int iEntidadId);
+	
 	public <E> void persistEndidad(E entidad);
 	public <E> boolean insertarUnaEndidad(E entidad);
 	public <E> boolean actualizarUnaEndidad(E entidad);

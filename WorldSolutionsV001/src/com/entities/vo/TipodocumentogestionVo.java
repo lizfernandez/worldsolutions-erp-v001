@@ -2,6 +2,8 @@ package com.entities.vo;
 
 import java.io.Serializable;
 
+import com.entities.Tipodocumentogestion;
+
 public class TipodocumentogestionVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -11,11 +13,12 @@ public class TipodocumentogestionVo implements Serializable {
 	
     public TipodocumentogestionVo() {
     }
-    public TipodocumentogestionVo(int iTipoDocumentoId, String vTipoDocuumentoDescripcion) {
-		super();
-		this.iTipoDocumentoGestionId = iTipoDocumentoId;
-		this.vTipoDocumentoDescripcion = vTipoDocuumentoDescripcion;
+    
+    public TipodocumentogestionVo(Tipodocumentogestion tipoDocumento) {
+		this.iTipoDocumentoGestionId = tipoDocumento.getiTipoDocumentoGestionId();
+		this.vTipoDocumentoDescripcion = tipoDocumento.getvTipoDocumentoDescripcion();
 	}
+
 	/**
 	 * @return the iTipoDocumentoGestionId
 	 */

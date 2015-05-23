@@ -81,24 +81,47 @@ public class GenericaDao  implements IGenerica{
 	}
 
 
+//	@Override
+//	public <E> E findEndidad(E entidad, int iEntidadId) {
+//		HashMap findProperties = new HashMap();
+//		findProperties.put(QueryHints.CACHE_RETRIEVE_MODE, CacheRetrieveMode.BYPASS);
+//		findProperties.put(QueryHints.CACHE_STORE_MODE, CacheStoreMode.USE);
+//		@SuppressWarnings("unchecked")
+//		E objeto = (E) getInstancia().find(entidad.getClass(), iEntidadId,findProperties);		
+//		return objeto;
+//	}
+	
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public <E> E findEndidad(E entidad, int iEntidadId) {
+	public <E> E findEndidad(Class<E> entidad, int iEntidadId) {
 		HashMap findProperties = new HashMap();
 		findProperties.put(QueryHints.CACHE_RETRIEVE_MODE, CacheRetrieveMode.BYPASS);
 		findProperties.put(QueryHints.CACHE_STORE_MODE, CacheStoreMode.USE);
-		@SuppressWarnings("unchecked")
-		E objeto = (E) getInstancia().find(entidad.getClass(), iEntidadId,findProperties);		
+		E objeto = (E) getInstancia().find(entidad, iEntidadId,findProperties);		
 		return objeto;
 	}
+	
+//	@Override
+//	public <E> E findEndidadBD(E entidad, String siEntidadId , int iEntidadId) {
+//
+//		Query q = getInstancia().createQuery("select p from " + entidad.getClass().getSimpleName() + "  p" + " where p."+siEntidadId+" = :iEntidadId");
+//		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+//		@SuppressWarnings("unchecked")
+//		E objeto = (E)q.setParameter("iEntidadId", iEntidadId).getSingleResult();
+//		return objeto;
+//	}
+	
 	@Override
-	public <E> E findEndidadBD(E entidad, String siEntidadId , int iEntidadId) {
+	public <E> E findEndidadBD(Class<E> entidad, String siEntidadId , int iEntidadId) {
 
-		Query q = getInstancia().createQuery("select p from " + entidad.getClass().getSimpleName() + "  p" + " where p."+siEntidadId+" = :iEntidadId");
+		Query q = getInstancia().createQuery("select p from " + entidad.getSimpleName() + "  p" + " where p."+siEntidadId+" = :iEntidadId");
 		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		@SuppressWarnings("unchecked")
 		E objeto = (E)q.setParameter("iEntidadId", iEntidadId).getSingleResult();
 		return objeto;
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <G> List<G> listaEntidadPaginada(String sentencia, int pagInicio, int pagFin) {
@@ -209,7 +232,6 @@ public class GenericaDao  implements IGenerica{
 		Query q;
 
 		String codigoGenerado = "";
-		EntityTransaction ext;
 		try {
 			/*ext = entityTransaction();
 			ext.begin();
@@ -223,8 +245,6 @@ public class GenericaDao  implements IGenerica{
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			limpiarInstancia();
-		} finally {
-			ext = null;
 		}
 		return codigoGenerado;
 
@@ -235,7 +255,6 @@ public class GenericaDao  implements IGenerica{
 
 		Query q;
 		int iPeriodoId = 0;
-		EntityTransaction ext;
 		try {
 			/*ext = entityTransaction();
 			ext.begin();
@@ -247,8 +266,6 @@ public class GenericaDao  implements IGenerica{
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			limpiarInstancia();
-		} finally {
-			ext = null;
 		}
 		return iPeriodoId;
 	}

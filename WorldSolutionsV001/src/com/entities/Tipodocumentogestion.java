@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.TipodocumentogestionVo;
+
 
 /**
  * The persistent class for the tipodocumentogestion database table.
@@ -30,6 +32,12 @@ public class Tipodocumentogestion implements Serializable {
 		super();
 		this.iTipoDocumentoGestionId = iTipoDocumentoId;
 		this.vTipoDocumentoDescripcion = vTipoDocuumentoDescripcion;
+	}
+	public Tipodocumentogestion(TipodocumentogestionVo tipoDocumento) {
+		
+		this.iTipoDocumentoGestionId = tipoDocumento.getiTipoDocumentoGestionId();
+		this.cTipoDocumentoGestionCodigo = tipoDocumento.getcTipoDocumentoGestionCodigo();
+		this.vTipoDocumentoDescripcion = tipoDocumento.getvTipoDocumentoDescripcion();
 	}
 	/**
 	 * @return the iTipoDocumentoGestionId

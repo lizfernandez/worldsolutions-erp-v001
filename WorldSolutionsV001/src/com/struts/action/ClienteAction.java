@@ -203,7 +203,7 @@ public class ClienteAction extends BaseAction {
 			int iClasificacion = Integer.parseInt(request.getParameter("iClasificacion"));
 			
 			GenericaDao genericoDao = new GenericaDao();
-			clasificacion = genericoDao.findEndidad(clasificacion, iClasificacion);
+			clasificacion = genericoDao.findEndidad(Clasificacioncliente.class, iClasificacion);
 			
 			
 			Gson gson = new Gson();			
@@ -285,7 +285,7 @@ public class ClienteAction extends BaseAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				Cliente cliente = clienteDao.findEndidad(clienteform.getCliente(),id);
+				Cliente cliente = clienteDao.findEndidad(Cliente.class,id);
 				clienteform.setCliente(cliente);
 				
 				for(Direccioncliente direccion:cliente.getDireccionclientes()){
@@ -414,7 +414,7 @@ public class ClienteAction extends BaseAction {
 				transaction = clienteDao.entityTransaction();
 				transaction.begin();
 	
-				obj = clienteDao.findEndidad(pForm.getCliente(), pForm.getCliente().getiClienteId());
+				obj = clienteDao.findEndidad(Cliente.class, pForm.getCliente().getiClienteId());
 				List<Direccioncliente> listaDireccion = obj.getDireccionclientes();
 	
 				obj = Util.comparar(obj, pForm.getCliente());
@@ -620,7 +620,7 @@ public class ClienteAction extends BaseAction {
 		else if(mode.equals("U") || mode.equals("D")){
 			
 			int id = Integer.parseInt(request.getParameter("id"));
-			clienteform.setClasifCliente((Clasificacioncliente) genericaDao.findEndidad(clienteform.getClasifCliente(), id));
+			clienteform.setClasifCliente((Clasificacioncliente) genericaDao.findEndidad(Clasificacioncliente.class, id));
 			msn ="showEditClasifCliente";
 			
 		}

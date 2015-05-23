@@ -3,6 +3,11 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.AreaVo;
+import com.entities.vo.OcupacionVo;
+import com.entities.vo.PersonalVo;
+import com.entities.vo.TipodocumentoVo;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -83,6 +88,26 @@ public class Personal implements Serializable {
 
     public Personal() {
     }
+
+	public Personal(PersonalVo personal) {
+		this.iPersonalId = personal.getiPersonalId();
+		this.cEstadoCodigo = personal.getcEstadoCodigo();
+		this.cPersonalCodigo = personal.getcPersonalCodigo();
+		this.dFechaAcualiza = personal.getdFechaAcualiza();
+		this.dFechaInserta = personal.getdFechaInserta();
+		this.iUsuarioActualizaId = personal.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = personal.getiUsuarioInsertaId();
+		this.nPersonalNumeroDocumento = personal.getnPersonalNumeroDocumento();
+		this.vPersonalApellidoMaterno = personal.getvPersonalApellidoMaterno();
+		this.vPersonalApellidoPaterno = personal.getvPersonalApellidoPaterno();
+		this.vPersonalNombres = personal.getvPersonalNombres();
+		this.area = new Area(personal.getArea());
+		this.ocupacion = new Ocupacion(personal.getOcupacion());
+		this.fSueldo = personal.getfSueldo();
+		this.iSexoId = personal.getiSexoId();
+		this.tipodocumento = new Tipodocumento(personal.getTipodocumento());
+	}
+	
 
 	/**
 	 * @return the iPersonalId

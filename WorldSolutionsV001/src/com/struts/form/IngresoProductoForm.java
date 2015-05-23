@@ -292,7 +292,7 @@ public class IngresoProductoForm extends ActionForm {
 	 * @param iFormaPagoId the iFormaPagoId to set
 	 */
 	public void setiFormaPago(int iFormaPagoId) {	
-		this.ingresoProducto.setFormaPago(ingresoProductoDao().findEndidad(getFormapago(), iFormaPagoId));
+		this.ingresoProducto.setFormaPago(ingresoProductoDao().findEndidad(Formapago.class, iFormaPagoId));
 	}
 	
 
@@ -336,7 +336,7 @@ public class IngresoProductoForm extends ActionForm {
 	 * @param iProveedorId the iProveedorId to set
 	 */
 	public void setiProveedorId(int iProveedorId) {			
-		ingresoProducto.setProveedor(ingresoProductoDao().findEndidad(getProveedor(), iProveedorId));
+		ingresoProducto.setProveedor(ingresoProductoDao().findEndidad(Proveedor.class, iProveedorId));
 	}
 	
 	
@@ -411,7 +411,7 @@ public class IngresoProductoForm extends ActionForm {
 	 * @param tipodocumento the tipodocumento to set
 	 */
 	public void setiTipoDocumentoId(int iTipoDocumentoGestionId) {	
-		this.ingresoProducto.setTipodocumento(ingresoProductoDao().findEndidad(getTipodocumentogestion(), iTipoDocumentoGestionId));
+		this.ingresoProducto.setTipodocumento(ingresoProductoDao().findEndidad(Tipodocumentogestion.class, iTipoDocumentoGestionId));
 	}
 
 	/**

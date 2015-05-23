@@ -1,14 +1,17 @@
 package com.entities.vo;
 
 import java.io.Serializable;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.entities.Venta;
+import com.entities.converter.KardexConverter;
+import com.entities.converter.VentaConverter;
+
 public class VentaVo implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	private int iVentaId;
 	private String cEstadoCodigo;
 	private String cVentaOrdenCompra;
@@ -25,18 +28,15 @@ public class VentaVo implements Serializable {
 	private int iUsuarioInsertaId;
 	private String nVentaNumero;
 	private String nVentaRuc;
-	private String vEstadoVenta;
 	private String vPrincipal;
 	private String vVentaPuntoLlegada;
-	private List<CuotaVo> cuotas;
 	private ClienteVo cliente;
     private FormapagoVo formaPago;
-	private TipodocumentogestionVo  tipoDocumento;
+	private TipodocumentogestionVo tipoDocumento;
 	private UsuarioVo usuario;
+	private SucursalVo sucursal;
 	private List<VentadetalleVo> ventadetalles;
 	private List<KardexVo> kardexs;
-	private List<EstadocuentaclienteVo> estadocuentaclientes;
-	private List<LetraclienteVo> letracliente; 
 	private String vEstadoDocumento;
 	private Date dFechaTraslado;
     private int iNumeroDias;
@@ -44,10 +44,75 @@ public class VentaVo implements Serializable {
 	private Date dFechaProximoPago;
 	private float fMontoAdelantado;	
 	private float fDescuento;
+	private float fMontoPago;
+	private float fTipoCambio;
+	private float fMontoVuelto;
+	private String vTipoPago;
+	private String vTipoVenta;
 	private int iPeriodoId;
-	
-    public VentaVo() {
-    }
+	private float fDescClienteVenta;
+	private String vIncluyeIGV;
+	private String vPorcentajeIGV;
+	private float fMontoPagoCredito;
+	private MediopagoVo medioPago1;
+	private MediopagoVo medioPago2;
+	private String vEstadoVenta;
+
+	public VentaVo(Venta venta) {
+
+		this.iVentaId = venta.getiVentaId();
+		this.cEstadoCodigo = venta.getcEstadoCodigo();
+		this.cVentaOrdenCompra = venta.getcVentaOrdenCompra();
+		this.dFechaActualiza = venta.getdFechaActualiza();
+		this.dFechaInserta = venta.getdFechaInserta();
+		this.dVentaFecha = venta.getdVentaFecha();
+		this.fVentaGanancia = venta.getfVentaGanancia();
+		this.fVentaIGV = venta.getfVentaIGV();
+		this.fVentaSubTotal = venta.getfVentaSubTotal();
+		this.fVentaTotal = venta.getfVentaTotal();
+		this.fVentaTotalReal = venta.getfVentaTotalReal();
+		this.idireccionClienteId = venta.getIdireccionClienteId();
+		this.iUsuarioActualizaId = venta.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = venta.getiUsuarioInsertaId();
+		this.nVentaNumero = venta.getnVentaNumero();
+		this.nVentaRuc = venta.getnVentaRuc();
+		this.vEstadoVenta = venta.getvEstadoVenta();
+		this.vPrincipal = venta.getvPrincipal();
+		this.vVentaPuntoLlegada = venta.getvVentaPuntoLlegada();
+		this.cliente = new ClienteVo(venta.getCliente());
+		this.formaPago = new FormapagoVo(venta.getFormaPago());
+		this.tipoDocumento = new TipodocumentogestionVo(venta.getTipoDocumento());
+		this.usuario = new UsuarioVo(venta.getUsuario());
+		this.sucursal = new SucursalVo(venta.getSucursal());
+		this.ventadetalles = VentaConverter.aListVentadetalleVo(venta.getVentadetalles());
+//		this.kardexs = KardexConverter.aListKardexVo(venta.getKardexs());
+		this.vEstadoDocumento = venta.getvEstadoDocumento();
+		this.dFechaTraslado = venta.getdFechaTraslado();
+		this.iNumeroDias = venta.getiNumeroDias();
+		this.iNumeroLetras = venta.getiNumeroLetras();
+		this.dFechaProximoPago = venta.getdFechaProximoPago();
+		this.fMontoAdelantado = venta.getfMontoAdelantado();
+		this.fDescuento = venta.getfDescuento();
+		this.fMontoPago = venta.getfMontoPago();
+		this.fTipoCambio = venta.getfTipoCambio();
+		this.fMontoVuelto = venta.getfMontoVuelto();
+		this.vTipoPago = venta.getvTipoPago();
+		this.vTipoVenta = venta.getvTipoVenta();
+		this.iPeriodoId = venta.getiPeriodoId();
+		this.fDescClienteVenta = venta.getfDescClienteVenta();
+		this.vIncluyeIGV = venta.getvIncluyeIGV();
+		this.vPorcentajeIGV = venta.getvPorcentajeIGV();
+		this.fMontoPagoCredito = venta.getfMontoPagoCredito();
+		this.medioPago1 = venta.getMedioPago1() != null ? new MediopagoVo(venta.getMedioPago1()):null;
+		this.medioPago2 = venta.getMedioPago1() != null ? new MediopagoVo(venta.getMedioPago2()):null;
+	}
+
+
+
+	public VentaVo() {
+		
+	}
+
 
 	/**
 	 * @return the iVentaId
@@ -302,20 +367,6 @@ public class VentaVo implements Serializable {
 	}
 
 	/**
-	 * @return the cuotas
-	 */
-	public List<CuotaVo> getCuotas() {
-		return cuotas;
-	}
-
-	/**
-	 * @param cuotas the cuotas to set
-	 */
-	public void setCuotas(List<CuotaVo> cuotas) {
-		this.cuotas = cuotas;
-	}
-
-	/**
 	 * @return the cliente
 	 */
 	public ClienteVo getCliente() {
@@ -383,21 +434,6 @@ public class VentaVo implements Serializable {
 	 */
 	public void setVentadetalles(List<VentadetalleVo> ventadetalles) {
 		this.ventadetalles = ventadetalles;
-	}
-
-	/**
-	 * @return the estadocuentaclientes
-	 */
-	public List<EstadocuentaclienteVo> getEstadocuentaclientes() {
-		return estadocuentaclientes;
-	}
-
-	/**
-	 * @param estadocuentaclientes the estadocuentaclientes to set
-	 */
-	public void setEstadocuentaclientes(
-			List<EstadocuentaclienteVo> estadocuentaclientes) {
-		this.estadocuentaclientes = estadocuentaclientes;
 	}
 
 	/**
@@ -540,20 +576,101 @@ public class VentaVo implements Serializable {
 		this.iPeriodoId = iPeriodoId;
 	}
 
-	/**
-	 * @return the letracliente
-	 */
-	public List<LetraclienteVo> getLetracliente() {
-		return letracliente;
+	public SucursalVo getSucursal() {
+		return sucursal;
 	}
 
-	/**
-	 * @param letracliente the letracliente to set
-	 */
-	public void setLetracliente(List<LetraclienteVo> letracliente) {
-		this.letracliente = letracliente;
+	public void setSucursal(SucursalVo sucursal) {
+		this.sucursal = sucursal;
 	}
 
+	public float getfMontoPago() {
+		return fMontoPago;
+	}
+
+	public void setfMontoPago(float fMontoPago) {
+		this.fMontoPago = fMontoPago;
+	}
+
+	public float getfTipoCambio() {
+		return fTipoCambio;
+	}
+
+	public void setfTipoCambio(float fTipoCambio) {
+		this.fTipoCambio = fTipoCambio;
+	}
+
+	public float getfMontoVuelto() {
+		return fMontoVuelto;
+	}
+
+	public void setfMontoVuelto(float fMontoVuelto) {
+		this.fMontoVuelto = fMontoVuelto;
+	}
+
+	public String getvTipoPago() {
+		return vTipoPago;
+	}
+
+	public void setvTipoPago(String vTipoPago) {
+		this.vTipoPago = vTipoPago;
+	}
+
+	public String getvTipoVenta() {
+		return vTipoVenta;
+	}
+
+	public void setvTipoVenta(String vTipoVenta) {
+		this.vTipoVenta = vTipoVenta;
+	}
+
+	public float getfDescClienteVenta() {
+		return fDescClienteVenta;
+	}
+
+	public void setfDescClienteVenta(float fDescClienteVenta) {
+		this.fDescClienteVenta = fDescClienteVenta;
+	}
+
+	public String getvIncluyeIGV() {
+		return vIncluyeIGV;
+	}
+
+	public void setvIncluyeIGV(String vIncluyeIGV) {
+		this.vIncluyeIGV = vIncluyeIGV;
+	}
+
+	public String getvPorcentajeIGV() {
+		return vPorcentajeIGV;
+	}
+
+	public void setvPorcentajeIGV(String vPorcentajeIGV) {
+		this.vPorcentajeIGV = vPorcentajeIGV;
+	}
+
+	public float getfMontoPagoCredito() {
+		return fMontoPagoCredito;
+	}
+
+	public void setfMontoPagoCredito(float fMontoPagoCredito) {
+		this.fMontoPagoCredito = fMontoPagoCredito;
+	}
+
+	public MediopagoVo getMedioPago1() {
+		return medioPago1;
+	}
+
+	public void setMedioPago1(MediopagoVo medioPago1) {
+		this.medioPago1 = medioPago1;
+	}
+
+	public MediopagoVo getMedioPago2() {
+		return medioPago2;
+	}
+
+	public void setMedioPago2(MediopagoVo medioPago2) {
+		this.medioPago2 = medioPago2;
+	}
 	
 	
 }

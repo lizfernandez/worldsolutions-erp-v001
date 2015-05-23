@@ -2,6 +2,8 @@ package com.entities.vo;
 
 import java.io.Serializable;
 
+import com.entities.Formapago;
+
 /**
  * The persistent class for the formapago database table.
  * 
@@ -14,6 +16,12 @@ public class FormapagoVo implements Serializable {
 
     public FormapagoVo() {
     }
+
+	public FormapagoVo(Formapago formaPago) {
+		
+		this.iFormaPago = formaPago.getiFormaPago();
+		this.vFormaPagoDescripcion = formaPago.getvFormaPagoDescripcion();
+	}
 
 	/**
 	 * @return the iFormaPago

@@ -13,6 +13,7 @@ import org.eclipse.persistence.config.QueryHints;
 import com.entities.Venta;
 import com.entities.Ventadetalle;
 import com.entities.Ventadevolucion;
+import com.entities.vo.VentaVo;
 import com.interfaces.dao.IVentaDao;
 import com.util.Constantes;
 import com.util.Fechas;
@@ -158,6 +159,70 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 		
         return listaVenta;
 	}
+	
+	@Override
+	public List<Venta> listaEstadoCuentaPorCliente(int pagInicio, int pagFin, VentaVo venta, int iClienteId) {
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();     
+		Query q ;
+		List<Venta> listaVenta = null ;
+		String where="";
+    	
+		if(venta!=null){
+			if(venta.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }
+			if(venta.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+venta.getcEstadoCodigo()+"%'";
+	        }
+//			if(venta.getvEstadoDocumento()==null){
+//	        	where+= " and p.vEstadoDocumento LIKE '%"+Constantes.estadoDocumentoDeuda+"%'";
+//	        }
+			if(venta.getvEstadoDocumento()!=null){
+	        	where+= " and p.vEstadoDocumento LIKE '%"+venta.getvEstadoDocumento()+"%'";
+	        }
+			if(venta.getCliente()!=null && venta.getCliente().getvClienteCodigo()!=null){
+	        	where+= " and p.cliente.vClienteCodigo LIKE '%"+venta.getCliente().getvClienteCodigo()+"%'";
+	        }
+			if(venta.getCliente()!=null && venta.getCliente().getvClienteRazonSocial()!=null){
+	        	where+= " and p.cliente.vClienteRazonSocial LIKE '%"+venta.getCliente().getvClienteRazonSocial()+"%'";
+	        }
+			if(venta.getFormaPago()!=null && venta.getFormaPago().getiFormaPago()!=00){
+	        	where+= " and p.formaPago.iFormaPago="+venta.getFormaPago().getiFormaPago();
+	        } else {
+	        	where+= " and p.formaPago.vFormaPagoDescripcion LIKE '%"+Constantes.formaPagoCredito + "%'";
+	        }
+			if(venta.getTipoDocumento()!=null && venta.getTipoDocumento().getiTipoDocumentoGestionId()!=00){
+	        	where+= " and p.tipoDocumento.iTipoDocumentoGestionId='"+venta.getTipoDocumento().getiTipoDocumentoGestionId()+"'";
+	        }
+			if(venta.getfVentaTotal()>0.0){
+	        	where+= " and p.fVentaTotal>='"+venta.getfVentaTotal()+"'";
+	        }
+			if(venta.getnVentaNumero()!=null){
+	        	where+= " and p.nVentaNumero LIKE '%"+venta.getnVentaNumero()+"%'";
+	        }
+			if(venta.getdVentaFecha()!=null && venta.getdFechaActualiza()!=null){
+	        	where+= " and p.dVentaFecha BETWEEN '"+Fechas.fechaYYMMDD(venta.getdVentaFecha())+"' and '"+Fechas.fechaYYMMDD(venta.getdFechaActualiza())+"'";
+	        }
+
+			if (venta.getSucursal() != null) {
+				where+= " and p.sucursal.iSucursalId = '"+venta.getSucursal().getiSucursalId() +"'";
+			}
+	          System.out.println(" where ingreso Producto Estado Cuenta ="+ where);
+	    	    q = em.createQuery("select p from Venta p " +
+	    	    				   " JOIN FETCH p.cliente " + where);/**/
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	    	    listaVenta = q.setFirstResult(pagInicio)
+							  .setMaxResults(pagFin)
+							  .getResultList(); 
+
+			
+		}// lista con busqueda
+		
+		
+        return listaVenta;
+	}
+	
 	
 	/*@Override
 	public Venta buscarVenta(int iVentaId) {
@@ -384,6 +449,118 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 				return listaIngresoproducto;
 	}
 
+	@Override
+	public List<Venta> listaVenta(int pagInicio, int pagFin, VentaVo venta) {
 	
+		Query q ;
+		List<Venta> listaVenta = null ;
+		String where="";
+    	
+		if(venta!=null){
+			if(venta.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }
+			if(venta.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+venta.getcEstadoCodigo()+"%'";
+	        }
+			if(venta.getiVentaId()>0){
+	        	where+= " and p.iVentaId= "+venta.getiVentaId()+"";
+	        }
+			if(venta.getCliente()!=null && venta.getCliente().getvClienteCodigo()!=null){
+	        	where+= " and p.cliente.vClienteCodigo LIKE '%"+venta.getCliente().getvClienteCodigo()+"%'";
+	        }
+			if(venta.getCliente()!=null && venta.getCliente().getvClienteRazonSocial()!=null){
+	        	where+= " and p.cliente.vClienteRazonSocial LIKE '%"+venta.getCliente().getvClienteRazonSocial()+"%'";
+	        }
+			if(venta.getFormaPago()!=null && venta.getFormaPago().getiFormaPago()!=00){
+	        	where+= " and p.formaPago.iFormaPago='"+venta.getFormaPago().getiFormaPago()+"'";
+	        }
+			if(venta.getTipoDocumento()!=null && venta.getTipoDocumento().getiTipoDocumentoGestionId()!=00){
+	        	where+= " and p.tipoDocumento.iTipoDocumentoGestionId='"+venta.getTipoDocumento().getiTipoDocumentoGestionId()+"'";
+	        }
+			if(venta.getfVentaTotal()>0.0){
+	        	where+= " and p.fVentaTotal>='"+venta.getfVentaTotal()+"'";
+	        }
+			if(venta.getnVentaNumero()!=null){
+	        	where+= " and p.nVentaNumero LIKE '%"+venta.getnVentaNumero()+"%'";
+	        }
+			if(venta.getdVentaFecha()!=null && venta.getdFechaActualiza()!=null){
+	        	where+= " and p.dVentaFecha BETWEEN '"+Fechas.fechaYYMMDD(venta.getdVentaFecha())+"' and '"+Fechas.fechaYYMMDD(venta.getdFechaActualiza())+"'";
+	        } else if(venta.getdVentaFecha() != null) {
+	        	where+= " and p.dVentaFecha = '"+Fechas.fechaYYMMDD(venta.getdVentaFecha())+"'";
+	        }
+			if (venta.getUsuario() != null) {
+				where+= " and p.usuario.iUsuarioId = '"+venta.getUsuario().getiUsuarioId()+"'";
+			}
+			
+			if (venta.getSucursal() != null) {
+				where+= " and p.sucursal.iSucursalId = '"+venta.getSucursal().getiSucursalId() +"'";
+			}
+			
+			
+	          System.out.println(" where ="+ where);
+	    	    q = getInstancia().createQuery("select p from Venta p " + where +" order by p.dVentaFecha desc");/**/
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	    	    listaVenta = q.setFirstResult(pagInicio)
+							  .setMaxResults(pagFin)
+							  .getResultList(); 
+	
+		}
+		
+        return listaVenta;
+	}
+
+	@Override
+	public List<Ventadevolucion> listaVentaDevolucion(int pagInicio, int pagFin, VentaVo venta) {
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();     
+		Query q ;
+		List<Ventadevolucion> listaVenta = null ;
+		String where="";
+    	
+		if(venta!=null){
+			if(venta.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }
+			if(venta.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+venta.getcEstadoCodigo()+"%'";
+	        }
+			if(venta==null){
+	        	where+= " and p.venta.vEstadoDocumento  LIKE '%"+Constantes.estadoDocumentoDevuelto+"%'";
+	        }
+			if(venta.getCliente()!=null){
+	        	where+= " and p.venta.cliente.vClienteCodigo='"+venta.getCliente().getvClienteCodigo()+"'";
+	        }
+			if(venta.getFormaPago()!=null && venta.getFormaPago().getiFormaPago()!=00){
+	        	where+= " and p.venta.formaPago.iFormaPago='"+venta.getFormaPago().getiFormaPago()+"'";
+	        }
+			if(venta.getTipoDocumento()!=null && venta.getTipoDocumento().getiTipoDocumentoGestionId()!=00){
+	        	where+= " and p.venta.tipoDocumento.iTipoDocumentoGestionId='"+venta.getTipoDocumento().getiTipoDocumentoGestionId()+"'";
+	        }
+			if(venta.getfVentaTotal()>0.0){
+	        	where+= " and p.venta.fVentaTotal>='"+venta.getfVentaTotal()+"'";
+	        }
+			if(venta.getnVentaNumero()!=null){
+	        	where+= " and p.venta.nVentaNumero LIKE '%"+venta.getnVentaNumero()+"%'";
+	        }
+			if(venta.getdVentaFecha()!=null && venta.getdFechaActualiza()!=null){
+	        	where+= " and p.venta.dVentaFecha BETWEEN '"+Fechas.fechaYYMMDD(venta.getdVentaFecha())+"' and '"+Fechas.fechaYYMMDD(venta.getdFechaActualiza())+"'";
+	        }
+
+			if (venta.getSucursal() != null) {
+				where+= " and p.sucursal.iSucursalId = '"+venta.getSucursal().getiSucursalId() +"'";
+			}
+	          System.out.println(" where ="+ where);
+	    	    q = em.createQuery("select p from Ventadevolucion p " + where +" order by p.dVentaDevFecha desc");/**/
+	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+	    	    listaVenta = q.setFirstResult(pagInicio)
+							  .setMaxResults(pagFin)
+							  .getResultList(); 
+
+			
+		}
+		
+        return listaVenta;
+	}
 	
 }

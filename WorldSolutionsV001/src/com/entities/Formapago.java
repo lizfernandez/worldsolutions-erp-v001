@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.FormapagoVo;
+
 
 
 /**
@@ -27,6 +29,11 @@ public class Formapago implements Serializable {
 
     public Formapago() {
     }
+
+	public Formapago(FormapagoVo formaPago) {
+		this.iFormaPago = formaPago.getiFormaPago();
+		this.vFormaPagoDescripcion = formaPago.getvFormaPagoDescripcion();
+	}
 
 	/**
 	 * @return the iFormaPago

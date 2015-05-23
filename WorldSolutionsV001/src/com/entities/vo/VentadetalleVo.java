@@ -4,6 +4,19 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.entities.Personal;
+import com.entities.Producto;
+import com.entities.Venta;
+import com.entities.Ventadetalle;
+
 public class VentadetalleVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -17,11 +30,30 @@ public class VentadetalleVo implements Serializable {
 	private int iUsuarioInsertaId;
 	private int iVentaDetalleCantidad;
 	private ProductoVo producto;
-	private VentaVo venta;
 	private float fDescuento;
+    private PersonalVo personal;    
+    private int iSubCta;
+    private String vIdentificadorSession;
     
     public VentadetalleVo() {
     }
+
+	public VentadetalleVo(Ventadetalle ventadetalle) {
+		this.iVentaDetalleId = ventadetalle.getiVentaDetalleId();
+		this.cEstadoCodigo = ventadetalle.getcEstadoCodigo();
+		this.dFechaActualiza = ventadetalle.getdFechaActualiza();
+		this.dFechaInserta = ventadetalle.getdFechaInserta();
+		this.fVentaDetallePrecio = ventadetalle.getfVentaDetallePrecio();
+		this.fVentaDetalleTotal = ventadetalle.getfVentaDetalleTotal();
+		this.iUsuarioActualizaId = ventadetalle.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = ventadetalle.getiUsuarioInsertaId();
+		this.iVentaDetalleCantidad = ventadetalle.getiVentaDetalleCantidad();
+		this.producto = ventadetalle.getProducto() != null ? new ProductoVo(ventadetalle.getProducto()) : null;
+		this.fDescuento = ventadetalle.getfDescuento();
+		this.personal = ventadetalle.getPersonal()!= null ? new PersonalVo(ventadetalle.getPersonal()) : null;
+		this.iSubCta = ventadetalle.getiSubCta();
+		this.vIdentificadorSession = ventadetalle.getvIdentificadorSession();
+	}
 
 	/**
 	 * @return the iVentaDetalleId
@@ -164,20 +196,6 @@ public class VentadetalleVo implements Serializable {
 	}
 
 	/**
-	 * @return the venta
-	 */
-	public VentaVo getVenta() {
-		return venta;
-	}
-
-	/**
-	 * @param venta the venta to set
-	 */
-	public void setVenta(VentaVo venta) {
-		this.venta = venta;
-	}
-
-	/**
 	 * @return the fDescuento
 	 */
 	public float getfDescuento() {
@@ -191,6 +209,28 @@ public class VentadetalleVo implements Serializable {
 		this.fDescuento = fDescuento;
 	}
 
-	
+	public PersonalVo getPersonal() {
+		return personal;
+	}
+
+	public void setPersonal(PersonalVo personal) {
+		this.personal = personal;
+	}
+
+	public int getiSubCta() {
+		return iSubCta;
+	}
+
+	public void setiSubCta(int iSubCta) {
+		this.iSubCta = iSubCta;
+	}
+
+	public String getvIdentificadorSession() {
+		return vIdentificadorSession;
+	}
+
+	public void setvIdentificadorSession(String vIdentificadorSession) {
+		this.vIdentificadorSession = vIdentificadorSession;
+	}
 	
 }

@@ -248,7 +248,7 @@ public class PersonalForm extends ActionForm {
 	public void setiTipoDocumentoId(int iTipoDocumentoId) {
 	//	Tipodocumento tipo= getTipodocumento();
 		//tipo.setiTipoDocumentoId(iTipoDocumentoId);
-		this.personal.setTipodocumento(getPersonalDao().findEndidad(getTipodocumento(), iTipoDocumentoId));
+		this.personal.setTipodocumento(getPersonalDao().findEndidad(Tipodocumento.class, iTipoDocumentoId));
 		
 	}
 

@@ -282,7 +282,7 @@ public class PerfilAction extends DispatchAction {
 		else if(mode.equals("U") || mode.equals("D")){
 			
 			int id = Integer.parseInt(request.getParameter("id"));
-			Perfil perfil = perfilDao.findEndidad(obj,id);
+			Perfil perfil = perfilDao.findEndidad(Perfil.class, id);
 			System.out.println("perfilDao.buscarPerfil(id) ="+perfil);
 		//	PerfilForm(perfilDao.buscarPerfil(id));r
 			
@@ -344,7 +344,7 @@ public class PerfilAction extends DispatchAction {
 			resultado = perfilDao.insertarUnaEndidad(obj);
 			
 		} else if (pForm.getMode().equals("U")) {
-		     obj = perfilDao.findEndidad(obj,pForm.getiPerfilId());
+		     obj = perfilDao.findEndidad(Perfil.class, pForm.getiPerfilId());
 			
 			try {
 				obj.setdFechaActualiza(Fechas.getDate());

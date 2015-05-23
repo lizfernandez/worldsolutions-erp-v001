@@ -130,7 +130,7 @@ public class OcupacionAction extends DispatchAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				ocupacionform.setOcupacion((Ocupacion) genericaDao.findEndidad(ocupacionform.getOcupacion(), id));
+				ocupacionform.setOcupacion((Ocupacion) genericaDao.findEndidad(Ocupacion.class, id));
 				msn ="showEdit";
 				
 			}
@@ -185,7 +185,7 @@ public class OcupacionAction extends DispatchAction {
 					resultado = ocupacionDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
-				 obj =  ocupacionDao.findEndidad(obj,pForm.getiOcupacionId());
+				 obj =  ocupacionDao.findEndidad(Ocupacion.class, pForm.getiOcupacionId());
 				  obj= Util.comparar(obj, pForm.getOcupacion());
 				  obj.setiUsuarioModifica(usu.getiUsuarioId());
 				  obj.setdFechaActualiza(Fechas.getDate());

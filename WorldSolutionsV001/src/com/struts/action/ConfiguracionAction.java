@@ -126,7 +126,7 @@ public class ConfiguracionAction extends DispatchAction {
 			/**LLamamos al formulario mantenimientoConfiguracion.jsp para la insercion de datos **/
 			if(mode.equals("U")){
 				int id = Integer.parseInt(request.getParameter("id"));
-				configuracionform.setConf((Configuracion)genericaDao.findEndidad(configuracionform.getConf(), id));
+				configuracionform.setConf((Configuracion)genericaDao.findEndidad(Configuracion.class, id));
 				msn ="showEdit";
 			}
 			
@@ -280,7 +280,7 @@ public class ConfiguracionAction extends DispatchAction {
 			/**LLamamos al formulario mantenimientoConfiguracion.jsp para la insercion de datos **/
 			if(mode.equals("U")){
 				int id = Integer.parseInt(request.getParameter("id"));
-				Ejerciciofiscal ejercicio = (Ejerciciofiscal)genericaDao.findEndidad(configuracionform.getEjercicio(), id);
+				Ejerciciofiscal ejercicio = (Ejerciciofiscal)genericaDao.findEndidad(Ejerciciofiscal.class, id);
 				configuracionform.setEjercicio(ejercicio);
 				configuracionform.setcEstadoCodigo(ejercicio.getcCodigoEstado());
 				configuracionform.setLista(ejercicio.getPeriodos());
@@ -464,7 +464,7 @@ public class ConfiguracionAction extends DispatchAction {
 			/**LLamamos al formulario mantenimientoConfiguracion.jsp para la insercion de datos **/
 			if(mode.equals("U")){
 				int id = Integer.parseInt(request.getParameter("id"));
-				Periodo periodo= (Periodo)genericaDao.findEndidad(configuracionform.getPeriodo(), id);
+				Periodo periodo= (Periodo)genericaDao.findEndidad(Periodo.class, id);
 				configuracionform.setPeriodo(periodo);
 				configuracionform.setdFechaInicio(Fechas.fechaDDMMYY(periodo.getdFechaInicio()));
 				configuracionform.setdFechaFin(Fechas.fechaDDMMYY(periodo.getdFechaFin()));
@@ -636,7 +636,7 @@ public class ConfiguracionAction extends DispatchAction {
 			/**LLamamos al formulario mantenimientoConfiguracion.jsp para la insercion de datos **/
 			if(mode.equals("U")){
 				int id = Integer.parseInt(request.getParameter("id"));
-				Impuesto inpuesto= (Impuesto)genericaDao.findEndidad(configuracionform.getImpuesto(), id);
+				Impuesto inpuesto= (Impuesto)genericaDao.findEndidad(Impuesto.class, id);
 				configuracionform.setImpuesto(inpuesto);
 				configuracionform.setcEstadoCodigo(inpuesto.getcCodigoEstado());
 				configuracionform.setvAplicacionImpuesto(inpuesto.getvAplicacionImpuesto());

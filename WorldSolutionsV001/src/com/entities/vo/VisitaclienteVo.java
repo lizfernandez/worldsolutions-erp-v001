@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
+import com.entities.Visitacliente;
+
 public class VisitaclienteVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,6 +25,22 @@ public class VisitaclienteVo implements Serializable {
 	private String vProductoOfrecido;
 
 	public VisitaclienteVo() {
+	}
+
+	public VisitaclienteVo(Visitacliente visitacliente) {
+		
+		this.iVisitaClienteId = visitacliente.getiVisitaClienteId();
+		this.dFecaProxVisita = visitacliente.getdFecaProxVisita();
+		this.dFechaActualiza = visitacliente.getdFechaActualiza();
+		this.dFechaInserta = visitacliente.getdFechaInserta();
+		this.dFechaVisista = visitacliente.getdFechaVisista();
+		this.dHoraVisita = visitacliente.getdHoraVisita();
+		this.fPrecioPactado = visitacliente.getfPrecioPactado();
+		this.iUsuarioActualizaId = visitacliente.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = visitacliente.getiUsuarioInsertaId();
+		this.vMotivoVisita = visitacliente.getvMotivoVisita();
+		this.vObservacion = visitacliente.getvObservacion();
+		this.vProductoOfrecido = visitacliente.getvProductoOfrecido();
 	}
 
 	/**

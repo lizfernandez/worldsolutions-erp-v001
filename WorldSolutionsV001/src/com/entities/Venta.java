@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.VentaVo;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -170,6 +172,47 @@ public class Venta implements Serializable {
 	
     public Venta() {
     }
+
+    
+    
+	public Venta(VentaVo ventaVo) {
+		super();
+		this.iVentaId = ventaVo.getiVentaId();
+		this.cVentaOrdenCompra = ventaVo.getcVentaOrdenCompra();
+		this.dVentaFecha = ventaVo.getdVentaFecha();
+		this.fVentaGanancia = ventaVo.getfVentaGanancia();
+		this.fVentaIGV = ventaVo.getfVentaIGV();
+		this.fVentaSubTotal = ventaVo.getfVentaSubTotal();
+		this.fVentaTotal = ventaVo.getfVentaTotal();
+		this.fVentaTotalReal = ventaVo.getfVentaTotalReal();
+		this.nVentaRuc = ventaVo.getnVentaRuc();
+		this.vEstadoVenta = ventaVo.getvEstadoVenta();
+		this.vVentaPuntoLlegada = ventaVo.getvVentaPuntoLlegada();
+		this.formaPago = new Formapago(ventaVo.getFormaPago());
+		this.tipoDocumento = new Tipodocumentogestion(ventaVo.getTipoDocumento());		
+		this.vEstadoDocumento = ventaVo.getvEstadoDocumento();
+		this.iNumeroDias = ventaVo.getiNumeroDias();
+		this.iNumeroLetras = ventaVo.getiNumeroLetras();
+		this.dFechaProximoPago = ventaVo.getdFechaProximoPago();
+		this.fMontoAdelantado = ventaVo.getfMontoAdelantado();
+		this.fDescuento = ventaVo.getfDescuento();
+		this.fMontoPago = ventaVo.getfMontoPago();
+		this.fTipoCambio = ventaVo.getfTipoCambio();
+		this.fMontoVuelto = ventaVo.getfMontoVuelto();
+		this.vTipoPago = ventaVo.getvTipoPago();
+		this.vTipoVenta = ventaVo.getvTipoVenta();
+		this.fDescClienteVenta = ventaVo.getfDescClienteVenta();
+		this.vIncluyeIGV = ventaVo.getvIncluyeIGV();
+		this.fMontoPagoCredito = ventaVo.getfMontoPagoCredito();
+		if (ventaVo.getMedioPago1() != null) {
+			this.medioPago1 = new Mediopago(ventaVo.getMedioPago1());
+		}
+		if (ventaVo.getMedioPago2() != null) {
+			this.medioPago2 = new Mediopago(ventaVo.getMedioPago2());
+		}
+	}
+
+
 
 	/**
 	 * @return the iVentaId

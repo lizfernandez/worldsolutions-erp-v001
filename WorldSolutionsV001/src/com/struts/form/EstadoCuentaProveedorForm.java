@@ -531,7 +531,7 @@ public class EstadoCuentaProveedorForm extends IngresoProductoForm   {
 	 * @param iFormaPagoId the iFormaPagoId to set
 	 */
 	public void setiFormaPago(int iFormaPagoId) {	
-		this.getIngresoproducto().setFormaPago(ingresoProductoDao().findEndidad(getFormapago(), iFormaPagoId));
+		this.getIngresoproducto().setFormaPago(ingresoProductoDao().findEndidad(Formapago.class, iFormaPagoId));
 	}
 	
 	/**

@@ -436,6 +436,19 @@
          	$("#btnGuardar").removeClass('save');
          	$("#btnGuardar").addClass('find');
         	$("#btnGuardar").text('Buscar');
+         } else if (mode == 'U') {
+        	 $('#vProductoNombre').attr('readonly', true);
+        	 $('#iUMBase').attr('readonly', true);
+        	 $('#iUMPedido').attr('readonly', true);
+        	 $('#iUMSalida').attr('readonly', true);
+        	 $('#iProductoStockTotal').attr('readonly', true);
+        	 $('#fProductoPrecioCompra').attr('readonly', true);
+        	 $('#fProductoGastosAdm').attr('readonly', true);
+        	 $('#fProductoGanancia').attr('readonly', true);
+        	 $('#fProductoPrecioVenta').attr('readonly', true);
+        	 $('#fProductoDescuento').attr('readonly', true);
+        	 
+        	 
          }
     }
     

@@ -1,7 +1,6 @@
 package com.struts.action;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +31,7 @@ import com.entities.Tipodocumentogestion;
 import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.vo.EstadoCuentaVo;
+import com.entities.vo.SucursalVo;
 import com.struts.form.EstadoCuentaClienteForm;
 import com.util.Constantes;
 import com.util.Fechas;
@@ -87,7 +87,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 	        HttpSession sesion = request.getSession();
 			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		 	if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
-		 		objform.getVenta().setSucursal(usu.getSucursal());
+		 		objform.getVenta().setSucursal(new SucursalVo(usu.getSucursal()));
 		 	}
 			 
 			 /**Seteamos los valores en las listas**/
@@ -159,7 +159,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				estadoCuentaClienteform.setEstadoCuentaCliente(estadoCuentaClienteDao.findEndidad(obj, id));
+				estadoCuentaClienteform.setEstadoCuentaCliente(estadoCuentaClienteDao.findEndidad(Estadocuentacliente.class, id));
 				
 				msn ="showEdit";
 				
@@ -232,7 +232,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 							obj.setfMontoPago((float) ((pForm.getMontoTotal())-(pForm.getPagoTotal())));						
 							estadoCuentaClienteDao.persistEndidad(obj);
 							
-							Venta venta = ventaDao.findEndidad(obj.getVenta(), obj.getVenta().getiVentaId());
+							Venta venta = ventaDao.findEndidad(Venta.class, obj.getVenta().getiVentaId());
 							venta.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
 							ventaDao.mergeEndidad(venta);
 						}
@@ -246,7 +246,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 				}// fin mode I;
 				else if (pForm.getMode().equals("U")) {
 					
-				   obj = estadoCuentaClienteDao.findEndidad(obj,obj.getiEstadoCuentaCliente());
+				   obj = estadoCuentaClienteDao.findEndidad(Estadocuentacliente.class ,obj.getiEstadoCuentaCliente());
 				   
 				   obj.setdFechaPago(pForm.getEstadoCuentaCliente().getdFechaPago());
 				   obj.setfMontoPago(pForm.getfMontoPago());
@@ -279,7 +279,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 				    resultado = ventaDao.commitEndidad(transaction);
 				}
 				else if (mode.equals("D")) { 
-					obj = estadoCuentaClienteDao.findEndidad(obj,Integer.parseInt(ids));
+					obj = estadoCuentaClienteDao.findEndidad(Estadocuentacliente.class ,Integer.parseInt(ids));
 						 estadoCuentaClienteDao.eliminarUnaEndidad(obj, "iEstadoCuentaCliente", ids);
 						
 						Venta venta = obj.getVenta();
@@ -407,7 +407,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				Letracliente letraCliente=estadoCuentaClienteDao.findEndidad(estadoCuentaClienteform.getLetracliente(), id);
+				Letracliente letraCliente=estadoCuentaClienteDao.findEndidad(Letracliente.class, id);
 				estadoCuentaClienteform.setLetracliente(letraCliente);
 				estadoCuentaClienteform.setdFechaPago(Fechas.fechaDDMMYY(letraCliente.getdFechaPago()));
 				msn ="showEditLetraCliente";
@@ -464,7 +464,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			IngresoProductoDao ingresoProductoDao= new IngresoProductoDao();
 			
 			Letracliente obj = pForm.getLetracliente();			
-			obj.getVenta().setFormaPago(pForm.getFormaPago());
+			obj.getVenta().setFormaPago(contabilidadDao.findEndidad(Formapago.class, pForm.getiFormaPago()));
 			//obj.setIngresoProducto(pForm.getIngresoProducto());
 			
 	        /**Instanciamos una transacion**/
@@ -504,7 +504,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			        	 resultado = ingresoProductoDao.commitEndidad(transaccion);		 */        
 			              transaccion= ingresoProductoDao.entityTransaction();
 		            	  transaccion.begin();
-			              Venta venta =  ingresoProductoDao.findEndidad(obj.getVenta(), obj.getVenta().getiVentaId());
+			              Venta venta =  ingresoProductoDao.findEndidad(Venta.class, obj.getVenta().getiVentaId());
 				    	
 						 venta.setFormaPago(obj.getVenta().getFormaPago());
 						 ingresoProductoDao.mergeEndidad(venta);
@@ -513,7 +513,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 					
 				}// fin mode I;
 				else if (pForm.getMode().equals("U")) {
-					    obj = ingresoProductoDao.findEndidad(pForm.getLetracliente(), pForm.getLetracliente().getiLetraClienteId());
+					    obj = ingresoProductoDao.findEndidad(Letracliente.class, pForm.getLetracliente().getiLetraClienteId());
 					   if(pForm.getdFechaPago()!=""){
 					       obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPago()));
 					    }
@@ -542,7 +542,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 					    ingresoProductoDao.refreshEndidad(obj);
 			}// fin mode I;
 			else if (pForm.getMode().equals("U")) {
-				    obj = ingresoProductoDao.findEndidad(pForm.getLetracliente(), pForm.getLetracliente().getiLetraClienteId());
+				    obj = ingresoProductoDao.findEndidad(Letracliente.class, pForm.getLetracliente().getiLetraClienteId());
 				    obj.setdFechaActualiza(Fechas.getDate());
 				   if(pForm.getdFechaPago()!=""){
 				       obj.setdFechaPago(Fechas.fechaDate(pForm.getdFechaPago()));
@@ -574,7 +574,7 @@ public class EstadoCuentaClienteAction extends BaseAction {
 			   }
 			}
 			else if (mode.equals("D")) { 
-				    obj = ingresoProductoDao.findEndidad(obj, Integer.parseInt(ids));
+				    obj = ingresoProductoDao.findEndidad(Letracliente.class, Integer.parseInt(ids));
 				    ingresoProductoDao.eliminarUnaEndidad(obj, "iLetraClienteId",ids);
 					
 				   }

@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.SubcategoriaVo;
+
 import java.util.Date;
 
 
@@ -40,6 +42,19 @@ public class Subcategoria implements Serializable {
 	private String vSubCategoriaDescripcion;
 
 	public Subcategoria() {
+	}
+
+	public Subcategoria(SubcategoriaVo subcategoria) {
+		
+		this.iSubCategoriaId = subcategoria.getiSubCategoriaId();
+		this.cEstadoCodigo = subcategoria.getcEstadoCodigo();
+		this.cSubCategoriaCodigo = subcategoria.getcSubCategoriaCodigo();
+		this.dFechaActualiza = subcategoria.getdFechaActualiza();
+		this.dFechaInserta = subcategoria.getdFechaInserta();
+		this.categoria = new Categoria(subcategoria.getCategoria());
+		this.iUsuarioActualizaId = subcategoria.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = subcategoria.getiUsuarioInsertaId();
+		this.vSubCategoriaDescripcion = subcategoria.getvSubCategoriaDescripcion();
 	}
 
 	/**

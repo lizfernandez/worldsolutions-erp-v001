@@ -1,9 +1,9 @@
 package com.entities.vo;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import java.util.Date;
+
+import com.entities.Direccioncliente;
 
 
 /**
@@ -23,10 +23,23 @@ public class DireccionclienteVo implements Serializable {
 	private String vDireccion;
 	private String vPrincipal;
 	private String vReferencia;
-	private ClienteVo cliente;
 
     public DireccionclienteVo() {
     }
+
+	public DireccionclienteVo(Direccioncliente direccioncliente) {
+		this.idireccionClienteId = direccioncliente.getIdireccionClienteId();
+		this.cEstadoCodigo = direccioncliente.getcEstadoCodigo();
+		this.dFechaActualiza = direccioncliente.getdFechaActualiza();
+		this.dFechaInserta = direccioncliente.getdFechaInserta();
+		this.iPoblacionId = direccioncliente.getiPoblacionId();
+		this.iUsuarioActualizaId = direccioncliente.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = direccioncliente.getiUsuarioInsertaId();
+		this.vDireccion = direccioncliente.getvDireccion();
+		this.vPrincipal = direccioncliente.getvPrincipal();
+		this.vReferencia = direccioncliente.getvReferencia();
+	
+	}
 
 	/**
 	 * @return the idireccionClienteId
@@ -166,20 +179,6 @@ public class DireccionclienteVo implements Serializable {
 	 */
 	public void setvReferencia(String vReferencia) {
 		this.vReferencia = vReferencia;
-	}
-
-	/**
-	 * @return the cliente
-	 */
-	public ClienteVo getCliente() {
-		return cliente;
-	}
-
-	/**
-	 * @param cliente the cliente to set
-	 */
-	public void setCliente(ClienteVo cliente) {
-		this.cliente = cliente;
 	}
 
 	@Override

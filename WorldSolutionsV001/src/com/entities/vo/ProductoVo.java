@@ -1,11 +1,12 @@
 package com.entities.vo;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.List;
 
-import com.entities.Ingresoproductodetalle;
+import com.entities.Producto;
+import com.entities.converter.KardexConverter;
+import com.entities.converter.PreciosproductoConverter;
 
 public class ProductoVo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,32 +17,66 @@ public class ProductoVo implements Serializable {
 	private Date dFechaActualiza;
 	private Date dFechaInserta;
 	private float fProductoGanancia;
+	private float fProductoGastosAdm;
 	private float fProductoPrecioCompra;
 	private float fProductoPrecioVenta;
 	private CategoriaVo categoria;
 	private SubcategoriaVo subcategoria;
-	private int iProduccionId;
 	private int iProductoStockTotal;
+	private UnidadmedidaVo unidadMedida;
 	private int iProductoStockMaximo;
 	private int iProductoStockMinimo;
 	private int iUsuarioActualizaId;
 	private int iUsuarioInsertaId;
-	private String iUMPedido;
 	private String vProductoNombre;
 	private float fProductoDescuento;
 	private String vFoto;
-	private List<IngresoproductodetalleVo> ingresoproductodetalles;
-	private UnidadmedidaVo unidadMedida;
-	private int iUMBase;
-	private String vUnidadMedidaDescripcionC;
 	private MonedaVo moneda;
-	private List<VentadetalleVo> ventadetalles;
-	private List<KardexVo> kardexs;
+	private ProduccionVo produccion;
 	private List<PreciosproductoVo> preciosproductodetallles;
-	private List<IngresoproductodetalleVo> ingresoproductodetalle;
-
+	private int iUMBase;
+	private UnidadmedidaVo umBase;
+	private int iUMPedido;
+	private UnidadmedidaVo umPedido;
+	private int iUMSalida;
+	private UnidadmedidaVo umSalida;
+	
     public ProductoVo() {
     }
+
+	public ProductoVo(Producto producto) {
+		this.iProductoId = producto.getiProductoId();
+		this.cEstadoCodigo = producto.getcEstadoCodigo();
+		this.cProductoCodigo = producto.getcProductoCodigo();
+		this.dFechaActualiza = producto.getdFechaActualiza();
+		this.dFechaInserta = producto.getdFechaInserta();
+		this.fProductoGanancia = producto.getfProductoGanancia();
+		this.fProductoGastosAdm = producto.getfProductoGastosAdm();
+		this.fProductoPrecioCompra = producto.getfProductoPrecioCompra();
+		this.fProductoPrecioVenta = producto.getfProductoPrecioVenta();
+		this.categoria = new CategoriaVo(producto.getCategoria());
+		this.subcategoria = producto.getSubcategoria() != null ? new SubcategoriaVo(producto.getSubcategoria()) : null;
+		this.iProductoStockTotal = producto.getiProductoStockTotal();
+		if (producto.getUnidadMedida() != null) {
+			this.unidadMedida = new UnidadmedidaVo(producto.getUnidadMedida());
+		}
+		this.iProductoStockMaximo = producto.getiProductoStockMaximo();
+		this.iProductoStockMinimo = producto.getiProductoStockMinimo();
+		this.iUsuarioActualizaId = producto.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = producto.getiUsuarioInsertaId();
+		this.vProductoNombre = producto.getvProductoNombre();
+		this.fProductoDescuento = producto.getfProductoDescuento();
+		this.vFoto = producto.getvFoto();
+		this.moneda = producto.getMoneda()!= null?new MonedaVo(producto.getMoneda()) : null;
+		this.produccion = producto.getProduccion() != null ? new ProduccionVo(producto.getProduccion()) : null; 
+		this.preciosproductodetallles = PreciosproductoConverter.aListPreciosproductoVo(producto.getPreciosproductodetallles());
+		this.iUMBase = producto.getiUMBase();
+		this.umBase = producto.getUmBase()!=null ? new UnidadmedidaVo(producto.getUmBase()) : null;
+		this.iUMPedido = producto.getiUMPedido();
+		this.umPedido = producto.getUmPedido()!=null ? new UnidadmedidaVo(producto.getUmPedido()) : null;
+		this.iUMSalida = producto.getiUMSalida();
+		this.umSalida = producto.getUmSalida()!=null ? new UnidadmedidaVo(producto.getUmSalida()) : null;
+	}
 
 	public int getiProductoId() {
 		return iProductoId;
@@ -58,7 +93,6 @@ public class ProductoVo implements Serializable {
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.cEstadoCodigo = cEstadoCodigo;
 	}
-
 
 	public String getcProductoCodigo() {
 		return cProductoCodigo;
@@ -92,6 +126,14 @@ public class ProductoVo implements Serializable {
 		this.fProductoGanancia = fProductoGanancia;
 	}
 
+	public float getfProductoGastosAdm() {
+		return fProductoGastosAdm;
+	}
+
+	public void setfProductoGastosAdm(float fProductoGastosAdm) {
+		this.fProductoGastosAdm = fProductoGastosAdm;
+	}
+
 	public float getfProductoPrecioCompra() {
 		return fProductoPrecioCompra;
 	}
@@ -108,88 +150,36 @@ public class ProductoVo implements Serializable {
 		this.fProductoPrecioVenta = fProductoPrecioVenta;
 	}
 
-	/*public int getiCategoriaId() {
-		return iCategoriaId;
-	}
-
-	public void setiCategoriaId(int iCategoriaId) {
-		this.iCategoriaId = iCategoriaId;
-	}
-*/
-	
-	public int getiProduccionId() {
-		return iProduccionId;
-	}
-
-	/**
-	 * @return the categoria
-	 */
 	public CategoriaVo getCategoria() {
 		return categoria;
 	}
 
-	/**
-	 * @param categoria the categoria to set
-	 */
 	public void setCategoria(CategoriaVo categoria) {
 		this.categoria = categoria;
 	}
 
-	public void setiProduccionId(int iProduccionId) {
-		this.iProduccionId = iProduccionId;
-	}
-	
-	 /**
-      * @return the vUnidadMedidaDescripcionC
-	  */
-	public String getvUnidadMedidaDescripcionC() {
-		/*UnidadMedidaDao dao = new UnidadMedidaDao();
-		String vUnidadMedidaDescripcion ="nn";
-		if(this.iUMBase>0){
-			Unidadmedida unidadmedida = dao.buscarUnidadMedida(this.iUMBase);
-			vUnidadMedidaDescripcion =unidadmedida.getvUnidadMedidaDescripcion();
-		}
-		*/
-		return vUnidadMedidaDescripcionC;
+	public SubcategoriaVo getSubcategoria() {
+		return subcategoria;
 	}
 
-	/**
-	 * @param vUnidadMedidaDescripcionC the vUnidadMedidaDescripcionC to set
-	 */
-	public void setvUnidadMedidaDescripcionC(String vUnidadMedidaDescripcionC) {
-		this.vUnidadMedidaDescripcionC = vUnidadMedidaDescripcionC;
+	public void setSubcategoria(SubcategoriaVo subcategoria) {
+		this.subcategoria = subcategoria;
 	}
 
-	
-
-	/**
-	 * @return the iProductoStockTotal
-	 */
 	public int getiProductoStockTotal() {
 		return iProductoStockTotal;
 	}
 
-	/**
-	 * @param iProductoStockTotal the iProductoStockTotal to set
-	 */
 	public void setiProductoStockTotal(int iProductoStockTotal) {
 		this.iProductoStockTotal = iProductoStockTotal;
 	}
-	
-	
 
-	/**
-	 * @return the moneda
-	 */
-	public MonedaVo getMoneda() {
-		return moneda;
+	public UnidadmedidaVo getUnidadMedida() {
+		return unidadMedida;
 	}
 
-	/**
-	 * @param moneda the moneda to set
-	 */
-	public void setMoneda(MonedaVo moneda) {
-		this.moneda = moneda;
+	public void setUnidadMedida(UnidadmedidaVo unidadMedida) {
+		this.unidadMedida = unidadMedida;
 	}
 
 	public int getiProductoStockMaximo() {
@@ -224,36 +214,6 @@ public class ProductoVo implements Serializable {
 		this.iUsuarioInsertaId = iUsuarioInsertaId;
 	}
 
-	
-
-	/**
-	 * @return the iProductoCapacidad
-	 */
-	public String getiUMPedido() {
-		return iUMPedido;
-	}
-
-	/**
-	 * @param iProductoCapacidad the iProductoCapacidad to set
-	 */
-	public void setiUMPedido(String iUMPedido) {
-		this.iUMPedido = iUMPedido;
-	}
-
-	/**
-	 * @return the unidadMedidaC
-	 */
-	public int getiUMBase() {
-		return iUMBase;
-	}
-
-	/**
-	 * @param unidadMedidaC the unidadMedidaC to set
-	 */
-	public void setiUMBase(int iUMBase) {
-		this.iUMBase = iUMBase;
-	}
-
 	public String getvProductoNombre() {
 		return vProductoNombre;
 	}
@@ -262,132 +222,93 @@ public class ProductoVo implements Serializable {
 		this.vProductoNombre = vProductoNombre;
 	}
 
-	public List<IngresoproductodetalleVo> getIngresoproductodetalles() {
-		return ingresoproductodetalles;
+	public float getfProductoDescuento() {
+		return fProductoDescuento;
 	}
 
-	public void setIngresoproductodetalles(
-			List<IngresoproductodetalleVo> ingresoproductodetalles) {
-		this.ingresoproductodetalles = ingresoproductodetalles;
+	public void setfProductoDescuento(float fProductoDescuento) {
+		this.fProductoDescuento = fProductoDescuento;
 	}
 
-	
-	/**
-	 * @return the unidadMedida
-	 */
-	public UnidadmedidaVo getUnidadMedida() {
-		return unidadMedida;
+	public String getvFoto() {
+		return vFoto;
 	}
 
-	/**
-	 * @param unidadMedida the unidadMedida to set
-	 */
-	public void setUnidadMedida(UnidadmedidaVo unidadMedida) {
-		this.unidadMedida = unidadMedida;
+	public void setvFoto(String vFoto) {
+		this.vFoto = vFoto;
 	}
 
-	/*public List<Salidaproducto> getSalidaproductos() {
-		return salidaproductos;
+	public MonedaVo getMoneda() {
+		return moneda;
 	}
 
-	public void setSalidaproductos(List<Salidaproducto> salidaproductos) {
-		this.salidaproductos = salidaproductos;
-	}
-*/
-	public List<VentadetalleVo> getVentadetalles() {
-		return ventadetalles;
+	public void setMoneda(MonedaVo moneda) {
+		this.moneda = moneda;
 	}
 
-	public void setVentadetalles(List<VentadetalleVo> ventadetalles) {
-		this.ventadetalles = ventadetalles;
+	public ProduccionVo getProduccion() {
+		return produccion;
 	}
 
-	/**
-	 * @return the kardexs
-	 */
-	public List<KardexVo> getKardexs() {
-		return kardexs;
+	public void setProduccion(ProduccionVo produccion) {
+		this.produccion = produccion;
 	}
 
-	/**
-	 * @param kardexs the kardexs to set
-	 */
-	public void setKardexs(List<KardexVo> kardexs) {
-		this.kardexs = kardexs;
-	}
-
-	/**
-	 * @return the subcategoria
-	 */
-	public SubcategoriaVo getSubcategoria() {
-		return subcategoria;
-	}
-	/**
-	 * @param subcategoria the subcategoria to set
-	 */
-	public void setSubcategoria(SubcategoriaVo subcategoria) {
-		this.subcategoria = subcategoria;
-	}
-
-	
-	/**
-	 * @return the preciosproductodetallles
-	 */
 	public List<PreciosproductoVo> getPreciosproductodetallles() {
 		return preciosproductodetallles;
 	}
 
-	/**
-	 * @param preciosproductodetallles the preciosproductodetallles to set
-	 */
 	public void setPreciosproductodetallles(
 			List<PreciosproductoVo> preciosproductodetallles) {
 		this.preciosproductodetallles = preciosproductodetallles;
 	}
 
-	/**
-	 * @return the vFoto
-	 */
-	public String getvFoto() {
-		return vFoto;
+	public int getiUMBase() {
+		return iUMBase;
 	}
 
-	/**
-	 * @param vFoto the vFoto to set
-	 */
-	public void setvFoto(String vFoto) {
-		this.vFoto = vFoto;
+	public void setiUMBase(int iUMBase) {
+		this.iUMBase = iUMBase;
 	}
 
-	/**
-	 * @return the ingresoproductodetalle
-	 */
-	public List<IngresoproductodetalleVo> getIngresoproductodetalle() {
-		return ingresoproductodetalle;
+	public UnidadmedidaVo getUmBase() {
+		return umBase;
 	}
 
-	/**
-	 * @param ingresoproductodetalle the ingresoproductodetalle to set
-	 */
-	public void setIngresoproductodetalle(
-			List<IngresoproductodetalleVo> ingresoproductodetalle) {
-		this.ingresoproductodetalle = ingresoproductodetalle;
+	public void setUmBase(UnidadmedidaVo umBase) {
+		this.umBase = umBase;
 	}
 
-	/**
-	 * @return the fProductoDescuento
-	 */
-	public float getfProductoDescuento() {
-		return fProductoDescuento;
+	public int getiUMPedido() {
+		return iUMPedido;
 	}
 
-	/**
-	 * @param fProductoDescuento the fProductoDescuento to set
-	 */
-	public void setfProductoDescuento(float fProductoDescuento) {
-		this.fProductoDescuento = fProductoDescuento;
+	public void setiUMPedido(int iUMPedido) {
+		this.iUMPedido = iUMPedido;
 	}
 
-	
+	public UnidadmedidaVo getUmPedido() {
+		return umPedido;
+	}
+
+	public void setUmPedido(UnidadmedidaVo umPedido) {
+		this.umPedido = umPedido;
+	}
+
+	public int getiUMSalida() {
+		return iUMSalida;
+	}
+
+	public void setiUMSalida(int iUMSalida) {
+		this.iUMSalida = iUMSalida;
+	}
+
+	public UnidadmedidaVo getUmSalida() {
+		return umSalida;
+	}
+
+	public void setUmSalida(UnidadmedidaVo umSalida) {
+		this.umSalida = umSalida;
+	}
 	
 }

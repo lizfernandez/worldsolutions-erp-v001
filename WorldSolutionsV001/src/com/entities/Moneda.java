@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.MonedaVo;
+
 
 /**
  * The persistent class for the moneda database table.
@@ -28,6 +30,14 @@ public class Moneda implements Serializable {
 
     public Moneda() {
     }
+
+	public Moneda(MonedaVo moneda) {
+		
+		this.iMonedaId = moneda.getiMonedaId();
+		this.cEstadoCodigo = moneda.getcEstadoCodigo();
+		this.cModenaCodigo = moneda.getcModenaCodigo();
+		this.vMonedaDescripcion = moneda.getvMonedaDescripcion();
+	}
 
 	/**
 	 * @return the iMonedaId

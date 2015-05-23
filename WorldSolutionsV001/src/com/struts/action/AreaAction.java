@@ -129,7 +129,7 @@ public class AreaAction extends DispatchAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				areaform.setArea((Area) genericaDao.findEndidad(areaform.getArea(), id));
+				areaform.setArea((Area) genericaDao.findEndidad(Area.class, id));
 				msn ="showEdit";
 				
 			}

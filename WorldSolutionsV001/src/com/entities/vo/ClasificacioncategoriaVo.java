@@ -2,6 +2,8 @@ package com.entities.vo;
 
 import java.io.Serializable;
 
+import com.entities.Clasificacioncategoria;
+
 
 /**
  * The persistent class for the clasificacioncategoria database table.
@@ -22,6 +24,14 @@ public class ClasificacioncategoriaVo implements Serializable {
 		super();
 		this.iClasificacionId = iClasificacionId;
 		this.vClasificacionDescripcion = vClasificacionDescripcion;
+	}
+
+	public ClasificacioncategoriaVo(Clasificacioncategoria clasificacionCategoria) {
+		
+		this.iClasificacionId = clasificacionCategoria.getiClasificacionId();
+		this.cClasificacionCodigo = clasificacionCategoria.getcClasificacionCodigo();
+		this.cEstadoCodigo = clasificacionCategoria.getcEstadoCodigo();
+		this.vClasificacionDescripcion = clasificacionCategoria.getvClasificacionDescripcion();
 	}
 
 	/**

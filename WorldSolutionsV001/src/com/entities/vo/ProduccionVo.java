@@ -1,75 +1,131 @@
 package com.entities.vo;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import com.entities.Produccion;
 
 public class ProduccionVo implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	private int iProduccionId;
 	private String cEstadoCodigo;
-	private float fManoObra;
-	private float fOtros;
-	private float fTotal;
-	private float fTransporte;
+	private Date dFechaActualiza;
+	private Date dFechaInserta;
+	private float fCostoTotal;
+	private float fCostoUni;
 	private int iCantidad;
+	private int iUsuarioActualiza;
+	private int iUsuarioInsertaId;
+    private float fOtrosCostos;
+	private List<ProducciondetalleVo> produccionDetalle;
+	
 
     public ProduccionVo() {
     }
 
-	public int getIProduccionId() {
-		return this.iProduccionId;
+	public ProduccionVo(Produccion produccion) {
+		
+		this.iProduccionId = produccion.getiProduccionId();
+		this.cEstadoCodigo = produccion.getcEstadoCodigo();
+		this.dFechaActualiza = produccion.getdFechaActualiza();
+		this.dFechaInserta = produccion.getdFechaInserta();
+		this.fCostoTotal = produccion.getfCostoTotal();
+		this.fCostoUni = produccion.getfCostoUni();
+		this.iCantidad = produccion.getiCantidad();
+		this.iUsuarioActualiza = produccion.getiUsuarioActualiza();
+		this.iUsuarioInsertaId = produccion.getiUsuarioInsertaId();
+		this.fOtrosCostos = produccion.getfOtrosCostos();
+		//this.produccionDetalle = produccion.getProduccionDetalle();
 	}
 
-	public void setIProduccionId(int iProduccionId) {
+	public int getiProduccionId() {
+		return iProduccionId;
+	}
+
+	public void setiProduccionId(int iProduccionId) {
 		this.iProduccionId = iProduccionId;
 	}
 
-	public String getCEstadoCodigo() {
-		return this.cEstadoCodigo;
+	public String getcEstadoCodigo() {
+		return cEstadoCodigo;
 	}
 
-	public void setCEstadoCodigo(String cEstadoCodigo) {
+	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.cEstadoCodigo = cEstadoCodigo;
 	}
 
-	public float getFManoObra() {
-		return this.fManoObra;
+	public Date getdFechaActualiza() {
+		return dFechaActualiza;
 	}
 
-	public void setFManoObra(float fManoObra) {
-		this.fManoObra = fManoObra;
+	public void setdFechaActualiza(Date dFechaActualiza) {
+		this.dFechaActualiza = dFechaActualiza;
 	}
 
-	public float getFOtros() {
-		return this.fOtros;
+	public Date getdFechaInserta() {
+		return dFechaInserta;
 	}
 
-	public void setFOtros(float fOtros) {
-		this.fOtros = fOtros;
+	public void setdFechaInserta(Date dFechaInserta) {
+		this.dFechaInserta = dFechaInserta;
 	}
 
-	public float getFTotal() {
-		return this.fTotal;
+	public float getfCostoTotal() {
+		return fCostoTotal;
 	}
 
-	public void setFTotal(float fTotal) {
-		this.fTotal = fTotal;
+	public void setfCostoTotal(float fCostoTotal) {
+		this.fCostoTotal = fCostoTotal;
 	}
 
-	public float getFTransporte() {
-		return this.fTransporte;
+	public float getfCostoUni() {
+		return fCostoUni;
 	}
 
-	public void setFTransporte(float fTransporte) {
-		this.fTransporte = fTransporte;
+	public void setfCostoUni(float fCostoUni) {
+		this.fCostoUni = fCostoUni;
 	}
 
-	public int getICantidad() {
-		return this.iCantidad;
+	public int getiCantidad() {
+		return iCantidad;
 	}
 
-	public void setICantidad(int iCantidad) {
+	public void setiCantidad(int iCantidad) {
 		this.iCantidad = iCantidad;
+	}
+
+	public int getiUsuarioActualiza() {
+		return iUsuarioActualiza;
+	}
+
+	public void setiUsuarioActualiza(int iUsuarioActualiza) {
+		this.iUsuarioActualiza = iUsuarioActualiza;
+	}
+
+	public int getiUsuarioInsertaId() {
+		return iUsuarioInsertaId;
+	}
+
+	public void setiUsuarioInsertaId(int iUsuarioInsertaId) {
+		this.iUsuarioInsertaId = iUsuarioInsertaId;
+	}
+
+	public float getfOtrosCostos() {
+		return fOtrosCostos;
+	}
+
+	public void setfOtrosCostos(float fOtrosCostos) {
+		this.fOtrosCostos = fOtrosCostos;
+	}
+
+	public List<ProducciondetalleVo> getProduccionDetalle() {
+		return produccionDetalle;
+	}
+
+	public void setProduccionDetalle(List<ProducciondetalleVo> produccionDetalle) {
+		this.produccionDetalle = produccionDetalle;
 	}
 
 }

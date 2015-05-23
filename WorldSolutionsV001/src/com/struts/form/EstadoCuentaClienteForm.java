@@ -3,15 +3,15 @@ package com.struts.form;
 
 
 import java.text.ParseException;
-
 import java.util.Date;
 import java.util.List;
 
+import com.entities.Cliente;
 import com.entities.Estadocuentacliente;
-import com.entities.Formapago;
 import com.entities.Letracliente;
 import com.entities.Venta;
-import com.entities.Cliente;
+import com.entities.vo.ClienteVo;
+import com.entities.vo.VentaVo;
 import com.util.Fechas;
 
 
@@ -167,12 +167,19 @@ public class EstadoCuentaClienteForm extends VentaForm {
 	/**
 	 * @return the venta
 	 */
-	public Venta getVenta() {
-		Venta venta = estadoCuentaCliente.getVenta();
+	public VentaVo getVenta() {
+		VentaVo venta = null;
+		
+		if (estadoCuentaCliente.getVenta() != null) {
+			venta = new VentaVo(estadoCuentaCliente.getVenta());
+		}
+		if(venta==null && letracliente.getVenta() != null) {
+			venta= new VentaVo(letracliente.getVenta());
+		}
+		
 		if(venta==null)
-			venta= letracliente.getVenta();
-		if(venta==null)
-			venta = new Venta();
+			venta = new VentaVo();
+		
 		return venta;
 	}
 
@@ -187,7 +194,7 @@ public class EstadoCuentaClienteForm extends VentaForm {
 	 * @return the iVentaId
 	 */
 	public int getiVentaId() {
-		Venta venta = getVenta();
+		VentaVo venta = getVenta();
 		return venta.getiVentaId();
 	}
 
@@ -195,8 +202,7 @@ public class EstadoCuentaClienteForm extends VentaForm {
 	 * @param iVentaId the iVentaId to set
 	 */
 	public void setiVentaId(int iVentaId) {
-		Venta venta = getVenta();	
-		venta.setiVentaId(iVentaId);
+		Venta venta = ventaDao().findEndidad(Venta.class, iVentaId);
 		this.letracliente.setVenta(venta);
 		this.estadoCuentaCliente.setVenta(venta);
 		
@@ -215,20 +221,24 @@ public class EstadoCuentaClienteForm extends VentaForm {
 	 * @param iClienteId the iClienteId to set
 	 */
 	public void setiClienteId(int iClienteId) {
-		Cliente cliente= getCliente();
-		cliente.setiClienteId(iClienteId);
+		Cliente cliente= ventaDao().findEndidad(Cliente.class, iClienteId);
 		this.estadoCuentaCliente.setCliente(cliente) ;
 		this.letracliente.setCliente(cliente);
 	}
 	/**
 	 * @return the cliente
 	 */
-	public Cliente getCliente() {
-		Cliente cliente = estadoCuentaCliente.getCliente();
+	public ClienteVo getCliente() {
+		ClienteVo cliente = null;
+		if (estadoCuentaCliente.getCliente() != null) {
+			cliente = new ClienteVo(estadoCuentaCliente.getCliente());
+		}
+		if(cliente==null && letracliente.getCliente() != null)
+			cliente = new ClienteVo(letracliente.getCliente());
+		
 		if(cliente==null)
-			cliente = letracliente.getCliente();
-		if(cliente==null)
-			 cliente= new Cliente();
+			 cliente= new ClienteVo();
+		
 		return cliente;
 	}
 

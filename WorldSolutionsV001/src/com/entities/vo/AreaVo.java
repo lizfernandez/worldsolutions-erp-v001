@@ -2,9 +2,8 @@ package com.entities.vo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import com.entities.Personal;
+import com.entities.Area;
 
 public class AreaVo implements Serializable{
 
@@ -18,10 +17,20 @@ public class AreaVo implements Serializable{
 	private int iUsuarioInsertaId;
 	private int iUsuarioModificaId;
 	private String vAreaDescripcion;
-	private List<PersonalVo> personals;
 
     public AreaVo() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public AreaVo(Area area) {
+		this.iAreaId = area.getiAreaId();
+		this.cAreaCodigo = area.getcAreaCodigo();
+		this.cEstadoCodigo = area.getcEstadoCodigo();
+		this.dFechaActualiza = area.getdFechaActualiza();
+		this.dFechaInserta = area.getdFechaInserta();
+		this.iUsuarioInsertaId = area.getiUsuarioInsertaId();
+		this.iUsuarioModificaId = area.getiUsuarioModificaId();
+		this.vAreaDescripcion = area.getvAreaDescripcion();
 	}
 
 	/**
@@ -134,22 +143,6 @@ public class AreaVo implements Serializable{
 	 */
 	public void setvAreaDescripcion(String vAreaDescripcion) {
 		this.vAreaDescripcion = vAreaDescripcion;
-	}
-
-	/**
-	 * @return the personals
-	 */
-	public List<PersonalVo> getPersonals() {
-		return personals;
-	}
-
-	/**
-	 * @param personals the personals to set
-	 */
-	public void setPersonals(List<PersonalVo> personals) {
-		this.personals = personals;
-	}
-    
-    
+	}   
     
 }

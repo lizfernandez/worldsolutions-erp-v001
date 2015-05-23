@@ -224,7 +224,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 						obj.setfMontoPago((float) ((pForm.getMontoTotal())-(pForm.getPagoTotal())));
 						
 						estadoCuentaProveedorDao.persistEndidad(obj);
-						Ingresoproducto ingresoproducto = ingresoProductoDao.findEndidad(obj.getIngresoproducto(), obj.getIngresoproducto().getiIngresoProductoId());
+						Ingresoproducto ingresoproducto = ingresoProductoDao.findEndidad(Ingresoproducto.class, obj.getIngresoproducto().getiIngresoProductoId());
 						ingresoproducto.setvEstadoDocumento(Constantes.estadoDocumentoCancelado);
 						ingresoProductoDao.mergeEndidad(ingresoproducto);
 					}
@@ -238,7 +238,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 					
 				}// fin mode I;
 				else if (pForm.getMode().equals("U")) {
-				   obj = estadoCuentaProveedorDao.findEndidad(pForm.getEstadoCuentaProveedor(), pForm.getEstadoCuentaProveedor().getiEstadoCuentaProveedor());
+				   obj = estadoCuentaProveedorDao.findEndidad(Estadocuentaproveedor.class, pForm.getEstadoCuentaProveedor().getiEstadoCuentaProveedor());
 				   obj.setdFechaPago(pForm.getEstadoCuentaProveedor().getdFechaPago());
 				   obj.setsVendedor(pForm.getsVendedor());
 				   
@@ -269,7 +269,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 					
 				}
 				else if (mode.equals("D")) { 
-					    obj = estadoCuentaProveedorDao.findEndidad(obj, Integer.parseInt(ids));
+					    obj = estadoCuentaProveedorDao.findEndidad(Estadocuentaproveedor.class, Integer.parseInt(ids));
 						estadoCuentaProveedorDao.eliminarUnaEndidad(obj, "iEstadoCuentaProveedor",ids);
 						
 						Ingresoproducto ingresoproducto = obj.getIngresoproducto();
@@ -398,7 +398,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				Letraproveedor letraProveedor=estadoCuentaProveedorDao.findEndidad(estadoCuentaProveedorform.getLetraProveedor(), id);
+				Letraproveedor letraProveedor=estadoCuentaProveedorDao.findEndidad(Letraproveedor.class, id);
 				estadoCuentaProveedorform.setLetraProveedor(letraProveedor);
 				estadoCuentaProveedorform.setdFechaPagoLetra(Fechas.fechaDDMMYY(letraProveedor.getdFechaPago()));
 				msn ="showEditLetraProveedor";
@@ -491,7 +491,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 				        	 contabilidadDao.callCompraContabilidad(iIngresoProductoId,fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),pForm.getMode(),iPeriodoId, nNumeroLetra,iFormaPagoId);
 				        	 resultado = ingresoProductoDao.commitEndidad(transaccion);
 				         }
-				         Ingresoproducto ingresoProducto =  ingresoProductoDao.findEndidad(obj.getIngresoProducto(), obj.getIngresoProducto().getiIngresoProductoId());
+				         Ingresoproducto ingresoProducto =  ingresoProductoDao.findEndidad(Ingresoproducto.class, obj.getIngresoProducto().getiIngresoProductoId());
 							
 						 ingresoProducto.setFormaPago(obj.getIngresoProducto().getFormaPago());
 						 ingresoProductoDao.mergeEndidad(ingresoProducto);
@@ -502,7 +502,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 					
 				}// fin mode I;
 				else if (pForm.getMode().equals("U")) {
-					    obj = ingresoProductoDao.findEndidad(pForm.getLetraProveedor(), pForm.getLetraProveedor().getIletraProveedorId());
+					    obj = ingresoProductoDao.findEndidad(Letraproveedor.class, pForm.getLetraProveedor().getIletraProveedorId());
 					    obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 					    obj.setdFechaActualiza(Fechas.getDate());
 					   if(pForm.getdFechaPagoLetra()!=""){
@@ -535,7 +535,7 @@ public class EstadoCuentaProveedorAction extends BaseAction {
 				   }
 				}
 				else if (mode.equals("D")) { 
-					    obj = ingresoProductoDao.findEndidad(obj, Integer.parseInt(ids));
+					    obj = ingresoProductoDao.findEndidad(Letraproveedor.class, Integer.parseInt(ids));
 					    ingresoProductoDao.eliminarUnaEndidad(obj, "iletraProveedorId",ids);
 						
 						Ingresoproducto ingresoproducto = obj.getIngresoProducto();
