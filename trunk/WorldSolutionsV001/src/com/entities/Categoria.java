@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.CategoriaVo;
+
 import java.util.Date;
 
 
@@ -47,6 +49,19 @@ public class Categoria implements Serializable {
 
     public Categoria() {
     }
+
+	public Categoria(CategoriaVo categoria) {
+		
+		this.iCategoriaId = categoria.getiCategoriaId();
+		this.cCategoriaCodigo = categoria.getcCategoriaCodigo();
+		this.cEstadoCodigo = categoria.getcEstadoCodigo();
+		this.dFechaActualiza = categoria.getdFechaActualiza();
+		this.dFechaInserta = categoria.getdFechaInserta();
+		this.iUsuarioActualizaId = categoria.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = categoria.getiUsuarioInsertaId();
+		this.clasificacionCategoria = new Clasificacioncategoria(categoria.getClasificacionCategoria());
+		this.vCategoriaDescripcion = categoria.getvCategoriaDescripcion();
+	}
 
 	public int getiCategoriaId() {
 		return iCategoriaId;

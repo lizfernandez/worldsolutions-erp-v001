@@ -140,7 +140,7 @@ public class CategoriaAction extends BaseAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				categoriaform.setCategoria(categoriaDao.findEndidad(categoriaform.getCategoria(),id));
+				categoriaform.setCategoria(categoriaDao.findEndidad(Categoria.class,id));
 				categoriaform.setiClasificacionId(categoriaform.getCategoria().getClasificacionCategoria().getiClasificacionId());
 				msn ="showEdit";
 				
@@ -197,7 +197,7 @@ public class CategoriaAction extends BaseAction {
 			if (pForm.getMode().equals("I")) {
 				
 				obj = pForm.getCategoria();
-				obj.setClasificacionCategoria(categoriaDao.findEndidad(new Clasificacioncategoria(), pForm.getiClasificacionId()));
+				obj.setClasificacionCategoria(categoriaDao.findEndidad(Clasificacioncategoria.class, pForm.getiClasificacionId()));
 				obj.setdFechaInserta(Fechas.getDate());
 				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 				
@@ -205,10 +205,10 @@ public class CategoriaAction extends BaseAction {
 				
 			} else if (pForm.getMode().equals("U")) {
 
-				obj = categoriaDao.findEndidad(pForm.getCategoria(), pForm.getiCategoriaId());
+				obj = categoriaDao.findEndidad(Categoria.class, pForm.getiCategoriaId());
 				obj = Util.comparar(obj, pForm.getCategoria());
 				
-				obj.setClasificacionCategoria(categoriaDao.findEndidad(new Clasificacioncategoria(), pForm.getiClasificacionId()));
+				obj.setClasificacionCategoria(categoriaDao.findEndidad(Clasificacioncategoria.class, pForm.getiClasificacionId()));
 				obj.setdFechaActualiza(Fechas.getDate());	
 				obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 				resultado = categoriaDao.insertarUnaEndidad(obj);
@@ -340,7 +340,7 @@ public class CategoriaAction extends BaseAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				categoriaform.setSubCategoria(categoriaDao.findEndidad(categoriaform.getSubCategoria(),id));
+				categoriaform.setSubCategoria(categoriaDao.findEndidad(Subcategoria.class,id));
 				categoriaform.setCategoria(categoriaform.getSubCategoria().getCategoria());
 				msn ="showEditSubCategoria";
 				
@@ -394,7 +394,7 @@ public class CategoriaAction extends BaseAction {
 	        /** **/
 			if (pForm.getMode().equals("I")) {			
 				obj =pForm.getSubCategoria();
-				obj.setCategoria(categoriaDao.findEndidad(new Categoria(), pForm.getiCategoriaId()));
+				obj.setCategoria(categoriaDao.findEndidad(Categoria.class, pForm.getiCategoriaId()));
 				obj.setcEstadoCodigo(pForm.getcEstadoCodigo());
 				obj.setdFechaInserta(Fechas.getDate());
 				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
@@ -402,10 +402,10 @@ public class CategoriaAction extends BaseAction {
 				resultado = categoriaDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
-				obj = categoriaDao.findEndidad(pForm.getSubCategoria(), pForm.getiSubCategoriaId());
+				obj = categoriaDao.findEndidad(Subcategoria.class, pForm.getiSubCategoriaId());
 				obj = Util.comparar(obj, pForm.getSubCategoria());
 
-				obj.setCategoria(categoriaDao.findEndidad(new Categoria(), pForm.getiCategoriaId()));
+				obj.setCategoria(categoriaDao.findEndidad(Categoria.class, pForm.getiCategoriaId()));
 				obj.setcEstadoCodigo(pForm.getcEstadoCodigo());
 				obj.setdFechaActualiza(Fechas.getDate());
 				obj.setiUsuarioActualizaId(usu.getiUsuarioId());

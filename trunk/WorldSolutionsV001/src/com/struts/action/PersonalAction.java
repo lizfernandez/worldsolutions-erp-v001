@@ -154,7 +154,7 @@ public class PersonalAction extends BaseAction {
 		else if(mode.equals("U") || mode.equals("D")){
 			
 			int id = Integer.parseInt(request.getParameter("id"));
-			personalForm.setPersonal(personalDao.findEndidad(personalForm.getPersonal(),id));
+			personalForm.setPersonal(personalDao.findEndidad(Personal.class,id));
 			msn ="showEdit";
 			
 		}

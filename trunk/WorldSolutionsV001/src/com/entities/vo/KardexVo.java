@@ -3,6 +3,8 @@ package com.entities.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.entities.Kardex;
+
 
 /**
  * The persistent class for the kardex database table.
@@ -24,7 +26,7 @@ public class KardexVo implements Serializable {
 	private int iCantExistencia;
 	private int iCantIngresoProducto;
 	private int iCantVenta;
-	private IngresoproductoVo ingresoProducto ;
+	private IngresoproductoVo ingresoProducto;
 	private ProductoVo producto;
 	private int iUsuarioActualizaId;
 	private int iUsuarioInsertaId;
@@ -32,8 +34,45 @@ public class KardexVo implements Serializable {
 	private VentadevolucionVo ventadevolucion;
 	private int iPeriodoId;
 	private String vConcepto;
+	
     public KardexVo() {
     }
+	
+    public KardexVo(Kardex kardex) {
+	
+		this.iKardexId = kardex.getiKardexId();
+		this.cEstadoCodigo = kardex.getcEstadoCodigo();
+		this.dFecha = kardex.getdFecha();
+		this.dFechaActualiza = kardex.getdFechaActualiza();
+		this.dFechaInserta = kardex.getdFechaInserta();
+		this.fPuExistencia = kardex.getfPuExistencia();
+		this.fPuIngresoProducto = kardex.getfPuIngresoProducto();
+		this.fPuVenta = kardex.getfPuVenta();
+		this.fTotalExistencia = kardex.getfTotalExistencia();
+		this.fTotalngresoProducto = kardex.getfTotalngresoProducto();
+		this.fTotalVenta = kardex.getfTotalVenta();
+		this.iCantExistencia = kardex.getiCantExistencia();
+		this.iCantIngresoProducto = kardex.getiCantIngresoProducto();
+		this.iCantVenta = kardex.getiCantVenta();
+		if (kardex.getIngresoProducto() != null) {
+			//this.ingresoProducto = new IngresoproductoVo(kardex.getIngresoProducto());
+		}
+		
+		this.producto = new ProductoVo( kardex.getProducto());
+		
+		this.iUsuarioActualizaId = kardex.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = kardex.getiUsuarioInsertaId();
+		if (kardex.getVenta() != null) {
+			this.venta = new VentaVo(kardex.getVenta());
+		}
+		if (kardex.getVentadevolucion()!= null ) {
+			//this.ventadevolucion = new VentadevolucionVo(kardex.getVentadevolucion());
+		}
+		
+		this.iPeriodoId = kardex.getiPeriodoId();
+		this.vConcepto = kardex.getvConcepto();
+	}
+
 	/**
 	 * @return the iKardexId
 	 */

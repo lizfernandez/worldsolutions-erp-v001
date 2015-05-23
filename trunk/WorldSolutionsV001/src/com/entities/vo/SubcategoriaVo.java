@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import com.entities.Subcategoria;
+
 public class SubcategoriaVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -18,6 +20,18 @@ public class SubcategoriaVo implements Serializable {
 	private String vSubCategoriaDescripcion;
 
 	public SubcategoriaVo() {
+	}
+
+	public SubcategoriaVo(Subcategoria subcategoria) {
+		this.iSubCategoriaId = subcategoria.getiSubCategoriaId();
+		this.cEstadoCodigo = subcategoria.getcEstadoCodigo();
+		this.cSubCategoriaCodigo = subcategoria.getcSubCategoriaCodigo();
+		this.dFechaActualiza = subcategoria.getdFechaActualiza();
+		this.dFechaInserta = subcategoria.getdFechaInserta();
+		this.categoria = new CategoriaVo(subcategoria.getCategoria());
+		this.iUsuarioActualizaId = subcategoria.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = subcategoria.getiUsuarioInsertaId();
+		this.vSubCategoriaDescripcion = subcategoria.getvSubCategoriaDescripcion();
 	}
 
 	/**

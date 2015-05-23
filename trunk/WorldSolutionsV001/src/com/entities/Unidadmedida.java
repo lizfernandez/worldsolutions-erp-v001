@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.UnidadmedidaVo;
+
 
 
 /**
@@ -33,6 +35,14 @@ public class Unidadmedida implements Serializable {
 
     public Unidadmedida() {
     }
+
+	public Unidadmedida(UnidadmedidaVo unidadMedida) {
+		
+		this.iUnidadMedidaId = unidadMedida.getiUnidadMedidaId();
+		this.cEstadoCodigo = unidadMedida.getcEstadoCodigo();
+		this.cUnidadMedidaCodigo = unidadMedida.getcUnidadMedidaCodigo();
+		this.vUnidadMedidaDescripcion = unidadMedida.getvUnidadMedidaDescripcion();
+	}
 
 	public int getiUnidadMedidaId() {
 		return iUnidadMedidaId;

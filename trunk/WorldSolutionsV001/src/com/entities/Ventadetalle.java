@@ -3,6 +3,9 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.ProductoVo;
+import com.entities.vo.VentadetalleVo;
+
 import java.util.Date;
 
 
@@ -62,10 +65,28 @@ public class Ventadetalle implements Serializable {
 	@JoinColumn(name="iPersonalId", nullable=false)	
     private Personal personal;    
     private int iSubCta;
-     private String vIdentificadorSession;
+    private String vIdentificadorSession;
     
     public Ventadetalle() {
     }
+
+	public Ventadetalle(VentadetalleVo ventaDetalleVo) {
+		
+		this.iVentaDetalleId = ventaDetalleVo.getiVentaDetalleId();
+		this.cEstadoCodigo = ventaDetalleVo.getcEstadoCodigo();
+		this.dFechaActualiza = ventaDetalleVo.getdFechaActualiza();
+		this.dFechaInserta = ventaDetalleVo.getdFechaInserta();
+		this.fVentaDetallePrecio = ventaDetalleVo.getfVentaDetallePrecio();
+		this.fVentaDetalleTotal = ventaDetalleVo.getfVentaDetalleTotal();
+		this.iUsuarioActualizaId = ventaDetalleVo.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = ventaDetalleVo.getiUsuarioInsertaId();
+		this.iVentaDetalleCantidad = ventaDetalleVo.getiVentaDetalleCantidad();
+		this.producto = ventaDetalleVo.getProducto() != null ? new Producto(ventaDetalleVo.getProducto()) : null;		
+		this.fDescuento = ventaDetalleVo.getfDescuento();
+		this.personal = ventaDetalleVo.getPersonal() != null ? new Personal(ventaDetalleVo.getPersonal()) : null;
+		this.iSubCta = ventaDetalleVo.getiSubCta();
+		this.vIdentificadorSession = ventaDetalleVo.getvIdentificadorSession();
+	}
 
 	/**
 	 * @return the iVentaDetalleId

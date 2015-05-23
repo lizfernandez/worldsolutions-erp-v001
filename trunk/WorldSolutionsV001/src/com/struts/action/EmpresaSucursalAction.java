@@ -129,7 +129,7 @@ public class EmpresaSucursalAction extends DispatchAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				sucursalform.setSucursal((Sucursal) genericaDao.findEndidad(sucursalform.getSucursal(), id));
+				sucursalform.setSucursal((Sucursal) genericaDao.findEndidad(Sucursal.class, id));
 				msn ="showEdit";
 				
 			}
@@ -186,7 +186,7 @@ public class EmpresaSucursalAction extends DispatchAction {
 					resultado = sucursalDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
-				  obj =  sucursalDao.findEndidad(obj,pForm.getiSucursalId());
+				  obj =  sucursalDao.findEndidad(Sucursal.class, pForm.getiSucursalId());
 				  obj= Util.comparar(obj, pForm.getSucursal());
 			      obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 					obj.setdFechaActualiza(Fechas.getDate());
@@ -321,7 +321,7 @@ public class EmpresaSucursalAction extends DispatchAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				sucursalform.setEmpresa((Empresa) genericaDao.findEndidad(sucursalform.getEmpresa(), id));
+				sucursalform.setEmpresa((Empresa) genericaDao.findEndidad(Empresa.class, id));
 				msn ="showEmpresaEdit";
 				
 			}
@@ -377,7 +377,7 @@ public class EmpresaSucursalAction extends DispatchAction {
 					resultado = sucursalDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
-				  obj =  sucursalDao.findEndidad(obj,pForm.getiEmpresaId());
+				  obj =  sucursalDao.findEndidad(Empresa.class, pForm.getiEmpresaId());
 				  obj= Util.comparar(obj, pForm.getEmpresa());
 			      obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 					obj.setdFechaActualiza(Fechas.getDate());
@@ -513,7 +513,7 @@ public class EmpresaSucursalAction extends DispatchAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				sucursalform.setAlmacen((Almacen) genericaDao.findEndidad(sucursalform.getAlmacen(), id));
+				sucursalform.setAlmacen((Almacen) genericaDao.findEndidad(Almacen.class, id));
 				msn ="showAlmacenEdit";
 				
 			}
@@ -569,7 +569,7 @@ public class EmpresaSucursalAction extends DispatchAction {
 					resultado = sucursalDao.insertarUnaEndidad(obj);
 				
 			} else if (pForm.getMode().equals("U")) {
-				  obj =  sucursalDao.findEndidad(obj,pForm.getiAlmacenId());
+				  obj =  sucursalDao.findEndidad(Almacen.class, pForm.getiAlmacenId());
 				  obj= Util.comparar(obj, pForm.getAlmacen());
 			      obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 					obj.setdFechaActualiza(Fechas.getDate());

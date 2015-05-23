@@ -1,9 +1,9 @@
 package com.entities.vo;
 
 import java.io.Serializable;
-
 import java.util.Date;
-import java.util.List;
+
+import com.entities.Usuario;
 
 public class UsuarioVo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,15 +17,29 @@ public class UsuarioVo implements Serializable {
 	private int iUsuarioInsertaId;
 	private String vUsuarioLogin;
 	private String vUsuarioPassword;
-	private List<SessionVo> sessions;
 	private PerfilVo perfil;
 	private PersonalVo personal;
-	private List<VentaVo> ventas;
 
     public UsuarioVo() {
     }
 
 	
+
+	public UsuarioVo(Usuario usuario) {
+		this.iUsuarioId = usuario.getiUsuarioId();
+		this.cEstadoCodigo = usuario.getcEstadoCodigo();
+		this.cUsuarioCodigo = usuario.getcUsuarioCodigo();
+		this.dFechaActualiza = usuario.getdFechaActualiza();
+		this.dFechaInserta = usuario.getdFechaInserta();
+		this.iUsuarioActualizaId = usuario.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = usuario.getiUsuarioInsertaId();
+		this.vUsuarioLogin = usuario.getvUsuarioLogin();
+		this.vUsuarioPassword = usuario.getvUsuarioPassword();
+		this.perfil = new PerfilVo(usuario.getPerfil());
+		this.personal = new PersonalVo(usuario.getPersonal());
+	}
+
+
 
 	/**
 	 * @return the iUsuarioId
@@ -187,16 +201,6 @@ public class UsuarioVo implements Serializable {
 		this.vUsuarioPassword = vUsuarioPassword;
 	}
 
-
-
-	public List<SessionVo> getSessions() {
-		return this.sessions;
-	}
-
-	public void setSessions(List<SessionVo> sessions) {
-		this.sessions = sessions;
-	}
-	
 	public PerfilVo getPerfil() {
 		return this.perfil;
 	}
@@ -211,14 +215,6 @@ public class UsuarioVo implements Serializable {
 
 	public void setPersonal(PersonalVo personal) {
 		this.personal = personal;
-	}
-	
-	public List<VentaVo> getVentas() {
-		return this.ventas;
-	}
-
-	public void setVentas(List<VentaVo> ventas) {
-		this.ventas = ventas;
 	}
 	
 }

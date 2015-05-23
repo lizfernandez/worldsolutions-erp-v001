@@ -1,10 +1,10 @@
 package com.entities.vo;
 
 import java.io.Serializable;
-
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
+
+import com.entities.Personal;
 
 public class PersonalVo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,10 +25,28 @@ public class PersonalVo implements Serializable {
     private float fSueldo;
 	private int iSexoId;
 	private TipodocumentoVo tipodocumento;
-	private List<UsuarioVo> usuarios;
 
     public PersonalVo() {
     }
+
+	public PersonalVo(Personal personal) {
+		this.iPersonalId = personal.getiPersonalId();
+		this.cEstadoCodigo = personal.getcEstadoCodigo();
+		this.cPersonalCodigo = personal.getcPersonalCodigo();
+		this.dFechaAcualiza = personal.getdFechaAcualiza();
+		this.dFechaInserta = personal.getdFechaInserta();
+		this.iUsuarioActualizaId = personal.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = personal.getiUsuarioInsertaId();
+		this.nPersonalNumeroDocumento = personal.getnPersonalNumeroDocumento();
+		this.vPersonalApellidoMaterno = personal.getvPersonalApellidoMaterno();
+		this.vPersonalApellidoPaterno = personal.getvPersonalApellidoPaterno();
+		this.vPersonalNombres = personal.getvPersonalNombres();
+		this.area = new AreaVo(personal.getArea());
+		this.ocupacion = new OcupacionVo(personal.getOcupacion());
+		this.fSueldo = personal.getfSueldo();
+		this.iSexoId = personal.getiSexoId();
+		this.tipodocumento = new TipodocumentoVo(personal.getTipodocumento());
+	}
 
 	/**
 	 * @return the iPersonalId
@@ -228,23 +246,6 @@ public class PersonalVo implements Serializable {
 	 */
 	public void setTipodocumento(TipodocumentoVo tipodocumento) {
 		this.tipodocumento = tipodocumento;
-	}
-	
-	
-
-	
-	/**
-	 * @return the usuarios
-	 */
-	public List<UsuarioVo> getUsuarios() {
-		return usuarios;
-	}
-
-	/**
-	 * @param usuarios the usuarios to set
-	 */
-	public void setUsuarios(List<UsuarioVo> usuarios) {
-		this.usuarios = usuarios;
 	}
 
 	/**

@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.entities.vo.ProductoVo;
+
 
 /**
  * The persistent class for the producto database table.
@@ -161,6 +163,38 @@ public class Producto implements Serializable {
 	
     public Producto() {
     }
+
+	public Producto(ProductoVo producto) {
+		this.iProductoId = producto.getiProductoId();
+		this.cEstadoCodigo = producto.getcEstadoCodigo();
+		this.cProductoCodigo = producto.getcProductoCodigo();
+		this.dFechaActualiza = producto.getdFechaActualiza();
+		this.dFechaInserta = producto.getdFechaInserta();
+		this.fProductoGanancia = producto.getfProductoGanancia();
+		this.fProductoGastosAdm = producto.getfProductoGastosAdm();
+		this.fProductoPrecioCompra = producto.getfProductoPrecioCompra();
+		this.fProductoPrecioVenta = producto.getfProductoPrecioVenta();
+		this.categoria = new Categoria(producto.getCategoria());
+		this.subcategoria = producto.getSubcategoria() != null ? new Subcategoria(producto.getSubcategoria()) : null;
+		
+		this.iProductoStockTotal = producto.getiProductoStockTotal();
+		this.unidadMedida = producto.getUnidadMedida() != null ? new Unidadmedida(producto.getUnidadMedida()) : null;
+		this.iProductoStockMaximo = producto.getiProductoStockMaximo();
+		this.iProductoStockMinimo = producto.getiProductoStockMinimo();
+		this.iUsuarioActualizaId = producto.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = producto.getiUsuarioInsertaId();
+		this.vProductoNombre = producto.getvProductoNombre();
+		this.fProductoDescuento = producto.getfProductoDescuento();
+		this.vFoto = producto.getvFoto();
+		this.moneda = producto.getMoneda()!= null ? new Moneda(producto.getMoneda()) : null;
+		this.produccion = producto.getProduccion() != null ? new Produccion(producto.getProduccion()): null;
+		this.iUMBase = producto.getiUMBase();
+		this.umBase = producto.getUmBase() != null ? new Unidadmedida(producto.getUmBase()) : null;
+		this.iUMPedido = producto.getiUMPedido();
+		this.umPedido = producto.getUmPedido() != null ? new Unidadmedida(producto.getUmPedido()) : null;
+		this.iUMSalida = producto.getiUMSalida();
+		this.umSalida = producto.getUmSalida() != null ? new Unidadmedida(producto.getUmSalida()) : null;
+	}
 
 	public int getiProductoId() {
 		return iProductoId;

@@ -131,7 +131,7 @@ public class UsuarioAction extends DispatchAction {
 			/** Seteamos el Usuarioform la clase Usuario **/
 			else if(mode.equals("U") || mode.equals("D")){				
 				int id = Integer.parseInt(request.getParameter("id"));
-				Usuarioform.setUsuario(UsuarioDao.findEndidad(Usuarioform.getUsuario(),id));
+				Usuarioform.setUsuario(UsuarioDao.findEndidad(Usuario.class,id));
 				msn ="showEdit";
 				
 			}
@@ -179,9 +179,9 @@ public class UsuarioAction extends DispatchAction {
 			/** Instanciamos las clase UsuarioForm y UsuarioDao **/
 			UsuarioForm pForm = (UsuarioForm) form;
 			Usuario obj =pForm.getUsuario();
-			obj.setPersonal(usuarioDao.findEndidad(new Personal(), pForm.getiPersonalId()));
-			obj.setPerfil(usuarioDao.findEndidad(new Perfil(), pForm.getiPerfilId()));
-			obj.setSucursal(usuarioDao.findEndidad(new Sucursal(), pForm.getiSucursalId()));
+			obj.setPersonal(usuarioDao.findEndidad(Personal.class, pForm.getiPersonalId()));
+			obj.setPerfil(usuarioDao.findEndidad(Perfil.class, pForm.getiPerfilId()));
+			obj.setSucursal(usuarioDao.findEndidad(Sucursal.class, pForm.getiSucursalId()));
 			
 			
 	        /** **/
@@ -193,7 +193,7 @@ public class UsuarioAction extends DispatchAction {
 				
 			} else if (pForm.getMode().equals("U")) {
 			
-				  obj =  usuarioDao.findEndidad(obj,pForm.getiUsuarioId());
+				  obj =  usuarioDao.findEndidad(Usuario.class,pForm.getiUsuarioId());
 				  obj= Util.comparar(obj, pForm.getUsuario());
 			
 				obj.setdFechaActualiza(Fechas.getDate());

@@ -2,6 +2,8 @@ package com.entities.vo;
 
 import java.io.Serializable;
 
+import com.entities.Unidadmedida;
+
 public class UnidadmedidaVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -12,6 +14,14 @@ public class UnidadmedidaVo implements Serializable {
 
     public UnidadmedidaVo() {
     }
+
+	public UnidadmedidaVo(Unidadmedida unidadMedida) {
+		
+		this.iUnidadMedidaId = unidadMedida.getiUnidadMedidaId();
+		this.cEstadoCodigo = unidadMedida.getcEstadoCodigo();
+		this.cUnidadMedidaCodigo = unidadMedida.getcUnidadMedidaCodigo();
+		this.vUnidadMedidaDescripcion = unidadMedida.getvUnidadMedidaDescripcion();
+	}
 
 	public int getiUnidadMedidaId() {
 		return iUnidadMedidaId;

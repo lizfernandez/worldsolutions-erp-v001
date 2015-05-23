@@ -2,6 +2,9 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.entities.vo.OcupacionVo;
+
 import java.util.Date;
 
 
@@ -35,6 +38,17 @@ public class Ocupacion implements Serializable {
 
     public Ocupacion() {
     }
+
+	public Ocupacion(OcupacionVo ocupacion) {
+		this.iOcupacionId = ocupacion.getiOcupacionId();
+		this.cOcupacionCodigo = ocupacion.getcOcupacionCodigo();
+		this.cEstadoCodigo = ocupacion.getcEstadoCodigo();
+		this.dFechaActualiza = ocupacion.getdFechaActualiza();
+		this.dFechaInserta = ocupacion.getdFechaInserta();
+		this.iUsuarioInserta = ocupacion.getiUsuarioInserta();
+		this.iUsuarioModifica = ocupacion.getiUsuarioModifica();
+		this.vOcupacionDescripcion = ocupacion.getvOcupacionDescripcion();
+	}
 
 	/**
 	 * @return the iOcupacionId

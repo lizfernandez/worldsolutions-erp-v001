@@ -116,7 +116,7 @@ public class IngresoProductoAction extends BaseAction {
 			if(mode!=null && mode.equals("LEP")){
 				
 				int idProveedor = Integer.parseInt(request.getParameter("id"));				
-				objform.setProveedor(generica.findEndidad(objform.getProveedor(),idProveedor));
+				objform.setProveedor(generica.findEndidad(Proveedor.class,idProveedor));
 				 
 				 
 				 /**Seteamos los valores en las listas**/
@@ -370,7 +370,7 @@ public class IngresoProductoAction extends BaseAction {
 			
 		
 			int id = Integer.parseInt(request.getParameter("id"));
-			Ingresoproductodevolucion ingresoProductoDev = ingresogenericaDao.findEndidad(ingresoproductoform.getIngresoProductoDev(),id);			
+			Ingresoproductodevolucion ingresoProductoDev = ingresogenericaDao.findEndidad(Ingresoproductodevolucion.class,id);			
 			ingresoproductoform.setIngresoProductoDev(ingresoProductoDev);
 			    
 			/***COMPRAS FACTURA, BOLETA, NOTA DE PEDIDO***/				
@@ -520,7 +520,7 @@ public class IngresoProductoAction extends BaseAction {
 				float fPrecioVenta = Float.parseFloat(request.getParameter("fPrecioVenta"));
 				float fTotal = Float.parseFloat(request.getParameter("fTotal"));
 				
-				Producto producto  = genericaDao.findEndidad(productoBean,iProductoId);	
+				Producto producto  = genericaDao.findEndidad(Producto.class,iProductoId);	
 				
 				productoBean.setiProductoId(producto.getiProductoId());
 				productoBean.setcProductoCodigo(producto.getcProductoCodigo());
@@ -739,7 +739,7 @@ public class IngresoProductoAction extends BaseAction {
 			String tipoDocumento = request.getParameter("idTipoDocumento");
 			
 			
-			Ingresoproducto ingresoProducto = ingresogenericaDao.findEndidad(ingresoproductoform.getIngresoProducto(),id);
+			Ingresoproducto ingresoProducto = ingresogenericaDao.findEndidad(Ingresoproducto.class,id);
 			
 			ingresoproductoform.setIngresoProducto(ingresoProducto);
 			ingresoproductoform.setTipoMoneda(ingresoProducto.getvTipoCompra());
@@ -906,7 +906,7 @@ public class IngresoProductoAction extends BaseAction {
 		      			  ingresoDetalle.setdFechaInserta(Fechas.getDate());
 		      			  ingresoDetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
 				      	   
-		      			  Producto producto = ingresogenericaDao.findEndidad(ingresoDetalle.getProducto(), ingresoDetalle.getProducto().getiProductoId());
+		      			  Producto producto = ingresogenericaDao.findEndidad(Producto.class, ingresoDetalle.getProducto().getiProductoId());
 		      			    
 	      			    /******************************************/
 						/**Insertamos detalle de lista de precios**/
@@ -962,7 +962,7 @@ public class IngresoProductoAction extends BaseAction {
 								kardex.setProducto(producto);
 								kardex.setIngresoProducto(obj);
 								kardex.setdFecha(Fechas.getDate());						
-								kardex.setvConcepto(Constantes.conceptoCompra+ingresogenericaDao.findEndidad(pForm.getTipodocumentogestion(), pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()+Constantes.nro+obj.getnIngresoProductoNumero());						
+								kardex.setvConcepto(Constantes.conceptoCompra+ingresogenericaDao.findEndidad(Tipodocumentogestion.class, pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()+Constantes.nro+obj.getnIngresoProductoNumero());						
 								kardex.setiCantIngresoProducto(ingresoDetalle.getiIngresoProductoDetalleCantidad());
 								kardex.setfPuIngresoProducto(ingresoDetalle.getfIngresoProductoDetallePrecio());
 								kardex.setfTotalngresoProducto(ingresoDetalle.getfIngresoProductoDetalleTotal());						
@@ -1029,7 +1029,7 @@ public class IngresoProductoAction extends BaseAction {
 			/*****************************************************************************************/
 			   else if (pForm.getMode().equals("U") || pForm.getMode().equals("UE")) {
 				
-			    obj = ingresogenericaDao.findEndidad(pForm.getIngresoProducto(),pForm.getIngresoProducto().getiIngresoProductoId()); 
+			    obj = ingresogenericaDao.findEndidad(Ingresoproducto.class,pForm.getIngresoProducto().getiIngresoProductoId()); 
 				obj= Util.comparar(obj, pForm.getIngresoProducto());//pForm.getVenta();
 				obj.setiUsuarioActualizaId(usu.getiUsuarioId());
 				obj.setdFechaActualiza(Fechas.getDate());
@@ -1042,7 +1042,7 @@ public class IngresoProductoAction extends BaseAction {
 							  /***************************/
 							  /** Obtenemos el producto */
 							  /**************************/
-							  Producto producto = ingresogenericaDao.findEndidad(ingresoDetalle.getProducto(), ingresoDetalle.getProducto().getiProductoId());
+							  Producto producto = ingresogenericaDao.findEndidad(Producto.class, ingresoDetalle.getProducto().getiProductoId());
 							
 							  /*****************************************/
 							  /** Registro nuevo del detalle de compra**/
@@ -1108,7 +1108,7 @@ public class IngresoProductoAction extends BaseAction {
 											kardex.setProducto(producto);
 											kardex.setIngresoProducto(obj);
 											kardex.setdFecha(Fechas.getDate());
-											kardex.setvConcepto(Constantes.conceptoCompra+ingresogenericaDao.findEndidad(pForm.getTipodocumentogestion(), pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()+Constantes.nro+obj.getnIngresoProductoNumero());
+											kardex.setvConcepto(Constantes.conceptoCompra+ingresogenericaDao.findEndidad(Tipodocumentogestion.class, pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()+Constantes.nro+obj.getnIngresoProductoNumero());
 											kardex.setiCantIngresoProducto(ingresoDetalle.getiIngresoProductoDetalleCantidad());
 											kardex.setfPuIngresoProducto(ingresoDetalle.getfIngresoProductoDetallePrecio());
 											kardex.setfTotalngresoProducto(ingresoDetalle.getfIngresoProductoDetalleTotal());
@@ -1351,7 +1351,7 @@ public class IngresoProductoAction extends BaseAction {
 	      	   if(sesion.getAttribute("listaIngresoProductoDetalle")!=null){
 	      		    /**Actualizamos el estado de la Compra**/
 	      		     listaProductoDetalle= (List<Ingresoproductodetalle>) sesion.getAttribute("listaIngresoProductoDetalle");
-	    			 objIngresoProducto = ingresogenericaDao.findEndidad(listaProductoDetalle.get(0).getIngresoproducto(), listaProductoDetalle.get(0).getIngresoproducto().getiIngresoProductoId()) ;	      			
+	    			 objIngresoProducto = ingresogenericaDao.findEndidad(Ingresoproducto.class, listaProductoDetalle.get(0).getIngresoproducto().getiIngresoProductoId()) ;	      			
 	    			 objIngresoProducto.setvEstadoDocumento(pForm.getvEstadoDocumento());
 	    			
 		      	   for(Ingresoproductodetalle ingresoDetalle:listaProductoDetalle){
@@ -1375,7 +1375,7 @@ public class IngresoProductoAction extends BaseAction {
 		      			  /***************************/
 						  /** Obtenemos el producto */
 						  /**************************/
-						  Producto producto = ingresogenericaDao.findEndidad(ingresoDetalle.getProducto(), ingresoDetalle.getProducto().getiProductoId());
+						  Producto producto = ingresogenericaDao.findEndidad(Producto.class, ingresoDetalle.getProducto().getiProductoId());
 											    
 						    /******************************************/
 							/**Insertamos detalle de lista de precios**/
@@ -1458,7 +1458,7 @@ public class IngresoProductoAction extends BaseAction {
 		   	 listaProductoDetalle =(List<Ingresoproductodetalle>) sesion.getAttribute("listaIngresoProductoDetalle");
 		   	 int i=0;
 				   if(sesion.getAttribute("listaIngresoProductoDetalle")!=null){
-					     objIngresoProducto = ingresogenericaDao.findEndidad(listaProductoDetalle.get(0).getIngresoproducto(),listaProductoDetalle.get(0).getIngresoproducto().getiIngresoProductoId()) ;	      			
+					     objIngresoProducto = ingresogenericaDao.findEndidad(Ingresoproducto.class, listaProductoDetalle.get(0).getIngresoproducto().getiIngresoProductoId()) ;	      			
 		    			 objIngresoProducto.setvEstadoDocumento(pForm.getvEstadoDocumento());
 		    			 
 			      	   for(Ingresoproductodetalle ingresoDetalle: listaProductoDetalle){
@@ -1466,7 +1466,7 @@ public class IngresoProductoAction extends BaseAction {
 			      		      /***************************/
 							  /** Obtenemos el producto */
 							  /**************************/
-							  Producto producto = ingresogenericaDao.findEndidad(ingresoDetalle.getProducto(), ingresoDetalle.getProducto().getiProductoId());
+							  Producto producto = ingresogenericaDao.findEndidad(Producto.class, ingresoDetalle.getProducto().getiProductoId());
 							
 			      		   
 			      		 /***Actualizamos la cantidad del producto en stock, el precio de compra y venta*****/
@@ -1604,7 +1604,7 @@ public class IngresoProductoAction extends BaseAction {
 		IngresoProductoForm pForm = (IngresoProductoForm) form;
 		if(pForm.getvTipoImpresion().equals("ingresoDevolucion")) {
 		
-			Ingresoproductodevolucion ingresoDev = ingresoProDao.findEndidadBD(new Ingresoproductodevolucion(), "iIngresoProductoDevolucionId", pForm.getIngresoProductoDev().getiIngresoProductoDevolucionId());
+			Ingresoproductodevolucion ingresoDev = ingresoProDao.findEndidadBD(Ingresoproductodevolucion.class, "iIngresoProductoDevolucionId", pForm.getIngresoProductoDev().getiIngresoProductoDevolucionId());
 			
 			impresora.agregarLineaCentrada(ingresoDev.getTipoDocumento().getvTipoDocumentoDescripcion() + " ELECTRONICO: " + ingresoDev.getIngresoProducto().getnIngresoProductoNumero());
     		impresora.agregarLinea("FECHA EMISION: " + Fechas.fechaConFormato("dd/MM/yyyy HH:mm:SS"));			

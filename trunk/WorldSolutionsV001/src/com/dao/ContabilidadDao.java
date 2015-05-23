@@ -224,9 +224,8 @@ public class ContabilidadDao  extends GenericaDao  implements IContabilidadDao {
 		for(Object[] obj:listaObjeto){
 			if(i<=pagFin){
 			Libromayor libroMayor= new Libromayor();
-			Cuenta cuenta = new Cuenta();
 			libroMayor.setiLibroMayorId(Integer.parseInt(obj[0].toString()));
-			libroMayor.setCuenta(genericaDao.findEndidad(cuenta, Integer.parseInt(obj[1].toString())));
+			libroMayor.setCuenta(genericaDao.findEndidad(Cuenta.class, Integer.parseInt(obj[1].toString())));
 			libroMayor.setfMontoDebe(Float.parseFloat(obj[2].toString()));
 			libroMayor.setfMontoHaber(Float.parseFloat(obj[3].toString()));
 			libroMayor.setiPeriodoId(Integer.parseInt(obj[4].toString()));

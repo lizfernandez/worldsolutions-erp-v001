@@ -2,6 +2,9 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.entities.vo.AreaVo;
+
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +50,17 @@ public class Area implements Serializable {
 
     public Area() {
     }
+
+	public Area(AreaVo area) {
+		this.iAreaId = area.getiAreaId();
+		this.cAreaCodigo = area.getcAreaCodigo();
+		this.cEstadoCodigo = area.getcEstadoCodigo();
+		this.dFechaActualiza = area.getdFechaActualiza();
+		this.dFechaInserta = area.getdFechaInserta();
+		this.iUsuarioInsertaId = area.getiUsuarioInsertaId();
+		this.iUsuarioModificaId = area.getiUsuarioModificaId();
+		this.vAreaDescripcion = area.getvAreaDescripcion();
+	}
 
 	/**
 	 * @return the iAreaId

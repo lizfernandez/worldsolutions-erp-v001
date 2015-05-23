@@ -33,6 +33,7 @@ import com.entities.Ingresoproducto;
 import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.vo.EstadoCuentaVo;
+import com.entities.vo.VentaVo;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.Impresora;
@@ -41,6 +42,58 @@ import com.util.Impresora;
 public abstract class BaseAction  extends DispatchAction {
 
 	protected List<EstadoCuentaVo> listarEstadoCuentaCliente(Venta venta, VentaDao ventaDao, int paginaInicio, int paginaFin) {
+
+		List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
+		/** Accedemos al Dao **/
+		List<Venta> listaVenta = ventaDao.listaEstadoCuentaPorCliente(paginaInicio, paginaFin, venta, 0);
+		float montosTotales = 0;
+		float pagosTotales = 0;
+		float saldosTotales = 0;
+		
+		for (Venta obj : listaVenta) {
+			float pagoTotal = 0;
+			float saldoTotal = 0;
+			EstadoCuentaVo estadoCuenta = new EstadoCuentaVo();
+
+			estadoCuenta.setVenta(obj);
+			if (obj.getEstadocuentaclientes().size() > 0) {
+
+				for (Estadocuentacliente obje : obj.getEstadocuentaclientes()) {
+					if (obje.getcEstadoCodigo().equals(Constantes.estadoActivo)) {
+						pagoTotal += obje.getfMontoPago();
+						pagosTotales += obje.getfMontoPago();
+						// e.setEstadocuenta(obj.getEstadocuentaclientes());
+					}
+				} // for
+
+			} // if
+
+			saldoTotal = obj.getfVentaTotal() - pagoTotal;
+			montosTotales += obj.getfVentaTotal();
+			saldosTotales = (montosTotales - pagosTotales);
+			estadoCuenta.setPagoTotal(pagoTotal);
+			estadoCuenta.setSaldoTotal(saldoTotal);
+
+			if (saldoTotal > 0) {
+				listaEstadoCuenta.add(estadoCuenta);
+			}
+
+		}
+
+		
+		int indice = listaEstadoCuenta.size() - 1;
+		if(indice >= 0){
+			listaEstadoCuenta.get(indice).setMontosTotales(montosTotales);
+			listaEstadoCuenta.get(indice).setPagosTotales(pagosTotales);
+			listaEstadoCuenta.get(indice).setSaldosTotales(saldosTotales);
+		}
+		
+
+		return listaEstadoCuenta;
+
+	}
+	
+	protected List<EstadoCuentaVo> listarEstadoCuentaCliente(VentaVo venta, VentaDao ventaDao, int paginaInicio, int paginaFin) {
 
 		List<EstadoCuentaVo> listaEstadoCuenta = new ArrayList<EstadoCuentaVo>();
 		/** Accedemos al Dao **/

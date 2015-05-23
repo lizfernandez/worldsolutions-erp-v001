@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.ProduccionVo;
+
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +54,21 @@ public class Produccion implements Serializable {
 	private String vDescripcion;
     public Produccion() {
     }
+
+	public Produccion(ProduccionVo produccion) {
+		
+		this.iProduccionId = produccion.getiProduccionId();
+		this.cEstadoCodigo = produccion.getcEstadoCodigo();
+		this.dFechaActualiza = produccion.getdFechaActualiza();
+		this.dFechaInserta = produccion.getdFechaInserta();
+		this.fCostoTotal = produccion.getfCostoTotal();
+		this.fCostoUni = produccion.getfCostoUni();
+		this.iCantidad = produccion.getiCantidad();
+		this.iUsuarioActualiza = produccion.getiUsuarioActualiza();
+		this.iUsuarioInsertaId = produccion.getiUsuarioInsertaId();
+		this.fOtrosCostos = produccion.getfOtrosCostos();
+//		this.produccionDetalle =   produccion.getProduccionDetalle();
+	}
 
 	/**
 	 * @return the iProduccionId

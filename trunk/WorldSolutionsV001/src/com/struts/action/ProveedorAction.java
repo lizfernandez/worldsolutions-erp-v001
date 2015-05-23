@@ -222,7 +222,7 @@ public class ProveedorAction extends BaseAction {
 			else if(mode.equals("U") || mode.equals("D")){
 				
 				int id = Integer.parseInt(request.getParameter("id"));
-				proveedorform.setProveedor(proveedorDao.findEndidad(proveedorform.getProveedor(),id));
+				proveedorform.setProveedor(proveedorDao.findEndidad(Proveedor.class,id));
 				listaProvincia = poblacionDao.listaProvincia(String.valueOf(proveedorform.getiPoblacionId()).substring(0,2));// codigo de provincia lima
 			    listaDistrito = poblacionDao.listaDistrito(String.valueOf(proveedorform.getiPoblacionId()).substring(0,4));// codigo distrito lima
 			   
@@ -290,7 +290,7 @@ public class ProveedorAction extends BaseAction {
 			} else if (pForm.getMode().equals("U")) {
 				//Proveedor obj =pForm.getProveedor();
 				
-				obj = proveedorDao.findEndidad(pForm.getProveedor(), pForm.getProveedor().getiProveedorId());
+				obj = proveedorDao.findEndidad(Proveedor.class, pForm.getProveedor().getiProveedorId());
 				obj = Util.comparar(obj, pForm.getProveedor());
 				
 				obj.setdFechaActualiza(Fechas.getDate());

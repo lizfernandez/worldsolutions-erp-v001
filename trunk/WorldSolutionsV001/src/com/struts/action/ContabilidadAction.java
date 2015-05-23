@@ -548,7 +548,7 @@ public class ContabilidadAction extends BaseAction {
 			}
 			
 			Periodo periodo = new Periodo();
-			periodo = contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo = contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio()) +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
 			
 			 /** Seteamos las clase ProductoForm **/
@@ -630,7 +630,7 @@ public class ContabilidadAction extends BaseAction {
 			contabilidadForm.setTotalDebe(totalDebe);
 			contabilidadForm.setTotalHaber(totalHaber);
 			Periodo periodo = new Periodo();
-			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo=contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio())
 					                        +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
 			
@@ -771,7 +771,7 @@ public class ContabilidadAction extends BaseAction {
 			contabilidadForm.setTotalfMontoBalanceA(totalBalanceA);
 			contabilidadForm.setTotalfMontoBalanceP(totalBalanceP);
 			Periodo periodo = new Periodo();
-			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo=contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio())
 					                        +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
 			
@@ -845,7 +845,7 @@ public class ContabilidadAction extends BaseAction {
 			contabilidadForm.setPagInicio(pagina);
 			
 			Periodo periodo = new Periodo();
-			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo=contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio())
 					                        +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
 			
@@ -912,7 +912,7 @@ public class ContabilidadAction extends BaseAction {
 			contabilidadForm.setPaginas(paginas);
 			contabilidadForm.setPagInicio(pagina);
 			Periodo periodo = new Periodo();
-			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo=contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio())
 					                        +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
 			double totalDebe=0.0;
@@ -1006,7 +1006,7 @@ public class ContabilidadAction extends BaseAction {
 			contabilidadForm.setTotalDebe(totalDebe);
 			contabilidadForm.setTotalHaber(totalHaber);
 			Periodo periodo = new Periodo();
-			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo=contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio())
 					                        +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
 			
@@ -1073,7 +1073,7 @@ public class ContabilidadAction extends BaseAction {
 				int id = Integer.parseInt(request.getParameter("id"));
 				/** Instantacia al AreaForm **/			
 				
-				Librodiario librodiario = genericaDao.findEndidad(contabilidadform.getLibrodiario(), id);
+				Librodiario librodiario = genericaDao.findEndidad(Librodiario.class, id);
 				contabilidadform.setLibrodiario(librodiario);
 				vCodigo = librodiario.getCuenta().getvCodigo();
 				
@@ -1364,7 +1364,7 @@ public class ContabilidadAction extends BaseAction {
 			contabilidadForm.setPaginas(paginas);
 			contabilidadForm.setPagInicio(pagina);
 			Periodo periodo = new Periodo();
-			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo=contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			contabilidadForm.setMes(" mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio())
                     +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")");
            
@@ -1469,7 +1469,7 @@ public class ContabilidadAction extends BaseAction {
 			/** Seteamos el Usuarioform la clase Usuario **/
 			else if(mode.equals("U") || mode.equals("D")){				
 				int id = Integer.parseInt(request.getParameter("id"));
-				Planilla planilla = contabilidadDao.findEndidad(contabilidadForm.getPlanilla(),id);
+				Planilla planilla = contabilidadDao.findEndidad(Planilla.class,id);
 				contabilidadForm.setPlanilla(planilla);
 				 
 					   contabilidadForm.setfPorApoESSALUD(planilla.getfPorApoESSALUD());
@@ -1526,7 +1526,7 @@ public class ContabilidadAction extends BaseAction {
 			/** Instanciamos las clase UsuarioForm y UsuarioDao **/
 			ContabilidadForm pForm = (ContabilidadForm) form;
 			Planilla obj =pForm.getPlanilla();
-			obj.setPersonal(contabilidadDao.findEndidad(new Personal(), pForm.getiPersonalId()));
+			obj.setPersonal(contabilidadDao.findEndidad(Personal.class, pForm.getiPersonalId()));
 			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 			int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 			
@@ -1567,7 +1567,7 @@ public class ContabilidadAction extends BaseAction {
 				//Usuario obj =pForm.getUsuario();
 				
 				
-				  obj =  contabilidadDao.findEndidad(obj,pForm.getiPlanillaId());
+				  obj =  contabilidadDao.findEndidad(Planilla.class, pForm.getiPlanillaId());
 				  obj= Util.comparar(obj, pForm.getPlanilla());
 				obj.setdFechaActualiza(Fechas.timestamp());
 				obj.setiUsuarioActualiza(usu.getiUsuarioId());
@@ -1646,7 +1646,7 @@ public class ContabilidadAction extends BaseAction {
 			ContabilidadDao contabilidadDao= new ContabilidadDao();
 			List<Librodiario> listaCajaBanco =  contabilidadDao.listaCajaChica(0, 1000, objform.getLibrodiario(), iPeriodoId);
 			Periodo periodo = new Periodo();
-			periodo = contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo = contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			String detallePeriodo = " mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio()) +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")";
 			
 			beans.put("cuentasLibroDiario", listaCajaBanco);
@@ -1659,7 +1659,7 @@ public class ContabilidadAction extends BaseAction {
 			List<Planilla> listaPlanilla =  contabilidadDao.listaPlanilla(0, 1000, objform.getPlanilla(), iPeriodoId);
 			
 			Periodo periodo = new Periodo();
-			periodo=contabilidadDao.findEndidad(periodo, iPeriodoId);
+			periodo=contabilidadDao.findEndidad(Periodo.class, iPeriodoId);
 			String detallePeriodo = " mes: "+Util.mes(Fechas.mesFecha(periodo.getdFechaInicio()))+" ("+Fechas.fechaDDMMYY(periodo.getdFechaInicio()) +" - "+Fechas.fechaDDMMYY(periodo.getdFechaFin())+")";
 			
 			beans.put("planillasPersonal", listaPlanilla);

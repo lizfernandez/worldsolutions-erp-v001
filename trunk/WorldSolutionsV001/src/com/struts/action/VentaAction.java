@@ -46,12 +46,17 @@ import com.entities.Personal;
 import com.entities.Preciosproducto;
 import com.entities.Producto;
 import com.entities.Tipodocumentogestion;
-import com.entities.Unidadmedida;
 import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.Ventadetalle;
 import com.entities.Ventadevolucion;
 import com.entities.Ventadevoluciondetalle;
+import com.entities.converter.VentaConverter;
+import com.entities.vo.PersonalVo;
+import com.entities.vo.ProductoVo;
+import com.entities.vo.SucursalVo;
+import com.entities.vo.VentaVo;
+import com.entities.vo.VentadetalleVo;
 import com.google.gson.Gson;
 import com.struts.form.VentaForm;
 import com.util.Constantes;
@@ -79,17 +84,11 @@ public class VentaAction extends BaseAction {
 	 * @throws IOException
 	 * @throws JRException
 	 */
-	public ActionForward listaVenta(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
+	public ActionForward listaVenta(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws ParseException, IOException, JRException {
 
 		/*** Validamos la session activa y logeada ***/
-		// HttpSession sesion = request.getSession();
 		String msn = "";
-		/*
-		 * if(sesion.getId()!=(sesion.getAttribute("id"))){
-		 * response.sendRedirect("login.do?metodo=logout"); } else{
-		 */
 		/*** Inicializamos variables ***/
 		int pagina = Paginacion.paginaInicial;
 		int pagInicio = Paginacion.paginaInicial;
@@ -100,6 +99,8 @@ public class VentaAction extends BaseAction {
 		/** Seteamos los valores en las listas **/
 		List<Venta> listaVenta = new ArrayList<Venta>();
 		List<Venta> listaVentaTotal = new ArrayList<Venta>();
+		
+		List<VentaVo> listaVO = new ArrayList<VentaVo>();
 		List<Long> paginas = new ArrayList<Long>();
 
 		/** Instanciamos la Clase VentaForm **/
@@ -111,9 +112,8 @@ public class VentaAction extends BaseAction {
 		HttpSession sesion = request.getSession();
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		
-		if (!Constantes.usuAdministrador.equals(usu.getPerfil()
-				.getvPerfilDescripcion())) {
-			objform.getVenta().setSucursal(usu.getSucursal());
+		if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+			objform.getVenta().setSucursal(new SucursalVo(usu.getSucursal()));
 		}
 
 		/** Lista de personal en Modal Popup ***/
@@ -131,18 +131,14 @@ public class VentaAction extends BaseAction {
 			 ***/
 
 			else if (mode != null && (mode.equals("LP") || mode.equals("LPL"))) {
-				listaVenta = ventaDao.listaVenta(Paginacion.pagInicio(pagina),
-						Paginacion.pagFin(), objform.getVenta());
-
+				listaVenta = ventaDao.listaVenta(Paginacion.pagInicio(pagina), Paginacion.pagFin(), objform.getVenta());
+				listaVO = VentaConverter.aListVentaVo(listaVenta);
 				/** Consultamos el total de registros segun criterio **/
-				listaVentaTotal = ventaDao.listaVenta(
-						Paginacion.pagInicio(pagInicio),
-						Paginacion.pagFinMax(), objform.getVenta());
+				listaVentaTotal = ventaDao.listaVenta(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(), objform.getVenta());
 
 				/** Obtenemos el total del paginas ***/
-				paginas = Paginacion
-						.listPaginas((long) (listaVentaTotal.size()));
-				objform.setLista(listaVenta);
+				paginas = Paginacion.listPaginas((long) (listaVentaTotal.size()));
+				objform.setLista(listaVO);
 
 				msn = "showListPopupVentas";
 
@@ -150,39 +146,34 @@ public class VentaAction extends BaseAction {
 
 			/** Lista de ventas en el modulo de Contabilidad ***/
 			else if (mode.equals("LContabilidad")) {
-				listaVenta = ventaDao.listaVenta(Paginacion.pagInicio(pagina),
-						Paginacion.pagFin(), objform.getVenta());
-
+				
+				listaVenta = ventaDao.listaVenta(Paginacion.pagInicio(pagina),Paginacion.pagFin(), objform.getVenta());
+				listaVO = VentaConverter.aListVentaVo(listaVenta);
+				
 				/** Consultamos el total de registros segun criterio **/
-				listaVentaTotal = ventaDao.listaVenta(
-						Paginacion.pagInicio(pagInicio),
-						Paginacion.pagFinMax(), objform.getVenta());
+				listaVentaTotal = ventaDao.listaVenta(Paginacion.pagInicio(pagInicio), Paginacion.pagFinMax(), objform.getVenta());
 
 				/** Obtenemos el total del paginas ***/
-				paginas = Paginacion
-						.listPaginas((long) (listaVentaTotal.size()));
-				objform.setLista(listaVenta);
+				paginas = Paginacion.listPaginas((long) (listaVentaTotal.size()));
+				objform.setLista(listaVO);
 
 				msn = "showListVentaContabilidad";
 
 			}
 
 		}// if mode != null
-
 		else {
 
-			listaVenta = ventaDao.listaVenta(Paginacion.pagInicio(pagina),
-					Paginacion.pagFin(), objform.getVenta());
+			listaVenta = ventaDao.listaVenta(Paginacion.pagInicio(pagina), Paginacion.pagFin(), objform.getVenta());
+			listaVO = VentaConverter.aListVentaVo(listaVenta);
 
 			/** Consultamos el total de registros segun criterio **/
-			listaVentaTotal = ventaDao.listaVenta(
-					Paginacion.pagInicio(pagInicio), Paginacion.pagFinMax(),
-					objform.getVenta());
+			listaVentaTotal = ventaDao.listaVenta(Paginacion.pagInicio(pagInicio), Paginacion.pagFinMax(), objform.getVenta());
 
 			/** Obtenemos el total del paginas ***/
 			paginas = Paginacion.listPaginas((long) (listaVentaTotal.size()));
 
-			objform.setLista(listaVenta);
+			objform.setLista(listaVO);
 
 			/*** Redirecionamos al ***/
 			msn = "showList";
@@ -207,9 +198,7 @@ public class VentaAction extends BaseAction {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public ActionForward listaVentaDevolucion(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws ParseException, IOException {
+	public ActionForward listaVentaDevolucion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
 
 		/*** Validamos la session activa y logeada ***/
 		String msn = "";
@@ -234,19 +223,14 @@ public class VentaAction extends BaseAction {
 
 		HttpSession sesion = request.getSession();
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
-		if (!Constantes.usuAdministrador.equals(usu.getPerfil()
-				.getvPerfilDescripcion())) {
-			ventaform.getVenta().setSucursal(usu.getSucursal());
+		if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+			ventaform.getVenta().setSucursal(new SucursalVo(usu.getSucursal()));
 		}
 
-		listaVentaDevolucion = ventaDao.listaVentaDevolucion(
-				Paginacion.pagInicio(pagina), Paginacion.pagFin(),
-				ventaform.getVenta());
+		listaVentaDevolucion = ventaDao.listaVentaDevolucion(Paginacion.pagInicio(pagina), Paginacion.pagFin(),ventaform.getVenta());
 
 		/** Consultamos el total de registros segun criterio **/
-		VentadevolucionTotal = ventaDao.listaVentaDevolucion(
-				Paginacion.pagInicio(pagInicio), Paginacion.pagFinMax(),
-				ventaform.getVenta());
+		VentadevolucionTotal = ventaDao.listaVentaDevolucion(Paginacion.pagInicio(pagInicio), Paginacion.pagFinMax(),ventaform.getVenta());
 
 		/** Obtenemos el total del paginas ***/
 		paginas = Paginacion.listPaginas((long) (VentadevolucionTotal.size()));
@@ -273,9 +257,7 @@ public class VentaAction extends BaseAction {
 	 * @param response
 	 * @return ActionForward
 	 */
-	public ActionForward mantenimientoVentaDevolucion(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ActionForward mantenimientoVentaDevolucion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession sesion = request.getSession();
 		String mode = request.getParameter("mode");
@@ -294,18 +276,15 @@ public class VentaAction extends BaseAction {
 		List<Ventadetalle> lista = new ArrayList<Ventadetalle>();
 		List<Ventadetalle> listadev = new ArrayList<Ventadetalle>();
 		List<Ventadevoluciondetalle> listadevOriginal = new ArrayList<Ventadevoluciondetalle>();
-		List<Formapago> listaFormapago = ventaDao
-				.listaEntidadGenericaSinCodigo("Formapago");
-		List<Tipodocumentogestion> listaTipoDoc = ventaDao
-				.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
+		List<Formapago> listaFormapago = ventaDao.listaEntidadGenericaSinCodigo("Formapago");
+		List<Tipodocumentogestion> listaTipoDoc = ventaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
 		List<Estado> listaEstadoDocumento = Util.listaEstadoDocumento();
 		Moneda moneda = (Moneda) sesion.getAttribute("Moneda");
 		ventaform.setTipoMoneda(moneda.getcModenaCodigo());
 		ventaform.setIGVVentas(sesion.getAttribute("IGVVentas").toString());
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
-		// List<Tipodocumentogestion> listaDocumentoGestion =
-		// Util.listaDocGest();
+
 		/**
 		 * LLamamos al formulario mantenimientoVenta.jsp para la insercion de
 		 * datos
@@ -316,9 +295,7 @@ public class VentaAction extends BaseAction {
 			sesion.removeAttribute("listaVentaDetalle");
 			sesion.removeAttribute("listaVentaDetalleCompra");
 			sesion.removeAttribute("listaVentaDetalleOriginal");
-			ventaform.getVentaDev().setnNroNotaCredito(
-					ventaDao.callSPNro_Documento(7, "ventaDevolucion",
-							"nNroNotaCredito",usu.getSucursal().getiSucursalId()));
+			ventaform.getVentaDev().setnNroNotaCredito(ventaDao.callSPNro_Documento(7, "ventaDevolucion", "nNroNotaCredito",usu.getSucursal().getiSucursalId()));
 
 		}
 
@@ -330,12 +307,10 @@ public class VentaAction extends BaseAction {
 		else if (mode.equals("U")) {
 
 			int id = Integer.parseInt(request.getParameter("id"));
-			Ventadevolucion ventaDev = ventaDao.findEndidad(
-					ventaform.getVentaDev(), id);
+			Ventadevolucion ventaDev = ventaDao.findEndidad(Ventadevolucion.class, id);
 			ventaform.setVentaDev(ventaDev);
-			ventaform.setVenta(ventaDev.getVenta());
-			ventaform.setvClienteDireccion(ventaDev.getVenta().getCliente()
-					.getDireccionclientes().get(0).getvDireccion());
+			ventaform.setVenta(new VentaVo( ventaDev.getVenta()));
+			ventaform.setvClienteDireccion(ventaDev.getVenta().getCliente().getDireccionclientes().get(0).getvDireccion());
 
 			/*** COMPRAS FACTURA, BOLETA, NOTA DE PEDIDO ***/
 			/*** LISTA DE DETALLE DE COMPRAS ***/
@@ -345,13 +320,9 @@ public class VentaAction extends BaseAction {
 			sesion.removeAttribute("listaVentaDetalleOriginal");
 
 			for (Ventadetalle e : ventaDev.getVenta().getVentadetalles()) {
-				for (Ventadevoluciondetalle eobj : ventaDev
-						.getVentadevoluciondetalles()) {
+				for (Ventadevoluciondetalle eobj : ventaDev.getVentadevoluciondetalles()) {
 					if (e.getcEstadoCodigo().equals(Constantes.estadoActivo)
-							&& e.getProducto()
-									.getcProductoCodigo()
-									.equals(eobj.getProducto()
-											.getcProductoCodigo())) {
+							&& e.getProducto().getcProductoCodigo().equals(eobj.getProducto().getcProductoCodigo())) {
 
 						Venta venta = new Venta();
 						Ventadetalle ventaDetalle = new Ventadetalle();
@@ -359,53 +330,38 @@ public class VentaAction extends BaseAction {
 
 						venta.setiVentaId(e.getVenta().getiVentaId());
 						venta.setfVentaIGV(e.getVenta().getfVentaIGV());
-						venta.setfVentaSubTotal(e.getVenta()
-								.getfVentaSubTotal());
+						venta.setfVentaSubTotal(e.getVenta().getfVentaSubTotal());
 						venta.setfVentaTotal(e.getVenta().getfVentaTotal());
 						venta.setdVentaFecha(e.getVenta().getdVentaFecha());
 						venta.setnVentaNumero(e.getVenta().getnVentaNumero());
-						venta.setvEstadoDocumento(e.getVenta()
-								.getvEstadoDocumento());
+						venta.setvEstadoDocumento(e.getVenta().getvEstadoDocumento());
 						venta.setFormaPago(e.getVenta().getFormaPago());
 						venta.setTipoDocumento(e.getVenta().getTipoDocumento());
 
-						cliente.setiClienteId(e.getVenta().getCliente()
-								.getiClienteId());
-						cliente.setvClienteRazonSocial(e.getVenta()
-								.getCliente().getvClienteRazonSocial());
-						cliente.setvNombreCliente(e.getVenta().getCliente()
-								.getvNombreCliente());
-						cliente.setvClienteCodigo(e.getVenta().getCliente()
-								.getvClienteCodigo());
+						cliente.setiClienteId(e.getVenta().getCliente().getiClienteId());
+						cliente.setvClienteRazonSocial(e.getVenta().getCliente().getvClienteRazonSocial());
+						cliente.setvNombreCliente(e.getVenta().getCliente().getvNombreCliente());
+						cliente.setvClienteCodigo(e.getVenta().getCliente().getvClienteCodigo());
 
 						venta.setCliente(cliente);
 
 						ventaDetalle.setVenta(venta);
 
 						ventaDetalle.setcEstadoCodigo(Constantes.estadoActivo);
-						ventaDetalle.setiVentaDetalleCantidad(e
-								.getiVentaDetalleCantidad());
-						ventaDetalle.setfVentaDetallePrecio(e
-								.getfVentaDetallePrecio());
-						ventaDetalle.setfVentaDetalleTotal(e
-								.getfVentaDetalleTotal());
+						ventaDetalle.setiVentaDetalleCantidad(e.getiVentaDetalleCantidad());
+						ventaDetalle.setfVentaDetallePrecio(e.getfVentaDetallePrecio());
+						ventaDetalle.setfVentaDetalleTotal(e.getfVentaDetalleTotal());
 						ventaDetalle.setfDescuento(e.getfDescuento());
 
 						Producto productoBean = new Producto();
 
-						productoBean.setiProductoId(e.getProducto()
-								.getiProductoId());
-						productoBean.setcProductoCodigo(e.getProducto()
-								.getcProductoCodigo());
-						productoBean.setvProductoNombre(e.getProducto()
-								.getvProductoNombre());
-						productoBean.setUnidadMedida(e.getProducto()
-								.getUnidadMedida());
+						productoBean.setiProductoId(e.getProducto().getiProductoId());
+						productoBean.setcProductoCodigo(e.getProducto().getcProductoCodigo());
+						productoBean.setvProductoNombre(e.getProducto().getvProductoNombre());
+						productoBean.setUnidadMedida(e.getProducto().getUnidadMedida());
 						productoBean.setiUMBase(e.getProducto().getiUMBase());
-						productoBean.setfProductoPrecioVenta(e.getProducto()
-								.getfProductoPrecioVenta());
-						productoBean.setfProductoPrecioCompra(e.getProducto()
-								.getfProductoPrecioCompra());
+						productoBean.setfProductoPrecioVenta(e.getProducto().getfProductoPrecioVenta());
+						productoBean.setfProductoPrecioCompra(e.getProducto().getfProductoPrecioCompra());
 
 						ventaDetalle.setProducto(productoBean);
 
@@ -418,56 +374,36 @@ public class VentaAction extends BaseAction {
 						venta = new Venta();
 						ventaDetalle = new Ventadetalle();
 
-						venta.setiVentaId(eobj.getVentadevolucion().getVenta()
-								.getiVentaId());
-						venta.setfVentaIGV(eobj.getVentadevolucion().getVenta()
-								.getfVentaIGV());
-						venta.setfVentaSubTotal(eobj.getVentadevolucion()
-								.getVenta().getfVentaSubTotal());
-						venta.setfVentaTotal(eobj.getVentadevolucion()
-								.getVenta().getfVentaTotal());
-						venta.setdVentaFecha(eobj.getVentadevolucion()
-								.getVenta().getdVentaFecha());
-						venta.setnVentaNumero(eobj.getVentadevolucion()
-								.getVenta().getnVentaNumero());
-						venta.setvEstadoDocumento(eobj.getVentadevolucion()
-								.getVenta().getvEstadoDocumento());
-						venta.setFormaPago(eobj.getVentadevolucion().getVenta()
-								.getFormaPago());
-						venta.setTipoDocumento(eobj.getVentadevolucion()
-								.getVenta().getTipoDocumento());
+						venta.setiVentaId(eobj.getVentadevolucion().getVenta().getiVentaId());
+						venta.setfVentaIGV(eobj.getVentadevolucion().getVenta().getfVentaIGV());
+						venta.setfVentaSubTotal(eobj.getVentadevolucion().getVenta().getfVentaSubTotal());
+						venta.setfVentaTotal(eobj.getVentadevolucion().getVenta().getfVentaTotal());
+						venta.setdVentaFecha(eobj.getVentadevolucion().getVenta().getdVentaFecha());
+						venta.setnVentaNumero(eobj.getVentadevolucion().getVenta().getnVentaNumero());
+						venta.setvEstadoDocumento(eobj.getVentadevolucion().getVenta().getvEstadoDocumento());
+						venta.setFormaPago(eobj.getVentadevolucion().getVenta().getFormaPago());
+						venta.setTipoDocumento(eobj.getVentadevolucion().getVenta().getTipoDocumento());
 						venta.setCliente(cliente);
 
 						ventaDetalle.setVenta(venta);
 
 						productoBean = new Producto();
 
-						productoBean.setiProductoId(eobj.getProducto()
-								.getiProductoId());
-						productoBean.setcProductoCodigo(eobj.getProducto()
-								.getcProductoCodigo());
-						productoBean.setvProductoNombre(eobj.getProducto()
-								.getvProductoNombre());
-						productoBean.setUnidadMedida(eobj.getProducto()
-								.getUnidadMedida());
-						productoBean
-								.setiUMBase(eobj.getProducto().getiUMBase());
-						productoBean.setfProductoPrecioVenta(eobj.getProducto()
-								.getfProductoPrecioVenta());
-						productoBean.setfProductoPrecioCompra(eobj
-								.getProducto().getfProductoPrecioCompra());
+						productoBean.setiProductoId(eobj.getProducto().getiProductoId());
+						productoBean.setcProductoCodigo(eobj.getProducto().getcProductoCodigo());
+						productoBean.setvProductoNombre(eobj.getProducto().getvProductoNombre());
+						productoBean.setUnidadMedida(eobj.getProducto().getUnidadMedida());
+						productoBean.setiUMBase(eobj.getProducto().getiUMBase());
+						productoBean.setfProductoPrecioVenta(eobj.getProducto().getfProductoPrecioVenta());
+						productoBean.setfProductoPrecioCompra(eobj.getProducto().getfProductoPrecioCompra());
 
 						ventaDetalle.setProducto(productoBean);
 
 						ventaDetalle.setProducto(productoBean);
-						ventaDetalle.setfVentaDetallePrecio(eobj
-								.getfVentaDevDetallePrecio());
-						ventaDetalle.setfVentaDetalleTotal(eobj
-								.getfVentaDevDetalleTotal());
-						ventaDetalle.setiVentaDetalleCantidad(eobj
-								.getiVentaDevDetalleCantidad());
-						ventaDetalle.setiVentaDetalleId(eobj
-								.getiVentaDevolucionDetalleId());
+						ventaDetalle.setfVentaDetallePrecio(eobj.getfVentaDevDetallePrecio());
+						ventaDetalle.setfVentaDetalleTotal(eobj.getfVentaDevDetalleTotal());
+						ventaDetalle.setiVentaDetalleCantidad(eobj.getiVentaDevDetalleCantidad());
+						ventaDetalle.setiVentaDetalleId(eobj.getiVentaDevolucionDetalleId());
 						ventaDetalle.setcEstadoCodigo(eobj.getcEstadoCodigo());
 						ventaDetalle.setfDescuento(eobj.getfDescuento());
 
@@ -478,7 +414,7 @@ public class VentaAction extends BaseAction {
 				}// for
 			}// for
 
-			ventaform.setVenta(ventaDev.getVenta());
+			ventaform.setVenta(new VentaVo(ventaDev.getVenta()));
 			sesion.setAttribute("listaVentaDetalleCompra", lista);
 			sesion.setAttribute("listaVentaDetalle", listadev);
 			sesion.setAttribute("listaVentaDetalleOriginal", listadevOriginal);
@@ -519,9 +455,8 @@ public class VentaAction extends BaseAction {
 	 * @return ActionForward
 	 * @throws IOException
 	 */
-	public ActionForward detalleVenta(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	@SuppressWarnings("unchecked")
+	public ActionForward detalleVenta(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		response.setContentType("text/json");
 		HttpSession sesion = request.getSession();
@@ -535,12 +470,12 @@ public class VentaAction extends BaseAction {
 		//int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 		/** Instanciamos la Clase VentaForm **/
 
-		List<Ventadetalle> lista = (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle");
+		List<VentadetalleVo> lista = (List<VentadetalleVo>) sesion.getAttribute("listaVentaDetalle");
 
 		String identificador = request.getParameter("identificador");
 
-		Producto productoBean = new Producto();
-		Ventadetalle ventadetalle = new Ventadetalle();
+		ProductoVo productoVo;
+		VentadetalleVo ventadetalle = new VentadetalleVo();
 		/** Iniciamos instacia de transacion **/
 		//
 
@@ -548,40 +483,17 @@ public class VentaAction extends BaseAction {
 
 			if (mode.equals("I")) {
 				// lista = new ArrayList<Ventadetalle>();
-				int iCantidad = Integer.parseInt(request
-						.getParameter("iCantidad"));
-				float fDescuento = Float.parseFloat(request
-						.getParameter("fDescuento"));
-				float fPrecioVenta = Float.parseFloat(request
-						.getParameter("fPrecioVenta"));
-				float fPrecioCompra = Float.parseFloat(request
-						.getParameter("fPrecioCompra"));
+				int iCantidad = Integer.parseInt(request.getParameter("iCantidad"));
+				float fDescuento = Float.parseFloat(request.getParameter("fDescuento"));
+				float fPrecioVenta = Float.parseFloat(request.getParameter("fPrecioVenta"));
+				float fPrecioCompra = Float.parseFloat(request.getParameter("fPrecioCompra"));
 				float fTotal = Float.parseFloat(request.getParameter("fTotal"));
-				int iPersonalId = Integer.parseInt(request
-						.getParameter("iPersonalId"));
+				int iPersonalId = Integer.parseInt(request.getParameter("iPersonalId"));
 
-				Producto producto = productoDao.findEndidad(productoBean,
-						iProductoId);
-
-				productoBean.setiProductoId(producto.getiProductoId());
-				productoBean.setcProductoCodigo(producto.getcProductoCodigo());
-				productoBean.setvProductoNombre(producto.getvProductoNombre());
-               if(producto.getUnidadMedida()!=null)
-				productoBean.setUnidadMedida(producto.getUnidadMedida());
-               if(producto.getUmBase()!=null)
-				productoBean.setiUMBase(producto.getiUMBase());
-               if(producto.getUmPedido()!=null)
-   				productoBean.setiUMPedido(producto.getiUMPedido());
-               if(producto.getUmSalida()!=null)
-   				productoBean.setiUMBase(producto.getiUMSalida());
-				productoBean.setfProductoPrecioVenta(producto
-						.getfProductoPrecioVenta());
-				productoBean.setiProductoStockTotal(producto
-						.getiProductoStockTotal());
-				productoBean.setfProductoPrecioCompra(fPrecioCompra);
-				productoBean.setCategoria(producto.getCategoria());
-
-				ventadetalle.setProducto(productoBean);
+				Producto producto = productoDao.findEndidad(Producto.class, iProductoId);
+				productoVo = new ProductoVo(producto);
+				
+				ventadetalle.setProducto(productoVo);
 				ventadetalle.setfVentaDetallePrecio(fPrecioVenta);
 				ventadetalle.setiVentaDetalleCantidad(iCantidad);
 				ventadetalle.setfVentaDetalleTotal(fTotal);
@@ -595,18 +507,16 @@ public class VentaAction extends BaseAction {
 				 * (Math.random() * 10.0)); ventadetalle.setVenta(venta);
 				 */
 				if (iPersonalId > 0) {
-					Personal personalBean = new Personal();
-					Personal personal = new Personal();
-					personal = productoDao.findEndidad(personal, iPersonalId);
-					personalBean.setiPersonalId(personal.getiPersonalId());
-					personalBean.setvPersonalNombres(personal
-							.getvPersonalNombres());
-					personalBean.setvPersonalApellidoPaterno(personal
-							.getvPersonalApellidoPaterno());
+					
+					Personal personal = productoDao.findEndidad(Personal.class, iPersonalId);
+					PersonalVo personalBean = new PersonalVo(personal);
+//					personalBean.setiPersonalId(personal.getiPersonalId());
+//					personalBean.setvPersonalNombres(personal.getvPersonalNombres());
+//					personalBean.setvPersonalApellidoPaterno(personal.getvPersonalApellidoPaterno());
 
 					ventadetalle.setPersonal(personalBean);
 					ventadetalle.setvIdentificadorSession(identificador);
-					productoBean.setUnidadMedida(null);
+//					productoBean.setUnidadMedida(null);
 				}
 
 				lista.add(ventadetalle);
@@ -615,29 +525,24 @@ public class VentaAction extends BaseAction {
 				// ventaDao.commitEndidad(entityTransaction);
 			}
 			if (mode.equals("D")) {
-				if (lista.get(iProductoId).getcEstadoCodigo()
-						.equals(Constantes.estadoActivo) && lista.get(iProductoId).getvIdentificadorSession().equals(identificador))
-					lista.get(iProductoId).setcEstadoCodigo(
-							Constantes.estadoInactivo);
-				else
-					lista.get(iProductoId).setcEstadoCodigo(
-							Constantes.estadoActivo);
-
+				if (lista.get(iProductoId).getcEstadoCodigo() .equals(Constantes.estadoActivo) 
+						&& lista.get(iProductoId).getvIdentificadorSession().equals(identificador)) {
+					lista.get(iProductoId).setcEstadoCodigo(Constantes.estadoInactivo);
+				} else { 
+					lista.get(iProductoId).setcEstadoCodigo(Constantes.estadoActivo);
+				}
+				
 				sesion.setAttribute("listaVentaDetalle", lista);
 			}
+			
 			if (mode.equals("U")) {
-				int iCantidad = Integer.parseInt(request
-						.getParameter("iCantidad"));
-				float fDescuento = Float.parseFloat(request
-						.getParameter("fDescuento"));
-				float fPrecioVenta = Float.parseFloat(request
-						.getParameter("fPrecioVenta"));
-				float fPrecioVentaFinal = (fPrecioVenta - fPrecioVenta
-						* fDescuento / 100);
+				int iCantidad = Integer.parseInt(request.getParameter("iCantidad"));
+				float fDescuento = Float.parseFloat(request.getParameter("fDescuento"));
+				float fPrecioVenta = Float.parseFloat(request.getParameter("fPrecioVenta"));
+				float fPrecioVentaFinal = (fPrecioVenta - fPrecioVenta * fDescuento / 100);
 
 				lista.get(iProductoId).setfVentaDetallePrecio(fPrecioVenta);
-				lista.get(iProductoId).setfVentaDetalleTotal(
-						(fPrecioVentaFinal * iCantidad));
+				lista.get(iProductoId).setfVentaDetalleTotal((fPrecioVentaFinal * iCantidad));
 				lista.get(iProductoId).setiVentaDetalleCantidad(iCantidad);
 				lista.get(iProductoId).setfDescuento(fDescuento);
 
@@ -650,11 +555,10 @@ public class VentaAction extends BaseAction {
 			 **/
 			if (mode.equals("ID")) {
 				sesion.removeAttribute("listaVentaDetalle");
-				lista = new ArrayList<Ventadetalle>();
-				List<Ventadetalle> listas = ventaDao
-						.buscarVentaDetalle(iProductoId);
+				lista = new ArrayList<VentadetalleVo>();
+				List<Ventadetalle> listas = ventaDao.buscarVentaDetalle(iProductoId);
+				List<Ventadetalle> lista2 = new ArrayList<Ventadetalle>();
 				for (Ventadetalle e : listas) {
-
 					Venta venta = new Venta();
 					Ventadetalle ventaDetalle = new Ventadetalle();
 					Cliente cliente = new Cliente();
@@ -665,55 +569,40 @@ public class VentaAction extends BaseAction {
 					venta.setfVentaTotal(e.getVenta().getfVentaTotal());
 					venta.setdVentaFecha(e.getVenta().getdVentaFecha());
 					venta.setnVentaNumero(e.getVenta().getnVentaNumero());
-					venta.setvEstadoDocumento(e.getVenta()
-							.getvEstadoDocumento());
+					venta.setvEstadoDocumento(e.getVenta().getvEstadoDocumento());
 					venta.setFormaPago(e.getVenta().getFormaPago());
 					venta.setTipoDocumento(e.getVenta().getTipoDocumento());
 
-					cliente.setiClienteId(e.getVenta().getCliente()
-							.getiClienteId());
-					cliente.setvClienteRazonSocial(e.getVenta().getCliente()
-							.getvClienteRazonSocial());
-					cliente.setvNombreCliente(e.getVenta().getCliente()
-							.getvNombreCliente());
-					cliente.setvClienteCodigo(e.getVenta().getCliente()
-							.getvClienteCodigo());
-					cliente.setnClienteNumeroDocumento(e.getVenta()
-							.getCliente().getnClienteNumeroDocumento());
+					cliente.setiClienteId(e.getVenta().getCliente().getiClienteId());
+					cliente.setvClienteRazonSocial(e.getVenta().getCliente().getvClienteRazonSocial());
+					cliente.setvNombreCliente(e.getVenta().getCliente().getvNombreCliente());
+					cliente.setvClienteCodigo(e.getVenta().getCliente().getvClienteCodigo());
+					cliente.setnClienteNumeroDocumento(e.getVenta().getCliente().getnClienteNumeroDocumento());
 
 					venta.setCliente(cliente);
 
 					ventaDetalle.setVenta(venta);
 
 					ventaDetalle.setcEstadoCodigo(Constantes.estadoActivo);
-					ventaDetalle.setiVentaDetalleCantidad(e
-							.getiVentaDetalleCantidad());
-					ventaDetalle.setfVentaDetallePrecio(e
-							.getfVentaDetallePrecio());
-					ventaDetalle.setfVentaDetalleTotal(e
-							.getfVentaDetalleTotal());
+					ventaDetalle.setiVentaDetalleCantidad(e.getiVentaDetalleCantidad());
+					ventaDetalle.setfVentaDetallePrecio(e.getfVentaDetallePrecio());
+					ventaDetalle.setfVentaDetalleTotal(e.getfVentaDetalleTotal());
 					ventaDetalle.setfDescuento(e.getfDescuento());
-					productoBean = new Producto();
+					Producto productoBean = new Producto();
 
-					productoBean.setiProductoId(e.getProducto()
-							.getiProductoId());
-					productoBean.setcProductoCodigo(e.getProducto()
-							.getcProductoCodigo());
-					productoBean.setvProductoNombre(e.getProducto()
-							.getvProductoNombre());
-					productoBean.setUnidadMedida(e.getProducto()
-							.getUnidadMedida());
+					productoBean.setiProductoId(e.getProducto().getiProductoId());
+					productoBean.setcProductoCodigo(e.getProducto().getcProductoCodigo());
+					productoBean.setvProductoNombre(e.getProducto().getvProductoNombre());
+					productoBean.setUnidadMedida(e.getProducto().getUnidadMedida());
 					productoBean.setiUMBase(e.getProducto().getiUMBase());
-					productoBean.setfProductoPrecioVenta(e.getProducto()
-							.getfProductoPrecioVenta());
-					productoBean.setfProductoPrecioCompra(e.getProducto()
-							.getfProductoPrecioCompra());
+					productoBean.setfProductoPrecioVenta(e.getProducto().getfProductoPrecioVenta());
+					productoBean.setfProductoPrecioCompra(e.getProducto().getfProductoPrecioCompra());
 
 					ventaDetalle.setProducto(productoBean);
 
-					lista.add(ventaDetalle);
+					lista2.add(ventaDetalle);
 				}
-				sesion.setAttribute("listaVentaDetalle", lista);
+				sesion.setAttribute("listaVentaDetalle", lista2);
 				// sesion.setAttribute("listaVentaDetalleDevol", lista);
 
 			}
@@ -747,15 +636,12 @@ public class VentaAction extends BaseAction {
 	 * @return ActionForward
 	 * @throws IOException
 	 */
-	public ActionForward obtenerCodigoVenta(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	public ActionForward obtenerCodigoVenta(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		response.setContentType("text/json");
 		HttpSession sesion = request.getSession();
 
 		Gson gson = new Gson();
-		GenericaDao productoDao = new GenericaDao();
 		VentaDao ventaDao = new VentaDao();
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		int iTipoDocumentoId = Integer.parseInt(request
@@ -792,9 +678,7 @@ public class VentaAction extends BaseAction {
 	 * @param response
 	 * @return ActionForward
 	 */
-	public ActionForward mantenimientoVenta(ActionMapping mapping,
-			ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ActionForward mantenimientoVenta(ActionMapping mapping,ActionForm form, HttpServletRequest request,HttpServletResponse response) {
 
 		HttpSession sesion = request.getSession();
 		String mode = request.getParameter("mode");
@@ -809,19 +693,15 @@ public class VentaAction extends BaseAction {
 		VentaDao ventaDao = new VentaDao();
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		Moneda moneda = (Moneda) sesion.getAttribute("Moneda");
-		float tipoCambio = Float.parseFloat((String) sesion
-				.getAttribute("TipoCambio"));
+		float tipoCambio = Float.parseFloat((String) sesion.getAttribute("TipoCambio"));
 
 		/** llamado de los metodos de la clase dao **/
 
 		List<Estado> listaEstado = estadoDao.listEstado();
-		List<Formapago> listaFormapago = genericaDao
-				.listaEntidadGenericaSinCodigo("Formapago");
-		List<Mediopago> listamedioPago = genericaDao
-				.listaEntidadGenericaSinCodigo("Mediopago");
-		List<Ventadetalle> lista = new ArrayList<Ventadetalle>();
-		List<Tipodocumentogestion> listaTipoDoc = genericaDao
-				.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
+		List<Formapago> listaFormapago = genericaDao.listaEntidadGenericaSinCodigo("Formapago");
+		List<Mediopago> listamedioPago = genericaDao.listaEntidadGenericaSinCodigo("Mediopago");
+		List<VentadetalleVo> lista = new ArrayList<VentadetalleVo>();
+		List<Tipodocumentogestion> listaTipoDoc = genericaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
 		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
 
 		/**
@@ -835,19 +715,13 @@ public class VentaAction extends BaseAction {
 			ventaform.setiSucursalId(usu.getSucursal().getiSucursalId());
 
 			ventaform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
-			ventaform
-					.setcPersonalCodigo(usu.getPersonal().getcPersonalCodigo());
-			ventaform.setvPersonalNombres(usu.getPersonal()
-					.getvPersonalNombres()
-					+ " "
-					+ usu.getPersonal().getvPersonalApellidoPaterno());
-			ventaform.setIclasificacionId(Integer.parseInt(request
-					.getParameter("iclasificacionId")));
+			ventaform.setcPersonalCodigo(usu.getPersonal().getcPersonalCodigo());
+			ventaform.setvPersonalNombres(usu.getPersonal().getvPersonalNombres() + " " + usu.getPersonal().getvPersonalApellidoPaterno());
+			ventaform.setIclasificacionId(Integer.parseInt(request.getParameter("iclasificacionId")));
 
 			ventaform.setfTipoCambio(tipoCambio);
 			// :1 : factura.
-			ventaform.getVenta().setnVentaNumero(
-					ventaDao.callSPNro_Documento(1, "venta", "nVentaNumero",usu.getSucursal().getiSucursalId()));
+			ventaform.getVenta().setnVentaNumero(ventaDao.callSPNro_Documento(1, "venta", "nVentaNumero",usu.getSucursal().getiSucursalId()));
 
 			/*** LISTA DE DETALLE VENTA ***/
 			sesion.removeAttribute("listaVentaDetalle");
@@ -871,8 +745,7 @@ public class VentaAction extends BaseAction {
 
 			msn = "showEstadoCuenta";
 			// 1:factura:
-			ventaform.getVenta().setnVentaNumero(
-					ventaDao.callSPNro_Documento(1, "venta", "nVentaNumero",usu.getSucursal().getiSucursalId()));
+			ventaform.getVenta().setnVentaNumero(ventaDao.callSPNro_Documento(1, "venta", "nVentaNumero",usu.getSucursal().getiSucursalId()));
 		}
 
 		/**
@@ -887,11 +760,11 @@ public class VentaAction extends BaseAction {
 
 			int id = Integer.parseInt(request.getParameter("id"));
 			String tipoDocumento = request.getParameter("idTipoDocumento");
-			Venta venta = ventaDao.findEndidad(ventaform.getVenta(), id);
+			Venta venta = ventaDao.findEndidad(Venta.class, id);
 
 			ventaform.setvClasificacion(venta.getCliente().getClasificacion()
 					.getvNombre());
-			ventaform.setVenta(venta);
+			ventaform.setVenta(new VentaVo(venta));
 			ventaform.setTipoMoneda(venta.getvTipoVenta());
 			ventaform.setIGVVentas(venta.getvPorcentajeIGV());
 
@@ -899,10 +772,8 @@ public class VentaAction extends BaseAction {
 
 				/*** INGRESO DE VENTAS MEDIANTE EL ESTADO DE CUENTA DEL CLIENTE ***/
 
-				ventaform.setPagoTotal(Float.parseFloat(request
-						.getParameter("pagoTotal")));
-				ventaform.setvClienteDireccion(venta.getCliente()
-						.getDireccionclientes().get(0).getvDireccion());
+				ventaform.setPagoTotal(Float.parseFloat(request.getParameter("pagoTotal")));
+				ventaform.setvClienteDireccion(venta.getCliente().getDireccionclientes().get(0).getvDireccion());
 
 				msn = "showEstadoCuenta";
 
@@ -916,56 +787,22 @@ public class VentaAction extends BaseAction {
 				sesion.removeAttribute("listaVentaDetalle");
 				for (Ventadetalle obj : venta.getVentadetalles()) {
 					if (obj.getcEstadoCodigo().equals(Constantes.estadoActivo)) {
-						Ventadetalle ventaDetalle = new Ventadetalle();
-						Producto productoBean = new Producto();
-						Personal personal = new Personal();
-						productoBean.setiProductoId(obj.getProducto()
-								.getiProductoId());
-						productoBean.setcProductoCodigo(obj.getProducto()
-								.getcProductoCodigo());
-						productoBean.setvProductoNombre(obj.getProducto()
-								.getvProductoNombre());
-
-						if (obj.getProducto().getUmBase() == null)
-							productoBean.setUmBase(new Unidadmedida());
-
-						if (obj.getProducto().getUmBase() == null)
-							productoBean.setUmPedido(new Unidadmedida());
-						if (obj.getProducto().getUmBase() == null)
-							productoBean.setUmSalida(new Unidadmedida());
-
-						if (obj.getProducto().getUnidadMedida() != null) {
-							productoBean.setUnidadMedida(obj.getProducto()
-									.getUnidadMedida());
-						} else {
-							productoBean.setUnidadMedida(new Unidadmedida());
-							personal.setvPersonalNombres(obj.getPersonal()
-									.getvPersonalNombres());
-							personal.setvPersonalApellidoPaterno(obj
-									.getPersonal()
-									.getvPersonalApellidoPaterno());
+						VentadetalleVo ventaDetalle = new VentadetalleVo();
+						ProductoVo productoBean = new ProductoVo(obj.getProducto());
+						PersonalVo personal = new PersonalVo();
+						
+						if (obj.getPersonal() != null) {
+							personal = new PersonalVo(obj.getPersonal());
 						}
-						productoBean.setiUMBase(obj.getProducto().getiUMBase());
-						productoBean.setfProductoPrecioVenta(obj.getProducto()
-								.getfProductoPrecioVenta());
-						productoBean.setiProductoStockTotal(obj.getProducto()
-								.getiProductoStockTotal());
-						productoBean.setfProductoPrecioCompra(obj.getProducto()
-								.getfProductoPrecioCompra());
-						productoBean.setCategoria(obj.getProducto().getCategoria());
 
 						ventaDetalle.setProducto(productoBean);
 						ventaDetalle.setPersonal(personal);
 
-						ventaDetalle.setiVentaDetalleId(obj
-								.getiVentaDetalleId());
+						ventaDetalle.setiVentaDetalleId(obj.getiVentaDetalleId());
 						ventaDetalle.setcEstadoCodigo(obj.getcEstadoCodigo());
-						ventaDetalle.setfVentaDetallePrecio(obj
-								.getfVentaDetallePrecio());
-						ventaDetalle.setfVentaDetalleTotal(obj
-								.getfVentaDetalleTotal());
-						ventaDetalle.setiVentaDetalleCantidad(obj
-								.getiVentaDetalleCantidad());
+						ventaDetalle.setfVentaDetallePrecio(obj.getfVentaDetallePrecio());
+						ventaDetalle.setfVentaDetalleTotal(obj.getfVentaDetalleTotal());
+						ventaDetalle.setiVentaDetalleCantidad(obj.getiVentaDetalleCantidad());
 						ventaDetalle.setfDescuento(obj.getfDescuento());
 
 						lista.add(ventaDetalle);
@@ -973,25 +810,14 @@ public class VentaAction extends BaseAction {
 				}
 
 				sesion.setAttribute("listaVentaDetalle", lista);
-				ventaform.setvClienteDireccion(venta.getCliente()
-						.getDireccionclientes().get(0).getvDireccion());
+				ventaform.setvClienteDireccion(venta.getCliente().getDireccionclientes().get(0).getvDireccion());
 				ventaform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
-				ventaform.setVenta(venta);
-				ventaform.setcPersonalCodigo(venta.getUsuario().getPersonal()
-						.getcPersonalCodigo());
-				ventaform.setvPersonalNombres(venta.getUsuario().getPersonal()
-						.getvPersonalNombres()
-						+ " "
-						+ venta.getUsuario().getPersonal()
-								.getvPersonalApellidoPaterno());
+				ventaform.setVenta(new VentaVo(venta));
+				ventaform.setcPersonalCodigo(venta.getUsuario().getPersonal().getcPersonalCodigo());
+				ventaform.setvPersonalNombres(venta.getUsuario().getPersonal().getvPersonalNombres()
+						+ " " + venta.getUsuario().getPersonal().getvPersonalApellidoPaterno());
 
-				/*
-				 * if(tipoDocumento.equals("1")) msn = "showEditFactura";
-				 * if(tipoDocumento.equals("2")) msn = "showEditBoleta";
-				 * if(tipoDocumento.equals("3")) msn = "showEditNotaDebito";
-				 * if(tipoDocumento.equals("4")) msn = "showEditGuiaRemision";
-				 * if(tipoDocumento.equals("5"))
-				 */
+				
 				msn = "showEditFactura";
 			}
 
@@ -1050,7 +876,6 @@ public class VentaAction extends BaseAction {
 		String ids = request.getParameter("ids");
 		HttpSession sesion = request.getSession();
 		boolean resultado = false;
-		int cantidadProducto = 0, cantidadProductoActual = 0;
 
 		/** Instanciamos las clase VentaForm y VentaDao **/
 		VentaForm pForm = (VentaForm) form;
@@ -1062,15 +887,13 @@ public class VentaAction extends BaseAction {
 		KardexDao kardexDao = new KardexDao();
 		List<Ventadetalle> ventadetalles = new ArrayList<Ventadetalle>();
 		List<Kardex> listaKadex = new ArrayList<Kardex>();
-		List<Kardex> listaKadexActivo = new ArrayList<Kardex>();
-
-		Venta obj = pForm.getVenta();
+		
+		Venta obj = new Venta(pForm.getVenta());
 		Date fecha = Fechas.getDate();
-		if (obj.getFormaPago() != null)
-			fecha = (obj.getFormaPago().getiFormaPago() == 3 ? Fechas
-					.fechaDate("30/" + (Fechas.mesFecha(fecha) + 1) + "/"
-							+ Fechas.anioFecha(fecha)) : obj
-					.getdFechaProximoPago());
+		if (obj.getFormaPago() != null) {
+			fecha = (obj.getFormaPago().getiFormaPago() == 3 ? Fechas .fechaDate("30/" + (Fechas.mesFecha(fecha) + 1) + "/" + Fechas.anioFecha(fecha)) : obj.getdFechaProximoPago());
+		}
+		
 		obj.setdFechaProximoPago(fecha);
 
 		/** Iniciamos instacia de transacion **/
@@ -1093,31 +916,35 @@ public class VentaAction extends BaseAction {
 				obj.setfVentaGanancia(BigDecimal.valueOf(0));
 				obj.setvEstadoVenta(pForm.getvEstadoDocumento());
 				obj.setIdireccionClienteId(pForm.getiClienteId());
+				obj.setCliente(ventaDao.findEndidad(Cliente.class, pForm.getiClienteId()));
 				obj.setUsuario(usu);
 				obj.setiPeriodoId(iPeriodoId);
 				obj.setSucursal(usu.getSucursal());
 				obj.setvPorcentajeIGV(sesion.getAttribute("IGVVentas").toString());
 				obj.setnVentaNumero(nVentaNumero);
 
+				ventaDao.persistEndidad(obj);
+				
 				/**** Informacion de detalle venta ****/
 
 				// Ventadetalle ventaDetalle = new Ventadetalle();
 
 				if (sesion.getAttribute("listaVentaDetalle") != null) {
-					List<Ventadetalle> listaVentaDetalle = (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle");
-					
-					for (Ventadetalle ventaDetalle : listaVentaDetalle) {
+					@SuppressWarnings("unchecked")
+					List<VentadetalleVo> listaVentaDetalle = (List<VentadetalleVo>) sesion.getAttribute("listaVentaDetalle");
+					Ventadetalle ventadetalle;
+					for (VentadetalleVo ventaDetalleVo : listaVentaDetalle) {
 
-						if (ventaDetalle.getcEstadoCodigo().equals(Constantes.estadoActivo)
-								&& ventaDetalle.getvIdentificadorSession().equals(pForm.getIdentificador())) {
+						if (ventaDetalleVo.getcEstadoCodigo().equals(Constantes.estadoActivo)
+								&& ventaDetalleVo.getvIdentificadorSession().equals(pForm.getIdentificador())) {
 							
-							ventaDetalle.setVenta(obj);
-							ventaDetalle.setdFechaInserta(Fechas.getDate());
-							ventaDetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
+//							ventaDetalle.setVenta(obj);
+							ventaDetalleVo.setdFechaInserta(Fechas.getDate());
+							ventaDetalleVo.setiUsuarioInsertaId(usu.getiUsuarioId());
 
-							Producto producto = ventaDao.findEndidad(ventaDetalle.getProducto(), ventaDetalle.getProducto().getiProductoId());
-							ventaDetalle.setProducto(producto);
-							if (!ventaDetalle.getProducto().getCategoria().getClasificacionCategoria().getvClasificacionDescripcion().equals(Constantes.categoriaServicios)) {
+							Producto producto = ventaDao.findEndidad(Producto.class, ventaDetalleVo.getProducto().getiProductoId());
+							ventaDetalleVo.setProducto(new ProductoVo(producto));
+							if (!ventaDetalleVo.getProducto().getCategoria().getClasificacionCategoria().getvClasificacionDescripcion().equals(Constantes.categoriaServicios)) {
 								
 								/*******************************************/
 								/** Insertamos detalle de lista de precios **/
@@ -1128,22 +955,17 @@ public class VentaAction extends BaseAction {
 								int cantAsignado = 0;
 								int asignado = 0;
 								for (Preciosproducto preciosProducto : producto.getPreciosproductodetallles()) {
-									if (preciosProducto.getfPrecioCompra() == ventaDetalle.getProducto().getfProductoPrecioCompra()) {
-										iCantidad = preciosProducto.getiCantidadStock() - ventaDetalle.getiVentaDetalleCantidad();
+									if (preciosProducto.getfPrecioCompra() == ventaDetalleVo.getProducto().getfProductoPrecioCompra()) {
+										iCantidad = preciosProducto.getiCantidadStock() - ventaDetalleVo.getiVentaDetalleCantidad();
 	
 										Kardex kardex = new Kardex();
 										kardex.setProducto(producto);
 										kardex.setVenta(obj);
 										kardex.setdFecha(Fechas.getDate());
-										kardex.setvConcepto(Constantes.conceptoVenta + ventaDao.findEndidad(pForm.getTipoDocumento(), pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()
-												+ Constantes.nro + obj.getnVentaNumero());
-										kardex.setiCantExistencia(preciosProducto
-												.getiCantidadStock());
-										kardex.setfPuExistencia(preciosProducto
-												.getfPrecioCompra());
-										kardex.setfTotalExistencia(kardex
-												.getiCantExistencia()
-												* kardex.getfPuExistencia());
+										kardex.setvConcepto(Constantes.conceptoVenta + ventaDao.findEndidad(Tipodocumentogestion.class, pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion() + Constantes.nro + obj.getnVentaNumero());
+										kardex.setiCantExistencia(preciosProducto .getiCantidadStock());
+										kardex.setfPuExistencia(preciosProducto.getfPrecioCompra());
+										kardex.setfTotalExistencia(kardex.getiCantExistencia() * kardex.getfPuExistencia());
 										kardex.setiPeriodoId(iPeriodoId);
 										kardex.setdFechaInserta(Fechas.getDate());
 										kardex.setcEstadoCodigo(Constantes.estadoActivo);
@@ -1154,17 +976,11 @@ public class VentaAction extends BaseAction {
 												 * Agregamos al Kardex el movimiento
 												 * de los productos
 												 ***/
-												kardex.setiCantVenta(preciosProducto
-														.getiCantidadStock());
-												kardex.setfPuVenta(preciosProducto
-														.getfPrecioCompra());
-												kardex.setfTotalVenta(kardex
-														.getiCantVenta()
-														* kardex.getfPuVenta());
+												kardex.setiCantVenta(preciosProducto.getiCantidadStock());
+												kardex.setfPuVenta(preciosProducto.getfPrecioCompra());
+												kardex.setfTotalVenta(kardex.getiCantVenta() * kardex.getfPuVenta());
 												kardex.setiCantExistencia(0);
-												kardex.setfPuExistencia(ventaDetalle
-														.getProducto()
-														.getfProductoPrecioCompra());
+												kardex.setfPuExistencia(ventaDetalleVo.getProducto().getfProductoPrecioCompra());
 												kardex.setfTotalExistencia(0);
 												kardex.setcEstadoCodigo(Constantes.estadoInactivo);
 	
@@ -1175,22 +991,13 @@ public class VentaAction extends BaseAction {
 	
 											}// if
 											else {
-												kardex.setiCantVenta(preciosProducto
-														.getiCantidadStock()
-														- iCantidad);
-												kardex.setfPuVenta(preciosProducto
-														.getfPrecioCompra());
-												kardex.setfTotalVenta(kardex
-														.getiCantVenta()
-														* kardex.getfPuVenta());
+												kardex.setiCantVenta(preciosProducto.getiCantidadStock() - iCantidad);
+												kardex.setfPuVenta(preciosProducto.getfPrecioCompra());
+												kardex.setfTotalVenta(kardex.getiCantVenta() * kardex.getfPuVenta());
 												kardex.setiCantExistencia(iCantidad);
-												kardex.setfPuExistencia(preciosProducto
-														.getfPrecioCompra());
-												kardex.setfTotalExistencia(kardex
-														.getiCantExistencia()
-														* kardex.getfPuExistencia());
-												kardex.setiUsuarioInsertaId(usu
-														.getiUsuarioId());
+												kardex.setfPuExistencia(preciosProducto.getfPrecioCompra());
+												kardex.setfTotalExistencia(kardex.getiCantExistencia() * kardex.getfPuExistencia());
+												kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
 	
 												/*** Agregamos en la lista kardex ****/
 												// listaKardex.add(kardex);
@@ -1199,26 +1006,17 @@ public class VentaAction extends BaseAction {
 												 * Actualizamos la cantidad restante
 												 * en el stock
 												 **/
-												preciosProducto
-														.setiCantidadStock(iCantidad);
+												preciosProducto.setiCantidadStock(iCantidad);
 												/** Actualizamos el producto */
-												producto.setiProductoStockTotal(producto
-														.getiProductoStockTotal()
-														- ventaDetalle
-																.getiVentaDetalleCantidad());
-												producto.setfProductoDescuento(preciosProducto
-														.getfDescuento());
-												producto.setfProductoGanancia(preciosProducto
-														.getfGanancia());
-												producto.setfProductoPrecioVenta(preciosProducto
-														.getfPrecioVenta());
-												producto.setfProductoPrecioCompra(preciosProducto
-														.getfPrecioCompra());
+												producto.setiProductoStockTotal(producto.getiProductoStockTotal() - ventaDetalleVo.getiVentaDetalleCantidad());
+												producto.setfProductoDescuento(preciosProducto.getfDescuento());
+												producto.setfProductoGanancia(preciosProducto.getfGanancia());
+												producto.setfProductoPrecioVenta(preciosProducto.getfPrecioVenta());
+												producto.setfProductoPrecioCompra(preciosProducto.getfPrecioCompra());
 												asignado = 1;
 	
 											}// else
-											cantAsignado = preciosProducto
-													.getiCantidadStock();
+											cantAsignado = preciosProducto.getiCantidadStock();
 										}// fin if
 											// ventaDao.persistEndidad(kardex);
 											// producto.getKardexs().add(kardex);
@@ -1242,9 +1040,7 @@ public class VentaAction extends BaseAction {
 								 ***********************************************************************************/
 								int i = 0;
 								for (Preciosproducto objpreciosProducto : producto.getPreciosproductodetallles()) {
-									if (objpreciosProducto.getiCantidadStock() > 0
-											&& objpreciosProducto
-													.getiCantidadStock() != cantAsignado) {
+									if (objpreciosProducto.getiCantidadStock() > 0 && objpreciosProducto.getiCantidadStock() != cantAsignado) {
 										/***
 										 * Agregamos al Kardex el movimiento de los
 										 * productos
@@ -1284,26 +1080,16 @@ public class VentaAction extends BaseAction {
 	
 												/**************************/
 												/** reducimos el stock a 0 */
-												objpreciosProducto
-														.setiCantidadStock(0);
+												objpreciosProducto.setiCantidadStock(0);
 	
 											} else {
-												kardex.setiCantVenta(objpreciosProducto
-														.getiCantidadStock()
-														- iCantidad);
-												kardex.setfPuVenta(objpreciosProducto
-														.getfPrecioCompra());
-												kardex.setfTotalVenta(kardex
-														.getiCantVenta()
-														* kardex.getfPuVenta());
+												kardex.setiCantVenta(objpreciosProducto.getiCantidadStock() - iCantidad);
+												kardex.setfPuVenta(objpreciosProducto.getfPrecioCompra());
+												kardex.setfTotalVenta(kardex.getiCantVenta() * kardex.getfPuVenta());
 												kardex.setiCantExistencia(iCantidad);
-												kardex.setfPuExistencia(objpreciosProducto
-														.getfPrecioCompra());
-												kardex.setfTotalExistencia(kardex
-														.getiCantExistencia()
-														* kardex.getfPuExistencia());
-												kardex.setiUsuarioInsertaId(usu
-														.getiUsuarioId());
+												kardex.setfPuExistencia(objpreciosProducto.getfPrecioCompra());
+												kardex.setfTotalExistencia(kardex.getiCantExistencia() * kardex.getfPuExistencia());
+												kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
 	
 												asignado = 1;
 												/*** Agregamos en la lista kardex ****/
@@ -1313,21 +1099,13 @@ public class VentaAction extends BaseAction {
 												 * Actualizamos la cantidad restante
 												 * en el stock
 												 **/
-												objpreciosProducto
-														.setiCantidadStock(iCantidad);
+												objpreciosProducto.setiCantidadStock(iCantidad);
 												/** Actualizamos el producto */
-												producto.setiProductoStockTotal(producto
-														.getiProductoStockTotal()
-														- ventaDetalle
-																.getiVentaDetalleCantidad());
-												producto.setfProductoDescuento(objpreciosProducto
-														.getfDescuento());
-												producto.setfProductoGanancia(objpreciosProducto
-														.getfGanancia());
-												producto.setfProductoPrecioVenta(objpreciosProducto
-														.getfPrecioVenta());
-												producto.setfProductoPrecioCompra(objpreciosProducto
-														.getfPrecioCompra());
+												producto.setiProductoStockTotal(producto.getiProductoStockTotal() - ventaDetalleVo.getiVentaDetalleCantidad());
+												producto.setfProductoDescuento(objpreciosProducto.getfDescuento());
+												producto.setfProductoGanancia(objpreciosProducto.getfGanancia());
+												producto.setfProductoPrecioVenta(objpreciosProducto.getfPrecioVenta());
+												producto.setfProductoPrecioCompra(objpreciosProducto.getfPrecioCompra());
 	
 											}// else
 	
@@ -1339,12 +1117,12 @@ public class VentaAction extends BaseAction {
 									}// / if
 									i++;
 								}// for
-								for (Kardex objKar : kardexDao
-										.buscarKardexProducto(producto
-												.getiProductoId())) {
+								for (Kardex objKar : kardexDao.buscarKardexProducto(producto.getiProductoId())) {	
 									objKar.setcEstadoCodigo(Constantes.estadoInactivo);
 									ventaDao.mergeEndidad(objKar);
+								
 								}
+								
 								producto.setKardexs(listaKadex);
 								ventaDao.mergeEndidad(producto);
 								
@@ -1353,8 +1131,9 @@ public class VentaAction extends BaseAction {
 							 * Agregamos las actualizaciones en la lista
 							 * ventadetalles
 							 ****/
-						
-							ventadetalles.add(ventaDetalle);
+							ventadetalle = new Ventadetalle(ventaDetalleVo);
+							ventadetalle.setVenta(obj);
+							ventadetalles.add(ventadetalle);
 
 						}// if
 							// ventadetalles = producto.getVentadetalles();
@@ -1373,18 +1152,15 @@ public class VentaAction extends BaseAction {
 
 				sesion.removeAttribute("listaProducto");
 
-				ventaDao.persistEndidad(obj);
+				ventaDao.mergeEndidad(obj);
 				resultado = ventaDao.commitEndidad(entityTransaction);
 				if (resultado == true) {
 					int idVentaId = obj.getiVentaId();
 					int nNumeroLetra = 1;
 					entityTransaction = ventaDao.entityTransaction();
 					entityTransaction.begin();
-					contabilidadDao.callVentaContabilidad(idVentaId, fecha,
-							pForm.getfMontoAdelantado(), usu.getiUsuarioId(),
-							pForm.getiNumeroLetras(), pForm.getiNumeroDias(),
-							pForm.getMode(), iPeriodoId, nNumeroLetra, pForm
-									.getFormaPago().getiFormaPago());
+					contabilidadDao.callVentaContabilidad(idVentaId, fecha, pForm.getfMontoAdelantado(), usu.getiUsuarioId(), pForm.getiNumeroLetras(), pForm.getiNumeroDias(),
+							pForm.getMode(), iPeriodoId, nNumeroLetra, pForm.getFormaPago().getiFormaPago());
 					resultado = ventaDao.commitEndidad(entityTransaction);
 
 				}
@@ -1397,8 +1173,7 @@ public class VentaAction extends BaseAction {
 			} else if (pForm.getMode().equals("U")
 					|| pForm.getMode().equals("UE")) {
 
-				Venta obj1 = ventaDao.findEndidad(pForm.getVenta(), pForm
-						.getVenta().getiVentaId());
+				Venta obj1 = ventaDao.findEndidad(Venta.class, pForm.getVenta().getiVentaId());
 				obj1 = Util.comparar(obj1, pForm.getVenta());// pForm.getVenta();
 
 				/*
@@ -1872,6 +1647,7 @@ public class VentaAction extends BaseAction {
 		return mapping.findForward(msn);
 	}
 
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
 	public ActionForward reporteVenta(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws ParseException, IOException, JRException {
@@ -1959,6 +1735,7 @@ public class VentaAction extends BaseAction {
 	 * @throws NoSuchFieldException
 	 */
 
+	@SuppressWarnings("unchecked")
 	public ActionForward iduVentaDevolucion(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws ParseException,
@@ -2015,11 +1792,8 @@ public class VentaAction extends BaseAction {
 								Constantes.estadoActivo)) {
 							/** Actualizamos el estado de la Compra **/
 							// Ventadetalle ingresoDetalle;
-							objVenta = ventaDao.findEndidad(ingresoDetalle
-									.getVenta(), ingresoDetalle.getVenta()
-									.getiVentaId());
-							objVenta.setvEstadoDocumento(pForm
-									.getvEstadoDocumento());
+							objVenta = ventaDao.findEndidad(Venta.class, ingresoDetalle.getVenta().getiVentaId());
+							objVenta.setvEstadoDocumento(pForm.getvEstadoDocumento());
 
 							Ventadevoluciondetalle objDetalle = new Ventadevoluciondetalle();
 							obj.setVenta(objVenta);
@@ -2042,10 +1816,7 @@ public class VentaAction extends BaseAction {
 
 							ingresoproductodevoluciondetalles.add(objDetalle);
 
-							Producto producto = ventaDao.findEndidad(
-									ingresoDetalle.getProducto(),
-									ingresoDetalle.getProducto()
-											.getiProductoId());
+							Producto producto = ventaDao.findEndidad(Producto.class, ingresoDetalle.getProducto().getiProductoId());
 
 							/***********************************************************************************/
 							/***
@@ -2091,8 +1862,7 @@ public class VentaAction extends BaseAction {
 								kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
 								kardex.setcEstadoCodigo(Constantes.estadoActivo);
 								if (i == 0)
-									kardex.setvConcepto(Constantes.conceptoDevVenta + ventaDao
-													.findEndidad(pForm.getTipoDocumento(), pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()
+									kardex.setvConcepto(Constantes.conceptoDevVenta + ventaDao.findEndidad(Tipodocumentogestion.class, pForm.getiTipoDocumentoId()).getvTipoDocumentoDescripcion()
 											+ Constantes.nro + objVenta.getnVentaNumero());
 								iCantidad = cantidadProductoActual;
 								cantidadProductoActual = objKardex.getiCantVenta() - cantidadProductoActual;
@@ -2163,8 +1933,7 @@ public class VentaAction extends BaseAction {
 				}
 			}
 			if (pForm.getMode().equals("U")) {
-				obj = ventaDao.findEndidad(pForm.getVentaDev(), pForm
-						.getVentaDev().getiVentaDevolucionId());
+				obj = ventaDao.findEndidad(Ventadevolucion.class, pForm.getVentaDev().getiVentaDevolucionId());
 				// obj= Util.comparar(obj,
 				// pForm.getVentaDev());//pForm.getVenta();
 
@@ -2176,7 +1945,7 @@ public class VentaAction extends BaseAction {
 				listaDetalle = (List<Ventadevoluciondetalle>) sesion.getAttribute("listaVentaDetalleOriginal");
 				if (sesion.getAttribute("listaVentaDetalle") != null) {
 					for (Ventadetalle ventaDetalle : (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle")) {
-						objVenta = ventaDao.findEndidad(ventaDetalle.getVenta(), ventaDetalle.getVenta().getiVentaId());
+						objVenta = ventaDao.findEndidad(Venta.class, ventaDetalle.getVenta().getiVentaId());
 
 						/***
 						 * Actualizamos la cantidad del producto en stock, el
@@ -2188,7 +1957,7 @@ public class VentaAction extends BaseAction {
 
 							if (ventaDetalle.getProducto().getcProductoCodigo().equals(ingresoDetalles.getProducto().getcProductoCodigo())) {
 
-								Producto producto = ventaDao.findEndidad(ingresoDetalles.getProducto(),ingresoDetalles.getProducto().getiProductoId());
+								Producto producto = ventaDao.findEndidad(Producto.class, ingresoDetalles.getProducto().getiProductoId());
 
 								/***
 								 * Actualizamos la cantidad del producto en
@@ -2581,7 +2350,7 @@ public class VentaAction extends BaseAction {
 			 * response); venta = ventaDao.findEndidadBD(new Venta(),
 			 * "iVentaId", ventaForm.getVenta().getiVentaId()); } else {
 			 */
-			venta = ventaDao.findEndidadBD(new Venta(), "iVentaId", ventaForm.getVenta().getiVentaId());
+			venta = ventaDao.findEndidadBD(Venta.class, "iVentaId", ventaForm.getVenta().getiVentaId());
 
 			// }
 			impresora.agregarLineaCentrada(venta.getTipoDocumento().getvTipoDocumentoDescripcion()
@@ -2660,9 +2429,7 @@ public class VentaAction extends BaseAction {
 			
 		} else if (ventaForm.getvTipoImpresion().equals("ventaDevolucion")) {
 			
-			Ventadevolucion ventaDev = ventaDao.findEndidadBD(
-					new Ventadevolucion(), "iVentaDevolucionId", ventaForm
-							.getVentaDev().getiVentaDevolucionId());
+			Ventadevolucion ventaDev = ventaDao.findEndidadBD(Ventadevolucion.class, "iVentaDevolucionId", ventaForm.getVentaDev().getiVentaDevolucionId());
 
 			impresora.agregarLineaCentrada(ventaDev.getTipoDocumento()
 					.getvTipoDocumentoDescripcion()

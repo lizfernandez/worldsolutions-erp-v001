@@ -2,6 +2,8 @@ package com.entities.vo;
 
 import java.io.Serializable;
 
+import com.entities.Moneda;
+
 public class MonedaVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -12,6 +14,14 @@ public class MonedaVo implements Serializable {
 
     public MonedaVo() {
     }
+
+	public MonedaVo(Moneda moneda) {
+	
+		this.iMonedaId = moneda.getiMonedaId();
+		this.cEstadoCodigo = moneda.getcEstadoCodigo();
+		this.cModenaCodigo = moneda.getcModenaCodigo();
+		this.vMonedaDescripcion = moneda.getvMonedaDescripcion();
+	}
 
 	/**
 	 * @return the iMonedaId

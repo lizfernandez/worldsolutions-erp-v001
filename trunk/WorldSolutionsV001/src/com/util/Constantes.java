@@ -52,5 +52,5 @@ public class Constantes {
 	public static String proMax="proMasVend";
 	public static String proMes="proMenVend";
 	public static String categoriaServicios="SERVICIOS";
-	
+	public static String UnidadMedida = "UNIDAD";
 }

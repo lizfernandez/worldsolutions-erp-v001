@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import com.entities.Sucursal;
+
 public class SucursalVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -20,6 +22,18 @@ public class SucursalVo implements Serializable {
 	
 	public SucursalVo() {
 		
+	}
+	public SucursalVo(Sucursal sucursal) {
+		this.iSucursalId = sucursal.getiSucursalId();
+		this.cSucursalCodigo = sucursal.getcSucursalCodigo();
+		this.cEstadoCodigo = sucursal.getcEstadoCodigo();
+		this.dFechaActualiza = sucursal.getdFechaActualiza();
+		this.dFechaInserta = sucursal.getdFechaInserta();
+		this.iUsuarioActualizaId = sucursal.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = sucursal.getiUsuarioInsertaId();
+		this.vSucursalDireccion = sucursal.getvSucursalDireccion();
+		this.vSucursalNombre = sucursal.getvSucursalNombre();
+		this.vSucursalTelefono = sucursal.getvSucursalTelefono();
 	}
 	/**
 	 * @return the iSucursalId

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import com.entities.Preciosproducto;
+
 public class PreciosproductoVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -16,11 +18,25 @@ public class PreciosproductoVo implements Serializable {
 	private float fPrecioCompra;
 	private float fPrecioVenta;
 	private int iCantidadStock;
-	private ProductoVo producto;
 	private int iUsuarioActualizaId;
 	private int iUsuarioInsertaId;
 
 	public PreciosproductoVo() {
+	}
+
+	public PreciosproductoVo(Preciosproducto preciosproducto) {
+
+		this.iPreciosProductoId = preciosproducto.getiPreciosProductoId();
+		this.cEstadoCodigo = preciosproducto.getcEstadoCodigo();
+		this.dFechaActualiza = preciosproducto.getdFechaActualiza();
+		this.dFechaInserta = preciosproducto.getdFechaInserta();
+		this.fDescuento = preciosproducto.getfDescuento();
+		this.fGanancia = preciosproducto.getfGanancia();
+		this.fPrecioCompra = preciosproducto.getfPrecioCompra();
+		this.fPrecioVenta = preciosproducto.getfPrecioVenta();
+		this.iCantidadStock = preciosproducto.getiCantidadStock();
+		this.iUsuarioActualizaId = preciosproducto.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = preciosproducto.getiUsuarioInsertaId();
 	}
 
 	/**
@@ -147,20 +163,6 @@ public class PreciosproductoVo implements Serializable {
 	 */
 	public void setiCantidadStock(int iCantidadStock) {
 		this.iCantidadStock = iCantidadStock;
-	}
-
-	/**
-	 * @return the producto
-	 */
-	public ProductoVo getProducto() {
-		return producto;
-	}
-
-	/**
-	 * @param producto the producto to set
-	 */
-	public void setProducto(ProductoVo producto) {
-		this.producto = producto;
 	}
 
 	/**

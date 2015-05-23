@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import com.entities.Perfil;
+
 public class PerfilVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -25,6 +27,24 @@ public class PerfilVo implements Serializable {
 
     public PerfilVo() {
     }
+
+	public PerfilVo(Perfil perfil) {
+		this.iPerfilId = perfil.getiPerfilId();
+		this.cEstadoCodigo = perfil.getcEstadoCodigo();
+		this.cPerfilCodigo = perfil.getcPerfilCodigo();
+		this.dFechaActualiza = perfil.getdFechaActualiza();
+		this.dFechaInserta = perfil.getdFechaInserta();
+		this.iUsuarioActualizaId = perfil.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = perfil.getiUsuarioInsertaId();
+		this.vPerfilDescripcion = perfil.getvPerfilDescripcion();
+		this.cInventario = perfil.getcInventario();
+		this.cProveedor = perfil.getcProveedor();
+		this.cClientes = perfil.getcClientes();
+		this.cCompras = perfil.getcCompras();
+		this.cVentas = perfil.getcVentas();
+		this.cEstadisticas = perfil.getcEstadisticas();
+		this.cMantenimiento = perfil.getcMantenimiento();
+	}
 
 	/**
 	 * @return the iPerfilId

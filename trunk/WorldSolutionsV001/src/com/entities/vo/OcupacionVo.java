@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import com.entities.Ocupacion;
+
 public class OcupacionVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -19,6 +21,17 @@ public class OcupacionVo implements Serializable {
 
     public OcupacionVo() {
     }
+
+	public OcupacionVo(Ocupacion ocupacion) {
+		this.iOcupacionId = ocupacion.getiOcupacionId();
+		this.cOcupacionCodigo = ocupacion.getcOcupacionCodigo();
+		this.cEstadoCodigo = ocupacion.getcEstadoCodigo();
+		this.dFechaActualiza = ocupacion.getdFechaActualiza();
+		this.dFechaInserta = ocupacion.getdFechaInserta();
+		this.iUsuarioInserta = ocupacion.getiUsuarioInserta();
+		this.iUsuarioModifica = ocupacion.getiUsuarioModifica();
+		this.vOcupacionDescripcion = ocupacion.getvOcupacionDescripcion();
+	}
 
 	/**
 	 * @return the iOcupacionId

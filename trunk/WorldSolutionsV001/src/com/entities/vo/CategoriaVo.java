@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 
+import com.entities.Categoria;
+
 
 /**
  * The persistent class for the categoria database table.
@@ -24,6 +26,18 @@ public class CategoriaVo implements Serializable {
 
     public CategoriaVo() {
     }
+
+	public CategoriaVo(Categoria categoria) {
+		this.iCategoriaId = categoria.getiCategoriaId();
+		this.cCategoriaCodigo = categoria.getcCategoriaCodigo();
+		this.cEstadoCodigo = categoria.getcEstadoCodigo();
+		this.dFechaActualiza = categoria.getdFechaActualiza();
+		this.dFechaInserta = categoria.getdFechaInserta();
+		this.iUsuarioActualizaId = categoria.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = categoria.getiUsuarioInsertaId();
+		this.clasificacionCategoria = new ClasificacioncategoriaVo(categoria.getClasificacionCategoria());
+		this.vCategoriaDescripcion = categoria.getvCategoriaDescripcion();
+	}
 
 	public int getiCategoriaId() {
 		return iCategoriaId;

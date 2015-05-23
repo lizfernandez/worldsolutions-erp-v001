@@ -1,10 +1,25 @@
 package com.entities.vo;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.entities.Clasificacioncliente;
+import com.entities.Cliente;
+import com.entities.Direccioncliente;
+import com.entities.Estadocuentacliente;
+import com.entities.Visitacliente;
+import com.entities.converter.ClienteConverter;
 
 
 /**
@@ -14,7 +29,8 @@ import java.util.List;
 
 public class ClienteVo implements Serializable {
 	private static final long serialVersionUID = 1L;
-    private int iClienteId;
+	
+	private int iClienteId;
 	private String cEstadoCodigo;
 	private Date dFechaActualiza;
 	private Date dFechaInserta;
@@ -27,11 +43,29 @@ public class ClienteVo implements Serializable {
 	private String vNombreCliente;
 	private String vRubro;
 	private List<DireccionclienteVo> direccionclientes;
-	private List<EstadocuentaclienteVo> estadocuentaclientes;
-	private List<VisitaclienteVo> visitaCliente;
-
+	private ClasificacionclienteVo clasificacion;
+	private float fDescuento;
 
 	public ClienteVo() {
+	}
+
+
+	public ClienteVo(Cliente cliente) {
+		this.iClienteId = cliente.getiClienteId();
+		this.cEstadoCodigo = cliente.getcEstadoCodigo();
+		this.dFechaActualiza = cliente.getdFechaActualiza();
+		this.dFechaInserta = cliente.getdFechaInserta();
+		this.iUsuarioActualizaId = cliente.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = cliente.getiUsuarioInsertaId();
+		this.nClienteNumeroDocumento = cliente.getnClienteNumeroDocumento();
+		this.nClienteTelefono = cliente.getnClienteTelefono();
+		this.vClienteCodigo = cliente.getvClienteCodigo();
+		this.vClienteRazonSocial = cliente.getvClienteRazonSocial();
+		this.vNombreCliente = cliente.getvNombreCliente();
+		this.vRubro = cliente.getvRubro();
+		this.direccionclientes = ClienteConverter.aListDireccionVo(cliente.getDireccionclientes());
+		this.clasificacion = new ClasificacionclienteVo(cliente.getClasificacion());
+		this.fDescuento = cliente.getfDescuento();
 	}
 
 
@@ -243,40 +277,24 @@ public class ClienteVo implements Serializable {
 	}
 
 
-	/**
-	 * @return the estadocuentaclientes
-	 */
-	public List<EstadocuentaclienteVo> getEstadocuentaclientes() {
-		return estadocuentaclientes;
+	public ClasificacionclienteVo getClasificacion() {
+		return clasificacion;
 	}
 
 
-	/**
-	 * @param estadocuentaclientes the estadocuentaclientes to set
-	 */
-	public void setEstadocuentaclientes(
-			List<EstadocuentaclienteVo> estadocuentaclientes) {
-		this.estadocuentaclientes = estadocuentaclientes;
+	public void setClasificacion(ClasificacionclienteVo clasificacion) {
+		this.clasificacion = clasificacion;
 	}
 
 
-	/**
-	 * @return the visitaCliente
-	 */
-	public List<VisitaclienteVo> getVisitaCliente() {
-		return visitaCliente;
+	public float getfDescuento() {
+		return fDescuento;
 	}
 
 
-	/**
-	 * @param visitaCliente the visitaCliente to set
-	 */
-	public void setVisitaCliente(List<VisitaclienteVo> visitaCliente) {
-		this.visitaCliente = visitaCliente;
+	public void setfDescuento(float fDescuento) {
+		this.fDescuento = fDescuento;
 	}
-
-
-	
 
 
 }
