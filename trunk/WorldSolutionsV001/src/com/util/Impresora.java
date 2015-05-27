@@ -17,6 +17,8 @@ import javax.print.attribute.DocAttributeSet;
 
 import javax.print.attribute.HashDocAttributeSet;
 
+import com.entities.Ventadetalle;
+
 
 
 
@@ -269,6 +271,32 @@ public class Impresora {
 		
 		
 	}
+	
+
+	public void agregarDetalleProducto(Ventadetalle ventadetalle) throws IllegalAccessException {
+		
+		Object[][] detalleLinea = new Object[][] {
+				{ ventadetalle.getProducto().getcProductoCodigo(), 0, 1 },
+				{ ventadetalle.getProducto().getvProductoNombre(), 9, 1 } };
+		agregarLinea(detalleLinea);
+
+		if (ventadetalle.getPersonal() != null) {
+			detalleLinea = new Object[][] {
+					{ "TECNICO", 0, 1 },
+					{ ventadetalle.getPersonal().getvPersonalNombres() + " " + ventadetalle.getPersonal().getvPersonalApellidoPaterno(), 9, 1 } };
+			agregarLinea(detalleLinea);
+		}
+		
+		detalleLinea = new Object[][] {
+				{ "", 0, 1},
+				{ ventadetalle.getiVentaDetalleCantidad(), 10, 1},
+				{ ventadetalle.getfVentaDetallePrecio(), 20, -1 },
+				{ ventadetalle.getfVentaDetalleTotal(), 30, -1 } };
+		agregarLinea(detalleLinea);
+		
+		
+	}
+	
 
 	public void agregarCabeceraDetalleProducto(String tituloCodigo, String tituloDescripcion,
 			String tituloCantidad, String tituloPrecioUnitario, String tituloDescuentoProducto, String tituloImporte) {

@@ -2584,7 +2584,7 @@ public class VentaAction extends BaseAction {
 					if (arqueoVenta.getfMontoPago() > 0) {
 						indice = arqueoVenta.getMedioPago1().getiMedioPagoId() - 1;
 
-						totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPago() - arqueoVenta.getfMontoVuelto();
+						totalMedioPago = listaTotalPorMedioPago.get(indice) + arqueoVenta.getfMontoPago() - (arqueoVenta.getfMontoVuelto()>0? arqueoVenta.getfMontoVuelto() : 0);
 						
 						listaTotalPorMedioPago.set(indice, totalMedioPago);
 					}

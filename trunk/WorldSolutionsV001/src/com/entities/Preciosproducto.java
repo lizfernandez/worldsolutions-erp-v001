@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.PreciosproductoVo;
+
 import java.util.Date;
 
 
@@ -31,6 +33,8 @@ public class Preciosproducto implements Serializable {
 
 	private float fGanancia;
 
+	private float fGastosAdm;
+	
 	private float fPrecioCompra;
 
 	private float fPrecioVenta;
@@ -47,6 +51,22 @@ public class Preciosproducto implements Serializable {
 	private int iUsuarioInsertaId;
 
 	public Preciosproducto() {
+	}
+
+	public Preciosproducto(PreciosproductoVo preciosproductoVo,Producto producto) {
+		this.iPreciosProductoId = preciosproductoVo.getiPreciosProductoId();
+		this.cEstadoCodigo = preciosproductoVo.getcEstadoCodigo();
+		this.dFechaActualiza = preciosproductoVo.getdFechaActualiza();
+		this.dFechaInserta = preciosproductoVo.getdFechaInserta();
+		this.fDescuento = preciosproductoVo.getfDescuento();
+		this.fGanancia = preciosproductoVo.getfGanancia();
+		this.fPrecioCompra = preciosproductoVo.getfPrecioCompra();
+		this.fPrecioVenta = preciosproductoVo.getfPrecioVenta();
+		this.iCantidadStock = preciosproductoVo.getiCantidadStock();
+		this.iUsuarioActualizaId = preciosproductoVo.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = preciosproductoVo.getiUsuarioInsertaId();
+		this.fGastosAdm = preciosproductoVo.getfGastosAdm(); 
+		this.producto = producto;
 	}
 
 	/**
@@ -217,6 +237,12 @@ public class Preciosproducto implements Serializable {
 		this.iUsuarioInsertaId = iUsuarioInsertaId;
 	}
 
-	
-	
+	public float getfGastosAdm() {
+		return fGastosAdm;
+	}
+
+	public void setfGastosAdm(float fGastosAdm) {
+		this.fGastosAdm = fGastosAdm;
+	}
+
 }

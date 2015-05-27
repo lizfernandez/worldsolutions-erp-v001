@@ -15,6 +15,7 @@ public class PreciosproductoVo implements Serializable {
 	private Date dFechaInserta;
 	private float fDescuento;
 	private float fGanancia;
+	private float fGastosAdm;
 	private float fPrecioCompra;
 	private float fPrecioVenta;
 	private int iCantidadStock;
@@ -193,6 +194,18 @@ public class PreciosproductoVo implements Serializable {
 		this.iUsuarioInsertaId = iUsuarioInsertaId;
 	}
 
-	
-	
+	/**
+	 * @return the fGastosAdm
+	 */
+	public float getfGastosAdm() {
+		return fGastosAdm;
+	}
+
+	/**
+	 * @param fGastosAdm the fGastosAdm to set
+	 */
+	public void setfGastosAdm(float fGastosAdm) {
+		this.fGastosAdm = fGastosAdm;
+	}
+
 }
