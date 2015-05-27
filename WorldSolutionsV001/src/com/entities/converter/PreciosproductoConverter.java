@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.entities.Preciosproducto;
+import com.entities.Producto;
 import com.entities.vo.PreciosproductoVo;
 
 public class PreciosproductoConverter {
@@ -15,6 +16,20 @@ public class PreciosproductoConverter {
 			for (Preciosproducto preciosproducto : preciosproductodetallles) {
 				vo = new PreciosproductoVo(preciosproducto);
 				list.add(vo);
+			}
+			return list;
+		}
+		
+		return null;
+	}
+
+	public static List<Preciosproducto> aListEntidad(List<PreciosproductoVo> preciosproductodetallles, Producto producto) {
+		List<Preciosproducto> list = new ArrayList<Preciosproducto>();
+		Preciosproducto entidad;
+		if (preciosproductodetallles != null && preciosproductodetallles.size() > 0) {
+			for (PreciosproductoVo vo : preciosproductodetallles) {
+				entidad = new Preciosproducto(vo, producto);
+				list.add(entidad);
 			}
 			return list;
 		}

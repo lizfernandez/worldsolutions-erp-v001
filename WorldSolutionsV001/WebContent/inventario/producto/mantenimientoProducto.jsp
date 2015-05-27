@@ -19,7 +19,7 @@
                    
                     $("#fProductoGanancia").val(ganancia);
                     
-               } 
+               }
                if(ganancia!='' && tipo=='G') {
                     precio =Math.round((compra+compra*ganancia/100) * 100) / 100;
                   
@@ -35,10 +35,11 @@
             alert('INGRESE UTILIDAD');
         }
     }
+    
     function fn_calcularGananciaLista(tipo) {
         var compra = parseFloat(($("#fPrecioCompra").val()==null)?0:$("#fPrecioCompra").val());
         var precio = parseFloat(($("#fPrecioVenta").val()==null)?0:$("#fPrecioVenta").val());
-        var ganancia = parseFloat(($("#fGanancia").val()==null)?0:$("#fGanancia").val());
+        var ganancia = parseFloat(($("#fGanancia").val()==null)?0:$("#fGanancia").val()) + parseFloat(($("#fGastosAdm").val()==null || $("#fGastosAdm").val()=='')?0:$("#fGastosAdm").val());
         
        
         if(precio!='' || ganancia!=''){
@@ -277,46 +278,51 @@
           <thead>
 		       <tr id="tr_01">
 					<td>Cantidad:</td>
-					<td><input type="text" id="iCantidadStock" class="textN" size="10">
-					    <input type="text" id="iPrecioProductoId" class="textInvisible" value="0" size="10"></td>
+					<td><input type="text" id="iCantidadStock" class="textN" size="7" onkeypress="return Numeros(event)">
+					    <input type="text" id="iPrecioProductoId" class="textInvisible" size="7">
+					    <input type="text" id="accionPrecioProducto" class="textInvisible" size="7"></td>
 					<td>Precio Compra:</td>
-					<td><input type="text" id="fPrecioCompra" class="textN" size="10"></td>
-					<td>% ganancia:</td>
-					<td><input type="text" id="fGanancia" class="textN" onblur="fn_calcularGananciaLista('G')" size="10" ></td>
-					<td colspan="2"><button type="button" onclick="limpiar('tabla2')" class="button">
-         				 <span class='refresh' id="btnLimpiar">Limpiar</span></button></td>
-			  </tr>
-			   <tr id="tr_02">				
-					
-					<td>% Desc.:</td>
-					<td><input type="text" id="fDescuento" class="textN" size="10"></td>
-					<td>Precio Venta:</td>
-					<td><input type="text" id="fPrecioVenta" class="textN" size="7"></td>
+					<td><input type="text" id="fPrecioCompra" class="textN" size="7" onkeypress="return Numeros(event)"></td>
+					<td>% Utilidad:</td>
+					<td><input type="text" id="fGanancia" class="textN" onblur="fn_calcularGananciaLista('G')" size="7" onkeypress="return Numeros(event)"></td>
 					<td>Estado:</td>
 					<td>
 					<html:select  property="cEstadoCodigo" styleId="cEstadoCodigoPrecio" styleClass="combo" tabindex="15">       
 				       <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
 				     </html:select>
 		           </td>
-		           <td colspan="2"><button type="button" onclick="agregarPrecio('tabla2')" class="button">
+			  </tr>
+			   <tr id="tr_02">				
+					
+					<td>% Gasto Adm:</td>
+					<td><input type="text" id="fGastosAdm" class="textN" onblur="fn_calcularGananciaLista('G')" size="7" onkeypress="return Numeros(event)"></td>
+					<td>% Desc.:</td>
+					<td><input type="text" id="fDescuento" class="textN" size="7" onkeypress="return Numeros(event)"></td>
+					<td>Precio Venta:</td>
+					<td><input type="text" id="fPrecioVenta" class="textN" size="7" onkeypress="return Numeros(event)"></td>
+					
+<!-- 		           <td><button type="button" onclick="limpiar('tabla2')" class="button"> -->
+					<td><button type="button" onclick="limpiarPrecioProducto()" class="button">
+         				 <span class='refresh' id="btnLimpiar">Limpiar</span></button></td>
+		           <td><button type="button" onclick="agregarPrecio('tabla2')" class="button">
          				 <span class='add' id="btnAgregar" >Agregar</span></button></td>
 				</tr>
 				  
 				
-		     <tr style="background-color: silver;">		    
-		        <th align="left" >Cantidad</th>		      
-		        <th align="left">Precio Compra</th>
-		        <th align="left">% Ganancia</th>
-		        <th align="left">% Descuento</th>
-		        <th align="left">Precio Venta</th>		        
-		        <th align="left">Fecha</th>        
-		        <th align="left">Estado</th>
-		      </tr>
+		     <tr style="background-color: silver;">	
+		        <th align="center" >Cantidad</th>		      
+		        <th align="center">Precio Compra</th>
+		        <th align="center">% Utilidad</th>
+		        <th align="center">% Gastos Adm</th>
+		        <th align="center">% Descuento</th>
+		        <th align="center">Precio Venta</th>		        
+		        <th align="center">Fecha</th>        
+		        <th align="center">Estado</th>
 		    </thead>
 		    <tbody id="tr_detalle">
 		    <logic:empty name="productosForm" property="produc">
 				<tr>
-					<td colspan="12">No hay informaci&oacute;n del Precio producto</td>
+					<td colspan="14">No hay informaci&oacute;n del Precio producto</td>
 				</tr>
 			</logic:empty>
 			<logic:notEmpty name="productosForm" property="produc">		
@@ -326,10 +332,11 @@
 				    <td class="iCantidadStock"><bean:write name="x" property="iCantidadStock"/></td>
 					<td class="fPrecioCompra"><bean:write name="x" property="fPrecioCompra"/></td>
 					<td class="fGanancia"><bean:write name="x" property="fGanancia"/></td>
+					<td class="fGastosAdm"><bean:write name="x" property="fGastosAdm"/></td>
 					<td class="fDescuento"><bean:write name="x" property="fDescuento" /></td>
 					<td class="fPrecioVenta"><bean:write name="x" property="fPrecioVenta"/></td>				    				   
 					<td class="dFechaInserta"><bean:write name="x" property="dFechaInserta"  format="dd/MM/yyyy" locale="Localidad"/></td>
-					<td class="cEstadoCodigoPrecio"><bean:write name="x" property="cEstadoCodigo" /></td>	   
+					<td class="cEstadoCodigoPrecio"><bean:write name="x" property="cEstadoCodigo" /></td>
 				</tr>
 				</logic:iterate>
 			
@@ -372,24 +379,13 @@
 
 <%-- hidden field que contiene el id del producto --%>
 <html:hidden property="iProductoId" styleId="iProductoId"/>
-
 <%-- hidden field que contiene el id del producto --%>
-
-
-
 <%-- hidden field que contiene el mode --%>
-<html:hidden property="mode" styleId="mode" />
-
-			
+<html:hidden property="mode" styleId="mode" />		
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="iduProducto" styleId="metodo"/>
-
-
-
-
 <html:hidden property="vFoto" />
 <%-- hidden field que contiene el iUsuarioInsertaId del producto --%>
-
 <html:hidden property="sizeIngresoproductodetalles" />
 <html:hidden property="sizeVentaDetalles" />
 
@@ -399,6 +395,7 @@
    
     
    $(".comboCodigo.change").attr("disabled",true);
+   $("#accionPrecioProducto").val("I");
    
    $("#iMonedaId").change(function () {
     	var mival = $("#iMonedaId option:selected").val();
@@ -476,17 +473,6 @@
     	$("#iProductoStockTotal").val(stockTotal);
     }
     
-//     function cargarFoto() {
-//     	var cad = "producto.do?metodo=cargarFoto";
-// 	   	 $.ajax({
-// 	         type: "GET",
-// 	         url: cad,
-// 	         data: "",
-	         
-// 	     });
-	    	
-// 	}
-    
  function listSubCategoria(){
 	 var iCategoriaId = $("#iCategoriaId").val();
 	 var cad = "categoria.do?metodo=cambioCategoria&id="+iCategoriaId;  	
@@ -507,6 +493,7 @@
  }
  function llenarDatos(id){
 	 $("#iPrecioProductoId").val(id);
+	 $("#accionPrecioProducto").val("U");
 	 $(document).find('#tr_'+id+' td').each(function(key,val){ 		 
 		  $("#"+$(this).attr('class')).val($( this ).text());
 		
@@ -514,50 +501,68 @@
 	$('#btnAgregar').text("Actualizar");
  }
  
+ function limpiarPrecioProducto () {
+	$("#iCantidadStock").val('');
+	$("#fPrecioCompra").val('');
+	$("#fGanancia").val('');
+	$("#fDescuento").val('');
+	$("#fPrecioVenta").val('');
+	$("#cEstadoCodigoPrecio").val('');
+	$("#fGastosAdm").val('');
+	$('#btnAgregar').text("Agregar");
+ }
+ 
  function agregarPrecio(id){
+	 
 	var iCantidadStock =$("#iCantidadStock").val();
 	var fPrecioCompra =$("#fPrecioCompra").val();
 	var fGanancia =$("#fGanancia").val();
+	var fGastosAdm =$("#fGastosAdm").val();
 	var fDescuento =$("#fDescuento").val();
 	var fPrecioVenta =$("#fPrecioVenta").val();
 	var cEstadoCodigoPrecio =$("#cEstadoCodigoPrecio").val();
 	var iProductoId = ($("#iProductoId").val()==null)?0:$("#iProductoId").val();
 	var iPrecioProductoId = "";
 	var newHtml ="";
-	if($("#iPrecioProductoId").val()==0){
+	var modePrecioProducto = $("#accionPrecioProducto").val();
+	if(modePrecioProducto == 'I'){
 		iPrecioProductoId =0;
-		mode = "I" ;
-	}
-	else{
+		
+	} else{
 		iPrecioProductoId = $("#iPrecioProductoId").val();
-		mode = "U";
+		
 	}
 	var f = new Date();
 	var fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
 	
 	var cad = "productos.do?metodo=detalleListaPrecios&iPrecioProductoId="+iPrecioProductoId+"&iCantidadStock="+iCantidadStock+"&fPrecioCompra="+fPrecioCompra+"&fGanancia="+fGanancia+"&fDescuento="+fDescuento+
-			   "&fPrecioVenta="+fPrecioVenta+"&cEstadoCodigoPrecio="+cEstadoCodigoPrecio+"&iProductoId="+iProductoId+"&mode="+mode;
+			   "&fPrecioVenta="+fPrecioVenta+"&cEstadoCodigoPrecio="+cEstadoCodigoPrecio+"&iProductoId="+iProductoId+"&mode="+modePrecioProducto+"&fGastosAdm="+fGastosAdm;
 	
-	
-	 
 	 $.getJSON(cad, function retorna(obj){		 	
-		 
+		 var i = 0;
     	 $.each(obj,function(key,data){
-    		 newHtml+='<tr>';
-    	 		newHtml+='<td>'+data.iCantidadStock+'</td>';
-    	 		newHtml+='<td>'+data.fPrecioCompra+'</td>';
-    	 		newHtml+='<td>'+data.fGanancia+'</td>';
-    	 		newHtml+='<td>'+data.fDescuento+'</td>';
-    	 		newHtml+='<td>'+data.fPrecioVenta+'</td>';
-    	 		newHtml+='<td>'+fecha+'</td>';
-    	 		newHtml+='<td>'+data.cEstadoCodigo+'</td>';
+			//<tr id='tr_${i}' onclick="llenarDatos('${i}')">
+			
+			newHtml+='<tr id=\'tr_' + i + '\' onclick="llenarDatos(\'' + i + '\')>';
+    	 	newHtml+='<td>'+data.iCantidadStock+'</td>';
+    	 	newHtml+='<td>'+data.fPrecioCompra+'</td>';
+    	 	newHtml+='<td>'+data.fGanancia+'</td>';
+    	 	newHtml+='<td>'+data.fGastosAdm+'</td>';
+    	 	newHtml+='<td>'+data.fDescuento+'</td>';
+    	 	newHtml+='<td>'+data.fPrecioVenta+'</td>';
+    	 	newHtml+='<td>'+fecha+'</td>';
+    	 	newHtml+='<td>'+data.cEstadoCodigo+'</td>';
     	 	newHtml+='</tr>';
+    	 	i = i+  1;
+    	 	
     	 	});
     	 
     	 $("#tr_detalle").html(newHtml);
       });
+	 limpiarPrecioProducto();
 	
  }
+ 
  function fn_totalProducto(i){
 	 
 	 var iUMBase=parseFloat(($("#iUMBaseAlm"+i).val()=="")?1:$("#iUMBaseAlm"+i).val()) * parseFloat(($("#iUMPedido").val()=="0")?1:$("#iUMPedido").val())*parseFloat(($("#iUMSalida").val()=="0")?1:$("#iUMSalida").val());

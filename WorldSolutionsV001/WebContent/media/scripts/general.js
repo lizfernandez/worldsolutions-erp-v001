@@ -298,10 +298,12 @@ function buscar(form){
 }
 function limpiar(id){
 	$(document).find('#'+id+' .text').each(function(key,val){ 	 
-	     $(this).val(" ");
+	    
+		$(this).val(" ");
 	    	     	
 	   });
 }
+
 /**Realiza la busqueda popup***/
 function buscarPopup(form){
 	var valor="";
