@@ -184,8 +184,8 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 			if(producto.getPeriodo()!=null && producto.getPeriodo().getiPeriodoId()>0){
 	        	where+= " and p.periodo.iPeriodoId LIKE '%"+producto.getPeriodo().getiPeriodoId()+"%'";
 	        }
-			if(producto.getUsuarioRecepcion()!=null && producto.getUsuarioRecepcion().getiUsuarioId()>0){
-	        	where+= " and p.usuarioRecepcion.iUsuarioId LIKE '%"+producto.getUsuarioRecepcion().getiUsuarioId()+"%'";
+			if(producto.getUsuarioRecepcion()!=null && producto.getUsuarioRecepcion().getiPersonalId()>0){
+	        	where+= " and p.usuarioRecepcion.iUsuarioId LIKE '%"+producto.getUsuarioRecepcion().getiPersonalId()+"%'";
 	        }
 			
 	        System.out.println(" where ="+where);

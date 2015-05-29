@@ -50,12 +50,12 @@ public class Distalmacen implements Serializable {
 	private int iUsuarioActualizaId;
 	@ManyToOne
 	@JoinColumn(name="iUsuarioEntregaId", nullable=false)
-	private Usuario usuatioEntrega;
+	private Personal usuatioEntrega;
 
 	private int iUsuarioInsertaId;
 	@ManyToOne
 	@JoinColumn(name="iUsuarioRecepcionId", nullable=false)
-	private Usuario usuarioRecepcion;
+	private Personal usuarioRecepcion;
 
 	private String vNroIngreso;
 
@@ -232,18 +232,27 @@ public class Distalmacen implements Serializable {
 		this.iUsuarioActualizaId = iUsuarioActualizaId;
 	}
 
+	
+
 	/**
 	 * @return the usuatioEntrega
 	 */
-	public Usuario getUsuatioEntrega() {
+	public Personal getUsuatioEntrega() {
 		return usuatioEntrega;
 	}
 
 	/**
 	 * @param usuatioEntrega the usuatioEntrega to set
 	 */
-	public void setUsuatioEntrega(Usuario usuatioEntrega) {
+	public void setUsuatioEntrega(Personal usuatioEntrega) {
 		this.usuatioEntrega = usuatioEntrega;
+	}
+
+	/**
+	 * @param usuarioRecepcion the usuarioRecepcion to set
+	 */
+	public void setUsuarioRecepcion(Personal usuarioRecepcion) {
+		this.usuarioRecepcion = usuarioRecepcion;
 	}
 
 	/**
@@ -260,18 +269,12 @@ public class Distalmacen implements Serializable {
 		this.iUsuarioInsertaId = iUsuarioInsertaId;
 	}
 
+
 	/**
 	 * @return the usuarioRecepcion
 	 */
-	public Usuario getUsuarioRecepcion() {
+	public Personal getUsuarioRecepcion() {
 		return usuarioRecepcion;
-	}
-
-	/**
-	 * @param usuarioRecepcion the usuarioRecepcion to set
-	 */
-	public void setUsuarioRecepcion(Usuario usuarioRecepcion) {
-		this.usuarioRecepcion = usuarioRecepcion;
 	}
 
 	/**

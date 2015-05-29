@@ -42,21 +42,21 @@
 		<tr>
 		    <td align="right">Personal de Entreda:</td>
 		    <td colspan="3">
-		    <input type="text" id="cPersonalCodigo" maxlength="5" class="textCodigo inputDisabled" />
-	        <input type="text" id="vPersonalNombres"   class="text inputDisabled" size="47/>
+		    <html:text property="cPersonalCodigo"  styleId="cPersonalCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />
+	        <html:text property="vPersonalNombres"  styleId="vPersonalNombres"   styleClass="text inputDisabled" size="47"/>
 	    <span id="m_cPersonalCodigo" class="importante"></span>
 	    <input type="hidden" id="vOcupacionDescripcion"/>
 	    <input type="hidden" id="fSueldo"/>
-		       <html:hidden property="iUsuarioEntregaId"  styleId="iUsuarioEntregaId" styleClass="text " />
+		       <html:hidden property="iUsuarioEntregaId"  styleId="iUsuarioEntregaId" />
 		        <button type="button"  class="button" onclick="popupModal('personal.do?metodo=listaPersonal&mode=LP&iPersonalId=iUsuarioEntregaId&codigo=cPersonalCodigo&nombre=vPersonalNombres',580,250)"><span class='imgpopup'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></button>
 		    </td>
 		</tr>
 		<tr>
-		    <td align="right">Rersonal de Recepcion:</td>
+		    <td align="right">Personal de Recepcion:</td>
 		    <td colspan="3">
-		     <input type="text" id="cPersonalCodigoRecepcion" maxlength="5" class="textCodigo inputDisabled" />
-	        <input type="text" id="vPersonalNombresRecepcion"   class="text inputDisabled" size="47"/>
-	        <html:hidden property="iUsuarioRecepcionId"  styleId="iUsuarioRecepcionId" styleClass="text " />
+		     <html:text property="cPersonalCodigoRecep"  styleId="cPersonalCodigoRecepcion" maxlength="5" styleClass="textCodigo inputDisabled" />
+	        <html:text property="vPersonalNombresRecep"  styleId="vPersonalNombresRecepcion"   styleClass="text inputDisabled" size="47"/>
+	        <html:hidden property="iUsuarioRecepcionId"  styleId="iUsuarioRecepcionId" />
 		    
 		        <button type="button"  class="button" onclick="popupModal('personal.do?metodo=listaPersonal&mode=LP&iPersonalId=iUsuarioRecepcionId&codigo=cPersonalCodigoRecepcion&nombre=vPersonalNombresRecepcion',580,250)" ><span class='imgpopup'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></button>
 		    </td>
@@ -104,29 +104,26 @@
           <td><img  src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" class="imgDelete" /></td>
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
             <td>	           
-	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
-	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockTotal" />'/>
+	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iCantidad" />"/>
+	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="iCantidad" />'/>
             </td>
             <logic:notEqual name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
                 <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
             </logic:notEqual>
-            <logic:equal name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
-                <td><bean:write name="x" property="personal.vPersonalNombres" />&emsp;  <bean:write name="x" property="personal.vPersonalApellidoPaterno"  /></td>
-            </logic:equal>
-            
+             
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td align="right">
-                <input type="text" class="inputderecha" id="precio${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fVentaDetallePrecio" format="#,##0.00" locale="Localidad" />"/>                
+                <input type="text" class="inputderecha" id='precio${i}' disabled="true" value="<bean:write name="x" property="producto.fProductoPrecioVenta" format="#,##0.00" locale="Localidad" /> "/>                
             </td>
              <td align="right">
-                <input type="text" class="inputderecha" id="descuento${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fDescuento" format="#,##0.00" locale="Localidad" />"/>                
+                <input type="text" class="inputderecha" id='descuento${i}' disabled="true" value="<bean:write name="x" property="producto.fProductoDescuento" format="#,##0.00" locale="Localidad" />"/>                
             </td>            
             <td align="right">  
                    <span class="total${i}">
-	                 <bean:write name="x" property="fVentaDetalleTotal" />
+	                 <bean:write name="x" property="fTotal" />
 	                </span>
 	               <span id="total${i}" class="totales">
-	                 <bean:write name="x" property="fVentaDetalleTotal" />
+	                 <bean:write name="x" property="fTotal" />
 	               </span>          
               </td>
         </tr> 
@@ -354,6 +351,7 @@
         $(".trCodigo").show();
          document.getElementById('btnGuardar').textContent="Actualizar";
         $("#popupCabecera").text('ACTUALIZAR DATOS');
+        $(".imgNew, .imgDelete").hide();
         //$("#span2").hide();
         if(mode=='F'){
         	$("#popupCabecera").text('BUSCAR DATOS');        	
@@ -403,7 +401,7 @@ function fn_calcularTotal(fila) {
     var precio =  parseFloat($.trim($("#precio"+fila).val()));        
     var fDescuento = parseFloat($.trim($("#descuento"+fila).val()));   	
 	var precioReal = (precio)-(precio*(fDescuento/100));
-    var precioTotal = parseFloat(cantidad*precioReal);
+    var precioTotal = dosDecimales(parseFloat(cantidad*precioReal));
 
     	
     
