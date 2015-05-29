@@ -21,6 +21,7 @@ import com.entities.Distalmacen;
 import com.entities.Moneda;
 import com.entities.Ordencompra;
 import com.entities.Periodo;
+import com.entities.Personal;
 import com.entities.Produccion;
 import com.entities.Producciondetalle;
 import com.entities.Producto;
@@ -67,6 +68,8 @@ public class ProductosForm extends ActionForm {
     private int iPersonalId;
     private String cPersonalCodigo;
     private String vPersonalNombres;
+    private String cPersonalCodigoRecep;
+    private String vPersonalNombresRecep;
     private int iSucursalId;
     
     /**
@@ -1028,55 +1031,47 @@ public class ProductosForm extends ActionForm {
 		this.distAlmacen.setAlmacenSalida(getProductoDao().findEndidad(Almacen.class,almacenEntrada)) ;
 	}
 	
-	/**
-	 * @return the usuatioEntrega
-	 */
-	public Usuario getUsuatioEntrega() {
-		Usuario usuatioEntrega= distAlmacen.getUsuatioEntrega();
-		if(usuatioEntrega==null){
-			usuatioEntrega=  new Usuario();
-		}
-		return usuatioEntrega;
-	}
-
-
 
 	/**
 	 * @return the iUsuarioInsertaId
 	 */
 	public int getiUsuarioEntregaId() {
-		return getUsuatioEntrega().getiUsuarioId();
+		Personal usuarioRecepcion= distAlmacen.getUsuatioEntrega();
+		int iUsuarioRecepcionId =0;
+		if(usuarioRecepcion!=null){
+			iUsuarioRecepcionId= distAlmacen.getUsuatioEntrega().getiPersonalId();
+		}
+		return iUsuarioRecepcionId;
+		
 	}
 
 	/**
 	 * @param iUsuarioInsertaId the iUsuarioInsertaId to set
 	 */
-	public void setiUsuarioEntregaId(int iUsuarioInsertaId) {
-		this.distAlmacen.setUsuatioEntrega(getProductoDao().findEndidad(Usuario.class,iUsuarioInsertaId));
+	public void setiUsuarioEntregaId(int iUsuarioEntregaId) {
+		System.out.println("fs"+iUsuarioEntregaId);
+		this.distAlmacen.setUsuatioEntrega(getProductoDao().findEndidad(Personal.class,iUsuarioEntregaId));
+		System.out.println("fs"+iUsuarioEntregaId);
 	}
 
-	/**
-	 * @return the usuarioRecepcion
-	 */
-	public Usuario getUsuarioRecepcion() {
-		Usuario usuarioRecepcion= distAlmacen.getUsuarioRecepcion();
-		if(usuarioRecepcion==null){
-			usuarioRecepcion=  new Usuario();
-		}
-		return usuarioRecepcion;
-	}
+	
 	/**
 	 * @return the iUsuarioInsertaId
 	 */
 	public int getiUsuarioRecepcionId() {
-		return getUsuarioRecepcion().getiUsuarioId();
+		Personal usuarioRecepcion= distAlmacen.getUsuarioRecepcion();
+		int iUsuarioRecepcionId =0;
+		if(usuarioRecepcion!=null){
+			iUsuarioRecepcionId= distAlmacen.getUsuarioRecepcion().getiPersonalId();
+		}
+		return iUsuarioRecepcionId;
 	}
 
 	/**
 	 * @param iUsuarioInsertaId the iUsuarioInsertaId to set
 	 */
-	public void setiUsuarioRecepcionId(int iUsuarioInsertaId) {
-		this.distAlmacen.setUsuarioRecepcion(getProductoDao().findEndidad(Usuario.class,iUsuarioInsertaId));
+	public void setiUsuarioRecepcionId(int iUsuarioRecepcion) {
+		this.distAlmacen.setUsuarioRecepcion(getProductoDao().findEndidad(Personal.class,iUsuarioRecepcion));
 	}
 
 	/**
@@ -1348,6 +1343,34 @@ public class ProductosForm extends ActionForm {
 	 */
 	public void setvNroOrden(String vNroOrden) {
 		this.ordenCompra.setvNroOrden(vNroOrden);
+	}
+
+	/**
+	 * @return the cPersonalCodigoRecep
+	 */
+	public String getcPersonalCodigoRecep() {
+		return cPersonalCodigoRecep;
+	}
+
+	/**
+	 * @param cPersonalCodigoRecep the cPersonalCodigoRecep to set
+	 */
+	public void setcPersonalCodigoRecep(String cPersonalCodigoRecep) {
+		this.cPersonalCodigoRecep = cPersonalCodigoRecep;
+	}
+
+	/**
+	 * @return the vPersonalNombresRecep
+	 */
+	public String getvPersonalNombresRecep() {
+		return vPersonalNombresRecep;
+	}
+
+	/**
+	 * @param vPersonalNombresRecep the vPersonalNombresRecep to set
+	 */
+	public void setvPersonalNombresRecep(String vPersonalNombresRecep) {
+		this.vPersonalNombresRecep = vPersonalNombresRecep;
 	}
 
 }

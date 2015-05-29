@@ -42,6 +42,7 @@ import com.entities.Librodiario;
 import com.entities.Moneda;
 import com.entities.Ordencompra;
 import com.entities.Ordencompradetalle;
+import com.entities.Periodo;
 import com.entities.Personal;
 import com.entities.Preciosproducto;
 import com.entities.Produccion;
@@ -1478,7 +1479,13 @@ public class ProductosAction extends BaseAction {
 					int id = Integer.parseInt(request.getParameter("id"));
 					Distalmacen distAlamcen = genericoDao.findEndidad(Distalmacen.class,id);
 					productoForm.setDistAlmacen(distAlamcen);
-					
+					Personal perSalida = genericoDao.findEndidad(Personal.class,distAlamcen.getUsuatioEntrega().getiPersonalId());
+					productoForm.setcPersonalCodigo(perSalida.getcPersonalCodigo());
+					productoForm.setvPersonalNombres(perSalida.getvPersonalNombres()+perSalida.getvPersonalApellidoPaterno());
+				
+					Personal perEntrada = genericoDao.findEndidad(Personal.class,distAlamcen.getUsuarioRecepcion().getiPersonalId());
+					productoForm.setcPersonalCodigoRecep(perEntrada.getcPersonalCodigo());
+					productoForm.setvPersonalNombresRecep(perEntrada.getvPersonalNombres()+perSalida.getvPersonalApellidoPaterno());
 					
 					for(Distalmacendetalle produce:distAlamcen.getDistAlmacendetalles()){
 						Producto pro = new Producto();
@@ -1512,6 +1519,7 @@ public class ProductosAction extends BaseAction {
 						pro.setcProductoCodigo(produce.getProducto().getcProductoCodigo());
 						pro.setfProductoDescuento(produce.getProducto().getfProductoDescuento());
 						pro.setfProductoPrecioCompra(produce.getProducto().getfProductoPrecioCompra());
+						pro.setfProductoPrecioVenta(produce.getProducto().getfProductoPrecioVenta());
 						pro.setiProductoId(produce.getProducto().getiProductoId());
 						pro.setiProductoStockTotal(produce.getProducto().getiProductoStockTotal());
 						pro.setMoneda(produce.getProducto().getMoneda());
@@ -2113,6 +2121,13 @@ public class ProductosAction extends BaseAction {
 				/******************************************/
 				DistBean.setdFechaInserta(Fechas.getDate());
 				DistBean.setiUsuarioInsertaId(usu.getiUsuarioId());
+				DistBean.setiSucursalId(usu.getSucursal().getiSucursalId());
+				//14: documento de almacen de salida.
+				DistBean.setiTipoDocumentoId(14);
+				DistBean.setPeriodo(productoDao.findEndidad(Periodo.class,iPeriodoId));
+				/*DistBean.setUsuarioRecepcion(productoDao.findEndidad(Usuario.class,pForm.getiUsuarioRecepcionId()));
+				DistBean.setUsuatioEntrega(productoDao.findEndidad(Usuario.class,pForm.getiUsuarioEntregaId()));
+				*/
 				productoDao.persistEndidad(DistBean);
 				
 				
@@ -2145,7 +2160,7 @@ public class ProductosAction extends BaseAction {
 				}
 				
 				/**Insertamos la existencia de un producto en el Kardex**/
-				Kardex  kardex = new Kardex();
+				/*Kardex  kardex = new Kardex();
 				kardex.setProducto(pro);
 				kardex.setdFecha(Fechas.getDate());
 				kardex.setvConcepto(Constantes.conceptoDistribucion);
@@ -2155,10 +2170,10 @@ public class ProductosAction extends BaseAction {
 				kardex.setiUsuarioInsertaId(usu.getiUsuarioId());
 				kardex.setdFechaInserta(Fechas.getDate());
 				kardex.setcEstadoCodigo(Constantes.estadoActivo);
-				kardex.setiPeriodoId(iPeriodoId);
+				kardex.setiPeriodoId(iPeriodoId);*/
 				//listaKardexs.add(kardex);
 				//pro.setKardexs(listaKardexs);
-				productoDao.persistEndidad(kardex);
+				//productoDao.persistEndidad(kardex);
 				
 				
 				 
@@ -2166,7 +2181,7 @@ public class ProductosAction extends BaseAction {
 				 * 20(Mercaderia) y
 				 * 201(Almacem)
 				 * id=57; 201: mercaderia/ Almacen**/			
-				Librodiario libroDiario = new Librodiario();
+				/*Librodiario libroDiario = new Librodiario();
 				libroDiario.setcEstadoCodigo(Constantes.estadoActivo);
 				libroDiario.setCuenta(productoDao.findEndidad(Cuenta.class, 57));
 				libroDiario.setfMonto(kardex.getiCantExistencia()*kardex.getfPuExistencia());
@@ -2177,9 +2192,9 @@ public class ProductosAction extends BaseAction {
 				libroDiario.setKardex(kardex);
 				libroDiario.setiPeriodoId(iPeriodoId);
 				productoDao.persistEndidad(libroDiario);
-				
+				*/
 						
-				 productoDao.persistEndidad(libroDiario);
+				
 				 resultado = productoDao.commitEndidad(transaccion);
 				// productoDao.refreshEndidad(pro);
 				
