@@ -130,9 +130,9 @@ public class Producto implements Serializable {
 	private List<Preciosproducto> preciosproductodetallles;
 	
 	//bi-directional many-to-one association to listaPrecios
-	/*@OneToMany(mappedBy="producto", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="producto", fetch=FetchType.LAZY)
 	private List<Productoalmacen> productoAlmacendetallles;
-	*/
+	
 	
 	//bi-directional many-to-one association to Ingresoproducto
 	@OneToMany(mappedBy="producto")
@@ -482,17 +482,16 @@ public class Producto implements Serializable {
 	/**
 	 * @return the productoAlmacendetallles
 	 */
-	/*public List<Productoalmacen> getProductoAlmacendetallles() {
+	public List<Productoalmacen> getProductoAlmacendetallles() {
 		return productoAlmacendetallles;
 	}
 
-	*//**
+	/**
 	 * @param productoAlmacendetallles the productoAlmacendetallles to set
-	 *//*
-	public void setProductoAlmacendetallles(
-			List<Productoalmacen> productoAlmacendetallles) {
+	 */
+	public void setProductoAlmacendetallles(List<Productoalmacen> productoAlmacendetallles) {
 		this.productoAlmacendetallles = productoAlmacendetallles;
-	}*/
+	}
 
 	/**
 	 * @return the fProductoGastosAdm

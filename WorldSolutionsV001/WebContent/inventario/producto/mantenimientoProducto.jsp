@@ -157,7 +157,7 @@
 		     <span id="m_iUnidadMedidadId" class="importante">*</span> 
 		    </td>
 		    <td colspan="2">  
-		       <html:select property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="text comboCodigo unidadFinal" tabindex="12" style="width:140px" >
+		       <html:select property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="text comboCodigo unidadFinal comboCodigo change" tabindex="12" style="width:140px" >
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>		          
 		     </html:select>  
 		      
@@ -510,6 +510,7 @@
 	$("#cEstadoCodigoPrecio").val('');
 	$("#fGastosAdm").val('');
 	$('#btnAgregar').text("Agregar");
+	$("#accionPrecioProducto").val('I');
  }
  
  function agregarPrecio(id){
@@ -538,22 +539,22 @@
 	var cad = "productos.do?metodo=detalleListaPrecios&iPrecioProductoId="+iPrecioProductoId+"&iCantidadStock="+iCantidadStock+"&fPrecioCompra="+fPrecioCompra+"&fGanancia="+fGanancia+"&fDescuento="+fDescuento+
 			   "&fPrecioVenta="+fPrecioVenta+"&cEstadoCodigoPrecio="+cEstadoCodigoPrecio+"&iProductoId="+iProductoId+"&mode="+modePrecioProducto+"&fGastosAdm="+fGastosAdm;
 	
-	 $.getJSON(cad, function retorna(obj){		 	
-		 var i = 0;
+	 $.getJSON(cad, function retorna(obj){
     	 $.each(obj,function(key,data){
+    		 //alert('Cantidad: ' + data.iCantidadStock);
+    		 
 			//<tr id='tr_${i}' onclick="llenarDatos('${i}')">
-			
-			newHtml+='<tr id=\'tr_' + i + '\' onclick="llenarDatos(\'' + i + '\')>';
-    	 	newHtml+='<td>'+data.iCantidadStock+'</td>';
-    	 	newHtml+='<td>'+data.fPrecioCompra+'</td>';
-    	 	newHtml+='<td>'+data.fGanancia+'</td>';
-    	 	newHtml+='<td>'+data.fGastosAdm+'</td>';
-    	 	newHtml+='<td>'+data.fDescuento+'</td>';
-    	 	newHtml+='<td>'+data.fPrecioVenta+'</td>';
-    	 	newHtml+='<td>'+fecha+'</td>';
-    	 	newHtml+='<td>'+data.cEstadoCodigo+'</td>';
+// 			newHtml+='<tr id=\'tr_' + i + '\' onclick="llenarDatos(\'' + i + '\')>';
+			newHtml+="<tr id=\"tr_" + key + "\" onclick=\"llenarDatos('" + key + "')\" >";
+    	 	newHtml+='<td class=\"iCantidadStock\">'+data.iCantidadStock+'</td>';
+    	 	newHtml+='<td class=\"fPrecioCompra\">'+data.fPrecioCompra+'</td>';
+    	 	newHtml+='<td class=\"fGanancia\">'+data.fGanancia+'</td>';
+    	 	newHtml+='<td class=\"fGastosAdm\">'+data.fGastosAdm+'</td>';
+    	 	newHtml+='<td class=\"fDescuento\">'+data.fDescuento+'</td>';
+    	 	newHtml+='<td class=\"fPrecioVenta\">'+data.fPrecioVenta+'</td>';
+    	 	newHtml+='<td class=\"dFechaInserta\">'+fecha+'</td>';
+    	 	newHtml+='<td class=\"cEstadoCodigoPrecio\">'+data.cEstadoCodigo+'</td>';
     	 	newHtml+='</tr>';
-    	 	i = i+  1;
     	 	
     	 	});
     	 

@@ -1,60 +1,42 @@
-package com.entities;
+package com.entities.vo;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.entities.vo.AlmacenVo;
-
 import java.util.Date;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- * The persistent class for the almacen database table.
- * 
- */
-@Entity
-public class Almacen implements Serializable {
-	private static final long serialVersionUID = 1L;
+import com.entities.Almacen;
+import com.entities.Sucursal;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+public class AlmacenVo implements Serializable {
+	
 	private int iAlmacenId;
-
 	private String cEstadoCodigo;
-
 	private String cAlmacenCodigo;
-
-    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
-
-    @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
-    
-    @ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iSucursalId", nullable=false)	
-	private Sucursal sucursal;
-
+	private SucursalVo sucursal;
 	private int iUsuarioActualizaId;
-
 	private int iUsuarioInsertaId;
-
 	private String vAlmacenDireccion;
-
 	private String vAlmacenNombre;
-
 	private String vAlmacenTelefono;
-
-    public Almacen() {
-    }
-
-	public Almacen(AlmacenVo almacen) {
+	
+	public AlmacenVo() {
+	}
+	
+	public AlmacenVo(Almacen almacen) {
 		super();
 		this.iAlmacenId = almacen.getiAlmacenId();
 		this.cEstadoCodigo = almacen.getcEstadoCodigo();
 		this.cAlmacenCodigo = almacen.getcAlmacenCodigo();
 		this.dFechaActualiza = almacen.getdFechaActualiza();
 		this.dFechaInserta = almacen.getdFechaInserta();
-		this.sucursal = new Sucursal(almacen.getSucursal());
+		this.sucursal = new SucursalVo(almacen.getSucursal());
 		this.iUsuarioActualizaId = almacen.getiUsuarioActualizaId();
 		this.iUsuarioInsertaId = almacen.getiUsuarioInsertaId();
 		this.vAlmacenDireccion = almacen.getvAlmacenDireccion();
@@ -90,7 +72,6 @@ public class Almacen implements Serializable {
 		this.cEstadoCodigo = cEstadoCodigo;
 	}
 
-	
 	/**
 	 * @return the cAlmacenCodigo
 	 */
@@ -133,19 +114,17 @@ public class Almacen implements Serializable {
 		this.dFechaInserta = dFechaInserta;
 	}
 
-	
-
 	/**
 	 * @return the sucursal
 	 */
-	public Sucursal getSucursal() {
+	public SucursalVo getSucursal() {
 		return sucursal;
 	}
 
 	/**
 	 * @param sucursal the sucursal to set
 	 */
-	public void setSucursal(Sucursal sucursal) {
+	public void setSucursal(SucursalVo sucursal) {
 		this.sucursal = sucursal;
 	}
 
@@ -218,6 +197,7 @@ public class Almacen implements Serializable {
 	public void setvAlmacenTelefono(String vAlmacenTelefono) {
 		this.vAlmacenTelefono = vAlmacenTelefono;
 	}
-
-
+	
+	
+	
 }

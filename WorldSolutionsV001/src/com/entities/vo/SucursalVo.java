@@ -1,7 +1,6 @@
 package com.entities.vo;
 
 import java.io.Serializable;
-
 import java.util.Date;
 
 import com.entities.Sucursal;
@@ -19,6 +18,7 @@ public class SucursalVo implements Serializable {
 	private String vSucursalDireccion;
 	private String vSucursalNombre;
 	private String vSucursalTelefono;
+	private EmpresaVo empresa;
 	
 	public SucursalVo() {
 		
@@ -173,6 +173,18 @@ public class SucursalVo implements Serializable {
 	 */
 	public void setvSucursalTelefono(String vSucursalTelefono) {
 		this.vSucursalTelefono = vSucursalTelefono;
+	}
+	/**
+	 * @return the empresa
+	 */
+	public EmpresaVo getEmpresa() {
+		return empresa;
+	}
+	/**
+	 * @param empresa the empresa to set
+	 */
+	public void setEmpresa(EmpresaVo empresa) {
+		this.empresa = empresa;
 	}
 
 	
