@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.ProductoalmacenVo;
+
 import java.util.Date;
 
 
@@ -40,8 +42,6 @@ public class Productoalmacen implements Serializable {
 
 	private int iUMBaseAlm;
 	
-
-	
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="iUMBaseAlmId", nullable=false)
 	private Unidadmedida unidadBaseAlm;
@@ -52,6 +52,26 @@ public class Productoalmacen implements Serializable {
 
     public Productoalmacen() {
     }
+
+    
+    
+	public Productoalmacen(ProductoalmacenVo ProductoalmacenVo) {
+		super();
+		this.iProductoAlamcenId = iProductoAlamcenId;
+		this.cEstadoCodigo = cEstadoCodigo;
+		this.dFechaActualiza = dFechaActualiza;
+		this.dFechaInserta = dFechaInserta;
+		this.almacen = almacen;
+		this.iProductoAlmStockTotal = iProductoAlmStockTotal;
+		this.producto = producto;
+		this.unidadMedidaAlm = unidadMedidaAlm;
+		this.iUMBaseAlm = iUMBaseAlm;
+		this.unidadBaseAlm = unidadBaseAlm;
+		this.iUsuarioActualizaId = iUsuarioActualizaId;
+		this.iUsuarioInsertaId = iUsuarioInsertaId;
+	}
+
+
 
 	/**
 	 * @return the iProductoAlamcenId

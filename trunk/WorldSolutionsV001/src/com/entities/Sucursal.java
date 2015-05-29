@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.SucursalVo;
+
 import java.util.Date;
 
 
@@ -53,6 +55,22 @@ public class Sucursal implements Serializable {
 	public Sucursal() {
 		
 	}
+	
+	public Sucursal(SucursalVo sucursalVo) {
+		this.iSucursalId = sucursalVo.getiSucursalId();
+		this.cSucursalCodigo = sucursalVo.getcSucursalCodigo();
+		this.cEstadoCodigo = sucursalVo.getcEstadoCodigo();
+		this.dFechaActualiza = sucursalVo.getdFechaActualiza();
+		this.dFechaInserta = sucursalVo.getdFechaInserta();
+		this.iUsuarioActualizaId = sucursalVo.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = sucursalVo.getiUsuarioInsertaId();
+		this.vSucursalDireccion = sucursalVo.getvSucursalDireccion();
+		this.vSucursalNombre = sucursalVo.getvSucursalNombre();
+		this.vSucursalTelefono = sucursalVo.getvSucursalTelefono();
+		this.empresa = new Empresa(sucursalVo.getEmpresa());
+	}
+
+
 	/**
 	 * @return the iSucursalId
 	 */

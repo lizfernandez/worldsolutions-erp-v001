@@ -55,6 +55,7 @@ import com.entities.Unidadmedida;
 import com.entities.Usuario;
 import com.entities.converter.PreciosproductoConverter;
 import com.entities.vo.PreciosproductoVo;
+import com.entities.vo.ProductoalmacenVo;
 import com.google.gson.Gson;
 import com.struts.form.ProductosForm;
 import com.util.Constantes;
@@ -479,8 +480,7 @@ public class ProductosAction extends BaseAction {
 		List<Unidadmedida> listaUnidadMedida = unidadMedidaDao.listaUnidadMedida();
 		List<Estado> listaEstado = estadoDao.listEstado();
 		List<Moneda> listaMoneda = genericoDao.listaEntidadGenerica(moneda);
-		List<Almacen> listalmAlmacen = genericoDao.listaEntidadGenerica(new Almacen());
-		List<Productoalmacen> listaProduAlma= new ArrayList<Productoalmacen>();
+		List<ProductoalmacenVo> listaProduAlma= new ArrayList<ProductoalmacenVo>();
 		
 		List<PreciosproductoVo> listaPrecio = new ArrayList<PreciosproductoVo>();
 		
@@ -521,15 +521,15 @@ public class ProductosAction extends BaseAction {
 		if(mode.equals("I")){
 			/** Obtenemos le codigo correlativo del producto **/
 			productoForm.getProducto().setcProductoCodigo(genericoDao.callSPCalculoCodigo(productoForm.getProducto()));
-			if (iclasificacionId != 5) {
-				for (Almacen alm : listalmAlmacen) {
-					Productoalmacen pro = new Productoalmacen();
-					pro.setAlmacen(alm);
-					listaProduAlma.add(pro);
-					productoForm.setProducAlmacen(listaProduAlma);
-
-				}
-			}
+//			if (iclasificacionId != 5) {
+//				for (Almacen alm : listalmAlmacen) {
+//					Productoalmacen pro = new Productoalmacen();
+//					pro.setAlmacen(alm);
+//					listaProduAlma.add(pro);
+//					productoForm.setProducAlmacen(listaProduAlma);
+//
+//				}
+//			}
 			
 		
 		/**LLamamos al formulario mantenimientoProducto.jsp para mostrar los datos del UPDATE **/
@@ -546,40 +546,35 @@ public class ProductosAction extends BaseAction {
 			listaSubCategoria = categoriaDao.listaSubcategoria(productoForm.getProducto().getCategoria().getiCategoriaId());
 			
 			if (iclasificacionId != 5) {
-				for(Almacen alm:listalmAlmacen){
-					Productoalmacen prodAlm = new Productoalmacen();
-					prodAlm.setAlmacen(alm);
-					listaProduAlma.add(prodAlm);
-					productoForm.setProducAlmacen(listaProduAlma);
-					
-				}
-				
-				if(pro.getPreciosproductodetallles()!=null){
-					if(pro.getPreciosproductodetallles().size()>0){
-					 for(Preciosproducto precioPro: pro.getPreciosproductodetallles()){
-						 PreciosproductoVo preciosproducto = new PreciosproductoVo(precioPro);
-						 
-//						 preciosproducto.setiCantidadStock(precioPro.getiCantidadStock());
-//						 preciosproducto.setfPrecioCompra(precioPro.getfPrecioCompra());
-//						 preciosproducto.setfGanancia(precioPro.getfGanancia());
-//						 preciosproducto.setfDescuento(precioPro.getfDescuento());
-//						 preciosproducto.setfPrecioVenta(precioPro.getfPrecioVenta());
-//						 preciosproducto.setdFechaInserta(precioPro.getdFechaInserta());
-//						 preciosproducto.setcEstadoCodigo(precioPro.getcEstadoCodigo());
-//						 
-						
-						listaPrecio.add(preciosproducto);
-						
-					 }
+				if (pro.getProductoAlmacendetallles() != null) {
+					if (pro.getProductoAlmacendetallles().size() > 0) {
+						for (Productoalmacen productoalmacen : pro.getProductoAlmacendetallles()) {
+							ProductoalmacenVo productoAlmacen = new ProductoalmacenVo(productoalmacen);
+							listaProduAlma.add(productoAlmacen);
+
+						}
 					}
-					
-			    }
+
+				}
+
+				if (pro.getPreciosproductodetallles() != null) {
+					if (pro.getPreciosproductodetallles().size() > 0) {
+						for (Preciosproducto precioPro : pro.getPreciosproductodetallles()) {
+							PreciosproductoVo preciosproducto = new PreciosproductoVo(precioPro);
+
+							listaPrecio.add(preciosproducto);
+
+						}
+					}
+
+				}
 			}
 			
 		productoForm.setProduc(listaPrecio);
 		productoForm.setProducAlmacen(listaProduAlma);
-		//pro.setProductoAlmacendetallles(listaProduAlma);
+//		productoForm.setProducAlmacen(listaProduAlma);
 		sesion.setAttribute("listaPrecioProducto",listaPrecio);
+//		sesion.setAttribute("producAlmacen",listaProduAlma);
 			
 		}
 		/**LLamamos al formulario buscarMantenimientoProducto.jsp para realizar la busqueda **/
@@ -618,7 +613,6 @@ public class ProductosAction extends BaseAction {
 		sesion.setAttribute("listaSubCategoria", listaSubCategoria);		
 		sesion.setAttribute("listaMoneda", listaMoneda);		
 		sesion.setAttribute("listaEstado", listaEstado);
-		sesion.setAttribute("listaProductoAlmacen",listaProduAlma);
 
 		return mapping.findForward(msn);
 	}
@@ -998,13 +992,13 @@ public class ProductosAction extends BaseAction {
 					
 			List<PreciosproductoVo> lista = (List<PreciosproductoVo>) sesion.getAttribute("listaPrecioProducto");
 			
-			Producto producto = new Producto();			
+//			Producto producto = new Producto();			
 			PreciosproductoVo precioProducto;
 			
 			if(mode.equals("I")){
-				Producto productoBean = genericaDao.findEndidad(Producto.class, iProductoId);
-				lista = PreciosproductoConverter.aListPreciosproductoVo(productoBean.getPreciosproductodetallles());
-				producto.setiProductoId(iProductoId);
+//				Producto productoBean = genericaDao.findEndidad(Producto.class, iProductoId);
+//				lista = PreciosproductoConverter.aListPreciosproductoVo(productoBean.getPreciosproductodetallles());
+//				producto.setiProductoId(iProductoId);
 				/**valores por defecto**/
 			
 				//precioProducto.setProducto(producto);
