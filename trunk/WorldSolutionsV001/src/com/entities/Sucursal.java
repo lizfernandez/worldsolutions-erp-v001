@@ -48,7 +48,7 @@ public class Sucursal implements Serializable {
 	@Column(nullable=false, length=45)
 	private String vSucursalTelefono;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iEmpresaId", nullable=false)	
 	private Empresa empresa ;
 	
@@ -67,6 +67,7 @@ public class Sucursal implements Serializable {
 		this.vSucursalDireccion = sucursalVo.getvSucursalDireccion();
 		this.vSucursalNombre = sucursalVo.getvSucursalNombre();
 		this.vSucursalTelefono = sucursalVo.getvSucursalTelefono();
+		if(sucursalVo.getEmpresa()!=null)
 		this.empresa = new Empresa(sucursalVo.getEmpresa());
 	}
 

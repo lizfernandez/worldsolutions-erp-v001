@@ -130,7 +130,7 @@ public class Producto implements Serializable {
 	private List<Preciosproducto> preciosproductodetallles;
 	
 	//bi-directional many-to-one association to listaPrecios
-	@OneToMany(mappedBy="producto", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="producto", fetch=FetchType.EAGER,cascade = CascadeType.ALL )
 	private List<Productoalmacen> productoAlmacendetallles;
 	
 	
@@ -141,21 +141,21 @@ public class Producto implements Serializable {
 	private int iUMBase;
 
 	//bi-directional many-to-one association to Unidadmedida
-	@OneToOne(fetch=FetchType.LAZY, optional=false, cascade=CascadeType.PERSIST)
+	@OneToOne(fetch=FetchType.LAZY, optional=false)
 	@JoinColumn(name="iUMBaseId", nullable=true)
 	private Unidadmedida umBase;
 
 	private int iUMPedido;
 
 	//bi-directional many-to-one association to Unidadmedida
-	@OneToOne(fetch=FetchType.LAZY, optional=false , cascade=CascadeType.PERSIST)
+	@OneToOne(fetch=FetchType.LAZY, optional=false )
 	@JoinColumn(name="iUMPedidoId", nullable=true)
 	private Unidadmedida umPedido;
 
 	private int iUMSalida;
 
 	//bi-directional many-to-one association to Unidadmedida
-	@OneToOne(fetch=FetchType.LAZY, optional=false , cascade=CascadeType.PERSIST)
+	@OneToOne(fetch=FetchType.LAZY, optional=false )
 	@JoinColumn(name="iUMSalidaId", nullable=true)
 	private Unidadmedida umSalida;
 

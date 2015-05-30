@@ -118,7 +118,7 @@ public class UsuarioAction extends DispatchAction {
 
 			List<Estado> listaEstado = estadoDao.listEstado();
 			List<Perfil> listaPerfil = perfilDao.listaPerfil(0, 0, perfil);
-			List<Sucursal> listaSucursal = UsuarioDao.listaEntidadGenerica(new Sucursal());
+			List<Sucursal> listaSucursal = UsuarioDao.listaEntidadGenerica(Sucursal.class);
 
 			
 			/**LLamamos al formulario mantenimientoUsuario.jsp para la insercion de datos **/

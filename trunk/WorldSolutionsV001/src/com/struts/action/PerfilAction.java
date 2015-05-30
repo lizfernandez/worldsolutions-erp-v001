@@ -151,8 +151,8 @@ public class PerfilAction extends DispatchAction {
 		
 		
 		List<Permiso> listaPermisoBD = perfilDao.listaPermiso(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax());
-		List<Usuario> listaUsuario = genericaDao.listaEntidadGenerica(new Usuario());
-		listaUsuarios = genericaDao.listaEntidadGenerica(new Usuario());
+		List<Usuario> listaUsuario = genericaDao.listaEntidadGenerica(Usuario.class);
+		listaUsuarios = genericaDao.listaEntidadGenerica(Usuario.class);
 	    msn ="showListPermiso";
 			
 	    

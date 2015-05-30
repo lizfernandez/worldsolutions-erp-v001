@@ -1370,7 +1370,7 @@ public class ContabilidadAction extends BaseAction {
            
 			/****obtenermos los porcentajes de descuentos y aportes***/
 			
-				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(new Configuracion())){
+				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(Configuracion.class)){
 				   if(planilla.getvConcepto().equals(Constantes.aportESSALUD)){
 					   contabilidadForm.setfPorApoESSALUD( Float.parseFloat( planilla.getvValor()));
 				   }
@@ -1439,7 +1439,7 @@ public class ContabilidadAction extends BaseAction {
 			if(mode.equals("I")){
 				/****obtenermos los porcentajes de descuentos y aportes***/
 				
-				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(new Configuracion())){
+				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(Configuracion.class)){
 				   if(planilla.getvConcepto().equals(Constantes.aportESSALUD)){
 					   contabilidadForm.setfPorApoESSALUD( Float.parseFloat( planilla.getvValor()));
 				   }
@@ -1538,7 +1538,7 @@ public class ContabilidadAction extends BaseAction {
 				obj.setiUsuarioInserta(usu.getiUsuarioId());
 				obj.setiPeriodoId(iPeriodoId);
 				
-				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(new Configuracion())){
+				for (Configuracion planilla:contabilidadDao.listaEntidadGenerica(Configuracion.class)){
 					   if(planilla.getvConcepto().equals(Constantes.aportESSALUD)){
 						   obj.setfPorApoESSALUD( Float.parseFloat( planilla.getvValor()));
 					   }
@@ -1665,7 +1665,7 @@ public class ContabilidadAction extends BaseAction {
 			beans.put("planillasPersonal", listaPlanilla);
 			beans.put("periodoActual", detallePeriodo);
 
-			List<Configuracion> listaConfPlanilla = contabilidadDao.listaEntidadGenerica(new Configuracion());
+			List<Configuracion> listaConfPlanilla = contabilidadDao.listaEntidadGenerica(Configuracion.class);
 			for (Configuracion planilla : listaConfPlanilla) {
 				if (planilla.getvConcepto().equals(Constantes.aportESSALUD)) {
 					beans.put("esApor", Float.parseFloat(planilla.getvValor()));

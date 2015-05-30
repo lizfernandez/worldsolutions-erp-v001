@@ -259,7 +259,7 @@ public class ClienteAction extends BaseAction {
 
 			
 			List<Estado> listaEstado = estadoDao.listEstado();
-			List<Clasificacioncliente> listaClasificacion = clienteDao.listaEntidadGenerica(new Clasificacioncliente());
+			List<Clasificacioncliente> listaClasificacion = clienteDao.listaEntidadGenerica(Clasificacioncliente.class);
 			List<Poblacion> listaDepartamento = poblacionDao.listaDepartamento();
 			List<Poblacion> listaProvincia = new ArrayList<Poblacion>();// codigo de provincia lima
 			List<Poblacion> listaDistrito =  new ArrayList<Poblacion>();// codigo distrito lima

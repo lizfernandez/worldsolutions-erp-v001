@@ -112,7 +112,7 @@ public class EmpresaSucursalAction extends DispatchAction {
 			/** llamado de los metodos de la clase dao **/
 
 			List<Estado> listaEstado = estadoDao.listEstado();
-			List<Empresa> listaEmpresa = genericaDao.listaEntidadGenerica(new Empresa());
+			List<Empresa> listaEmpresa = genericaDao.listaEntidadGenerica(Empresa.class);
 
 			 
 			/**LLamamos al formulario mantenimientoSucursal.jsp para la insercion de datos **/
@@ -497,7 +497,7 @@ public class EmpresaSucursalAction extends DispatchAction {
 
 			List<Estado> listaEstado = estadoDao.listEstado();
 			
-			List<Sucursal> listaSucursal = genericaDao.listaEntidadGenerica(new Sucursal());
+			List<Sucursal> listaSucursal = genericaDao.listaEntidadGenerica(Sucursal.class);
 			 
 			/**LLamamos al formulario mantenimientoSucursal.jsp para la insercion de datos **/
 			if(mode.equals("I")){
