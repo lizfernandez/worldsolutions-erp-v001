@@ -62,9 +62,9 @@ public class GenericaDao  implements IGenerica{
 
 
 	@Override
-	public <G> List<G> listaEntidadGenerica(G entidad) {
+	public <G> List<G> listaEntidadGenerica(Class<G> entidad) {
 
-		Query q = getInstancia().createQuery("select p from " + entidad.getClass().getSimpleName() + "  p" + " where p.cEstadoCodigo = :EstadoCodigo");
+		Query q = getInstancia().createQuery("select p from " + entidad.getSimpleName() + "  p" + " where p.cEstadoCodigo = :EstadoCodigo");
 		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		@SuppressWarnings("unchecked")
 		List<G> lista = q.setParameter("EstadoCodigo", Constantes.estadoActivo).getResultList();

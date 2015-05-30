@@ -141,7 +141,7 @@ public class PersonalAction extends BaseAction {
 
 		List<Estado> listaEstado = estadoDao.listEstado();
 		List<Area> listaArea = areaDao.listaArea(0, 0, area);
-		List<Ocupacion> listaOcupacion = personalDao.listaEntidadGenerica(new Ocupacion());
+		List<Ocupacion> listaOcupacion = personalDao.listaEntidadGenerica(Ocupacion.class);
 
 		/**LLamamos al formulario mantenimientoPersonal.jsp para la insercion de datos **/
 		if(mode.equals("I")){

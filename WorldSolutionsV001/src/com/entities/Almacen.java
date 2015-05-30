@@ -30,7 +30,7 @@ public class Almacen implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
     
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iSucursalId", nullable=false)	
 	private Sucursal sucursal;
 

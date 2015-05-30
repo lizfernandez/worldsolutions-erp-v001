@@ -10,7 +10,7 @@ public interface IGenerica {
 	public EntityManager getInstancia();
 	public EntityTransaction entityTransaction();
 	public <E> Long totalLista(E entidad);
-	public <G> List<G> listaEntidadGenerica(G entidad);
+	public <G> List<G> listaEntidadGenerica(Class<G> entidad);
 	public <G> List<G> listaEntidadGenericaSinCodigo(String entidad);
 	public <G> List<G> listaEntidadPaginada(String sentencia, int pagInicio, int pagFin);
 //	public <E> E findEndidad(E entidad, int iEntidadId);

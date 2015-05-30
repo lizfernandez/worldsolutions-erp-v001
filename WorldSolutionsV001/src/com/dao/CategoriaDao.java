@@ -60,7 +60,7 @@ public class CategoriaDao  extends GenericaDao implements ICategoriaDao {
 			
 		}// lista con busqueda
 		else{
-				listaCategoria = listaEntidadGenerica(categoria);
+				listaCategoria = listaEntidadGenerica(Categoria.class);
 				
 		 
 		}//else , lista simple	        

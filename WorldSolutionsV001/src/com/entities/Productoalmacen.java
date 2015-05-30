@@ -27,12 +27,12 @@ public class Productoalmacen implements Serializable {
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iAlmacenId")
 	private Almacen almacen;
 
 	private int iProductoAlmStockTotal;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="iProductoId")
 	private Producto producto;
 
@@ -55,20 +55,21 @@ public class Productoalmacen implements Serializable {
 
     
     
-	public Productoalmacen(ProductoalmacenVo ProductoalmacenVo) {
+	public Productoalmacen(ProductoalmacenVo productoalmacenVo) {
 		super();
-		this.iProductoAlamcenId = iProductoAlamcenId;
-		this.cEstadoCodigo = cEstadoCodigo;
-		this.dFechaActualiza = dFechaActualiza;
-		this.dFechaInserta = dFechaInserta;
-		this.almacen = almacen;
-		this.iProductoAlmStockTotal = iProductoAlmStockTotal;
-		this.producto = producto;
-		this.unidadMedidaAlm = unidadMedidaAlm;
-		this.iUMBaseAlm = iUMBaseAlm;
-		this.unidadBaseAlm = unidadBaseAlm;
-		this.iUsuarioActualizaId = iUsuarioActualizaId;
-		this.iUsuarioInsertaId = iUsuarioInsertaId;
+		this.iProductoAlamcenId = productoalmacenVo.getiProductoAlamcenId();
+		this.cEstadoCodigo = productoalmacenVo.getcEstadoCodigo();
+		this.dFechaActualiza = productoalmacenVo.getdFechaActualiza();
+		this.dFechaInserta = productoalmacenVo.getdFechaInserta();
+		this.almacen = new Almacen(productoalmacenVo.getAlmacen());
+		this.iProductoAlmStockTotal = productoalmacenVo.getiProductoAlmStockTotal();
+		this.producto = new Producto(productoalmacenVo.getProducto());
+		this.unidadMedidaAlm = new Unidadmedida(productoalmacenVo.getUnidadMedidaAlm());
+		this.iUMBaseAlm = productoalmacenVo.getiUMBaseAlm();
+		if(productoalmacenVo.getUnidadBaseAlm()!=null)
+		this.unidadBaseAlm = new Unidadmedida(productoalmacenVo.getUnidadBaseAlm());
+		this.iUsuarioActualizaId = productoalmacenVo.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = productoalmacenVo.getiUsuarioInsertaId();
 	}
 
 
