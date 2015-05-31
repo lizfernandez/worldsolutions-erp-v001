@@ -2,7 +2,6 @@ package com.dao;
 
 import java.util.List;
 
-
 import javax.persistence.Query;
 
 import org.eclipse.persistence.config.HintValues;
@@ -13,7 +12,6 @@ import com.entities.Ordencompra;
 import com.entities.Produccion;
 import com.entities.Producciondetalle;
 import com.entities.Producto;
-import com.entities.Ventadetalle;
 import com.interfaces.dao.IProductoDao;
 import com.util.Constantes;
 
@@ -21,13 +19,16 @@ import com.util.Constantes;
 
 public  class ProductoDao  extends GenericaDao implements IProductoDao {
 	
+	@SuppressWarnings("unchecked")
 	public List<Producto> listaProducto(int pagInicio, int pagFin, Producto producto, int iclasificacionId, int iSucursal) {
 	  
 		Query q ;
 		List<Producto> listaProducto = null ;
 		String where=""; 
 	
-		
+		if (iSucursal > 0) {
+			where += "INNER JOIN p.productoAlmacendetallles a ";
+		}
 
 		if(producto!=null){
 			if(producto.getcEstadoCodigo()==null){
@@ -69,6 +70,10 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 	        if(producto.getfProductoPrecioVenta()>0){
 	        	where+=" and  p.fProductoPrecioVenta LIKE '%"+producto.getfProductoPrecioVenta()+"%'";
 	        }
+	        if (iSucursal > 0) {
+				where += " and a.almacen.sucursal.iSucursalId = " + iSucursal;
+			}
+	        
 	        System.out.println(" where ="+where);
 	        q = getInstancia().createQuery("select  DISTINCT  p from Producto p   " + where +" order by p.vProductoNombre asc");/**/
 	        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
@@ -81,10 +86,10 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
         return listaProducto;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Produccion> listaProduccion(int pagInicio, int pagFin,
 			Produccion produccion) {
-		// TODO Auto-generated method stub
 		Query q ;
 		List<Produccion> listaProduccion = null ;
 		String where=""; 
@@ -115,21 +120,21 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
         return listaProduccion;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Producciondetalle> buscarDetalleProduccion(int iProduccionId) {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 		Query q ;
 		List<Producciondetalle> listaProduccionDetalle = null ;
 
         
   	    q = getInstancia().createQuery("select p from Producciondetalle p where p.produccion.iProduccionId="+iProduccionId);/**/
   	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
-  	  listaProduccionDetalle = q.getResultList(); 
+  	    listaProduccionDetalle = q.getResultList(); 
     
 		return listaProduccionDetalle;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Producto> listaProductoStockMinimo(int pagInicio, int pagFin,
 			int iclasificacionId) {
@@ -145,6 +150,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 		
 		return listaProducto;
 	}
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	public List<Producto> listaProductoStockMaximo(int pagInicio, int pagFin,
 			int iclasificacionId) {
@@ -161,6 +167,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 		return listaProducto;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Distalmacen> listaDistAlmacen(int pagInicio, int pagFin,
 			Distalmacen producto) {
@@ -200,6 +207,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
         return listaProducto;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Ordencompra> listaOrdenCompra(int pagInicio, int pagFin,
 			Ordencompra producto) {

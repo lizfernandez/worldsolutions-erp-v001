@@ -37,7 +37,7 @@ public class ProductoalmacenVo implements Serializable {
 		this.producto = new ProductoVo(productoalmacen.getProducto());
 		this.unidadMedidaAlm = new UnidadmedidaVo(productoalmacen.getUnidadMedidaAlm());
 		this.iUMBaseAlm = productoalmacen.getiUMBaseAlm();
-		this.unidadBaseAlm = new UnidadmedidaVo(productoalmacen.getUnidadBaseAlm());
+		this.unidadBaseAlm = productoalmacen.getUnidadBaseAlm()!= null?new UnidadmedidaVo(productoalmacen.getUnidadBaseAlm()):null;
 		this.iUsuarioActualizaId = productoalmacen.getiUsuarioActualizaId();
 		this.iUsuarioInsertaId = productoalmacen.getiUsuarioInsertaId();
 	}

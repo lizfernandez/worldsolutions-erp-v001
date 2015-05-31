@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.entities.Producto;
-import com.entities.converter.KardexConverter;
 import com.entities.converter.PreciosproductoConverter;
 
 public class ProductoVo implements Serializable {
@@ -40,6 +39,10 @@ public class ProductoVo implements Serializable {
 	private UnidadmedidaVo umPedido;
 	private int iUMSalida;
 	private UnidadmedidaVo umSalida;
+	
+	//Campos para los productos por almacen
+	private long stockSucursal;
+	private int iProductoalmacenId;
 	
     public ProductoVo() {
     }
@@ -310,5 +313,33 @@ public class ProductoVo implements Serializable {
 	public void setUmSalida(UnidadmedidaVo umSalida) {
 		this.umSalida = umSalida;
 	}
-	
+
+	/**
+	 * @return the stockSucursal
+	 */
+	public long getStockSucursal() {
+		return stockSucursal;
+	}
+
+	/**
+	 * @param stockSucursal the stockSucursal to set
+	 */
+	public void setStockSucursal(long stockSucursal) {
+		this.stockSucursal = stockSucursal;
+	}
+
+	/**
+	 * @return the iProductoalmacenId
+	 */
+	public int getiProductoalmacenId() {
+		return iProductoalmacenId;
+	}
+
+	/**
+	 * @param iProductoalmacenId the iProductoalmacenId to set
+	 */
+	public void setiProductoalmacenId(int iProductoalmacenId) {
+		this.iProductoalmacenId = iProductoalmacenId;
+	}
+
 }

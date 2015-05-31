@@ -54,9 +54,8 @@
         <th align="left">Unidad Medida</th>
         <th align="left">% Desc</th>
         <th align="right">P.Venta</th>
-<!--         <th align="right">P.Compra</th> -->
+        <th align="right">P.Compra</th>
         
-            
       </tr>
     </thead>
     <tbody>
@@ -69,7 +68,7 @@
 		 <logic:iterate name="productosForm" property="produc" id="x" indexId="i">	
 		 
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
-			               '<bean:write name="x" property="iProductoStockTotal" />',
+			               '<bean:write name="x" property="stockSucursal" />',
 			               '<bean:write name="x" property="vProductoNombre" />',
 			               '<bean:write name="x" property="fProductoDescuento" />',
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
@@ -77,7 +76,8 @@
 			               '<bean:write name="x" property="iUMPedido" />',
 			               '<bean:write name="x" property="fProductoPrecioCompra" format="###0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoPrecioVenta" format="###0.00"  locale="Localidad"/>',
-			               '<bean:write name="x" property="fProductoDescuento" format="###0.00"  locale="Localidad"/>')">
+			               '<bean:write name="x" property="fProductoDescuento" format="###0.00"  locale="Localidad"/>',
+			               '<bean:write name="x" property="iProductoalmacenId" />')">
 		 		<td><bean:write name="x" property="cProductoCodigo" /></td>
 				<td><bean:write name="x" property="vProductoNombre" /></td>
 				<td>
@@ -91,55 +91,16 @@
     			  </div>
     			  </td>
 				<td>
-				    <bean:write name="x" property="iProductoStockTotal" />				    
+				    <bean:write name="x" property="stockSucursal" />				    
 				</td>
 				<td>
 				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
 				</td>
 				<td align="right"><bean:write name="x" property="fProductoDescuento" format="###0.00" locale="Localidad" /></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="###0.00"  locale="Localidad"/></td>
-<%-- 				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="###0.00"  locale="Localidad"/></td> --%>
+				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="###0.00"  locale="Localidad"/></td>
 						
 	    	</tr>
-	    	<logic:notEmpty name="x" property="preciosproductodetallles">
-	    	
-			<tr class="textInvisible">
-   				 <td colspan="11"  align="right" id="tr_<bean:write name="x" property="iProductoId"/>">   				 
-   				 <table class="tabladetalle" width="100%" border="0">
-					<caption>Lista de Precios</caption>
-					<thead>
-						<tr>
-						<th  align="center">Cantidad</th>
-						<th  align="center">Precio Venta</th>
-<!-- 						<th  align="center">Precio Compra</th> -->
-						<th align="right">% Descuento</th>
-<!-- 						<th align="right">Fecha Compra</th> -->
-						</tr>
-					</thead>
-					<tbody>
-					  <logic:iterate name="x" property="preciosproductodetallles" id="z">
-					  <logic:notEqual name="x" property="iProductoStockTotal" value="0">
-					  <logic:equal name="z" property="cEstadoCodigo" value="AC">
-					  <tr onclick="fn_cargarPrecio('<bean:write name="z" property="fPrecioVenta" />',
-					  							   '<bean:write name="z" property="fPrecioCompra"/>',
-					  							   '<bean:write name="z" property="fDescuento"/>')">				        
-					       <td align="center"><bean:write name="z" property="iCantidadStock"/></td>
-					       <td align="right"><bean:write name="z" property="fPrecioVenta" format="###0.00" locale="Localidad" /></td>
-<%-- 					       <td align="right"><bean:write name="z" property="fPrecioCompra" format="###0.00" locale="Localidad" /></td>					        --%>
-						   <td align="right"><bean:write name="z" property="fDescuento" format="###0.00" locale="Localidad" /></td>
-<%-- 						   <td align="center"><bean:write name="z" property="dFechaInserta" format="dd/MM/yyyy"  /></td> --%>
-						</tr> 						
-						</logic:equal>  
-						</logic:notEqual>
-			           </logic:iterate>	
-					</tbody>
-					</table>
-   				 </td>
-   				 <td colspan="2">
-   				 </td>
-			</tr>
-			 
-			</logic:notEmpty>
 		</logic:iterate>
 	  </logic:notEmpty>
     </tbody>
@@ -177,10 +138,11 @@
 	  <tr>
 	        <td>Cantidad:</td>
 	        <td>
-			   <html:text property="iProductoStockTotal" styleId="iProductoStockTotal"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>
-			   <html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px" disabled="true">
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select>
+	        	<input type="hidden" id="iProductoalmacenId"> 
+			   	<html:text property="stockSucursal" styleId="stockSucursal"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>
+			   	<html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px" disabled="true">
+		        	<html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
+		     	</html:select>
 			</td>
 			<td>Capacidad:</td>
 	        <td>
@@ -236,7 +198,7 @@
 paginacion(); 
 $("#tipo").val($_GET('tipo'));
 $("#identificador").val($_GET('identificador'));
- function fn_cargarProducto(iProductoId,iStock,vNombreProducto,fProductoDescuento,iUnidadMedidadId,iUMBase,iUMPedido,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
+ function fn_cargarProducto(iProductoId,iStock,vNombreProducto,fProductoDescuento,iUnidadMedidadId,iUMBase,iUMPedido,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento,iProductoalmacenId){   
 	    $("#iProductoId").val(iProductoId);
 	    $("#iStock").val(iStock);
 		$("#vxProductoNombre").val(vNombreProducto);
@@ -247,27 +209,28 @@ $("#identificador").val($_GET('identificador'));
 		$("#fProductoDescuento").val(fProductoDescuento);
 		$("#fPrecioCompra").val(fProductoPrecioCompra);
 		$("#fDescuento").val(fProductoDescuento);
+		$("#iProductoalmacenId").val(iProductoalmacenId);
 		var fDescuento =parseFloat(($("#fDescuento").val()/100));		
 		$("#fProductoPrecioVentaFinal").val(dosDecimales(fProductoPrecioVenta)-parseFloat(fProductoPrecioVenta)*fDescuento);		
-		$("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
+		$("#fTotal").val(dosDecimales(($("#stockSucursal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
 		$("#detalleListaPrecio").html($("#tr_"+iProductoId).html());
-	   
+		
 	}
    function fn_cargarPrecio(fPrecioVenta,fPrecioCompra,fDescuento){	  
 	   $("#fProductoPrecioVenta").val(fPrecioVenta);
 	   $("#fPrecioCompra").val(fPrecioCompra);
 	   $("#fDescuento").val(fDescuento);
 	   $("#fProductoPrecioVentaFinal").val(dosDecimales(fPrecioVenta-parseFloat((fPrecioVenta)*fDescuento/100)));	
-	  	$("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
+	  	$("#fTotal").val(dosDecimales(($("#stockSucursal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
 		
 	   
    }
 	function fn_CalcularTotal(){ 
 		var iStock = parseFloat($("#iStock").val());
-		var iCantidad =parseFloat($("#iProductoStockTotal").val());
+		var iCantidad =parseFloat($("#stockSucursal").val());
 		if(iCantidad>iStock){
 			alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+iStock);
-			$("#iProductoStockTotal").val(iStock);
+			$("#stockSucursal").val(iStock);
 			iCantidad=iStock;
 		}		
 		var fPrecioVenta=$("#fProductoPrecioVenta").val();
@@ -278,16 +241,18 @@ $("#identificador").val($_GET('identificador'));
 	
 	function fn_agregarProducto(){
 		var id=$("#iProductoId").val();
-		if(id!="0"){
-		var iCantidad=$("#iProductoStockTotal").val();		
+		if(id!=''){
+		var iCantidad=$("#stockSucursal").val();		
 		var fDescuento=$("#fDescuento").val();			
 		var fPrecioVenta =$("#fProductoPrecioVenta").val();
 		var fPrecioCompra =$("#fPrecioCompra").val();
 		var fTotal = $("#fTotal").val();
 		var iPersonalId=0;
+		var iProductoalmacenId = $("#iProductoalmacenId").val();
 	    var cad = "venta.do?metodo=detalleVenta&id="+id+"&iCantidad="+iCantidad+
 	    		  "&fDescuento="+fDescuento+"&fPrecioVenta="+fPrecioVenta+"&fPrecioCompra="+fPrecioCompra+
-	    		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId+"&identificador="+$_GET("identificador");
+	    		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId+"&identificador="+$_GET("identificador")+
+	    		  "&iProductoalmacenId="+iProductoalmacenId;
 	         $.getJSON(cad, function retorna(obj){
 	        	// alert("obje"+obj.cProductoCodigo);
 	        	 listar_detalleVenta(obj,'padre',$_GET("identificador"));

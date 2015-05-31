@@ -61,28 +61,24 @@
             </td>
           </tr>
           <tr>
-          <td>R.U.C :</td>
-          <td colspan="3">
-              <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  styleClass="text textCodigo inputDisabled" readonly="true" />
-           CLASIF:   
-           <html:text property="vClasificacion" styleId="vClasificacion"  styleClass="text textCodigo inputDisabled" readonly="true" />
-          %DESC:
-           <html:text property="fDescuentoCliente" styleId="fDescuentoCliente"  styleClass="text inputDisabled" readonly="true" size="6" />
-          </td>
-          
-           <td width="5%">ORDEN DE COMPRA :</td>
-           <td width="14%">
-              <html:text property="cVentaOrdenCompra"  styleId="cVentaOrdenCompra" styleClass="textN" />
-           </td>
+	          <td>R.U.C :</td>
+	          <td colspan="3">
+	              <html:text property="nClienteNumeroDocumento" styleId="nClienteNumeroDocumento"  styleClass="text textCodigo inputDisabled" readonly="true" />
+	           CLASIF:   
+	           <html:text property="vClasificacion" styleId="vClasificacion"  styleClass="text textCodigo inputDisabled" readonly="true" />
+	          %DESC:
+	           <html:text property="fDescuentoCliente" styleId="fDescuentoCliente"  styleClass="text inputDisabled" readonly="true" size="6" />
+	          </td>
+	          <td width="13%">VENDEDOR:</td>
+	          <td><html:text property="vPersonalNombres" styleId="vPersonalNombres" styleClass="textExtraGrande" readonly="true" /></td>
+	          
           </tr>
           <tr>
-           <td width="5%">PUNTO DE LLEGADA :</td>
-          <td colspan="3"  width="16%">
-             <html:text property="vVentaPuntoLlegada" styleId="vVentaPuntoLlegada"   size="60%"  styleClass="textExtraGrande inputDisabled"/>
-          </td>
-           
-                <td width="13%">VENDEDOR:</td>
-                <td><html:text property="vPersonalNombres" styleId="vPersonalNombres" styleClass="textExtraGrande" readonly="true" /></td>
+	          <td width="5%">PUNTO DE LLEGADA :</td>
+	          <td colspan="5"  width="16%">
+	             <html:text property="vVentaPuntoLlegada" styleId="vVentaPuntoLlegada"   size="60%"  styleClass="textExtraGrande inputDisabled"/>
+	          </td>
+	          
           </tr>
         </table></td>
       </tr>

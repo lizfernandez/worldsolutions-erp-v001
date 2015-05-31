@@ -244,23 +244,23 @@
 						<logic:iterate name="productosForm" property="producAlmacen" id="x" indexId="i">
 							<tr id="tr_01">
 								<td align="right" width="20%">Sucursal:</td>
-								<td colspan="4"><bean:write name="x" property="almacen.sucursal.vSucursalNombre" /></td>
+								<td><bean:write name="x" property="almacen.sucursal.vSucursalNombre" /></td>
 								<td align="right" width="20%">Almacen:</td>
-								<td colspan="9"><bean:write name="x" property="almacen.vAlmacenNombre" /> <input type="hidden" id="iAlmacenId${i}" value="<bean:write name="x" property="almacen.iAlmacenId"/>">
+								<td><bean:write name="x" property="almacen.vAlmacenNombre" /> <input type="hidden" id="iAlmacenId${i}" value="<bean:write name="x" property="almacen.iAlmacenId"/>">
 									<input type="hidden" id="iProductoAlmacenId${i}" value="<bean:write name="x" property="iProductoAlamcenId"/>">
 								</td>
 							</tr>
 							<tr>
-								<td align="right" width="20%">UM Base:</td>
-								<td width="20%"><input type="text" id="iUMBaseAlm${i}" maxlength="7" 
-										value="<bean:write name="x" property="iUMBaseAlm"/>" styleClass="text textNumero" onkeypress="return Numeros(event)" size="10" onblur="fn_totalProducto(${i})" /> <span id="m_iUMBase" class="importante">*</span></td>
-								<td colspan="2"><html:select property="iUMBaseAlmId" styleId="iUMBaseAlmId" styleClass="comboCodigo iUMBaseAlmId" tabindex="6" style="width:140px">
-										<html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion" />
-									</html:select></td>
+<!-- 								<td align="right" width="20%">UM Base:</td> -->
+<%-- 								<td width="20%"><input type="text" id="iUMBaseAlm${i}" maxlength="7"  --%>
+<%-- 										value="<bean:write name="x" property="iUMBaseAlm"/>" class="text textNumero" onkeypress="return Numeros(event)" size="10" onblur="fn_totalProducto(${i})" /> <span id="m_iUMBase" class="importante">*</span></td> --%>
+<%-- 								<td colspan="2"><html:select property="iUMBaseAlmId" styleId="iUMBaseAlmId" styleClass="comboCodigo iUMBaseAlmId" tabindex="6" style="width:140px"> --%>
+<%-- 										<html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion" /> --%>
+<%-- 									</html:select></td> --%>
 
 								<td align="right">Stock Total:</td>
-								<td><input type="text" id="iProductoAlmStockTotal${i}" maxlength="7" styleClass="textN textNumero" value="<bean:write name="x" property="iProductoAlmStockTotal"/>" 
-										onkeypress="return Numeros(event)" size="10" /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+								<td><input type="text" id="iProductoAlmStockTotal${i}" maxlength="7" class="textN textNumero" value="<bean:write name="x" property="iProductoAlmStockTotal"/>" 
+										onkeypress="return Numeros(event)" size="10" onblur="fn_totalProducto(${i})"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
 								</td>
 								<td colspan="2"><html:select property="iUnidadMedidaAlmId" styleId="iUnidadMedidaAlmId" styleClass="comboCodigo unidadFinal" style="width:140px">
 										<option value="0">::SELECCIONE::</option>
@@ -329,7 +329,7 @@
 			   
 	        <logic:iterate name="productosForm" property="produc" id="x" indexId="i">		    
 				<tr id='tr_${i}' onclick="llenarDatos('${i}')">
-				    <td class="iCantidadStock"><bean:write name="x" property="iCantidadStock"/></td>
+				    <td class="iCantidadStock" id="iCantidadStock${i}"><bean:write name="x" property="iCantidadStock"/></td>
 					<td class="fPrecioCompra"><bean:write name="x" property="fPrecioCompra"/></td>
 					<td class="fGanancia"><bean:write name="x" property="fGanancia"/></td>
 					<td class="fGastosAdm"><bean:write name="x" property="fGastosAdm"/></td>
@@ -388,13 +388,14 @@
 <%-- hidden field que contiene el iUsuarioInsertaId del producto --%>
 <html:hidden property="sizeIngresoproductodetalles" />
 <html:hidden property="sizeVentaDetalles" />
-
+<html:hidden property="totalPrecios" styleId="totalPrecios"/>
+<html:hidden property="totalProductosAlmacen" styleId="totalProductosAlmacen"/>
 
 </html:form>
 <script>
    
     
-   $(".comboCodigo.change").attr("disabled",true);
+//     $(".comboCodigo.change").attr("disabled",true);
    $("#accionPrecioProducto").val("I");
    
    $("#iMonedaId").change(function () {
@@ -460,13 +461,48 @@
     	var stockTotal = parseFloat(cantBase==0?1:cantBase) * parseFloat(cantPedido==0?1:cantPedido) * parseFloat(cantSalida==0?1:cantSalida);
     	
     	if (valUnidSal > 0) {
-    		$(".comboCodigo.unidadFinal option[value="+valUnidSal+"]").attr("selected",true);
+    		$("#iUMSalidaId option").each(function()
+    				{   
+    			      $(".comboCodigo.unidadFinal option[value="+$(this).val()+"]").show();
+    				    if($(this).val()==valUnidSal){
+    				    	$(".comboCodigo.unidadFinal option[value="+valUnidSal+"]").attr("selected",true);	
+    				    }
+    				    else{
+    				    	$(".comboCodigo.unidadFinal option[value="+$(this).val()+"]").hide();
+    				    	
+    				    }
+    		});
+    		
+    
+    		
     		
     	} else if (valUnidPed > 0) {
-    		$(".comboCodigo.unidadFinal option[value="+valUnidPed+"]").attr("selected",true);
+    		$("#iUMSalidaId option").each(function()
+    				{   
+    			      $(".comboCodigo.unidadFinal option[value="+$(this).val()+"]").show();
+    				    if($(this).val()==valUnidPed){
+    				    	$(".comboCodigo.unidadFinal option[value="+valUnidPed+"]").attr("selected",true);	
+    				    }
+    				    else{
+    				    	$(".comboCodigo.unidadFinal option[value="+$(this).val()+"]").hide();
+    				    	
+    				    }
+    		});
+    		
     		
     	} else if (valUnidBase > 0) {
-    		$(".comboCodigo.unidadFinal option[value="+valUnidBase+"]").attr("selected",true);
+    		$("#iUMSalidaId option").each(function()
+    				{   
+    			      $(".comboCodigo.unidadFinal option[value="+$(this).val()+"]").show();
+    				    if($(this).val()==valUnidBase){
+    				    	$(".comboCodigo.unidadFinal option[value="+valUnidBase+"]").attr("selected",true);	
+    				    }
+    				    else{
+    				    	$(".comboCodigo.unidadFinal option[value="+$(this).val()+"]").hide();
+    				    	
+    				    }
+    		});
+    	
     		
     	}
     	
@@ -536,6 +572,21 @@
 	var f = new Date();
 	var fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
 	
+	var stockTotalProducto = $("#iProductoStockTotal").val();
+	var stockPrecios = 0;
+	
+	$(document).find('#tr_detalle td.iCantidadStock').each(function(key,val){ 		 
+		
+		stockPrecios = parseFloat(stockPrecios) + parseFloat($("#iCantidadStock"+key).text());
+		
+	   });
+	
+ 	stockPrecios = parseFloat(stockPrecios) + parseFloat(iCantidadStock);
+ 	if(modePrecioProducto == 'U'){
+ 		stockPrecios = parseFloat(stockPrecios) - parseFloat($("#iCantidadStock"+iPrecioProductoId).text());
+ 	}
+	
+	if (stockPrecios <= stockTotalProducto) {
 	var cad = "productos.do?metodo=detalleListaPrecios&iPrecioProductoId="+iPrecioProductoId+"&iCantidadStock="+iCantidadStock+"&fPrecioCompra="+fPrecioCompra+"&fGanancia="+fGanancia+"&fDescuento="+fDescuento+
 			   "&fPrecioVenta="+fPrecioVenta+"&cEstadoCodigoPrecio="+cEstadoCodigoPrecio+"&iProductoId="+iProductoId+"&mode="+modePrecioProducto+"&fGastosAdm="+fGastosAdm;
 	
@@ -546,7 +597,7 @@
 			//<tr id='tr_${i}' onclick="llenarDatos('${i}')">
 // 			newHtml+='<tr id=\'tr_' + i + '\' onclick="llenarDatos(\'' + i + '\')>';
 			newHtml+="<tr id=\"tr_" + key + "\" onclick=\"llenarDatos('" + key + "')\" >";
-    	 	newHtml+='<td class=\"iCantidadStock\">'+data.iCantidadStock+'</td>';
+    	 	newHtml+='<td class=\"iCantidadStock\" id=\"iCantidadStock' + key + '\">'+data.iCantidadStock+'</td>';
     	 	newHtml+='<td class=\"fPrecioCompra\">'+data.fPrecioCompra+'</td>';
     	 	newHtml+='<td class=\"fGanancia\">'+data.fGanancia+'</td>';
     	 	newHtml+='<td class=\"fGastosAdm\">'+data.fGastosAdm+'</td>';
@@ -562,33 +613,60 @@
       });
 	 limpiarPrecioProducto();
 	
+	} else {
+		stockPrecios = parseFloat(stockPrecios) - parseFloat(iCantidadStock);
+		var saldo = stockTotalProducto - stockPrecios;
+ 		alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+ stockTotalProducto);
+ 		
+ 		$("#iCantidadStock").val(saldo);
+		
+		
+	}
+	
  }
  
  function fn_totalProducto(i){
 	 
-	 var iUMBase=parseFloat(($("#iUMBaseAlm"+i).val()=="")?1:$("#iUMBaseAlm"+i).val()) * parseFloat(($("#iUMPedido").val()=="0")?1:$("#iUMPedido").val())*parseFloat(($("#iUMSalida").val()=="0")?1:$("#iUMSalida").val());
-	//alert($("#iUMBaseAlm"+i).val()+" "+$("#iUMPedido").val()+" "+$("#iUMSalida").val());	
-	 $("#iProductoAlmStockTotal"+i).val(iUMBase);
+// 	 var iUMBase=parseFloat(($("#iUMBaseAlm"+i).val()=="")?1:$("#iUMBaseAlm"+i).val()) * parseFloat(($("#iUMPedido").val()=="0")?1:$("#iUMPedido").val())*parseFloat(($("#iUMSalida").val()=="0")?1:$("#iUMSalida").val());
+// 	//alert($("#iUMBaseAlm"+i).val()+" "+$("#iUMPedido").val()+" "+$("#iUMSalida").val());	
+// 	 $("#iProductoAlmStockTotal"+i).val(iUMBase);
 	 var iAlmacenId = $("#iAlmacenId"+i).val();
 	 var iProductoId = $("#iProductoId").val();
 	 var iProductoAlmacenId=$("#iProductoAlmacenId"+i).val()==""?0:$("#iProductoAlmacenId"+i).val();
 	 
-	 var iUMBaseAlm = $("#iUMBaseAlm"+i).val();
+// 	 var iUMBaseAlm = $("#iUMBaseAlm"+i).val();
 	 
-	 var iUMBaseAlmId= $("#iUMBaseAlmId").val();
+// 	 var iUMBaseAlmId= $("#iUMBaseAlmId").val();
 	 var iProductoAlmStockTotal=$("#iProductoAlmStockTotal"+i).val();
 	 var iUnidadMedidaAlmId	=$("#iUnidadMedidaAlmId").val();
-		var cad = "productos.do?metodo=detalleProductoAlmacen&iAlmacenId="+iAlmacenId+"&iProductoId="+iProductoId+"&iProductoAlmacenId="+iProductoAlmacenId
-				+"&iUMBaseAlm="+iUMBaseAlm+"&iUMBaseAlmId="+iUMBaseAlmId+
-		   "&iProductoAlmStockTotal="+iProductoAlmStockTotal+"&iUnidadMedidaAlmId="+iUnidadMedidaAlmId+"&mode="+mode+"&i="+i;
-
-
-
-$.getJSON(cad, function retorna(obj){
 	 
+	 //Se valida si se supero stockTotal 
+	 var stockTotalProducto = $("#iProductoStockTotal").val();
+	 var stockDistribuido = 0;
+	 $(document).find('#tabla3 input:text.textN.textNumero').each(function(key,val){
+		 
+		 stockDistribuido = stockDistribuido + parseFloat($("#iProductoAlmStockTotal"+key).val()); 
 	
-});
- }
+	 });
+	 
+	 if (stockDistribuido > stockTotalProducto) {
+		 
+ 		stockDistribuido = stockDistribuido - parseFloat($("#iProductoAlmStockTotal"+i).val());
+		var saldo = stockTotalProducto - stockDistribuido;
+ 		alert('La cantidad ingresada es mayor al stock\nLo maximo a solicitar es: '+ stockTotalProducto);
+ 		
+ 		$("#iProductoAlmStockTotal"+i).val(saldo);	
+ 		iProductoAlmStockTotal = saldo;
+ 	};
+ 	
+ 	var cad = "productos.do?metodo=detalleProductoAlmacen&iAlmacenId="+iAlmacenId+"&iProductoId="+iProductoId+"&iProductoAlmacenId="+iProductoAlmacenId+
+	//		+"&iUMBaseAlm="+iUMBaseAlm+"&iUMBaseAlmId="+iUMBaseAlmId+
+			"&iProductoAlmStockTotal="+iProductoAlmStockTotal+"&iUnidadMedidaAlmId="+iUnidadMedidaAlmId+"&mode="+mode+"&i="+i;
+	
+	$.getJSON(cad, function retorna(obj){
+	});
+ 
+ };
  
 
    // redimenciona();
