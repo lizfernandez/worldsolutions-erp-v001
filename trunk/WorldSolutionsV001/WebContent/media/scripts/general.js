@@ -1326,6 +1326,7 @@ function fn_exportarExcel(urlmetodo){
 
 function fn_recargar(){
 	var iclasificacionId= $("#iclasificacionId").val();
+	var iSucursalId = $("#iSucursalId").val();
 	var url= window.document.location.search;
 	var metodo = url.split("&");	
 	var mode ="";	
