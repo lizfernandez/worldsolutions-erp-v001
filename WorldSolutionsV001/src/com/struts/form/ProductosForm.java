@@ -6,32 +6,24 @@ package com.struts.form;
 
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.upload.FormFile;
 
-import com.dao.CategoriaDao;
-import com.dao.GenericaDao;
 import com.dao.ProductoDao;
-import com.entities.Categoria;
-
 import com.entities.Almacen;
+import com.entities.Categoria;
 import com.entities.Distalmacen;
 import com.entities.Moneda;
 import com.entities.Ordencompra;
-import com.entities.Periodo;
 import com.entities.Personal;
 import com.entities.Produccion;
-import com.entities.Producciondetalle;
 import com.entities.Producto;
 import com.entities.Productoalmacen;
 import com.entities.Proveedor;
-import com.entities.Sucursal;
-import com.entities.Tipodocumentogestion;
-import com.entities.Usuario;
-
 import com.entities.Subcategoria;
+import com.entities.Sucursal;
 import com.entities.Unidadmedida;
 import com.util.Fechas;
 
@@ -71,6 +63,8 @@ public class ProductosForm extends ActionForm {
     private String cPersonalCodigoRecep;
     private String vPersonalNombresRecep;
     private int iSucursalId;
+    private int totalPrecios;
+    private int totalProductosAlmacen;
     
     /**
 	 * @return the paginas
@@ -1371,6 +1365,34 @@ public class ProductosForm extends ActionForm {
 	 */
 	public void setvPersonalNombresRecep(String vPersonalNombresRecep) {
 		this.vPersonalNombresRecep = vPersonalNombresRecep;
+	}
+
+	/**
+	 * @return the totalPrecios
+	 */
+	public int getTotalPrecios() {
+		return totalPrecios;
+	}
+
+	/**
+	 * @param totalPrecios the totalPrecios to set
+	 */
+	public void setTotalPrecios(int totalPrecios) {
+		this.totalPrecios = totalPrecios;
+	}
+
+	/**
+	 * @return the totalProductosAlmacen
+	 */
+	public int getTotalProductosAlmacen() {
+		return totalProductosAlmacen;
+	}
+
+	/**
+	 * @param totalProductosAlmacen the totalProductosAlmacen to set
+	 */
+	public void setTotalProductosAlmacen(int totalProductosAlmacen) {
+		this.totalProductosAlmacen = totalProductosAlmacen;
 	}
 
 }

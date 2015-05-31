@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +106,6 @@ public class ProductosAction extends BaseAction {
 		/***Inicializamos variables***/
 		String mode = request.getParameter("mode");
 		int  iclasificacionId = Integer.parseInt(request.getParameter("iclasificacionId"));
-		String  iSucursalId = request.getParameter("iSucursalId");
 		
 		int pagina = Paginacion.paginaInicial;
 		int pagInicio = Paginacion.paginaInicial;
@@ -167,18 +165,16 @@ public class ProductosAction extends BaseAction {
 			 sesion.setAttribute("listaUnidadMedida",listaUnidadMedida);
 			 sesion.setAttribute("listaSucursal",listaSucursal);
 			 productosForm.setIclasificacionId(iclasificacionId);
-			 
-			 if(iSucursalId==null){
-				 if(usu.getPerfil().getvPerfilDescripcion().equals(Constantes.usuAdministrador)){
-					 productosForm.setiSucursalId(0);  
-				 }
-				 else{
-				 productosForm.setiSucursalId(usu.getSucursal().getiSucursalId()); 
-				 }
-			 }
-			 else{
-				 productosForm.setiSucursalId(Integer.parseInt(iSucursalId));
-			 }
+			 String iSucursalId = request.getParameter("iSucursalId");
+				
+			if (iSucursalId == null) {
+				if (!usu.getPerfil().getvPerfilDescripcion().equals(Constantes.usuAdministrador)) {
+					productosForm.setiSucursalId(usu.getSucursal().getiSucursalId());
+					
+				} else {
+					productosForm.setiSucursalId(Integer.parseInt(iSucursalId));
+				}
+			}
 			
 			 if(mode.equals("LP")){
 				if (usu.getPerfil().getvPerfilDescripcion().equals(Constantes.usuAdministrador)) {
@@ -212,7 +208,34 @@ public class ProductosAction extends BaseAction {
 		
 	
 		/**Seteamos los valores en las listas**/
-		List<Producto> listaProductos =  productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(),iclasificacionId,productosForm.getiSucursalId());
+		List<Producto> listaEntidad =  productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(),iclasificacionId,productosForm.getiSucursalId());
+		List<ProductoVo> listaProductos = new ArrayList<ProductoVo>(); 
+		if (listaEntidad.size() > 0) {
+			ProductoVo productoVo;
+			for (Producto producto : listaEntidad) {
+				List<Productoalmacen> listaProductoAlmacen = producto.getProductoAlmacendetallles();
+				
+				if (listaProductoAlmacen != null && listaProductoAlmacen.size() > 0) {
+					productoVo = new ProductoVo(producto);
+					
+					for (Productoalmacen productoalmacen : listaProductoAlmacen) {
+						
+						if (productoalmacen.getAlmacen().getSucursal().getiSucursalId() == productosForm.getiSucursalId()) {
+							System.out.println("Agregando Almacen [ " + productoalmacen.getiProductoAlamcenId() + " ] Stock [ " + productoalmacen.getiProductoAlmStockTotal() + " ]");
+							productoVo.setStockSucursal(productoalmacen.getiProductoAlmStockTotal());
+							productoVo.setiProductoalmacenId(productoalmacen.getiProductoAlamcenId());
+							
+						}
+						
+					}
+					
+					listaProductos.add(productoVo);
+					
+				}
+				
+			}
+			
+		}
 		
 		/**Consultamos el total de registros segun criterio**/
 		List<Producto> listaPerfilTotal = productoDao.listaProducto(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(), productosForm.getProducto(),iclasificacionId,productosForm.getiSucursalId());
@@ -465,7 +488,7 @@ public class ProductosAction extends BaseAction {
 
 		/***Instancioamos ProductosForm form***/
 		ProductosForm productoForm = (ProductosForm) form;
-		Moneda moneda = new Moneda();
+//		Moneda moneda = new Moneda();
 		Categoria categoria = new Categoria();
 		Clasificacioncategoria clasificacioncategoria = new Clasificacioncategoria();
 		clasificacioncategoria.setiClasificacionId(iclasificacionId);
@@ -552,13 +575,7 @@ public class ProductosAction extends BaseAction {
 			
 			if (iclasificacionId != 5) {
 				List<Almacen> almacen = categoriaDao.listaEntidadGenerica(Almacen.class);
-//				Collections.sort(almacen, new Comparator<Almacen>(){
-//					  public int compare(Kardex p1, Kardex p2) { // return new
-//					  Integer(p1.getiKardexId()).compareTo(new
-//					  Integer(p2.getiKardexId())); return
-//					  p2.getvConcepto().compareTo(p1.getvConcepto()); } });
-				
-				
+
 				boolean registrado = false;
 				for (Almacen alma : almacen) {
 					registrado = false;
@@ -570,24 +587,17 @@ public class ProductosAction extends BaseAction {
 								registrado = true;
 							}
 						}
-
-						if (!registrado) {
-							ProductoalmacenVo productoAlmacen = new ProductoalmacenVo();
-							AlmacenVo almacenVo = new AlmacenVo(alma);
-							productoAlmacen.setAlmacen(almacenVo);
-							productoAlmacen.setcEstadoCodigo(Constantes.estadoActivo);
-							listaProduAlma.add(productoAlmacen);
-						}
 					
-					} else {
+					}
+					if (!registrado) {
 						ProductoalmacenVo productoAlmacen = new ProductoalmacenVo();
 						AlmacenVo almacenVo = new AlmacenVo(alma);
 						productoAlmacen.setAlmacen(almacenVo);
+						productoAlmacen.setProducto(new ProductoVo(pro));
 						productoAlmacen.setcEstadoCodigo(Constantes.estadoActivo);
 						listaProduAlma.add(productoAlmacen);
-					
 					}
-
+					
 				}				
 				  
 
@@ -603,14 +613,16 @@ public class ProductosAction extends BaseAction {
 
 				}
 			}
+
+			productoForm.setTotalPrecios(listaPrecio.size());
+			productoForm.setTotalProductosAlmacen(listaProduAlma.size());
+			productoForm.setProduc(listaPrecio);
+			productoForm.setProducAlmacen(listaProduAlma);
+	//		productoForm.setProducAlmacen(listaProduAlma);
 			
-		productoForm.setProduc(listaPrecio);
-		productoForm.setProducAlmacen(listaProduAlma);
-//		productoForm.setProducAlmacen(listaProduAlma);
-		
-		sesion.setAttribute("listaPrecioProducto",listaPrecio);
-		sesion.setAttribute("listaProductoAlmacen",listaProduAlma);
-			
+			sesion.setAttribute("listaPrecioProducto",listaPrecio);
+			sesion.setAttribute("listaProductoAlmacen",listaProduAlma);
+				
 		}
 		/**LLamamos al formulario buscarMantenimientoProducto.jsp para realizar la busqueda **/
 		else if(mode.equals("F")){
@@ -685,8 +697,7 @@ public class ProductosAction extends BaseAction {
 		ProductosForm pForm = (ProductosForm) form;
 		Producto producto = pForm.getProducto();
 		
-		GenericaDao productoDao = new GenericaDao();	
-		KardexDao kardexDao = new KardexDao();
+		GenericaDao productoDao = new GenericaDao();
 		List<Preciosproducto> listaPrecios = new ArrayList<Preciosproducto>();
 		
 		
@@ -828,10 +839,10 @@ public class ProductosAction extends BaseAction {
 				}
 				
 				//	pro.setiProductoStockTotal(CantidadStocktotal);				
-			      resultado = productoDao.commitEndidad(transaccion);
+			    resultado = productoDao.commitEndidad(transaccion);
 					
 					
-			}
+			} else 
 			/** Insertamos Datos del producto como Insumos **/
 			if (pForm.getMode().equals("II")) {
 				producto.setdFechaInserta(Fechas.getDate());
@@ -929,20 +940,23 @@ public class ProductosAction extends BaseAction {
 					/*****************************************************/
 					/*** ingresamos el listado de productos por almacen***/
 					/*****************************************************/
+					@SuppressWarnings("unchecked")
 					List<ProductoalmacenVo> lista = (List<ProductoalmacenVo>) sesion.getAttribute("listaProductoAlmacen");
-					List<Productoalmacen> listaEntidad =  new ArrayList<Productoalmacen>();
-				    for(ProductoalmacenVo productoAlmacenVo:lista){
-				    	Productoalmacen prodAlmacen = new Productoalmacen(productoAlmacenVo);
-				    	listaEntidad.add(prodAlmacen);
-				    }
-					producto.setProductoAlmacendetallles(listaEntidad);
+					if (lista != null && lista.size() > 0) {
+						List<Productoalmacen> listaEntidad =  new ArrayList<Productoalmacen>();
+					    for(ProductoalmacenVo productoAlmacenVo : lista){
+					    	if (productoAlmacenVo.getiProductoAlmStockTotal() > 0) {
+						    	Productoalmacen prodAlmacen = new Productoalmacen(productoAlmacenVo);
+						    	listaEntidad.add(prodAlmacen);
+					    	}
+					    }
+						producto.setProductoAlmacendetallles(listaEntidad);
+					}
 					/** Actualizamos los valores de la existencia del Kardex **/
 					/** si no existe ningun tipo de movimiento (Compras o ventas) **/
 					if (pForm.getSizeIngresoproductodetalles() == 0 && pForm.getSizeVentaDetalles() == 0) {
 						
-						int iKardexId = 0;
 						List<Kardex> kardex = producto.getKardexs();
-						iKardexId = kardex.get(0).getiKardexId();
 						kardex.get(0).setiCantExistencia(producto.getiProductoStockTotal());
 						kardex.get(0).setfPuExistencia(producto.getfProductoPrecioCompra());
 						kardex.get(0).setfTotalExistencia(kardex.get(0).getiCantExistencia() * kardex.get(0).getfPuExistencia());
@@ -1118,17 +1132,17 @@ public class ProductosAction extends BaseAction {
 				HttpSession sesion = request.getSession();
 				
 				Gson gson = new Gson();			
-				GenericaDao genericaDao = new GenericaDao();
+//				GenericaDao genericaDao = new GenericaDao();
+//				ProductosForm productoForm = (ProductosForm) form;
 				
-				ProductosForm productoForm = (ProductosForm) form;
 				int iProductoId = Integer.parseInt(request.getParameter("iProductoId"));
 				int i = Integer.parseInt(request.getParameter("i"));
 				int iAlmacenId = Integer.parseInt(request.getParameter("iAlmacenId"));
 				int iProductoAlmacenId = Integer.parseInt(request.getParameter("iProductoAlmacenId"));	
 				int iProductoAlmStockTotal = Integer.parseInt(request.getParameter("iProductoAlmStockTotal"));
 				int iUnidadMedidaAlmId = Integer.parseInt(request.getParameter("iUnidadMedidaAlmId"));
-				int iUMBaseAlm = Integer.parseInt(request.getParameter("iUMBaseAlm"));
-				int iUMBaseAlmId = Integer.parseInt(request.getParameter("iUMBaseAlmId"));
+//				int iUMBaseAlm = Integer.parseInt(request.getParameter("iUMBaseAlm"));
+//				int iUMBaseAlmId = Integer.parseInt(request.getParameter("iUMBaseAlmId"));
 				
 				
 				
@@ -1158,8 +1172,8 @@ public class ProductosAction extends BaseAction {
 				
 					productoAlmacen.setiProductoAlmStockTotal(iProductoAlmStockTotal);
 					productoAlmacen.setAlmacen(new AlmacenVo(productodao.findEndidad(Almacen.class, iAlmacenId)));
-					productoAlmacen.setiUMBaseAlm(iUMBaseAlm);
-					productoAlmacen.setUnidadBaseAlm(new UnidadmedidaVo( productodao.findEndidad(Unidadmedida.class, iUMBaseAlmId)));
+//					productoAlmacen.setiUMBaseAlm(iUMBaseAlm);
+//					productoAlmacen.setUnidadBaseAlm(new UnidadmedidaVo( productodao.findEndidad(Unidadmedida.class, iUMBaseAlmId)));
 					productoAlmacen.setUnidadMedidaAlm(new UnidadmedidaVo( productodao.findEndidad(Unidadmedida.class, iUnidadMedidaAlmId)));
 					productoAlmacen.setdFechaInserta(Fechas.getDate());
 					productoAlmacen.setcEstadoCodigo(Constantes.estadoActivo);
@@ -1169,8 +1183,8 @@ public class ProductosAction extends BaseAction {
 						
 						lista.get(i).setiProductoAlmStockTotal(iProductoAlmStockTotal);
 						lista.get(i).setAlmacen(new AlmacenVo(productodao.findEndidad(Almacen.class, iAlmacenId)));
-						lista.get(i).setiUMBaseAlm(iUMBaseAlm);
-						lista.get(i).setUnidadBaseAlm(new UnidadmedidaVo(productodao.findEndidad(Unidadmedida.class, iUMBaseAlmId)));
+//						lista.get(i).setiUMBaseAlm(iUMBaseAlm);
+//						lista.get(i).setUnidadBaseAlm(new UnidadmedidaVo(productodao.findEndidad(Unidadmedida.class, iUMBaseAlmId)));
 						lista.get(i).setUnidadMedidaAlm(new UnidadmedidaVo( productodao.findEndidad(Unidadmedida.class, iUnidadMedidaAlmId)));
 						lista.get(i).setdFechaInserta(Fechas.getDate());
 						lista.get(i).setProducto(new ProductoVo(productBean));
@@ -1184,9 +1198,9 @@ public class ProductosAction extends BaseAction {
 					 //  lista = producto.getPreciosproductodetallles();
 					  
 							   lista.get(i).setiProductoAlmStockTotal(iProductoAlmStockTotal);
-							   lista.get(i).setiUMBaseAlm(iUMBaseAlm);
+//							   lista.get(i).setiUMBaseAlm(iUMBaseAlm);
 							   lista.get(i).setProducto(new ProductoVo(productBean));
-							   lista.get(i).setUnidadBaseAlm(new UnidadmedidaVo(productodao.findEndidad(Unidadmedida.class, iUMBaseAlmId)));
+//							   lista.get(i).setUnidadBaseAlm(new UnidadmedidaVo(productodao.findEndidad(Unidadmedida.class, iUMBaseAlmId)));
 							   lista.get(i).setUnidadMedidaAlm(new UnidadmedidaVo( productodao.findEndidad(Unidadmedida.class, iUnidadMedidaAlmId)));
 							   lista.get(i).setiProductoAlamcenId(iProductoAlmacenId);
 							   lista.get(i).setdFechaInserta(Fechas.getDate());

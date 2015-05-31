@@ -19,7 +19,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 			if(per!=null){
 	   if(per.equals("1241")){%>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=4&mode=I',700,550)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=4&mode=I',700,635)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -54,14 +54,16 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
     <caption>Lista de Envases y Embalajes </caption>
     <thead>
      <tr>
-        <th colspan="3">Operaciones</th>
+        <th colspan="4" width="5%">Operaciones</th>
         <th align="left">C&oacute;digo</th>
-        <th width="23%" align="left">Nombre</th>
-        <th align="left">Cantidad</th>
-        <th align="left">Capacidad</th>
-        <th align="left">Precio Compra</th>
-        <th align="left">Stock Min</th>
-        <th align="left">Stock Max</th>        
+        <th width="20%" align="left">Nombre</th>
+        <th align="left">Descripci&oacute;n</th>
+        <th width="9%" align="left">Foto</th>
+        <th align="left">Stock Total</th>        
+        <th align="left" width="6%" >Precio Compra</th>
+        <th align="left" width="6%" >Precio Venta</th>
+        <th align="left" width="8%" >Stock Min</th>
+        <th align="left" width="8%" >Stock Max</th>        
         <th align="left">Estado</th>
       </tr>
     </thead>
@@ -83,7 +85,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		if(per!=null){
 		if(per.equals("1242")){%>
 		<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=4&mode=U&id=<bean:write name="x" property="iProductoId" />',700,550)" />
+		                     onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=4&mode=U&id=<bean:write name="x" property="iProductoId" />',700,635)" />
          <% break;}}}%>
          </td>
 		<td align="center">
@@ -96,22 +98,34 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
          <% break;}}}%> 
          </td>	
 		
-		<td><bean:write name="x" property="cProductoCodigo" /></td>
+		<td align="center">
+     		<img  src="${pageContext.request.contextPath}/media/imagenes/approve_notes.png"   title="Visualizar Kardex" 
+     		onclick="popup('productos.do?metodo=listaKardex&mode=Kardex&id=<bean:write name="x" property="iProductoId" />',900,500)" />
+		</td>
+		
+	    <td><bean:write name="x" property="cProductoCodigo" /></td>
 		<td><bean:write name="x" property="vProductoNombre" /></td>
+		<td><bean:write name="x" property="iUMBase" />  <bean:write name="x" property="umBase.vUnidadMedidaDescripcion" /> 
+		 <logic:notEqual name="x" property="umPedido"  value="">
+		  de 
+		  <bean:write name="x" property="iUMPedido" />  <bean:write name="x" property="umPedido.vUnidadMedidaDescripcion" /> 
+		 </logic:notEqual>
+		 <logic:notEqual name="x" property="umSalida" value="">
+		  de
+		  <bean:write name="x" property="iUMSalida" />  <bean:write name="x" property="umSalida.vUnidadMedidaDescripcion" /> 
+		 </logic:notEqual>
+		</td>
+		<td><logic:notEqual name="x" property="vFoto" value=""> <img  src="${pageContext.request.contextPath}/media/fotos/<bean:write name="x" property="vFoto" />"  width="23%" height="20%" /></logic:notEqual></td>
 		<td>
 		    <bean:write name="x" property="iProductoStockTotal" />
-		    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
+		    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" /> 
 		</td>
-		<td>
-			<bean:write name="x" property="iUMPedido" />
-			<bean:write name="x" property="vUnidadMedidaDescripcionC" />
-	    </td>
-	    <td><bean:write name="x" property="fProductoPrecioCompra" /></td>
+		
+	    <td><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"/></td>
+	    <td><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"/></td>
 	    <td><bean:write name="x" property="iProductoStockMinimo" /></td>
 		<td><bean:write name="x" property="iProductoStockMaximo" /></td>
 		<td><bean:write name="x" property="cEstadoCodigo" /></td>
-	   
-
 	</tr>
 	</logic:iterate>
 </logic:notEmpty>

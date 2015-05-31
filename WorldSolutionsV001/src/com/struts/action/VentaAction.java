@@ -45,6 +45,7 @@ import com.entities.Moneda;
 import com.entities.Personal;
 import com.entities.Preciosproducto;
 import com.entities.Producto;
+import com.entities.Productoalmacen;
 import com.entities.Tipodocumentogestion;
 import com.entities.Usuario;
 import com.entities.Venta;
@@ -489,9 +490,11 @@ public class VentaAction extends BaseAction {
 				float fPrecioCompra = Float.parseFloat(request.getParameter("fPrecioCompra"));
 				float fTotal = Float.parseFloat(request.getParameter("fTotal"));
 				int iPersonalId = Integer.parseInt(request.getParameter("iPersonalId"));
-
+				int iProductoalmacenId = Integer.parseInt(request.getParameter("iProductoalmacenId"));
+				System.out.println("iProductoalmacenId [ " + iProductoalmacenId + " ]");
 				Producto producto = productoDao.findEndidad(Producto.class, iProductoId);
 				productoVo = new ProductoVo(producto);
+				productoVo.setiProductoalmacenId(iProductoalmacenId);
 				
 				ventadetalle.setProducto(productoVo);
 				ventadetalle.setfVentaDetallePrecio(fPrecioVenta);
@@ -525,8 +528,7 @@ public class VentaAction extends BaseAction {
 				// ventaDao.commitEndidad(entityTransaction);
 			}
 			if (mode.equals("D")) {
-				if (lista.get(iProductoId).getcEstadoCodigo() .equals(Constantes.estadoActivo) 
-						&& lista.get(iProductoId).getvIdentificadorSession().equals(identificador)) {
+				if (lista.get(iProductoId).getcEstadoCodigo() .equals(Constantes.estadoActivo) && lista.get(iProductoId).getvIdentificadorSession().equals(identificador)) {
 					lista.get(iProductoId).setcEstadoCodigo(Constantes.estadoInactivo);
 				} else { 
 					lista.get(iProductoId).setcEstadoCodigo(Constantes.estadoActivo);
@@ -887,6 +889,7 @@ public class VentaAction extends BaseAction {
 		KardexDao kardexDao = new KardexDao();
 		List<Ventadetalle> ventadetalles = new ArrayList<Ventadetalle>();
 		List<Kardex> listaKadex = new ArrayList<Kardex>();
+		List<Productoalmacen> listaProductoAlmacen = new ArrayList<Productoalmacen>();
 		
 		Venta obj = new Venta(pForm.getVenta());
 		Date fecha = Fechas.getDate();
@@ -943,8 +946,29 @@ public class VentaAction extends BaseAction {
 							ventaDetalleVo.setiUsuarioInsertaId(usu.getiUsuarioId());
 
 							Producto producto = ventaDao.findEndidad(Producto.class, ventaDetalleVo.getProducto().getiProductoId());
-							ventaDetalleVo.setProducto(new ProductoVo(producto));
-							if (!ventaDetalleVo.getProducto().getCategoria().getClasificacionCategoria().getvClasificacionDescripcion().equals(Constantes.categoriaServicios)) {
+//							ventaDetalleVo.setProducto(new ProductoVo(producto));
+							if (!producto.getCategoria().getClasificacionCategoria().getvClasificacionDescripcion().equals(Constantes.categoriaServicios)) {
+								
+
+								System.out.println("Actualizando almacen [ " + ventaDetalleVo.getProducto().getiProductoalmacenId() + " ]");
+								for (Productoalmacen productoalmacen : producto.getProductoAlmacendetallles()) {
+									
+									if (productoalmacen.getiProductoAlamcenId() == ventaDetalleVo.getProducto().getiProductoalmacenId()) {
+										
+										productoalmacen = ventaDao.findEndidad(Productoalmacen.class, ventaDetalleVo.getProducto().getiProductoalmacenId());
+										
+										System.out.println("Stock actualizado [ " + (productoalmacen.getiProductoAlmStockTotal() - ventaDetalleVo.getiVentaDetalleCantidad()) + " ]");
+										productoalmacen.setiProductoAlmStockTotal(productoalmacen.getiProductoAlmStockTotal() - ventaDetalleVo.getiVentaDetalleCantidad());									
+										productoalmacen.setiUsuarioActualizaId(usu.getiUsuarioId());
+										productoalmacen.setdFechaActualiza(Fechas.getDate());
+										listaProductoAlmacen.add(productoalmacen);
+										ventaDao.mergeEndidad(productoalmacen);
+									}
+									
+								}
+								producto.setProductoAlmacendetallles(listaProductoAlmacen);
+								
+								
 								
 								/*******************************************/
 								/** Insertamos detalle de lista de precios **/
@@ -955,7 +979,7 @@ public class VentaAction extends BaseAction {
 								int cantAsignado = 0;
 								int asignado = 0;
 								for (Preciosproducto preciosProducto : producto.getPreciosproductodetallles()) {
-									if (preciosProducto.getfPrecioCompra() == ventaDetalleVo.getProducto().getfProductoPrecioCompra()) {
+									if (preciosProducto.getfPrecioCompra() == producto.getfProductoPrecioCompra()) {
 										iCantidad = preciosProducto.getiCantidadStock() - ventaDetalleVo.getiVentaDetalleCantidad();
 	
 										Kardex kardex = new Kardex();
@@ -980,7 +1004,7 @@ public class VentaAction extends BaseAction {
 												kardex.setfPuVenta(preciosProducto.getfPrecioCompra());
 												kardex.setfTotalVenta(kardex.getiCantVenta() * kardex.getfPuVenta());
 												kardex.setiCantExistencia(0);
-												kardex.setfPuExistencia(ventaDetalleVo.getProducto().getfProductoPrecioCompra());
+												kardex.setfPuExistencia(producto.getfProductoPrecioCompra());
 												kardex.setfTotalExistencia(0);
 												kardex.setcEstadoCodigo(Constantes.estadoInactivo);
 	
@@ -1106,7 +1130,7 @@ public class VentaAction extends BaseAction {
 												producto.setfProductoGanancia(objpreciosProducto.getfGanancia());
 												producto.setfProductoPrecioVenta(objpreciosProducto.getfPrecioVenta());
 												producto.setfProductoPrecioCompra(objpreciosProducto.getfPrecioCompra());
-	
+												
 											}// else
 	
 										}// if cantidad manor a cero
@@ -1124,6 +1148,7 @@ public class VentaAction extends BaseAction {
 								}
 								
 								producto.setKardexs(listaKadex);
+								
 								ventaDao.mergeEndidad(producto);
 								
 							}
@@ -1170,8 +1195,7 @@ public class VentaAction extends BaseAction {
 					imprimir(mapping, pForm, request, response);
 				}
 
-			} else if (pForm.getMode().equals("U")
-					|| pForm.getMode().equals("UE")) {
+			} else if (pForm.getMode().equals("U") || pForm.getMode().equals("UE")) {
 
 				Venta obj1 = ventaDao.findEndidad(Venta.class, pForm.getVenta().getiVentaId());
 				obj1 = Util.comparar(obj1, pForm.getVenta());// pForm.getVenta();

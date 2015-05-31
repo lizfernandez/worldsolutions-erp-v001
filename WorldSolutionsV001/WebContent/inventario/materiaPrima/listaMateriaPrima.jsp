@@ -19,7 +19,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 			if(per!=null){
 	   if(per.equals("1221")){%>
-        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=I',700,600)">
+        <td><button  class="button" onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=I',700,635)">
                 <span class="new">Nuevo</span>
             </button>
         </td>
@@ -85,7 +85,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		if(per!=null){
 		if(per.equals("1222")){%>
 		<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=U&id=<bean:write name="x" property="iProductoId" />',700,550)" />
+		                     onclick="popup('productos.do?metodo=mantenimientoProducto&iclasificacionId=2&mode=U&id=<bean:write name="x" property="iProductoId" />',700,635)" />
          <% break; }}}%>
          </td>
 		<td align="center">
@@ -110,7 +110,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		 </logic:notEqual>
 		 <logic:notEqual name="x" property="umSalida" value="">
 		  de
-		  <bean:write name="x" property="vUMSalida" />  <bean:write name="x" property="umSalida.vUnidadMedidaDescripcion" /> 
+		  <bean:write name="x" property="iUMSalida" />  <bean:write name="x" property="umSalida.vUnidadMedidaDescripcion" /> 
 		 </logic:notEqual>
 		</td>
 		<td><logic:notEqual name="x" property="vFoto" value=""> <img  src="${pageContext.request.contextPath}/media/fotos/<bean:write name="x" property="vFoto" />"  width="23%" height="20%" /></logic:notEqual></td>
