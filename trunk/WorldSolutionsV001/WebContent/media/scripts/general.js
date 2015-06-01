@@ -1332,14 +1332,15 @@ function fn_recargar(){
 	var mode ="";	
 	var tipo=$_GET("tipo");
 	var identificador=$_GET("identificador");
+	var iSucursalId=$_GET("iSucursalId");
 	
 	if(tipo=='ventas'){
 		if(iclasificacionId=="5"){ ///  el id=5 es de servicio
 			//redireccionamos al padre los valores, sin hacer doble recarga por el return false;
-			mode="&tipo=ventas&mode=LPS&identificador="+identificador;		
+			mode="&tipo=ventas&mode=LPS&identificador="+identificador+"&iSucursalId="+iSucursalId;		
 		}
 		else{
-			mode="&tipo=ventas&mode=LP&identificador="+identificador;	
+			mode="&tipo=ventas&mode=LP&identificador="+identificador+"&iSucursalId="+iSucursalId;		
 		}
 	}
 	if(tipo=='compras'){	
