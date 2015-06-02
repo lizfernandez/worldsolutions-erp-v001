@@ -2,8 +2,8 @@ package com.struts.action;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,18 +20,18 @@ import com.dao.AreaDao;
 import com.dao.EstadoDao;
 import com.dao.GenericaDao;
 import com.dao.PersonalDao;
-import com.dao.UsuarioDao;
 import com.dao.VentaDao;
 import com.entities.Area;
 import com.entities.Estado;
-import com.entities.Mediopago;
 import com.entities.Ocupacion;
 import com.entities.Personal;
 import com.entities.Usuario;
-import com.entities.Venta;
+import com.entities.Ventadetalle;
+import com.entities.vo.DetalleServicioPersonalVo;
+import com.entities.vo.DetalleServicioSucursalVo;
+import com.entities.vo.ServicioPersonalVo;
 import com.struts.form.PersonalForm;
 import com.util.Fechas;
-import com.util.FormatosNumeros;
 import com.util.Impresora;
 import com.util.Paginacion;
 import com.util.Util;
@@ -254,5 +254,6 @@ public class PersonalAction extends BaseAction {
 			ActionMapping mapping, HttpServletResponse response) throws IllegalAccessException, IOException, IllegalArgumentException, SecurityException, ClassNotFoundException, NoSuchFieldException, ParseException {
 		
 	}
+	
 }
 

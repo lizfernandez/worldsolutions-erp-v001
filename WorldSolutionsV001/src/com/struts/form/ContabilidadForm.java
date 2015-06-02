@@ -2,15 +2,12 @@ package com.struts.form;
 
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.ParseException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
-
 
 import com.entities.Categoria;
 import com.entities.Cliente;
@@ -22,7 +19,6 @@ import com.entities.Librodiario;
 import com.entities.Moneda;
 import com.entities.Personal;
 import com.entities.Planilla;
-
 import com.entities.Producto;
 import com.entities.Proveedor;
 import com.entities.Tipodocumentogestion;
@@ -67,8 +63,11 @@ public class ContabilidadForm extends ActionForm {
     private double igvCompraVenta; 
     private String igvActual;
     private String mes;
-    
-    
+   
+    private Date fechaInicio;
+    private Date fechaFin;
+    private List<String> listaFechas;
+    private List<Float> listaTotalDia; 
 
     
     
@@ -1639,5 +1638,54 @@ public class ContabilidadForm extends ActionForm {
 	public void setvOcupacionDescripcion(String vOcupacionDescripcion) {
 		this.vOcupacionDescripcion = vOcupacionDescripcion;
 	}
+	/**
+	 * @return the fechaInicio
+	 */
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+	/**
+	 * @param fechaInicio the fechaInicio to set
+	 */
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	/**
+	 * @return the fechaFin
+	 */
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+	/**
+	 * @param fechaFin the fechaFin to set
+	 */
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+	/**
+	 * @return the listaFechas
+	 */
+	public List<String> getListaFechas() {
+		return listaFechas;
+	}
+	/**
+	 * @param listaFechas the listaFechas to set
+	 */
+	public void setListaFechas(List<String> listaFechas) {
+		this.listaFechas = listaFechas;
+	}
+	/**
+	 * @return the listaTotalDia
+	 */
+	public List<Float> getListaTotalDia() {
+		return listaTotalDia;
+	}
+	/**
+	 * @param listaTotalDia the listaTotalDia to set
+	 */
+	public void setListaTotalDia(List<Float> listaTotalDia) {
+		this.listaTotalDia = listaTotalDia;
+	}
+	
 	
 }

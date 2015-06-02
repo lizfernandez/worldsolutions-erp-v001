@@ -624,4 +624,8 @@
 	<put name="body" value="/ventas/venta/verArqueoVendedor.jsp"></put>  
 </definition>
 
+<definition name=".listaServiciosPersonal" extends=".popup">
+	<put name="body" value="/contabilidad/planilla/listaPopupServiciosPersonal.jsp"></put>  
+</definition>
+
 </tiles-definitions>

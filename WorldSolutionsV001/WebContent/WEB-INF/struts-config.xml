@@ -431,7 +431,7 @@
                      <forward name="showEditPlanilla" path=".mantenimientoPlanilla" />
                      <forward name="showFindPlanilla" path=".buscarMantenimientoPlanilla" />
                      
-                     
+                     <forward name="showListServiciosPersonal" path=".listaServiciosPersonal" />
                      
                      
                      

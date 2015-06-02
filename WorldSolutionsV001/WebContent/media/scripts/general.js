@@ -608,7 +608,7 @@ function listar_detalleVenta(obj,destino,identificador){
    newHtml+='<th>&nbsp;</th>';
    newHtml+='<th>CODIGO</th>';
    newHtml+='<th>CANTIDAD</th>';
-   newHtml+='<th>UNID.</th>';
+   newHtml+='<th>UNID. / TECNICO</th>';
    
    newHtml+='<th  width="25%">DESCRIPCION</th>';
    newHtml+='<th>P.U.</th>';
@@ -633,7 +633,7 @@ function listar_detalleVenta(obj,destino,identificador){
 		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockTotal+"'/>";
 		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='categoriaProducto"+key+"'  value='"+data['producto']['categoria']['clasificacionCategoria'].vClasificacionDescripcion + "'/>";
 		  newHtml+='</td>';
-	   if(data['producto']['unidadMedida']!=null){
+	   if(data['producto']['categoria']['clasificacionCategoria'].iClasificacionId != "5"){
 	    newHtml+='<td>'; 
 	   
             newHtml+=data['producto']['unidadMedida'].vUnidadMedidaDescripcion;
@@ -643,7 +643,7 @@ function listar_detalleVenta(obj,destino,identificador){
 	   else{
 		   newHtml+='<td>'; 
 		   empleado:
-			 newHtml+="empleado: "+data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
+			 newHtml+="Empleado: "+data['personal'].vPersonalNombres+" "+data['personal'].vPersonalApellidoPaterno;
 		newHtml+='</td>';  
 	   }
 	 

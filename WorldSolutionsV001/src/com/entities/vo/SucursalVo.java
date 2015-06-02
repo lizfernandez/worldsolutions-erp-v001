@@ -186,6 +186,32 @@ public class SucursalVo implements Serializable {
 	public void setEmpresa(EmpresaVo empresa) {
 		this.empresa = empresa;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + iSucursalId;
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SucursalVo other = (SucursalVo) obj;
+		if (iSucursalId != other.iSucursalId)
+			return false;
+		return true;
+	}
 
 	
 

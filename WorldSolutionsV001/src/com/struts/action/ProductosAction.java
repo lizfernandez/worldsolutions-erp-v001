@@ -152,8 +152,11 @@ public class ProductosAction extends BaseAction {
 		/**LPC= lista de productos para compras **/
 		/**LPS= lista de productos de servicios **/
 		/**LPP= lista de productos de produccion **/
-		 if(mode!=null && mode.equals("LP") || mode!=null && mode.equals("LPC") || mode!=null && mode.equals("LPS") 
-				 || mode!=null && mode.equals("LPP")|| mode!=null && mode.equals("LPSP") || mode!=null && mode.equals("LPPU") || mode!=null && mode.equals("LPA")){
+		 if(mode!=null && mode.equals("LP") || mode!=null && mode.equals("LPC") 
+				 || mode!=null && mode.equals("LPS") || mode!=null && mode.equals("LPP") 
+				 || mode!=null && mode.equals("LPSP") || mode!=null && mode.equals("LPPU") 
+				 || mode!=null && mode.equals("LPA")){
+			 
 			 UnidadMedidaDao unidadMedidaDao = new UnidadMedidaDao();
 			 //Aqui se debera cambiar el método para solo cargar las categorias de los productos que son validos para vender.
 			 List<Clasificacioncategoria> listaSubcategoria = productoDao.listaEntidadGenerica(Clasificacioncategoria.class);		 
@@ -208,30 +211,41 @@ public class ProductosAction extends BaseAction {
 		
 	
 		/**Seteamos los valores en las listas**/
-		List<Producto> listaEntidad =  productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(),iclasificacionId,productosForm.getiSucursalId());
+		
+		List<Producto> listaEntidad;
+		
+		if (iclasificacionId != 5) {
+			listaEntidad = productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(),iclasificacionId,productosForm.getiSucursalId());
+		} else {
+			listaEntidad = productoDao.listaProducto(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getProducto(), iclasificacionId, 0);
+		}
+		
 		List<ProductoVo> listaProductos = new ArrayList<ProductoVo>(); 
 		if (listaEntidad.size() > 0) {
 			ProductoVo productoVo;
 			for (Producto producto : listaEntidad) {
 				List<Productoalmacen> listaProductoAlmacen = producto.getProductoAlmacendetallles();
-				
+				productoVo = new ProductoVo(producto);
 				if (listaProductoAlmacen != null && listaProductoAlmacen.size() > 0) {
-					productoVo = new ProductoVo(producto);
-					
-					for (Productoalmacen productoalmacen : listaProductoAlmacen) {
-						
-						if (productoalmacen.getAlmacen().getSucursal().getiSucursalId() == productosForm.getiSucursalId()) {
-							System.out.println("Agregando Almacen [ " + productoalmacen.getiProductoAlamcenId() + " ] Stock [ " + productoalmacen.getiProductoAlmStockTotal() + " ]");
-							productoVo.setStockSucursal(productoalmacen.getiProductoAlmStockTotal());
-							productoVo.setiProductoalmacenId(productoalmacen.getiProductoAlamcenId());
+					if (iclasificacionId != 5) {
+						for (Productoalmacen productoalmacen : listaProductoAlmacen) {
 							
+							if (productoalmacen.getAlmacen().getSucursal().getiSucursalId() == productosForm.getiSucursalId()) {
+								System.out.println("Agregando Almacen [ " + productoalmacen.getiProductoAlamcenId() + " ] Stock [ " + productoalmacen.getiProductoAlmStockTotal() + " ]");
+								productoVo.setStockSucursal(productoalmacen.getiProductoAlmStockTotal());
+								productoVo.setiProductoalmacenId(productoalmacen.getiProductoAlamcenId());
+								
+							}	
 						}
 						
+					} else {
+						productoVo.setStockSucursal(producto.getiProductoStockTotal());
+						productoVo.setiProductoalmacenId(0);
+						
 					}
-					
-					listaProductos.add(productoVo);
-					
+										
 				}
+				listaProductos.add(productoVo);
 				
 			}
 			
