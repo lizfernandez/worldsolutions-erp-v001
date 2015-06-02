@@ -44,6 +44,13 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
             </button>
         </td>
         <% break;}}}%>
+        
+        <td>
+        	<button class="button" onclick="popup('contabilidad.do?metodo=listaServiciosPersonal',700,500)">
+            	<span class="find">Ver Servicios</span>
+            </button>
+        </td>
+        
     </tr>
 </table >
 <table class="tabla" border="0" width="100%" id="tabla">

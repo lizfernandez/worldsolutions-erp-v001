@@ -42,10 +42,8 @@
     <tr >
         <th align="left">C&oacute;digo</th>
         <th align="left">Categoria</th>
-        <th align="left">Nombre</th> 
-        <th align="left">% Desc</th> 
+        <th align="left">Nombre</th>
         <th align="right">P.Venta</th>
-        <th align="right">P.Compra</th>
         
             
       </tr>
@@ -64,13 +62,20 @@
 			               '<bean:write name="x" property="fProductoDescuento" />',
 			               '<bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/>',
 			               '<bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/>',
-			               '<bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/>')">
-		 		<td><bean:write name="x" property="cProductoCodigo" /></td>
-			<td><bean:write name="x" property="categoria.vCategoriaDescripcion" /></td>
-				<td><bean:write name="x" property="vProductoNombre" /></td>
-			<td align="right"><bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/></td>
-				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/></td>
-				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"  locale="Localidad"/></td>
+			               '<bean:write name="x" property="fProductoDescuento" format="#,##0.00"  locale="Localidad"/>',
+			               '<bean:write name="x" property="iProductoalmacenId" />')">
+		 		<td>
+		 			<bean:write name="x" property="cProductoCodigo" />
+		 		</td>
+				<td>
+					<bean:write name="x" property="categoria.vCategoriaDescripcion" />
+				</td>
+				<td>
+					<bean:write name="x" property="vProductoNombre" />
+				</td>
+				<td align="right">
+					<bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"  locale="Localidad"/>
+				</td>
 						
 	    	</tr>
 	    	<logic:notEmpty name="x" property="preciosproductodetallles">
@@ -112,20 +117,19 @@
 	  </tr>
 	  <tr>
 	        <td>Cantidad:</td>
-	        <td>
-			   <html:text property="iProductoStockTotal" styleId="iProductoStockTotal"   styleClass="text" size="5" onblur="fn_CalcularTotal()" value="1"/>			   
-			&ensp;&ensp;&ensp;&ensp;
-			 Personal:
-			 <%-- hidden field que contiene el id del producto --%>
-             <html:hidden property="iPersonalId" styleId="iPersonalId" />			 
-			 <html:text property="cPersonalCodigo"  styleId="cPersonalCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />
-	         <html:text property="vPersonalNombres"  styleId="vPersonalNombres"  styleClass="text inputDisabled" size="35"/>
-	         <img  onclick="popupModal('personal.do?metodo=listaPersonal&mode=LP&iPersonalId=iPersonalId&codigo=cPersonalCodigo&nombre=vPersonalNombres',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png"/>
-	  		 <input type="hidden" id="vOcupacionDescripcion"/>
-	         <input type="hidden" id="fSueldo"/>	   
+			<td>
+				<html:text property="iProductoStockTotal" styleId="iProductoStockTotal" styleClass="text" size="5"
+					onblur="fn_CalcularTotal()" value="1" /> &ensp;&ensp;&ensp;&ensp;Personal:
+					 <%-- hidden field que contiene el id del producto --%>
+				<html:hidden property="iPersonalId" styleId="iPersonalId" />
+				<html:text property="cPersonalCodigo" styleId="cPersonalCodigo" maxlength="5" styleClass="textCodigo inputDisabled" />
+				<html:text property="vPersonalNombres" styleId="vPersonalNombres" styleClass="text inputDisabled" size="35" />
+				<img onclick="popupModal('personal.do?metodo=listaPersonal&mode=LP&iPersonalId=iPersonalId&codigo=cPersonalCodigo&nombre=vPersonalNombres',580,250)" src="${pageContext.request.contextPath}/media/imagenes/imgpopup.png" />
+				<input type="hidden" id="vOcupacionDescripcion" />
+				<input type="hidden" id="fSueldo" />
+				<input type="hidden" id="iProductoalmacenId" />
 			</td>
-			
-	  </tr>
+	</tr>
 	  <tr>
 	        <td >Precio Venta:</td>
 	       <td>
@@ -171,13 +175,15 @@ paginacion();
 
 
 
- function fn_cargarProducto(iProductoId,vNombreProducto,fProductoDescuento,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
+ function fn_cargarProducto(iProductoId,vNombreProducto,fProductoDescuento,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento,iProductoalmacenId){   
 	    $("#iProductoId").val(iProductoId);	    
 		$("#vxProductoNombre").val(vNombreProducto);
 		$("#fProductoPrecioVenta").val(fProductoPrecioVenta);
 		$("#fProductoDescuento").val(fProductoDescuento);
 		$("#fPrecioCompra").val(fProductoPrecioCompra);
 		$("#fDescuento").val(fProductoDescuento);
+		$("#iProductoalmacenId").val(iProductoalmacenId);
+		
 		var fDescuento =parseFloat(($("#fDescuento").val()/100));		
 		
 		$("#fProductoPrecioVentaFinal").val(dosDecimales(fProductoPrecioVenta)-parseFloat(fProductoPrecioVenta)*fDescuento);		
@@ -185,15 +191,17 @@ paginacion();
 		$("#detalleListaPrecio").html($("#tr_"+iProductoId).html());
 	   
 	}
+ 
    function fn_cargarPrecio(fPrecioVenta,fPrecioCompra,fDescuento){	  
 	   $("#fProductoPrecioVenta").val(fPrecioVenta);
 	   $("#fPrecioCompra").val(fPrecioCompra);
 	   $("#fDescuento").val(fDescuento);
 	   $("#fProductoPrecioVentaFinal").val(dosDecimales(fPrecioVenta-parseFloat((fPrecioVenta)*fDescuento/100)));	
-	  	$("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
+	   $("#fTotal").val(dosDecimales(($("#iProductoStockTotal").val()*$("#fProductoPrecioVentaFinal").val()),'')); 
 		
 	   
    }
+   
 	function fn_CalcularTotal(){ 
 	
 		var iCantidad =parseFloat($("#iProductoStockTotal").val());
@@ -215,12 +223,14 @@ paginacion();
 		var fPrecioVenta =$("#fProductoPrecioVenta").val();
 		var fPrecioCompra =$("#fPrecioCompra").val();
 		var fTotal = $("#fTotal").val();
+		var iProductoalmacenId = $("#iProductoalmacenId").val();
 		
 		var identificador = $_GET("identificador");
 
-	    var cad = "venta.do?metodo=detalleVenta&id="+id+"&iCantidad="+iCantidad+
-	 		  "&fDescuento="+fDescuento+"&fPrecioVenta="+fPrecioVenta+"&fPrecioCompra="+fPrecioCompra+
-	 		  "&fTotal="+fTotal+"&mode=I"+"&iPersonalId="+iPersonalId+"&identificador="+identificador;
+	    var cad = "venta.do?metodo=detalleVenta&id="+id+"&iCantidad="+iCantidad+"&fDescuento="+fDescuento+
+	    		"&fPrecioVenta="+fPrecioVenta+"&fPrecioCompra="+fPrecioCompra+"&fTotal="+fTotal+"&mode=I"+
+	    		"&iPersonalId="+iPersonalId+"&identificador="+identificador+"&iProductoalmacenId="+iProductoalmacenId;
+	    
 	       $.getJSON(cad, function retorna(obj){
 	      	// alert("obje"+obj.cProductoCodigo);
 	      	 listar_detalleVenta(obj,'padre',identificador);

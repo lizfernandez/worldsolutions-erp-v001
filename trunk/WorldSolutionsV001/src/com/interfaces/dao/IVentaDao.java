@@ -1,5 +1,6 @@
 package com.interfaces.dao;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -10,6 +11,7 @@ import com.entities.vo.VentaVo;
 
 
 public interface IVentaDao {
+	
 	public List<Venta> listaVenta(int pagInicio, int pagFin, Venta venta);
 	public List<Venta> listaVenta(int pagInicio, int pagFin, VentaVo venta);
 	public List<Venta> listaEstadoCuentaPorCliente(int pagInicio, int pagFin, Venta venta, int iClienteId);
@@ -17,9 +19,6 @@ public interface IVentaDao {
 	public List<Ventadevolucion> listaVentaDevolucion(int pagInicio, int pagFin, VentaVo venta);
 	public List<Ventadetalle>  buscarVentaDetalle(int iVentaId);
 	public List<Venta> listaEstadoCuentaPorCliente(int pagInicio, int pagFin, VentaVo venta, int iClienteId);
-
-	
-
-	
+	public List<Ventadetalle> listarServicioPersonal(int pagInicio, int pagFin, Date fechaInicio, Date fechaFin);
 	
 }

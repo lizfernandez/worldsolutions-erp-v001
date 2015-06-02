@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -510,6 +511,7 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
         return listaVenta;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Ventadevolucion> listaVentaDevolucion(int pagInicio, int pagFin, VentaVo venta) {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -524,9 +526,6 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 	        }
 			if(venta.getcEstadoCodigo()!=null){
 	        	where+= " where p.cEstadoCodigo LIKE '%"+venta.getcEstadoCodigo()+"%'";
-	        }
-			if(venta==null){
-	        	where+= " and p.venta.vEstadoDocumento  LIKE '%"+Constantes.estadoDocumentoDevuelto+"%'";
 	        }
 			if(venta.getCliente()!=null){
 	        	where+= " and p.venta.cliente.vClienteCodigo='"+venta.getCliente().getvClienteCodigo()+"'";
@@ -561,6 +560,22 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 		}
 		
         return listaVenta;
+	}
+
+	public List<Ventadetalle> listarServicioPersonal(int pagInicio, int pagFin, Date fechaInicio, Date fechaFin) {
+		
+		String where = "and p.venta.dVentaFecha BETWEEN '" + 
+							Fechas.fechaYYMMDD(fechaInicio) + "' and '" + Fechas.fechaYYMMDD(fechaFin) + "'";
+		if (fechaInicio.compareTo(fechaFin) == 0) {
+			where = "and p.venta.dVentaFecha = '" + 
+					Fechas.fechaYYMMDD(fechaInicio) + "' ";
+		}
+		
+		String sentencia = "select p from Ventadetalle p where p.personal.iPersonalId > 0 " + where + " order by p.venta.dVentaFecha asc";
+		
+		List<Ventadetalle> lista = listaEntidadPaginada(sentencia, pagInicio, pagFin);
+		
+		return lista;
 	}
 	
 }

@@ -90,7 +90,7 @@
         <th>&nbsp;</th>
         <th>C&Oacute;DIGO</th>
         <th width="12%">CANTIDAD</th>
-        <th>UNID.</th>
+        <th>UNID. / TECNICO</th>
         
         <th>DESCRIPCI&Oacute;N</th>
         <!--th>C.Compra</th>
@@ -111,13 +111,14 @@
 	           <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iVentaDetalleCantidad" />"/>
 	           <input type='hidden' size='10' class='inputderecha' id='numeroReal${i}'  value='<bean:write name="x" property="producto.iProductoStockTotal" />'/>
 	           <input type='hidden' size='10' class='inputderecha' id='categoriaProducto${i}'  value='<bean:write name="x" property="producto.categoria.clasificacionCategoria.vClasificacionDescripcion" />'/>
+	        
             </td>
          
-            <logic:notEqual name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
+            <logic:notEqual name="x" property="producto.categoria.clasificacionCategoria.iClasificacionId" value="5">
                 <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
             </logic:notEqual>
-            <logic:equal name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion"  value="">
-                <td><bean:write name="x" property="personal.vPersonalNombres" />&emsp;  <bean:write name="x" property="personal.vPersonalApellidoPaterno" /></td>
+            <logic:equal name="x" property="producto.categoria.clasificacionCategoria.iClasificacionId"  value="5">
+                <td><bean:write name="x" property="personal.vPersonalNombres" />&emsp;<bean:write name="x" property="personal.vPersonalApellidoPaterno" /></td>
             </logic:equal>
             
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
@@ -599,6 +600,7 @@
         fn_calcularTotales();
        
     }
+    
     function fn_descuentoProducto(){    	
     	$("#fVentaTotal").val(parseFloat($("#fVentaTotalReal").val())-parseFloat(numeroFloat($("#fDescuentoR").val()))-parseFloat(numeroFloat($("#fDescClienteVenta").val())));
     	$("#fDescuento").val($("#fDescuentoR").val());
@@ -606,6 +608,7 @@
 	   	 $("#vIncluyeIGV").val('siIgv');
 	   	fn_calcularGlobal();
     }
+    
     function fn_descuentoCliente(){    	
     	$("#fVentaTotal").val(parseFloat($("#fVentaTotalReal").val())-parseFloat(numeroFloat($("#fDescuento").val()))-parseFloat(numeroFloat($("#fDescClienteVentaR").val())));
     	$("#fDescClienteVenta").val($("#fDescClienteVentaR").val());
@@ -630,6 +633,7 @@
     	 document.getElementById('fVentaTotal').value =(total);
     	 fn_calcularGlobal();
     }
+    
     function fn_tipoPago(){
     	    var fVentaTotalR = parseFloat($("#fVentaTotal").val());
     	    var tipoCambio=parseFloat($("#fTipoCambio").val());  
@@ -724,6 +728,7 @@
     		 
         fn_calcularGlobal();
     }
+    
     function fn_calcularGlobal(){
     	var sumaTotalReal= document.getElementById('fVentaTotalReal').value;
     	var sumaTotal=document.getElementById('fVentaTotal').value;
@@ -749,6 +754,7 @@
         
         
     }
+    
     function fn_listarProducto(){
     	var iclasificacionId = $("#iclasificacionId").val();
     	var identificador = $("#identificador").val();

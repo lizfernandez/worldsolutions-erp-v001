@@ -1,11 +1,12 @@
 package com.struts.form;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+
 import org.apache.struts.action.ActionForm;
 
 import com.dao.PersonalDao;
-import com.dao.ProductoDao;
 import com.entities.Area;
 import com.entities.Ocupacion;
 import com.entities.Personal;
