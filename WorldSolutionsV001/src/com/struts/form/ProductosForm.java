@@ -1022,7 +1022,8 @@ public class ProductosForm extends ActionForm {
 	 * @param almacenEntrada the almacenEntrada to set
 	 */
 	public void setiAlmacenSalidaId(int almacenEntrada) {
-		this.distAlmacen.setAlmacenSalida(getProductoDao().findEndidad(Almacen.class,almacenEntrada)) ;
+		Almacen almacen= getProductoDao().findEndidadBD(Almacen.class, "sucursal.iSucursalId", almacenEntrada);
+		this.distAlmacen.setAlmacenSalida(almacen) ;
 	}
 	
 

@@ -25,7 +25,9 @@
 		    <td align="right">Almacen salida:</td>
 		    <td>		
 			 <html:select  property="iAlmacenSalidaId" styleId="iAlmacenSalidaId" styleClass="combo" tabindex="3" style="width:153px">       
-		       <html:options collection="listaAlmacen" property="iAlmacenId" labelProperty="vAlmacenNombre"/>
+		       <html:options collection="listaAlmacen" property="sucursal.iSucursalId" labelProperty="vAlmacenNombre" />
+		       
+		       
 		     </html:select> 
 			    <span id="m_iAlmacenSalidaId" class="importante">*</span>
 			</td>
@@ -368,9 +370,9 @@
     function fn_listarProducto(){
     	var iclasificacionId = 1;
     
-    	//var iSucursalId = $("#iSucursalId").val();
+    	var iSucursalId = $("#iAlmacenSalidaId").val();
   
-    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LPA',750,560);
+    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=ventas&mode=LPA&iSucursalId='+iSucursalId,750,560);
     	
     }
 function fn_eliminar(key){
