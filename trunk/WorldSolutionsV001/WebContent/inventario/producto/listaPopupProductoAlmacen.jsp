@@ -66,7 +66,7 @@
 		 <logic:iterate name="productosForm" property="produc" id="x" indexId="i">	
 		 
 			<tr onclick="fn_cargarProducto('<bean:write name="x" property="iProductoId" />',
-			               '<bean:write name="x" property="iProductoStockTotal" />',
+			               '<bean:write name="x" property="stockSucursal" />',
 			               '<bean:write name="x" property="vProductoNombre" />',
 			               '<bean:write name="x" property="fProductoDescuento" />',
 			               '<bean:write name="x" property="unidadMedida.iUnidadMedidaId" />',			               
@@ -88,7 +88,7 @@
     			  </div>
     			  </td>
 				<td>
-				    <bean:write name="x" property="iProductoStockTotal" />				    
+				    <bean:write name="x" property="stockSucursal" />				    
 				</td>
 				<td>
 				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
@@ -179,13 +179,15 @@
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     </html:select>
 			</td>
-			<td>Capacidad:</td>
+			<td><!-- Capacidad: --></td>
 	        <td>
+	        <!--
 	           <html:text property="iUMPedido" styleId="iUMPedido"   styleClass="text" size="5" disabled="true" />
 			   <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo" tabindex="8" style="width:140px" disabled="true">
 		          <option value="0">::SELECCIONE::</option> 
 		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select>  
+		     </html:select> 
+		      --> 
 			</td>
 	  </tr>
 	  <tr>
