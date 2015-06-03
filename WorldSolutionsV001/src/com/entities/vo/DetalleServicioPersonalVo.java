@@ -64,14 +64,13 @@ public class DetalleServicioPersonalVo {
 	 * @return the totalServicio
 	 */
 	public float getTotalServicio() {
+		totalServicio = 0;
+		if (detalleServicioSucursalVo.size() > 0) {
+			for (DetalleServicioSucursalVo detalle : detalleServicioSucursalVo) {
+				totalServicio += detalle.getTotalServicioSucursal();
+			}
+		}
 		return totalServicio;
-	}
-
-	/**
-	 * @param totalServicio the totalServicio to set
-	 */
-	public void setTotalServicio(float totalServicio) {
-		this.totalServicio = totalServicio;
 	}
 
 	/**

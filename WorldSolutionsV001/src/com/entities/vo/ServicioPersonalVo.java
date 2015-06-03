@@ -9,7 +9,7 @@ public class ServicioPersonalVo {
 
 	private PersonalVo personal;
 	private float totalNeto;
-	private float procentaje;
+	private float porcentaje;
 	private List<DetalleServicioPersonalVo> detalleServicioPersonalVo;
 	
 	public ServicioPersonalVo(Personal personal) {
@@ -69,28 +69,22 @@ public class ServicioPersonalVo {
 	 * @return the totalNeto
 	 */
 	public float getTotalNeto() {
+		totalNeto = 0;
+		if (detalleServicioPersonalVo.size() > 0) {
+			
+			for (DetalleServicioPersonalVo detalle : detalleServicioPersonalVo) {
+				totalNeto += detalle.getTotalServicio();
+			}
+		}
 		return totalNeto;
-	}
-
-	/**
-	 * @param totalNeto the totalNeto to set
-	 */
-	public void setTotalNeto(float totalNeto) {
-		this.totalNeto = totalNeto;
 	}
 
 	/**
 	 * @return the procentaje
 	 */
-	public float getProcentaje() {
-		return procentaje;
-	}
-
-	/**
-	 * @param procentaje the procentaje to set
-	 */
-	public void setProcentaje(float procentaje) {
-		this.procentaje = procentaje;
+	public float getPorcentaje() {
+		porcentaje = getTotalNeto()/2;
+		return porcentaje;
 	}
 
 	/**

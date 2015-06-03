@@ -16,7 +16,7 @@
 	      	
 	    </td>
 	    <td align="center">
-    		<button onclick="buscar('tab-grupo')" class="button"><span class='find' id="btnBuscar">Buscar</span></button>
+    		<button onclick="buscarPopup('tab-grupo')" class="button" ><span class='find' id="btnBuscar">Buscar</span></button>
      	</td>
 	</tr>
 	<html:hidden property="metodo" value="listaServiciosPersonal" styleId="metodo"  />
@@ -32,7 +32,6 @@
 				 	<th>
 				 		<bean:write name="x" />
 					</th>
-					
 				</logic:iterate>
         	</logic:notEmpty>        	
         	<th align="right" width="8%">TOTAL NETO</th>
@@ -47,17 +46,14 @@
 				</tr>
 	     </logic:empty>
          <logic:notEmpty name="contabilidadForm" property="lista">
-			<logic:iterate name="contabilidadForm" property="lista" id="x" indexId="i">	
+			<logic:iterate name="contabilidadForm" property="lista" id="x" >	
 			 	<tr>
 					<td><bean:write name="x" property="personal.vPersonalNombres"/> <bean:write name="x" property="personal.vPersonalApellidoPaterno"/></td>
 					
 					<!-- Informacion de servicios por sucursal -->
 					<logic:iterate name="x" property="detalleServicioPersonalVo" id="y">
-						<td>
+						<td align="center">
 							<table class="tabladetalle" >
-								<tr>
-									<td colspan="2"><bean:write name="y" property="totalServicio" format="###00.00"/></td>
-								</tr>
 								<logic:iterate name="y" property="detalleServicioSucursalVo" id="z" >
 									<tr>
 										<td><bean:write name="z" property="sucursal.vSucursalNombre"/></td>
@@ -68,7 +64,7 @@
 						</td>					
 					</logic:iterate>
 					<td><bean:write name="x" property="totalNeto" format="###00.00"/></td>
-					<td><bean:write name="x" property="procentaje" format="###00.00"/></td>
+					<td><bean:write name="x" property="porcentaje" format="###00.00"/></td>
 					
 				</tr>
 				

@@ -4,7 +4,6 @@ package com.struts.form;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
@@ -32,6 +31,7 @@ public class ContabilidadForm extends ActionForm {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("rawtypes")
 	private List lista;	
 	Venta venta = new Venta();
 	Ingresoproducto ingresoProducto = new Ingresoproducto();
@@ -42,7 +42,8 @@ public class ContabilidadForm extends ActionForm {
 	private String vOcupacionDescripcion;
     
     private String mode;
-    private List paginas;
+    @SuppressWarnings("rawtypes")
+	private List paginas;
     private int pagInicio; 
     private String vClienteDireccion;
     private int iclasificacionId ;
@@ -64,8 +65,8 @@ public class ContabilidadForm extends ActionForm {
     private String igvActual;
     private String mes;
    
-    private Date fechaInicio;
-    private Date fechaFin;
+    private String fechaInicio;
+    private String fechaFin;
     private List<String> listaFechas;
     private List<Float> listaTotalDia; 
 
@@ -141,12 +142,14 @@ public class ContabilidadForm extends ActionForm {
 	/**
 	 * @return the lista
 	 */
+	@SuppressWarnings("rawtypes")
 	public List getLista() {
 		return lista;
 	}
 	/**
 	 * @param lista the lista to set
 	 */
+	@SuppressWarnings("rawtypes")
 	public void setLista(List lista) {
 		this.lista = lista;
 	}
@@ -166,12 +169,14 @@ public class ContabilidadForm extends ActionForm {
 	/**
 	 * @return the paginas
 	 */
+	@SuppressWarnings("rawtypes")
 	public List getPaginas() {
 		return paginas;
 	}
 	/**
 	 * @param paginas the paginas to set
 	 */
+	@SuppressWarnings("rawtypes")
 	public void setPaginas(List paginas) {
 		this.paginas = paginas;
 	}
@@ -1641,25 +1646,25 @@ public class ContabilidadForm extends ActionForm {
 	/**
 	 * @return the fechaInicio
 	 */
-	public Date getFechaInicio() {
+	public String getFechaInicio() {
 		return fechaInicio;
 	}
 	/**
 	 * @param fechaInicio the fechaInicio to set
 	 */
-	public void setFechaInicio(Date fechaInicio) {
+	public void setFechaInicio(String fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 	/**
 	 * @return the fechaFin
 	 */
-	public Date getFechaFin() {
+	public String getFechaFin() {
 		return fechaFin;
 	}
 	/**
 	 * @param fechaFin the fechaFin to set
 	 */
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 	/**
