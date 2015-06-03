@@ -1705,19 +1705,19 @@ public class ContabilidadAction extends BaseAction {
 			throws IllegalAccessException, IOException,
 			IllegalArgumentException, SecurityException,
 			ClassNotFoundException, NoSuchFieldException, ParseException {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
 
-	public ActionForward listaServiciosPersonal(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ActionForward listaServiciosPersonal(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
 		
 		String msn = "showListServiciosPersonal";
 		ContabilidadForm objForm = (ContabilidadForm) form;
 		
 		VentaDao ventaDao = new VentaDao();
-		Date fechaInicio = objForm.getFechaInicio()==null ? Fechas.getDate() : objForm.getFechaInicio();
-		Date fechaFin = objForm.getFechaFin()==null ? Fechas.getDate() : objForm.getFechaFin();
+		Date fechaInicio = objForm.getFechaInicio()==null ? Fechas.getDate() : Fechas.fechaDate(objForm.getFechaInicio());
+		Date fechaFin = objForm.getFechaFin()==null ? Fechas.getDate() : Fechas.fechaDate(objForm.getFechaFin());
 		
 		List<Ventadetalle> lista = ventaDao.listarServicioPersonal(0, Paginacion.pagFinMax(), fechaInicio, fechaFin);
 		List<String> listaFechas = new ArrayList<String>();
@@ -1776,15 +1776,14 @@ public class ContabilidadAction extends BaseAction {
 						
 						listaServicioPersonalVo = new ArrayList<DetalleServicioPersonalVo>();
 						detalleServicioPersonalVo.setDetalleServicioSucursalVo(listaServicioSucursalVo);
-						detalleServicioPersonalVo.setTotalServicio(ventadetalle.getfVentaDetalleTotal());
 						listaServicioPersonalVo.add(detalleServicioPersonalVo);
 						servicioPersonalVo.setDetalleServicioPersonalVo(listaServicioPersonalVo);
-						servicioPersonalVo.setTotalNeto(detalleServicioSucursalVo.getTotalServicioSucursal());
+						
 						listaServPersonalVo.add(servicioPersonalVo);
 					
 					} else {
 						servicioPersonalVo = listaServPersonalVo.get(indice);
-						servicioPersonalVo.setTotalNeto(servicioPersonalVo.getTotalNeto() + detalleServicioSucursalVo.getTotalServicioSucursal());
+						
 						listaServicioPersonalVo = servicioPersonalVo.getDetalleServicioPersonalVo();
 						
 						int indServPersona = listaServicioPersonalVo.indexOf(detalleServicioPersonalVo);  
@@ -1793,7 +1792,6 @@ public class ContabilidadAction extends BaseAction {
 							detalleServicioSucursalVo.setTotalServicioSucursal(ventadetalle.getfVentaDetalleTotal());
 							listaServicioSucursalVo.add(detalleServicioSucursalVo);
 
-							detalleServicioPersonalVo.setTotalServicio(ventadetalle.getfVentaDetalleTotal());
 							detalleServicioPersonalVo.setDetalleServicioSucursalVo(listaServicioSucursalVo);
 							
 							listaServicioPersonalVo.add(detalleServicioPersonalVo);
@@ -1801,7 +1799,6 @@ public class ContabilidadAction extends BaseAction {
 						} else {
 							
 							detalleServicioPersonalVo = listaServicioPersonalVo.get(indServPersona);
-							detalleServicioPersonalVo.setTotalServicio(detalleServicioPersonalVo.getTotalServicio() + ventadetalle.getfVentaDetalleTotal());
 							
 							listaServicioSucursalVo = detalleServicioPersonalVo.getDetalleServicioSucursalVo();
 							//Se busca listaServicioSucursalVo
@@ -1822,10 +1819,8 @@ public class ContabilidadAction extends BaseAction {
 							
 						}
 						servicioPersonalVo.setDetalleServicioPersonalVo(listaServicioPersonalVo);
-						servicioPersonalVo.setProcentaje((float)(servicioPersonalVo.getProcentaje() * 0.5));
 						listaServPersonalVo.set(indice, servicioPersonalVo);
-						
-						
+												
 					}
 					
 				
