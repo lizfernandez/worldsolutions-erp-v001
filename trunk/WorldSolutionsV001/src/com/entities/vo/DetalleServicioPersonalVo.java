@@ -3,15 +3,20 @@ package com.entities.vo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.entities.Sucursal;
+
 public class DetalleServicioPersonalVo {
 
 	private String fechaServicio;
 	private float totalServicio;
 	private List<DetalleServicioSucursalVo> detalleServicioSucursalVo;
 	
-	public DetalleServicioPersonalVo(String fechaServicio) {
+	public DetalleServicioPersonalVo(String fechaServicio, List<Sucursal> listaSucursales) {
 		this.fechaServicio = fechaServicio;
-		detalleServicioSucursalVo = new ArrayList<DetalleServicioSucursalVo>();
+		this.detalleServicioSucursalVo = new ArrayList<DetalleServicioSucursalVo>();
+		for (Sucursal sucursal : listaSucursales) {
+			this.detalleServicioSucursalVo.add(new DetalleServicioSucursalVo(sucursal));
+		}
 	}
 
 	/* (non-Javadoc)

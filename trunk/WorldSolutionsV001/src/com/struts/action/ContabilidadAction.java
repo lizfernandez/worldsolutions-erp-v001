@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,7 @@ import com.entities.Periodo;
 import com.entities.Personal;
 import com.entities.Planilla;
 import com.entities.Producto;
+import com.entities.Sucursal;
 import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.Ventadetalle;
@@ -1720,30 +1722,37 @@ public class ContabilidadAction extends BaseAction {
 		Date fechaFin = objForm.getFechaFin()==null ? Fechas.getDate() : Fechas.fechaDate(objForm.getFechaFin());
 		
 		List<Ventadetalle> lista = ventaDao.listarServicioPersonal(0, Paginacion.pagFinMax(), fechaInicio, fechaFin);
+		List<Sucursal> listaSucursales = ventaDao.listaEntidadGenerica(Sucursal.class);
 		List<String> listaFechas = new ArrayList<String>();
 		List<Float> listaTotalDia = new ArrayList<Float>();
 		
 		// Se cargan las fechas
-		if (fechaInicio.compareTo(fechaFin) <= 0) {
-			
-			listaFechas.add(Fechas.fechaFormato(fechaInicio, "E dd").toUpperCase());
-			listaTotalDia.add((float) 0);
-			
-			Date proximaFecha = fechaInicio;
-			while (proximaFecha.compareTo(fechaFin) < 0) {
-				proximaFecha = Fechas.sumarFechasDias(proximaFecha, 1);
-				listaFechas.add(Fechas.fechaFormato(proximaFecha, "E dd").toUpperCase());
-				listaTotalDia.add((float) 0);
+		String fechaInicioStr = Fechas.fechaFormato(fechaInicio, Constantes.formatoFechaDia).toUpperCase();
+		System.out.println(fechaInicioStr);
+		String fechaFinStr = Fechas.fechaFormato(fechaFin, Constantes.formatoFechaDia).toUpperCase();
+		System.out.println(fechaFinStr);
+		
+		if (!fechaInicioStr.equals(fechaFinStr)) {
+			String proximaFecha = fechaInicioStr;
+			int indice = 1;
+			while (!proximaFecha.equals(fechaFinStr)) {
+				listaFechas.add(proximaFecha);
+				listaTotalDia.add((float)0);
+				proximaFecha = Fechas.fechaFormato(Fechas.sumarDias(fechaInicio, indice), Constantes.formatoFechaDia).toUpperCase();
+				
+				indice++;
 				
 			}
-		
-			if (fechaInicio.compareTo(fechaFin) > 0) {
-				listaFechas.add(Fechas.fechaFormato(fechaFin, "E dd").toUpperCase());
-				listaTotalDia.add((float) 0);
-			}
+			listaFechas.add(fechaFinStr);
+			listaTotalDia.add((float)0);
+				
+		} else {
+			listaFechas.add(fechaInicioStr);
+			listaTotalDia.add((float)0);
 			
 		}
 		
+		System.out.println("lista: " + Arrays.toString(listaFechas.toArray()));
 		List<ServicioPersonalVo> listaServPersonalVo = new ArrayList<ServicioPersonalVo>();
 		
 		if (lista.size() > 0) {
@@ -1756,9 +1765,10 @@ public class ContabilidadAction extends BaseAction {
 			
 			for (Ventadetalle ventadetalle : lista) {
 				if (ventadetalle.getPersonal() != null) {
-					servicioPersonalVo = new ServicioPersonalVo(ventadetalle.getPersonal());
-					fechaVenta = Fechas.fechaFormato(ventadetalle.getVenta().getdVentaFecha(), "E dd").toUpperCase();
-					detalleServicioPersonalVo = new DetalleServicioPersonalVo(fechaVenta);
+					servicioPersonalVo = new ServicioPersonalVo(ventadetalle.getPersonal(), listaFechas, listaSucursales);
+					fechaVenta = Fechas.fechaFormato(ventadetalle.getVenta().getdVentaFecha(), Constantes.formatoFechaDia).toUpperCase();
+					detalleServicioPersonalVo = new DetalleServicioPersonalVo(fechaVenta, listaSucursales);
+					
 					detalleServicioSucursalVo = new DetalleServicioSucursalVo(ventadetalle.getVenta().getSucursal());
 					
 					int indFecha = listaFechas.indexOf(fechaVenta);
@@ -1768,62 +1778,43 @@ public class ContabilidadAction extends BaseAction {
 					
 					int indice = listaServPersonalVo.indexOf(servicioPersonalVo);
 					
-					if (indice < 0) {
-					
-						listaServicioSucursalVo = new ArrayList<DetalleServicioSucursalVo>();
-						detalleServicioSucursalVo.setTotalServicioSucursal(ventadetalle.getfVentaDetalleTotal());
-						listaServicioSucursalVo.add(detalleServicioSucursalVo);
-						
-						listaServicioPersonalVo = new ArrayList<DetalleServicioPersonalVo>();
-						detalleServicioPersonalVo.setDetalleServicioSucursalVo(listaServicioSucursalVo);
-						listaServicioPersonalVo.add(detalleServicioPersonalVo);
-						servicioPersonalVo.setDetalleServicioPersonalVo(listaServicioPersonalVo);
-						
-						listaServPersonalVo.add(servicioPersonalVo);
-					
-					} else {
+					if (indice >= 0) {
 						servicioPersonalVo = listaServPersonalVo.get(indice);
-						
-						listaServicioPersonalVo = servicioPersonalVo.getDetalleServicioPersonalVo();
-						
-						int indServPersona = listaServicioPersonalVo.indexOf(detalleServicioPersonalVo);  
-						if (indServPersona < 0) {
-							listaServicioSucursalVo = new ArrayList<DetalleServicioSucursalVo>();
-							detalleServicioSucursalVo.setTotalServicioSucursal(ventadetalle.getfVentaDetalleTotal());
-							listaServicioSucursalVo.add(detalleServicioSucursalVo);
-
-							detalleServicioPersonalVo.setDetalleServicioSucursalVo(listaServicioSucursalVo);
-							
-							listaServicioPersonalVo.add(detalleServicioPersonalVo);
-						
-						} else {
-							
-							detalleServicioPersonalVo = listaServicioPersonalVo.get(indServPersona);
-							
-							listaServicioSucursalVo = detalleServicioPersonalVo.getDetalleServicioSucursalVo();
-							//Se busca listaServicioSucursalVo
-							int indServSucursal = listaServicioSucursalVo.indexOf(detalleServicioSucursalVo);
-							
-							if (indServSucursal < 0) {
-								detalleServicioSucursalVo.setTotalServicioSucursal(ventadetalle.getfVentaDetalleTotal());
-								listaServicioSucursalVo.add(detalleServicioSucursalVo);
-							
-							} else {
-								detalleServicioSucursalVo = listaServicioSucursalVo.get(indServSucursal);
-								detalleServicioSucursalVo.setTotalServicioSucursal(detalleServicioSucursalVo.getTotalServicioSucursal() + ventadetalle.getfVentaDetalleTotal());
-								listaServicioSucursalVo.set(indServSucursal, detalleServicioSucursalVo);
-							}
-							
-							detalleServicioPersonalVo.setDetalleServicioSucursalVo(listaServicioSucursalVo);
-							listaServicioPersonalVo.set(indServPersona, detalleServicioPersonalVo);
-							
-						}
-						servicioPersonalVo.setDetalleServicioPersonalVo(listaServicioPersonalVo);
-						listaServPersonalVo.set(indice, servicioPersonalVo);
-												
 					}
 					
-				
+					listaServicioPersonalVo = servicioPersonalVo.getDetalleServicioPersonalVo();
+					
+					int indServPersona = listaServicioPersonalVo.indexOf(detalleServicioPersonalVo);  
+					if (indServPersona > 0) {
+						detalleServicioPersonalVo = listaServicioPersonalVo.get(indServPersona);
+					
+					}
+						
+					listaServicioSucursalVo = detalleServicioPersonalVo.getDetalleServicioSucursalVo();
+					//Se busca listaServicioSucursalVo
+					int indServSucursal = listaServicioSucursalVo.indexOf(detalleServicioSucursalVo);
+					
+					if (indServSucursal < 0) {
+						detalleServicioSucursalVo.setTotalServicioSucursal(ventadetalle.getfVentaDetalleTotal());
+						listaServicioSucursalVo.add(detalleServicioSucursalVo);
+					
+					} else {
+						detalleServicioSucursalVo = listaServicioSucursalVo.get(indServSucursal);
+						detalleServicioSucursalVo.setTotalServicioSucursal(detalleServicioSucursalVo.getTotalServicioSucursal() + ventadetalle.getfVentaDetalleTotal());
+						listaServicioSucursalVo.set(indServSucursal, detalleServicioSucursalVo);
+					}
+					
+					detalleServicioPersonalVo.setDetalleServicioSucursalVo(listaServicioSucursalVo);
+					listaServicioPersonalVo.set(indServPersona, detalleServicioPersonalVo);
+					
+					
+					servicioPersonalVo.setDetalleServicioPersonalVo(listaServicioPersonalVo);
+					if (indice >= 0) {
+						listaServPersonalVo.set(indice, servicioPersonalVo);
+					} else {
+						listaServPersonalVo.add(servicioPersonalVo);
+					}
+					
 				}
 				
 			}
@@ -1831,6 +1822,7 @@ public class ContabilidadAction extends BaseAction {
 		}
 		
 		objForm.setLista(listaServPersonalVo);
+		objForm.setTotalSucursales(listaSucursales.size());
 		objForm.setListaFechas(listaFechas);
 		objForm.setListaTotalDia(listaTotalDia);
 		

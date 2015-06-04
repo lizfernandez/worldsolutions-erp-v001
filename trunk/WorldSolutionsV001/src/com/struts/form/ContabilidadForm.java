@@ -20,6 +20,7 @@ import com.entities.Personal;
 import com.entities.Planilla;
 import com.entities.Producto;
 import com.entities.Proveedor;
+import com.entities.Sucursal;
 import com.entities.Tipodocumentogestion;
 import com.entities.Unidadmedida;
 import com.entities.Venta;
@@ -68,8 +69,8 @@ public class ContabilidadForm extends ActionForm {
     private String fechaInicio;
     private String fechaFin;
     private List<String> listaFechas;
-    private List<Float> listaTotalDia; 
-
+    private List<Float> listaTotalDia;
+    private int totalSucursales;
     
     
     
@@ -1690,6 +1691,18 @@ public class ContabilidadForm extends ActionForm {
 	 */
 	public void setListaTotalDia(List<Float> listaTotalDia) {
 		this.listaTotalDia = listaTotalDia;
+	}
+	/**
+	 * @return the totalSucursales
+	 */
+	public int getTotalSucursales() {
+		return totalSucursales;
+	}
+	/**
+	 * @param totalSucursales the totalSucursales to set
+	 */
+	public void setTotalSucursales(int totalSucursales) {
+		this.totalSucursales = totalSucursales;
 	}
 	
 	

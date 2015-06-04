@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.entities.Personal;
+import com.entities.Sucursal;
 
 public class ServicioPersonalVo {
 
@@ -12,9 +13,12 @@ public class ServicioPersonalVo {
 	private float porcentaje;
 	private List<DetalleServicioPersonalVo> detalleServicioPersonalVo;
 	
-	public ServicioPersonalVo(Personal personal) {
+	public ServicioPersonalVo(Personal personal, List<String> fechas, List<Sucursal> listaSucursales) {
 		this.personal = personal == null ? null : new PersonalVo(personal);
 		this.detalleServicioPersonalVo = new ArrayList<DetalleServicioPersonalVo>();
+		for (String fecha : fechas) {
+			this.detalleServicioPersonalVo.add(new DetalleServicioPersonalVo(fecha, listaSucursales));
+		}
 	
 	}
 
