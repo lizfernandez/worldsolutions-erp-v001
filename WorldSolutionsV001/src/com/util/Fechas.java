@@ -73,6 +73,14 @@ public class Fechas {
 
 		return new Date(cal.getTimeInMillis());
 	}
+	
+	public static Date sumarDias(Date fecha, int dias) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(fecha);
+		cal.add(Calendar.DATE, dias);
+
+		return new Date(cal.getTimeInMillis());
+	}
 
 	public static int diasMes(int mes, int anio) {
 

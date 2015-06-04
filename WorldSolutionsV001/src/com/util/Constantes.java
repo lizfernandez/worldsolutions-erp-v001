@@ -53,4 +53,5 @@ public class Constantes {
 	public static String proMes="proMenVend";
 	public static String categoriaServicios="SERVICIOS";
 	public static String UnidadMedida = "UNIDAD";
+	public static String formatoFechaDia = "E dd";
 }

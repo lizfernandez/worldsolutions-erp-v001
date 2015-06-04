@@ -27,6 +27,7 @@
     <thead>
     	<tr >
         	<th align="left" width="15%">PERSONAL</th>
+        	<th align="left" width="15%">SUCURSALES</th>
         	<logic:notEmpty name="contabilidadForm" property="listaFechas">
         		<logic:iterate name="contabilidadForm" property="listaFechas" id="x">	
 				 	<th>
@@ -34,8 +35,8 @@
 					</th>
 				</logic:iterate>
         	</logic:notEmpty>        	
-        	<th align="right" width="8%">TOTAL NETO</th>
-        	<th align="right" width="8%">PROCENTAJE 50%</th>
+        	<th align="right" width="10%">TOTAL NETO</th>
+        	<th align="right">PROCENTAJE 50%</th>
            
       	</tr>
     </thead>
@@ -49,22 +50,32 @@
 			<logic:iterate name="contabilidadForm" property="lista" id="x" >	
 			 	<tr>
 					<td><bean:write name="x" property="personal.vPersonalNombres"/> <bean:write name="x" property="personal.vPersonalApellidoPaterno"/></td>
-					
+
 					<!-- Informacion de servicios por sucursal -->
-					<logic:iterate name="x" property="detalleServicioPersonalVo" id="y">
+					<logic:iterate name="x" property="detalleServicioPersonalVo" id="y" indexId="i">
+						<logic:equal name="i" value="0">>
+							<td align="center">
+								<table class="tablaSinBorde">
+										<logic:iterate name="y" property="detalleServicioSucursalVo" id="z" indexId="i">
+											<tr>
+												<td align="center"><bean:write name="z" property="sucursal.vSucursalNombre" /></td>
+											</tr>
+										</logic:iterate>
+								</table>
+							</td>
+						</logic:equal>
 						<td align="center">
-							<table class="tabladetalle" >
+							<table class="tablaSinBorde">
 								<logic:iterate name="y" property="detalleServicioSucursalVo" id="z" >
 									<tr>
-										<td><bean:write name="z" property="sucursal.vSucursalNombre"/></td>
-										<td><bean:write name="z" property="totalServicioSucursal" format="###00.00"/></td>
-									</tr>	
+										<td align="right" ><bean:write name="z" property="totalServicioSucursal" format="##0.00"/></td>
+									</tr>
 								</logic:iterate>
 							</table>
 						</td>					
 					</logic:iterate>
-					<td><bean:write name="x" property="totalNeto" format="###00.00"/></td>
-					<td><bean:write name="x" property="porcentaje" format="###00.00"/></td>
+					<td align="right"><bean:write name="x" property="totalNeto" format="#####0.00"/></td>
+					<td align="right"><bean:write name="x" property="porcentaje" format="#####0.00"/></td>
 					
 				</tr>
 				
@@ -72,9 +83,10 @@
 		 </logic:notEmpty>
 		 <tr>
 		 	<td>&nbsp;</td>
+		 	<td>&nbsp;</td>
 		 	<logic:notEmpty name="contabilidadForm" property="listaFechas">
         		<logic:iterate name="contabilidadForm" property="listaTotalDia" id="x">	
-				 	<td><bean:write name="x" format="###00.00"/></td>
+				 	<td align="right"><bean:write name="x" format="#####0.00"/></td>
 				</logic:iterate>
         	</logic:notEmpty> 
 		 </tr>
