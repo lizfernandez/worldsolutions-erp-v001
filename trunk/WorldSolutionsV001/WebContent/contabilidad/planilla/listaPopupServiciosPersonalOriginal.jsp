@@ -18,21 +18,16 @@
 	    <td align="center">
     		<button onclick="buscarPopup('tab-grupo')" class="button" ><span class='find' id="btnBuscar">Buscar</span></button>
      	</td>
-	    <td align="center">
-	    	<button class="button" onclick="fn_exportarExcel('contabilidad.do?metodo=exportarExcel&plantilla=servicios-tecnico')">
-                <span class="excel">Exportar</span>
-            </button>
-        </td>
 	</tr>
 	<html:hidden property="metodo" value="listaServiciosPersonal" styleId="metodo"  />
 </html:form>
 
 <table class="tabla" border="0" width="100%" id="tabla">
-    <caption>Lista de Servicios por T&eacute;cnico</caption>
+    <caption>Lista de Servicios por Personal</caption>
     <thead>
     	<tr >
-        	<th align="left" width="18%">PERSONAL</th>
-        	<th align="left" width="14%">SUCURSAL</th>
+        	<th align="left" width="15%">PERSONAL</th>
+        	<th align="left" width="15%">SUCURSALES</th>
         	<logic:notEmpty name="contabilidadForm" property="listaFechas">
         		<logic:iterate name="contabilidadForm" property="listaFechas" id="x">	
 				 	<th>
@@ -41,54 +36,49 @@
 				</logic:iterate>
         	</logic:notEmpty>        	
         	<th align="right" width="10%">TOTAL NETO</th>
-        	<th align="right" width="10%">PROCENTAJE 50%</th>
+        	<th align="right">PROCENTAJE 50%</th>
            
       	</tr>
     </thead>
     <tbody>
 	     <logic:empty name="contabilidadForm" property="lista">
 				<tr>
-					<td colspan="5">No hay informaci&oacute;n de Servicios ejecutados en hasta la fecha</td>
+					<td >No hay informaci&oacute;n de Servicios ejecutados en hasta la fecha</td>
 				</tr>
 	     </logic:empty>
          <logic:notEmpty name="contabilidadForm" property="lista">
-			<logic:iterate name="contabilidadForm" property="lista" id="x" indexId="i">
-				<tr>
-					<td rowspan="2"><bean:write name="x" property="personal.vPersonalNombres"/> <bean:write name="x" property="personal.vPersonalApellidoPaterno"/></td>
-					
-					<logic:iterate name="x" property="detalleServicioSucursalVo" id="y" indexId="j">
-						<logic:equal name="j" value="0">
-							<td><bean:write name="y" property="sucursal.vSucursalNombre"/></td>
-							<logic:iterate name="y" property="detalleServicioDiarioVo" id="z" indexId="k">
-								<td align="right">&nbsp;
-									<logic:notEqual name="z" property="totalServicio" value="0">
-										<bean:write name="z" property="totalServicio" format="###0.00"/>
-									</logic:notEqual>
-								</td>
-								
-							</logic:iterate>
+			<logic:iterate name="contabilidadForm" property="lista" id="x" >	
+			 	<tr>
+					<td><bean:write name="x" property="personal.vPersonalNombres"/> <bean:write name="x" property="personal.vPersonalApellidoPaterno"/></td>
+
+					<!-- Informacion de servicios por sucursal -->
+					<logic:iterate name="x" property="detalleServicioPersonalVo" id="y" indexId="i">
+						<logic:equal name="i" value="0">>
+							<td align="center">
+								<table class="tablaSinBorde">
+										<logic:iterate name="y" property="detalleServicioSucursalVo" id="z" indexId="i">
+											<tr>
+												<td align="center"><bean:write name="z" property="sucursal.vSucursalNombre" /></td>
+											</tr>
+										</logic:iterate>
+								</table>
+							</td>
 						</logic:equal>
+						<td align="center">
+							<table class="tablaSinBorde">
+								<logic:iterate name="y" property="detalleServicioSucursalVo" id="z" >
+									<tr>
+										<td align="right" ><bean:write name="z" property="totalServicioSucursal" format="##0.00"/></td>
+									</tr>
+								</logic:iterate>
+							</table>
+						</td>					
 					</logic:iterate>
-					<td rowspan="2" align="right"><bean:write name="x" property="totalNeto" format="###0.00"/></td>
-					<td rowspan="2" align="right"><bean:write name="x" property="porcentaje" format="###0.00"/></td>
+					<td align="right"><bean:write name="x" property="totalNeto" format="#####0.00"/></td>
+					<td align="right"><bean:write name="x" property="porcentaje" format="#####0.00"/></td>
 					
 				</tr>
 				
-				<tr>
-					<logic:iterate name="x" property="detalleServicioSucursalVo" id="y" indexId="j">
-						<logic:greaterThan name="j" value="0">
-							<td><bean:write name="y" property="sucursal.vSucursalNombre"/></td>
-							<logic:iterate name="y" property="detalleServicioDiarioVo" id="z" indexId="k">
-								<td align="right">&nbsp;
-									<logic:notEqual name="z" property="totalServicio" value="0">
-										<bean:write name="z" property="totalServicio" format="###0.00"/>
-									</logic:notEqual>
-								</td>
-								
-							</logic:iterate>
-						</logic:greaterThan>
-					</logic:iterate>
-				</tr>
 			</logic:iterate>
 		 </logic:notEmpty>
 		 <tr>
@@ -96,7 +86,7 @@
 		 	<td>&nbsp;</td>
 		 	<logic:notEmpty name="contabilidadForm" property="listaFechas">
         		<logic:iterate name="contabilidadForm" property="listaTotalDia" id="x">	
-				 	<td align="right"><bean:write name="x" format="###0.00"/></td>
+				 	<td align="right"><bean:write name="x" format="#####0.00"/></td>
 				</logic:iterate>
         	</logic:notEmpty> 
 		 </tr>
@@ -122,16 +112,7 @@
 
 <script>
 	paginacion();
-	$("#fechaInicio").datepicker({
-		changeMonth : true,
-		changeYear : true,
-		dateFormat : 'dd/mm/yy',
-		defaultDate : -1,
-		maxDate : '+0d'
-	});
-	
-
-	$("#fechaFin").datepicker({
+	$("#fechaInicio, #fechaFin").datepicker({
 		changeMonth : true,
 		changeYear : true,
 		dateFormat : 'dd/mm/yy',
