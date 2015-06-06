@@ -1022,7 +1022,7 @@ public class ProductosForm extends ActionForm {
 	 * @param almacenEntrada the almacenEntrada to set
 	 */
 	public void setiAlmacenSalidaId(int almacenEntrada) {
-		Almacen almacen= getProductoDao().findEndidadBD(Almacen.class, "sucursal.iSucursalId", almacenEntrada);
+		Almacen almacen= getProductoDao().findEndidad(Almacen.class, almacenEntrada);
 		this.distAlmacen.setAlmacenSalida(almacen) ;
 	}
 	
@@ -1396,4 +1396,17 @@ public class ProductosForm extends ActionForm {
 		this.totalProductosAlmacen = totalProductosAlmacen;
 	}
 
+	/**
+	 * @return the vTipoOperacion
+	 */
+	public String getvTipoOperacion() {
+		return distAlmacen.getvTipoOperacion();
+	}
+
+	/**
+	 * @param vTipoOperacion the vTipoOperacion to set
+	 */
+	public void setvTipoOperacion(String vTipoOperacion) {
+		this.distAlmacen.setvTipoOperacion(vTipoOperacion);
+	}
 }

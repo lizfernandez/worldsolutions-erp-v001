@@ -81,6 +81,10 @@
     <put name="body" value="/inventario/distribucionAlmacen/listaDistribucionProducto.jsp"></put>   
     <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
 </definition>
+<definition name=".listaDistPopupAlmacen" extends=".popup">
+    <put name="body" value="/inventario/distribucionAlmacen/listaPopupDistribucionSalida.jsp"></put>   
+    <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
+</definition>
 <definition name=".listaOrdenCompra" extends=".plantilla">
     <put name="body" value="/inventario/ordenCompra/listaOrdenCompra.jsp"></put>   
     <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
@@ -140,8 +144,11 @@
 <definition name=".mantenimientoProduccion" extends=".popup">
     <put name="body" value="/inventario/produccion/mantenimientoProduccion.jsp"></put>   
 </definition>
-<definition name=".mantenimientoDistAlmacen" extends=".popup">
-    <put name="body" value="/inventario/distribucionAlmacen/mantenimientoDistProducto.jsp"></put>   
+<definition name=".mantenimientoDistAlmacenEntrada" extends=".popup">
+    <put name="body" value="/inventario/distribucionAlmacen/mantenimientoDistProductoEntrada.jsp"></put>   
+</definition>
+<definition name=".mantenimientoDistAlmacenSalida" extends=".popup">
+    <put name="body" value="/inventario/distribucionAlmacen/mantenimientoDistProductoSalida.jsp"></put>   
 </definition>
 <definition name=".mantenimientoOrdenCompra" extends=".popup">
     <put name="body" value="/inventario/ordenCompra/mantenimientoOrdenCompra.jsp"></put>   

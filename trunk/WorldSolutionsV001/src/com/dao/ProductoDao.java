@@ -27,7 +27,7 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 		String where=""; 
 	
 		if (iSucursal > 0) {
-			where += "INNER JOIN p.productoAlmacendetallles a ";
+			where += "LEFT JOIN p.productoAlmacendetallles a ";
 		}
 
 		if(producto!=null){

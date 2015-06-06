@@ -1315,6 +1315,114 @@ function listar_detalleVentaDevolucion(obj, destino, fecha, direccion){
 
 	
 };
+//CARGAMOS EL detalle de la venta
+function listar_detalleDistribucionEntrada(obj, destino, fecha){
+	var datos='',datos1='',datos2='',datos3='';
+	
+	var newHtmlD='';
+	var newHtml1='';
+	var newHtml2='';
+	var newHtml='';
+	newHtml+='<tbody>';
+   newHtml+='<tr>';
+   newHtml+='<th>&nbsp;</th>';
+   newHtml+='<th>CODIGO</th>';
+   newHtml+='<th>CANTIDAD</th>';
+   newHtml+='<th>UNID.</th>';
+   
+   newHtml+='<th  width="25%">DESCRIPCION</th>';
+   newHtml+='<th>P.U.</th>';
+   newHtml+='<th>% DESC.</th>';
+   newHtml+='<th>TOTAL</th>';
+   newHtml+='</tr>';
+   
+	$.each(obj,function(key,data){
+		
+		
+		if(data.cEstadoCodigo=="AC"){
+			datos1=data['distAlmacen'].vNroSalida+"*"+data['distAlmacen'].vPuntoSalida+"*"+data['distAlmacen'].vPuntoLlegada+"*"+data['distAlmacen'].vObservacion;
+			if(data.fPrecioUnitario!=0)
+				precio = data.fPrecioUnitario;
+			else
+				precio = data['producto'].fProductoPrecioVenta;
+			//fn_calcularVentasPadre(data.fVentaDetalleTotal,data['producto'].fProductoPrecioVenta, data.iVentaDetalleCantidad)
+		newHtml+='<tr>';
+		newHtml+="<td><img src='/WorldSolutionsV001/media/imagenes/delete.png' onclick=\"fn_eliminar('"+key+"')\"  /></td>";
+		newHtml+='<td>';
+			newHtml+=data['producto'].cProductoCodigo;
+		newHtml+='</td>';
+	
+		newHtml+="<td '>";
+		newHtml1+=newHtml;
+		  newHtml+="<input type='text' size='10' class='inputderecha' id='numero"+key+"' onBlur=\"fn_calcularTotal('"+key+"')\" value='"+data.iCantidad+"'/>";
+		  newHtml+="<input type='hidden' size='10' class='inputderecha' id='numeroReal"+key+"'  value='"+data['producto'].iProductoStockTotal+"'/>";
+		  
+		  newHtml1+="<input type='text' size='10' class='inputderecha' value='"+data.iCantidad+"'disabled='true'/> ";
+		  newHtml1+="<input type='hidden' size='10' class='inputderecha'  value='"+data['producto'].iProductoStockTotal+"'/>";
+		 
+		  newHtml2+='</td>';
+	
+	    newHtml2+='<td>'; 
+	   
+            newHtml2+=data['producto']['unidadMedida'].vUnidadMedidaDescripcion;
+        newHtml2+='</td>';
+		
+	  
+		
+		newHtml2+='<td>';
+			newHtml2+=data['producto'].vProductoNombre;
+		newHtml2+='</td>';		
+	    newHtml2+="<td align='right'>";
+		  newHtml2+="<input type='text' size='10' class='inputderecha' id='precio"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+(precio)+"' disabled='true'/>";		  
+	    newHtml2+='</td>';
+	    newHtml2+="<td align='right'>";
+		  newHtml2+="<input type='text' size='10' class='inputderecha' id='descuento"+key+"' onBlur=\"fn_calcularTotal('"+key+"','"+data['producto'].iProductoStockTotal+"')\" value='"+(data['producto'].fProductoDescuento)+"' disabled='true'/>";		  
+	    newHtml2+='</td>';
+	    newHtml2+="<td align='right'>";
+	    newHtml+=newHtml2;
+		newHtml1+=newHtml2;
+		
+		   newHtml+="<span class='total"+key+"' >"+(data.fTotal)+" </span>";
+		   newHtml+="<span id='total"+key+"' class='totales' >"+data.fTotal+" </span>";
+		   
+		   newHtml1+="<span >"+(data.fTotal)+" </span>";
+		   
+		newHtml2+='</td>';		
+		newHtml2+='</tr>';
+		
+		//newHtml+=newHtml2;
+		//newHtml1+=newHtml2;
+		}// if
+	});
+	
+	newHtml+='</tbody>';
+	newHtml1+='</tbody>';
+	newHtml2+='</tbody>';
+	//$('.combo.Distrito').html(newHtml);
+	//newHtml1=newHtml;
+	
+	if(destino=="padre"){
+		datos=datos1+datos2+datos3;
+		var i= datos.split("*");
+		
+		/***Informacion de la compra**/		
+		window.opener.document.getElementById("vNroSalida").value=i[0];
+		
+		 window.opener.document.getElementById("detalle").innerHTML=newHtml1;
+		 window.opener.document.getElementById("detalleDevolucion").innerHTML=newHtml;		 
+		 window.close();
+	 }
+		
+	 if(destino=="hijo"){
+		// document.getElementById("detalle").innerHTML=newHtml1;
+		 document.getElementById("detalleDevolucion").innerHTML=newHtml;		 
+		
+	//	 document.getElementById("detalle").innerHTML=newHtml;
+	 }	
+	 
+
+	
+};
 function fn_exportarExcel(urlmetodo){
 	var s = window.document.location.search;
 	var l=  s.split("?");
@@ -1326,7 +1434,7 @@ function fn_exportarExcel(urlmetodo){
 
 function fn_recargar(){
 	var iclasificacionId= $("#iclasificacionId").val();
-	var iSucursalId = $("#iSucursalId").val();
+
 	var url= window.document.location.search;
 	var metodo = url.split("&");	
 	var mode ="";	
@@ -1344,17 +1452,20 @@ function fn_recargar(){
 		}
 	}
 	if(tipo=='compras'){	
-			mode="&tipo=compras&mode=LPC";	
+			mode="&tipo=compras&mode=LPC&iSucursalId="+iSucursalId;	
 		
 	}
 	if(tipo=='produccion'){	
 		if(iclasificacionId=="5"){ ///  el id=5 es de servicio
 			//redireccionamos al padre los valores, sin hacer doble recarga por el return false;
-			mode="&tipo=produccion&mode=LPSP";		
+			mode="&tipo=produccion&mode=LPSP&iSucursalId="+iSucursalId;	
 		}else{
-			mode="&tipo=produccion&mode=LPP";	
+			mode="&tipo=produccion&mode=LPP&iSucursalId="+iSucursalId;	
 		}
 		
+	}
+	if(tipo=='inventario'){		
+			mode="&tipo=inventario&mode=LPA&iSucursalId="+iSucursalId;
 	}
 	window.document.location.search = metodo[0]+"&iclasificacionId="+iclasificacionId+mode;
 }

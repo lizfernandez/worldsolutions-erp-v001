@@ -53,12 +53,14 @@ import com.entities.Subcategoria;
 import com.entities.Sucursal;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
+import com.entities.Ventadetalle;
 import com.entities.converter.PreciosproductoConverter;
 import com.entities.vo.AlmacenVo;
 import com.entities.vo.PreciosproductoVo;
 import com.entities.vo.ProductoVo;
 import com.entities.vo.ProductoalmacenVo;
 import com.entities.vo.UnidadmedidaVo;
+import com.entities.vo.VentadetalleVo;
 import com.google.gson.Gson;
 import com.struts.form.ProductosForm;
 import com.util.Constantes;
@@ -226,7 +228,7 @@ public class ProductosAction extends BaseAction {
 			for (Producto producto : listaEntidad) {
 				List<Productoalmacen> listaProductoAlmacen = producto.getProductoAlmacendetallles();
 				productoVo = new ProductoVo(producto);
-				if (listaProductoAlmacen != null && listaProductoAlmacen.size() > 0) {
+				if (listaProductoAlmacen != null) {
 					if (iclasificacionId != 5) {
 						for (Productoalmacen productoalmacen : listaProductoAlmacen) {
 							
@@ -367,18 +369,23 @@ public class ProductosAction extends BaseAction {
 			HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
 
 		/***Validamos la session activa y logeada***/
-		String msn = "showListDistAlmacen";
+		
 		/*HttpSession sesion = request.getSession();
 		
 		if(sesion.getId()!=(sesion.getAttribute("id"))){
 			response.sendRedirect("login.do?metodo=logout");				
 		}
 		else{*/
-		
+		String msn = "";
 		/***Inicializamos variables***/
 		String mode = request.getParameter("mode");
-		
-		String cInsumo="";
+		if(mode!=null && mode.equals("LP")){
+			 msn = "showListPopupDistAlmacen";
+		}
+		else{
+			 msn = "showListDistAlmacen";
+			
+		}
 		int pagina = Paginacion.paginaInicial;
 		int pagInicio = Paginacion.paginaInicial;
 		if(request.getParameter("pagina")!= null){
@@ -1537,15 +1544,27 @@ public class ProductosAction extends BaseAction {
 			
 			List<Estado> listaEstado = estadoDao.listEstado();
 			List<Almacen> listaAlmacen = genericoDao.listaEntidadGenerica(Almacen.class);
-			msn = "showEditDistAlmacen";
+			
 				
 				
 				List<Distalmacendetalle> listaProduccion = new ArrayList<Distalmacendetalle>();
 				Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 				
-				if(mode.equals("I")){
+		    if(mode.equals("IE")|| mode.equals("UE")){
+		    	msn = "showEditDistAlmacenEntrada";	
+		    }
+		    if(mode.equals("IS")|| mode.equals("US")){
+		    	msn = "showEditDistAlmacenSalida";	
+		    }
+			/**
+			 * IE: insercion de entrada
+			 * IS: insercion de salida.
+			 * */	
+			if(mode.equals("IE")|| mode.equals("IS")){
 					/** Obtenemos le codigo correlativo del producto **/
 					productoForm.getDistAlmacen().setvNroSalida(genericoDao.callSPNro_Documento(14, "DistAlmacen", "vNroSalida",usu.getSucursal().getiSucursalId()));
+					productoForm.getDistAlmacen().setvNroIngreso(genericoDao.callSPNro_Documento(15, "DistAlmacen", "vNroIngreso",usu.getSucursal().getiSucursalId()));
+					
 					/***LISTA DE DETALLE VENTA***/
 					sesion.removeAttribute("listaDistAlmacenDetalle");
 					if(sesion.getAttribute("listaDistAlmacenDetalle")==null){				
@@ -1554,8 +1573,8 @@ public class ProductosAction extends BaseAction {
 				
 				/**LLamamos al formulario mantenimientoProducto.jsp para mostrar los datos del UPDATE **/
 				/** Seteamos el PerfilForm la clase Perfil **/
-				} else if(mode.equals("U") || mode.equals("D")){
-					productoForm.getDistAlmacen().setvNroSalida(genericoDao.callSPNro_Documento(15, "DistAlmacen", "vNroEntrada",usu.getSucursal().getiSucursalId()));
+				} else if(mode.equals("UE") ||mode.equals("US") || mode.equals("D")){
+				
 					int id = Integer.parseInt(request.getParameter("id"));
 					Distalmacen distAlamcen = genericoDao.findEndidad(Distalmacen.class,id);
 					productoForm.setDistAlmacen(distAlamcen);
@@ -1586,7 +1605,9 @@ public class ProductosAction extends BaseAction {
 						produc.setdFechaSalida(produce.getDistAlmacen().getdFechaSalida());
 						produc.setUsuarioRecepcion(produce.getDistAlmacen().getUsuarioRecepcion());
 						produc.setUsuatioEntrega(produce.getDistAlmacen().getUsuatioEntrega());
-						produc.setvNroIngreso(produce.getDistAlmacen().getvNroIngreso());
+
+							produc.setvNroIngreso(produce.getDistAlmacen().getvNroIngreso());
+						
 						produc.setvNroSalida(produce.getDistAlmacen().getvNroSalida());
 						produc.setvObservacion(produce.getDistAlmacen().getvObservacion());
 						produc.setvPuntoLlegada(produce.getDistAlmacen().getvPuntoLlegada());
@@ -2192,9 +2213,12 @@ public class ProductosAction extends BaseAction {
 				transaccion = productoDao.entityTransaction();
 			transaccion.begin();
 			
-
+            /***
+             * IE: INSERCION DE ENTRADA.
+             * IS: INSERCION DE SALIDA
+             */
 	        /**Insertamos Datos del producto **/
-			if (pForm.getMode().equals("I")) {	
+			if (pForm.getMode().equals("IE")||pForm.getMode().equals("IS")) {	
 				
 				/******************************************/
 				/**Insertamos la gestion de la produccion**/
@@ -2230,7 +2254,7 @@ public class ProductosAction extends BaseAction {
 					Productoalmacen material=  productoDao.findEndidad(Productoalmacen.class, prodeta.getProducto().getiProductoId()) ;
 					    
 					    if(material!=null){
-					    	cantidad= material.getiProductoAlmStockTotal()+prodeta.getiCantidad();
+					    	cantidad= material.getiProductoAlmStockTotal()-prodeta.getiCantidad();
 						    material.setiProductoAlmStockTotal(cantidad);
 						    material.setAlmacen(DistBean.getAlmacenEntrada());
 						    productoDao.persistEndidad(material);	
@@ -2302,8 +2326,12 @@ public class ProductosAction extends BaseAction {
 			    productoDao.refreshEndidad(pro);
 				
 			}
+			/***
+             * UE: INSERCION DE ENTRADA.
+             * US: INSERCION DE SALIDA
+             */
 			/**Insertamos Datos del producto y de insumo **/		
-			else if (pForm.getMode().equals("U") || pForm.getMode().equals("UI")) {	
+			else if (pForm.getMode().equals("UE") || pForm.getMode().equals("US")) {	
 				
 				/******************************************/
 				/**Insertamos la gestion de la produccion**/
@@ -2339,7 +2367,7 @@ public class ProductosAction extends BaseAction {
 					   
 					    if(prodeta.getiDistAlmacenDetId()>0){
 					    	/// exite producto  en el detalle original y se cambia la cantidad
-					    	proDeOriginal= productoDao.findEndidadBD(Distalmacendetalle.class,"iProduccionDetalleId", prodeta.getiDistAlmacenDetId());
+					    	proDeOriginal= productoDao.findEndidadBD(Distalmacendetalle.class,"iDistAlmacenDetId", prodeta.getiDistAlmacenDetId());
 					    	cantidad= proDeOriginal.getiCantidad()-prodeta.getiCantidad()+material.getiProductoStockTotal();
 					    }
 					    else{
@@ -2362,9 +2390,9 @@ public class ProductosAction extends BaseAction {
 			   
 				
 				
-				
-				/**Actualizamos los valores de la existencia del Kardex **/
-				/**si no existe ningun tipo de movimiento (Compras o ventas)**/
+				/*
+				*//**Actualizamos los valores de la existencia del Kardex **//*
+				*//**si no existe ningun tipo de movimiento (Compras o ventas)**//*
 				if(pForm.getSizeIngresoproductodetalles()==0 && pForm.getSizeVentaDetalles()==0){
 					int iKardexId=0;
 					List<Kardex> kardex = kardexDao.buscarKardexProducto(pro.getiProductoId());
@@ -2377,19 +2405,19 @@ public class ProductosAction extends BaseAction {
 					
 					productoDao.mergeEndidad(kardex.get(0));
 									
-					/**Actualizamos los valores de la existencias del libro diario la cuenta de Mercaredia **/
+					*//**Actualizamos los valores de la existencias del libro diario la cuenta de Mercaredia **//*
 					
 					List<Librodiario> librodiario= kardexDao.buscarLibroDiarioKardex(iKardexId);
 					for(Librodiario listaLibros:librodiario ){
-						/**
+						*//**
 						 * 20(Mercaderia) y
 						 * 201(Almacem)
-						 * id=57; 201: mercaderia/ Almacen**/	
+						 * id=57; 201: mercaderia/ Almacen**//*	
 						
 						
-						/**Insertamos en el libro Dirio la cuenta de Mercaredia 
+						*//**Insertamos en el libro Dirio la cuenta de Mercaredia 
 						 * 50(Capital) y 
-						 * '212', '5', '50', 'CAPITAL'**/
+						 * '212', '5', '50', 'CAPITAL'**//*
 						
 						listaLibros.setfMonto(kardex.get(0).getfTotalExistencia());
 						listaLibros.setiUsuarioActualizaId(usu.getiUsuarioId());
@@ -2399,14 +2427,14 @@ public class ProductosAction extends BaseAction {
 					}
 					
 				
-				}
+				}*/
 				
-				 productoDao.mergeEndidad(pro);
+				 productoDao.mergeEndidad(distAlmacen);
 				 resultado = productoDao.commitEndidad(transaccion);
-				 productoDao.refreshEndidad(pro);
+				 
 			}
 			 else if (mode.equals("D")) { 	        	
-					productoDao.eliminarUnaEndidad(pro, "iProductoId", ids);/**/
+					productoDao.eliminarUnaEndidad(DistBean, "iDistAlmacenDetId", ids);/**/
 					resultado = productoDao.commitEndidad(transaccion);
 				}
 			
@@ -3134,7 +3162,46 @@ public class ProductosAction extends BaseAction {
 						// sesion.setAttribute("listaVentaDetalle", lista);
 
 					}
-					
+					if(mode.equals("ID")) {
+						/***
+						 * iProductoId: iDistAlmacenId
+						 */
+						sesion.removeAttribute("listaDistAlmacenDetalle");
+						listaAlmacen = new ArrayList<Distalmacendetalle>();
+						Distalmacen disAlmacen = productoDao.findEndidad(Distalmacen.class, iProductoId);
+						
+						for(Distalmacendetalle detalleAlmacen: disAlmacen.getDistAlmacendetalles()){
+							Distalmacendetalle almacenDetalle = new Distalmacendetalle();
+							productoBean = new Producto();
+							Distalmacen alma = new Distalmacen();
+							almacenDetalle.setiDistAlmacenDetId(detalleAlmacen.getiDistAlmacenDetId());
+							almacenDetalle.setcEstadoCodigo(detalleAlmacen.getcEstadoCodigo());
+							almacenDetalle.setdFechaSalida(detalleAlmacen.getdFechaSalida());
+							almacenDetalle.setfPrecioUnitario(detalleAlmacen.getfPrecioUnitario());
+							almacenDetalle.setfTotal(detalleAlmacen.getfTotal());
+							almacenDetalle.setiCantidad(detalleAlmacen.getiCantidad());
+							alma.setiDistAlmacenId(disAlmacen.getiDistAlmacenId());
+							alma.setAlmacenSalida(disAlmacen.getAlmacenSalida());
+							alma.setAlmacenEntrada(disAlmacen.getAlmacenEntrada());
+							alma.setdFechaSalida(disAlmacen.getdFechaSalida());
+							alma.setvNroSalida(disAlmacen.getvNroSalida());
+							alma.setvPuntoSalida(disAlmacen.getvPuntoSalida());
+							alma.setvPuntoLlegada(disAlmacen.getvPuntoLlegada());
+							alma.setvObservacion(disAlmacen.getvObservacion());
+							almacenDetalle.setDistAlmacen(alma);
+							
+							
+							productoBean.setiProductoId(detalleAlmacen.getProducto().getiProductoId());
+							productoBean.setvProductoNombre(detalleAlmacen.getProducto().getvProductoNombre());
+							productoBean.setcProductoCodigo(detalleAlmacen.getProducto().getcProductoCodigo());
+							productoBean.setUnidadMedida(detalleAlmacen.getProducto().getUnidadMedida());
+							productoBean.setfProductoDescuento(detalleAlmacen.getProducto().getfProductoDescuento());
+							productoBean.setfProductoPrecioVenta(detalleAlmacen.getProducto().getfProductoPrecioVenta());
+							almacenDetalle.setProducto(productoBean);
+							listaAlmacen.add(almacenDetalle);
+						}
+						sesion.setAttribute("listaVentaDetalle", listaAlmacen);
+					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					ventaDao.limpiarInstancia();
@@ -3154,5 +3221,52 @@ public class ProductosAction extends BaseAction {
 				return null;
 
 			}
-			
+			/**
+			 * Method execute
+			 * 
+			 * @param mapping
+			 * @param form
+			 * @param request
+			 * @param response
+			 * @return ActionForward
+			 * @throws IOException 
+			 */
+				@SuppressWarnings("unchecked")
+				public ActionForward json(ActionMapping mapping, ActionForm form,
+							HttpServletRequest request, HttpServletResponse response) throws IOException{
+		      
+					response.setContentType("text/json");	
+								
+					Gson gson = new Gson();			
+					GenericaDao genericaDao = new GenericaDao();
+					int id = Integer.parseInt(request.getParameter("id"));
+					String mode = request.getParameter("mode");
+					String jsonOutput = "";
+					
+				
+					if(mode.equals("almacen")){
+						Almacen lista=genericaDao.findEndidadBD(Almacen.class, "iAlmacenId", id);
+						jsonOutput = gson.toJson(lista);
+					}
+					
+			     
+					
+					
+					
+					//response.getWriter().write(json);
+					
+					PrintWriter pw;
+					pw = response.getWriter();
+				
+					pw.write(jsonOutput);
+				
+					System.out.println( jsonOutput.toString() );
+					
+					pw.flush();
+					pw.close();
+						
+					
+					return null;
+					
+				}
 }
