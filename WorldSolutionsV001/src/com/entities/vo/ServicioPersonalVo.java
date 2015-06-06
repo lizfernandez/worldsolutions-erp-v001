@@ -8,18 +8,17 @@ import com.entities.Sucursal;
 
 public class ServicioPersonalVo {
 
-	private PersonalVo personal;
-	private float totalNeto;
-	private float porcentaje;
-	private List<DetalleServicioPersonalVo> detalleServicioPersonalVo;
+	private PersonalVo personal;;
+	private List<DetalleServicioSucursalVo> detalleServicioSucursalVo;
 	
 	public ServicioPersonalVo(Personal personal, List<String> fechas, List<Sucursal> listaSucursales) {
 		this.personal = personal == null ? null : new PersonalVo(personal);
-		this.detalleServicioPersonalVo = new ArrayList<DetalleServicioPersonalVo>();
-		for (String fecha : fechas) {
-			this.detalleServicioPersonalVo.add(new DetalleServicioPersonalVo(fecha, listaSucursales));
+		this.detalleServicioSucursalVo = new ArrayList<DetalleServicioSucursalVo>();
+		for (Sucursal sucursal : listaSucursales) {
+			this.detalleServicioSucursalVo.add(new DetalleServicioSucursalVo(sucursal, fechas));
+			
 		}
-	
+		
 	}
 
 	/* (non-Javadoc)
@@ -73,11 +72,11 @@ public class ServicioPersonalVo {
 	 * @return the totalNeto
 	 */
 	public float getTotalNeto() {
-		totalNeto = 0;
-		if (detalleServicioPersonalVo.size() > 0) {
+		float totalNeto = 0;
+		if (detalleServicioSucursalVo.size() > 0) {
 			
-			for (DetalleServicioPersonalVo detalle : detalleServicioPersonalVo) {
-				totalNeto += detalle.getTotalServicio();
+			for (DetalleServicioSucursalVo detalle : detalleServicioSucursalVo) {
+				totalNeto += detalle.getTotalSucursal();
 			}
 		}
 		return totalNeto;
@@ -87,24 +86,22 @@ public class ServicioPersonalVo {
 	 * @return the procentaje
 	 */
 	public float getPorcentaje() {
-		porcentaje = getTotalNeto()/2;
-		return porcentaje;
+		return getTotalNeto()/2;
 	}
 
 	/**
-	 * @return the detalleServicioPersonalVo
+	 * @return the detalleServicioSucursalVo
 	 */
-	public List<DetalleServicioPersonalVo> getDetalleServicioPersonalVo() {
-		return detalleServicioPersonalVo;
+	public List<DetalleServicioSucursalVo> getDetalleServicioSucursalVo() {
+		return detalleServicioSucursalVo;
 	}
 
 	/**
-	 * @param detalleServicioPersonalVo the detalleServicioPersonalVo to set
+	 * @param detalleServicioSucursalVo the detalleServicioSucursalVo to set
 	 */
-	public void setDetalleServicioPersonalVo(List<DetalleServicioPersonalVo> detalleServicioPersonalVo) {
-		this.detalleServicioPersonalVo = detalleServicioPersonalVo;
+	public void setDetalleServicioSucursalVo(
+			List<DetalleServicioSucursalVo> detalleServicioSucursalVo) {
+		this.detalleServicioSucursalVo = detalleServicioSucursalVo;
 	}
-	
-	
 	
 }

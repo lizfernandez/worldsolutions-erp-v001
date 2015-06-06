@@ -1,22 +1,14 @@
 package com.entities.vo;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import com.entities.Sucursal;
-
-public class DetalleServicioPersonalVo {
+public class DetalleServicioDiarioVo {
 
 	private String fechaServicio;
 	private float totalServicio;
-	private List<DetalleServicioSucursalVo> detalleServicioSucursalVo;
 	
-	public DetalleServicioPersonalVo(String fechaServicio, List<Sucursal> listaSucursales) {
+	public DetalleServicioDiarioVo(String fechaServicio) {
 		this.fechaServicio = fechaServicio;
-		this.detalleServicioSucursalVo = new ArrayList<DetalleServicioSucursalVo>();
-		for (Sucursal sucursal : listaSucursales) {
-			this.detalleServicioSucursalVo.add(new DetalleServicioSucursalVo(sucursal));
-		}
+		
 	}
 
 	/* (non-Javadoc)
@@ -42,7 +34,7 @@ public class DetalleServicioPersonalVo {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DetalleServicioPersonalVo other = (DetalleServicioPersonalVo) obj;
+		DetalleServicioDiarioVo other = (DetalleServicioDiarioVo) obj;
 		if (fechaServicio == null) {
 			if (other.fechaServicio != null)
 				return false;
@@ -69,29 +61,15 @@ public class DetalleServicioPersonalVo {
 	 * @return the totalServicio
 	 */
 	public float getTotalServicio() {
-		totalServicio = 0;
-		if (detalleServicioSucursalVo.size() > 0) {
-			for (DetalleServicioSucursalVo detalle : detalleServicioSucursalVo) {
-				totalServicio += detalle.getTotalServicioSucursal();
-			}
-		}
 		return totalServicio;
 	}
 
 	/**
-	 * @return the detalleServicioSucursalVo
+	 * @param totalServicio the totalServicio to set
 	 */
-	public List<DetalleServicioSucursalVo> getDetalleServicioSucursalVo() {
-		return detalleServicioSucursalVo;
-	}
-
-	/**
-	 * @param detalleServicioSucursalVo the detalleServicioSucursalVo to set
-	 */
-	public void setDetalleServicioSucursalVo(List<DetalleServicioSucursalVo> detalleServicioSucursalVo) {
-		this.detalleServicioSucursalVo = detalleServicioSucursalVo;
-	}
-	
+	public void setTotalServicio(float totalServicio) {
+		this.totalServicio = totalServicio;
+	}	
 	
 	
 }

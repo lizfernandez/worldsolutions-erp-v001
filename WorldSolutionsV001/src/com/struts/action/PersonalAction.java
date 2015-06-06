@@ -27,7 +27,7 @@ import com.entities.Ocupacion;
 import com.entities.Personal;
 import com.entities.Usuario;
 import com.entities.Ventadetalle;
-import com.entities.vo.DetalleServicioPersonalVo;
+import com.entities.vo.DetalleServicioDiarioVo;
 import com.entities.vo.DetalleServicioSucursalVo;
 import com.entities.vo.ServicioPersonalVo;
 import com.struts.form.PersonalForm;

@@ -1,14 +1,22 @@
 package com.entities.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.entities.Sucursal;
 
 public class DetalleServicioSucursalVo {
 
 	private SucursalVo sucursal;
-	private float totalServicioSucursal;
+	private List<DetalleServicioDiarioVo> detalleServicioDiarioVo;
 	
-	public DetalleServicioSucursalVo(Sucursal sucursal) {
+	public DetalleServicioSucursalVo(Sucursal sucursal, List<String> fechas) {
 		this.sucursal = sucursal == null ? null : new SucursalVo(sucursal);
+		this.detalleServicioDiarioVo = new ArrayList<DetalleServicioDiarioVo>();
+		for (String fecha : fechas) {
+			this.detalleServicioDiarioVo.add(new DetalleServicioDiarioVo(fecha));
+			
+		}
 	}
 
 	/**
@@ -28,15 +36,12 @@ public class DetalleServicioSucursalVo {
 	/**
 	 * @return the totalServicioSucursal
 	 */
-	public float getTotalServicioSucursal() {
-		return totalServicioSucursal;
-	}
-
-	/**
-	 * @param totalServicioSucursal the totalServicioSucursal to set
-	 */
-	public void setTotalServicioSucursal(float totalServicioSucursal) {
-		this.totalServicioSucursal = totalServicioSucursal;
+	public float getTotalSucursal() {
+		float totalSucursal = 0;
+		for (DetalleServicioDiarioVo detalle : detalleServicioDiarioVo) {
+			totalSucursal = totalSucursal + detalle.getTotalServicio();
+		}
+		return totalSucursal;
 	}
 
 	/* (non-Javadoc)
@@ -69,6 +74,24 @@ public class DetalleServicioSucursalVo {
 		} else if (!sucursal.equals(other.sucursal))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the detalleServicioDiarioVo
+	 */
+	public List<DetalleServicioDiarioVo> getDetalleServicioDiarioVo() {
+		return detalleServicioDiarioVo;
+	}
+
+	/**
+	 * @param detalleServicioDiarioVo the detalleServicioDiarioVo to set
+	 */
+	public void setDetalleServicioDiarioVo(List<DetalleServicioDiarioVo> detalleServicioDiarioVo) {
+		this.detalleServicioDiarioVo = detalleServicioDiarioVo;
+	}
+	
+	public int totalSucursales() {
+		return detalleServicioDiarioVo.size();
 	}
 	
 }

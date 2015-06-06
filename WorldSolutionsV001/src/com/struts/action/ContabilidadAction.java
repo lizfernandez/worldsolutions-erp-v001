@@ -42,7 +42,7 @@ import com.entities.Usuario;
 import com.entities.Venta;
 import com.entities.Ventadetalle;
 import com.entities.Ventadevolucion;
-import com.entities.vo.DetalleServicioPersonalVo;
+import com.entities.vo.DetalleServicioDiarioVo;
 import com.entities.vo.DetalleServicioSucursalVo;
 import com.entities.vo.EstadoCuentaVo;
 import com.entities.vo.LibroDiarioVo1;
@@ -1695,6 +1695,48 @@ public class ContabilidadAction extends BaseAction {
 
 			}
 			
+		} else if ("servicios-tecnico".equals(plantilla)) {
+
+			Date fechaInicio = (objform.getFechaInicio()==null || objform.getFechaInicio().isEmpty())? Fechas.getDate() : Fechas.fechaDate(objform.getFechaInicio());
+			Date fechaFin = (objform.getFechaFin()==null || objform.getFechaFin().isEmpty())? Fechas.getDate() : Fechas.fechaDate(objform.getFechaFin());
+			
+			VentaDao ventaDao = new VentaDao();
+
+			// Se cargan las fechas
+			String fechaInicioStr = Fechas.fechaFormato(fechaInicio, Constantes.formatoFechaDia).toUpperCase();
+			String fechaFinStr = Fechas.fechaFormato(fechaFin, Constantes.formatoFechaDia).toUpperCase();
+			
+			
+			List<Ventadetalle> lista = ventaDao.listarServicioPersonal(0, Paginacion.pagFinMax(), fechaInicio, fechaFin);
+			List<Sucursal> listaSucursales = ventaDao.listaEntidadGenerica(Sucursal.class);
+			
+			List<String> listaFechas = cargarFechas(fechaInicioStr, fechaFinStr, fechaInicio);
+			
+			List<ServicioPersonalVo> listaServPersonalVo = cargarDetalleServicioPersonal(lista, listaFechas, listaSucursales);
+			
+			List<Float> listaTotalDias = cargarTotales(listaFechas);
+			
+			if (listaServPersonalVo.size() > 0) {
+				for (ServicioPersonalVo servPersonalVo : listaServPersonalVo) {					
+					for (DetalleServicioSucursalVo detalleSucursal : servPersonalVo.getDetalleServicioSucursalVo()) {
+						for (DetalleServicioDiarioVo detalleDiario : detalleSucursal.getDetalleServicioDiarioVo()) {
+							
+							int indFecha = listaFechas.indexOf(detalleDiario.getFechaServicio());
+							if (indFecha >= 0) {
+								listaTotalDias.set(indFecha, (listaTotalDias.get(indFecha)) + detalleDiario.getTotalServicio());
+							}
+						}
+					}
+					
+				}
+
+				
+			}
+			
+			beans.put("listaServPersonalVo", listaServPersonalVo);
+			beans.put("listaFechas", listaFechas);
+			beans.put("listaTotalDias", listaTotalDias);
+			
 		}
 
 		return beans;
@@ -1718,106 +1760,43 @@ public class ContabilidadAction extends BaseAction {
 		ContabilidadForm objForm = (ContabilidadForm) form;
 		
 		VentaDao ventaDao = new VentaDao();
-		Date fechaInicio = objForm.getFechaInicio()==null ? Fechas.getDate() : Fechas.fechaDate(objForm.getFechaInicio());
-		Date fechaFin = objForm.getFechaFin()==null ? Fechas.getDate() : Fechas.fechaDate(objForm.getFechaFin());
-		
-		List<Ventadetalle> lista = ventaDao.listarServicioPersonal(0, Paginacion.pagFinMax(), fechaInicio, fechaFin);
-		List<Sucursal> listaSucursales = ventaDao.listaEntidadGenerica(Sucursal.class);
-		List<String> listaFechas = new ArrayList<String>();
-		List<Float> listaTotalDia = new ArrayList<Float>();
+
+		Date fechaInicio = (objForm.getFechaInicio()==null || objForm.getFechaInicio().isEmpty())? Fechas.getDate() : Fechas.fechaDate(objForm.getFechaInicio());
+		Date fechaFin = (objForm.getFechaFin()==null || objForm.getFechaFin().isEmpty())? Fechas.getDate() : Fechas.fechaDate(objForm.getFechaFin());
 		
 		// Se cargan las fechas
 		String fechaInicioStr = Fechas.fechaFormato(fechaInicio, Constantes.formatoFechaDia).toUpperCase();
-		System.out.println(fechaInicioStr);
 		String fechaFinStr = Fechas.fechaFormato(fechaFin, Constantes.formatoFechaDia).toUpperCase();
-		System.out.println(fechaFinStr);
 		
-		if (!fechaInicioStr.equals(fechaFinStr)) {
-			String proximaFecha = fechaInicioStr;
-			int indice = 1;
-			while (!proximaFecha.equals(fechaFinStr)) {
-				listaFechas.add(proximaFecha);
-				listaTotalDia.add((float)0);
-				proximaFecha = Fechas.fechaFormato(Fechas.sumarDias(fechaInicio, indice), Constantes.formatoFechaDia).toUpperCase();
-				
-				indice++;
-				
-			}
-			listaFechas.add(fechaFinStr);
-			listaTotalDia.add((float)0);
-				
-		} else {
-			listaFechas.add(fechaInicioStr);
-			listaTotalDia.add((float)0);
-			
-		}
 		
-		System.out.println("lista: " + Arrays.toString(listaFechas.toArray()));
-		List<ServicioPersonalVo> listaServPersonalVo = new ArrayList<ServicioPersonalVo>();
+		List<Ventadetalle> lista = ventaDao.listarServicioPersonal(0, Paginacion.pagFinMax(), fechaInicio, fechaFin);
+		List<Sucursal> listaSucursales = ventaDao.listaEntidadGenerica(Sucursal.class);
 		
-		if (lista.size() > 0) {
-			ServicioPersonalVo servicioPersonalVo;
-			List<DetalleServicioPersonalVo> listaServicioPersonalVo;
-			List<DetalleServicioSucursalVo> listaServicioSucursalVo;
-			DetalleServicioPersonalVo detalleServicioPersonalVo;
-			DetalleServicioSucursalVo detalleServicioSucursalVo;
-			String fechaVenta;
-			
-			for (Ventadetalle ventadetalle : lista) {
-				if (ventadetalle.getPersonal() != null) {
-					servicioPersonalVo = new ServicioPersonalVo(ventadetalle.getPersonal(), listaFechas, listaSucursales);
-					fechaVenta = Fechas.fechaFormato(ventadetalle.getVenta().getdVentaFecha(), Constantes.formatoFechaDia).toUpperCase();
-					detalleServicioPersonalVo = new DetalleServicioPersonalVo(fechaVenta, listaSucursales);
-					
-					detalleServicioSucursalVo = new DetalleServicioSucursalVo(ventadetalle.getVenta().getSucursal());
-					
-					int indFecha = listaFechas.indexOf(fechaVenta);
-					if (indFecha >= 0) {
-						listaTotalDia.set(indFecha, (listaTotalDia.get(indFecha)) + ventadetalle.getfVentaDetalleTotal());
-					}
-					
-					int indice = listaServPersonalVo.indexOf(servicioPersonalVo);
-					
-					if (indice >= 0) {
-						servicioPersonalVo = listaServPersonalVo.get(indice);
-					}
-					
-					listaServicioPersonalVo = servicioPersonalVo.getDetalleServicioPersonalVo();
-					
-					int indServPersona = listaServicioPersonalVo.indexOf(detalleServicioPersonalVo);  
-					if (indServPersona > 0) {
-						detalleServicioPersonalVo = listaServicioPersonalVo.get(indServPersona);
-					
-					}
+		List<String> listaFechas = cargarFechas(fechaInicioStr, fechaFinStr, fechaInicio);
+		List<Float> listaTotalDia = cargarTotales(listaFechas);
+		
+		List<ServicioPersonalVo> listaServPersonalVo = cargarDetalleServicioPersonal(lista, listaFechas, listaSucursales);
+		if (listaServPersonalVo.size() > 0) {
+			float totalServicios = 0;
+			float totalDescuento = 0;
+			for (ServicioPersonalVo servPersonalVo : listaServPersonalVo) {
+				
+				totalServicios = totalServicios + servPersonalVo.getTotalNeto();
+				totalDescuento = totalDescuento + servPersonalVo.getPorcentaje();
+				
+				for (DetalleServicioSucursalVo detalleSucursal : servPersonalVo.getDetalleServicioSucursalVo()) {
+					for (DetalleServicioDiarioVo detalleDiario : detalleSucursal.getDetalleServicioDiarioVo()) {
 						
-					listaServicioSucursalVo = detalleServicioPersonalVo.getDetalleServicioSucursalVo();
-					//Se busca listaServicioSucursalVo
-					int indServSucursal = listaServicioSucursalVo.indexOf(detalleServicioSucursalVo);
-					
-					if (indServSucursal < 0) {
-						detalleServicioSucursalVo.setTotalServicioSucursal(ventadetalle.getfVentaDetalleTotal());
-						listaServicioSucursalVo.add(detalleServicioSucursalVo);
-					
-					} else {
-						detalleServicioSucursalVo = listaServicioSucursalVo.get(indServSucursal);
-						detalleServicioSucursalVo.setTotalServicioSucursal(detalleServicioSucursalVo.getTotalServicioSucursal() + ventadetalle.getfVentaDetalleTotal());
-						listaServicioSucursalVo.set(indServSucursal, detalleServicioSucursalVo);
+						int indFecha = listaFechas.indexOf(detalleDiario.getFechaServicio());
+						if (indFecha >= 0) {
+							listaTotalDia.set(indFecha, (listaTotalDia.get(indFecha)) + detalleDiario.getTotalServicio());
+						}
 					}
-					
-					detalleServicioPersonalVo.setDetalleServicioSucursalVo(listaServicioSucursalVo);
-					listaServicioPersonalVo.set(indServPersona, detalleServicioPersonalVo);
-					
-					
-					servicioPersonalVo.setDetalleServicioPersonalVo(listaServicioPersonalVo);
-					if (indice >= 0) {
-						listaServPersonalVo.set(indice, servicioPersonalVo);
-					} else {
-						listaServPersonalVo.add(servicioPersonalVo);
-					}
-					
 				}
 				
 			}
+			listaTotalDia.add(totalServicios);
+			listaTotalDia.add(totalDescuento);
 			
 		}
 		
@@ -1827,7 +1806,107 @@ public class ContabilidadAction extends BaseAction {
 		objForm.setListaTotalDia(listaTotalDia);
 		
 		return mapping.findForward(msn);
+	
+	}
 		
+	private List<Float> cargarTotales(List<String> listaFechas) {
+		List<Float> totales = new ArrayList<Float>();
+		int indice = 0;
+		while (indice < listaFechas.size()) {
+			totales.add((float)0);
+			indice++;
+		}
+		return totales;
+	}
+	
+	private List<String> cargarFechas(String fechaInicioStr, String fechaFinStr, Date fechaInicio) throws ParseException {
+		
+		List<String> listaFechas = new ArrayList<String>();
+		
+		if (!fechaInicioStr.equals(fechaFinStr)) {
+			String proximaFecha = fechaInicioStr;
+			int indice = 1;
+			while (!proximaFecha.equals(fechaFinStr)) {
+				listaFechas.add(proximaFecha);
+				proximaFecha = Fechas.fechaFormato(Fechas.sumarDias(fechaInicio, indice), Constantes.formatoFechaDia).toUpperCase();
+				
+				indice++;
+				
+			}
+			listaFechas.add(fechaFinStr);
+				
+		} else {
+			listaFechas.add(fechaInicioStr);
+			
+		}
+		
+		return listaFechas;
+	}
+	
+	private List<ServicioPersonalVo> cargarDetalleServicioPersonal(List<Ventadetalle> lista, List<String> listaFechas, List<Sucursal> listaSucursales) {
+		List<ServicioPersonalVo> listaServPersonalVo = new ArrayList<ServicioPersonalVo>();
+		
+		if (lista.size() > 0) {
+			ServicioPersonalVo servicioPersonalVo;
+			List<DetalleServicioDiarioVo> listaServicioDiarioVo;
+			List<DetalleServicioSucursalVo> listaServicioSucursalVo;
+			DetalleServicioSucursalVo detalleServicioSucursalVo;
+			DetalleServicioDiarioVo detalleServicioDiarioVo;
+			String fechaVenta;
+			
+			for (Ventadetalle ventadetalle : lista) {
+				if (ventadetalle.getPersonal() != null) {
+					
+					servicioPersonalVo = new ServicioPersonalVo(ventadetalle.getPersonal(), listaFechas, listaSucursales);
+					fechaVenta = Fechas.fechaFormato(ventadetalle.getVenta().getdVentaFecha(), Constantes.formatoFechaDia).toUpperCase();
+					
+					detalleServicioSucursalVo = new DetalleServicioSucursalVo(ventadetalle.getVenta().getSucursal(), listaFechas);
+					detalleServicioDiarioVo = new DetalleServicioDiarioVo(fechaVenta);
+					
+					int indice = listaServPersonalVo.indexOf(servicioPersonalVo);
+					if (indice >= 0) {
+						servicioPersonalVo = listaServPersonalVo.get(indice);
+					}
+					
+					listaServicioSucursalVo = servicioPersonalVo.getDetalleServicioSucursalVo();
+					
+					int indServSucursal = listaServicioSucursalVo.indexOf(detalleServicioSucursalVo);  
+					if (indServSucursal >= 0) {
+						detalleServicioSucursalVo = listaServicioSucursalVo.get(indServSucursal);
+					}
+						
+					listaServicioDiarioVo = detalleServicioSucursalVo.getDetalleServicioDiarioVo();
+					//Se busca listaServicioSucursalVo
+					int indServDiario = listaServicioDiarioVo.indexOf(detalleServicioDiarioVo);
+					if (indServDiario >= 0) {
+						detalleServicioDiarioVo = listaServicioDiarioVo.get(indServDiario);
+						detalleServicioDiarioVo.setTotalServicio(ventadetalle.getfVentaDetalleTotal());
+						listaServicioDiarioVo.set(indServDiario, detalleServicioDiarioVo);
+					}
+					
+					detalleServicioSucursalVo.setDetalleServicioDiarioVo(listaServicioDiarioVo);
+					if (indServSucursal >= 0) {
+						listaServicioSucursalVo.set(indServSucursal, detalleServicioSucursalVo);
+					} else {
+						listaServicioSucursalVo.add(detalleServicioSucursalVo);
+					}
+					
+					
+					servicioPersonalVo.setDetalleServicioSucursalVo(listaServicioSucursalVo);
+					if (indice >= 0) {
+						listaServPersonalVo.set(indice, servicioPersonalVo);
+					} else {
+						listaServPersonalVo.add(servicioPersonalVo);
+					}
+					
+				}
+				
+			}
+		}
+		
+		return listaServPersonalVo;
+	
 	}
 
+	
 }
