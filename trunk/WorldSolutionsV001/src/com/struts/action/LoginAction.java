@@ -1,4 +1,8 @@
 package com.struts.action;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -46,9 +50,10 @@ public class LoginAction extends BaseAction {
 	 * @param request
 	 * @param response
 	 * @return ActionForward
+	 * @throws IOException 
 	 */
 	public ActionForward login(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 	
 		String msn="";
 		HttpSession sesion = request.getSession();	
@@ -64,7 +69,9 @@ public class LoginAction extends BaseAction {
 		sesion.removeAttribute("iPeriodoId");
 		sesion.removeAttribute("nombreImpresora");
 		
-		
+		  File archivo = null;
+	      FileReader fr = null;
+	      BufferedReader br = null;
 		
 		
 		/** Instanciamos la Clase LoginForm **/
@@ -85,8 +92,26 @@ public class LoginAction extends BaseAction {
 
 			listapermiso = perfilDao.listaFindPermiso(usuario.get(0)
 					.getiUsuarioId());
-
-			if (listapermiso != null && listapermiso.size() > 0) {
+			
+			String licencia="";
+			 archivo = new File ("C:\\licenciaSof\\keyLicencia.txt");
+	         try {
+				fr = new FileReader (archivo);
+				br = new BufferedReader(fr);
+				String linea;
+	         while((linea=br.readLine())!=null)
+	        	 licencia=linea;
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				objform.setMensaje("La licencia  no es la correcta, Consulte con su proveedor");
+			}
+	         
+	 
+	         // Lectura del fichero
+	         
+	         
+			if (listapermiso != null && listapermiso.size() > 0 && licencia!="") {
 				
 
 				ConfiguracionDao configuracionDao = new ConfiguracionDao();
@@ -150,7 +175,14 @@ public class LoginAction extends BaseAction {
 				return home(mapping, objform, request, response);
 
 			} else {
-				objform.setMensaje("No se le han asignado permisos, Consulte con su Administrador ");
+				if(licencia=="" ){
+					objform.setMensaje("La licencia  no es la correcta, Consulte con su proveedor");
+				}
+				else{
+					objform.setMensaje("No se le han asignado permisos, Consulte con su Administrador ");
+				}
+				
+				
 
 			}
 		} else {
