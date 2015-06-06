@@ -59,7 +59,7 @@
         <div id="cabecera">
 				<div class="wrapper">
 			            <div id="logo">				 
-			              		 <a href="http://www.wordlsolutions.com"> 
+			              		 <a href="http://www.worldsolutionsit.com"> 
 			              		 <img alt="logo" src="${pageContext.request.contextPath}/media/imagenes/LOGO.png">
 			             		  <!-- div id="logoImg"> </div>
 					                <div id="logoLetra"> 

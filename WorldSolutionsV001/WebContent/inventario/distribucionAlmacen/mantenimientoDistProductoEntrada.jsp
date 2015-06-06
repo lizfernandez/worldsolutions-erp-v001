@@ -17,8 +17,8 @@
 		     <td align="right">Nro Recepci&oacute;n :</td>
 		     
 		    <td>
-		    <html:text property="vNroSalida" styleId="vNroSalida" size="13"  styleClass="text "  tabindex="2" onkeyup="return mayuscula('vNroSalida')"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-		     <span id="m_vNroSalida" class="importante">*</span>
+		    <html:text property="vNroIngreso" styleId="vNroIngreso" size="13"  styleClass="text "  tabindex="2" onkeyup="return mayuscula('vNroSalida')"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+		     <span id="m_vNroIngreso" class="importante">*</span>
 		    </td>
 		    
 		</tr>
@@ -169,7 +169,7 @@
          <td align="right" colspan="3">TOTAL:</td>
          <td align="right">
          <span class="tipoMoneda"></span>
-            <html:text property="fTotal" styleId="fTotal" maxlength="15"  styleClass="text inputderecha " readonly="true"  /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
+            <input type="text" id="fTotalx" maxlength="15"  class="text inputderecha " readonly="true"  /> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
 </td>
 </tr>
 <tr style="height: 1px;">
@@ -399,23 +399,28 @@ function fn_descuentoCliente(){
 }
 function fn_calcularTotales(){
  	var sumaTotalReal=parseFloat(0.0);
+ 	var sumaTotalReale=parseFloat(0.0);
+	var sumaTotale=parseFloat(0.0);
 	var sumaTotal=parseFloat(0.0);
 	var sumaDescuento=parseFloat(0.0);    	
-	 for(var key=0;key<=50;key++){
+	 for(var key=0;key<=150;key++){
         /*****************************************/
         /** Obtenemos el total y total descuento**/
         /*****************************************/
-        var precio= $.trim($("#precio"+key).val())==""?0:parseFloat($.trim($("#precio"+key).val()));
+     var precio= $.trim($("#precio"+key).val())==""?0:parseFloat($.trim($("#precio"+key).val()));
    	 var cantidad =$.trim($("#numero"+key).val())==""?0: parseFloat($.trim($("#numero"+key).val()));
    	 var descuento = $.trim($("#descuento"+key).val())==""?0:parseFloat($.trim($("#descuento"+key).val()));
    	 var total = $.trim($("#total"+key).text())==""?0:parseFloat($.trim($("#total"+key).text()));
+   	var totale = $.trim($("#totale"+key).text())==""?0:parseFloat($.trim($("#totale"+key).text()));
    	 
-   	 sumaTotal =sumaTotal+parseFloat(total); 
+   	    sumaTotal =sumaTotal+parseFloat(total); 
         sumaTotalReal = sumaTotalReal+(precio*cantidad);
         sumaDescuento = sumaDescuento+(precio*(descuento/100))* cantidad;
- 
+        
+       
    }
-	 document.getElementById('fTotal').value=dosDecimales(sumaTotalReal-sumaDescuento);        
+	 document.getElementById('fTotal').value=dosDecimales(sumaTotalReal-sumaDescuento);
+	 
 	
 		 
    fn_calcularGlobal();

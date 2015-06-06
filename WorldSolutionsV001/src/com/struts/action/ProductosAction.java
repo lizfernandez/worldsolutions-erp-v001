@@ -2229,6 +2229,7 @@ public class ProductosAction extends BaseAction {
 				//14: documento de almacen de salida.
 				DistBean.setiTipoDocumentoId(14);
 				DistBean.setPeriodo(productoDao.findEndidad(Periodo.class,iPeriodoId));
+				DistBean.setcEstadoCodigo(Constantes.estadoActivo);
 				/*DistBean.setUsuarioRecepcion(productoDao.findEndidad(Usuario.class,pForm.getiUsuarioRecepcionId()));
 				DistBean.setUsuatioEntrega(productoDao.findEndidad(Usuario.class,pForm.getiUsuarioEntregaId()));
 				*/
@@ -3188,6 +3189,21 @@ public class ProductosAction extends BaseAction {
 							alma.setvPuntoSalida(disAlmacen.getvPuntoSalida());
 							alma.setvPuntoLlegada(disAlmacen.getvPuntoLlegada());
 							alma.setvObservacion(disAlmacen.getvObservacion());
+							Personal personalEntrega = new Personal();
+							Personal personalRecepcion = new Personal();
+							personalEntrega.setiPersonalId(disAlmacen.getUsuatioEntrega().getiPersonalId());
+							personalEntrega.setcPersonalCodigo(disAlmacen.getUsuatioEntrega().getcPersonalCodigo());
+							personalEntrega.setvPersonalNombres(disAlmacen.getUsuatioEntrega().getvPersonalNombres());
+							personalEntrega.setvPersonalApellidoPaterno(disAlmacen.getUsuatioEntrega().getvPersonalApellidoPaterno());
+							
+							personalRecepcion.setiPersonalId(disAlmacen.getUsuarioRecepcion().getiPersonalId());
+							personalRecepcion.setcPersonalCodigo(disAlmacen.getUsuarioRecepcion().getcPersonalCodigo());
+							personalRecepcion.setvPersonalNombres(disAlmacen.getUsuarioRecepcion().getvPersonalNombres());
+							personalRecepcion.setvPersonalApellidoPaterno(disAlmacen.getUsuarioRecepcion().getvPersonalApellidoPaterno());
+							
+							alma.setUsuatioEntrega(personalEntrega);
+							alma.setUsuarioRecepcion(personalRecepcion);
+							alma.setfTotal(disAlmacen.getfTotal());
 							almacenDetalle.setDistAlmacen(alma);
 							
 							
@@ -3197,10 +3213,12 @@ public class ProductosAction extends BaseAction {
 							productoBean.setUnidadMedida(detalleAlmacen.getProducto().getUnidadMedida());
 							productoBean.setfProductoDescuento(detalleAlmacen.getProducto().getfProductoDescuento());
 							productoBean.setfProductoPrecioVenta(detalleAlmacen.getProducto().getfProductoPrecioVenta());
+							productoBean.setiProductoStockTotal(detalleAlmacen.getProducto().getiProductoStockTotal());
+							
 							almacenDetalle.setProducto(productoBean);
 							listaAlmacen.add(almacenDetalle);
 						}
-						sesion.setAttribute("listaVentaDetalle", listaAlmacen);
+						sesion.setAttribute("listaDistAlmacenDetalle", listaAlmacen);
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();

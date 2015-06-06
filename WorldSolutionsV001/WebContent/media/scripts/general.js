@@ -1340,14 +1340,17 @@ function listar_detalleDistribucionEntrada(obj, destino, fecha){
 		
 		
 		if(data.cEstadoCodigo=="AC"){
-			datos1=data['distAlmacen'].vNroSalida+"*"+data['distAlmacen'].vPuntoSalida+"*"+data['distAlmacen'].vPuntoLlegada+"*"+data['distAlmacen'].vObservacion;
+			datos1=data['distAlmacen'].vNroSalida+"*"+data['distAlmacen'].fTotal+"*"+data['distAlmacen'].vPuntoSalida+"*"+data['distAlmacen'].vPuntoLlegada+"*"+data['distAlmacen'].vObservacion+"*";
+			datos2=data['distAlmacen']['almacenSalida'].iAlmacenId+"*"+data['distAlmacen']['almacenEntrada'].iAlmacenId+"*";
+			
+			datos3=data['distAlmacen']['usuarioRecepcion'].iPersonalId+"*"+data['distAlmacen']['usuarioRecepcion'].cPersonalCodigo+"*"+data['distAlmacen']['usuarioRecepcion'].vPersonalNombres+"*"+data['distAlmacen']['usuarioRecepcion'].vPersonalApellidoPaterno+"*"+data['distAlmacen']['usuatioEntrega'].iPersonalId+"*"+data['distAlmacen']['usuatioEntrega'].cPersonalCodigo+"*"+data['distAlmacen']['usuatioEntrega'].vPersonalNombres+"*"+data['distAlmacen']['usuatioEntrega'].vPersonalApellidoPaterno;			
 			if(data.fPrecioUnitario!=0)
 				precio = data.fPrecioUnitario;
 			else
 				precio = data['producto'].fProductoPrecioVenta;
 			//fn_calcularVentasPadre(data.fVentaDetalleTotal,data['producto'].fProductoPrecioVenta, data.iVentaDetalleCantidad)
 		newHtml+='<tr>';
-		newHtml+="<td><img src='/WorldSolutionsV001/media/imagenes/delete.png' onclick=\"fn_eliminar('"+key+"')\"  /></td>";
+		newHtml+="<td></td>";
 		newHtml+='<td>';
 			newHtml+=data['producto'].cProductoCodigo;
 		newHtml+='</td>';
@@ -1387,7 +1390,8 @@ function listar_detalleDistribucionEntrada(obj, destino, fecha){
 		   
 		   newHtml1+="<span >"+(data.fTotal)+" </span>";
 		   
-		newHtml2+='</td>';		
+		newHtml2+='</td>';
+		
 		newHtml2+='</tr>';
 		
 		//newHtml+=newHtml2;
@@ -1407,6 +1411,23 @@ function listar_detalleDistribucionEntrada(obj, destino, fecha){
 		
 		/***Informacion de la compra**/		
 		window.opener.document.getElementById("vNroSalida").value=i[0];
+		window.opener.document.getElementById("fTotalx").value=i[1];
+		window.opener.document.getElementById("dFechaSalida").value=fecha;
+		window.opener.document.getElementById("vPuntoSalida").value=i[2];
+		window.opener.document.getElementById("vPuntoLlegada").value=i[3];
+		window.opener.document.getElementById("vObservacion").value=i[4];
+		window.opener.document.getElementById("iAlmacenSalidaId").value=i[5];
+		window.opener.document.getElementById("iAlmacenEntradaId").value=i[6];
+	
+		window.opener.document.getElementById("iUsuarioRecepcionId").value=i[7];
+		window.opener.document.getElementById("cPersonalCodigoRecepcion").value=i[8];
+		window.opener.document.getElementById("vPersonalNombresRecepcion").value=i[9]+" "+i[10];
+		
+		window.opener.document.getElementById("iUsuarioEntregaId").value=i[11];
+		window.opener.document.getElementById("cPersonalCodigo").value=i[12];
+		window.opener.document.getElementById("vPersonalNombres").value=i[13]+" "+i[14];
+		
+		
 		
 		 window.opener.document.getElementById("detalle").innerHTML=newHtml1;
 		 window.opener.document.getElementById("detalleDevolucion").innerHTML=newHtml;		 
