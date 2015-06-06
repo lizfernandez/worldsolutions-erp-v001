@@ -233,6 +233,7 @@
 </div>   
 <script>   
 paginacion(); 
+$("#iclasificacionId option[value=5]").attr('disabled', true);
  function fn_cargarProducto(iProductoId,iStock,vNombreProducto,fProductoDescuento,iUnidadMedidadId,iUMBase,iUMPedido,fProductoPrecioCompra,fProductoPrecioVenta,fProductoDescuento){   
 	    $("#iProductoId").val(iProductoId);
 	    $("#iStock").val(iStock);

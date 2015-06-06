@@ -75,6 +75,9 @@ public class Distalmacen implements Serializable {
 	
 	private int iSucursalId;
 	
+	private String vTipoOperacion;
+	
+	
     public Distalmacen() {
     }
 
@@ -387,6 +390,20 @@ public class Distalmacen implements Serializable {
 	 */
 	public void setiSucursalId(int iSucursalId) {
 		this.iSucursalId = iSucursalId;
+	}
+
+	/**
+	 * @return the vTipoOperacion
+	 */
+	public String getvTipoOperacion() {
+		return vTipoOperacion;
+	}
+
+	/**
+	 * @param vTipoOperacion the vTipoOperacion to set
+	 */
+	public void setvTipoOperacion(String vTipoOperacion) {
+		this.vTipoOperacion = vTipoOperacion;
 	}
 
 	

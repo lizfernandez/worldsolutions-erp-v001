@@ -28,11 +28,19 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 			if(per!=null){
 	   if(per.equals("1311")){%>
-        <td><button  class="button" onclick="nuevo()">
-                <span class="new">Nuevo</span>
+        <td><button  class="button" onclick="nuevoEntrada()">
+                <span class="new">Entrada</span>
             </button>
         </td>
         <% break; }}}
+         for (String per: listapermiso) {
+ 			if(per!=null){
+ 	   if(per.equals("1311")){%>
+         <td><button  class="button" onclick="nuevoSalida()">
+                 <span class="new">Salida</span>
+             </button>
+         </td>
+         <% break; }}}
 	   for (String per: listapermiso) {
 	   if(per!=null){
 	   if(per.equals("1314")){%>
@@ -65,6 +73,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
      <tr>
         <th colspan="3" width="5%">Operaciones</th>
         <th align="left">C&oacute;digo</th>
+        <th width="20%" align="left">Tipo Operacion</th>
         <th width="20%" align="left">Almacen Salida</th>
         <th align="left">Almacen Entrada</th>
         <th align="left" width="8%" >Fecha Salida</th>
@@ -91,7 +100,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		if(per!=null){
 		if(per.equals("1312")){%>
 		<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('productos.do?metodo=mantenimientoDistAlmacen&mode=U&iclasificacionId=1&id=<bean:write name="x" property="iDistAlmacenId" />',700,635)" />
+		                     onclick="popup('productos.do?metodo=mantenimientoDistAlmacen&mode=UE&iclasificacionId=1&id=<bean:write name="x" property="iDistAlmacenId" />',700,635)" />
          <% break; }}}%>
         </td>
 		<td align="center">
@@ -103,7 +112,15 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iDistAlmacenId" />','productos.do?metodo=iduDistAlmacen&mode=D')" />
 		<%break; }}}%>
 		</td>	
+		<logic:equal name="x" property="vTipoOperacion" value="S">
 		<td><bean:write name="x" property="vNroSalida" /></td>
+		<td>SALIDA</td>
+		</logic:equal>
+		<logic:equal name="x" property="vTipoOperacion" value="E">
+		<td><bean:write name="x" property="vNroIngreso" /></td>
+		<td>ENTRADA</td>
+		</logic:equal>
+		
 	    <td><bean:write name="x" property="almacenSalida.vAlmacenNombre" /></td>
 		<td><bean:write name="x" property="almacenEntrada.vAlmacenNombre" /></td>
 		<td><bean:write name="x" property="dFechaSalida"  format="dd/MM/yyyy"/></td>
@@ -139,7 +156,10 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 <script>   
 paginacion();
 $("#inventario, #distAlmacen").addClass("active");
-function nuevo(){
-	popup('productos.do?metodo=mantenimientoDistAlmacen&mode=I',700,635);
+function nuevoEntrada(){
+	popup('productos.do?metodo=mantenimientoDistAlmacen&mode=IE',700,635);
+}
+function nuevoSalida(){
+	popup('productos.do?metodo=mantenimientoDistAlmacen&mode=IS',700,635);
 }
 </script> 
