@@ -399,8 +399,8 @@
 	                 <forward name="showFindAdm" path=".buscarMantenimientoVentaAdm" />
 	                 <forward name="showEstadoCuenta" path=".mantenimientoEstadoCuentaCliente" />	
 	                 <forward name="showFindEstadoCuenta" path=".buscarMantenimientoEstadoCuentaCliente" />		
-	                 <forward name="showArqueo" path=".verArqueo" />		
-	                 
+	                 <forward name="showArqueo" path=".verArqueo" />
+	                 <forward name="showArqueoAdm" path=".verArqueoAdm" />
 	                 <forward name="msnImprimirTicket" path=".msnImprimirTicket" />         
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />

@@ -56,6 +56,7 @@ import com.entities.Ventadevoluciondetalle;
 import com.entities.converter.VentaConverter;
 import com.entities.vo.PersonalVo;
 import com.entities.vo.ProductoVo;
+import com.entities.vo.ReporteDetalleVenta;
 import com.entities.vo.SucursalVo;
 import com.entities.vo.VentaVo;
 import com.entities.vo.VentadetalleVo;
@@ -2555,14 +2556,113 @@ public class VentaAction extends BaseAction {
 	public ActionForward verArqueoVendedor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 		VentaForm ventaForm = (VentaForm) form;
 		String msn = "showArqueo";
-		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
-		Impresora impresora = new Impresora();
+		VentaDao ventaDao = new VentaDao();
 		
-		generarArqueo(request, impresora);
+		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
+		List<Tipodocumentogestion> listaTipodocumentogestion = ventaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
+				
 		HttpSession sesion = request.getSession();
-		ventaForm.setvTextoImpresion(impresora.toString());
+		Usuario usuario = (Usuario) sesion.getAttribute("Usuario");
+		Venta venta = new Venta();
+		
+		String mode = request.getParameter("mode");
+		
+		if (mode == null) {
+			venta.setUsuario(usuario);
+		
+		} else if (mode.equals("A")) {
+			int personalId = Integer.parseInt(request.getParameter("id"));
+			venta.setUsuario(ventaDao.findEndidadBD(Usuario.class, "personal.iPersonalId", personalId));
+			msn = "showArqueoAdm";
+			
+		}
+		
+		venta.setdVentaFecha(Fechas.getDate());
+		List<Venta> ventas = ventaDao.listaVenta(0, 10000, venta);
+
+		List<ReporteDetalleVenta> listaReporteArqueo = new ArrayList<ReporteDetalleVenta>();
+		float totalVentasArqueo = 0;
+		float totalVentasArqueoCredito = 0;
+		float totalVentasArqueoTarjeta = 0;
+		
+		if (ventas.size() > 0) {
+			
+			for (Tipodocumentogestion tipodocumentogestion : listaTipodocumentogestion) {
+				listaReporteArqueo.add(new ReporteDetalleVenta(tipodocumentogestion));
+			}
+			List<Ventadetalle> listaVentadetalle;
+			
+			for (Venta ventaArqueo : ventas) {
+				ReporteDetalleVenta reporteDetalleVenta = new ReporteDetalleVenta(ventaArqueo.getTipoDocumento());
+ 				int indice = listaReporteArqueo.indexOf(reporteDetalleVenta);
+ 				
+ 				reporteDetalleVenta = listaReporteArqueo.get(indice);
+
+ 				float totalVenta = reporteDetalleVenta.getTotalVentaProducto();
+ 				float totalCreditos = reporteDetalleVenta.getTotalVentaCredito();
+ 				float totalServicios = reporteDetalleVenta.getTotalVentaServicios();
+ 				float totalTarjetas = reporteDetalleVenta.getTotalVentaTarjeta();
+ 				
+ 				if (!ventaArqueo.getFormaPago().getvFormaPagoDescripcion().equals(Constantes.formaPagoContado)) {
+ 					totalVenta = totalVenta +  ventaArqueo.getfVentaTotal();
+ 					totalCreditos =  totalCreditos + (ventaArqueo.getfVentaTotal() - ventaArqueo.getfMontoAdelantado());
+ 				} else {
+ 					totalVenta = totalVenta +  ventaArqueo.getfVentaTotal();
+ 				}
+ 				
+ 				
+ 				listaVentadetalle = ventaArqueo.getVentadetalles();
+ 				for (Ventadetalle ventadetalle : listaVentadetalle) {
+ 					
+ 					float valorDetalle = ventadetalle.getfVentaDetallePrecio();
+ 					if (Constantes.categoriaServicios.equals(ventadetalle.getProducto().getCategoria().getClasificacionCategoria().getvClasificacionDescripcion()) ) {
+ 						totalVenta = totalVenta - valorDetalle;
+ 						totalServicios = totalServicios + valorDetalle;
+ 					}
+ 					
+ 				}
+ 				
+ 				if(ventaArqueo.getfMontoPago() > 0) {
+ 					if (!ventaArqueo.getMedioPago1().getvNombre().equals(Constantes.medioPagoEfectivo)) {
+ 						totalTarjetas = totalTarjetas + ventaArqueo.getfMontoPago(); 
+ 					}
+ 				}
+ 				
+ 				if(ventaArqueo.getfMontoPagoCredito() > 0) {
+ 					if (!ventaArqueo.getMedioPago2().getvNombre().equals(Constantes.medioPagoEfectivo)) {
+ 						totalTarjetas = totalTarjetas + ventaArqueo.getfMontoPagoCredito(); 
+ 					}
+ 					
+ 				}
+ 				
+ 				reporteDetalleVenta.setTotalVentaProducto(totalVenta);
+ 				reporteDetalleVenta.setTotalVentaServicios(totalServicios);
+ 				reporteDetalleVenta.setTotalVentaCredito(totalCreditos);
+ 				reporteDetalleVenta.setTotalVentaTarjeta(totalTarjetas);
+ 				
+			}
+			
+			for (ReporteDetalleVenta reporteDetalleVenta : listaReporteArqueo) {
+
+ 				totalVentasArqueo = totalVentasArqueo + reporteDetalleVenta.getTotalVenta();
+ 				totalVentasArqueoCredito = totalVentasArqueoCredito + reporteDetalleVenta.getTotalVentaCredito();
+ 				totalVentasArqueoTarjeta = totalVentasArqueoTarjeta + reporteDetalleVenta.getTotalVentaTarjeta();
+ 				
+			}
+			
+		}	
+		
+		ventaForm.setTotalVentaArqueo(totalVentasArqueo);
+		ventaForm.setTotalVentaCreditoArqueo(totalVentasArqueoCredito);
+		ventaForm.setTotalVentaTarjetaArqueo(totalVentasArqueoTarjeta);
+		ventaForm.setNombrePersonal(venta.getUsuario().getPersonal().getvPersonalApellidoPaterno() + " " + venta.getUsuario().getPersonal().getvPersonalNombres());
+		ventaForm.setNombreSucursal(venta.getUsuario().getSucursal().getvSucursalNombre());
+		ventaForm.setIdPersonalArqueo(venta.getUsuario().getPersonal().getiPersonalId());
+		ventaForm.setFechaArqueo(Fechas.fechaDDMMYY(venta.getdVentaFecha()));
+		ventaForm.setLista(listaReporteArqueo);
 		sesion.setAttribute("listaImpresora", listaImpresora);
 		return mapping.findForward(msn);
+		
 	}
 	
 	private void generarArqueo(HttpServletRequest request, Impresora impresora) {
@@ -2579,8 +2679,7 @@ public class VentaAction extends BaseAction {
 			int personalId = Integer.parseInt(request.getParameter("id"));
 			venta.setUsuario(ventaDao.findEndidadBD(Usuario.class, "personal.iPersonalId", personalId));
 		}
-		
-		
+				
 		venta.setdVentaFecha(Fechas.getDate());
 		List<Venta> detalleArqueoVentas = ventaDao.listaVenta(0, 1000, venta);
 		int contadorVentas = 0;

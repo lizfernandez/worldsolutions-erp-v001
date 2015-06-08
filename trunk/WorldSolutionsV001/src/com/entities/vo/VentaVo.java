@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.entities.Venta;
-import com.entities.converter.KardexConverter;
 import com.entities.converter.VentaConverter;
 
 public class VentaVo implements Serializable {
