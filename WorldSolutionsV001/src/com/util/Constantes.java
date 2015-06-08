@@ -54,4 +54,7 @@ public class Constantes {
 	public static String categoriaServicios="SERVICIOS";
 	public static String UnidadMedida = "UNIDAD";
 	public static String formatoFechaDia = "E dd";
+	public static String medioPagoEfectivo = "EFECTIVO";
+	public static String formaPagoContado = "CONTADO";
+	
 }

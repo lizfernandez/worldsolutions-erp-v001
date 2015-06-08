@@ -48,7 +48,7 @@
     <tbody>
 	     <logic:empty name="contabilidadForm" property="lista">
 				<tr>
-					<td colspan="5">No hay informaci&oacute;n de Servicios ejecutados en hasta la fecha</td>
+					<td colspan="5">No hay informaci&oacute;n de las ventas</td>
 				</tr>
 	     </logic:empty>
          <logic:notEmpty name="contabilidadForm" property="lista">

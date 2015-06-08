@@ -1,6 +1,5 @@
 package com.struts.form;
 
-
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -18,15 +17,13 @@ import com.entities.Ventadevolucion;
 import com.entities.vo.ClienteVo;
 import com.entities.vo.FormapagoVo;
 import com.entities.vo.MediopagoVo;
-import com.entities.vo.SucursalVo;
 import com.entities.vo.TipodocumentogestionVo;
 import com.entities.vo.VentaVo;
 import com.entities.vo.VentadetalleVo;
 import com.util.Fechas;
 
-
-
 public class VentaForm extends  ActionForm {
+	
 	/**
 	 * 
 	 */
@@ -57,6 +54,13 @@ public class VentaForm extends  ActionForm {
 	
 	private String impresoraID;
     private String imprimirTicket;
+	private String nombrePersonal;
+	private String fechaArqueo;
+	private String nombreSucursal;
+	private int idPersonalArqueo;
+	private float totalVentaArqueo;
+	private float totalVentaCreditoArqueo;
+	private float totalVentaTarjetaArqueo;
 	
     /**
 	 * @return the lista
@@ -1077,6 +1081,96 @@ public class VentaForm extends  ActionForm {
 	 */
 	public void setImprimirTicket(String imprimirTicket) {
 		this.imprimirTicket = imprimirTicket;
+	}
+	/**
+	 * @return the nombrePersonal
+	 */
+	public String getNombrePersonal() {
+		return nombrePersonal;
+	}
+	/**
+	 * @param nombrePersonal the nombrePersonal to set
+	 */
+	public void setNombrePersonal(String nombrePersonal) {
+		this.nombrePersonal = nombrePersonal;
+	}
+	/**
+	 * @return the fechaArqueo
+	 */
+	public String getFechaArqueo() {
+		return fechaArqueo;
+	}
+	/**
+	 * @param fechaArqueo the fechaArqueo to set
+	 */
+	public void setFechaArqueo(String fechaArqueo) {
+		this.fechaArqueo = fechaArqueo;
+	}
+	/**
+	 * @return the nombreSuscursal
+	 */
+	public String getNombreSucursal() {
+		return nombreSucursal;
+	}
+	/**
+	 * @param nombreSuscursal the nombreSuscursal to set
+	 */
+	public void setNombreSucursal(String nombreSucursal) {
+		this.nombreSucursal = nombreSucursal;
+	}
+	/**
+	 * @return the idPersonalArqueo
+	 */
+	public int getIdPersonalArqueo() {
+		return idPersonalArqueo;
+	}
+	/**
+	 * @param idPersonalArqueo the idPersonalArqueo to set
+	 */
+	public void setIdPersonalArqueo(int idPersonalArqueo) {
+		this.idPersonalArqueo = idPersonalArqueo;
+	}
+	/**
+	 * @return the totalVentaArqueo
+	 */
+	public float getTotalVentaArqueo() {
+		return totalVentaArqueo;
+	}
+	/**
+	 * @param totalVentaArqueo the totalVentaArqueo to set
+	 */
+	public void setTotalVentaArqueo(float totalVentaArqueo) {
+		this.totalVentaArqueo = totalVentaArqueo;
+	}
+	/**
+	 * @return the totalVentaCreditoArqueo
+	 */
+	public float getTotalVentaCreditoArqueo() {
+		return totalVentaCreditoArqueo;
+	}
+	/**
+	 * @param totalVentaCreditoArqueo the totalVentaCreditoArqueo to set
+	 */
+	public void setTotalVentaCreditoArqueo(float totalVentaCreditoArqueo) {
+		this.totalVentaCreditoArqueo = totalVentaCreditoArqueo;
+	}
+	/**
+	 * @return the totalVentaTarjetaArqueo
+	 */
+	public float getTotalVentaTarjetaArqueo() {
+		return totalVentaTarjetaArqueo;
+	}
+	/**
+	 * @param totalVentaTarjetaArqueo the totalVentaTarjetaArqueo to set
+	 */
+	public void setTotalVentaTarjetaArqueo(float totalVentaTarjetaArqueo) {
+		this.totalVentaTarjetaArqueo = totalVentaTarjetaArqueo;
+	}
+	/**
+	 * @return the totalVentaEfectivoArqueo
+	 */
+	public float getTotalVentaEfectivoArqueo() {
+		return totalVentaArqueo - totalVentaTarjetaArqueo - totalVentaCreditoArqueo;
 	}
 	
 }
