@@ -6,7 +6,7 @@
 <html:form action="venta" styleId="formVenta" enctype="echarset=utf-8">
 
 	<tr>
-		<td align="center">
+		<td align="center" colspan="3">
 			<table class="tabla" border="0" width="100%" id="tabla">
 			    
 			    <thead>
@@ -69,14 +69,19 @@
 	</tr>
 
 	<tr>
-		<td align="center">
+		<td width="50%" align="right">
 			<html:select property="impresoraID" styleId="impresoraID" styleClass="combo" style="width:100px" onchange="fn_PagoCredito()">
 				<html:options collection="listaImpresora" property="impresoraID" labelProperty="impresoraID" />
 			</html:select>
+		</td><td width="5%" >
 			<button onclick="fn_imprimir('<bean:write name="ventaForm" property="idPersonalArqueo"/>')" type="submit" class="button"
 				id="btnImprimir">
 				<span class='savePrint' id="btnGuardar">Imprimir</span>
 			</button>
+		</td><td align="left">
+			<button class="button" onclick="fn_exportarExcel('venta.do?metodo=exportarExcel&plantilla=arqueo-sucursal')">
+                <span class="excel">Exportar</span>
+            </button>
 		</td>
 	</tr>
 	

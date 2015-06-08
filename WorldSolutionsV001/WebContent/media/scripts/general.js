@@ -1453,6 +1453,16 @@ function fn_exportarExcel(urlmetodo){
 	popupModal(urlmetodo+''+nuev,350,220);
 };
 
+function fn_exportarExcelPopup(urlmetodo){
+	var s = window.document.location.search;
+	var l=  s.split("?");
+	var metodo = l[1].split("&");
+	var nuev=l[1].substring(metodo[0].length,l[1].length);
+	window.close();  
+	
+	popupModal(urlmetodo+''+nuev,350,220);
+};
+
 function fn_recargar(){
 	var iclasificacionId= $("#iclasificacionId").val();
 

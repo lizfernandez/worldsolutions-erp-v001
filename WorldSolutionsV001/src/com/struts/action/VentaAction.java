@@ -2355,6 +2355,53 @@ public class VentaAction extends BaseAction {
 			List<Ventadevolucion> listaVentaDevolucion = ventaDao
 					.listaVentaDevolucion(0, 1000, objform.getVenta());
 			beans.put("devolucionVentas", listaVentaDevolucion);
+		} else if ("arqueo-sucursal".equals(plantilla)) {
+			List<Tipodocumentogestion> listaTipodocumentogestion = ventaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
+			
+			HttpSession sesion = request.getSession();
+			Usuario usuario = (Usuario) sesion.getAttribute("Usuario");
+			Venta venta = new Venta();
+			
+			String mode = request.getParameter("mode");
+			
+			if (mode == null) {
+				venta.setUsuario(usuario);
+			
+			} else if (mode.equals("A")) {
+				int personalId = Integer.parseInt(request.getParameter("id"));
+				venta.setUsuario(ventaDao.findEndidadBD(Usuario.class, "personal.iPersonalId", personalId));
+				
+			}
+			
+			venta.setdVentaFecha(Fechas.getDate());
+			List<Venta> ventas = ventaDao.listaVenta(0, 10000, venta);
+			List<ReporteDetalleVenta> listaReporteArqueo = new ArrayList<ReporteDetalleVenta>();
+			float totalVentasArqueo = 0;
+			float totalVentasArqueoCredito = 0;
+			float totalVentasArqueoTarjeta = 0;
+			
+			if (ventas.size() > 0) {
+				
+				listaReporteArqueo = cargarReporteArqueo(ventas, listaTipodocumentogestion);
+				
+				for (ReporteDetalleVenta reporteDetalleVenta : listaReporteArqueo) {
+
+	 				totalVentasArqueo = totalVentasArqueo + reporteDetalleVenta.getTotalVenta();
+	 				totalVentasArqueoCredito = totalVentasArqueoCredito + reporteDetalleVenta.getTotalVentaCredito();
+	 				totalVentasArqueoTarjeta = totalVentasArqueoTarjeta + reporteDetalleVenta.getTotalVentaTarjeta();
+	 				
+				}
+			
+				beans.put("listaVentasArqueo", listaReporteArqueo);
+				beans.put("fecha", Fechas.fechaDDMMYY(venta.getdVentaFecha()));
+				beans.put("sucursal", venta.getUsuario().getSucursal().getvSucursalNombre());
+				beans.put("totalArqueo", totalVentasArqueo);
+				beans.put("totalArqueoTarjeta", totalVentasArqueoTarjeta);
+				beans.put("totalArqueoCredito", totalVentasArqueoCredito);
+				beans.put("totalArqueoEfectivo", (totalVentasArqueo - totalVentasArqueoTarjeta - totalVentasArqueoCredito));
+				
+				
+			}	
 		}
 
 		return beans;
@@ -2587,60 +2634,7 @@ public class VentaAction extends BaseAction {
 		
 		if (ventas.size() > 0) {
 			
-			for (Tipodocumentogestion tipodocumentogestion : listaTipodocumentogestion) {
-				listaReporteArqueo.add(new ReporteDetalleVenta(tipodocumentogestion));
-			}
-			List<Ventadetalle> listaVentadetalle;
-			
-			for (Venta ventaArqueo : ventas) {
-				ReporteDetalleVenta reporteDetalleVenta = new ReporteDetalleVenta(ventaArqueo.getTipoDocumento());
- 				int indice = listaReporteArqueo.indexOf(reporteDetalleVenta);
- 				
- 				reporteDetalleVenta = listaReporteArqueo.get(indice);
-
- 				float totalVenta = reporteDetalleVenta.getTotalVentaProducto();
- 				float totalCreditos = reporteDetalleVenta.getTotalVentaCredito();
- 				float totalServicios = reporteDetalleVenta.getTotalVentaServicios();
- 				float totalTarjetas = reporteDetalleVenta.getTotalVentaTarjeta();
- 				
- 				if (!ventaArqueo.getFormaPago().getvFormaPagoDescripcion().equals(Constantes.formaPagoContado)) {
- 					totalVenta = totalVenta +  ventaArqueo.getfVentaTotal();
- 					totalCreditos =  totalCreditos + (ventaArqueo.getfVentaTotal() - ventaArqueo.getfMontoAdelantado());
- 				} else {
- 					totalVenta = totalVenta +  ventaArqueo.getfVentaTotal();
- 				}
- 				
- 				
- 				listaVentadetalle = ventaArqueo.getVentadetalles();
- 				for (Ventadetalle ventadetalle : listaVentadetalle) {
- 					
- 					float valorDetalle = ventadetalle.getfVentaDetallePrecio();
- 					if (Constantes.categoriaServicios.equals(ventadetalle.getProducto().getCategoria().getClasificacionCategoria().getvClasificacionDescripcion()) ) {
- 						totalVenta = totalVenta - valorDetalle;
- 						totalServicios = totalServicios + valorDetalle;
- 					}
- 					
- 				}
- 				
- 				if(ventaArqueo.getfMontoPago() > 0) {
- 					if (!ventaArqueo.getMedioPago1().getvNombre().equals(Constantes.medioPagoEfectivo)) {
- 						totalTarjetas = totalTarjetas + ventaArqueo.getfMontoPago(); 
- 					}
- 				}
- 				
- 				if(ventaArqueo.getfMontoPagoCredito() > 0) {
- 					if (!ventaArqueo.getMedioPago2().getvNombre().equals(Constantes.medioPagoEfectivo)) {
- 						totalTarjetas = totalTarjetas + ventaArqueo.getfMontoPagoCredito(); 
- 					}
- 					
- 				}
- 				
- 				reporteDetalleVenta.setTotalVentaProducto(totalVenta);
- 				reporteDetalleVenta.setTotalVentaServicios(totalServicios);
- 				reporteDetalleVenta.setTotalVentaCredito(totalCreditos);
- 				reporteDetalleVenta.setTotalVentaTarjeta(totalTarjetas);
- 				
-			}
+			listaReporteArqueo = cargarReporteArqueo(ventas, listaTipodocumentogestion);
 			
 			for (ReporteDetalleVenta reporteDetalleVenta : listaReporteArqueo) {
 
@@ -2665,6 +2659,66 @@ public class VentaAction extends BaseAction {
 		
 	}
 	
+	private List<ReporteDetalleVenta> cargarReporteArqueo(List<Venta> ventas, List<Tipodocumentogestion> listaTipodocumentogestion) {
+		List<ReporteDetalleVenta> listaReporteArqueo = new ArrayList<ReporteDetalleVenta>();
+		
+		for (Tipodocumentogestion tipodocumentogestion : listaTipodocumentogestion) {
+			listaReporteArqueo.add(new ReporteDetalleVenta(tipodocumentogestion));
+		}
+		List<Ventadetalle> listaVentadetalle;
+		
+		for (Venta ventaArqueo : ventas) {
+			ReporteDetalleVenta reporteDetalleVenta = new ReporteDetalleVenta(ventaArqueo.getTipoDocumento());
+				int indice = listaReporteArqueo.indexOf(reporteDetalleVenta);
+				
+				reporteDetalleVenta = listaReporteArqueo.get(indice);
+
+				float totalVenta = reporteDetalleVenta.getTotalVentaProducto();
+				float totalCreditos = reporteDetalleVenta.getTotalVentaCredito();
+				float totalServicios = reporteDetalleVenta.getTotalVentaServicios();
+				float totalTarjetas = reporteDetalleVenta.getTotalVentaTarjeta();
+				
+				if (!ventaArqueo.getFormaPago().getvFormaPagoDescripcion().equals(Constantes.formaPagoContado)) {
+					totalVenta = totalVenta +  ventaArqueo.getfVentaTotal();
+					totalCreditos =  totalCreditos + (ventaArqueo.getfVentaTotal() - ventaArqueo.getfMontoAdelantado());
+				} else {
+					totalVenta = totalVenta +  ventaArqueo.getfVentaTotal();
+				}
+				
+				
+				listaVentadetalle = ventaArqueo.getVentadetalles();
+				for (Ventadetalle ventadetalle : listaVentadetalle) {
+					
+					float valorDetalle = ventadetalle.getfVentaDetallePrecio();
+					if (Constantes.categoriaServicios.equals(ventadetalle.getProducto().getCategoria().getClasificacionCategoria().getvClasificacionDescripcion()) ) {
+						totalVenta = totalVenta - valorDetalle;
+						totalServicios = totalServicios + valorDetalle;
+					}
+					
+				}
+				
+				if(ventaArqueo.getfMontoPago() > 0) {
+					if (!ventaArqueo.getMedioPago1().getvNombre().equals(Constantes.medioPagoEfectivo)) {
+						totalTarjetas = totalTarjetas + ventaArqueo.getfMontoPago(); 
+					}
+				}
+				
+				if(ventaArqueo.getfMontoPagoCredito() > 0) {
+					if (!ventaArqueo.getMedioPago2().getvNombre().equals(Constantes.medioPagoEfectivo)) {
+						totalTarjetas = totalTarjetas + ventaArqueo.getfMontoPagoCredito(); 
+					}
+					
+				}
+				
+				reporteDetalleVenta.setTotalVentaProducto(totalVenta);
+				reporteDetalleVenta.setTotalVentaServicios(totalServicios);
+				reporteDetalleVenta.setTotalVentaCredito(totalCreditos);
+				reporteDetalleVenta.setTotalVentaTarjeta(totalTarjetas);
+				
+		}
+		return listaReporteArqueo;
+	}
+
 	private void generarArqueo(HttpServletRequest request, Impresora impresora) {
 		HttpSession sesion = request.getSession();
 		Usuario usuario = (Usuario) sesion.getAttribute("Usuario");
