@@ -86,7 +86,14 @@ public class ServicioPersonalVo {
 	 * @return the procentaje
 	 */
 	public float getPorcentaje() {
-		return getTotalNeto()/2;
+		float totalCosto = 0;
+		if (detalleServicioSucursalVo.size() > 0) {
+			
+			for (DetalleServicioSucursalVo detalle : detalleServicioSucursalVo) {
+				totalCosto += detalle.getTotalCostoSucursal();
+			}
+		}
+		return totalCosto;
 	}
 
 	/**

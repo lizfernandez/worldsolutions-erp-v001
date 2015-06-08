@@ -71,14 +71,12 @@ public class Impresora {
 		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
 		if (services.length > 0) {
 			for (int i = 0; i < services.length; i++) {
-				DocPrintJob printJob = services[i].createPrintJob();
 				impresoraVO = new ImpresoraVO();
 				impresoraVO.setImpresoraID(services[i].getName());
 				impresoraVO.setImpresoraNombre(services[i].toString());
 				impresoraVO.setJobImpresora(services[i].createPrintJob());
 				
 				list.add(impresoraVO);
-				System.out.println(printJob.getPrintService());
 				
 			}
 		}
@@ -283,15 +281,17 @@ public class Impresora {
 		if (ventadetalle.getPersonal() != null) {
 			detalleLinea = new Object[][] {
 					{ "TECNICO", 0, 1 },
-					{ ventadetalle.getPersonal().getvPersonalNombres() + " " + ventadetalle.getPersonal().getvPersonalApellidoPaterno(), 9, 1 } };
-			agregarLinea(detalleLinea);
-		}
+					{ ventadetalle.getPersonal().getvPersonalNombres() + " " + ventadetalle.getPersonal().getvPersonalApellidoPaterno(), 9, 1 },
+					{ ventadetalle.getfVentaDetalleTotal(), 30, -1 } };
+		} else {
 		
-		detalleLinea = new Object[][] {
-				{ "", 0, 1},
-				{ ventadetalle.getiVentaDetalleCantidad(), 10, 1},
-				{ ventadetalle.getfVentaDetallePrecio(), 20, -1 },
-				{ ventadetalle.getfVentaDetalleTotal(), 30, -1 } };
+			detalleLinea = new Object[][] {
+					{ "", 0, 1},
+					{ ventadetalle.getiVentaDetalleCantidad(), 10, 1},
+					{ ventadetalle.getfVentaDetallePrecio(), 20, -1 },
+					{ ventadetalle.getfVentaDetalleTotal(), 30, -1 } };
+			
+		}
 		agregarLinea(detalleLinea);
 		
 		

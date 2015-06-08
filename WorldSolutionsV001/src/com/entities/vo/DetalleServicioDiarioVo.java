@@ -5,6 +5,7 @@ public class DetalleServicioDiarioVo {
 
 	private String fechaServicio;
 	private float totalServicio;
+	private float totalCostoServicio;
 	
 	public DetalleServicioDiarioVo(String fechaServicio) {
 		this.fechaServicio = fechaServicio;
@@ -69,6 +70,20 @@ public class DetalleServicioDiarioVo {
 	 */
 	public void setTotalServicio(float totalServicio) {
 		this.totalServicio = totalServicio;
+	}
+
+	/**
+	 * @return the totalCostoServicio
+	 */
+	public float getTotalCostoServicio() {
+		return totalCostoServicio;
+	}
+
+	/**
+	 * @param totalCostoServicio the totalCostoServicio to set
+	 */
+	public void setTotalCostoServicio(float totalCostoServicio) {
+		this.totalCostoServicio = totalCostoServicio;
 	}	
 	
 	

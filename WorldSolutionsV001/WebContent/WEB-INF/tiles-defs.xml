@@ -634,5 +634,8 @@
 <definition name=".listaServiciosPersonal" extends=".popup">
 	<put name="body" value="/contabilidad/planilla/listaPopupServiciosPersonal.jsp"></put>  
 </definition>
-
+       
+<definition name=".buscarMantenimientoVentaAdm" extends=".popup">
+    <put name="body" value="/ventas/venta/buscarMantenimientoVentaAdm.jsp"></put>   
+</definition>
 </tiles-definitions>

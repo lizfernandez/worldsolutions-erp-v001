@@ -46,6 +46,7 @@ import com.entities.Personal;
 import com.entities.Preciosproducto;
 import com.entities.Producto;
 import com.entities.Productoalmacen;
+import com.entities.Sucursal;
 import com.entities.Tipodocumentogestion;
 import com.entities.Usuario;
 import com.entities.Venta;
@@ -115,6 +116,12 @@ public class VentaAction extends BaseAction {
 		
 		if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
 			objform.getVenta().setSucursal(new SucursalVo(usu.getSucursal()));
+		} else {
+			if (objform.getiSucursalId() > 0) {
+				SucursalVo sucursalVo = new SucursalVo();
+				sucursalVo.setiSucursalId(objform.getiSucursalId());
+				objform.getVenta().setSucursal(sucursalVo);
+			}
 		}
 
 		/** Lista de personal en Modal Popup ***/
@@ -498,6 +505,7 @@ public class VentaAction extends BaseAction {
 				
 				ventadetalle.setProducto(productoVo);
 				ventadetalle.setfVentaDetallePrecio(fPrecioVenta);
+				ventadetalle.setfVentaDetalleCosto(fPrecioCompra);
 				ventadetalle.setiVentaDetalleCantidad(iCantidad);
 				ventadetalle.setfVentaDetalleTotal(fTotal);
 				ventadetalle.setfDescuento(fDescuento);
@@ -705,7 +713,7 @@ public class VentaAction extends BaseAction {
 		List<VentadetalleVo> lista = new ArrayList<VentadetalleVo>();
 		List<Tipodocumentogestion> listaTipoDoc = genericaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
 		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
-
+		List<Sucursal> listSucursal = ventaDao.listaEntidadGenerica(Sucursal.class); 
 		/**
 		 * LLamamos al formulario mantenimientoVenta.jsp para la insercion de
 		 * datos
@@ -763,9 +771,7 @@ public class VentaAction extends BaseAction {
 			int id = Integer.parseInt(request.getParameter("id"));
 			String tipoDocumento = request.getParameter("idTipoDocumento");
 			Venta venta = ventaDao.findEndidad(Venta.class, id);
-
-			ventaform.setvClasificacion(venta.getCliente().getClasificacion()
-					.getvNombre());
+			ventaform.setvClasificacion(venta.getCliente().getClasificacion().getvNombre());
 			ventaform.setVenta(new VentaVo(venta));
 			ventaform.setTipoMoneda(venta.getvTipoVenta());
 			ventaform.setIGVVentas(venta.getvPorcentajeIGV());
@@ -829,7 +835,12 @@ public class VentaAction extends BaseAction {
 		 * busqueda metodoBusqueda: se determina el metodo a lista; listaVenta:
 		 **/
 		else if (mode.equals("F")) {
-			msn = "showFind";
+
+			if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+				msn = "showFind";
+			} else {
+				msn = "showFindAdm";
+			}
 		}
 		/**
 		 * LLamamos al formulario buscarMantenimientoVenta.jsp para realizar la
@@ -844,7 +855,7 @@ public class VentaAction extends BaseAction {
 		sesion.setAttribute("listaFormapago", listaFormapago);
 		sesion.setAttribute("listamedioPago", listamedioPago);
 		sesion.setAttribute("listaImpresora", listaImpresora);
-
+		sesion.setAttribute("listSucursal", listSucursal);
 		sesion.setAttribute("listaTipoDoc", listaTipoDoc);
 
 		return mapping.findForward(msn);
@@ -921,6 +932,7 @@ public class VentaAction extends BaseAction {
 				obj.setIdireccionClienteId(pForm.getiClienteId());
 				obj.setCliente(ventaDao.findEndidad(Cliente.class, pForm.getiClienteId()));
 				obj.setUsuario(usu);
+				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 				obj.setiPeriodoId(iPeriodoId);
 				obj.setSucursal(usu.getSucursal());
 				obj.setvPorcentajeIGV(sesion.getAttribute("IGVVentas").toString());
@@ -1198,7 +1210,7 @@ public class VentaAction extends BaseAction {
 			} else if (pForm.getMode().equals("U") || pForm.getMode().equals("UE")) {
 
 				Venta obj1 = ventaDao.findEndidad(Venta.class, pForm.getVenta().getiVentaId());
-				obj1 = Util.comparar(obj1, pForm.getVenta());// pForm.getVenta();
+				obj1 = Util.comparar(obj1, new Venta(pForm.getVenta()));// pForm.getVenta();
 
 				/*
 				 * if(pForm.getMode().equals("U")){ int i= 0; int iCantidad=0;
@@ -1772,14 +1784,12 @@ public class VentaAction extends BaseAction {
 
 		boolean resultado = false;
 		int cantidadProducto = 0, cantidadProductoActual = 0;
-		float precioProducto = (float) 0.0;
 		HttpSession sesion = request.getSession();
 
 		/** Instanciamos las clase VentaForm y VentaDao **/
 		VentaForm pForm = (VentaForm) form;
 		VentaDao ventaDao = new VentaDao();
 		ContabilidadDao contabilidadDao = new ContabilidadDao();
-		KardexDao kardexDao = new KardexDao();
 		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 		int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
 
@@ -1788,7 +1798,6 @@ public class VentaAction extends BaseAction {
 		List<Ventadevoluciondetalle> ingresoproductodevoluciondetalles = new ArrayList<Ventadevoluciondetalle>();
 		List<Ventadevoluciondetalle> listaDetalle = new ArrayList<Ventadevoluciondetalle>();
 		List<Kardex> listaKardex = new ArrayList<Kardex>();
-		List<Kardex> listaKardexActivo = new ArrayList<Kardex>();
 
 		/*** Informacion de la devolcuion de compra ****/
 		obj.setdVentaDevFecha(Fechas.fechaDate(pForm.getdVentaDevFecha()));
@@ -2401,12 +2410,7 @@ public class VentaAction extends BaseAction {
 			float totalVenta = 0;
 			// aqui recorro mis productos y los imprimo
 			for (Ventadetalle ventadetalle : venta.getVentadetalles()) {
-				impresora.agregarDetalleProducto(ventadetalle.getProducto().getcProductoCodigo(),
-													ventadetalle.getProducto().getvProductoNombre(),
-													ventadetalle.getiVentaDetalleCantidad(),
-													ventadetalle.getfVentaDetallePrecio(), 
-													ventadetalle.getfDescuento(),
-													ventadetalle.getfVentaDetalleTotal());
+				impresora.agregarDetalleProducto(ventadetalle);
 				
 				totalVenta += ventadetalle.getfVentaDetalleTotal();
 				
@@ -2566,7 +2570,17 @@ public class VentaAction extends BaseAction {
 		Usuario usuario = (Usuario) sesion.getAttribute("Usuario");
 		VentaDao ventaDao = new VentaDao();
 		Venta venta = new Venta();
-		venta.setUsuario(usuario);
+		
+		String mode = request.getParameter("mode");
+		
+		if (mode == null) {
+			venta.setUsuario(usuario);
+		} else if (mode.equals("A")) {
+			int personalId = Integer.parseInt(request.getParameter("id"));
+			venta.setUsuario(ventaDao.findEndidadBD(Usuario.class, "personal.iPersonalId", personalId));
+		}
+		
+		
 		venta.setdVentaFecha(Fechas.getDate());
 		List<Venta> detalleArqueoVentas = ventaDao.listaVenta(0, 1000, venta);
 		int contadorVentas = 0;

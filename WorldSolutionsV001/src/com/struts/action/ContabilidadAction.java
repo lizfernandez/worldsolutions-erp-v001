@@ -841,12 +841,7 @@ public class ContabilidadAction extends BaseAction {
 	        /**Obtenemos el total del paginas***/
 			List<Long> paginas = Paginacion.listPaginas((long)(listaLibroDiarioTotal.size()));
 			
-			
-			
-			float totalbruto=0;
-			
-			
-		
+					
 		    contabilidadForm.setLista(listaLibroDiario);
 		    contabilidadForm.setPaginas(paginas);
 			contabilidadForm.setPagInicio(pagina);
@@ -1856,7 +1851,7 @@ public class ContabilidadAction extends BaseAction {
 			
 			for (Ventadetalle ventadetalle : lista) {
 				if (ventadetalle.getPersonal() != null) {
-					
+										
 					servicioPersonalVo = new ServicioPersonalVo(ventadetalle.getPersonal(), listaFechas, listaSucursales);
 					fechaVenta = Fechas.fechaFormato(ventadetalle.getVenta().getdVentaFecha(), Constantes.formatoFechaDia).toUpperCase();
 					
@@ -1880,7 +1875,8 @@ public class ContabilidadAction extends BaseAction {
 					int indServDiario = listaServicioDiarioVo.indexOf(detalleServicioDiarioVo);
 					if (indServDiario >= 0) {
 						detalleServicioDiarioVo = listaServicioDiarioVo.get(indServDiario);
-						detalleServicioDiarioVo.setTotalServicio(ventadetalle.getfVentaDetalleTotal());
+						detalleServicioDiarioVo.setTotalServicio(detalleServicioDiarioVo.getTotalServicio() + ventadetalle.getfVentaDetallePrecio());
+						detalleServicioDiarioVo.setTotalCostoServicio(detalleServicioDiarioVo.getTotalCostoServicio() + ventadetalle.getfVentaDetalleCosto());
 						listaServicioDiarioVo.set(indServDiario, detalleServicioDiarioVo);
 					}
 					

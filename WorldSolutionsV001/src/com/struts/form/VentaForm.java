@@ -18,6 +18,7 @@ import com.entities.Ventadevolucion;
 import com.entities.vo.ClienteVo;
 import com.entities.vo.FormapagoVo;
 import com.entities.vo.MediopagoVo;
+import com.entities.vo.SucursalVo;
 import com.entities.vo.TipodocumentogestionVo;
 import com.entities.vo.VentaVo;
 import com.entities.vo.VentadetalleVo;
@@ -279,7 +280,10 @@ public class VentaForm extends  ActionForm {
 	 * @param iClienteId the iClienteId to set
 	 */
 	public void setiClienteId(int iClienteId) {
-		this.venta.setCliente(new ClienteVo(ventaDao().findEndidad(Cliente.class, iClienteId)));
+		Cliente cliente = ventaDao().findEndidad(Cliente.class, iClienteId);
+		if (cliente != null) {
+			this.venta.setCliente(new ClienteVo(cliente));
+		}
 		
 	}
 	
@@ -398,7 +402,10 @@ public class VentaForm extends  ActionForm {
 	 * @param tipodocumento the tipodocumento to set
 	 */
 	public void setiTipoDocumentoId(int iTipoDocumentoGestionId) {			
-		this.venta.setTipoDocumento(new TipodocumentogestionVo(ventaDao().findEndidad(Tipodocumentogestion.class, iTipoDocumentoGestionId)));
+		Tipodocumentogestion tipoDocumento = ventaDao().findEndidad(Tipodocumentogestion.class, iTipoDocumentoGestionId);
+		if (tipoDocumento != null) {
+			this.venta.setTipoDocumento(new TipodocumentogestionVo(tipoDocumento));
+		}
 	}
 
 	/**
@@ -439,7 +446,10 @@ public class VentaForm extends  ActionForm {
 	 * @param iFormaPagoId the iFormaPagoId to set
 	 */
 	public void setiFormaPago(int iFormaPagoId) {	
-		this.venta.setFormaPago(new FormapagoVo(ventaDao().findEndidad(Formapago.class, iFormaPagoId)));
+		Formapago formaPago = ventaDao().findEndidad(Formapago.class, iFormaPagoId);
+		if (formaPago != null) {
+			this.venta.setFormaPago(new FormapagoVo(formaPago));
+		}
 	}
 	
 
@@ -985,7 +995,10 @@ public class VentaForm extends  ActionForm {
 	 * @param iFormaPagoId the iFormaPagoId to set
 	 */
 	public void setiMedioPagoId1(int iFormaPagoId) {	
-		this.venta.setMedioPago1(new MediopagoVo(ventaDao().findEndidad(Mediopago.class, iFormaPagoId)));
+		Mediopago medioPago = ventaDao().findEndidad(Mediopago.class, iFormaPagoId);
+		if (medioPago != null) {
+			this.venta.setMedioPago1(new MediopagoVo(medioPago));
+		}
 	}
 	
 
@@ -1013,7 +1026,10 @@ public class VentaForm extends  ActionForm {
 	 * @param iFormaPagoId the iFormaPagoId to set
 	 */
 	public void setiMedioPagoId2(int iFormaPagoId) {	
-		this.venta.setMedioPago2(new MediopagoVo( ventaDao().findEndidad(Mediopago.class, iFormaPagoId)));
+		Mediopago medioPago = ventaDao().findEndidad(Mediopago.class, iFormaPagoId);
+		if (medioPago != null) {
+			this.venta.setMedioPago2(new MediopagoVo(medioPago));
+		}
 	}
 	
 
@@ -1062,5 +1078,5 @@ public class VentaForm extends  ActionForm {
 	public void setImprimirTicket(String imprimirTicket) {
 		this.imprimirTicket = imprimirTicket;
 	}
-
+	
 }
