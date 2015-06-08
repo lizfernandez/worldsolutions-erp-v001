@@ -50,7 +50,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
         -->
     <thead>
     <tr >
-        <th colspan="3">Operaciones</th>
+        <th colspan="4">Operaciones</th>
         <th align="left">C&oacute;digo</th>
         <th align="left">Nombres</th>
         <th align="left">Ap. Paterno</th>
@@ -77,7 +77,12 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		                     onclick="popup('personal.do?metodo=mantenimientoPersonal&mode=U&id=<bean:write name="x" property="iPersonalId" />',350,500)" /></td>
 		 	    <td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
 		                     onclick="eliminar('tabla','<bean:write name="x" property="iPersonalId" />','personal.do?metodo=iduPersonal&mode=D')" /></td>
-		 		
+				 		
+				<td align="center">
+		     		<img  src="${pageContext.request.contextPath}/media/imagenes/approve_notes.png"   title="Visualizar Arqueo" 
+		     		onclick="popup('venta.do?metodo=verArqueoVendedor&id=<bean:write name="x" property="iPersonalId" />&mode=A',600,500)" />
+				</td>
+				
 		 		<td><bean:write name="x" property="cPersonalCodigo" /></td>
 				<td><bean:write name="x" property="vPersonalNombres" /></td>
 				<td><bean:write name="x" property="vPersonalApellidoPaterno" /></td>

@@ -1,3 +1,7 @@
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,6 +11,8 @@ import javax.persistence.Query;
 
 import com.dao.ProductoDao;
 import com.entities.Producto;
+import com.util.Constantes;
+import com.util.Fechas;
 
 
 
@@ -19,23 +25,46 @@ public class prueba {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-			ProductoDao ljn= new ProductoDao();
-			
-		//	List<Producto> todoList = ljn.listaProducto();
-			
-//			System.out.println("Sizekjjkjk: " + todoList.size());
-
-			// Create new todo
-			/*em.getTransaction().begin();
-			TbTmPerfil todo = new TbTmPerfil();
-			todo.setCodPerfil(2);
-			todo.setDescTipoPerfil("This is a test");
-			em.persist(todo);
-			em.getTransaction().commit();*/
-			
+		List<String> listaFechas = new ArrayList<String>();
+		List<Float> listaTotalDia = new ArrayList<Float>();
+		Date fechaInicio = new Date();
+		Date fechaFin = Fechas.sumarFechasDias(fechaInicio, 0);
+		
+		String fechaInicioStr = Fechas.fechaFormato(fechaInicio, Constantes.formatoFechaDia).toUpperCase();
+		String fechaFinStr = Fechas.fechaFormato(fechaFin, Constantes.formatoFechaDia).toUpperCase();
+				
+		System.out.println(fechaInicioStr);
+		System.out.println(fechaFinStr);
+		
+//		listaFechas.add(fechaInicioStr);
+		if (!fechaInicioStr.equals(fechaFinStr)) {
+			String proximaFecha = fechaInicioStr;
+//			listaFechas.add(proximaFecha);
+//			System.out.println(proximaFecha);
+//			System.out.println("Validacion: " + proximaFecha.equals(fechaFinStr));
+//			
+//			if (!proximaFecha.equals(fechaFinStr)) {
+				
+				System.out.println("Validacion 2: " + proximaFecha.equals(fechaFin));
+				int indice = 1;
+				while (!proximaFecha.equals(fechaFinStr)) {
+					listaFechas.add(proximaFecha);
+					proximaFecha = Fechas.fechaFormato(Fechas.sumarFechasDias(fechaInicio, indice), Constantes.formatoFechaDia).toUpperCase();
+					indice++;
+					System.out.println("Proxima fecha: " + proximaFecha);
+					
+				}
+				listaFechas.add(fechaFinStr);
+				
+//			}
+		} else {
+			listaFechas.add(fechaInicioStr);
 		}
+
+		
+		System.out.println("lista: " + Arrays.toString(listaFechas.toArray()));
+	}
 	
 
 }

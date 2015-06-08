@@ -41,7 +41,7 @@
 				</logic:iterate>
         	</logic:notEmpty>        	
         	<th align="right" width="10%">TOTAL NETO</th>
-        	<th align="right" width="10%">PROCENTAJE 50%</th>
+        	<th align="right" width="10%">PAGO AL T&Eacute;CNICO</th>
            
       	</tr>
     </thead>

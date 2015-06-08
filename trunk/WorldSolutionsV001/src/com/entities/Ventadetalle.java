@@ -47,6 +47,9 @@ public class Ventadetalle implements Serializable {
 	private float fVentaDetallePrecio;
 
 	@Column(nullable=false)
+	private float fVentaDetalleCosto;
+
+	@Column(nullable=false)
 	private float fVentaDetalleTotal;
 
 	private int iUsuarioActualizaId;
@@ -96,6 +99,7 @@ public class Ventadetalle implements Serializable {
 		this.personal = ventaDetalleVo.getPersonal() != null ? new Personal(ventaDetalleVo.getPersonal()) : null;
 		this.iSubCta = ventaDetalleVo.getiSubCta();
 		this.vIdentificadorSession = ventaDetalleVo.getvIdentificadorSession();
+		this.fVentaDetalleCosto = ventaDetalleVo.getfVentaDetalleCosto();
 	}
 
 	/**
@@ -308,8 +312,18 @@ public class Ventadetalle implements Serializable {
 		this.vIdentificadorSession = vIdentificadorSession;
 	}
 
-	
+	/**
+	 * @return the fVentaDetalleCosto
+	 */
+	public float getfVentaDetalleCosto() {
+		return fVentaDetalleCosto;
+	}
 
-	
+	/**
+	 * @param fVentaDetalleCosto the fVentaDetalleCosto to set
+	 */
+	public void setfVentaDetalleCosto(float fVentaDetalleCosto) {
+		this.fVentaDetalleCosto = fVentaDetalleCosto;
+	}	
 	
 }

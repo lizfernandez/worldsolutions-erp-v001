@@ -450,6 +450,7 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 				return listaIngresoproducto;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Venta> listaVenta(int pagInicio, int pagFin, VentaVo venta) {
 	
@@ -494,17 +495,14 @@ public class VentaDao  extends GenericaDao  implements IVentaDao {
 				where+= " and p.usuario.iUsuarioId = '"+venta.getUsuario().getiUsuarioId()+"'";
 			}
 			
-			if (venta.getSucursal() != null) {
+			if (venta.getSucursal() != null && venta.getSucursal().getiSucursalId() > 0) {
 				where+= " and p.sucursal.iSucursalId = '"+venta.getSucursal().getiSucursalId() +"'";
 			}
-			
-			
-	          System.out.println(" where ="+ where);
-	    	    q = getInstancia().createQuery("select p from Venta p " + where +" order by p.dVentaFecha desc");/**/
-	    	    q.setHint(QueryHints.REFRESH, HintValues.TRUE);
-	    	    listaVenta = q.setFirstResult(pagInicio)
-							  .setMaxResults(pagFin)
-							  .getResultList(); 
+
+			System.out.println(" where =" + where);
+			q = getInstancia().createQuery("select p from Venta p " + where + " order by p.dVentaFecha desc");/**/
+			q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+			listaVenta = q.setFirstResult(pagInicio).setMaxResults(pagFin).getResultList(); 
 	
 		}
 		

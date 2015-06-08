@@ -396,6 +396,7 @@
 	                 <forward name="showEditGuiaRemision" path=".mantenimientoVentaGuiaRemision" />
 	                 <forward name="showEditPedido" path=".mantenimientoVentaPedido" />
 	                 <forward name="showFind" path=".buscarMantenimientoVenta" />
+	                 <forward name="showFindAdm" path=".buscarMantenimientoVentaAdm" />
 	                 <forward name="showEstadoCuenta" path=".mantenimientoEstadoCuentaCliente" />	
 	                 <forward name="showFindEstadoCuenta" path=".buscarMantenimientoEstadoCuentaCliente" />		
 	                 <forward name="showArqueo" path=".verArqueo" />		

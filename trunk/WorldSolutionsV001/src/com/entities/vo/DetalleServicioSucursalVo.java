@@ -44,6 +44,16 @@ public class DetalleServicioSucursalVo {
 		return totalSucursal;
 	}
 
+	/**
+	 * @return the totalServicioSucursal
+	 */
+	public float getTotalCostoSucursal() {
+		float totalSucursal = 0;
+		for (DetalleServicioDiarioVo detalle : detalleServicioDiarioVo) {
+			totalSucursal = totalSucursal + detalle.getTotalCostoServicio();
+		}
+		return totalSucursal;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */

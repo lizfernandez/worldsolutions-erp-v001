@@ -1,20 +1,8 @@
 package com.entities.vo;
 
 import java.io.Serializable;
-
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import com.entities.Personal;
-import com.entities.Producto;
-import com.entities.Venta;
 import com.entities.Ventadetalle;
 
 public class VentadetalleVo implements Serializable {
@@ -34,6 +22,7 @@ public class VentadetalleVo implements Serializable {
     private PersonalVo personal;    
     private int iSubCta;
     private String vIdentificadorSession;
+	private float fVentaDetalleCosto;
     
     public VentadetalleVo() {
     }
@@ -53,6 +42,7 @@ public class VentadetalleVo implements Serializable {
 		this.personal = ventadetalle.getPersonal()!= null ? new PersonalVo(ventadetalle.getPersonal()) : null;
 		this.iSubCta = ventadetalle.getiSubCta();
 		this.vIdentificadorSession = ventadetalle.getvIdentificadorSession();
+		this.fVentaDetalleCosto = ventadetalle.getfVentaDetalleCosto();
 	}
 
 	/**
@@ -231,6 +221,20 @@ public class VentadetalleVo implements Serializable {
 
 	public void setvIdentificadorSession(String vIdentificadorSession) {
 		this.vIdentificadorSession = vIdentificadorSession;
+	}
+
+	/**
+	 * @return the fVentaDetalleCosto
+	 */
+	public float getfVentaDetalleCosto() {
+		return fVentaDetalleCosto;
+	}
+
+	/**
+	 * @param fVentaDetalleCosto the fVentaDetalleCosto to set
+	 */
+	public void setfVentaDetalleCosto(float fVentaDetalleCosto) {
+		this.fVentaDetalleCosto = fVentaDetalleCosto;
 	}
 	
 }
