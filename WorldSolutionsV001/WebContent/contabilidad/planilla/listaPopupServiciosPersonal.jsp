@@ -54,7 +54,7 @@
          <logic:notEmpty name="contabilidadForm" property="lista">
 			<logic:iterate name="contabilidadForm" property="lista" id="x" indexId="i">
 				<tr>
-					<td rowspan="2"><bean:write name="x" property="personal.vPersonalNombres"/> <bean:write name="x" property="personal.vPersonalApellidoPaterno"/></td>
+					<td rowspan="<bean:write name="contabilidadForm" property="totalSucursales"/>" valign="middle"><bean:write name="x" property="personal.vPersonalNombres"/> <bean:write name="x" property="personal.vPersonalApellidoPaterno"/></td>
 					
 					<logic:iterate name="x" property="detalleServicioSucursalVo" id="y" indexId="j">
 						<logic:equal name="j" value="0">
@@ -69,14 +69,14 @@
 							</logic:iterate>
 						</logic:equal>
 					</logic:iterate>
-					<td rowspan="2" align="right"><bean:write name="x" property="totalNeto" format="###0.00"/></td>
-					<td rowspan="2" align="right"><bean:write name="x" property="porcentaje" format="###0.00"/></td>
+					<td rowspan="<bean:write name="contabilidadForm" property="totalSucursales"/>" align="right"><bean:write name="x" property="totalNeto" format="###0.00"/></td>
+					<td rowspan="<bean:write name="contabilidadForm" property="totalSucursales"/>" align="right"><bean:write name="x" property="porcentaje" format="###0.00"/></td>
 					
-				</tr>
-				
-				<tr>
-					<logic:iterate name="x" property="detalleServicioSucursalVo" id="y" indexId="j">
-						<logic:greaterThan name="j" value="0">
+				</tr>		
+				<logic:iterate name="x" property="detalleServicioSucursalVo" id="y" indexId="j">
+					<logic:notEqual name="j" value="0">
+						
+						<tr>
 							<td><bean:write name="y" property="sucursal.vSucursalNombre"/></td>
 							<logic:iterate name="y" property="detalleServicioDiarioVo" id="z" indexId="k">
 								<td align="right">&nbsp;
@@ -86,9 +86,9 @@
 								</td>
 								
 							</logic:iterate>
-						</logic:greaterThan>
-					</logic:iterate>
-				</tr>
+						</tr>
+					</logic:notEqual>
+				</logic:iterate>
 			</logic:iterate>
 		 </logic:notEmpty>
 		 <tr>
