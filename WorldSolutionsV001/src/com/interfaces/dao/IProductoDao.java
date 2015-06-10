@@ -7,6 +7,7 @@ import com.entities.Ordencompra;
 import com.entities.Produccion;
 import com.entities.Producciondetalle;
 import com.entities.Producto;
+import com.entities.Productoalmacen;
 
 public interface IProductoDao {
 	
@@ -17,6 +18,8 @@ public interface IProductoDao {
 	public List<Produccion> listaProduccion(int pagInicio, int pagFin, Produccion produccion);
 	public List<Producciondetalle> buscarDetalleProduccion(int iProduccionId);
 	public List<Distalmacen> listaDistAlmacen (int pagInicio, int pagFin, Distalmacen distAlmacen);
+	public List<Distalmacen> listaDistAlmacenvNroSalida (String vNroSalida);
 	public List<Ordencompra> listaOrdenCompra (int pagInicio, int pagFin, Ordencompra ordencompra);
+	public Productoalmacen obtenerProductoAlmacen(int iProductoId, int iAlmacen);
     
 }
