@@ -7,11 +7,13 @@ import javax.persistence.Query;
 import org.eclipse.persistence.config.HintValues;
 import org.eclipse.persistence.config.QueryHints;
 
+import com.entities.Almacen;
 import com.entities.Distalmacen;
 import com.entities.Ordencompra;
 import com.entities.Produccion;
 import com.entities.Producciondetalle;
 import com.entities.Producto;
+import com.entities.Productoalmacen;
 import com.interfaces.dao.IProductoDao;
 import com.util.Constantes;
 
@@ -250,6 +252,38 @@ public  class ProductoDao  extends GenericaDao implements IProductoDao {
 			}
 		
         return listaProducto;
+	}
+
+	@Override
+	public Productoalmacen obtenerProductoAlmacen(int iProductoId, int iAlmacen) {
+		// TODO Auto-generated method stub
+		Query q ;
+		Productoalmacen listaProducto = null ;
+		String where="";
+		q = getInstancia().createQuery("select  p from Productoalmacen p  where p.producto.iProductoId="+iProductoId+" and p.almacen.iAlmacenId="+iAlmacen);/**/
+        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        listaProducto = (Productoalmacen) q.getSingleResult(); 
+	
+		
+	
+         return listaProducto;
+		
+	}
+
+	@Override
+	public List<Distalmacen> listaDistAlmacenvNroSalida(String vNroSalida) {
+		// TODO Auto-generated method stub
+		
+		Query q ;
+		 List<Distalmacen> listaProducto = null ;
+		String where="";
+		q = getInstancia().createQuery("select  p from Distalmacen p  where p.vNroSalida=:vNroSalida");/**/
+        q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+        listaProducto = ( List<Distalmacen>) q.setParameter("vNroSalida", vNroSalida).getResultList(); 
+	
+		
+	
+         return listaProducto;
 	}
 	
 	

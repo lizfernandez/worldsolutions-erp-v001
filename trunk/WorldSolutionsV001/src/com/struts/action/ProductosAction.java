@@ -1541,13 +1541,15 @@ public class ProductosAction extends BaseAction {
 			/** Instantacia a la capa Dao **/
 			EstadoDao estadoDao = new EstadoDao();
 			GenericaDao genericoDao = new GenericaDao();
+			ProductoDao productoDao = new ProductoDao();
 			
 			List<Estado> listaEstado = estadoDao.listEstado();
 			List<Almacen> listaAlmacen = genericoDao.listaEntidadGenerica(Almacen.class);
 			
 				
 				
-				List<Distalmacendetalle> listaProduccion = new ArrayList<Distalmacendetalle>();
+			List<Distalmacendetalle> listaProduccion = new ArrayList<Distalmacendetalle>();
+			List<Distalmacendetalle> listaDistribucionSalida = new ArrayList<Distalmacendetalle>();
 				Usuario usu = (Usuario) sesion.getAttribute("Usuario");
 				
 		    if(mode.equals("IE")|| mode.equals("UE")){
@@ -1570,7 +1572,12 @@ public class ProductosAction extends BaseAction {
 					if(sesion.getAttribute("listaDistAlmacenDetalle")==null){				
 						 sesion.setAttribute("listaDistAlmacenDetalle", listaProduccion);
 	                 }
-				
+					if(listaAlmacen.size()>0){
+						productoForm.setvPuntoLlegada(listaAlmacen.get(0).getSucursal().getvSucursalDireccion());
+						productoForm.setvPuntoSalida(listaAlmacen.get(0).getSucursal().getvSucursalDireccion());	
+					}
+					
+					
 				/**LLamamos al formulario mantenimientoProducto.jsp para mostrar los datos del UPDATE **/
 				/** Seteamos el PerfilForm la clase Perfil **/
 				} else if(mode.equals("UE") ||mode.equals("US") || mode.equals("D")){
@@ -1585,6 +1592,7 @@ public class ProductosAction extends BaseAction {
 					Personal perEntrada = genericoDao.findEndidad(Personal.class,distAlamcen.getUsuarioRecepcion().getiPersonalId());
 					productoForm.setcPersonalCodigoRecep(perEntrada.getcPersonalCodigo());
 					productoForm.setvPersonalNombresRecep(perEntrada.getvPersonalNombres()+perSalida.getvPersonalApellidoPaterno());
+					
 					
 					for(Distalmacendetalle produce:distAlamcen.getDistAlmacendetalles()){
 						Producto pro = new Producto();
@@ -1636,6 +1644,65 @@ public class ProductosAction extends BaseAction {
 					
 					}
 					sesion.setAttribute("listaDistAlmacenDetalle", listaProduccion);
+					
+				    List<Distalmacen>	listaDistAlmSalida = productoDao.listaDistAlmacenvNroSalida(productoForm.getDistAlmacen().getvNroSalida());
+					if(listaDistAlmSalida.size()>0 ){
+						for(Distalmacen distAlmacen:listaDistAlmSalida){
+							if(distAlmacen.getvNroIngreso()==null){
+						for(Distalmacendetalle produce:distAlmacen.getDistAlmacendetalles()){
+							
+							Producto pro = new Producto();
+							
+							Distalmacen produc= new Distalmacen();
+							Distalmacendetalle prodetalle= new Distalmacendetalle();
+							prodetalle.setiDistAlmacenDetId(produce.getiDistAlmacenDetId());						
+							prodetalle.setcEstadoCodigo(produce.getcEstadoCodigo());						
+							prodetalle.setfTotal(produce.getfTotal());
+							prodetalle.setiCantidad(produce.getiCantidad());
+							
+							produc.setcEstadoCodigo(produce.getDistAlmacen().getcEstadoCodigo());
+							produc.setfTotal(produce.getDistAlmacen().getfTotal());
+							produc.setAlmacenEntrada(produce.getDistAlmacen().getAlmacenEntrada());
+							produc.setAlmacenSalida(produce.getDistAlmacen().getAlmacenSalida());
+							produc.setdFechaIngreso(produce.getDistAlmacen().getdFechaIngreso());
+							produc.setiDistAlmacenId(produce.getDistAlmacen().getiDistAlmacenId());
+							produc.setdFechaSalida(produce.getDistAlmacen().getdFechaSalida());
+							produc.setUsuarioRecepcion(produce.getDistAlmacen().getUsuarioRecepcion());
+							produc.setUsuatioEntrega(produce.getDistAlmacen().getUsuatioEntrega());
+
+								produc.setvNroIngreso(produce.getDistAlmacen().getvNroIngreso());
+							
+							produc.setvNroSalida(produce.getDistAlmacen().getvNroSalida());
+							produc.setvObservacion(produce.getDistAlmacen().getvObservacion());
+							produc.setvPuntoLlegada(produce.getDistAlmacen().getvPuntoLlegada());
+							produc.setvPuntoSalida(produce.getDistAlmacen().getvPuntoSalida());
+							
+							
+							prodetalle.setDistAlmacen(produc);
+							
+							pro.setCategoria(produce.getProducto().getCategoria());
+							pro.setcProductoCodigo(produce.getProducto().getcProductoCodigo());
+							pro.setfProductoDescuento(produce.getProducto().getfProductoDescuento());
+							pro.setfProductoPrecioCompra(produce.getProducto().getfProductoPrecioCompra());
+							pro.setfProductoPrecioVenta(produce.getProducto().getfProductoPrecioVenta());
+							pro.setiProductoId(produce.getProducto().getiProductoId());
+							pro.setiProductoStockTotal(produce.getProducto().getiProductoStockTotal());
+							pro.setMoneda(produce.getProducto().getMoneda());
+							pro.setUnidadMedida(produce.getProducto().getUnidadMedida());
+							pro.setvProductoNombre(produce.getProducto().getvProductoNombre());
+							
+							prodetalle.setProducto(pro);
+							
+							
+							
+							
+							listaDistribucionSalida.add(prodetalle);
+						
+						}
+					}
+						}
+						}
+				    sesion.setAttribute("listaDistAlmacenDetalleSalida", listaDistribucionSalida);
 					
 					
 				}
@@ -2199,7 +2266,8 @@ public class ProductosAction extends BaseAction {
 			Producto pro = pForm.getProducto();
 			Distalmacen DistBean = pForm.getDistAlmacen();
 			
-			GenericaDao productoDao = new GenericaDao();	
+			GenericaDao productoDao = new GenericaDao();
+			ProductoDao productoDaos = new ProductoDao();	
 			KardexDao kardexDao = new KardexDao();
 			List<Preciosproducto> listaPrecios = new ArrayList<Preciosproducto>();
 			List<Distalmacendetalle> listaDistDetalle= new ArrayList<Distalmacendetalle>();
@@ -2251,15 +2319,26 @@ public class ProductosAction extends BaseAction {
 					/*****************************************/
 					/** sumamos  el stock de los materiales**/
 					/*****************************************/
-					int cantidad;
-					Productoalmacen material=  productoDao.findEndidad(Productoalmacen.class, prodeta.getProducto().getiProductoId()) ;
+					int cantidad = 0;
+					
 					    
-					    if(material!=null){
+					   // if(material!=null){
+					    	if(pForm.getMode().equals("IS")){
+					    	Productoalmacen material=  productoDaos.obtenerProductoAlmacen(prodeta.getProducto().getiProductoId(),DistBean.getAlmacenSalida().getiAlmacenId()) ;
 					    	cantidad= material.getiProductoAlmStockTotal()-prodeta.getiCantidad();
-						    material.setiProductoAlmStockTotal(cantidad);
-						    material.setAlmacen(DistBean.getAlmacenEntrada());
-						    productoDao.persistEndidad(material);	
-					    }
+					    	material.setiProductoAlmStockTotal(cantidad);
+						   
+						    productoDao.mergeEndidad(material);
+					    	}
+					    	if(pForm.getMode().equals("IE")){
+					    	Productoalmacen material=  productoDaos.obtenerProductoAlmacen(prodeta.getProducto().getiProductoId(),DistBean.getAlmacenEntrada().getiAlmacenId()) ;
+					    	cantidad= material.getiProductoAlmStockTotal()+prodeta.getiCantidad();
+					    	material.setiProductoAlmStockTotal(cantidad);
+						    
+						    productoDao.mergeEndidad(material);
+					    	}
+					    		
+					  /*  }
 					    else{
 					    	 material=  new Productoalmacen();
 					    	 material.setcEstadoCodigo(Constantes.estadoActivo);
@@ -2273,7 +2352,7 @@ public class ProductosAction extends BaseAction {
 					    	 material.setiUMBaseAlm(prodeta.getProducto().getiUMBase());
 					    	 productoDao.persistEndidad(material);
 					    }
-					    
+					    */
 					}
 					
 				}

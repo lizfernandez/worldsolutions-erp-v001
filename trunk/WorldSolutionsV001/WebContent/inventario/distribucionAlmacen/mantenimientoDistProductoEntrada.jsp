@@ -115,8 +115,8 @@
         <th align="right">% DESC.</th>
         <th align="right">TOTAL</th>
       </tr>
-      <logic:notEmpty name="listaDistAlmacenDetalle" >      
-      <logic:iterate id="x" name="listaDistAlmacenDetalle" indexId="i">
+      <logic:notEmpty name="listaDistAlmacenDetalleSalida" >      
+      <logic:iterate id="x" name="listaDistAlmacenDetalleSalida" indexId="i">
        <logic:equal  name="x"  property="cEstadoCodigo" value="AC">
          <tr id="fila${i}">
           <td><img  src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')" class="imgDelete" /></td>
@@ -309,6 +309,11 @@ $("#dFechaIngreso").datepicker(
         document.getElementById('btnGuardar').textContent="Insertar";
         $(".trCodigo").show();
         $("#popupCabecera").text('INSERTAR DATOS');	
+        if(mode=='IE'){
+        	$("#dFechaSalida").val("");
+        	$("#vNroSalida").val("");
+        	
+        }
         
     } else {
         $(".trCodigo").show();
