@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="850" pageHeight="530" columnWidth="810" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="198"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1" fill="Solid" radius="3"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<field name="vNroSalida" class="java.lang.String"/>
+	<field name="almacenSalida.vAlmacenNombre" class="java.lang.String"/>
+	<field name="dFechaSalida" class="java.util.Date"/>
+	<field name="distAlmacendetalles" class="java.util.List"/>
+	<field name="almacenEntrada.vAlmacenNombre" class="java.lang.String"/>
+	<field name="usuarioRecepcion.vPersonalApellidoPaterno" class="java.lang.String"/>
+	<field name="usuatioEntrega.vPersonalNombres" class="java.lang.String"/>
+	<field name="vPuntoLlegada" class="java.lang.String"/>
+	<field name="usuarioRecepcion.cPersonalCodigo" class="java.lang.String"/>
+	<field name="usuarioRecepcion.vPersonalNombres" class="java.lang.String"/>
+	<field name="fTotal" class="java.lang.Float"/>
+	<field name="vPuntoSalida" class="java.lang.String"/>
+	<field name="usuatioEntrega.cPersonalCodigo" class="java.lang.String"/>
+	<field name="usuatioEntrega.vPersonalApellidoPaterno" class="java.lang.String"/>
+	<field name="vObservacion" class="java.lang.String"/>
+	<title>
+		<band height="100" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="6" y="4" width="804" height="96"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="133" y="19" width="300" height="38"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[ORDEN DE SALIDA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="380" splitType="Stretch">
+			<rectangle>
+				<reportElement x="6" y="174" width="804" height="196"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="8" width="138" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<text><![CDATA[Fecha Salida:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="28" width="138" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Almacen Salida:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="148" y="8" width="119" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MM/dd/yyyy").format($F{dFechaSalida})]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="10" y="184" width="548" height="58"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{distAlmacendetalles})]]></dataSourceExpression>
+				<subreportExpression><![CDATA["detalleDistSalida.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="10" y="49" width="138" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Personal Resp. de Entrega:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="90" width="138" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Punto de Salida:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="148" y="28" width="267" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{almacenSalida.vAlmacenNombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="90" width="289" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vPuntoSalida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="49" width="138" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuatioEntrega.vPersonalApellidoPaterno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="69" width="96" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuarioRecepcion.cPersonalCodigo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="523" y="7" width="100" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<text><![CDATA[Nro Salida:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="523" y="28" width="100" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<text><![CDATA[Almacen Salida:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="623" y="7" width="172" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{vNroSalida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="623" y="28" width="172" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{almacenEntrada.vAlmacenNombre}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="619" y="350" width="100" height="19"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="619" y="350" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="719" y="350" width="90" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement x="719" y="350" width="86" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="49" width="95" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuatioEntrega.cPersonalCodigo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="70" width="137" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Personal Resp. de Recepcion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="358" y="69" width="138" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuarioRecepcion.vPersonalApellidoPaterno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="257" y="49" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuatioEntrega.vPersonalNombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="257" y="70" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuarioRecepcion.vPersonalNombres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="110" width="137" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Punto de Llegada: 	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="130" width="136" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Observacion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="149" y="110" width="289" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{vPuntoLlegada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="130" width="289" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{vObservacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
