@@ -14,9 +14,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityTransaction;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -53,6 +61,7 @@ import com.entities.Subcategoria;
 import com.entities.Sucursal;
 import com.entities.Unidadmedida;
 import com.entities.Usuario;
+import com.entities.Venta;
 import com.entities.Ventadetalle;
 import com.entities.converter.PreciosproductoConverter;
 import com.entities.vo.AlmacenVo;
@@ -63,6 +72,7 @@ import com.entities.vo.UnidadmedidaVo;
 import com.entities.vo.VentadetalleVo;
 import com.google.gson.Gson;
 import com.struts.form.ProductosForm;
+import com.struts.form.VentaForm;
 import com.util.Constantes;
 import com.util.Fechas;
 import com.util.FormatosNumeros;
@@ -2395,7 +2405,9 @@ public class ProductosAction extends BaseAction {
 				
 				 resultado = productoDao.commitEndidad(transaccion);
 				// productoDao.refreshEndidad(pro);
-				
+				if(pForm.getvImprimir().equals("SI")){
+					reporte(mapping, pForm, request, response);
+				}
 			} 
 		    /**Insertamos Datos del producto como Insumos **/
 			if (pForm.getMode().equals("II")) {			
@@ -2511,6 +2523,11 @@ public class ProductosAction extends BaseAction {
 				
 				 productoDao.mergeEndidad(distAlmacen);
 				 resultado = productoDao.commitEndidad(transaccion);
+				 
+				 if(pForm.getvImprimir().equals("SI")){
+						reporte(mapping, pForm, request, response);
+					}
+
 				 
 			}
 			 else if (mode.equals("D")) { 	        	
@@ -3365,5 +3382,46 @@ public class ProductosAction extends BaseAction {
 					
 					return null;
 					
+				}
+				@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+				public ActionForward reporte(ActionMapping mapping, ActionForm form,
+						HttpServletRequest request, HttpServletResponse response)
+						throws ParseException, IOException, JRException {
+
+					ProductoDao ventaDao = new ProductoDao();
+					/** Instanciamos la Clase VentaForm **/
+					ProductosForm objform = (ProductosForm) form;
+
+					String id = (request.getParameter("id"));
+					String tipo = request.getParameter("tipo");
+					String reportPath = "";
+
+					HttpServletRequestWrapper srw = new HttpServletRequestWrapper(request);
+					Map param = new HashMap();
+					param.put("fechaActual", Fechas.getDate());
+
+					reportPath = srw.getRealPath("/inventario/distribucionAlmacen/reportes/reportDistSalida.jasper");
+
+						
+					List<Distalmacen> listOfShoppingCart = ventaDao.listaDistAlmacen(0, 10000,
+							objform.getDistAlmacen());
+					JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
+							listOfShoppingCart);
+
+					JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath,
+							param, beanCollectionDataSource);
+					HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+					httpServletResponse.addHeader("Content-disposition",
+							"attachment; filename=reportDistribucion.pdf");
+					ServletOutputStream servletOutputStream = httpServletResponse
+							.getOutputStream();
+					JasperExportManager.exportReportToPdfStream(jasperPrint,
+							servletOutputStream);
+
+					servletOutputStream.flush();
+					servletOutputStream.close();
+
+					return null;
+
 				}
 }

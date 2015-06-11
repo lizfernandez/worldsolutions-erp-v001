@@ -181,6 +181,8 @@
 
 <%-- hidden field que contiene el mode --%>
 <html:hidden property="mode" styleId="mode" />	
+<html:hidden property="vImprimir" styleId="vImprimir"  value="NO"/>	
+
 <html:hidden property="vTipoOperacion" styleId="vTipoOperacion"  value="S"/>	
 <%-- set the parameter for the dispatch action --%>
 <html:hidden property="metodo" value="iduDistAlmacen" styleId="metodo"/>
@@ -332,8 +334,9 @@ function fn_calcularTotales(){
 function fn_calcularGlobal(){
 }
 function fn_imprimir(){
-	window.print();
-	insertar('tabla');
+	
+    	$("#vImprimir").val("SI");
+    	insertar('tabla');
 }
 
 function fn_cambioAlmacen(id,tipo){

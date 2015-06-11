@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreport" pageWidth="804" pageHeight="802" columnWidth="804" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="97"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<field name="iVentaDetalleId" class="java.lang.Integer"/>
-	<field name="fVentaDetallePrecio" class="java.lang.Float"/>
-	<field name="iVentaDetalleCantidad" class="java.lang.Integer"/>
+	<field name="iDistAlmacenDetId" class="java.lang.Integer"/>
+	<field name="fPrecioUnitario" class="java.lang.Float"/>
+	<field name="iCantidad" class="java.lang.Integer"/>
 	<field name="producto.cProductoCodigo" class="java.lang.String"/>
 	<field name="producto.vProductoNombre" class="java.lang.String"/>
-	<field name="producto.unidadMedida.vUnidadMedidaDescripcion" class="java.lang.String"/>	
+	<field name="producto.unidadMedida.vUnidadMedidaDescripcion" class="java.lang.String"/>
 	<field name="producto.iUMPedido" class="java.lang.String"/>
 	<field name="producto.fProductoPrecioVenta" class="java.lang.Float"/>
-	<field name="fVentaDetalleTotal" class="java.lang.Float"/>
+	<field name="fTotal" class="java.lang.Float"/>
+	<field name="producto.fProductoDescuento" class="java.lang.Float"/>
 	<variable name="rowTotal" class="java.lang.Float" resetType="None">
-		<variableExpression><![CDATA[$F{fVentaDetallePrecio}*$F{iVentaDetalleCantidad}]]></variableExpression>
+		<variableExpression><![CDATA[$F{fPrecioUnitario}*$F{iCantidad}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0F]]></initialValueExpression>
 	</variable>
 	<variable name="grandTotal" class="java.lang.Float" calculation="Sum">
@@ -26,40 +27,26 @@
 				<reportElement mode="Transparent" x="439" y="11" width="46" height="20"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="4" width="117" height="27" backcolor="#E8E6E6"/>
+				<reportElement x="0" y="4" width="84" height="27" backcolor="#E8E6E6"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="4" width="117" height="27"/>
+				<reportElement x="0" y="4" width="84" height="27"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CODIGO]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="117" y="4" width="111" height="27" backcolor="#E8E6E6"/>
+				<reportElement x="84" y="4" width="85" height="27" backcolor="#E8E6E6"/>
 			</rectangle>
-			<staticText>
-				<reportElement x="117" y="4" width="111" height="27"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CANTIDAD]]></text>
-			</staticText>
 			<rectangle>
-				<reportElement x="228" y="4" width="113" height="27" backcolor="#E8E6E6"/>
+				<reportElement x="169" y="4" width="107" height="27" backcolor="#E8E6E6"/>
 			</rectangle>
-			<staticText>
-				<reportElement x="228" y="4" width="113" height="27"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[UNID.]]></text>
-			</staticText>
 			<rectangle>
-				<reportElement x="341" y="4" width="274" height="27" backcolor="#E8E6E6"/>
+				<reportElement x="276" y="4" width="262" height="27" backcolor="#E8E6E6"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="341" y="4" width="275" height="27"/>
+				<reportElement x="276" y="6" width="261" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -72,37 +59,58 @@
 				<reportElement x="705" y="4" width="89" height="27" backcolor="#E8E6E6"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="616" y="4" width="89" height="27"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[P.U.]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="704" y="4" width="89" height="27"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="83" y="4" width="84" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="171" y="4" width="105" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNID.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="537" y="4" width="81" height="27" backcolor="#E8E6E6"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="537" y="4" width="79" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[% DESC.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="618" y="6" width="86" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P.U.]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="102" splitType="Stretch">
 			<rectangle>
-				<reportElement mode="Opaque" x="117" y="1" width="111" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="83" y="1" width="86" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Opaque" x="229" y="1" width="101" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="169" y="1" width="107" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
 			</rectangle>
 			<textField>
-				<reportElement x="229" y="1" width="112" height="23"/>
+				<reportElement x="172" y="2" width="105" height="23"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{producto.unidadMedida.vUnidadMedidaDescripcion}]]></textFieldExpression>
 			</textField>
-			<rectangle>
-				<reportElement mode="Opaque" x="440" y="1" width="176" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
-			</rectangle>
 			<rectangle>
 				<reportElement mode="Opaque" x="617" y="1" width="88" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
 			</rectangle>
@@ -110,32 +118,43 @@
 				<reportElement mode="Opaque" x="706" y="1" width="88" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
 			</rectangle>
 			<textField>
-				<reportElement x="341" y="1" width="276" height="23"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{producto.vProductoNombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="618" y="1" width="88" height="23"/>
+				<reportElement x="618" y="2" width="88" height="23"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{fVentaDetallePrecio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fPrecioUnitario}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="706" y="1" width="89" height="23"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{fVentaDetalleTotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fTotal}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Opaque" x="0" y="1" width="117" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<reportElement mode="Opaque" x="0" y="1" width="84" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="1" width="117" height="23"/>
+				<reportElement x="0" y="1" width="84" height="23"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{producto.cProductoCodigo}]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="277" y="1" width="262" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+			</rectangle>
 			<textField>
-				<reportElement x="118" y="1" width="111" height="23"/>
+				<reportElement x="295" y="2" width="242" height="23"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{producto.vProductoNombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="2" width="83" height="23"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{iVentaDetalleCantidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{iCantidad}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="537" y="1" width="81" height="23" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+			</rectangle>
+			<textField>
+				<reportElement x="539" y="2" width="79" height="22"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{producto.fProductoDescuento}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

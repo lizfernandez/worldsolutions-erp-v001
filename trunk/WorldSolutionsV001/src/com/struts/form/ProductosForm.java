@@ -65,7 +65,7 @@ public class ProductosForm extends ActionForm {
     private int iSucursalId;
     private int totalPrecios;
     private int totalProductosAlmacen;
-    
+    private String vImprimir;
     /**
 	 * @return the paginas
 	 */
@@ -1409,4 +1409,20 @@ public class ProductosForm extends ActionForm {
 	public void setvTipoOperacion(String vTipoOperacion) {
 		this.distAlmacen.setvTipoOperacion(vTipoOperacion);
 	}
+
+	/**
+	 * @return the vImprimir
+	 */
+	public String getvImprimir() {
+		return vImprimir;
+	}
+
+	/**
+	 * @param vImprimir the vImprimir to set
+	 */
+	public void setvImprimir(String vImprimir) {
+		this.vImprimir = vImprimir;
+	}
+	
+	
 }
