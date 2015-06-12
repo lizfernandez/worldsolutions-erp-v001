@@ -42,6 +42,8 @@ public class IngresoProductoForm extends ActionForm {
 	private int iclasificacionId;
 	private String vImprimir;
 	private String vTipoImpresion;
+	private int iSucursalId;
+
 	/*************************/
 	/**SESIONES DE INPUESTOS**/
 	/*************************/
@@ -881,6 +883,18 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setImpresoraID(String impresoraID) {
 		this.impresoraID = impresoraID;
+	}
+	/**
+	 * @return the iSucursalId
+	 */
+	public int getiSucursalId() {
+		return iSucursalId;
+	}
+	/**
+	 * @param iSucursalId the iSucursalId to set
+	 */
+	public void setiSucursalId(int iSucursalId) {
+		this.iSucursalId = iSucursalId;
 	}
 
 	

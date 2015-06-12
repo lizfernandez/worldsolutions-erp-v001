@@ -205,6 +205,20 @@
     <put name="body" value="/mantenimiento/area/buscarMantenimientoArea.jsp"></put>   
 </definition>
 
+<definition name=".listaUnidadMedida" extends=".plantilla">
+    <put name="body" value="/mantenimiento/unidadMedida/listaUnidadMedida.jsp"></put>   
+    <put name="menuVertical" value="/mantenimiento/sidebar.jsp"></put>  
+</definition>
+<definition name=".mantenimientoUnidadMedida" extends=".popup">
+    <put name="body" value="/mantenimiento/unidadMedida/mantenimientoUnidadMedida.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientoUnidadMedida" extends=".popup">
+    <put name="body" value="/mantenimiento/unidadMedida/buscarMantenimientoUnidadMedida.jsp"></put>   
+</definition>
+
+                   
+	                 
+	                 
 <definition name=".sucursal" extends=".plantilla">
     <put name="body" value="/mantenimiento/sucursal/listaSucursal.jsp"></put>   
     <put name="menuVertical" value="/mantenimiento/sidebar.jsp"></put>  

@@ -23,6 +23,8 @@ public class VentadetalleVo implements Serializable {
     private int iSubCta;
     private String vIdentificadorSession;
 	private float fVentaDetalleCosto;
+	
+	private VentaVo venta;
     
     public VentadetalleVo() {
     }
@@ -236,5 +238,20 @@ public class VentadetalleVo implements Serializable {
 	public void setfVentaDetalleCosto(float fVentaDetalleCosto) {
 		this.fVentaDetalleCosto = fVentaDetalleCosto;
 	}
+
+	/**
+	 * @return the venta
+	 */
+	public VentaVo getVenta() {
+		return venta;
+	}
+
+	/**
+	 * @param venta the venta to set
+	 */
+	public void setVenta(VentaVo venta) {
+		this.venta = venta;
+	}
+	
 	
 }

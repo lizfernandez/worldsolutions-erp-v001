@@ -7,6 +7,7 @@ import org.apache.struts.action.ActionForm;
 
 import com.entities.Area;
 import com.entities.Personal;
+import com.entities.Unidadmedida;
 
 
 public class AreaForm extends ActionForm {
@@ -15,7 +16,8 @@ public class AreaForm extends ActionForm {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List lista;	
-	Area area = new Area();
+	Area area = new Area();	
+	Unidadmedida unidaMedida = new Unidadmedida();
     private String mode;
     private List paginas;
     private int pagInicio;
@@ -112,7 +114,11 @@ public class AreaForm extends ActionForm {
 	 * @return the cEstadoCodigo
 	 */
 	public String getcEstadoCodigo() {
-		return area.getcEstadoCodigo();
+		String cEstadoCodig= area.getcEstadoCodigo();
+		if(cEstadoCodig=="")
+			cEstadoCodig=unidaMedida.getcEstadoCodigo();
+		return cEstadoCodig;
+		
 	}
 
 	/**
@@ -120,6 +126,7 @@ public class AreaForm extends ActionForm {
 	 */
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		area.setcEstadoCodigo(cEstadoCodigo);
+		unidaMedida.setcEstadoCodigo(cEstadoCodigo);
 	}
 
 	
@@ -137,7 +144,43 @@ public class AreaForm extends ActionForm {
 	public void setvAreaDescripcion(String vAreaDescripcion) {
 		area.setvAreaDescripcion(vAreaDescripcion);
 	}
+	/**
+	 * @return the unidaMedida
+	 */
+	public Unidadmedida getUnidaMedida() {
+		return unidaMedida;
+	}
+	/**
+	 * @param unidaMedida the unidaMedida to set
+	 */
+	public void setUnidaMedida(Unidadmedida unidaMedida) {
+		this.unidaMedida = unidaMedida;
+	}
+	public int getiUnidadMedidaId() {
+		return unidaMedida.getiUnidadMedidaId();
+	}
 
+	public void setiUnidadMedidaId(int iUnidadMedidaId) {
+		this.unidaMedida.setiUnidadMedidaId(iUnidadMedidaId) ;
+	}
+
+	
+
+	public String getcUnidadMedidaCodigo() {
+		return unidaMedida.getcUnidadMedidaCodigo();
+	}
+
+	public void setcUnidadMedidaCodigo(String cUnidadMedidaCodigo) {
+		this.unidaMedida.setcUnidadMedidaCodigo(cUnidadMedidaCodigo) ;
+	}
+
+	public String getvUnidadMedidaDescripcion() {
+		return unidaMedida.getvUnidadMedidaDescripcion();
+	}
+
+	public void setvUnidadMedidaDescripcion(String vUnidadMedidaDescripcion) {
+		this.unidaMedida.setvUnidadMedidaDescripcion(vUnidadMedidaDescripcion);
+	}
 	
 
 }

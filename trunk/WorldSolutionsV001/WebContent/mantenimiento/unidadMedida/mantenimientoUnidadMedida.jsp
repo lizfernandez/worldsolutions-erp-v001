@@ -3,40 +3,18 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<html:form action="empresaSucursal" styleId="formSucursal">
+<html:form action="area" styleId="formArea">
 <tr class="trCodigo">
     <td align="right">C&oacute;digo:</td>
-    <td><html:text property="cSucursalCodigo" styleId="cSucursalCodigo" onkeyup="return mayuscula('cSucursalCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text"/>
-    	<span id="m_cSucursalCodigo" class="importante">*</span>
-    </td>
-</tr>
-<tr>
-    <td align="right">Empresa:</td>
-   <td> <html:select  property="iEmpresaId" styleId="iEmpresaId" styleClass="combo" style="width:155px"
-   >       
-              <html:options collection="listaEmpresa" property="iEmpresaId" labelProperty="vEmpresaNombre"/>
-         </html:select>
+    <td><html:text property="cUnidadMedidaCodigo" styleId="cUnidadMedidaCodigo" onkeyup="return mayuscula('cUnidadMedidaCodigo')"  onkeypress="return LetrasNumeros(event)" maxlength="5" styleClass="text"/>
+    	<span id="m_cUnidadMedidaCodigo" class="importante">*</span>
     </td>
 </tr>
 <tr>
     <td align="right">Nombre:</td>
     <td>
-       <html:text property="vSucursalNombre" styleId="vSucursalNombre" onkeyup="return mayuscula('vSucursalNombre')" styleClass="text" size="45"/>
-       <span id="m_vSucursalNombre" class="importante">*</span>
-   </td>
-</tr>
-<tr>
-    <td align="right">Direcci&oacute;n:</td>
-    <td>
-       <html:text property="vSucursalDireccion" styleId="vSucursalDireccion" onkeyup="return mayuscula('vSucursalDireccion')" styleClass="text" size="45"/>
-       <span id="m_vSucursalDireccion" class="importante">*</span>
-   </td>
-</tr>
-<tr>
-    <td align="right">Tel&eacute;fono:</td>
-    <td>
-       <html:text property="vSucursalTelefono" styleId="vSucursalTelefono" onkeyup="return mayuscula('vSucursalTelefono')" styleClass="text"/>
-       <span id="m_vSucursalTelefono" class="importante">*</span>
+       <html:text property="vUnidadMedidaDescripcion" styleId="vUnidadMedidaDescripcion" onkeyup="return mayuscula('vUnidadMedidaDescripcion')" styleClass="text"/>
+       <span id="m_vUnidadMedidaDescripcion" class="importante">*</span>
    </td>
 </tr>
 <tr>
@@ -59,20 +37,20 @@
     </td>
 </tr>
 <%-- hidden field que contiene el id del producto --%>
-<html:hidden property="iSucursalId" styleId="iSucursalId"/>
+<html:hidden property="iUnidadMedidaId" />
 
 <%-- hidden field que contiene el mode --%>
 <html:hidden property="mode" styleId="mode" />
 			
 <%-- set the parameter for the dispatch action --%>
-<html:hidden property="metodo" value="iduSucursal" styleId="metodo" />
+<html:hidden property="metodo" value="iduUnidadMedida" styleId="metodo" />
 	
 </html:form>
 <script>
     var mode = document.getElementById('mode').value;
     
     if(mode=='I') {
-        document.getElementById('cSucursalCodigo').focus();
+        document.getElementById('cUnidadMedidaCodigo').focus();
         document.getElementById('btnGuardar').textContent="Insertar";
         $(".trCodigo").show();
         $("#popupCabecera").text('INSERTAR DATOS');	

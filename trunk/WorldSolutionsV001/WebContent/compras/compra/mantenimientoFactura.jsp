@@ -356,7 +356,7 @@
 <html:hidden property="vIncluyeIGV" styleId="vIncluyeIGV" />
 <html:hidden property="fMontoVuelto" styleId="fMontoVuelto" />
 <html:hidden property="fMontoPago" styleId="fMontoPago" />
-
+<html:hidden property="iSucursalId" styleId="iSucursalId" />
 
 <%-- hidden field que contiene el mode --%>
 <html:hidden property="mode" styleId="mode" />
@@ -667,7 +667,8 @@
     
    function fn_listarProducto(){
     	var iclasificacionId = $("#iclasificacionId").val();
-    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&tipo=compras&mode=LPC',750,650);
+    	var iSucursalId= $("#iSucursalId").val();
+    	popupModal('productos.do?metodo=listaProducto&iclasificacionId='+iclasificacionId+'&iSucursalId='+iSucursalId+'tipo=compras&mode=LPC',750,650);
     }
 
 </script>

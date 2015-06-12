@@ -86,7 +86,7 @@
         <th>C&Oacute;DIGO</th>
         <th width="12%">CANTIDAD</th>
         <th>UNID.</th>
-        <th width="12%">CAPACIDAD</th>
+        
         <th>DESCRIPCI&Oacute;N</th>
         <!--th>C.Compra</th>
         <th>Ganancia(%)</th-->
@@ -110,7 +110,7 @@
 	           </span>
             </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
-            <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /> &ensp; </td>
+            
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td align="right">
                 <span id="precio${i}">
@@ -179,7 +179,7 @@
         <th>C&Oacute;DIGO</th>
         <th width="12%">CANTIDAD</th>
         <th>UNID.</th>
-        <th width="12%">CAPACIDAD</th>
+        
         <th>DESCRIPCI&Oacute;N</th>
         <!--th>C.Compra</th>
         <th>Ganancia(%)</th-->
@@ -199,7 +199,7 @@
 	            
             </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
-            <td><bean:write name="x" property="producto.vProductoCapacidad" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /> &ensp; </td>
+           
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td align="right">
                 <span id="precio${i}">

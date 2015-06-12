@@ -18,6 +18,7 @@ import com.dao.GenericaDao;
 import com.dao.AreaDao;
 import com.entities.Estado;
 import com.entities.Area;
+import com.entities.Unidadmedida;
 import com.entities.Usuario;
 import com.struts.form.AreaForm;
 import com.util.Fechas;
@@ -190,6 +191,185 @@ public class AreaAction extends DispatchAction {
 				    transaccion = areaDao.entityTransaction();
 				    transaccion.begin();
 					areaDao.eliminarUnaEndidad(obj, "iAreaId",ids);/**/
+					resultado = areaDao.commitEndidad(transaccion);
+				} catch (Exception e) {
+					e.printStackTrace();
+					areaDao.limpiarInstancia();
+				} finally {
+					transaccion = null;
+				}
+			}
+				
+			if (resultado == true) {
+				msn = "msnOk";
+
+			}
+			else  {
+				msn = "msnError";
+
+			}
+			/** llamamos a listar Area **/
+			//listaArea(mapping, pForm, request, response);
+			
+			return mapping.findForward(msn);
+		}
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
+		 * @throws IOException 
+		 */
+		public ActionForward listaUnidadMedida(ActionMapping mapping, ActionForm form,
+				HttpServletRequest request, HttpServletResponse response) throws IOException {
+            
+			/***Validamos la session activa y logeada***/
+			String msn = "";
+			/*HttpSession sesion = request.getSession();			
+			if(sesion.getId()!=(sesion.getAttribute("id"))){
+				response.sendRedirect("login.do?metodo=logout");				
+			}
+			else{*/
+			    msn ="showListUnidadMedida";			    
+			int pagina = Paginacion.paginaInicial;
+			int pagInicio = Paginacion.paginaInicial;
+			if(request.getParameter("pagina")!= null){
+				 pagina = Integer.parseInt(request.getParameter("pagina"));
+			}
+		
+			
+			
+			/** Instanciamos la Clase AreaForm **/
+			AreaForm objform = (AreaForm) form;
+			
+
+			/** Instanciamos las clase Daos **/
+			
+			AreaDao areaDao = new AreaDao();
+			
+			/**Seteamos los valores en las listas**/
+			List<Unidadmedida> listaArea = areaDao.listaUnidadMedida(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getUnidaMedida());
+			
+	    
+			/**Consultamos el total de registros segun criterio**/
+			List<Unidadmedida> listaAreaTotal = areaDao.listaUnidadMedida(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getUnidaMedida());
+			
+	        /**Obtenemos el total del paginas***/
+			List<Long> paginas = Paginacion.listPaginas((long)(listaAreaTotal.size()));
+	 	      
+			/** Seteamos las clase AreaForm **/
+	        objform.setLista(listaArea);
+	        objform.setPaginas(paginas);
+	        objform.setPagInicio(pagina);			
+			//}
+			
+			return mapping.findForward(msn);
+		}
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
+		 */
+		public ActionForward mantenimientoUnidadMedida(ActionMapping mapping,
+				ActionForm form, HttpServletRequest request,
+				HttpServletResponse response) {
+
+			
+
+			HttpSession sesion = request.getSession();			
+			String mode = request.getParameter("mode");
+			String msn="";
+			
+			
+			/** Instantacia al AreaForm **/			
+			AreaForm areaform = (AreaForm) form;
+			
+			/** Instantacia a la capa Dao **/
+			EstadoDao estadoDao = new EstadoDao();
+			GenericaDao genericaDao = new GenericaDao();
+
+			/** llamado de los metodos de la clase dao **/
+
+			List<Estado> listaEstado = estadoDao.listEstado();
+
+			 
+			/**LLamamos al formulario mantenimientoArea.jsp para la insercion de datos **/
+			if(mode.equals("I")){
+				
+				String cAreaCodigo = genericaDao.callSPCalculoCodigo(areaform.getUnidaMedida());
+				areaform.getUnidaMedida().setcUnidadMedidaCodigo(cAreaCodigo);
+				
+				msn ="showEditUnidadMedida";
+			}
+			
+			/**LLamamos al formulario mantenimientoArea.jsp para mostrar los datos del UPDATE **/
+			/** Seteamos el areaform la clase Area **/
+			else if(mode.equals("U") || mode.equals("D")){
+				
+				int id = Integer.parseInt(request.getParameter("id"));
+				areaform.setUnidaMedida((Unidadmedida) genericaDao.findEndidad(Unidadmedida.class, id));
+				msn ="showEditUnidadMedida";
+				
+			}
+			/**LLamamos al formulario buscarMantenimientoPerfil.jsp para realizar la busqueda **/
+			else if(mode.equals("F")){
+				msn ="showFindUnidadMedida";
+			}
+			
+				areaform.setMode(mode);
+
+			/** Colocamos en session las listas **/
+
+			sesion.setAttribute("listaEstado", listaEstado);
+
+			return mapping.findForward(msn);
+		}
+
+		/**
+		 * Method execute
+		 * 
+		 * @param mapping
+		 * @param form
+		 * @param request
+		 * @param response
+		 * @return ActionForward
+		 */
+		public ActionForward iduUnidadMedida(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+			
+			/** Inicializamos las variables **/ 
+			String msn = "";
+			String mode = request.getParameter("mode");		
+			String ids = request.getParameter("ids");		
+			boolean resultado = false;
+			HttpSession sesion = request.getSession();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+			/** Instanciamos las clase AreaForm y AreaDao **/
+			AreaForm pForm = (AreaForm) form;
+			Unidadmedida obj =pForm.getUnidaMedida();
+			
+			GenericaDao areaDao = new GenericaDao();
+			
+			if (pForm.getMode().equals("I")) {
+					resultado = areaDao.insertarUnaEndidad(obj);
+				
+			} else if (pForm.getMode().equals("U")) {
+				
+					resultado = areaDao.actualizarUnaEndidad(obj);
+				
+			}
+			else if (mode.equals("D")) {
+				EntityTransaction transaccion = null;
+				try {
+				    transaccion = areaDao.entityTransaction();
+				    transaccion.begin();
+					areaDao.eliminarUnaEndidad(obj, "iUnidadMedidaId",ids);/**/
 					resultado = areaDao.commitEndidad(transaccion);
 				} catch (Exception e) {
 					e.printStackTrace();

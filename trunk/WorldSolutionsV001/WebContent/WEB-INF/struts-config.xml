@@ -143,6 +143,11 @@
 	                 <forward name="showList" path=".area" />
 	                 <forward name="showEdit" path=".mantenimientoArea" />
 	                 <forward name="showFind" path=".buscarMantenimientoArea" />
+	                 
+	                 <forward name="showListUnidadMedida" path=".listaUnidadMedida" />
+	                 <forward name="showEditUnidadMedida" path=".mantenimientoUnidadMedida" />
+	                 <forward name="showFindUnidadMedida" path=".buscarMantenimientoUnidadMedida" />
+	                 
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />
 	           
