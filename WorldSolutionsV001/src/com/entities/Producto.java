@@ -174,7 +174,8 @@ public class Producto implements Serializable {
 		this.fProductoGastosAdm = producto.getfProductoGastosAdm();
 		this.fProductoPrecioCompra = producto.getfProductoPrecioCompra();
 		this.fProductoPrecioVenta = producto.getfProductoPrecioVenta();
-		this.categoria = new Categoria(producto.getCategoria());
+		
+		this.categoria =producto.getCategoria()!=null ?  new Categoria(producto.getCategoria()):null;
 		this.subcategoria = producto.getSubcategoria() != null ? new Subcategoria(producto.getSubcategoria()) : null;
 		
 		this.iProductoStockTotal = producto.getiProductoStockTotal();

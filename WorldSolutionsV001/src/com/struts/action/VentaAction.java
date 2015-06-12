@@ -54,10 +54,14 @@ import com.entities.Ventadetalle;
 import com.entities.Ventadevolucion;
 import com.entities.Ventadevoluciondetalle;
 import com.entities.converter.VentaConverter;
+import com.entities.vo.ClienteVo;
+import com.entities.vo.FormapagoVo;
 import com.entities.vo.PersonalVo;
 import com.entities.vo.ProductoVo;
 import com.entities.vo.ReporteDetalleVenta;
 import com.entities.vo.SucursalVo;
+import com.entities.vo.TipodocumentogestionVo;
+import com.entities.vo.UnidadmedidaVo;
 import com.entities.vo.VentaVo;
 import com.entities.vo.VentadetalleVo;
 import com.google.gson.Gson;
@@ -304,8 +308,8 @@ public class VentaAction extends BaseAction {
 			sesion.removeAttribute("listaVentaDetalle");
 			sesion.removeAttribute("listaVentaDetalleCompra");
 			sesion.removeAttribute("listaVentaDetalleOriginal");
-			ventaform.getVentaDev().setnNroNotaCredito(ventaDao.callSPNro_Documento(7, "ventaDevolucion", "nNroNotaCredito",usu.getSucursal().getiSucursalId()));
-
+			ventaform.setnNroNotaCredito(ventaDao.callSPNro_Documento(7, "ventaDevolucion", "nNroNotaCredito",usu.getSucursal().getiSucursalId()));
+		
 		}
 
 		/**
@@ -566,13 +570,13 @@ public class VentaAction extends BaseAction {
 			 **/
 			if (mode.equals("ID")) {
 				sesion.removeAttribute("listaVentaDetalle");
-				lista = new ArrayList<VentadetalleVo>();
+			    lista  = new ArrayList<VentadetalleVo>();
 				List<Ventadetalle> listas = ventaDao.buscarVentaDetalle(iProductoId);
-				List<Ventadetalle> lista2 = new ArrayList<Ventadetalle>();
+				
 				for (Ventadetalle e : listas) {
-					Venta venta = new Venta();
-					Ventadetalle ventaDetalle = new Ventadetalle();
-					Cliente cliente = new Cliente();
+					VentaVo venta = new VentaVo();
+					VentadetalleVo ventaDetalle = new VentadetalleVo();
+					ClienteVo cliente = new ClienteVo();
 
 					venta.setiVentaId(e.getVenta().getiVentaId());
 					venta.setfVentaIGV(e.getVenta().getfVentaIGV());
@@ -581,8 +585,8 @@ public class VentaAction extends BaseAction {
 					venta.setdVentaFecha(e.getVenta().getdVentaFecha());
 					venta.setnVentaNumero(e.getVenta().getnVentaNumero());
 					venta.setvEstadoDocumento(e.getVenta().getvEstadoDocumento());
-					venta.setFormaPago(e.getVenta().getFormaPago());
-					venta.setTipoDocumento(e.getVenta().getTipoDocumento());
+					venta.setFormaPago(new FormapagoVo(e.getVenta().getFormaPago()));
+					venta.setTipoDocumento(new TipodocumentogestionVo(e.getVenta().getTipoDocumento()));
 
 					cliente.setiClienteId(e.getVenta().getCliente().getiClienteId());
 					cliente.setvClienteRazonSocial(e.getVenta().getCliente().getvClienteRazonSocial());
@@ -599,21 +603,21 @@ public class VentaAction extends BaseAction {
 					ventaDetalle.setfVentaDetallePrecio(e.getfVentaDetallePrecio());
 					ventaDetalle.setfVentaDetalleTotal(e.getfVentaDetalleTotal());
 					ventaDetalle.setfDescuento(e.getfDescuento());
-					Producto productoBean = new Producto();
+					ProductoVo productoBean = new ProductoVo();
 
 					productoBean.setiProductoId(e.getProducto().getiProductoId());
 					productoBean.setcProductoCodigo(e.getProducto().getcProductoCodigo());
 					productoBean.setvProductoNombre(e.getProducto().getvProductoNombre());
-					productoBean.setUnidadMedida(e.getProducto().getUnidadMedida());
+					productoBean.setUnidadMedida(new UnidadmedidaVo(e.getProducto().getUnidadMedida()));
 					productoBean.setiUMBase(e.getProducto().getiUMBase());
 					productoBean.setfProductoPrecioVenta(e.getProducto().getfProductoPrecioVenta());
 					productoBean.setfProductoPrecioCompra(e.getProducto().getfProductoPrecioCompra());
 
 					ventaDetalle.setProducto(productoBean);
 
-					lista2.add(ventaDetalle);
+					lista.add(ventaDetalle);
 				}
-				sesion.setAttribute("listaVentaDetalle", lista2);
+				sesion.setAttribute("listaVentaDetalle", lista);
 				// sesion.setAttribute("listaVentaDetalleDevol", lista);
 
 			}
@@ -1812,6 +1816,7 @@ public class VentaAction extends BaseAction {
 				obj.setdFechaInserta(Fechas.getDate());
 				obj.setiUsuarioInsertaId(usu.getiUsuarioId());
 				obj.setcEstadoCodigo(Constantes.estadoActivo);
+				obj.setSucursal(usu.getSucursal());
 				obj.setTipoDocumento(Util.listaDocGest().get(2));/*
 																 * get(2)= 7:
 																 * NOTA DE
@@ -1820,7 +1825,7 @@ public class VentaAction extends BaseAction {
 
 				/**** Informacion de detalle compra ****/
 				if (sesion.getAttribute("listaVentaDetalle") != null) {
-					for (Ventadetalle ingresoDetalle : (List<Ventadetalle>) sesion.getAttribute("listaVentaDetalle")) {
+					for (VentadetalleVo ingresoDetalle : (List<VentadetalleVo>) sesion.getAttribute("listaVentaDetalle")) {
 
 						if (ingresoDetalle.getcEstadoCodigo().equals(
 								Constantes.estadoActivo)) {
@@ -1834,7 +1839,7 @@ public class VentaAction extends BaseAction {
 
 							objDetalle.setVentadevolucion(obj);
 							objDetalle
-									.setProducto(ingresoDetalle.getProducto());
+									.setProducto(new Producto(ingresoDetalle.getProducto()));
 							objDetalle.setfVentaDevDetallePrecio(ingresoDetalle
 									.getfVentaDetallePrecio());
 							objDetalle

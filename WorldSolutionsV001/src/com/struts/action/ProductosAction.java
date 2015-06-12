@@ -3,6 +3,7 @@
 
 package com.struts.action;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -2407,6 +2408,8 @@ public class ProductosAction extends BaseAction {
 				// productoDao.refreshEndidad(pro);
 				if(pForm.getvImprimir().equals("SI")){
 					reporte(mapping, pForm, request, response);
+					resultado=true;
+					
 				}
 			} 
 		    /**Insertamos Datos del producto como Insumos **/
@@ -2526,6 +2529,7 @@ public class ProductosAction extends BaseAction {
 				 
 				 if(pForm.getvImprimir().equals("SI")){
 						reporte(mapping, pForm, request, response);
+						resultado=true;
 					}
 
 				 
@@ -3408,15 +3412,14 @@ public class ProductosAction extends BaseAction {
 					JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(
 							listOfShoppingCart);
 
-					JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath,
-							param, beanCollectionDataSource);
+					JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath,param, beanCollectionDataSource);
 					HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-					httpServletResponse.addHeader("Content-disposition",
-							"attachment; filename=reportDistribucion.pdf");
-					ServletOutputStream servletOutputStream = httpServletResponse
-							.getOutputStream();
-					JasperExportManager.exportReportToPdfStream(jasperPrint,
-							servletOutputStream);
+					httpServletResponse.addHeader("Content-disposition","attachment; filename=reportDistribucion.pdf");
+					ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+					JasperExportManager.exportReportToPdfStream(jasperPrint,servletOutputStream);
+
+                    ByteArrayOutputStream baos =new ByteArrayOutputStream();
+                    baos.writeTo(servletOutputStream);
 
 					servletOutputStream.flush();
 					servletOutputStream.close();

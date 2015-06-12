@@ -41,6 +41,13 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		         if(per.equals("814")){ %>
 		        <li id="area"><a href="area.do?metodo=listaArea">
 		            <span class="gestion">Mant. Area</span></a>
+		        </li>		        
+		          <% break; }}}
+		         for (String per: listapermiso) {
+		   	     if(per!=null){
+		         if(per.equals("814")){ %>
+		        <li id="area"><a href="area.do?metodo=listaUnidadMedida">
+		            <span class="gestion">Mant. Unidad Medida</span></a>
 		        </li>
 		         <% break; }}}%>
 		       

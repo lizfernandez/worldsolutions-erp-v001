@@ -700,6 +700,7 @@ public class IngresoProductoAction extends BaseAction {
 			ingresoproductoform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
 			ingresoproductoform.setIclasificacionId(Integer.parseInt( request.getParameter("iclasificacionId")));
 			ingresoproductoform.setfTipoCambio(tipoCambio);
+			ingresoproductoform.setiSucursalId(usu.getSucursal().getiSucursalId());
 			/***LISTA DE DETALLE VENTA***/
 			sesion.removeAttribute("listaIngresoProductoDetalle");
 			 

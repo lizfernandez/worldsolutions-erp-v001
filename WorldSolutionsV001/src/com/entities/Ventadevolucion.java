@@ -62,6 +62,11 @@ public class Ventadevolucion implements Serializable {
     
     private String nNroNotaCredito;
     
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="iSucursalId", nullable=false) 
+    private Sucursal sucursal;
+    
     public Ventadevolucion() {
     }
 
@@ -336,6 +341,22 @@ public class Ventadevolucion implements Serializable {
 	 */
 	public void setTipoDocumento(Tipodocumentogestion tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+	}
+
+
+	/**
+	 * @return the sucursal
+	 */
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+
+	/**
+	 * @param sucursal the sucursal to set
+	 */
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
 	}
 	
 	
