@@ -87,8 +87,7 @@
         <th>&nbsp;</th>
         <th>C&Oacute;DIGO</th>
         <th width="12%">CANTIDAD</th>
-        <th>UNID.</th>
-        <th width="12%">CAPACIDAD</th>
+        <th>UNID.</th>        
         <th>DESCRIPCI&Oacute;N</th>
         <th align="right">P.U.</th>
         <th align="right">% DESC.</th>
@@ -101,23 +100,23 @@
           <td><img src="${pageContext.request.contextPath}/media/imagenes/delete.png" onclick="fn_eliminar('${i}')"  class="imgDelete"/></td>
             <td><bean:write name="x" property="producto.cProductoCodigo" /></td>
             <td>
-              <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iIngresoProductoDetalleCantidad" />"/>
+              <input type="text" class="inputderecha" id="numero${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="iCantidad" />"/>
 	        </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
-            <td><bean:write name="x" property="producto.iUMPedido" /> <bean:write name="x" property="producto.vUnidadMedidaDescripcionC" /></td>
+         
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td align="right">
-                <input type="text" class="inputderecha" id="precio${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fIngresoProductoDetallePrecio" format="#,##0.00" locale="Localidad" />"/>                
+                <input type="text" class="inputderecha" id="precio${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fPrecioUnitario" format="#,##0.00" locale="Localidad" />"/>                
             </td>
              <td align="right">
                 <input type="text" class="inputderecha" id="descuento${i}" onBlur="fn_calcularTotal('${i}')" value="<bean:write name="x" property="fDescuento" format="#,##0.00" locale="Localidad" />"/>                
             </td>
             <td align="right">  
                    <span class="total${i}">
-	                 <bean:write name="x" property="fIngresoProductoDetalleTotal" format="#,##0.00"  locale="Localidad"/>
+	                 <bean:write name="x" property="fTotal" format="#,##0.00"  locale="Localidad"/>
 	                </span>
 	               <span id="total${i}" class="totales">
-	                 <bean:write name="x" property="fIngresoProductoDetalleTotal" />
+	                 <bean:write name="x" property="fTotal" />
 	               </span>          
               </td>
         </tr> 
