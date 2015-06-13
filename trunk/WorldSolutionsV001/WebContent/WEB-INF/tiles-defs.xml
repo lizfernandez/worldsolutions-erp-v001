@@ -85,10 +85,7 @@
     <put name="body" value="/inventario/distribucionAlmacen/listaPopupDistribucionSalida.jsp"></put>   
     <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
 </definition>
-<definition name=".listaOrdenCompra" extends=".plantilla">
-    <put name="body" value="/inventario/ordenCompra/listaOrdenCompra.jsp"></put>   
-    <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
-</definition>
+
 
 <definition name=".listPopupProductoKardex" extends=".popup">
     <put name="body" value="/inventario/producto/listaPopupProductoKardex.jsp"></put>   
@@ -422,7 +419,21 @@
 <definition name=".buscarMantenimientoDevolucionCompra" extends=".popup">
     <put name="body" value="/compras/devolucionCompra/buscarMantenimientoDevolucionCompra.jsp"></put>   
 </definition>
-
+               
+<definition name=".listaOrdenCompra" extends=".plantilla">
+    <put name="body" value="/inventario/ordenCompra/listaOrdenCompra.jsp"></put>   
+    <put name="menuVertical" value="/inventario/sidebar.jsp"></put>  
+</definition>
+<definition name=".mantenimientoOrdenCompra" extends=".popup">
+    <put name="body" value="/inventario/ordenCompra/mantenimientoOrdenCompra.jsp"></put>   
+</definition>
+<definition name=".buscarMantenimientOrdenCompra" extends=".popup">
+    <put name="body" value="/inventario/ordenCompra/buscarMantenimientoOrdenCompra.jsp"></put>   
+</definition>
+<definition name=".listaPopupOrdenCompra" extends=".popup">
+    <put name="body" value="/inventario/ordenCompra/listaPopupOrdenCompra.jsp"></put>   
+</definition>
+	               
 <definition name=".mantenimientoEstadoCuenta" extends=".popup">
     <put name="body" value="/compras/compra/mantenimientoIngEstadoCuentaProv.jsp"></put>   
 </definition>

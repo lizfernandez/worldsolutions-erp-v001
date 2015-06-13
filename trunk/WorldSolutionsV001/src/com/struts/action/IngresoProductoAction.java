@@ -34,6 +34,8 @@ import com.entities.Ingresoproductodevolucion;
 import com.entities.Ingresoproductodevoluciondetalle;
 import com.entities.Kardex;
 import com.entities.Moneda;
+import com.entities.Ordencompra;
+import com.entities.Ordencompradetalle;
 import com.entities.Periodo;
 import com.entities.Preciosproducto;
 import com.entities.Producto;
@@ -358,7 +360,7 @@ public class IngresoProductoAction extends BaseAction {
 			sesion.removeAttribute("listaIngresoProductoDetalle"); 
 			sesion.removeAttribute("listaIngresoProductoDetalleCompra");
 			sesion.removeAttribute("listaIngresoProductoDetalleOriginal");
-			ingresoproductoform.getIngresoProductoDev().setnNroNotaDebito(ingresogenericaDao.callSPNro_Documento(8,"Ingresoproductodevolucion","nNroNotaDebito",usu.getSucursal().getiSucursalId()));
+			ingresoproductoform.setnNroNotaDebito(ingresogenericaDao.callSPNro_Documento(8,"Ingresoproductodevolucion","nNroNotaDebito",usu.getSucursal().getiSucursalId()));
 		}
      
 		/**
@@ -854,7 +856,6 @@ public class IngresoProductoAction extends BaseAction {
 			HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException, ParseException {
 
 		/** Inicializamos las variables **/
-		String msn = "";
 		String mode = request.getParameter("mode");
 		String ids = request.getParameter("ids");
 		boolean resultado = false;
@@ -1280,6 +1281,7 @@ public class IngresoProductoAction extends BaseAction {
         	 transaccion = null;
          }
 			
+		String msn;
 		if (resultado == true) {
 			msn = "msnOk";
 
@@ -1348,6 +1350,7 @@ public class IngresoProductoAction extends BaseAction {
 		   	    obj.setvEstadoCodigo(Constantes.estadoActivo);
 		   	    obj.setiPeriodoId(iPeriodoId);
 		   	    obj.setTipoDocumento(Util.listaDocGest().get(3));/* get(3)= 8: NOTA DE DEBITO **/
+		   	    obj.setSucursal(usu.getSucursal());
 		   	    /****Informacion de detalle compra****/
 	      	   if(sesion.getAttribute("listaIngresoProductoDetalle")!=null){
 	      		    /**Actualizamos el estado de la Compra**/
@@ -1643,5 +1646,467 @@ public class IngresoProductoAction extends BaseAction {
 		}
 		
 	}
+	/**
+	 * Method execute
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param requestidu
+	 * 
+	 * @param response
+	 * @return ActionForward
+	 * @throws ParseException 
+	 * @throws IOException 
+	 */
+	public ActionForward listaOrdenCompra(ActionMapping mapping, ActionForm form,
+				HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+
+		/***Validamos la session activa y logeada***/
+	    String msn = "";
+		HttpSession sesion = request.getSession();
+		
+		/*if(sesion.getId()!=(sesion.getAttribute("id"))){
+			response.sendRedirect("login.do?metodo=logout");				
+		}
+		else{*/
+			
+		
+		    /***Inicializamos variables***/
+			String mode = request.getParameter("mode");
+			int pagina = Paginacion.paginaInicial;
+			int pagInicio = Paginacion.paginaInicial;
+			if(request.getParameter("pagina")!= null){
+				 pagina = Integer.parseInt(request.getParameter("pagina"));
+			}
+			
+			/**Seteamos los valores en las listas**/
+			List<Ordencompra> listaIngresoproducto = new ArrayList<Ordencompra>();
+			List<Ordencompra> listaIngresoproductoTotal = new ArrayList<Ordencompra>();
+			List<Long> paginas = new ArrayList<Long>();
+			
+			/** Instanciamos la Clase IngresoproductoForm **/
+			IngresoProductoForm objform = (IngresoProductoForm) form;
+			
+
+			/** Instanciamos las clase Daos **/
+			GenericaDao generica = new GenericaDao();
+			IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
+			Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		 	if (!Constantes.usuAdministrador.equals(usu.getPerfil().getvPerfilDescripcion())) {
+		 		objform.getIngresoProducto().setSucursal(usu.getSucursal());
+		 	}
+
+			/**Lista de compras en Modal Popup compras
+			 * LP: lista popup para devoluciones de compras
+			 * LPL: lista popup para cargar la factura la cual se generara la letra***/
+			 if(mode!=null &&( mode.equals("LP") || mode.equals("LPL"))){
+				   listaIngresoproducto = ingresogenericaDao.listaOrdenCompra(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getOrdenCompra());
+				    
+					/**Consultamos el total de registros segun criterio**/
+					listaIngresoproductoTotal = ingresogenericaDao.listaOrdenCompra(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getOrdenCompra());
+					
+			        /**Obtenemos el total del paginas***/
+					paginas = Paginacion.listPaginas((long)(listaIngresoproductoTotal.size()));
+			 	     
+					
+					objform.setLista(listaIngresoproducto);				 
+					msn ="showListPopupOrdenCompra";
+				
+			}
+			else{
+				 listaIngresoproducto = ingresogenericaDao.listaOrdenCompra(Paginacion.pagInicio(pagina),Paginacion.pagFin(),objform.getOrdenCompra());
+		    
+				/**Consultamos el total de registros segun criterio**/
+				listaIngresoproductoTotal = ingresogenericaDao.listaOrdenCompra(Paginacion.pagInicio(pagInicio),Paginacion.pagFinMax(),objform.getOrdenCompra());
+				
+		        /**Obtenemos el total del paginas***/
+				paginas = Paginacion.listPaginas((long)(listaIngresoproductoTotal.size()));
+		 	     
+				
+				objform.setLista(listaIngresoproducto);
+				 
+				/***Redirecionamos  al ***/
+				 msn ="showListOrdenCompra";
+				
+			}
+			/** Seteamos las clase IngresoproductoForm **/
+	        
+	        objform.setPaginas(paginas);
+	        objform.setPagInicio(pagina);
+	        objform.setMode(mode);
+	     // }// else
+			return mapping.findForward(msn);
+		}
+	/**
+	 * Method execute
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return ActionForward
+	 */
+	public ActionForward mantenimientoOrdenCompra(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		HttpSession sesion = request.getSession();
+		String mode = request.getParameter("mode");
+		List<ImpresoraVO> listaImpresora = Impresora.listarImpresoras();
+		String msn = "";
+
+		/** Instantacia al IngresoproductoForm **/
+		IngresoProductoForm ingresoproductoform = (IngresoProductoForm) form;
+
+		/** Instantacia a la capa Dao **/
+		EstadoDao estadoDao = new EstadoDao();
+		
+		IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
+		Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		Moneda moneda = (Moneda)sesion.getAttribute("Moneda");
+		float tipoCambio = Float.parseFloat((String) sesion.getAttribute("TipoCambio"));
+		
+		
+
+		/** llamado de los metodos de la clase dao **/
+
+		List<Estado> listaEstado = estadoDao.listEstado();
+		List<Ordencompradetalle> lista = new ArrayList<Ordencompradetalle>();	
+		List<Formapago> listaFormapago = ingresogenericaDao.listaEntidadGenericaSinCodigo("Formapago");
+	    List<Tipodocumentogestion> listaTipoDoc = ingresogenericaDao.listaEntidadGenericaSinCodigo("Tipodocumentogestion");
+	    List<Periodo> listaPeriodo =  ingresogenericaDao.listaEntidadGenericaSinCodigo("Periodo");
+	    
+	    
+		
+	    /**
+		 * LLamamos al formulario mantenimientoIngresoproducto.jsp para la
+		 * insercion de datos
+		 **/
+		if (mode.equals("I")) {
+			String tipoDocumento = request.getParameter("idTipoDocumento");
+			
+			 ingresoproductoform.setTipoMoneda(moneda.getcModenaCodigo());
+			 ingresoproductoform.setIGVCompra(sesion.getAttribute("IGVCompras").toString());
+			 ingresoproductoform.setIGVPercepcion(sesion.getAttribute("IGVPercepcion").toString());
+			 ingresoproductoform.setvPersonalNombres(usu.getPersonal().getvPersonalNombres()+" "+usu.getPersonal().getvPersonalApellidoPaterno()); 
+			 ingresoproductoform.setcPersonalCodigo(usu.getPersonal().getcPersonalCodigo());
+				
+			
+			ingresoproductoform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
+			ingresoproductoform.setIclasificacionId(Integer.parseInt( request.getParameter("iclasificacionId")));
+			ingresoproductoform.setfTipoCambio(tipoCambio);
+			ingresoproductoform.setiSucursalId(usu.getSucursal().getiSucursalId());
+			ingresoproductoform.setvNroOrden(ingresogenericaDao.callSPNro_Documento(16,"Ordencompra","vNroOrden",usu.getSucursal().getiSucursalId()));
+			/***LISTA DE DETALLE VENTA***/
+			sesion.removeAttribute("listaIngresoProductoDetalle");
+			 
+	 	     if(sesion.getAttribute("listaIngresoProductoDetalle")==null){				
+								 sesion.setAttribute("listaIngresoProductoDetalle", lista);
+			 }
+			
+			 
+			 /*if(tipoDocumento.equals("1"))
+					msn = "showEditFactura";			
+			 if(tipoDocumento.equals("2"))
+				  // msn = "showEditBoleta";
+				 msn = "showEditFactura";
+			 if(tipoDocumento.equals("3"))
+				  // msn = "showEditNotaDebito";
+				 msn = "showEditFactura";
+			 if(tipoDocumento.equals("4"))
+				 //  msn = "showEditGuiaRemision";
+				 msn = "showEditFactura";
+			 if(tipoDocumento.equals("5"))
+				 //  msn = "showEditPedido";*/
+				 msn = "showEditOrdenCompra";
+		}
+      
+      
+		/**
+		 * LLamamos al formulario mantenimientoIngresoproducto.jsp para mostrar
+		 * los datos del UPDATE
+		 **/
+		/** Seteamos el ingresoproductoform la clase Ingresoproducto **/
+		else if (mode.equals("U") || mode.equals("UE")) {
+			
+		
+			int id = Integer.parseInt(request.getParameter("id"));
+			String tipoDocumento = request.getParameter("idTipoDocumento");
+			
+			
+			Ordencompra ingresoProducto = ingresogenericaDao.findEndidad(Ordencompra.class,id);
+			
+			ingresoproductoform.setOrdenCompra(ingresoProducto);
+		//	ingresoproductoform.setTipoMoneda(ingresoProducto.getvTipoCompra());
+			ingresoproductoform.setIGVCompra(String.valueOf(ingresoProducto.getfOrdenCompraIGV()));
+			
+			
+				
+				 /***COMPRAS FACTURA, BOLETA, NOTA DE PEDIDO***/				
+				 /***LISTA DE DETALLE DE COMPRAS***/
+				sesion.removeAttribute("listaIngresoProductoDetalle");					
+				for(Ordencompradetalle obj : ingresoProducto.getOrdenCompradetalles()){
+					if(obj.getcEstadoCodigo().equals(Constantes.estadoActivo)){
+					    Ordencompradetalle ingresoDetalle = new Ordencompradetalle();
+						//ventaDetalle.setVenta(obj.getVenta());
+					    obj.getProducto().setIngresoproductodetalles(new ArrayList<Ingresoproductodetalle>());
+					    obj.getProducto().setVentadetalles(new ArrayList<Ventadetalle>());
+					    obj.getProducto().setKardexs(new ArrayList<Kardex>());
+					
+					    ingresoDetalle.setProducto(obj.getProducto());
+					    ingresoDetalle.setiOrdenCompraDetalleId(obj.getiOrdenCompraDetalleId());
+					    ingresoDetalle.setcEstadoCodigo(obj.getcEstadoCodigo());
+					    ingresoDetalle.setfPrecioUnitario(obj.getfPrecioUnitario());
+					    ingresoDetalle.setfTotal(obj.getfTotal());
+					    ingresoDetalle.setiCantidad(obj.getiCantidad());
+					    ingresoDetalle.setfDescuento(obj.getfDescuento());
+						
+						lista.add(ingresoDetalle);
+					 }
+				}
+				
+				sesion.setAttribute("listaIngresoProductoDetalle",lista);
+				ingresoproductoform.setvProveedorDireccion(ingresoProducto.getProveedor().getvProveedorDireccion());
+				ingresoproductoform.setiTipoDocumentoId(Integer.parseInt(tipoDocumento));
+			//	ingresoproductoform.setIclasificacionId(Integer.parseInt( request.getParameter("iclasificacionId")));
+				ingresoproductoform.setcPersonalCodigo(ingresoProducto.getUsuario().getPersonal().getcPersonalCodigo());
+				ingresoproductoform.setvPersonalNombres(ingresoProducto.getUsuario().getPersonal().getvPersonalNombres()+" "+ ingresoProducto.getUsuario().getPersonal().getvPersonalApellidoPaterno());
+				
+				ingresoproductoform.setOrdenCompra(ingresoProducto);
+			   	
+
+				/* if(tipoDocumento.equals("1"))
+						msn = "showEditFactura";			
+				 if(tipoDocumento.equals("2"))
+					 msn = "showEditFactura";
+					// msn = "showEditBoleta";
+				 if(tipoDocumento.equals("3"))
+					 msn = "showEditFactura";
+					// msn = "showEditNotaDebito";
+				 if(tipoDocumento.equals("4"))
+					 msn = "showEditFactura";
+					// msn = "showEditGuiaRemision";
+				 if(tipoDocumento.equals("5"))*/
+					 msn = "showEditOrdenCompra";
+					// msn = "showEditPedido";
+			
+			
+
+		}
+		/**
+		 * LLamamos al formulario buscarMantenimientoPerfil.jsp para realizar la
+		 * busqueda
+		 **/
+		else if (mode.equals("F")) {
+			
+			msn = "showFindOrdenCompra";
+			
+		} 
+
+		ingresoproductoform.setMode(mode);
+
+		/** Colocamos en session las listas **/
+		
+		sesion.setAttribute("listaEstado", listaEstado);
+		sesion.setAttribute("listaFormapago", listaFormapago);
+		sesion.setAttribute("listaTipoDoc", listaTipoDoc);
+		sesion.setAttribute("listaPeriodo", listaPeriodo);
+		sesion.setAttribute("listaImpresora", listaImpresora);
+
+
+		return mapping.findForward(msn);
+	}
+	/**
+	 * Method execute
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return ActionForward
+	 * @throws NoSuchFieldException 
+	 * @throws IllegalAccessException 
+	 * @throws ClassNotFoundException 
+	 * @throws SecurityException 
+	 * @throws IllegalArgumentException 
+	 * @throws ParseException 
+	 */
+	public ActionForward iduOrdenCompra(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws IllegalArgumentException, SecurityException, ClassNotFoundException, IllegalAccessException, NoSuchFieldException, ParseException {
+
+		/** Inicializamos las variables **/
+		String mode = request.getParameter("mode");
+		String ids = request.getParameter("ids");
+		boolean resultado = false;
+		int cantidadProducto = 0, cantidadProductoActual=0;
+		float precioProducto =(float) 0.0;
+		HttpSession sesion = request.getSession();
+
+		/** Instanciamos las clase IngresoproductoForm y IngresogenericaDao **/
+		IngresoProductoForm pForm = (IngresoProductoForm) form;
+		IngresoProductoDao ingresogenericaDao = new IngresoProductoDao();
+		 Usuario usu = (Usuario) sesion.getAttribute("Usuario");
+		 int iPeriodoId = (Integer) sesion.getAttribute("iPeriodoId");
+		
+		
+		List<Ordencompradetalle> ingresodetalles = new  ArrayList<Ordencompradetalle>();
+		List<Kardex> listaKardex = new  ArrayList<Kardex>();
+		List<Kardex> listaKardexActivo = new  ArrayList<Kardex>();
+		ContabilidadDao contabilidadDao = new ContabilidadDao();
+		KardexDao kardexDao = new KardexDao();
+		Ordencompra obj = pForm.getOrdenCompra();
+		
+		/** Iniciamos instacia de transacion **/
+         EntityTransaction transaccion = null;
+         try {
+         	transaccion = ingresogenericaDao.entityTransaction();
+	        transaccion.begin();
+	         
+			if (pForm.getMode().equals("I") || pForm.getMode().equals("IE")) {
+				
+				/*** Informacion de la compra****/
+			   obj.setdFechaInserta(Fechas.getDate());
+	      	         	  
+	      	   obj.setcEstadoCodigo(Constantes.estadoActivo);
+	      	   obj.setUsuario(usu);
+	      	   obj.setPeriodo(ingresogenericaDao.findEndidad(Periodo.class, iPeriodoId));
+	      	   obj.setSucursal(usu.getSucursal());
+	          // obj.setvPorcentajeIGV(sesion.getAttribute("IGVCompras").toString());
+	      	   
+	      	  	
+	      	   /****Informacion de detalle compra****/
+	      	   if(sesion.getAttribute("listaIngresoProductoDetalle")!=null){
+		      	   for(Ingresoproductodetalle ingresoDetalle:(List<Ingresoproductodetalle>) sesion.getAttribute("listaIngresoProductoDetalle")){
+		      		       
+		      		   if(ingresoDetalle.getcEstadoCodigo().equals(Constantes.estadoActivo)){
+		      			   Ordencompradetalle ordenCompradetalle= new Ordencompradetalle();
+		      			 
+		      			 ordenCompradetalle.setOrdenCompra(obj);
+		      			 ordenCompradetalle.setcEstadoCodigo(ingresoDetalle.getcEstadoCodigo());
+		      			 ordenCompradetalle.setfDescuento(ingresoDetalle.getfDescuento());
+		      			 ordenCompradetalle.setfPrecioUnitario(ingresoDetalle.getfIngresoProductoDetallePrecio());
+		      			 ordenCompradetalle.setfTotal(ingresoDetalle.getfIngresoProductoDetalleTotal());
+		      			ordenCompradetalle.setiCantidad(ingresoDetalle.getiIngresoProductoDetalleCantidad());
+		      			ordenCompradetalle.setProducto(ingresoDetalle.getProducto());
+		      			ordenCompradetalle.setdFechaInserta(Fechas.getDate());
+		      			ordenCompradetalle.setiUsuarioInsertaId(usu.getiUsuarioId());
+				      	   
+		      			 
+				           /***Agregamos las actualizaciones en la lista ventadetalles****/  
+				           ingresodetalles.add(ordenCompradetalle);
+				           
+				         
+						
+		      		   }// activo
+		      		 		 
+		      		
+		      	   }// detalle compra
+		      	   
+		      	  
+		      	    obj.setOrdenCompradetalles(ingresodetalles);
+	      	   }// if
+	      	   
+	      	  
+		         
+		         ingresogenericaDao.persistEndidad(obj);
+		         resultado = ingresogenericaDao.commitEndidad(transaccion);
+		         ingresogenericaDao.refreshEndidad(obj);
+		    
+	             //ingresogenericaDao.refreshEndidad(obj);
+		         
+				}// fin de insercion
+			   
+			/*****************************************************************************************/
+			/** U: Actualizacion de la Entidad IngresoProducto                                      **/
+			/** UE: Actualizacion de la IngresoProducto por medio del estado de cuenta del proveedor */
+			/*****************************************************************************************/
+			   else if (pForm.getMode().equals("U") || pForm.getMode().equals("UE")) {
+				
+			    obj = ingresogenericaDao.findEndidad(Ordencompra.class,pForm.getiOrdenCompraId()); 
+				obj= Util.comparar(obj, pForm.getIngresoProducto());//pForm.getVenta();
+				obj.setiUsuarioActualizaId(usu.getiUsuarioId());
+				obj.setdFechaActualiza(Fechas.getDate());
+				
+				int i= 0;
+					 
+					 List<Ordencompradetalle>  listSession = (List<Ordencompradetalle>) sesion.getAttribute("listaIngresoProductoDetalle");			
+					 
+						  for(Ordencompradetalle ingresoDetalle:listSession){			       			
+							  /***************************/
+							  /** Obtenemos el producto */
+							  /**************************/
+							  Producto producto = ingresogenericaDao.findEndidad(Producto.class, ingresoDetalle.getProducto().getiProductoId());
+							
+							  /*****************************************/
+							  /** Registro nuevo del detalle de compra**/
+							  /*****************************************/
+							  if(ingresoDetalle.getiOrdenCompraDetalleId()==0 && ingresoDetalle.getcEstadoCodigo().equals(Constantes.estadoActivo)){
+								    ingresoDetalle.setOrdenCompra(obj);			       			
+					       			ingresoDetalle.setdFechaInserta(Fechas.getDate());
+					       			ingresoDetalle.setiUsuarioInsertaId(0);
+					       			
+					      			    
+							 
+								
+								  /***Actualizamos el detalle de la compra ***/
+								  obj.getOrdenCompradetalles().get(i).setdFechaActualiza(Fechas.getDate());
+								  obj.getOrdenCompradetalles().get(i).setiUsuarioActualizaId(0);
+								  obj.getOrdenCompradetalles().get(i).setfPrecioUnitario(ingresoDetalle.getfPrecioUnitario());
+								  obj.getOrdenCompradetalles().get(i).setfTotal(ingresoDetalle.getfTotal());
+								  obj.getOrdenCompradetalles().get(i).setiCantidad(ingresoDetalle.getiCantidad());
+								  obj.getOrdenCompradetalles().get(i).setProducto(ingresoDetalle.getProducto());
+								  obj.getOrdenCompradetalles().get(i).setcEstadoCodigo(ingresoDetalle.getcEstadoCodigo());
+								  
+								 
+								  
+								 
+								//  obj.getKardex().get(i).setcEstadoCodigo(ingresoDetalle.getcEstadoCodigo());
+								  
+							  }/// else detalleProducto existe;
+							  
+						        i++;
+						  } // for 
+						  
+					 
+					  // obj.setVentadetalles(ventadetalles);
+				  
 	
+				
+				
+				/******************************************************/
+				/** Actualizamos la entidad IngresoProducto           */
+				/** Actualizamos los valores en la tabla libro diario */
+				/******************************************************/
+			
+				ingresogenericaDao.persistEndidad(obj);	 
+					            
+			      } // fin Actualizar 
+			   
+			else if (mode.equals("D")) {
+	
+				ingresogenericaDao.eliminarUnaEndidad(obj, "iOrdenCompraId",ids);/**/
+				resultado = ingresogenericaDao.commitEndidad(transaccion);
+	
+			}
+         } catch (Exception ex) {
+        	 ex.printStackTrace();
+        	 ingresogenericaDao.limpiarInstancia();
+         } finally {
+        	 transaccion = null;
+         }
+			
+		String msn;
+		if (resultado == true) {
+			msn = "msnOk";
+
+		} else {
+			msn = "msnError";
+
+		}
+		/** llamamos a listar Ingresoproducto **/
+		// listaIngresoproducto(mapping, pForm, request, response);
+
+		return mapping.findForward(msn);
+	}
 }

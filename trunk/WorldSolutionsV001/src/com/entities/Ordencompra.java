@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -59,12 +60,17 @@ public class Ordencompra implements Serializable {
 	private Tipodocumentogestion tipoDocumento;
 
 	private int iUsuarioActualizaId;
-
-	private int iUsuarioInsertaId;
+	@ManyToOne
+	@JoinColumn(name="iUsuarioInsertaId", nullable=false)
+	private Usuario usuario;
 
 	private String vEstadoDocumento;
 
 	private String vNroOrden;
+	
+	@OneToMany(mappedBy="ordenCompra" ,cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Ordencompradetalle> ordenCompradetalles;
+	
 
     public Ordencompra() {
     }
@@ -293,18 +299,20 @@ public class Ordencompra implements Serializable {
 		this.iUsuarioActualizaId = iUsuarioActualizaId;
 	}
 
+	
+
 	/**
-	 * @return the iUsuarioInsertaId
+	 * @return the usuario
 	 */
-	public int getiUsuarioInsertaId() {
-		return iUsuarioInsertaId;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
 	/**
-	 * @param iUsuarioInsertaId the iUsuarioInsertaId to set
+	 * @param usuario the usuario to set
 	 */
-	public void setiUsuarioInsertaId(int iUsuarioInsertaId) {
-		this.iUsuarioInsertaId = iUsuarioInsertaId;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	/**
@@ -333,6 +341,20 @@ public class Ordencompra implements Serializable {
 	 */
 	public void setvNroOrden(String vNroOrden) {
 		this.vNroOrden = vNroOrden;
+	}
+
+	/**
+	 * @return the ordenCompradetalles
+	 */
+	public List<Ordencompradetalle> getOrdenCompradetalles() {
+		return ordenCompradetalles;
+	}
+
+	/**
+	 * @param ordenCompradetalles the ordenCompradetalles to set
+	 */
+	public void setOrdenCompradetalles(List<Ordencompradetalle> ordenCompradetalles) {
+		this.ordenCompradetalles = ordenCompradetalles;
 	}
 
 	

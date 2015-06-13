@@ -256,7 +256,7 @@
     <br>    
      <button onclick="insertar('tab-grupo')" class="button" tabindex="22">
           <span class='save' id="btnGuardar">Guardar</span></button>
-      <button onclick="fn_imprimir()"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button>
+      <!-- button onclick="fn_imprimir()"  class="button" id="btnImprimir"><span class='savePrint' id="btnGuardar">Imprimir</span></button-->
      <button onclick="cancelar('');"  class="button" type="button" tabindex="23"><span class='cancel'>Cancelar</span></button>
      <br>
     

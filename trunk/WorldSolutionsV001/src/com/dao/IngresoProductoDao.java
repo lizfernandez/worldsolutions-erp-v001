@@ -12,6 +12,7 @@ import com.entities.Ingresoproducto;
 import com.entities.Ingresoproductodetalle;
 import com.entities.Ingresoproductodevolucion;
 import com.entities.Letraproveedor;
+import com.entities.Ordencompra;
 import com.interfaces.dao.IIngresoProductoDao;
 import com.util.Constantes;
 import com.util.Fechas;
@@ -271,6 +272,69 @@ System.out.println("listado listaIngresoproducto "+listaIngresoproducto.size());
 		
 		
         return listaLetra;
+	}
+
+	@Override
+	public List<Ordencompra> listaOrdenCompra(int pagInicio, int pagFin,
+			Ordencompra ordenCompra) {
+		String q ;
+		List<Ordencompra> listaIngresoproducto = null ;
+		String where="";
+    	
+		if(ordenCompra!=null){
+			
+			if(ordenCompra.getcEstadoCodigo()==null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+Constantes.estadoActivo+"%'";
+	        }
+			if(ordenCompra.getcEstadoCodigo()!=null){
+	        	where+= " where p.cEstadoCodigo LIKE '%"+ordenCompra.getcEstadoCodigo()+"%'";
+	        }
+			
+			if(ordenCompra.getPeriodo()!=null){
+	        	where+= " and p.iPeriodoId ='"+ordenCompra.getPeriodo().getiPeriodoId()+"'";
+	        }
+			if(ordenCompra.getProveedor()!=null  && ordenCompra.getProveedor().getcProveedorCodigo()!=null){
+	        	where+= " and p.proveedor.cProveedorCodigo LIKE '%"+ordenCompra.getProveedor().getcProveedorCodigo()+"%'";
+	        }
+			if(ordenCompra.getProveedor()!=null  && ordenCompra.getProveedor().getvProveedorRazonSocial()!=null){
+	        	where+= " and p.proveedor.vProveedorRazonSocial LIKE '%"+ordenCompra.getProveedor().getvProveedorRazonSocial()+"%'";
+	        }
+			
+			if(ordenCompra.getTipoDocumento()!=null && ordenCompra.getTipoDocumento().getiTipoDocumentoGestionId()!=00){
+	        	where+= " and p.tipoDocumento.iTipoDocumentoGestionId='"+ordenCompra.getTipoDocumento().getiTipoDocumentoGestionId()+"'";
+	        }
+			if(ordenCompra.getfTotal()>0.0){
+	        	where+= " and p.fTotal>='"+ordenCompra.getfTotal()+"'";
+	        }
+			if(ordenCompra.getvNroOrden()!=null){
+	        	where+= " and p.vNroOrden LIKE '%"+ordenCompra.getvNroOrden()+"%'";
+	        }
+			if(ordenCompra.getdFechaPedido()!=null ){
+	        	where+= " and p.dFechaPedido LIKE '%"+Fechas.fechaYYMMDD(ordenCompra.getdFechaPedido())+"%'";
+	        }
+			if(ordenCompra.getdFechaPedido()!=null && ordenCompra.getdFechaActualiza()!=null){
+	        	where+= " and p.dFechaPedido BETWEEN '"+Fechas.fechaYYMMDD(ordenCompra.getdFechaPedido())+"' and '"+Fechas.fechaYYMMDD(ordenCompra.getdFechaActualiza())+"'";
+	        }
+			System.out.println(where);
+	    	    q = "select p from Ordencompra p " + where + "order by p.dFechaPedido desc";/**/
+	    	    
+	    	    listaIngresoproducto = listaEntidadPaginada(q, pagInicio, pagFin);
+
+			
+		}// lista con busqueda
+//		else{
+//				q= getInstancia().createQuery("select p from Ingresoproducto p " +
+//		    	   		                    " where p.cEstadoCodigo = :EstadoCodigo");
+//				listaIngresoproducto = q.setParameter("EstadoCodigo", Constantes. estadoActivo)
+//												  .setFirstResult(pagInicio)
+//												  .setMaxResults(pagFin)
+//												  .getResultList(); 
+//				
+//		 
+//		}//else , lista simple	        
+
+		
+        return listaIngresoproducto;
 	}
 
 	

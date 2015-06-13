@@ -59,6 +59,10 @@ public class Ingresoproductodevolucion implements Serializable {
 	
 	private String nNroNotaDebito;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="iSucursalId", nullable=false)
+	private Sucursal sucursal;
+	
     public Ingresoproductodevolucion() {
     }
 
@@ -285,6 +289,20 @@ public class Ingresoproductodevolucion implements Serializable {
 	 */
 	public void setTipoDocumento(Tipodocumentogestion tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+	}
+
+	/**
+	 * @return the sucursal
+	 */
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+
+	/**
+	 * @param sucursal the sucursal to set
+	 */
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
 	}
 
 	

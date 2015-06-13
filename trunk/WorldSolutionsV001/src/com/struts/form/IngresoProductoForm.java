@@ -9,10 +9,14 @@ import org.apache.struts.action.ActionForm;
 
 import com.dao.IngresoProductoDao;
 import com.entities.Ingresoproductodevolucion;
+import com.entities.Moneda;
+import com.entities.Ordencompra;
+import com.entities.Periodo;
 import com.entities.Proveedor;
 import com.entities.Formapago;
 import com.entities.Ingresoproducto;
 import com.entities.Ingresoproductodetalle;
+import com.entities.Sucursal;
 import com.entities.Tipodocumento;
 
 import com.entities.Tipodocumentogestion;
@@ -28,6 +32,7 @@ public class IngresoProductoForm extends ActionForm {
 	private List lista;	
 	Ingresoproducto ingresoProducto = new Ingresoproducto();
 	Ingresoproductodevolucion ingresoProductoDev = new Ingresoproductodevolucion();
+	Ordencompra ordenCompra = new Ordencompra();
     private String mode;
     private List paginas;
     private int pagInicio;
@@ -181,7 +186,12 @@ public class IngresoProductoForm extends ActionForm {
 	 * @return the cEstadoCodigo
 	 */
 	public String getcEstadoCodigo() {
-		return ingresoProducto.getcEstadoCodigo();
+		String cEstadoCodigo=ingresoProducto.getcEstadoCodigo();
+		if(cEstadoCodigo==""){
+			cEstadoCodigo=ordenCompra.getcEstadoCodigo();
+		}
+		return cEstadoCodigo;
+		
 	}
 
 	/**
@@ -189,6 +199,8 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setcEstadoCodigo(String cEstadoCodigo) {
 		this.ingresoProducto.setcEstadoCodigo ( cEstadoCodigo);
+		this.ordenCompra.setcEstadoCodigo(cEstadoCodigo);
+		this.ingresoProductoDev.setvEstadoCodigo(cEstadoCodigo);
 	}
 
 
@@ -330,7 +342,7 @@ public class IngresoProductoForm extends ActionForm {
 	 * @return the iProveedorId
 	 */
 	public int getiProveedorId() {	
-		Proveedor proveedor= getProveedor();
+		Proveedor proveedor= getProveedor();		
 		return proveedor.getiProveedorId();
 	}
 
@@ -338,7 +350,8 @@ public class IngresoProductoForm extends ActionForm {
 	 * @param iProveedorId the iProveedorId to set
 	 */
 	public void setiProveedorId(int iProveedorId) {			
-		ingresoProducto.setProveedor(ingresoProductoDao().findEndidad(Proveedor.class, iProveedorId));
+		this.ingresoProducto.setProveedor(ingresoProductoDao().findEndidad(Proveedor.class, iProveedorId));
+		this.ordenCompra.setProveedor(ingresoProductoDao().findEndidad(Proveedor.class, iProveedorId));
 	}
 	
 	
@@ -350,8 +363,9 @@ public class IngresoProductoForm extends ActionForm {
 		if(proveedor==null){
 			proveedor = new Proveedor();
 			ingresoProducto.setProveedor(proveedor);
+			ordenCompra.setProveedor(proveedor);
 		}
-		return ingresoProducto.getProveedor();
+		return proveedor;
 	}
 
 	/**
@@ -359,6 +373,7 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setProveedor(Proveedor proveedor) {		
 		this.ingresoProducto.setProveedor(proveedor);
+		this.ordenCompra.setProveedor(proveedor);
 	}
 	
 
@@ -397,6 +412,8 @@ public class IngresoProductoForm extends ActionForm {
 	public Tipodocumentogestion getTipodocumentogestion(){
 		Tipodocumentogestion tipoDoc =  ingresoProducto.getTipodocumento();	
 		if(tipoDoc==null)
+			tipoDoc = ordenCompra.getTipoDocumento();
+		if(tipoDoc==null)
 			tipoDoc = new Tipodocumentogestion();
 		return tipoDoc;
 	}
@@ -412,8 +429,10 @@ public class IngresoProductoForm extends ActionForm {
 	/**
 	 * @param tipodocumento the tipodocumento to set
 	 */
-	public void setiTipoDocumentoId(int iTipoDocumentoGestionId) {	
-		this.ingresoProducto.setTipodocumento(ingresoProductoDao().findEndidad(Tipodocumentogestion.class, iTipoDocumentoGestionId));
+	public void setiTipoDocumentoId(int iTipoDocumentoGestionId) {
+		Tipodocumentogestion tipoDocumento=ingresoProductoDao().findEndidad(Tipodocumentogestion.class, iTipoDocumentoGestionId);
+		this.ingresoProducto.setTipodocumento(tipoDocumento);
+		this.ordenCompra.setTipoDocumento(tipoDocumento);
 	}
 
 	/**
@@ -484,7 +503,10 @@ public class IngresoProductoForm extends ActionForm {
 	 * @return the vEstadoDocumento
 	 */
 	public String getvEstadoDocumento() {
-		return ingresoProducto.getvEstadoDocumento();
+		String vEstadoDocumento =   ingresoProducto.getvEstadoDocumento();
+		if(vEstadoDocumento=="")
+			vEstadoDocumento=ordenCompra.getvEstadoDocumento();
+		return vEstadoDocumento;
 	}
 
 	/**
@@ -492,6 +514,7 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setvEstadoDocumento(String vEstadoDocumento) {
 		this.ingresoProducto.setvEstadoDocumento (vEstadoDocumento);
+		this.ordenCompra.setvEstadoDocumento(vEstadoDocumento);
 	}
 	/**
 	 * @return the iclasificacionId
@@ -701,7 +724,11 @@ public class IngresoProductoForm extends ActionForm {
 	 * @return the fDescuento
 	 */
 	public float getfDescuento() {
-		return getIngresoProducto().getfDescuento();
+		float fDescuentos=  getIngresoProducto().getfDescuento();
+		if(fDescuentos==0){
+			fDescuentos = getOrdenCompra().getfDescuento();
+		}
+		return fDescuentos;
 	}
 
 	/**
@@ -709,6 +736,7 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setfDescuento(float fDescuento) {
 		this.getIngresoProducto().setfDescuento(fDescuento);
+		this.getOrdenCompra().setfDescuento(fDescuento);
 	}
 	/**
 	 * @return the fIngresoProductoTotalReal
@@ -728,7 +756,10 @@ public class IngresoProductoForm extends ActionForm {
 	 * @return the iPeriodoId
 	 */
 	public int getiPeriodoId() {
-		return this.getIngresoProducto().getiPeriodoId();
+		int iPeriodo = getIngresoProducto().getiPeriodoId();
+		if(iPeriodo==0 && ordenCompra.getPeriodo()!=null)
+			iPeriodo = ordenCompra.getPeriodo().getiPeriodoId();
+		return iPeriodo;
 	}
 
 	/**
@@ -736,6 +767,7 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setiPeriodoId(int iPeriodoId) {
 		this.getIngresoProducto().setiPeriodoId(iPeriodoId);
+		this.ordenCompra.setPeriodo(ingresoProductoDao().findEndidad(Periodo.class, iPeriodoId));
 	}
 	/**
 	 * @return the fMontoPago
@@ -755,7 +787,11 @@ public class IngresoProductoForm extends ActionForm {
 	 * @return the fTipoCambio
 	 */
 	public float getfTipoCambio() {
-		return getIngresoProducto().getfTipoCambio();
+		float ftipoCampio=getIngresoProducto().getfTipoCambio();
+		if(ftipoCampio==0){
+			ftipoCampio= ordenCompra.getfTipoCambio();
+		}
+		return ftipoCampio;
 	}
 
 	/**
@@ -763,6 +799,7 @@ public class IngresoProductoForm extends ActionForm {
 	 */
 	public void setfTipoCambio(float fTipoCambio) {
 		this.getIngresoProducto().setfTipoCambio(fTipoCambio) ;
+		this.ordenCompra.setfTipoCambio(fTipoCambio);
 	}
 
 	/**
@@ -888,14 +925,133 @@ public class IngresoProductoForm extends ActionForm {
 	 * @return the iSucursalId
 	 */
 	public int getiSucursalId() {
-		return iSucursalId;
+		int iSucusal= 0;
+		if(ingresoProducto.getSucursal()!=null)
+		  iSucusal= ingresoProducto.getSucursal().getiSucursalId();
+		if(iSucusal==0 && ordenCompra.getSucursal()!=null)
+			ordenCompra.getSucursal().getiSucursalId();
+		return  iSucusal;
 	}
 	/**
 	 * @param iSucursalId the iSucursalId to set
 	 */
-	public void setiSucursalId(int iSucursalId) {
-		this.iSucursalId = iSucursalId;
+	public void setiSucursalId(int iSucursalId) {		
+		Sucursal sucursal = ingresoProductoDao().findEndidad(Sucursal.class, iSucursalId);
+		this.ordenCompra.setSucursal(sucursal);
+		this.ingresoProducto.setSucursal(sucursal);
+		this.ingresoProductoDev.setSucursal(sucursal);
+		
+	}
+   /********************/
+   /**ORDEN DE COMPRAS**/
+   /********************/
+	/**
+	 * @return the ordenCompra
+	 */
+	public Ordencompra getOrdenCompra() {
+		return ordenCompra;
+	}
+	/**
+	 * @param ordenCompra the ordenCompra to set
+	 */
+	public void setOrdenCompra(Ordencompra ordenCompra) {
+		this.ordenCompra = ordenCompra;
+	}
+	/**
+	 * @return the iOrdenCompraId
+	 */
+	public int getiOrdenCompraId() {
+		return ordenCompra.getiOrdenCompraId();
 	}
 
+	/**
+	 * @param iOrdenCompraId the iOrdenCompraId to set
+	 */
+	public void setiOrdenCompraId(int iOrdenCompraId) {
+		this.ordenCompra.setiOrdenCompraId(iOrdenCompraId);
+	}
+
+	
+	
+
+
+	/**
+	 * @return the dFechaPedido
+	 */
+	public String getdFechaPedido() {
+		String fecha = Fechas.fechaDDMMYY(ordenCompra.getdFechaPedido());
+		if(fecha=="")
+			fecha= Fechas.fechaDDMMYY(Fechas.getDate());
+		return fecha;
+	}
+
+	/**
+	 * @param dFechaPedido the dFechaPedido to set
+	 * @throws ParseException 
+	 */
+	public void setdFechaPedido(String dFechaPedido) throws ParseException {
+		this.ordenCompra.setdFechaPedido(Fechas.fechaDate(dFechaPedido)) ;
+	}
+
+	
+
+	/**
+	 * @return the fOrdenCompraIGV
+	 */
+	public float getfOrdenCompraIGV() {
+		return ordenCompra.getfOrdenCompraIGV();
+	}
+
+	/**
+	 * @param fOrdenCompraIGV the fOrdenCompraIGV to set
+	 */
+	public void setfOrdenCompraIGV(float fOrdenCompraIGV) {
+		this.ordenCompra.setfOrdenCompraIGV(fOrdenCompraIGV);
+	}
+
+	/**
+	 * @return the fOrdenCompraSubTotal
+	 */
+	public float getfOrdenCompraSubTotal() {
+		return ordenCompra.getfOrdenCompraSubTotal();
+	}
+
+	/**
+	 * @param fOrdenCompraSubTotal the fOrdenCompraSubTotal to set
+	 */
+	public void setfOrdenCompraSubTotal(float fOrdenCompraSubTotal) {
+		this.ordenCompra.setfOrdenCompraSubTotal(fOrdenCompraSubTotal);
+	}
+
+	
+
+	/**
+	 * @return the fTotal
+	 */
+	public float getfTotal() {
+		return ordenCompra.getfTotal();
+	}
+
+	/**
+	 * @param fTotal the fTotal to set
+	 */
+	public void setfTotal(float fTotal) {
+		this.ordenCompra.setfTotal(fTotal);
+	}	
+
+	/**
+	 * @return the vNroOrden
+	 */
+	public String getvNroOrden() {
+		return ordenCompra.getvNroOrden();
+	}
+
+	/**
+	 * @param vNroOrden the vNroOrden to set
+	 */
+	public void setvNroOrden(String vNroOrden) {
+		this.ordenCompra.setvNroOrden(vNroOrden);
+	}
+	
 	
 }

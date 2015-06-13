@@ -64,6 +64,7 @@ public class Util {
     	 listaConf.add(new Configuracion(5,"NRO NOTA CREDITO"));
     	 listaConf.add(new Configuracion(5,"NRO NOTA DEBITO"));
     	 listaConf.add(new Configuracion(6,"NRO GUIA REMISION "));
+    	 listaConf.add(new Configuracion(16,"NRO ORDEN COMPRA"));
     	 listaConf.add(new Configuracion(7,"RUC DE EMPRESA"));
     	 listaConf.add(new Configuracion(8,"TIPO CAMBIO"));
     	 listaConf.add(new Configuracion(9,"TIPO MONEDA"));
@@ -73,6 +74,7 @@ public class Util {
     	 listaConf.add(new Configuracion(13,"DESC. C.V %"));
     	 listaConf.add(new Configuracion(14,"APORT. ESSALUD %"));
     	 listaConf.add(new Configuracion(15,"APORT. I.E.S %"));
+    	
     	 return listaConf;
      }
 	  
