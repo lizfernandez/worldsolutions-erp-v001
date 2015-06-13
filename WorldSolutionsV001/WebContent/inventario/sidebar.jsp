@@ -87,7 +87,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   if(per.equals("132")){%> 
        <div class="btn_admin" id="ordenCompra">
         <img src="${pageContext.request.contextPath}/media/imagenes/cate.png" width="20" height="20" />
-         <a href="productos.do?metodo=listaOrdenCompra">ORDEN DE COMPRA</a>
+         <a href="ingresoProducto.do?metodo=listaOrdenCompra">ORDEN DE COMPRA</a>
        </div>
       
         <% break;}}}

@@ -25,6 +25,7 @@
                   
                   
                     $("#fProductoPrecioVenta").val(precio);
+                    $("#fProductoPrecioVentaProducto").val(precio);
                    
                     
                }
@@ -200,9 +201,36 @@
 		    </td>
 		</tr>
 		<tr>
+		    <td align="right">P.U Producto:</td>
+		    <td>
+		      <html:text property="fProductoPrecioVentaProducto" styleId="fProductoPrecioVentaProducto" styleClass="text textNumero" tabindex="17" onkeypress="return Numeros(event)"/>
+		      <span id="m_fProductoPrecioVentaProducto" class="importante">*</span>
+		    </td>
+		    <td colspan="2">
+		 	   <html:select  property="iMonedaId" styleId="iMonedaId" styleClass="comboCodigo change" style="width:140px">
+			          <html:options collection="listaMoneda" property="iMonedaId" labelProperty="vMonedaDescripcion"/>
+			     </html:select>
+			     
+		     </td>
+		</tr>
+		<tr>
+		    <td align="right">Precio Instalaci&oacute;n:</td>
+		    <td>
+		      <html:text property="fPrecioInstalacion" styleId="fPrecioInstalacion" styleClass="text textNumero" tabindex="18" onkeypress="return Numeros(event)" onblur="fn_precioServicio('C')"/>
+		       </td>
+		     <td colspan="2">
+		     
+		      <html:select  property="iProductoServicioId" styleId="iProductoServicioId" styleClass="comboCodigo" tabindex="19" style="width:140px" onchange="fn_precioServicio('P')">
+		              <option value="0">::SELECCIONE::</option>
+			          <html:options collection="listaServicio" property="iProductoId" labelProperty="vProductoNombre"/>
+			     </html:select>  
+		    </td>
+		</tr>
+		
+		<tr>
 		    <td align="right">P.U Venta:</td>
 		    <td>
-		      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text textNumero" tabindex="17" onkeypress="return Numeros(event)"/>
+		      <html:text property="fProductoPrecioVenta" styleId="fProductoPrecioVenta" styleClass="text textNumero" tabindex="20" onkeypress="return Numeros(event)"/>
 		      <span id="m_fProductoPrecioVenta" class="importante">*</span>
 		    </td>
 		    <td colspan="2">
@@ -214,17 +242,17 @@
 		</tr>
 		<tr>
 		    <td align="right">% Descuento:</td>
-		    <td colspan=""><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text textNumero"  tabindex="18" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
+		    <td colspan=""><html:text property="fProductoDescuento" styleId="fProductoDescuento" styleClass="text textNumero"  tabindex="21" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
 		    <td align="right">Stock Min:</td>
-		    <td colspan=""><html:text property="iProductoStockMinimo" styleId="iProductoStockMinimo" styleClass="text textNumero"  tabindex="19" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
+		    <td colspan=""><html:text property="iProductoStockMinimo" styleId="iProductoStockMinimo" styleClass="text textNumero"  tabindex="22" onkeypress="return Numeros(event)"/></td>   <!-- onkeypress="return Numeros(event)" -->
 		  
 		</tr>
 		<tr>
 		     <td align="right">Stock Max:</td>
-		     <td colspan=""><html:text property="iProductoStockMaximo" styleId="iProductoStockMaximo" styleClass="text textNumero"  tabindex="20" onkeypress="return Numeros(event)"/></td>  <!-- onkeypress="return Numeros(event)" -->
+		     <td colspan=""><html:text property="iProductoStockMaximo" styleId="iProductoStockMaximo" styleClass="text textNumero"  tabindex="23" onkeypress="return Numeros(event)"/></td>  <!-- onkeypress="return Numeros(event)" -->
 		     <td align="right" width="22%">Estado:</td>
 		    <td colspan="2">
-		      <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" tabindex="21" style="width:153px">       
+		      <html:select  property="cEstadoCodigo" styleId="cEstadoCodigo" styleClass="combo" tabindex="24" style="width:153px">       
 		       <html:options collection="listaEstado" property="cEstadoCodigo" labelProperty="vEstadoDescripcion"/>
 		     </html:select>  
 		    </td>
@@ -367,9 +395,9 @@
 <tr height="10px">   
     <td align="center" colspan="4">
     <br>    
-     <button onclick="insertar('tab-grupo')" class="button" tabindex="22">
+     <button onclick="insertar('tab-grupo')" class="button" tabindex="25">
           <span class='save' id="btnGuardar">Guardar</span></button>
-     <button onclick="cancelar('');"  class="button" type="button" tabindex="23"><span class='cancel'>Cancelar</span></button>
+     <button onclick="cancelar('');"  class="button" type="button" tabindex="26"><span class='cancel'>Cancelar</span></button>
      <br>
     
      <span id="m_mensaje" class="mensaje"></span>
@@ -664,10 +692,25 @@
 			"&iProductoAlmStockTotal="+iProductoAlmStockTotal+"&iUnidadMedidaAlmId="+iUnidadMedidaAlmId+"&mode="+mode+"&i="+i;
 	
 	$.getJSON(cad, function retorna(obj){
+		
 	});
  
  };
  
+function fn_precioServicio(tipo){
+	if(tipo=="P"){
+		var id=$("#iProductoServicioId").val();	
+		var cad = "productos.do?metodo=json&id="+id+"&mode=servicio";
+		
+		$.getJSON(cad, function retorna(obj){
+			$("#fPrecioInstalacion").val(obj.fProductoPrecioVenta);
+			$("#fProductoPrecioVenta").val(parseFloat($("#fPrecioInstalacion").val())+parseFloat($("#fProductoPrecioVentaProducto").val()));
+		});	
+	}
+	if(tipo=="C"){
+		$("#fProductoPrecioVenta").val(parseFloat($("#fPrecioInstalacion").val())+parseFloat($("#fProductoPrecioVentaProducto").val()));
+	}
 
+}
    // redimenciona();
 </script>

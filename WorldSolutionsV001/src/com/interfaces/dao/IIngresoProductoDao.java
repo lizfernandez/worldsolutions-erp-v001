@@ -6,6 +6,7 @@ import com.entities.Ingresoproducto;
 import com.entities.Ingresoproductodetalle;
 import com.entities.Ingresoproductodevolucion;
 import com.entities.Letraproveedor;
+import com.entities.Ordencompra;
 
 public interface IIngresoProductoDao {
 	public List<Ingresoproducto> listaIngresoproducto(int pagInicio, int pagFin, Ingresoproducto ingresoproducto);
@@ -13,5 +14,6 @@ public interface IIngresoProductoDao {
 	public List<Ingresoproductodetalle>  buscarIngresoproductoDetalle(int iIngresoproductoId);	
 	public List<Ingresoproductodevolucion> listaIngresoproductoDevolucion(int pagInicio, int pagFin, Ingresoproducto ingresoproductodev);
 	public List<Letraproveedor> listaLetraProveedor(int pagInicio, int pagFin, Letraproveedor letraProveedor);
+	public List<Ordencompra> listaOrdenCompra(int pagInicio, int pagFin, Ordencompra ordenCompra);
 	
 }

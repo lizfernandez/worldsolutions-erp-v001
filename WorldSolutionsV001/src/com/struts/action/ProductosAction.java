@@ -72,6 +72,7 @@ import com.entities.vo.ProductoalmacenVo;
 import com.entities.vo.UnidadmedidaVo;
 import com.entities.vo.VentadetalleVo;
 import com.google.gson.Gson;
+import com.interfaces.dao.IProductoDao;
 import com.struts.form.ProductosForm;
 import com.struts.form.VentaForm;
 import com.util.Constantes;
@@ -428,71 +429,7 @@ public class ProductosAction extends BaseAction {
 		//}// else
 		return mapping.findForward(msn);
 	}
-	/**
-	 * Method execute
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return ActionForward
-	 * @throws IOException 
-	 * @throws ParseException 
-	 */
-	public ActionForward listaOrdenCompra(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
-
-		/***Validamos la session activa y logeada***/
-		String msn = "showListOrdenCompra";
-		/*HttpSession sesion = request.getSession();
-		
-		if(sesion.getId()!=(sesion.getAttribute("id"))){
-			response.sendRedirect("login.do?metodo=logout");				
-		}
-		else{*/
-		
-		/***Inicializamos variables***/
-		String mode = request.getParameter("mode");
-		
-		String cInsumo="";
-		int pagina = Paginacion.paginaInicial;
-		int pagInicio = Paginacion.paginaInicial;
-		if(request.getParameter("pagina")!= null){
-			 pagina = Integer.parseInt(request.getParameter("pagina"));
-		}
-	    
-		/** Instanciamos la Clase ProductoForm **/
-		ProductosForm productosForm = (ProductosForm) form;
-		Producto obj = productosForm.getProducto();
-
-		/** Instanciamos las clase Daos **/
-		ProductoDao productoDao = new ProductoDao();
 	
-	
-		//Producto producto = new Producto();
-		
-		
-		
-
-		/**Seteamos los valores en las listas**/
-		List<Ordencompra> listaProductos =  productoDao.listaOrdenCompra(Paginacion.pagInicio(pagina),Paginacion.pagFin(), productosForm.getOrdenCompra());
-		
-		/**Consultamos el total de registros segun criterio**/
-		List<Ordencompra> listaPerfilTotal = productoDao.listaOrdenCompra(Paginacion.pagInicio(pagina),Paginacion.pagFinMax(), productosForm.getOrdenCompra());
-		
-        /**Obtenemos el total del paginas***/
-		List<Long> paginas = Paginacion.listPaginas((long)(listaPerfilTotal.size()));
-		
-		
-		 
-		 /** Seteamos las clase ProductoForm **/
-		productosForm.setProduc(listaProductos);		
-		productosForm.setPaginas(paginas);
-		productosForm.setPagInicio(pagina);
-		
-		//}// else
-		return mapping.findForward(msn);
-	}
 	/**
 	 * Method execute
 	 * 
@@ -528,6 +465,7 @@ public class ProductosAction extends BaseAction {
 		
 		/** Instantacia a la capa Dao **/
 		CategoriaDao categoriaDao = new CategoriaDao();
+		ProductoDao productoDao = new ProductoDao();
 		UnidadMedidaDao unidadMedidaDao = new UnidadMedidaDao();
 		EstadoDao estadoDao = new EstadoDao();
 		GenericaDao genericoDao = new GenericaDao();
@@ -540,6 +478,7 @@ public class ProductosAction extends BaseAction {
 		List<Estado> listaEstado = estadoDao.listEstado();
 		List<Moneda> listaMoneda = genericoDao.listaEntidadGenerica(Moneda.class);
 		List<ProductoalmacenVo> listaProduAlma= new ArrayList<ProductoalmacenVo>();
+		List<Producto> listaServicio = productoDao.listaProducto(Paginacion.pagInicio(1),Paginacion.pagFinMax(), productoForm.getProducto(),5,productoForm.getiSucursalId());
 		
 		List<PreciosproductoVo> listaPrecio = new ArrayList<PreciosproductoVo>();
 		
@@ -654,6 +593,8 @@ public class ProductosAction extends BaseAction {
 			
 			sesion.setAttribute("listaPrecioProducto",listaPrecio);
 			sesion.setAttribute("listaProductoAlmacen",listaProduAlma);
+			
+			
 				
 		}
 		/**LLamamos al formulario buscarMantenimientoProducto.jsp para realizar la busqueda **/
@@ -692,6 +633,7 @@ public class ProductosAction extends BaseAction {
 		sesion.setAttribute("listaSubCategoria", listaSubCategoria);		
 		sesion.setAttribute("listaMoneda", listaMoneda);		
 		sesion.setAttribute("listaEstado", listaEstado);
+		sesion.setAttribute("listaServicio",listaServicio);
 
 		return mapping.findForward(msn);
 	}
@@ -962,11 +904,7 @@ public class ProductosAction extends BaseAction {
 							}
 						}
 						producto.setiProductoStockTotal(cantidadProducto);
-						producto.setfProductoPrecioVenta(FormatosNumeros.redondedoDecimal(precioVenta));
-						producto.setfProductoGanancia(fGanancia);
-						producto.setfProductoGastosAdm(fGastoAdm);
-						producto.setfProductoPrecioCompra(precioCompra);
-						producto.setfProductoDescuento(fDescuento);
+					
 	               
 					}
 					/*****************************************************/
@@ -3364,6 +3302,12 @@ public class ProductosAction extends BaseAction {
 				
 					if(mode.equals("almacen")){
 						Almacen lista=genericaDao.findEndidadBD(Almacen.class, "iAlmacenId", id);
+						jsonOutput = gson.toJson(lista);
+					}
+					if(mode.equals("servicio")){
+						Producto listas=genericaDao.findEndidadBD(Producto.class, "iProductoId", id);
+						ProductoVo lista = new ProductoVo();
+						lista.setfProductoPrecioVenta(listas.getfProductoPrecioVenta());
 						jsonOutput = gson.toJson(lista);
 					}
 					

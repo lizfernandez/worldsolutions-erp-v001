@@ -159,8 +159,12 @@ public class Producto implements Serializable {
 	@JoinColumn(name="iUMSalidaId", nullable=true)
 	private Unidadmedida umSalida;
 
+    private float fProductoPrecioVentaProducto;
 
-	
+    private float fPrecioInstalacion;
+    
+    private int iProductoServicioId;
+    
     public Producto() {
     }
 
@@ -620,6 +624,48 @@ public class Producto implements Serializable {
 	 */
 	public void setUmSalida(Unidadmedida umSalida) {
 		this.umSalida = umSalida;
+	}
+
+	/**
+	 * @return the fProductoPrecioVentaProducto
+	 */
+	public float getfProductoPrecioVentaProducto() {
+		return fProductoPrecioVentaProducto;
+	}
+
+	/**
+	 * @param fProductoPrecioVentaProducto the fProductoPrecioVentaProducto to set
+	 */
+	public void setfProductoPrecioVentaProducto(float fProductoPrecioVentaProducto) {
+		this.fProductoPrecioVentaProducto = fProductoPrecioVentaProducto;
+	}
+
+	/**
+	 * @return the fPrecioInstalacion
+	 */
+	public float getfPrecioInstalacion() {
+		return fPrecioInstalacion;
+	}
+
+	/**
+	 * @param fPrecioInstalacion the fPrecioInstalacion to set
+	 */
+	public void setfPrecioInstalacion(float fPrecioInstalacion) {
+		this.fPrecioInstalacion = fPrecioInstalacion;
+	}
+
+	/**
+	 * @return the iProductoServicioId
+	 */
+	public int getiProductoServicioId() {
+		return iProductoServicioId;
+	}
+
+	/**
+	 * @param iProductoServicioId the iProductoServicioId to set
+	 */
+	public void setiProductoServicioId(int iProductoServicioId) {
+		this.iProductoServicioId = iProductoServicioId;
 	}
 
 	

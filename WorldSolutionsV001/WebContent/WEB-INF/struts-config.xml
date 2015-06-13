@@ -332,7 +332,14 @@
 	                 	                 
 	                 <forward name="showFind" path=".buscarMantenimientoIngresoProducto" />
 	                 <forward name="showEstadoCuenta" path=".mantenimientoEstadoCuenta" />
-	                 <forward name="showFindEstadoCuenta" path=".buscarMantenimientoEstadoCuenta" />	                 		                 
+	                 <forward name="showFindEstadoCuenta" path=".buscarMantenimientoEstadoCuenta" />
+	                 
+	                 <forward name="showListOrdenCompra" path=".listaOrdenCompra" />
+	                 <forward name="showEditOrdenCompra" path=".mantenimientoOrdenCompra" />
+	                 <forward name="showFindOrdenCompra" path=".buscarMantenimientOrdenCompra" />
+	                 <forward name="showListPopupOrdenCompra" path=".listaPopupOrdenCompra" />
+	                 
+	                  	                 		                 
 	                 <forward name="msnOk" path=".msnOk" />
 	                 <forward name="msnError" path=".msnError" />
 	           

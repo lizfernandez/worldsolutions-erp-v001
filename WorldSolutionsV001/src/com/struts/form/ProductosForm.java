@@ -1424,5 +1424,46 @@ public class ProductosForm extends ActionForm {
 		this.vImprimir = vImprimir;
 	}
 	
-	
+	/**
+	 * @return the fProductoPrecioVentaProducto
+	 */
+	public float getfProductoPrecioVentaProducto() {
+		return producto.getfProductoPrecioVentaProducto();
+	}
+
+	/**
+	 * @param fProductoPrecioVentaProducto the fProductoPrecioVentaProducto to set
+	 */
+	public void setfProductoPrecioVentaProducto(float fProductoPrecioVentaProducto) {
+		this.producto.setfProductoPrecioVentaProducto(fProductoPrecioVentaProducto);
+	}
+
+	/**
+	 * @return the fPrecioInstalacion
+	 */
+	public float getfPrecioInstalacion() {
+		return producto.getfPrecioInstalacion();
+	}
+
+	/**
+	 * @param fPrecioInstalacion the fPrecioInstalacion to set
+	 */
+	public void setfPrecioInstalacion(float fPrecioInstalacion) {
+		this.producto.setfPrecioInstalacion(fPrecioInstalacion);
+	}
+
+	/**
+	 * @return the iProductoServicioId
+	 */
+	public int getiProductoServicioId() {
+		return producto.getiProductoServicioId();
+	}
+
+	/**
+	 * @param iProductoServicioId the iProductoServicioId to set
+	 */
+	public void setiProductoServicioId(int iProductoServicioId) {
+		this.producto.setiProductoServicioId(iProductoServicioId);
+	}
+
 }
