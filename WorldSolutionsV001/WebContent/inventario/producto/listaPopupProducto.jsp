@@ -53,7 +53,9 @@
         <th align="left">Stock</th>
         <th align="left">Unidad Medida</th>
         <th align="left">% Desc</th>
-        <th align="right">P.Venta</th>
+        <th align="right">P. Venta Producto</th>
+        <th align="right">P. Instalacion</th>
+        <th align="right">P. Venta </th>
         
       </tr>
     </thead>
@@ -96,6 +98,8 @@
 				    <bean:write name="x" property="unidadMedida.vUnidadMedidaDescripcion" />
 				</td>
 				<td align="right"><bean:write name="x" property="fProductoDescuento" format="###0.00" locale="Localidad" /></td>
+				<td align="right"><bean:write name="x" property="fProductoPrecioVentaProducto" format="###0.00"  locale="Localidad"/></td>
+				<td align="right"><bean:write name="x" property="fPrecioInstalacion" format="###0.00"  locale="Localidad"/></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="###0.00"  locale="Localidad"/></td>
 						
 	    	</tr>
@@ -127,13 +131,11 @@
     <tbody>
 	   <tr>
 	 		<td>Nombre de producto:</td>
-			<td colspan="3">
+			<td>
 			    <html:hidden property="iProductoId" styleId="iProductoId"/>
 			    <input type="hidden" id="iStock"/>
 				<input type="text" id="vxProductoNombre" size="45"  class="text"/>
 			</td>
-	  </tr>
-	  <tr>
 	        <td>Cantidad:</td>
 	        <td>
 	        	<input type="hidden" id="iProductoalmacenId"> 
@@ -141,14 +143,6 @@
 			   	<html:select  property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="comboCodigo" tabindex="6" style="width:140px" disabled="true">
 		        	<html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     	</html:select>
-			</td>
-			<td>Capacidad:</td>
-	        <td>
-	           <html:text property="iUMPedido" styleId="iUMPedido"   styleClass="text" size="5" disabled="true" />
-			   <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo" tabindex="8" style="width:140px" disabled="true">
-		          <option value="0">::SELECCIONE::</option> 
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select>  
 			</td>
 	  </tr>
 	  <tr>
