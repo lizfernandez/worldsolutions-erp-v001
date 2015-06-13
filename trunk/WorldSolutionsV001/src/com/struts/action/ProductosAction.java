@@ -731,8 +731,7 @@ public class ProductosAction extends BaseAction {
 				}
 				
 				productoDao.persistEndidad(producto);
-
-				if (!producto.getCategoria().getClasificacionCategoria().getvClasificacionDescripcion().equals(Constantes.categoriaServicios)) {
+			if (!producto.getCategoria().getClasificacionCategoria().getvClasificacionDescripcion().equals(Constantes.categoriaServicios)) {
 					
 					/** Insertamos la existencia de un producto en el Kardex **/
 					Kardex kardex = new Kardex();
@@ -894,12 +893,12 @@ public class ProductosAction extends BaseAction {
 								
 								cantidadProducto = producto.getiProductoStockTotal();
 								if (i == 0) {
-									precioCompra = objpreciosProducto.getfPrecioCompra();
+									/*precioCompra = objpreciosProducto.getfPrecioCompra();
 									precioVenta = objpreciosProducto.getfPrecioVenta();
 									fGanancia = objpreciosProducto.getfGanancia();
 									fGastoAdm = objpreciosProducto.getfGastosAdm();
 									fDescuento = objpreciosProducto.getfDescuento();
-									
+									*/
 								}
 							}
 						}
@@ -1494,7 +1493,7 @@ public class ProductosAction extends BaseAction {
 			
 			List<Estado> listaEstado = estadoDao.listEstado();
 			List<Almacen> listaAlmacen = genericoDao.listaEntidadGenerica(Almacen.class);
-			
+			sesion.removeAttribute("listaProductoAlmacen");
 				
 				
 			List<Distalmacendetalle> listaProduccion = new ArrayList<Distalmacendetalle>();
@@ -2344,7 +2343,7 @@ public class ProductosAction extends BaseAction {
 				
 				 resultado = productoDao.commitEndidad(transaccion);
 				// productoDao.refreshEndidad(pro);
-				if(pForm.getvImprimir().equals("SI")){
+				if(pForm.getvImprimir()!=null  && pForm.getvImprimir().equals("SI")){
 					reporte(mapping, pForm, request, response);
 					resultado=true;
 					

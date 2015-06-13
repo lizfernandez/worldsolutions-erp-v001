@@ -22,9 +22,9 @@
                }
                if(ganancia!='' && tipo=='G') {
                     precio =Math.round((compra+compra*ganancia/100) * 100) / 100;
+                   var precioProducto=parseFloat( $("#fPrecioInstalacion").val());
                   
-                  
-                    $("#fProductoPrecioVenta").val(precio);
+                    $("#fProductoPrecioVenta").val(precio+precioProducto);
                     $("#fProductoPrecioVentaProducto").val(precio);
                    
                     
@@ -155,7 +155,7 @@
 	   <tr>
 		     <td align="right">Stock Total:</td>
 		    <td><html:text property="iProductoStockTotal" styleId="iProductoStockTotal" maxlength="7"  styleClass="text textNumero"  tabindex="11" onkeypress="return Numeros(event)"/> <!-- onkeyup="return mayuscula('vProductoDescripcion')" -->
-		     <span id="m_iUnidadMedidadId" class="importante">*</span> 
+		     <span id="m_iProductoStockTotal" class="importante">*</span> 
 		    </td>
 		    <td colspan="2">  
 		       <html:select property="iUnidadMedidadId" styleId="iUnidadMedidadId" styleClass="text comboCodigo unidadFinal comboCodigo change" tabindex="12" style="width:140px" >
@@ -201,7 +201,7 @@
 		    </td>
 		</tr>
 		<tr>
-		    <td align="right">P.U Producto:</td>
+		    <td align="right">P.U Producto Venta:</td>
 		    <td>
 		      <html:text property="fProductoPrecioVentaProducto" styleId="fProductoPrecioVentaProducto" styleClass="text textNumero" tabindex="17" onkeypress="return Numeros(event)"/>
 		      <span id="m_fProductoPrecioVentaProducto" class="importante">*</span>
@@ -214,7 +214,7 @@
 		     </td>
 		</tr>
 		<tr>
-		    <td align="right">Precio Instalaci&oacute;n:</td>
+		    <td align="right">P.U Instalaci&oacute;n:</td>
 		    <td>
 		      <html:text property="fPrecioInstalacion" styleId="fPrecioInstalacion" styleClass="text textNumero" tabindex="18" onkeypress="return Numeros(event)" onblur="fn_precioServicio('C')"/>
 		       </td>
@@ -467,12 +467,12 @@
         	 $('#iUMBase').attr('readonly', true);
         	 $('#iUMPedido').attr('readonly', true);
         	 $('#iUMSalida').attr('readonly', true);
-        	 $('#iProductoStockTotal').attr('readonly', true);
+        	// $('#iProductoStockTotal').attr('readonly', true);
         	 $('#fProductoPrecioCompra').attr('readonly', true);
         	 $('#fProductoGastosAdm').attr('readonly', true);
         	 $('#fProductoGanancia').attr('readonly', true);
-        	 $('#fProductoPrecioVenta').attr('readonly', true);
-        	 $('#fProductoDescuento').attr('readonly', true);
+        	// $('#fProductoPrecioVenta').attr('readonly', true);
+        	// $('#fProductoDescuento').attr('readonly', true);
         	 
         	 
          }
