@@ -199,6 +199,9 @@ public class Producto implements Serializable {
 		this.umPedido = producto.getUmPedido() != null ? new Unidadmedida(producto.getUmPedido()) : null;
 		this.iUMSalida = producto.getiUMSalida();
 		this.umSalida = producto.getUmSalida() != null ? new Unidadmedida(producto.getUmSalida()) : null;
+		this.fProductoPrecioVentaProducto = producto.getfProductoPrecioVentaProducto();
+		this.fPrecioInstalacion = producto.getfPrecioInstalacion();
+		this.iProductoServicioId = producto.getiProductoServicioId();
 	}
 
 	public int getiProductoId() {

@@ -39,10 +39,12 @@ public class ProductoVo implements Serializable {
 	private UnidadmedidaVo umPedido;
 	private int iUMSalida;
 	private UnidadmedidaVo umSalida;
-	
 	//Campos para los productos por almacen
 	private long stockSucursal;
 	private int iProductoalmacenId;
+    private float fProductoPrecioVentaProducto;
+    private float fPrecioInstalacion;
+    private int iProductoServicioId;
 	
     public ProductoVo() {
     }
@@ -79,6 +81,9 @@ public class ProductoVo implements Serializable {
 		this.umPedido = producto.getUmPedido()!=null ? new UnidadmedidaVo(producto.getUmPedido()) : null;
 		this.iUMSalida = producto.getiUMSalida();
 		this.umSalida = producto.getUmSalida()!=null ? new UnidadmedidaVo(producto.getUmSalida()) : null;
+		this.fProductoPrecioVentaProducto = producto.getfProductoPrecioVentaProducto();
+		this.fPrecioInstalacion = producto.getfPrecioInstalacion();
+		this.iProductoServicioId = producto.getiProductoServicioId();
 	}
 
 	public int getiProductoId() {
@@ -340,6 +345,48 @@ public class ProductoVo implements Serializable {
 	 */
 	public void setiProductoalmacenId(int iProductoalmacenId) {
 		this.iProductoalmacenId = iProductoalmacenId;
+	}
+
+	/**
+	 * @return the fProductoPrecioVentaProducto
+	 */
+	public float getfProductoPrecioVentaProducto() {
+		return fProductoPrecioVentaProducto;
+	}
+
+	/**
+	 * @param fProductoPrecioVentaProducto the fProductoPrecioVentaProducto to set
+	 */
+	public void setfProductoPrecioVentaProducto(float fProductoPrecioVentaProducto) {
+		this.fProductoPrecioVentaProducto = fProductoPrecioVentaProducto;
+	}
+
+	/**
+	 * @return the fPrecioInstalacion
+	 */
+	public float getfPrecioInstalacion() {
+		return fPrecioInstalacion;
+	}
+
+	/**
+	 * @param fPrecioInstalacion the fPrecioInstalacion to set
+	 */
+	public void setfPrecioInstalacion(float fPrecioInstalacion) {
+		this.fPrecioInstalacion = fPrecioInstalacion;
+	}
+
+	/**
+	 * @return the iProductoServicioId
+	 */
+	public int getiProductoServicioId() {
+		return iProductoServicioId;
+	}
+
+	/**
+	 * @param iProductoServicioId the iProductoServicioId to set
+	 */
+	public void setiProductoServicioId(int iProductoServicioId) {
+		this.iProductoServicioId = iProductoServicioId;
 	}
 
 }

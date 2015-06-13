@@ -65,14 +65,15 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
      <tr>
         <th colspan="4" width="5%">Operaciones</th>
         <th align="left">C&oacute;digo</th>
-        <th width="20%" align="left">Nombre</th>
+        <th width="24%" align="left">Nombre</th>
         <th align="left">Descripci&oacute;n</th>
-        <th width="9%" align="left">Foto</th>
+        <th width="6%" align="left">Foto</th>
         <th align="left">Stock Total</th>        
-        <th align="left" width="6%" >Precio Compra</th>
-        <th align="left" width="6%" >Precio Venta</th>
-        <th align="left" width="8%" >Stock Min</th>
-        <th align="left" width="8%" >Stock Max</th>        
+        <th align="left" width="8%" >Precio Compra</th>
+        <th align="left" width="8%" >Precio Venta Producto</th>
+        <th align="left" width="8%" >Precio Venta</th>
+        <th align="left" width="5%" >Stock Min</th>
+        <th align="left" width="5%" >Stock Max</th>        
         <th align="left">Estado</th>
       </tr>
     </thead>
@@ -130,6 +131,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 		</td>
 		
 	    <td><bean:write name="x" property="fProductoPrecioCompra" format="#,##0.00"/></td>
+	    <td><bean:write name="x" property="fProductoPrecioVentaProducto" format="#,##0.00"/></td>
 	    <td><bean:write name="x" property="fProductoPrecioVenta" format="#,##0.00"/></td>
 	    <td><bean:write name="x" property="iProductoStockMinimo" /></td>
 		<td><bean:write name="x" property="iProductoStockMaximo" /></td>
