@@ -173,13 +173,11 @@
     <tbody>
 	   <tr>
 	 		<td>Nombre de producto:</td>
-			<td colspan="3">
+			<td>
 			    <html:hidden property="iProductoId" styleId="iProductoId"/>
 			    <input type="hidden" id="iStock"/>
 				<input type="text" id="vxProductoNombre" size="45"  class="text"/>
 			</td>
-	  </tr>
-	  <tr>
 	        <td>Cantidad:</td>
 	        <td>
 	        	<input type="hidden" id="iProductoalmacenId"> 
@@ -188,14 +186,7 @@
 		        	<html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
 		     	</html:select>
 			</td>
-			<td>Capacidad:</td>
-	        <td>
-	           <html:text property="iUMPedido" styleId="iUMPedido"   styleClass="text" size="5" disabled="true" />
-			   <html:select  property="iUMBase" styleId="iUMBase" styleClass="comboCodigo" tabindex="8" style="width:140px" disabled="true">
-		          <option value="0">::SELECCIONE::</option> 
-		          <html:options collection="listaUnidadMedida" property="iUnidadMedidaId" labelProperty="vUnidadMedidaDescripcion"/>
-		     </html:select>  
-			</td>
+
 	  </tr>
 	  <tr>
 	        <td>Precio Venta:</td>
