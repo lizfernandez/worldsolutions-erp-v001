@@ -1050,10 +1050,10 @@ public class VentaAction extends BaseAction {
 												preciosProducto.setiCantidadStock(iCantidad);
 												/** Actualizamos el producto */
 												producto.setiProductoStockTotal(producto.getiProductoStockTotal() - ventaDetalleVo.getiVentaDetalleCantidad());
-												producto.setfProductoDescuento(preciosProducto.getfDescuento());
-												producto.setfProductoGanancia(preciosProducto.getfGanancia());
-												producto.setfProductoPrecioVenta(preciosProducto.getfPrecioVenta());
-												producto.setfProductoPrecioCompra(preciosProducto.getfPrecioCompra());
+											//	producto.setfProductoDescuento(preciosProducto.getfDescuento());
+											//	producto.setfProductoGanancia(preciosProducto.getfGanancia());
+											//	producto.setfProductoPrecioVenta(preciosProducto.getfPrecioVenta());
+											//	producto.setfProductoPrecioCompra(preciosProducto.getfPrecioCompra());
 												asignado = 1;
 	
 											}// else
@@ -1143,10 +1143,10 @@ public class VentaAction extends BaseAction {
 												objpreciosProducto.setiCantidadStock(iCantidad);
 												/** Actualizamos el producto */
 												producto.setiProductoStockTotal(producto.getiProductoStockTotal() - ventaDetalleVo.getiVentaDetalleCantidad());
-												producto.setfProductoDescuento(objpreciosProducto.getfDescuento());
-												producto.setfProductoGanancia(objpreciosProducto.getfGanancia());
-												producto.setfProductoPrecioVenta(objpreciosProducto.getfPrecioVenta());
-												producto.setfProductoPrecioCompra(objpreciosProducto.getfPrecioCompra());
+												//producto.setfProductoDescuento(objpreciosProducto.getfDescuento());
+												//producto.setfProductoGanancia(objpreciosProducto.getfGanancia());
+												//producto.setfProductoPrecioVenta(objpreciosProducto.getfPrecioVenta());
+												//producto.setfProductoPrecioCompra(objpreciosProducto.getfPrecioCompra());
 												
 											}// else
 	
@@ -1196,7 +1196,10 @@ public class VentaAction extends BaseAction {
 
 				ventaDao.mergeEndidad(obj);
 				resultado = ventaDao.commitEndidad(entityTransaction);
-				if (resultado == true) {
+				/***
+				 * 10: GUIA DE COTIZACION : no se debe de regitrar movimientos en contabilidad.
+				 */
+				if (resultado == true && obj.getTipoDocumento().getiTipoDocumentoGestionId()!=10) {
 					int idVentaId = obj.getiVentaId();
 					int nNumeroLetra = 1;
 					entityTransaction = ventaDao.entityTransaction();
