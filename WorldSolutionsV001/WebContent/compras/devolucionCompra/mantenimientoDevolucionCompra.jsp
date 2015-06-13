@@ -180,7 +180,7 @@
         <th width="5%">&nbsp;</th>
         <th>C&Oacute;DIGO</th>
         <th width="12%">CANTIDAD</th>
-        <th>UNID.</th>        
+        <th>UNID.</th>
         <th>DESCRIPCI&Oacute;N</th>
         <!--th>C.Compra</th>
         <th>Ganancia(%)</th-->
@@ -199,6 +199,7 @@
 	           </span>
             </td>
             <td><bean:write name="x" property="producto.unidadMedida.vUnidadMedidaDescripcion" /></td>
+         
             
             <td><bean:write name="x" property="producto.vProductoNombre" /></td>
             <td  onclick="fn_ingresarPrecio('${i}')" align="right">

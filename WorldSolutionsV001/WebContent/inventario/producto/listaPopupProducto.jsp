@@ -54,7 +54,6 @@
         <th align="left">Unidad Medida</th>
         <th align="left">% Desc</th>
         <th align="right">P.Venta</th>
-        <th align="right">P.Compra</th>
         
       </tr>
     </thead>
@@ -98,7 +97,6 @@
 				</td>
 				<td align="right"><bean:write name="x" property="fProductoDescuento" format="###0.00" locale="Localidad" /></td>
 				<td align="right"><bean:write name="x" property="fProductoPrecioVenta" format="###0.00"  locale="Localidad"/></td>
-				<td align="right"><bean:write name="x" property="fProductoPrecioCompra" format="###0.00"  locale="Localidad"/></td>
 						
 	    	</tr>
 		</logic:iterate>
