@@ -47,7 +47,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 	   for (String per: listapermiso) {
 	   if(per!=null){
 	   if(per.equals("1313")){%>
-        <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=F',580,470)">
+        <td><button  class="button" onclick="popup('ingresoProducto.do?metodo=mantenimientoOrdenCompra&mode=F',580,470)">
                 <span class="find">Buscar</span>
             </button>
         </td>
@@ -105,7 +105,7 @@ List<String> listapermiso = (List<String>)session.getAttribute("listaMisPermisoU
 					if(per!=null){
 					if(per.equals("1312")){%>
 				<img title="Editar" src="${pageContext.request.contextPath}/media/imagenes/edit.png"
-		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoIngresoproducto&mode=U&id=<bean:write name="x" property="iOrdenCompraId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />',1150,500)" />
+		                     onclick="popup('ingresoProducto.do?metodo=mantenimientoOrdenCompra&mode=U&id=<bean:write name="x" property="iOrdenCompraId" />&idTipoDocumento=<bean:write name="x" property="tipoDocumento.iTipoDocumentoGestionId" />',1150,500)" />
 		           <% break;}}}%> 
 		           </td>
 		 	    <!--  td align="center"><img title="Eliminar" src="${pageContext.request.contextPath}/media/imagenes/delete.png"
