@@ -20,16 +20,16 @@ public class Contratoempresa implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaContrato;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaVencimiento;
 
 	private float fComision;
@@ -44,8 +44,8 @@ public class Contratoempresa implements Serializable {
 
 	private String vNroCuentaAbono;
 
-    public Contratoempresa() {
-    }
+	public Contratoempresa() {
+	}
 
 	public String getIContratoEmpresaId() {
 		return this.iContratoEmpresaId;

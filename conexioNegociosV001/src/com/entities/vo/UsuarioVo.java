@@ -1,49 +1,41 @@
-package com.entitie;
+package com.entities.vo;
 
-import java.io.Serializable;
-import javax.persistence.*;
-
-import java.util.Date;
 import java.math.BigInteger;
+import java.util.Date;
+
+import com.entitie.Usuario;
 
 
-/**
- * The persistent class for the usuario database table.
- * 
- */
-@Entity
-public class Usuario implements Serializable {
+public class UsuarioVo {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String iUsuarioId;
-
 	private String cEstadoCodigo;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dFechaInserta;
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iPerfilId")	
-	private Perfil perfil;
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iPersonaId")
-	private Persona persona;
-
+	private Date dFechaInserta;	
+	private PerfilVo perfil;
+	private PersonaVo persona;
 	private BigInteger iUsuarioActualizaId;
-
 	private BigInteger iUsuarioInsertaId;
-
 	private String vContrasena;
-
 	private String vIdentificador;
-
 	private String vUsuario;
 
-	public Usuario() {
+	public UsuarioVo() {
+		super();
+	}
+
+	public UsuarioVo(Usuario usuario) {
+		this.iUsuarioId = usuario.getiUsuarioId();
+		this.cEstadoCodigo =usuario.getcEstadoCodigo();
+		this.dFechaActualiza = usuario.getdFechaActualiza();
+		this.dFechaInserta = usuario.getdFechaInserta();
+		this.perfil = new PerfilVo(usuario.getPerfil());
+		this.persona = new PersonaVo(usuario.getPersona());
+		this.iUsuarioActualizaId = usuario.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = usuario.getiUsuarioInsertaId();
+		this.vContrasena = usuario.getvContrasena();
+		this.vIdentificador = usuario.getvIdentificador();
+		this.vUsuario = usuario.getvUsuario();
 	}
 
 	/**
@@ -102,7 +94,35 @@ public class Usuario implements Serializable {
 		this.dFechaInserta = dFechaInserta;
 	}
 
-		
+
+
+	/**
+	 * @return the perfil
+	 */
+	public PerfilVo getPerfil() {
+		return perfil;
+	}
+
+	/**
+	 * @param perfil the perfil to set
+	 */
+	public void setPerfil(PerfilVo perfil) {
+		this.perfil = perfil;
+	}
+
+	/**
+	 * @return the persona
+	 */
+	public PersonaVo getPersona() {
+		return persona;
+	}
+
+	/**
+	 * @param persona the persona to set
+	 */
+	public void setPersona(PersonaVo persona) {
+		this.persona = persona;
+	}
 
 	/**
 	 * @return the iUsuarioActualizaId
@@ -174,34 +194,5 @@ public class Usuario implements Serializable {
 		this.vUsuario = vUsuario;
 	}
 
-	/**
-	 * @return the perfil
-	 */
-	public Perfil getPerfil() {
-		return perfil;
-	}
-
-	/**
-	 * @param perfil the perfil to set
-	 */
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
-	}
-
-	/**
-	 * @return the persona
-	 */
-	public Persona getPersona() {
-		return persona;
-	}
-
-	/**
-	 * @param persona the persona to set
-	 */
-	public void setPersona(Persona persona) {
-		this.persona = persona;
-	}
-
 	
-
 }

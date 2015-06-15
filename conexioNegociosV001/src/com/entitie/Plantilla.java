@@ -20,10 +20,10 @@ public class Plantilla implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private float fPrecio;
@@ -34,8 +34,8 @@ public class Plantilla implements Serializable {
 
 	private String vNombrePlantilla;
 
-    public Plantilla() {
-    }
+	public Plantilla() {
+	}
 
 	public String getIPlantillaId() {
 		return this.iPlantillaId;

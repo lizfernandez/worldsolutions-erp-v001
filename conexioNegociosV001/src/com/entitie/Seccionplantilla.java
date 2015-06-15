@@ -20,10 +20,10 @@ public class Seccionplantilla implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iPlantillaId;
@@ -56,8 +56,8 @@ public class Seccionplantilla implements Serializable {
 
 	private String vTitulo;
 
-    public Seccionplantilla() {
-    }
+	public Seccionplantilla() {
+	}
 
 	public String getISeccionPlantillaId() {
 		return this.iSeccionPlantillaId;

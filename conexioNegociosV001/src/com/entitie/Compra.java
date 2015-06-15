@@ -20,10 +20,10 @@ public class Compra implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private float fIgv;
@@ -42,8 +42,8 @@ public class Compra implements Serializable {
 
 	private BigInteger iUsuarioVendedorId;
 
-    public Compra() {
-    }
+	public Compra() {
+	}
 
 	public String getICompraId() {
 		return this.iCompraId;

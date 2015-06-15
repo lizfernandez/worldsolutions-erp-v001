@@ -20,10 +20,10 @@ public class Empresa implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualizaId;
@@ -42,8 +42,8 @@ public class Empresa implements Serializable {
 
 	private String vUbigeo;
 
-    public Empresa() {
-    }
+	public Empresa() {
+	}
 
 	public String getIEmpresaId() {
 		return this.iEmpresaId;

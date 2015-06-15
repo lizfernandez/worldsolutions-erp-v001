@@ -21,10 +21,10 @@ public class Seguidore implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -35,8 +35,8 @@ public class Seguidore implements Serializable {
 
 	private BigInteger iUsuarioOrigId;
 
-    public Seguidore() {
-    }
+	public Seguidore() {
+	}
 
 	public String getISeguidorId() {
 		return this.iSeguidorId;

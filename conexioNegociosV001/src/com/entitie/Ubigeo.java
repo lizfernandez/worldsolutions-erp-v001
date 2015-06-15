@@ -22,10 +22,10 @@ public class Ubigeo implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -34,8 +34,8 @@ public class Ubigeo implements Serializable {
 
 	private String vNombre;
 
-    public Ubigeo() {
-    }
+	public Ubigeo() {
+	}
 
 	public String getIUbigeoId() {
 		return this.iUbigeoId;

@@ -16,14 +16,14 @@ public class Aulavirtual implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private BigInteger iAulaVirtualId;
+	private String iAulaVirtualId;
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -36,141 +36,79 @@ public class Aulavirtual implements Serializable {
 
 	private String vTitulo;
 
-    public Aulavirtual() {
-    }
-
-	/**
-	 * @return the iAulaVirtualId
-	 */
-	public BigInteger getiAulaVirtualId() {
-		return iAulaVirtualId;
+	public Aulavirtual() {
 	}
 
-	/**
-	 * @param iAulaVirtualId the iAulaVirtualId to set
-	 */
-	public void setiAulaVirtualId(BigInteger iAulaVirtualId) {
+	public String getIAulaVirtualId() {
+		return this.iAulaVirtualId;
+	}
+
+	public void setIAulaVirtualId(String iAulaVirtualId) {
 		this.iAulaVirtualId = iAulaVirtualId;
 	}
 
-	/**
-	 * @return the cEstadoCodigo
-	 */
-	public String getcEstadoCodigo() {
-		return cEstadoCodigo;
+	public String getCEstadoCodigo() {
+		return this.cEstadoCodigo;
 	}
 
-	/**
-	 * @param cEstadoCodigo the cEstadoCodigo to set
-	 */
-	public void setcEstadoCodigo(String cEstadoCodigo) {
+	public void setCEstadoCodigo(String cEstadoCodigo) {
 		this.cEstadoCodigo = cEstadoCodigo;
 	}
 
-	/**
-	 * @return the dFechaActualiza
-	 */
-	public Date getdFechaActualiza() {
-		return dFechaActualiza;
+	public Date getDFechaActualiza() {
+		return this.dFechaActualiza;
 	}
 
-	/**
-	 * @param dFechaActualiza the dFechaActualiza to set
-	 */
-	public void setdFechaActualiza(Date dFechaActualiza) {
+	public void setDFechaActualiza(Date dFechaActualiza) {
 		this.dFechaActualiza = dFechaActualiza;
 	}
 
-	/**
-	 * @return the dFechaInserta
-	 */
-	public Date getdFechaInserta() {
-		return dFechaInserta;
+	public Date getDFechaInserta() {
+		return this.dFechaInserta;
 	}
 
-	/**
-	 * @param dFechaInserta the dFechaInserta to set
-	 */
-	public void setdFechaInserta(Date dFechaInserta) {
+	public void setDFechaInserta(Date dFechaInserta) {
 		this.dFechaInserta = dFechaInserta;
 	}
 
-	/**
-	 * @return the iUsuarioActualiza
-	 */
-	public BigInteger getiUsuarioActualiza() {
-		return iUsuarioActualiza;
+	public BigInteger getIUsuarioActualiza() {
+		return this.iUsuarioActualiza;
 	}
 
-	/**
-	 * @param iUsuarioActualiza the iUsuarioActualiza to set
-	 */
-	public void setiUsuarioActualiza(BigInteger iUsuarioActualiza) {
+	public void setIUsuarioActualiza(BigInteger iUsuarioActualiza) {
 		this.iUsuarioActualiza = iUsuarioActualiza;
 	}
 
-	/**
-	 * @return the iUsuarioInserta
-	 */
-	public BigInteger getiUsuarioInserta() {
-		return iUsuarioInserta;
+	public BigInteger getIUsuarioInserta() {
+		return this.iUsuarioInserta;
 	}
 
-	/**
-	 * @param iUsuarioInserta the iUsuarioInserta to set
-	 */
-	public void setiUsuarioInserta(BigInteger iUsuarioInserta) {
+	public void setIUsuarioInserta(BigInteger iUsuarioInserta) {
 		this.iUsuarioInserta = iUsuarioInserta;
 	}
 
-	/**
-	 * @return the vContenido
-	 */
-	public String getvContenido() {
-		return vContenido;
+	public String getVContenido() {
+		return this.vContenido;
 	}
 
-	/**
-	 * @param vContenido the vContenido to set
-	 */
-	public void setvContenido(String vContenido) {
+	public void setVContenido(String vContenido) {
 		this.vContenido = vContenido;
 	}
 
-	/**
-	 * @return the vEnlance
-	 */
-	public String getvEnlance() {
-		return vEnlance;
+	public String getVEnlance() {
+		return this.vEnlance;
 	}
 
-	/**
-	 * @param vEnlance the vEnlance to set
-	 */
-	public void setvEnlance(String vEnlance) {
+	public void setVEnlance(String vEnlance) {
 		this.vEnlance = vEnlance;
 	}
 
-	/**
-	 * @return the vTitulo
-	 */
-	public String getvTitulo() {
-		return vTitulo;
+	public String getVTitulo() {
+		return this.vTitulo;
 	}
 
-	/**
-	 * @param vTitulo the vTitulo to set
-	 */
-	public void setvTitulo(String vTitulo) {
+	public void setVTitulo(String vTitulo) {
 		this.vTitulo = vTitulo;
 	}
 
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	
 }

@@ -20,10 +20,10 @@ public class Menuplantilla implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iPlantillaId;
@@ -44,8 +44,8 @@ public class Menuplantilla implements Serializable {
 
 	private String vPaginaDestino;
 
-    public Menuplantilla() {
-    }
+	public Menuplantilla() {
+	}
 
 	public String getIMenuPlantillaId() {
 		return this.iMenuPlantillaId;

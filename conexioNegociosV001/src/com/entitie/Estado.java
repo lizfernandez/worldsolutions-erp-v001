@@ -21,10 +21,10 @@ public class Estado implements Serializable {
 
 	private int cNombre;
 
-    @Temporal( TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	private Date dFechaInserta;
 
 	private int iUsuarioActualiza;
@@ -33,8 +33,8 @@ public class Estado implements Serializable {
 
 	private int vDescripcion;
 
-    public Estado() {
-    }
+	public Estado() {
+	}
 
 	public int getIEstadoId() {
 		return this.iEstadoId;

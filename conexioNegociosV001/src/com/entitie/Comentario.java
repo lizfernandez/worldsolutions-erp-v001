@@ -16,14 +16,14 @@ public class Comentario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private BigInteger iComentarioId;
+	private String iComentarioId;
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iEventoId;
@@ -44,190 +44,111 @@ public class Comentario implements Serializable {
 
 	private String vUbicacion;
 
-    public Comentario() {
-    }
-
-	/**
-	 * @return the iComentarioId
-	 */
-	public BigInteger getiComentarioId() {
-		return iComentarioId;
+	public Comentario() {
 	}
 
-	/**
-	 * @param iComentarioId the iComentarioId to set
-	 */
-	public void setiComentarioId(BigInteger iComentarioId) {
+	public String getIComentarioId() {
+		return this.iComentarioId;
+	}
+
+	public void setIComentarioId(String iComentarioId) {
 		this.iComentarioId = iComentarioId;
 	}
 
-	/**
-	 * @return the cEstadoCodigo
-	 */
-	public String getcEstadoCodigo() {
-		return cEstadoCodigo;
+	public String getCEstadoCodigo() {
+		return this.cEstadoCodigo;
 	}
 
-	/**
-	 * @param cEstadoCodigo the cEstadoCodigo to set
-	 */
-	public void setcEstadoCodigo(String cEstadoCodigo) {
+	public void setCEstadoCodigo(String cEstadoCodigo) {
 		this.cEstadoCodigo = cEstadoCodigo;
 	}
 
-	/**
-	 * @return the dFechaActualiza
-	 */
-	public Date getdFechaActualiza() {
-		return dFechaActualiza;
+	public Date getDFechaActualiza() {
+		return this.dFechaActualiza;
 	}
 
-	/**
-	 * @param dFechaActualiza the dFechaActualiza to set
-	 */
-	public void setdFechaActualiza(Date dFechaActualiza) {
+	public void setDFechaActualiza(Date dFechaActualiza) {
 		this.dFechaActualiza = dFechaActualiza;
 	}
 
-	/**
-	 * @return the dFechaInserta
-	 */
-	public Date getdFechaInserta() {
-		return dFechaInserta;
+	public Date getDFechaInserta() {
+		return this.dFechaInserta;
 	}
 
-	/**
-	 * @param dFechaInserta the dFechaInserta to set
-	 */
-	public void setdFechaInserta(Date dFechaInserta) {
+	public void setDFechaInserta(Date dFechaInserta) {
 		this.dFechaInserta = dFechaInserta;
 	}
 
-	/**
-	 * @return the iEventoId
-	 */
-	public BigInteger getiEventoId() {
-		return iEventoId;
+	public BigInteger getIEventoId() {
+		return this.iEventoId;
 	}
 
-	/**
-	 * @param iEventoId the iEventoId to set
-	 */
-	public void setiEventoId(BigInteger iEventoId) {
+	public void setIEventoId(BigInteger iEventoId) {
 		this.iEventoId = iEventoId;
 	}
 
-	/**
-	 * @return the iNoticiasId
-	 */
-	public BigInteger getiNoticiasId() {
-		return iNoticiasId;
+	public BigInteger getINoticiasId() {
+		return this.iNoticiasId;
 	}
 
-	/**
-	 * @param iNoticiasId the iNoticiasId to set
-	 */
-	public void setiNoticiasId(BigInteger iNoticiasId) {
+	public void setINoticiasId(BigInteger iNoticiasId) {
 		this.iNoticiasId = iNoticiasId;
 	}
 
-	/**
-	 * @return the iUsuarioActualiza
-	 */
-	public BigInteger getiUsuarioActualiza() {
-		return iUsuarioActualiza;
+	public BigInteger getIUsuarioActualiza() {
+		return this.iUsuarioActualiza;
 	}
 
-	/**
-	 * @param iUsuarioActualiza the iUsuarioActualiza to set
-	 */
-	public void setiUsuarioActualiza(BigInteger iUsuarioActualiza) {
+	public void setIUsuarioActualiza(BigInteger iUsuarioActualiza) {
 		this.iUsuarioActualiza = iUsuarioActualiza;
 	}
 
-	/**
-	 * @return the iUsuarioId
-	 */
-	public BigInteger getiUsuarioId() {
-		return iUsuarioId;
+	public BigInteger getIUsuarioId() {
+		return this.iUsuarioId;
 	}
 
-	/**
-	 * @param iUsuarioId the iUsuarioId to set
-	 */
-	public void setiUsuarioId(BigInteger iUsuarioId) {
+	public void setIUsuarioId(BigInteger iUsuarioId) {
 		this.iUsuarioId = iUsuarioId;
 	}
 
-	/**
-	 * @return the iUsuarioInserta
-	 */
-	public BigInteger getiUsuarioInserta() {
-		return iUsuarioInserta;
+	public BigInteger getIUsuarioInserta() {
+		return this.iUsuarioInserta;
 	}
 
-	/**
-	 * @param iUsuarioInserta the iUsuarioInserta to set
-	 */
-	public void setiUsuarioInserta(BigInteger iUsuarioInserta) {
+	public void setIUsuarioInserta(BigInteger iUsuarioInserta) {
 		this.iUsuarioInserta = iUsuarioInserta;
 	}
 
-	/**
-	 * @return the vComentario
-	 */
-	public String getvComentario() {
-		return vComentario;
+	public String getVComentario() {
+		return this.vComentario;
 	}
 
-	/**
-	 * @param vComentario the vComentario to set
-	 */
-	public void setvComentario(String vComentario) {
+	public void setVComentario(String vComentario) {
 		this.vComentario = vComentario;
 	}
 
-	/**
-	 * @return the vEtiquetas
-	 */
-	public String getvEtiquetas() {
-		return vEtiquetas;
+	public String getVEtiquetas() {
+		return this.vEtiquetas;
 	}
 
-	/**
-	 * @param vEtiquetas the vEtiquetas to set
-	 */
-	public void setvEtiquetas(String vEtiquetas) {
+	public void setVEtiquetas(String vEtiquetas) {
 		this.vEtiquetas = vEtiquetas;
 	}
 
-	/**
-	 * @return the vFoto
-	 */
-	public String getvFoto() {
-		return vFoto;
+	public String getVFoto() {
+		return this.vFoto;
 	}
 
-	/**
-	 * @param vFoto the vFoto to set
-	 */
-	public void setvFoto(String vFoto) {
+	public void setVFoto(String vFoto) {
 		this.vFoto = vFoto;
 	}
 
-	/**
-	 * @return the vUbicacion
-	 */
-	public String getvUbicacion() {
-		return vUbicacion;
+	public String getVUbicacion() {
+		return this.vUbicacion;
 	}
 
-	/**
-	 * @param vUbicacion the vUbicacion to set
-	 */
-	public void setvUbicacion(String vUbicacion) {
+	public void setVUbicacion(String vUbicacion) {
 		this.vUbicacion = vUbicacion;
 	}
 
-	
 }

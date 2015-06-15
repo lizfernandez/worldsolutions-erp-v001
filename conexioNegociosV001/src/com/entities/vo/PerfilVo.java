@@ -1,39 +1,37 @@
-package com.entitie;
+package com.entities.vo;
 
-import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 import java.math.BigInteger;
+import java.util.Date;
 
+import com.entitie.Perfil;
 
-/**
- * The persistent class for the perfil database table.
- * 
- */
-@Entity
-public class Perfil implements Serializable {
+public class PerfilVo {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String iPerfilId;
-
 	private String cEstadoCodigo;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
-
 	private BigInteger iUsuarioActualizaId;
-
 	private BigInteger iUsuarioInsertaId;
-
 	private String vNombre;
 
-	public Perfil() {
+	public PerfilVo() {
 	}
+	
+	
+
+	public PerfilVo(Perfil perfil) {
+		this.iPerfilId = perfil.getiPerfilId();
+		this.cEstadoCodigo = perfil.getcEstadoCodigo();
+		this.dFechaActualiza = perfil.getdFechaActualiza();
+		this.dFechaInserta = perfil.getdFechaInserta();
+		this.iUsuarioActualizaId = perfil.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = perfil.getiUsuarioInsertaId();
+		this.vNombre = perfil.getvNombre();
+	}
+
+
 
 	/**
 	 * @return the iPerfilId
@@ -134,5 +132,4 @@ public class Perfil implements Serializable {
 	}
 
 	
-
 }
