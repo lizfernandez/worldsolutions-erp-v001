@@ -20,10 +20,10 @@ public class Tipopago implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualizaId;
@@ -32,8 +32,8 @@ public class Tipopago implements Serializable {
 
 	private String vNombre;
 
-    public Tipopago() {
-    }
+	public Tipopago() {
+	}
 
 	public String getITipoPagoId() {
 		return this.iTipoPagoId;

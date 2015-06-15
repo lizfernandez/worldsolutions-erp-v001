@@ -15,7 +15,6 @@
 		<class>com.entitie.Grupo</class>
 		<class>com.entitie.Llamadacliente</class>
 		<class>com.entitie.Mensaje</class>
-		<class>com.entitie.Munuplantilla</class>
 		<class>com.entitie.Noticia</class>
 		<class>com.entitie.Notificacion</class>
 		<class>com.entitie.Perfil</class>
@@ -36,6 +35,11 @@
 		<class>com.entitie.Usuario</class>
 		<class>com.entitie.Visitascliente</class>
 		<class>com.entitie.Menuplantilla</class>
+		<class>com.entitie.Menu</class>
+		<class>com.entitie.Menuaccion</class>
+		<class>com.entitie.Menuopcione</class>
+		<class>com.entitie.Menutitulo</class>
+		<class>com.entitie.Seguridad</class>
 		<properties>
 			
 	      <property name="eclipselink.target-database" value="mysql"/>

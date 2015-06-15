@@ -1515,6 +1515,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
     padding-top: 30px;
   }
 }
+#footer i {
+  font-size: 12px;
+  line-height: 24px;
+  display: inline-block;
+  padding-right: 3px;
+}
 
 /*========================================================
                     Widget styles
@@ -1565,11 +1571,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
     right: 0;
     width: 178px;
     position: absolute;
-    top: 80px
+    top: 80px;
+   background:  url("../images/background1.png") repeat scroll 0 0 rgba(5, 5, 5, 0.66);
   }
 #navigation ul.tree {
 
-	background: none repeat scroll 0 0 #484848;
+	/*background: none repeat scroll 0 0 #484848;*/
     border-radius: 0 0 6px 6px;
     list-style: none outside none;
     padding: 0;
@@ -1577,24 +1584,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
 #navigation ul.tree > li > a {
     border-top: 1px solid #292929;
     color: #FFFFFF;
-   font-family: "Arial",sans-serif;
-    font-size: 12px;
+   font:500 14px/15px "Open Sans", sans-serif;
+   
     line-height: 20px;
     padding: 12px 20px 13px;
-    text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
-    text-transform: uppercase;
+   /* text-shadow: 1px 1px rgba(0, 0, 0, 0.3);*/
+   /* text-transform: uppercase;*/
 }
 #navigation ul.tree > li:first-child > a {
     border: medium none;
-    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.4) inset;
+  /*  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.4) inset;*/
 }
 #navigation ul.tree > li:last-child > a {
-	border-radius: 0 0 6px 6px;
+	/*border-radius: 0 0 6px 6px;*/
 }
 
 #navigation ul.tree > li > a:hover {    
 	 /*background:#BF0F00 url(../ima/expanded.gif) no-repeat scroll 93% 39%;	    */
-	  background: #5A5A5A;	
+	 
+	  background:  url("../images/background1.png") repeat scroll 0 0 rgba(0, 100, 209, 0.63);
+	 /*border:1px solid #0064d1;*/
 	  
 }
 #navigation ul.tree  li  .up {    
@@ -1607,8 +1616,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
 }
 #navigation ul.tree li a {
     display: block;
-    font-weight: bold;
-    transition: all 0.3s ease 0s;
+   /* font-weight: bold;*/
+    transition: all 0.3s ease-in-out;
 }
 #navigation a.head1 {
  background:#4E4E4D url("../images/collapsed.gif") no-repeat scroll 93% 39%;
@@ -1623,12 +1632,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046fe0', end
 	background:url("../images/collapsed.gif") no-repeat scroll 7% 39% rgba(0, 0, 0, 0);
 	
 }
-#navigation ul.tree > li > ul > li > a:hover {   
-    color: #fff; 
-	/*background-image: linear-gradient(#E81200, #BF0F00);   */
-	background:#5A5A5A;
-	/*background: url("../img/collapsed.gif") no-repeat scroll 7% 39% rgba(0, 0, 0, 0);*/
-}
+
 .active{
 color: #fff;
 background:#5A5A5A;

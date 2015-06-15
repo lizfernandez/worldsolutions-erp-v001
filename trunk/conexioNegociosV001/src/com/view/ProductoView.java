@@ -1,4 +1,4 @@
-package com.entities.vo;
+package com.view;
 
 
 import java.io.Serializable;

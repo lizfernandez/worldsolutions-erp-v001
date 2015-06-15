@@ -20,10 +20,10 @@ public class Evento implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -40,8 +40,8 @@ public class Evento implements Serializable {
 
 	private String vUbicacion;
 
-    public Evento() {
-    }
+	public Evento() {
+	}
 
 	public String getIEventoId() {
 		return this.iEventoId;

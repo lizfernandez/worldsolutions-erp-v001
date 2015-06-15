@@ -15,7 +15,7 @@ public class Productos {
 	private float fProductoGanancia;
 	private float fProductoPrecioCompra;
 	private float fProductoPrecioVenta;
-		private int iProductoStockCantidad;
+	private int iProductoStockCantidad;
 	private int iProductoStockMaximo;
 	private int iProductoStockMinimo;
 	private int iUsuarioActualizaId;

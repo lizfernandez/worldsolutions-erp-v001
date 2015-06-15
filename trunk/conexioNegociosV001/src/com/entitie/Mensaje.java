@@ -21,10 +21,10 @@ public class Mensaje implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -41,8 +41,8 @@ public class Mensaje implements Serializable {
 
 	private String vMensaje;
 
-    public Mensaje() {
-    }
+	public Mensaje() {
+	}
 
 	public String getIMensajesId() {
 		return this.iMensajesId;

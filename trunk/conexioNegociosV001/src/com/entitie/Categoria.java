@@ -1,10 +1,9 @@
 package com.entitie;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-
 import javax.persistence.*;
 import java.util.Date;
+import java.math.BigInteger;
 
 
 /**
@@ -17,139 +16,89 @@ public class Categoria implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private BigInteger iCategoriaId;
+	private String iCategoriaId;
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
 
-	private BigInteger iUsuarioId;
+	private int iUsuarioId;
 
 	private BigInteger iUsuarioInserta;
 
 	private String vNombre;
 
-    public Categoria() {
-    }
-
-	/**
-	 * @return the iCategoriaId
-	 */
-	public BigInteger getiCategoriaId() {
-		return iCategoriaId;
+	public Categoria() {
 	}
 
-	/**
-	 * @param iCategoriaId the iCategoriaId to set
-	 */
-	public void setiCategoriaId(BigInteger iCategoriaId) {
+	public String getICategoriaId() {
+		return this.iCategoriaId;
+	}
+
+	public void setICategoriaId(String iCategoriaId) {
 		this.iCategoriaId = iCategoriaId;
 	}
 
-	/**
-	 * @return the cEstadoCodigo
-	 */
-	public String getcEstadoCodigo() {
-		return cEstadoCodigo;
+	public String getCEstadoCodigo() {
+		return this.cEstadoCodigo;
 	}
 
-	/**
-	 * @param cEstadoCodigo the cEstadoCodigo to set
-	 */
-	public void setcEstadoCodigo(String cEstadoCodigo) {
+	public void setCEstadoCodigo(String cEstadoCodigo) {
 		this.cEstadoCodigo = cEstadoCodigo;
 	}
 
-	/**
-	 * @return the dFechaActualiza
-	 */
-	public Date getdFechaActualiza() {
-		return dFechaActualiza;
+	public Date getDFechaActualiza() {
+		return this.dFechaActualiza;
 	}
 
-	/**
-	 * @param dFechaActualiza the dFechaActualiza to set
-	 */
-	public void setdFechaActualiza(Date dFechaActualiza) {
+	public void setDFechaActualiza(Date dFechaActualiza) {
 		this.dFechaActualiza = dFechaActualiza;
 	}
 
-	/**
-	 * @return the dFechaInserta
-	 */
-	public Date getdFechaInserta() {
-		return dFechaInserta;
+	public Date getDFechaInserta() {
+		return this.dFechaInserta;
 	}
 
-	/**
-	 * @param dFechaInserta the dFechaInserta to set
-	 */
-	public void setdFechaInserta(Date dFechaInserta) {
+	public void setDFechaInserta(Date dFechaInserta) {
 		this.dFechaInserta = dFechaInserta;
 	}
 
-	/**
-	 * @return the iUsuarioActualiza
-	 */
-	public BigInteger getiUsuarioActualiza() {
-		return iUsuarioActualiza;
+	public BigInteger getIUsuarioActualiza() {
+		return this.iUsuarioActualiza;
 	}
 
-	/**
-	 * @param iUsuarioActualiza the iUsuarioActualiza to set
-	 */
-	public void setiUsuarioActualiza(BigInteger iUsuarioActualiza) {
+	public void setIUsuarioActualiza(BigInteger iUsuarioActualiza) {
 		this.iUsuarioActualiza = iUsuarioActualiza;
 	}
 
-	/**
-	 * @return the iUsuarioId
-	 */
-	public BigInteger getiUsuarioId() {
-		return iUsuarioId;
+	public int getIUsuarioId() {
+		return this.iUsuarioId;
 	}
 
-	/**
-	 * @param iUsuarioId the iUsuarioId to set
-	 */
-	public void setiUsuarioId(BigInteger iUsuarioId) {
+	public void setIUsuarioId(int iUsuarioId) {
 		this.iUsuarioId = iUsuarioId;
 	}
 
-	/**
-	 * @return the iUsuarioInserta
-	 */
-	public BigInteger getiUsuarioInserta() {
-		return iUsuarioInserta;
+	public BigInteger getIUsuarioInserta() {
+		return this.iUsuarioInserta;
 	}
 
-	/**
-	 * @param iUsuarioInserta the iUsuarioInserta to set
-	 */
-	public void setiUsuarioInserta(BigInteger iUsuarioInserta) {
+	public void setIUsuarioInserta(BigInteger iUsuarioInserta) {
 		this.iUsuarioInserta = iUsuarioInserta;
 	}
 
-	/**
-	 * @return the vNombre
-	 */
-	public String getvNombre() {
-		return vNombre;
+	public String getVNombre() {
+		return this.vNombre;
 	}
 
-	/**
-	 * @param vNombre the vNombre to set
-	 */
-	public void setvNombre(String vNombre) {
+	public void setVNombre(String vNombre) {
 		this.vNombre = vNombre;
 	}
-
-	
 
 }

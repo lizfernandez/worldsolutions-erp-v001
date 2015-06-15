@@ -1,66 +1,62 @@
-package com.entitie;
+package com.entities.vo;
 
-import java.io.Serializable;
-import javax.persistence.*;
-
-import java.util.Date;
 import java.math.BigInteger;
+import java.util.Date;
 
 
-/**
- * The persistent class for the promociones database table.
- * 
- */
-@Entity
-@Table(name="promociones")
-public class Promocione implements Serializable {
+import com.entitie.Promocione;
+import com.entitie.Usuario;
+
+public class PromocioneVo {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String iPromocionId;
-
 	private String cAplicaDescuento;
-
 	private String cEstadoCodigo;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaCaducidad;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
-
 	private float fDescuento;
-
 	private float fNuevoPrecio;
-
 	private float fPrecio;
-
 	private BigInteger iTotalGustos;
-
 	private BigInteger iTotalVistos;
-
-	private BigInteger iUsuarioActualiza;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="iUsuarioId")	
-	private Usuario usuario;
-
+	private BigInteger iUsuarioActualiza;		
+	private UsuarioVo usuario;
 	private BigInteger iUsuarioInserta;
-
 	private String vCondiciones;
-
 	private String vDescripcion;
-
 	private String vFoto;
-
 	private String vNombre;
 
-	public Promocione() {
+	
+
+	public PromocioneVo() {
+		super();
+	
 	}
+	
+	public PromocioneVo(Promocione promociones) {
+		this.iPromocionId = promociones.getiPromocionId();
+		this.cAplicaDescuento = promociones.getcAplicaDescuento();
+		this.cEstadoCodigo = promociones.getcEstadoCodigo();
+		this.dFechaActualiza = promociones.getdFechaActualiza();
+		this.dFechaCaducidad = promociones.getdFechaCaducidad();
+		this.dFechaInserta = promociones.getdFechaInserta();
+		this.fDescuento = promociones.getfDescuento();
+		this.fNuevoPrecio = promociones.getfNuevoPrecio();
+		this.fPrecio = promociones.getfPrecio();
+		this.iTotalGustos = promociones.getiTotalGustos();
+		this.iTotalVistos = promociones.getiTotalVistos();
+		this.iUsuarioActualiza = promociones.getiUsuarioActualiza();
+		this.usuario = new UsuarioVo(promociones.getUsuario());
+		this.iUsuarioInserta = promociones.getiUsuarioInserta();
+		this.vCondiciones = promociones.getvCondiciones();
+		this.vDescripcion = promociones.getvDescripcion();
+		this.vFoto = promociones.getvFoto();
+		this.vNombre = promociones.getvNombre();
+	}
+	
 
 	/**
 	 * @return the iPromocionId
@@ -234,14 +230,14 @@ public class Promocione implements Serializable {
 	/**
 	 * @return the usuario
 	 */
-	public Usuario getUsuario() {
+	public UsuarioVo getUsuario() {
 		return usuario;
 	}
 
 	/**
 	 * @param usuario the usuario to set
 	 */
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(UsuarioVo usuario) {
 		this.usuario = usuario;
 	}
 
@@ -314,7 +310,5 @@ public class Promocione implements Serializable {
 	public void setvNombre(String vNombre) {
 		this.vNombre = vNombre;
 	}
-
-	
 
 }

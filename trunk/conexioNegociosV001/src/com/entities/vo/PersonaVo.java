@@ -1,52 +1,48 @@
-package com.entitie;
+package com.entities.vo;
 
-import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 import java.math.BigInteger;
+import java.util.Date;
 
+import com.entitie.Persona;
 
-/**
- * The persistent class for the persona database table.
- * 
- */
-@Entity
-public class Persona implements Serializable {
+public class PersonaVo {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String iPersonaId;
-
 	private String cEstadoCodigo;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaNacimiento;
-
 	private float fSueldo;
-
 	private BigInteger iUsuarioActualizaId;
-
 	private BigInteger iUsuarioInsertaId;
-
 	private String vApellidos;
-
 	private String vDireccionEnvio;
-
 	private String vEmail;
-
 	private String vNombres;
-
 	private String vUbicacion;
 
-	public Persona() {
+	public PersonaVo() {
 	}
+
+	
+	public PersonaVo(Persona persona) {
+		super();
+		this.iPersonaId = persona.getiPersonaId();
+		this.cEstadoCodigo = persona.getcEstadoCodigo();
+		this.dFechaActualiza = persona.getdFechaActualiza();
+		this.dFechaInserta = persona.getdFechaInserta();
+		this.dFechaNacimiento = persona.getdFechaNacimiento();
+		this.fSueldo = persona.getfSueldo();
+		this.iUsuarioActualizaId = persona.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = persona.getiUsuarioInsertaId();
+		this.vApellidos = persona.getvApellidos();
+		this.vDireccionEnvio = persona.getvDireccionEnvio();
+		this.vEmail = persona.getvEmail();
+		this.vNombres = persona.getvNombres();
+		this.vUbicacion = persona.getvUbicacion();
+	}
+
 
 	/**
 	 * @return the iPersonaId
@@ -229,7 +225,4 @@ public class Persona implements Serializable {
 	public void setvUbicacion(String vUbicacion) {
 		this.vUbicacion = vUbicacion;
 	}
-
-	
-
 }

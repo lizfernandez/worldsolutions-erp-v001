@@ -20,10 +20,10 @@ public class Noticia implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -40,8 +40,8 @@ public class Noticia implements Serializable {
 
 	private String vUbicacion;
 
-    public Noticia() {
-    }
+	public Noticia() {
+	}
 
 	public String getINoticiaId() {
 		return this.iNoticiaId;

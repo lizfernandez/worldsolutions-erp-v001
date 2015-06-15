@@ -22,10 +22,10 @@ public class Producto implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private float fDescuento;
@@ -48,8 +48,8 @@ public class Producto implements Serializable {
 
 	private String vNombre;
 
-    public Producto() {
-    }
+	public Producto() {
+	}
 
 	public String getIProductoId() {
 		return this.iProductoId;

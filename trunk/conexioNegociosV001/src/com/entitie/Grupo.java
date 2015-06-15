@@ -20,10 +20,10 @@ public class Grupo implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualizaId;
@@ -34,8 +34,8 @@ public class Grupo implements Serializable {
 
 	private String vNombre;
 
-    public Grupo() {
-    }
+	public Grupo() {
+	}
 
 	public String getIGrupoId() {
 		return this.iGrupoId;

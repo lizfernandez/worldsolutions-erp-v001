@@ -20,13 +20,13 @@ public class Visitascliente implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaProxVisita;
 
 	private BigInteger iEmpresaId;
@@ -39,8 +39,8 @@ public class Visitascliente implements Serializable {
 
 	private String vComentario;
 
-    public Visitascliente() {
-    }
+	public Visitascliente() {
+	}
 
 	public String getIVisitasId() {
 		return this.iVisitasId;

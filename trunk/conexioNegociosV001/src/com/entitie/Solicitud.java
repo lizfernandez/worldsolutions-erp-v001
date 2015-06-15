@@ -20,10 +20,10 @@ public class Solicitud implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -34,8 +34,8 @@ public class Solicitud implements Serializable {
 
 	private BigInteger iUsuarioOrigId;
 
-    public Solicitud() {
-    }
+	public Solicitud() {
+	}
 
 	public String getISolicitudId() {
 		return this.iSolicitudId;

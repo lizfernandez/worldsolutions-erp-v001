@@ -20,10 +20,10 @@ public class Datoscontacto implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualizaId;
@@ -36,8 +36,8 @@ public class Datoscontacto implements Serializable {
 
 	private String vValorContacto;
 
-    public Datoscontacto() {
-    }
+	public Datoscontacto() {
+	}
 
 	public String getIContactoId() {
 		return this.iContactoId;

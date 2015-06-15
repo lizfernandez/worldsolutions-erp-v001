@@ -20,10 +20,10 @@ public class Tiposeccion implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -32,8 +32,8 @@ public class Tiposeccion implements Serializable {
 
 	private String vNombre;
 
-    public Tiposeccion() {
-    }
+	public Tiposeccion() {
+	}
 
 	public String getITipoSeccionId() {
 		return this.iTipoSeccionId;

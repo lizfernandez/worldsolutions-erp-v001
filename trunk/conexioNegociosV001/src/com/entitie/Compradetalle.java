@@ -20,10 +20,10 @@ public class Compradetalle implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private float fDescuento;
@@ -42,8 +42,8 @@ public class Compradetalle implements Serializable {
 
 	private BigInteger iUsuarioInsertaId;
 
-    public Compradetalle() {
-    }
+	public Compradetalle() {
+	}
 
 	public String getICompraDetalleId() {
 		return this.iCompraDetalleId;

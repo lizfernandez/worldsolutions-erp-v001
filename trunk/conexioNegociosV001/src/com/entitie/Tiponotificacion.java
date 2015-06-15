@@ -20,10 +20,10 @@ public class Tiponotificacion implements Serializable {
 
 	private String cEstadoCodigo;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaActualiza;
 
-    @Temporal( TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dFechaInserta;
 
 	private BigInteger iUsuarioActualiza;
@@ -32,8 +32,8 @@ public class Tiponotificacion implements Serializable {
 
 	private String vNombre;
 
-    public Tiponotificacion() {
-    }
+	public Tiponotificacion() {
+	}
 
 	public String getITipoNotificacionId() {
 		return this.iTipoNotificacionId;
