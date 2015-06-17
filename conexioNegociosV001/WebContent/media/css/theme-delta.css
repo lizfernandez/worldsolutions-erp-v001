@@ -1,0 +1,10 @@
+@CHARSET "ISO-8859-1";
+
+.ui-widget-content{
+	border:0px !important;
+}
+
+.ui-datascroller .ui-datascroller-content{
+	padding: 0px !important;
+}
+

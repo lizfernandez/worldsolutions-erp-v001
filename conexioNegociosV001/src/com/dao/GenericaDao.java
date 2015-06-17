@@ -2,8 +2,11 @@ package com.dao;
 
 
 
+import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.CacheRetrieveMode;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -35,6 +38,10 @@ public class GenericaDao  implements IGenerica{
 		em=null;
 		return em;
 	}
+
+	public void limpiarInstancia(){
+		em = null;
+	}
 	
     public EntityTransaction entityTransaction() {
 		EntityTransaction trx = null;
@@ -55,9 +62,9 @@ public class GenericaDao  implements IGenerica{
 
 
 	@Override
-	public <G> List<G> listaEntidadGenerica(G entidad) {
+	public <G> List<G> listaEntidadGenerica(Class<G> entidad) {
 
-		Query q = getInstancia().createQuery("select p from " + entidad.getClass().getSimpleName() + "  p" + " where p.cEstadoCodigo = :EstadoCodigo");
+		Query q = getInstancia().createQuery("select p from " + entidad.getSimpleName() + "  p" + " where p.cEstadoCodigo = :EstadoCodigo");
 		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
 		@SuppressWarnings("unchecked")
 		List<G> lista = q.setParameter("EstadoCodigo", Constantes.estadoActivo).getResultList();
@@ -74,13 +81,47 @@ public class GenericaDao  implements IGenerica{
 	}
 
 
+//	@Override
+//	public <E> E findEndidad(E entidad, int iEntidadId) {
+//		HashMap findProperties = new HashMap();
+//		findProperties.put(QueryHints.CACHE_RETRIEVE_MODE, CacheRetrieveMode.BYPASS);
+//		findProperties.put(QueryHints.CACHE_STORE_MODE, CacheStoreMode.USE);
+//		@SuppressWarnings("unchecked")
+//		E objeto = (E) getInstancia().find(entidad.getClass(), iEntidadId,findProperties);		
+//		return objeto;
+//	}
+	
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public <E> E findEndidad(E entidad, int iEntidadId) {
-		@SuppressWarnings("unchecked")
-		E objeto = (E) getInstancia().find(entidad.getClass(), iEntidadId);		
+	public <E> E findEndidad(Class<E> entidad, int iEntidadId) {
+		HashMap findProperties = new HashMap();
+		findProperties.put(QueryHints.CACHE_RETRIEVE_MODE, CacheRetrieveMode.BYPASS);
+		findProperties.put(QueryHints.CACHE_STORE_MODE, CacheStoreMode.USE);
+		E objeto = (E) getInstancia().find(entidad, iEntidadId,findProperties);		
 		return objeto;
 	}
+	
+//	@Override
+//	public <E> E findEndidadBD(E entidad, String siEntidadId , int iEntidadId) {
+//
+//		Query q = getInstancia().createQuery("select p from " + entidad.getClass().getSimpleName() + "  p" + " where p."+siEntidadId+" = :iEntidadId");
+//		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+//		@SuppressWarnings("unchecked")
+//		E objeto = (E)q.setParameter("iEntidadId", iEntidadId).getSingleResult();
+//		return objeto;
+//	}
+	
+	@Override
+	public <E> E findEndidadBD(Class<E> entidad, String siEntidadId , int iEntidadId) {
 
+		Query q = getInstancia().createQuery("select p from " + entidad.getSimpleName() + "  p" + " where p."+siEntidadId+" = :iEntidadId");
+		q.setHint(QueryHints.REFRESH, HintValues.TRUE);
+		@SuppressWarnings("unchecked")
+		E objeto = (E)q.setParameter("iEntidadId", iEntidadId).getSingleResult();
+		return objeto;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <G> List<G> listaEntidadPaginada(String sentencia, int pagInicio, int pagFin) {
@@ -98,17 +139,20 @@ public class GenericaDao  implements IGenerica{
 	public boolean commitEndidad(EntityTransaction ext) {
 		boolean resultado = true;
 		try {
+			
 			ext.commit();
 			// ext= null;
 		} catch (Exception re) {
 			resultado = false;
-			if (ext.isActive()) {
-				ext.rollback();
+//			if (ext.isActive()) {
+				//revertirCambios(ext);
 				// resultado = false;
-			} // or could attempt to fix error and retry
+//			} // or could attempt to fix error and retry
 			re.printStackTrace();
+			limpiarInstancia();
 		} finally {
 			ext = null;
+			//limpiarInstancia();
 			// em=null;
 		}
 		return resultado;
@@ -142,7 +186,7 @@ public class GenericaDao  implements IGenerica{
 	@Override
 	public <E> void refreshEndidad(E entidad) {
 		getInstancia().refresh(entidad);
-		em = null;
+		limpiarInstancia();
 
 	}
 	
@@ -180,6 +224,7 @@ public class GenericaDao  implements IGenerica{
 		q.executeUpdate();
 
 	}
+	
 
 	@Override
 	public <E> String callSPCalculoCodigo(E entidad) {
@@ -187,21 +232,19 @@ public class GenericaDao  implements IGenerica{
 		Query q;
 
 		String codigoGenerado = "";
-		EntityTransaction ext;
 		try {
-			ext = entityTransaction();
+			/*ext = entityTransaction();
 			ext.begin();
-
+*/
 			q = getInstancia().createNativeQuery("{ CALL SP_CALCULO_CODIGO(?) }") // createNamedQuery("SP_IDU_PERFIL_PERMISOS")
 					.setParameter(1, entidad.getClass().getSimpleName());
 			// q.executeUpdate();// SOBRA, el getSingleResult lo hace por el
 			codigoGenerado = (String) q.getSingleResult();
-			resultado = commitEndidad(ext);
+		 // resultado = commitEndidad(ext);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally {
-			ext = null;
+			limpiarInstancia();
 		}
 		return codigoGenerado;
 
@@ -212,22 +255,62 @@ public class GenericaDao  implements IGenerica{
 
 		Query q;
 		int iPeriodoId = 0;
-		EntityTransaction ext;
 		try {
-			ext = entityTransaction();
+			/*ext = entityTransaction();
 			ext.begin();
-
+*/
 			q = em.createNativeQuery("{ CALL SP_PERIODO_ACTUAL() }");
 			// q.executeUpdate();// SOBRA, el getSingleResult lo hace por el
 			iPeriodoId = (Integer) q.getSingleResult();
-			resultado = commitEndidad(ext);
+			//resultado = commitEndidad(ext);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally {
-			ext = null;
+			limpiarInstancia();
 		}
 		return iPeriodoId;
 	}
+
+	@Override
+	public void revertirCambios(EntityTransaction ext) {
+		try {
+			if (ext != null) {
+				ext.rollback();
+			}
+		} catch (Exception e) {
+			System.err.println("Error al ejecutar roolback: " + e);
+			e.printStackTrace();
+			limpiarInstancia();
+		} finally {
+			ext = null;
+		}
+	}
+	@Override
+	public String callSPNro_Documento(int iTipoDocumentoId,String tabla, String campoTablaNumeroDoc, int iSucursalId) {
+		Query q;
+
+		String nroDocumento = "";
+
+		try {
+
+//			getInstancia().getTransaction().begin();
+			q = getInstancia()
+					.createNativeQuery("{ CALL SP_NRO_DOCUMENTO(?,?,?,?) }")// createNamedQuery("SP_IDU_PERFIL_PERMISOS")
+					.setParameter(1, iTipoDocumentoId)
+					.setParameter(2, tabla)
+					.setParameter(3, campoTablaNumeroDoc)
+			        .setParameter(4, iSucursalId);
+
+			nroDocumento = (String) q.getSingleResult();
+//			getInstancia().getTransaction().commit();
+			/***** q.executeUpdate(); **/
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			limpiarInstancia();
+		}
+
+		return nroDocumento;
+	}
+	
 }
 
 

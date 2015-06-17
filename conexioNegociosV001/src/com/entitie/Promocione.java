@@ -3,6 +3,9 @@ package com.entitie;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.PromocioneVo;
+import com.entities.vo.UsuarioVo;
+
 import java.util.Date;
 import java.math.BigInteger;
 
@@ -61,6 +64,31 @@ public class Promocione implements Serializable {
 
 	public Promocione() {
 	}
+
+	
+	
+	public Promocione(PromocioneVo promociones) {
+		this.iPromocionId = promociones.getiPromocionId();
+		this.cAplicaDescuento = promociones.getcAplicaDescuento();
+		this.cEstadoCodigo = promociones.getcEstadoCodigo();
+		this.dFechaActualiza = promociones.getdFechaActualiza();
+		this.dFechaCaducidad = promociones.getdFechaCaducidad();
+		this.dFechaInserta = promociones.getdFechaInserta();
+		this.fDescuento = promociones.getfDescuento();
+		this.fNuevoPrecio = promociones.getfNuevoPrecio();
+		this.fPrecio = promociones.getfPrecio();
+		this.iTotalGustos = promociones.getiTotalGustos();
+		this.iTotalVistos = promociones.getiTotalVistos();
+		this.iUsuarioActualiza = promociones.getiUsuarioActualiza();
+		this.usuario = new Usuario(promociones.getUsuario());
+		this.iUsuarioInserta = promociones.getiUsuarioInserta();
+		this.vCondiciones = promociones.getvCondiciones();
+		this.vDescripcion = promociones.getvDescripcion();
+		this.vFoto = promociones.getvFoto();
+		this.vNombre = promociones.getvNombre();
+	}
+
+
 
 	/**
 	 * @return the iPromocionId

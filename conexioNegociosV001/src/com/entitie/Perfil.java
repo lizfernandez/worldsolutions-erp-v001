@@ -2,6 +2,9 @@ package com.entitie;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.entities.vo.PerfilVo;
+
 import java.util.Date;
 import java.math.BigInteger;
 
@@ -33,6 +36,15 @@ public class Perfil implements Serializable {
 	private String vNombre;
 
 	public Perfil() {
+	}
+	public Perfil(PerfilVo perfil) {
+		this.iPerfilId = perfil.getiPerfilId();
+		this.cEstadoCodigo = perfil.getcEstadoCodigo();
+		this.dFechaActualiza = perfil.getdFechaActualiza();
+		this.dFechaInserta = perfil.getdFechaInserta();
+		this.iUsuarioActualizaId = perfil.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = perfil.getiUsuarioInsertaId();
+		this.vNombre = perfil.getvNombre();
 	}
 
 	/**

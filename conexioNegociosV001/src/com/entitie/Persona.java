@@ -2,6 +2,9 @@ package com.entitie;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.entities.vo.PersonaVo;
+
 import java.util.Date;
 import java.math.BigInteger;
 
@@ -46,6 +49,22 @@ public class Persona implements Serializable {
 	private String vUbicacion;
 
 	public Persona() {
+	}
+	public Persona(PersonaVo persona) {
+		
+		this.iPersonaId = persona.getiPersonaId();
+		this.cEstadoCodigo = persona.getcEstadoCodigo();
+		this.dFechaActualiza = persona.getdFechaActualiza();
+		this.dFechaInserta = persona.getdFechaInserta();
+		this.dFechaNacimiento = persona.getdFechaNacimiento();
+		this.fSueldo = persona.getfSueldo();
+		this.iUsuarioActualizaId = persona.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = persona.getiUsuarioInsertaId();
+		this.vApellidos = persona.getvApellidos();
+		this.vDireccionEnvio = persona.getvDireccionEnvio();
+		this.vEmail = persona.getvEmail();
+		this.vNombres = persona.getvNombres();
+		this.vUbicacion = persona.getvUbicacion();
 	}
 
 	/**
