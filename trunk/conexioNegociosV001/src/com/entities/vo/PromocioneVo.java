@@ -28,7 +28,7 @@ public class PromocioneVo {
 	private String vDescripcion;
 	private String vFoto;
 	private String vNombre;
-
+    private String evento;
 	
 
 	public PromocioneVo() {
@@ -49,7 +49,7 @@ public class PromocioneVo {
 		this.iTotalGustos = promociones.getiTotalGustos();
 		this.iTotalVistos = promociones.getiTotalVistos();
 		this.iUsuarioActualiza = promociones.getiUsuarioActualiza();
-		this.usuario = new UsuarioVo(promociones.getUsuario());
+		this.usuario = promociones.getUsuario()!= null? new UsuarioVo(promociones.getUsuario()) : null; 
 		this.iUsuarioInserta = promociones.getiUsuarioInserta();
 		this.vCondiciones = promociones.getvCondiciones();
 		this.vDescripcion = promociones.getvDescripcion();
@@ -310,5 +310,20 @@ public class PromocioneVo {
 	public void setvNombre(String vNombre) {
 		this.vNombre = vNombre;
 	}
+
+	/**
+	 * @return the evento
+	 */
+	public String getEvento() {
+		return evento;
+	}
+
+	/**
+	 * @param evento the evento to set
+	 */
+	public void setEvento(String evento) {
+		this.evento = evento;
+	}
+	
 
 }

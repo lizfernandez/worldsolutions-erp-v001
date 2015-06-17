@@ -3,6 +3,10 @@ package com.entitie;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.entities.vo.PerfilVo;
+import com.entities.vo.PersonaVo;
+import com.entities.vo.UsuarioVo;
+
 import java.util.Date;
 import java.math.BigInteger;
 
@@ -46,6 +50,19 @@ public class Usuario implements Serializable {
 	public Usuario() {
 	}
 
+	public Usuario(UsuarioVo  usuario) {
+		this.iUsuarioId = usuario.getiUsuarioId();
+		this.cEstadoCodigo =usuario.getcEstadoCodigo();
+		this.dFechaActualiza = usuario.getdFechaActualiza();
+		this.dFechaInserta = usuario.getdFechaInserta();
+		this.perfil = new Perfil(usuario.getPerfil());
+		this.persona = new Persona(usuario.getPersona());
+		this.iUsuarioActualizaId = usuario.getiUsuarioActualizaId();
+		this.iUsuarioInsertaId = usuario.getiUsuarioInsertaId();
+		this.vContrasena = usuario.getvContrasena();
+		this.vIdentificador = usuario.getvIdentificador();
+		this.vUsuario = usuario.getvUsuario();
+	}
 	/**
 	 * @return the iUsuarioId
 	 */

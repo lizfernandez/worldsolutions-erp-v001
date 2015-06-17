@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"> 
+      
+      
+<h:body>  
+ <h:form> 
+        <p:dataScroller value="#{promocioneView.promociones}" var="pro" chunkSize="10"  >
+		 
+		 <f:facet name="loader" >
+		 
+		  <div class="grid_4">
+          <div class="box7 maxheight wow fadeInUp animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; height: 174px;"><div class="box_inner">
+           <div class="box7_descripcion">¡Todo lo que puedas comer! Almuerzo Buffet en La Dama Juana</div>
+           <div class="box7_price"></div>
+           <div class="box7_simbolo">S/.</div>
+	       <div class="box7_valor"><h:outputText value="#{pro.fPrecio}" style="font-weight: bold"/></div>	           
+            <img src="media/images/page1_img5.png" alt=""/>
+               <div class="box7_pre_fond">
+               <div class="box7_pre">
+               Precio Regular
+	                <br/>
+	                  <h:outputText value="#{pro.fPrecio}" style="font-weight: bold"/>
+                </div>
+                <div class="spa"></div>
+	           <div class="box7_pre">Descuento
+	                <br/>
+	                  50%
+	           </div>
+	            <div class="box7_more"><a href="#" class="btn-simple">read more</a></div>
+	            </div>
+
+              
+	           
+	           <div class="box7_log_emp"></div>
+	           <div class="box7_emp">
+		           <h3>
+	                  <a href="#">Damas y Punto</a>
+	              </h3>
+            </div>
+            
+            
+           </div>
+          </div>
+        </div>
+		 
+		 
+		 </f:facet>
+		  
+      </p:dataScroller>   
+      </h:form>    
+</h:body>  
+</html>

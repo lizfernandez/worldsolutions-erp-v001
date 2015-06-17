@@ -8,6 +8,7 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
+
 <h:head>
     <f:facet name="first">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -26,6 +27,7 @@
   <link rel="stylesheet" href="#{request.contextPath}/media/css/owl.carousel.css" />
   <link rel="stylesheet" href="#{request.contextPath}/media/css/touchTouch.css" />
   <link rel="stylesheet" href="#{request.contextPath}/media/css/style.css" />
+  <link rel="stylesheet" href="#{request.contextPath}/media/css/theme-delta.css" />
  
   <script src="#{request.contextPath}/media/js/jquery-1.11.2.js"></script>
   <script src="#{request.contextPath}/media/js/jquery-migrate-1.2.1.js"></script>
@@ -194,57 +196,23 @@
         </div>
       </div>
       <div class="row">
-      <!--p:dataScroller value="#{dataScrollerView.cars}" var="car" chunkSize="10"  >
-		 
-		 <f:facet name="loader" >
-		 
-		  <div class="grid_4">
-          <div class="box7 maxheight wow fadeInUp animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; height: 174px;"><div class="box_inner">
+      
+        
+        
+<!--     ui:repeat value="#{promocioneView.promociones}" var="pro" varStatus="estado">  -->
+    <h:form> 
+    <p:dataScroller value="#{promocioneView.promociones}" var="pro" chunkSize="6">
+    
+           <f:facet name="loader">
+            <p:commandButton type="button" value="ver 30 ofertas más" icon="ui-icon-circle-triangle-s"/>
+           </f:facet>
+        
+          <div class="grid_4">
+          <div class="box7 maxheight wow #{pro.evento} animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: #{pro.evento}; height: 399px;"><div class="box_inner">
            <div class="box7_descripcion">¡Todo lo que puedas comer! Almuerzo Buffet en La Dama Juana</div>
            <div class="box7_price"></div>
            <div class="box7_simbolo">S/.</div>
-	       <div class="box7_valor">60</div>	           
-            <img src="media/images/page1_img5.png" alt=""/>
-               <div class="box7_pre_fond">
-               <div class="box7_pre">
-               Precio Regular
-	                <br/>
-	                  S/.120
-                </div>
-                <div class="spa"></div>
-	           <div class="box7_pre">Descuento
-	                <br/>
-	                  50%
-	           </div>
-	            <div class="box7_more"><a href="#" class="btn-simple">read more</a></div>
-	            </div>
-
-              
-	           
-	           <div class="box7_log_emp"></div>
-	           <div class="box7_emp">
-		           <h3>
-	                  <a href="#">Damas y Punto</a>
-	              </h3>
-            </div>
-            
-            
-           </div>
-          </div>
-        </div>
-		 
-		 
-		 </f:facet>
-		  
-      </p:dataScroller> -->
-      
-      
-        <div class="grid_4">
-          <div class="box7 maxheight wow fadeInUp animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; height: 174px;"><div class="box_inner">
-           <div class="box7_descripcion">¡Todo lo que puedas comer! Almuerzo Buffet en La Dama Juana</div>
-           <div class="box7_price"></div>
-           <div class="box7_simbolo">S/.</div>
-	       <div class="box7_valor">60</div>	           
+	       <div class="box7_valor">#{pro.fPrecio} </div>	           
             <img src="media/images/405998.jpg" alt=""/>
                <div class="box7_pre_fond ">
                <div class="box7_pre">
@@ -281,71 +249,18 @@
            </div>
           </div>
         </div>
+       
+    
+    </p:dataScroller>
+   </h:form>
+<!-- </ui:repeat> -->
 
-        <div class="grid_4">
-          <div data-wow-delay="0.1s" data-wow-duration="1s" class="box7 maxheight wow fadeInDown animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInDown; height: 174px;"><div class="box_inner">
-            <i class="fa fa-phone"></i>
-            <h3>
-              <a href="#">Encongue orci luctus in</a>
-            </h3>
-            <p>Quisque tempus leo quis ullamcorp er frin
-              gilla. Ut eleme ntum ante elit, ut tempus magna posuere ac. Suspe ndis se
-              potenti. Fusce pulvinar erat vel veli</p>
-          </div></div>
-        </div>
-
-        <div class="grid_4">
-          <div data-wow-delay="0.1s" data-wow-duration="1s" class="box7 maxheight wow fadeInUp animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; height: 174px;"><div class="box_inner">
-            <i class="fa fa-medkit"></i>
-            <h3>
-              <a href="#">Duisnisi urna viverra</a>
-            </h3>
-            <p>Ut eleme ntum ante elit, ut tempus magna posuere ac. Suspe ndis se pote
-              nti. Fusce pulvinar erat vel velit fringillae
-              t efficitur diam fringilla. Aliquam er</p>
-          </div></div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="grid_4">
-          <div data-wow-delay="0.1s" data-wow-duration="1s" class="box7 maxheight wow fadeInDown animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInDown; height: 174px;"><div class="box_inner">
-            <i class="fa fa-users"></i>
-            <h3>
-              <a href="#">Quisque tempus leo quis</a>
-            </h3>
-            <p>Suspe ndis se potenti. Fusce pulvinar er
-              at vel velit fringillaet efficitur diam fringilla. Aliquam erat volutpat. Mauris quis convall is massa. Maecenas placerat dolor si</p>
-          </div></div>
-        </div>
-
-        <div class="grid_4">
-          <div data-wow-delay="0.1s" data-wow-duration="1s" class="box7 maxheight wow fadeInUp animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; height: 174px;"><div class="box_inner">
-            <i class="fa fa-key"></i>
-            <h3>
-              <a href="#">Netus at matti sfinibus</a>
-            </h3>
-            <p>Fusce pulvinar erat vel velit fringillaet effic
-              itur diam fringilla. Aliquam erat volutpat. Mauris quis convall is massa. Maecenas
-              placerat dolor sit amet mauris vive rr</p>
-          </div></div>
-        </div>
-
-        <div class="grid_4">
-          <div data-wow-delay="0.1s" data-wow-duration="1s" class="box7 maxheight wow fadeInDown animated" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInDown; height: 174px;"><div class="box_inner">
-            <i class="fa fa-gift"></i>
-            <h3>
-              <a href="#">Ullamcorp er fringilla</a>
-            </h3>
-            <p>Maecenas placerat dolor sit amet mau
-              ris vive rra blandit. Aenean lobortis aliquet vestibulum. Cras sit amet erat sed ips
-              um dignissim congue eget at aug</p>
-          </div></div>
-        </div>
-      </div>
+     
+      
+     
+      </div>     
     </div>
   </div>
- 
  
 
   <div class="wrapper2">
@@ -353,7 +268,7 @@
       <div class="row">
         <div class="grid_12">
           <div class="heading1">
-            <h2 class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.1s">Services</h2>
+            <h2 class="wow zoomIn" data-wow-duration="1s" data-wow-delay="0.1s">Nuestros Servicios</h2>
           </div>
         </div>
       </div>

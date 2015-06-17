@@ -29,8 +29,8 @@ public class UsuarioVo {
 		this.cEstadoCodigo =usuario.getcEstadoCodigo();
 		this.dFechaActualiza = usuario.getdFechaActualiza();
 		this.dFechaInserta = usuario.getdFechaInserta();
-		this.perfil = new PerfilVo(usuario.getPerfil());
-		this.persona = new PersonaVo(usuario.getPersona());
+		this.perfil = usuario.getPerfil()!= null?  new PerfilVo(usuario.getPerfil()) : null; ;
+		this.persona = usuario.getPersona()!= null?  new PersonaVo(usuario.getPersona()):null ;
 		this.iUsuarioActualizaId = usuario.getiUsuarioActualizaId();
 		this.iUsuarioInsertaId = usuario.getiUsuarioInsertaId();
 		this.vContrasena = usuario.getvContrasena();
