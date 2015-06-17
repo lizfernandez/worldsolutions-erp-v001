@@ -37,7 +37,6 @@
   <script src="#{request.contextPath}/media/js/modal.js"></script>
   <script src="#{request.contextPath}/media/js/touchTouch.jquery.js"></script>
   <script src="#{request.contextPath}/media/js/jquery.equalheights.js"></script>
-  <script src="#{request.contextPath}/media/js/funcion.js"></script>
   <!--[if (gt IE 9)|!(IE)]><!-->
   <script src="#{request.contextPath}/media/js/jquery.mobile.customized.min.js"></script>
   <script src="#{request.contextPath}/media/js/wow/wow.js"></script>
@@ -103,44 +102,11 @@
                 <li><a href="index-5.html">Socios</a></li>
                 <li><a href="index-5.html">Preguntas</a></li>
               </ul>
-               <ul class="sf-menu-r">
-                               
+              <ul class="sf-menu-r">                               
                 <li><a href="#" style="border-left:1px solid " id="registro">Registro</a></li>                
                 <li><a href="#" id="ingreso">Ingreso</a></li>
-            </ul>
-						<div class="login_dropdown">
-							<a title="Conectar con Facebook" class="btn fb_connect"
-								href="javascript:;"><span></span>Conectar con Facebook</a>
-							<hr class="special"></hr>
-							<form action="/auth/login" class="nolabel"
-								data-parsley-validate="" name="frmLogin" id="frmLogin"
-								method="POST" novalidate="">
-								<div class="form_control">
-									<label class="name wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                <input type="text" name="name" placeholder="Email:" data-constraints="@Required @JustLetters"/>
-                <span class="empty-message">*This field is required.</span>
-              </label>
-								</div>
-								<div class="form_control">
-									<label class="name wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.1s">
-                <input type="text" name="name" placeholder="Contraseña:" data-constraints="@Required @JustLetters"/>
-                <span class="empty-message">*This field is required.</span>
-              </label>
-								</div>
-								<div class="form_control">
-									<a class="forgot_pass_link" title="¿Olvidaste tu contraseña?"
-										href="/recuperar">¿Olvidaste tu contraseña?</a> <input
-										type="hidden" value="e29822a6e78ccafbfbd4f2d6bd166bb3"
-										name="csrf" id="csrf"/>
-									<button class="btn btn_small" id="btnLogin" type="submit">Ingresar</button>
-								</div>
-							</form>
-							<p>
-								¿No tienes una cuenta?<a title="Regístrate" href="/registro">
-									Regístrate</a>
-							</p>
-						</div>
-					</nav>
+              </ul>
+            </nav>
             <div class="clearfix"></div>
           </div>
         </div>
